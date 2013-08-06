@@ -2,6 +2,7 @@
 #define LJJ_Rook
 
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <memory>
 #include <set>
@@ -41,6 +42,7 @@ private:
 class RookBoard {
 private:
   friend class RooksWalk;
+  friend ofstream &operator<<(ofstream &, RookBoard &);
   int height;
   int width;
   int length;
@@ -57,5 +59,7 @@ public:
   RookBoard(int, int ,int);
   void print();
 };
+
+ofstream &operator<<(ofstream &, RookBoard &);  
 
 #endif

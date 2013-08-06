@@ -199,4 +199,18 @@ void RookBoard::markUnused() {
   }
 }
 
-  
+ofstream &operator<<(ofstream &ofs, RookBoard &RB) {
+  ofs << RB.height << '\n'
+      << RB.width << '\n';
+  for (int i = 0; i < RB.height; i++) {
+    for (int j = 0; j < RB.width; j++) {
+      ofs << RB.moveArea[i][j] << '\n';
+    }
+  }
+  ofs << RB.positions.size() << '\n';
+  for (int i = 0; i < RB.positions.size(); i++) {
+    ofs << RB.positions[i].r << '\n'
+	<< RB.positions[i].c << '\n';
+  }
+  return ofs;
+}
