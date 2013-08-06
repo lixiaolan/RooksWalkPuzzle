@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:28
+-keep class com.example.android.opengl.OpenGLES20Complete { <init>(...); }
+
