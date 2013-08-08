@@ -89,6 +89,46 @@ vector<pos> RookBoard::legalMoves() {
   return legalMovesList;
 }
 
+//Function to reorder the elements of a vector to have the least amout possible of directional preference.
+void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
+  pos last = *(positions.end()-1);
+  vector<pos> result;
+  srand ( unsigned (time(0) ) );
+  random_shuffle(legalMoves.begin(), legalMoves.end() );
+  vector<pos> directions[4];
+  for (int i = 0; i < legalMoves.size(); i++ ) {
+    pos test = legalMoves[i]-last;
+    if (test.r == 0) {
+      if (test.c > 0) {
+	directions[0].push_back(legalMoves[i]);
+      }
+      else {
+	directions[1].push_back(legalMoves[i]);
+      }
+    }
+    if (test.c == 0) {
+      if (test.r > 0) {
+	directions[2].push_back(legalMoves[i]);
+      }
+      else {
+	directions[3].push_back(legalMoves[i]);
+      }
+    }
+  }
+  for (int i = 0; i < legalMoves.size(); i++) {
+    vector<int> options;
+    for (int j = 0; j < 4; j++) {
+      if (directions[j].size() != 0)
+	options.push_back(j);
+    }
+    srand ( unsigned (time(0) ) );
+    random_shuffle(options.begin(), options.end() );
+    result.push_back(directions[options[0]].back());
+    directions[options[0]].pop_back();
+  }
+  legalMoves = result;
+}
+
 bool RookBoard::goodPlay(pos play, int num) {
   if (moveArea[play.r][play.c] != 0) return false;
   
@@ -147,6 +187,8 @@ bool RookBoard::makeBoard(int depth) {
   vector<pos> lm = legalMoves();
 
   if (lm.size() == 0) return false;
+
+  reorderLegalMoves(lm);
  
   srand ( unsigned ( time(0) ) );
   random_shuffle(lm.begin(), lm.end());

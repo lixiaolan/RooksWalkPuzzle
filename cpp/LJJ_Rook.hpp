@@ -51,6 +51,7 @@ private:
   vector<int> colSums;
   vector<pos> positions;
   
+  void reorderLegalMoves(vector<pos> &);
   vector<pos> legalMoves();
   bool makeBoard(int);
   bool goodPlay(pos, int);
