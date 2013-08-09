@@ -12,13 +12,18 @@ function rookPlotter()
 
 RandStream.setDefaultStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
-lenv = [8 12 16 20];
+lenv = [8 18 16 20];
 hv   = [0 1 3 4];
 
 for i = 1:4
     h   = hv(i);
     
-    system(['./test 6 6 ', num2str(lenv(i))]);
+    if (i < 3)
+        system(['./test 5 5 ', num2str(lenv(i))]);
+    else
+        system(['./test 6 6 ', num2str(lenv(i))]);
+    end
+    
     [S,P] = boardRead('iotest.txt');
     P = P + 1;
     boardplot(S,P,h);
@@ -91,7 +96,7 @@ function boardplot(S,P,h)
     hold on
     axis square
     whitebg
-    
+    axis([0, N+.5, -N-.5, 0]);
 %     fill([-.5 N+1.5 N+1.5 -.5 -.5],[.5 .5 -N-1.5 -N-1.5 .5],'w')
 
     for i = 1:N+1;
@@ -121,7 +126,7 @@ function boardplot(S,P,h)
     for i = 1:length(v1)
         text(P(v1(i),2),-P(v1(i),1),num2str(S(P(v1(i),1),P(v1(i),2))),'FontSize',14,'HorizontalAlignment','center')
     end
-    
+
 end
 
 function rooksolnplot(S,P)
@@ -150,7 +155,6 @@ function rooksolnplot(S,P)
         text(P(i,2),-P(i,1),num2str(S(P(i,1),P(i,2))),'FontSize',14,'HorizontalAlignment','center')
     end   
    
-    
 end
 
 function out = linklinexy(sta,fin,num,xy)
@@ -196,6 +200,7 @@ function solnboardplot(S,P)
     axis square
     hold on
     whitebg
+    axis([0, N+.5, -N-.5, 0]);
 %     fill([-.5 N+1.5 N+1.5 -.5 -.5],[.5 .5 -N-1.5 -N-1.5 .5],'w')
     
    
@@ -225,7 +230,7 @@ function solnboardplot(S,P)
     for i = 1:length(P(:,1))
         text(P(i,2),-P(i,1),num2str(S(P(i,1),P(i,2))),'FontSize',14,'HorizontalAlignment','center')
     end   
-    
+    axis square
 end
 
 function out = randint(n,m,lims)
