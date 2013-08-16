@@ -12,8 +12,8 @@ function rookPlotter()
 
 RandStream.setDefaultStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
-lenv = [8 18 16 20];
-hv   = [0 1 3 4];
+lenv = [8 12 16 20];
+hv   = [1 2 4 5];
 
 for i = 1:4
     h   = hv(i);
