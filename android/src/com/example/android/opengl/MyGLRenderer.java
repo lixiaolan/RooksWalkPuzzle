@@ -394,7 +394,7 @@ class Square {
 
 class Board{
     private Square   BGSquare;
-    private Tile[] puzzleSquares = new Tile[36];
+    private Tile[] puzzleTiles = new Tile[36];
 
     public Board() {
 	float col[] = { 0.1f, 0.709803922f, 0.898039216f, 1.0f };
@@ -407,7 +407,7 @@ class Board{
 				       h,  h, 0.0f };  // top right
 	BGSquare   = new Square(loc, col);
 	
-	for (int i = 0; i < puzzleSquares.length; i++) {
+	for (int i = 0; i < puzzleTiles.length; i++) {
 	    float H = .11f;
 	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
@@ -417,20 +417,20 @@ class Board{
 				       H + Sx, -H + Sy, 0.0f,    // bottom right
 				       H + Sx,  H + Sy, 0.0f };  // top right
 	    
-	    puzzleSquares[i] = new Tile(center, false);
+	    puzzleTiles[i] = new Tile(center, false);
 	}
     }
     
     public void touched(float[] pt) {
-	for (int i = 0; i < puzzleSquares.length; i++) {
-	    puzzleSquares[i].touched(pt);
+	for (int i = 0; i < puzzleTiles.length; i++) {
+	    puzzleTiles[i].touched(pt);
 	}
     }
 
     public void draw(float[] mvpMatrix) {
 	BGSquare.draw(mvpMatrix);
-	for (int i = 0; i < puzzleSquares.length; i++) {
-	    puzzleSquares[i].draw(mvpMatrix);
+	for (int i = 0; i < puzzleTiles.length; i++) {
+	    puzzleTiles[i].draw(mvpMatrix);
 	}
     }
 }
