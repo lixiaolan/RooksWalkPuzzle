@@ -80,5 +80,8 @@ I can update a project using \textbf{android update project -p . --subprojects}.
 
 \section*{adb commands}
 Sometimes when you have changed up virtual devices, you may need to excute \textbf{adb kill-server} before trying to install a program on a virtual device. This is helpful!
-
+\begin{itemize}
+\item \textbf{adb push [FILE] [/sdcard/DEST] :} Move a file onto the sd card.
+\item \textbf{adb logcat ActivityManager:I System.out:D *:S}: Gives a nice log of the program. In particular you will see the output of any \texttt{System.out} commands.
+\end{itemize}
 \end{document}
