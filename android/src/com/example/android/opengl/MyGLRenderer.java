@@ -15,6 +15,11 @@
  */
 
 package com.example.android.opengl;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.util.Scanner;
+import java.io.IOException;
+
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -47,7 +52,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 
-        // Set the background frame color
+        //Set the background frame col// or
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	mBoard = new Board();
     }
@@ -393,19 +398,26 @@ class Square {
 }
 
 class Board{
+
     private Square   BGSquare;
     private Tile[] puzzleTiles = new Tile[36];
 
+    private int[] solution ;
+    private int[][] path;
+    
     public Board() {
-	float col[] = { 0.1f, 0.709803922f, 0.898039216f, 1.0f };
-	float white[] = {1.0f, 1.0f, 1.0f, 1.0f };
+	try {
+	    readBoard("/sdcard/iotest.txt");	
+	} catch (IOException e) {
+	    System.err.println("Caught IOException: " + e.getMessage());
+	}
 
 	float h = .75f;
 	float loc[]                = { -h,  h, 0.0f,   // top left
 				       -h, -h, 0.0f,   // bottom left
 				       h, -h, 0.0f,    // bottom right
 				       h,  h, 0.0f };  // top right
-	BGSquare   = new Square(loc, col);
+	BGSquare   = new Square(loc, Colors.col);
 	
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    float H = .11f;
@@ -417,10 +429,50 @@ class Board{
 				       H + Sx, -H + Sy, 0.0f,    // bottom right
 				       H + Sx,  H + Sy, 0.0f };  // top right
 	    
-	    puzzleTiles[i] = new Tile(center, false);
+	    puzzleTiles[i] = new Tile(center, solution[i]);
 	}
     }
+
     
+    public void readBoard(String board_file) throws IOException{
+	Scanner scanner = null;
+	try {	    
+            scanner = new Scanner(new BufferedReader(new FileReader(board_file)));
+	    
+	    //Get dimensions
+	    int m = scanner.nextInt();
+	    int n = scanner.nextInt();
+	    System.out.println("m is "+Integer.toString(m));
+	    solution = new int[m*n];
+	    int a  = 0;
+	    //Update all the solutions
+	    for(int i = 0; i<m*n; i++){
+	    	a = scanner.nextInt(); 
+		solution[i] = a;
+		System.out.println(Integer.toString(a));
+	    }
+	    
+
+	    //Get path length
+	    int l = scanner.nextInt();
+	    path = new int[2*l][2];
+	    
+	    //Update path
+	    for(int i = 0; i < l; i++){
+	    	path[i][0] = scanner.nextInt();
+	    	path[i][1] = scanner.nextInt();
+		System.out.println("which l"+Integer.toString(i));
+	    }
+		
+        } finally {
+            
+	    scanner.close();
+           
+        }
+    }
+    
+	
+
     public void touched(float[] pt) {
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    puzzleTiles[i].touched(pt);
@@ -438,16 +490,18 @@ class Board{
 class Tile {
     private Square square;
     private boolean touched_flag;
+    private int true_solution;
+    private int true_arrow;
 
-    public Tile(float[] center, boolean flag) {
-	touched_flag = flag;
-	if (touched_flag == true) {
-	    float col[] = { 0.1f, 0.709803922f, 0.898039216f, 1.0f };
-	    square = new Square(center, col);
-	} else {
-	    float white[] = {1.0f, 1.0f, 1.0f, 1.0f };
-	    square = new Square(center, white);
+    public Tile(float[] center, int solution) {
+	touched_flag = false;
+	true_solution = solution;
+	if (true_solution==-1) {	    
+	    square = new Square(center, Colors.black);
+	} else {	    
+	    square = new Square(center, Colors.white);
 	}
+	    
     }
     
     public void draw(float[] mvpMatrix) {
@@ -456,13 +510,18 @@ class Tile {
 
     public void touched(float[] pt) {
 	touched_flag = square.touched(pt);
-	if (touched_flag == true) {
-	    float col[] = { 0.1f, 0.709803922f, 0.898039216f, 1.0f };
-	    square.color = col;
-	} else {
-	    float white[] = {1.0f, 1.0f, 1.0f, 1.0f };
-	    square.color = white;
+	if(true_solution != -1){
+	    if (touched_flag == true) {
+		square.color = Colors.col;
+	    } else {
+		square.color = Colors.white;
+	    }
 	}
     }
 }
     
+class Colors {
+    public static float col[] = { 0.1f, 0.709803922f, 0.898039216f, 1.0f };
+    public static float white[] =  {1.0f, 1.0f, 1.0f, 1.0f };
+    public static float black[] = {0.0f, 0.0f, 0.0f, 0.0f };
+}
