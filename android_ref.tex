@@ -1,0 +1,84 @@
+
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{listings}
+\lstset{backgroundcolor={\color{grey}}}
+\usepackage{geometry}
+\geometry{verbose,tmargin=1cm,bmargin=1cm,lmargin=1in,rmargin=1in,headheight=1cm,headsep=1cm,footskip=1cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{color}
+
+\makeatletter
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+
+
+\section*{Create a New Project \& Update old}
+\begin{enumerate}
+\item
+Change directories into the Android SDK's tools/ path.
+\item
+Execute ``android list targets'' to see targets
+\item
+Execute
+\begin{quote}
+android create project --target <target-id> --name MyFirstApp \
+--path <path-to-workspace>/MyFirstApp --activity MainActivity \
+--package com.example.myfirstapp
+\end{quote}
+\item
+To update a project to re-create its build.xml file use \textbf{android update project -p ./ --subprojects} inside of the home directory. I had to do this after restructuring my files and moving the home directory of my project from one place to another.
+\end{enumerate}
+Hint: Add \textbf{platform-tools/} and \textbf{tools/} to your PATH.
+
+
+\section*{Run project in emulator}
+\begin{enumerate}
+\item
+From <sdk>/tools/ run \textbf{andriod avd}. Set up a new device or use and old one.
+\item
+If you are compiling c++ code in NDK, then you need to run: \textbf{ndk\_root/ndk-build} first.
+\item
+Change to the root of your project and do \textbf{ant debug}.
+\item
+Next do \textbf{adb install bin/MyFirstApp-debug.apk}. Note, the command \textbf{adb install -r bin/MyFirstApp-debug.apk} will re-install the program on the virtual device so that you don't have to manually delete it on the device befor attempting an install!
+\end{enumerate}
+
+
+\section*{Run C++ with NDK}
+There are a few odd things that must happened before you can run c++ code in NDK. I started by modifying the sample ``hello-jni'' sample provided by NDK. In the jni sub directory, I modified the Android.mk file so that it looked for hello-jni.cpp. Then I changed the code inside of hello-jni.c to create hello-jni.cpp in such a way that is consistent with the desired syntax.  But this did not work.  The fixes needed were this.
+\begin{enumerate}
+\item
+  First, I had to create a file ``Application.mk'' which contained only the line ``APP\_STL := stlport\_static'' and nothing more. 
+\item
+Then I needed to use \textbf{extern ``C''} before my function declaration to keep c++ from mangling something or other. I don't understand why either of these fixes are needed since I found them on a useless stackoverflow post.  But hey, now it works.
+\end{enumerate}
+
+\begin{tabular}{|p{2cm}|p{8cm}|p{5cm}|}
+\hline 
+Command: & Effect: & Notes: \\
+\hline 
+\hline
+<ndk-path>/ndk-build & Compile native code into a local libaray for use within java & \\
+\hline
+<ndk-path>/ndk-build ``APP\_ABI := x86 '' & Needed if you want to run on intel architecture in an emulator!  Specifically, if using Intel Atom (x86) in the emulator. & \\
+\hline 
+\end{tabular}
+
+
+\section*{OpenGL on a Mac Book air}
+Sadly, getting the simple OpenGL examples to work on my computer was next to impossible. It turns out that I simply needed to change some emulator settings to get them not to crash. The key was to get the x86 Atom System Image for API 17 in the sdk manager (run ``android sdk''). Then it needed to be installed by hunting down the .dmg file. Afterwards I had to make a device in ADV with API 17 and using the x86 option. Finally, the OpenGl examples could run in the emulator!  Thank God. Note that I can run the emulator for the command line using \textbf{emulator -avd (name) -gpu on} where I am not sure if the -gpu on option is needed since I think I have it selected as always on for my particular -adv named ``test'' at the moment...
+
+\section*{Update a project}
+I can update a project using \textbf{android update project -p . --subprojects}. This needs to be done in order to change settings like the API of something like that.
+
+\section*{adb commands}
+Sometimes when you have changed up virtual devices, you may need to excute \textbf{adb kill-server} before trying to install a program on a virtual device. This is helpful!
+
+\end{document}
