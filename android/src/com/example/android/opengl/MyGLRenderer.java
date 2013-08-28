@@ -1,20 +1,6 @@
-/*
- * Copyright (C) 2012 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 package com.example.android.opengl;
+
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.util.Scanner;
@@ -407,7 +393,8 @@ class Board{
     
     public Board() {
 	try {
-	    readBoard("/sdcard/iotest.txt");	
+	    System.out.println("HELLO!");
+	    readBoard(stringFromJNI() );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
@@ -433,11 +420,12 @@ class Board{
 	}
     }
 
-    
-    public void readBoard(String board_file) throws IOException{
+    public native String stringFromJNI();
+
+    public void readBoard(String puzzleString) throws IOException{
 	Scanner scanner = null;
 	try {	    
-            scanner = new Scanner(new BufferedReader(new FileReader(board_file)));
+            scanner = new Scanner(puzzleString);
 	    
 	    //Get dimensions
 	    int m = scanner.nextInt();
@@ -484,6 +472,10 @@ class Board{
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    puzzleTiles[i].draw(mvpMatrix);
 	}
+    }
+
+    static {
+        System.loadLibrary("GeneratePuzzle");
     }
 }
 
