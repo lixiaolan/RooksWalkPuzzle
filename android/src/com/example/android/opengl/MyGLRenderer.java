@@ -393,7 +393,6 @@ class Board{
     
     public Board() {
 	try {
-	    System.out.println("HELLO!");
 	    readBoard(stringFromJNI() );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());

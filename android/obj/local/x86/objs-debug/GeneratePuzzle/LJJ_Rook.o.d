@@ -1,5 +1,5 @@
-/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/obj/local/x86/objs-debug/GeneratePuzzle/GeneratePuzzle.o: \
- /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/jni/GeneratePuzzle.cpp \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/obj/local/x86/objs-debug/GeneratePuzzle/LJJ_Rook.o: \
+ /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/jni/LJJ_Rook.cpp \
  /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/jni/LJJ_Rook.hpp \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/string.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cprolog.h \

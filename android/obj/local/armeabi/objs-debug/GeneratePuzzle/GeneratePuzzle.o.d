@@ -1,6 +1,5 @@
-/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/obj/local/x86/objs-debug/GeneratePuzzle/GeneratePuzzle.o: \
- /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/jni/GeneratePuzzle.cpp \
- /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/jni/LJJ_Rook.hpp \
+obj/local/armeabi/objs-debug/GeneratePuzzle/GeneratePuzzle.o: \
+ jni/GeneratePuzzle.cpp jni/LJJ_Rook.hpp \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/string.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cprolog.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/config/features.h \
@@ -13,15 +12,15 @@
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/config/_gcc.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/config/stl_confix.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/config/_native_headers.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/string.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/cdefs.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/cdefs_elf.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/android/api-level.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/string.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/cdefs.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/android/api-level.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stddef.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/malloc.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/malloc.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_epilog.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_config_compat_post.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/jni.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/jni.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stdarg.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/iostream \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_prolog.h \
@@ -32,19 +31,18 @@
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cstddef.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cstring.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/using/cstring \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/stdint.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/_types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/_types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/posix_types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/stddef.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/compiler.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/posix_types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/posix_types_32.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/kernel.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/sysmacros.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/stdint.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/_types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/_types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/posix_types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/stddef.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/compiler.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/posix_types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/kernel.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_construct.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_new.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/../../gabi++/include/new \
@@ -54,29 +52,28 @@
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/../../gabi++/include/exception \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cstdio.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stdio.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/stdio.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/stdio.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_iterator_base.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_ptrs_specialize.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/type_traits.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/type_manips.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_move_construct_fwk.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cwchar.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/wchar.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/wchar.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/limits.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/limits.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/limits.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/limits.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/internal_types.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/limits.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/syslimits.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/page.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/page_32.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/limits.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/limits.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/limits.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/internal_types.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/limits.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/syslimits.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/page.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/time.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/time.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/time.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/time.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/siginfo.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm-generic/siginfo.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/time.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/time.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/time.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/siginfo.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm-generic/siginfo.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_mbstate_t.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_istream.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_ios.h \
@@ -87,22 +84,22 @@
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_locale.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cstdlib.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stdlib.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/stdlib.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/alloca.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/strings.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/memory.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/stdlib.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/alloca.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/strings.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/memory.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cmath.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/math.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/math.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/math.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_threads.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/pthread.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/pthread.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/pthread.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/signal.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/signal.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/signal.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm-generic/signal.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/sigcontext.h \
- /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sched.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/signal.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/signal.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm-generic/signal.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/sigcontext.h \
+ /Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sched.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_threads.c \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_ctime.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_string_fwd.h \
@@ -179,7 +176,7 @@
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_string_io.h \
  /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_string_io.c
 
-/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/jni/LJJ_Rook.hpp:
+jni/LJJ_Rook.hpp:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/string.h:
 
@@ -205,23 +202,23 @@
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/config/_native_headers.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/string.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/string.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/cdefs.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/cdefs.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/cdefs_elf.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/cdefs_elf.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/android/api-level.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/android/api-level.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stddef.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/malloc.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/malloc.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_epilog.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_config_compat_post.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/jni.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/jni.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stdarg.h:
 
@@ -243,31 +240,29 @@
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/using/cstring:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/stdint.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/stdint.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/_types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/_types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/_types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/_types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/posix_types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/posix_types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/stddef.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/stddef.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/compiler.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/compiler.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/posix_types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/posix_types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/posix_types_32.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/kernel.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/kernel.h:
-
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/sysmacros.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/sysmacros.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_construct.h:
 
@@ -287,7 +282,7 @@
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stdio.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/stdio.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/stdio.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_iterator_base.h:
 
@@ -301,37 +296,35 @@
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cwchar.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/wchar.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/wchar.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/limits.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/limits.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/limits.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/limits.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/limits.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/limits.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/limits.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/internal_types.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/internal_types.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/machine/limits.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/machine/limits.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/syslimits.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/syslimits.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/page.h:
-
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/page_32.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/page.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/time.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/time.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/time.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sys/time.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sys/time.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/linux/time.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/linux/time.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/siginfo.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/siginfo.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm-generic/siginfo.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm-generic/siginfo.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_mbstate_t.h:
 
@@ -353,37 +346,37 @@
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stdlib.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/stdlib.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/stdlib.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/alloca.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/alloca.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/strings.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/strings.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/memory.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/memory.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_cmath.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/math.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/math.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/math.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_threads.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/pthread.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/pthread.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/pthread.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/signal.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/../include/signal.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/../include/signal.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/signal.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/signal.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm-generic/signal.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm-generic/signal.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/asm/sigcontext.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/asm/sigcontext.h:
 
-/Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include/sched.h:
+/Users/qile/android-ndk-r9/platforms/android-14/arch-arm/usr/include/sched.h:
 
 /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport/stl/_threads.c:
 
