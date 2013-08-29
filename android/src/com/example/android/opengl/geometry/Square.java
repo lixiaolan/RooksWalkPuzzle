@@ -13,7 +13,7 @@ import android.opengl.Matrix;
 import android.util.Log;
 import com.example.android.opengl.MyGLRenderer
 ;
-class Square {
+public class Square {
     
     private final String vertexShaderCode =
         // This matrix member variable provides a hook to manipulate

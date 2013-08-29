@@ -97,7 +97,7 @@ class Board{
     }
 
     static {
-	System.loadLibrary(GeneratePuzzle());
+	System.loadLibrary("GeneratePuzzle");
     }
 
 }
