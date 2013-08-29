@@ -20,7 +20,5 @@ android/libs/
 
 # Local configuration file (sdk path, etc)
 android/local.properties
-<<<<<<< HEAD
+
 auto/
-=======
->>>>>>> origin/master
