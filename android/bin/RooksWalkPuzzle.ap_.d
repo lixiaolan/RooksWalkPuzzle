@@ -1,6 +1,7 @@
-/Users/qile/Documents/programming/projects/Rook/android/bin/RooksWalkPuzzle.ap_ \
- : /Users/qile/Documents/programming/projects/Rook/android/res/drawable/ic_launcher.png \
-/Users/qile/Documents/programming/projects/Rook/android/res/layout/main.xml \
-/Users/qile/Documents/programming/projects/Rook/android/res/values/strings.xml \
-/Users/qile/Documents/programming/projects/Rook/android/bin/res/drawable/ic_launcher.png \
-/Users/qile/Documents/programming/projects/Rook/android/bin/AndroidManifest.xml \
+/home/jain/Repositories/RooksWalkPuzzle/android/bin/RooksWalkPuzzle.ap_ \
+ : /home/jain/Repositories/RooksWalkPuzzle/android/res/drawable/ic_launcher.png \
+/home/jain/Repositories/RooksWalkPuzzle/android/res/values/strings.xml \
+/home/jain/Repositories/RooksWalkPuzzle/android/res/layout/main.xml \
+/home/jain/Repositories/RooksWalkPuzzle/android/bin/res/drawable/ic_launcher.png \
+/home/jain/Repositories/RooksWalkPuzzle/android/assets/Roboto-Regular.ttf \
+/home/jain/Repositories/RooksWalkPuzzle/android/bin/AndroidManifest.xml \
