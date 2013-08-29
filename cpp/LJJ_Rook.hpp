@@ -1,6 +1,9 @@
 #ifndef LJJ_Rook
 #define LJJ_Rook
 
+#include <string.h>
+#include <jni.h>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -11,6 +14,7 @@
 #include <cmath>
 #include <ctime>
 #include <cstdlib> 
+#include <string>
 
 using namespace std;
 
@@ -31,13 +35,13 @@ pos operator-(pos left, pos right);
 
 pos operator+(pos left, pos right);
 
-class RooksWalk{
-private:
-  shared_ptr<RookBoard> board;
-  void print() const;
-  //  void export() const;
-  RooksWalk(shared_ptr<RookBoard > rb): board(rb) {};
-};
+// class RooksWalk{
+// private:
+//   shared_ptr<RookBoard> board;
+//   void print() const;
+//   //  void export() const;
+//   RooksWalk(shared_ptr<RookBoard > rb): board(rb) {};
+// };
 
 class RookBoard {
 private:
@@ -58,7 +62,7 @@ private:
   void markUnused();
 public:
   RookBoard(int, int ,int);
-  void print();
+  string print();
 };
 
 ofstream &operator<<(ofstream &, RookBoard &);  

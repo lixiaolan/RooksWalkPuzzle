@@ -160,25 +160,21 @@ bool RookBoard::goodPlay(pos play, int num) {
 }
 
 //A text based print out of the generated game board.
-void RookBoard::print() {
+string RookBoard::print() {
+  ostringstream oss;
+  oss << height << '\n'
+      << width << '\n';
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
-      if (moveArea[i][j]>=0)
-	cout << " ";
-      cout << moveArea[i][j];
+      oss << moveArea[i][j] << '\n';
     }
-    cout << "\n";
   }
-  cout << "row sums:" << endl;
-  for (auto i : rowSums) {
-    cout << i << " ";
+  oss << positions.size() << '\n';
+  for (int i = 0; i < positions.size(); i++) {
+    oss << positions[i].r << '\n'
+	<< positions[i].c << '\n';
   }
-  cout << endl;
-  cout << "col sums:" << endl;
-  for (auto i : colSums) {
-    cout << i << " ";
-  }
-  cout << endl;
+  return oss.str();
 }
 
 //The recrusive board maker.
