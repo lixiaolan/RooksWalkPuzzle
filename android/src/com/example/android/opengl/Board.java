@@ -16,7 +16,7 @@ class Board{
     
     public Board() {
 	try {
-	    readBoard("/sdcard/iotest.txt");	
+	    readBoard(stringFromJNI());	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
@@ -42,11 +42,12 @@ class Board{
 	}
     }
 
+    public native String stringFromJNI();
     
-    public void readBoard(String board_file) throws IOException{
+    public void readBoard(String puzzleString) throws IOException{
 	Scanner scanner = null;
 	try {	    
-            scanner = new Scanner(new BufferedReader(new FileReader(board_file)));
+            scanner = new Scanner(puzzleString);
 	    
 	    //Get dimensions
 	    int m = scanner.nextInt();
@@ -94,4 +95,9 @@ class Board{
 	    puzzleTiles[i].draw(mvpMatrix);
 	}
     }
+
+    static {
+	System.loadLibrary(GeneratePuzzle());
+    }
+
 }
