@@ -1,3 +1,0 @@
-Notes on Andriod Programming:
-
-Running native c++ code on Andriod requires the andriod NDK. This will be needed tool to get puzzle generation working locally on the phone. 

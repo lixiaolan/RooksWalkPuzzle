@@ -1,10 +1,14 @@
 #Last build type
+<<<<<<< HEAD
 #Wed, 28 Aug 2013 11:34:24 -0500
 <<<<<<<=HEAD
 #Tue, 27 Aug 2013 16:32:07 -0500
 =\=\=\=\=\=\=
 #Tue, 27 Aug 2013 16:36:29 -0500
 >>>>>>>=51bb2fc8fb1a7a897bf9607dcb468c204ca6a5be
+=======
+#Wed, 28 Aug 2013 17:25:32 -0500
+>>>>>>> origin/master
 
 build.last.target=debug
 
