@@ -35,4 +35,17 @@
 /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/res/xml/preferences.xml \
 /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/res/xml/switching_wallpaper.xml \
 /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/res/xml/wallpaper.xml \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable/ic_launcher.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-hdpi/ic_lesson_five.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-hdpi/ic_lesson_four.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-hdpi/ic_lesson_one.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-hdpi/ic_lesson_seven.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-hdpi/ic_lesson_six.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-hdpi/ic_lesson_three.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-hdpi/ic_lesson_two.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-nodpi/noisy_grass_public_domain.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-nodpi/stone_wall_public_domain.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-nodpi/usb_android.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-xhdpi/ic_lesson_eight.png \
+/Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/res/drawable-xhdpi/icon.png \
 /Users/qile/Documents/programming/projects/RooksWalkPuzzle/android/bin/AndroidManifest.xml \

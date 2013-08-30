@@ -13,13 +13,15 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
-
+import android.os.SystemClock;
 
 import com.example.android.opengl.R;
 import com.example.android.opengl.common.RawResourceReader;
 import com.example.android.opengl.common.ShaderHelper;
 import com.example.android.opengl.common.TextureHelper;
 
+import com.example.android.opengl.Board;
+import com.example.android.opengl.Tile;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
     
@@ -111,6 +113,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     
     public MyGLRenderer(final Context activityContext) {
+	
 	mActivityContext = activityContext;
 	
 	// Define points for a square.		
@@ -186,6 +189,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 	
+
+	System.out.println("ONE!!!!!");
+
         //Set the background frame col// or
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	
@@ -201,6 +207,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	// Load the texture
         mTextureDataHandle = TextureHelper.loadTexture(mActivityContext, R.drawable.test);
+
+	System.out.println("TWO!!!!!");
+
     }
     
     
@@ -214,10 +223,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onDrawFrame(GL10 unused) {
-	
+	System.out.println("THREE!!!!!");
+
         // Draw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 	
+	GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);			        
+        
 
 
 
@@ -230,11 +242,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 	////////////////////////////////////////
 
-
-
-
-	GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);			        
-        
         
         // Set our per-vertex lighting program.
         GLES20.glUseProgram(mProgramHandle);
@@ -258,6 +265,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	
 	//Draw the Board!
+	System.out.println("FOUR!!!!!");	
+	
 	drawBoard();
     }
     
@@ -341,16 +350,22 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// Loop though tiles and draw them
 	float[] center;
 	float size;
-	for (int i = 0; i < (mBoard.puzzleTiles).length; i++) {
+	System.out.println("IN DRAWBOARD!!!!!");
+	int j = mBoard.puzzleTiles.length;
+	for (int i = 0; i < mBoard.puzzleTiles.length; i++) {
+	    System.out.println("IN LOOP!!!!!");
 	    center = mBoard.puzzleTiles[i].center;
+	    System.out.println("IN GET CENTER");
 	    size = mBoard.puzzleTiles[i].size;
+	    System.out.println("FIVE!!!!!");
 	    drawTile(center, size);
+	    System.out.println("SIX!!!!!");
 	}	
     }
 
     private void drawTile(float[] center, float size){
 	
-	
+	System.out.println("DRAWTILE...");
 	// Bind the texture to this unit.
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle);
         
@@ -409,7 +424,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// GLES20.glUniform3f(mLightPosHandle, mLightPosInEyeSpace[0], mLightPosInEyeSpace[1], mLightPosInEyeSpace[2]);
 	
 	// Draw the square.
-	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);       
+	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);      
+	System.out.println("DONE DRAWING TILE!!!!!");
     }
  
 }
