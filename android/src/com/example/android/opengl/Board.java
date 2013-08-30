@@ -9,9 +9,9 @@ import com.example.android.opengl.MyGLRenderer;
 
 class Board{
 
-    private Tile[] puzzleTiles = new Tile[36];
-    private int[] solution ;
-    private int[][] path;
+    public Tile[] puzzleTiles = new Tile[36];
+    public int[] solution ;
+    public int[][] path;
     
     public Board() {
 

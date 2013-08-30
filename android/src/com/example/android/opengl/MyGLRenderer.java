@@ -42,10 +42,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
      * Store the view matrix. This can be thought of as our camera. This matrix transforms world space to eye space;
      * it positions things relative to our eye.
      */
-    private float[] mViewMatrix = new float[16];
+    private float[] mVMatrix = new float[16];
     
     /** Store the projection matrix. This is used to project the scene onto a 2D viewport. */
-    private float[] mProjectionMatrix = new float[16];
+    private float[] mProjMatrix = new float[16];
     
     /** Allocate storage for the final combined matrix. This will be passed into the shader program. */
     private float[] mMVPMatrix = new float[16];
@@ -99,7 +99,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
   
     
     // private final float[] mMVPMatrix = new float[16];
-    // private final float[] mMVPMatrixInv = new float[16];
+    private final float[] mMVPMatrixInv = new float[16];
     // private final float[] mProjMatrix = new float[16];
     // private final float[] mVMatrix = new float[16];
     // private final float[] mRotationMatrix = new float[16];
@@ -368,7 +368,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
 
-	Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 0.0f, 0.0f);  
+	Matrix.rotateM(mModelMatrix, 0, mAngle, 1.0f, 0.0f, 0.0f);  
 	
 	
 	
@@ -393,14 +393,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
 	// (which currently contains model * view).
-	Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);   
+	Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, mModelMatrix, 0);   
 	
 	// Pass in the modelview matrix.
 	GLES20.glUniformMatrix4fv(mMVMatrixHandle, 1, false, mMVPMatrix, 0);                
 	
 	// This multiplies the modelview matrix by the projection matrix, and stores the result in the MVP matrix
 	// (which now contains model * view * projection).
-	Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
+	Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mMVPMatrix, 0);
 	
 	// Pass in the combined matrix.
 	GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);

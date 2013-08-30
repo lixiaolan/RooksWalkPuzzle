@@ -7,11 +7,11 @@ import com.example.android.opengl.geometry.*;
 
 class Tile {
 
-    private boolean touched_flag;
-    private int true_solution;
-    private int true_arrow;
-    private float[] center;
-    private float size;
+    public boolean touched_flag;
+    public int true_solution;
+    public int true_arrow;
+    public float[] center;
+    public float size;
 
     public Tile(float[] inCenter,float inSize, int solution) {
 	touched_flag = false;
