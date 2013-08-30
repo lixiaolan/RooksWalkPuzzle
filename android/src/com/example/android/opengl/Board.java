@@ -5,7 +5,6 @@ import java.util.Scanner;
 import java.io.IOException;
 
 import com.example.android.opengl.geometry.*;
-import com.example.android.opengl.MyGLRenderer;
 
 class Board{
 

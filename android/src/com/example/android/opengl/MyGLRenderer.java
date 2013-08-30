@@ -351,8 +351,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	float[] center;
 	float size;
 	System.out.println("IN DRAWBOARD!!!!!");
-	int j = mBoard.puzzleTiles.length;
-	for (int i = 0; i < mBoard.puzzleTiles.length; i++) {
+
+	for (int i = 0; i < mBoard.puzzleTiles[].length; i++) {
 	    System.out.println("IN LOOP!!!!!");
 	    center = mBoard.puzzleTiles[i].center;
 	    System.out.println("IN GET CENTER");
