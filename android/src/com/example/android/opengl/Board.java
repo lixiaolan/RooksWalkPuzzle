@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.util.Scanner;
 import java.io.IOException;
 
-import com.example.android.opengl.geometry.*;
-
 class Board{
 
     public Tile[] puzzleTiles = new Tile[36];
@@ -15,7 +13,6 @@ class Board{
     public Board() {
 
 
-
 	try {
 	    readBoard(stringFromJNI() );	
 	} catch (IOException e) {
@@ -23,16 +20,14 @@ class Board{
 	}
 
 
-
-
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    float size = .11f;
 	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
 	    
-	    float center[]         = { Sx, Sy, 0.0f};
+	    float center[] = { Sx, Sy, 0.0f};
 	    
-	    puzzleTiles[i] = new Tile(center, size, solution[i]);
+	    puzzleTiles[i] = new Tile(center, size, solution[i], 0);
 	}
     }
 
@@ -56,7 +51,6 @@ class Board{
 		System.out.println(Integer.toString(a));
 	    }
 	    
-
 	    //Get path length
 	    int l = scanner.nextInt();
 	    path = new int[2*l][2];
@@ -76,11 +70,11 @@ class Board{
     }
     
 	
-    // public void touched(float[] pt) {
-    // 	for (int i = 0; i < puzzleTiles.length; i++) {
-    // 	    puzzleTiles[i].touched(pt);
-    // 	}
-    // }
+    public void touched(float[] pt) {
+    	for (int i = 0; i < puzzleTiles.length; i++) {
+    	    puzzleTiles[i].touched(pt);
+    	}
+    }
 
 
     static {

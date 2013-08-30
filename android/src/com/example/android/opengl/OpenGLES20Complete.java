@@ -58,7 +58,7 @@ class MyGLSurfaceView extends GLSurfaceView {
         setRenderer(mRenderer);
 
         // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
@@ -82,6 +82,7 @@ class MyGLSurfaceView extends GLSurfaceView {
 	    float[] pt = new float[2];
 	    pt[0] = 2.0f*(x/getWidth())-1;
 	    pt[1] = -2.0f*(y/getHeight())+1;
+
 	    mRenderer.touched(pt);
 	    requestRender();
 	    mPreviousX = x;

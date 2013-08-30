@@ -54,27 +54,9 @@ public final class R {
      Theme for a wallpaper's setting activity that is designed to be on
          top of a dark background.
     
-
-     Theme for a wallpaper's setting activity that is designed to be on
-         top of a dark background.
-    
-
-     Theme for a wallpaper's setting activity that is designed to be on
-         top of a dark background.
-    
          */
         public static final int WallpaperSettings=0x7f070000;
         /** 
-         Theme for a wallpaper's setting activity that is designed to be on
-         top of a light background.
-
-    
-
-         Theme for a wallpaper's setting activity that is designed to be on
-         top of a light background.
-
-    
-
          Theme for a wallpaper's setting activity that is designed to be on
          top of a light background.
 
@@ -84,7 +66,5 @@ public final class R {
     }
     public static final class xml {
         public static final int preferences=0x7f040000;
-        public static final int switching_wallpaper=0x7f040001;
-        public static final int wallpaper=0x7f040002;
     }
 }
