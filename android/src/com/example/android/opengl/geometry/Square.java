@@ -126,30 +126,25 @@ public class Square {
         GLES20.glDisableVertexAttribArray(mPositionHandle);
     }
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public boolean touched(float[] pt) {
 	return (pt[0]<squareCoords[6])&(pt[0]>squareCoords[0])&(pt[1]>squareCoords[7])&(pt[1]<squareCoords[1]);
     }
-
-    // public float[] GetCoords(float[] in) {
-    // 	float[] ret = new float[2];
-    // 	float[] inPt = new float[4];
-    // 	float[] outPt = new float[4];
-    // 	inPt[0] = in[0];
-    // 	inPt[1] = in[1];
-    // 	inPt[2] = -1.0f;
-    // 	inPt[3] = 1.0f;
-	
-    // 	// Set the camera position (View matrix)
-    // 	Matrix.setLookAtM(mVMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-	
-    // 	// Calculate the projection and view transformation
-    // 	Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
-    // 	Matrix.invertM(mMVPMatrixInv, 0, mMVPMatrix, 0);   
-	
-    // 	Matrix.multiplyMV(outPt, 0,mMVPMatrixInv, 0,inPt, 0);
-	
-    // 	ret[0] = outPt[0]/outPt[3];
-    // 	ret[1] = outPt[1]/outPt[3];
-    // 	return ret;
-    // }
 }

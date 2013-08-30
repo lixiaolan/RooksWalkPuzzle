@@ -5,40 +5,35 @@ import java.util.Scanner;
 import java.io.IOException;
 
 import com.example.android.opengl.geometry.*;
+import com.example.android.opengl.MyGLRenderer;
 
 class Board{
 
-    private Square   BGSquare;
     private Tile[] puzzleTiles = new Tile[36];
-
     private int[] solution ;
     private int[][] path;
     
     public Board() {
+
+
+
 	try {
-	    readBoard(stringFromJNI());	
+	    readBoard(stringFromJNI() );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
 
-	float h = .75f;
-	float loc[]                = { -h,  h, 0.0f,   // top left
-				       -h, -h, 0.0f,   // bottom left
-				       h, -h, 0.0f,    // bottom right
-				       h,  h, 0.0f };  // top right
-	BGSquare   = new Square(loc, Colors.col);
-	
+
+
+
 	for (int i = 0; i < puzzleTiles.length; i++) {
-	    float H = .11f;
+	    float size = .11f;
 	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
 	    
-	    float center[]         = { -H + Sx,  H + Sy, 0.0f,    // top left
-				       -H + Sx, -H + Sy, 0.0f,    // bottom left
-				       H + Sx, -H + Sy, 0.0f,    // bottom right
-				       H + Sx,  H + Sy, 0.0f };  // top right
+	    float center[]         = { Sx, Sy, 0.0f};
 	    
-	    puzzleTiles[i] = new Tile(center, solution[i]);
+	    puzzleTiles[i] = new Tile(center, size, solution[i]);
 	}
     }
 
@@ -82,19 +77,12 @@ class Board{
     }
     
 	
+    // public void touched(float[] pt) {
+    // 	for (int i = 0; i < puzzleTiles.length; i++) {
+    // 	    puzzleTiles[i].touched(pt);
+    // 	}
+    // }
 
-    public void touched(float[] pt) {
-	for (int i = 0; i < puzzleTiles.length; i++) {
-	    puzzleTiles[i].touched(pt);
-	}
-    }
-
-    public void draw(float[] mvpMatrix) {
-	BGSquare.draw(mvpMatrix);
-	for (int i = 0; i < puzzleTiles.length; i++) {
-	    puzzleTiles[i].draw(mvpMatrix);
-	}
-    }
 
     static {
 	System.loadLibrary("GeneratePuzzle");
