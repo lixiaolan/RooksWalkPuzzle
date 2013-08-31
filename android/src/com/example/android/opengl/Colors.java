@@ -1,4 +1,4 @@
-package com.example.android.opengl.geometry;
+package com.example.android.opengl;
 
 public class Colors {
     public static float col[] = { 0.1f, 0.709803922f, 0.898039216f, 1.0f };

@@ -1,2 +1,0 @@
-set solib-search-path ./obj/local/x86
-directory /Users/qile/android-ndk-r9/platforms/android-14/arch-x86/usr/include /Users/qile/android-ndk-r9/sources/cxx-stl/stlport/stlport /Users/qile/android-ndk-r9/sources/cxx-stl//gabi++/include jni
