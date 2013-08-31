@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical|top"
+    android:gravity="center"
+    android:orientation="vertical" 
+    >
+
+    <Button
+        android:id="@+id/new_game_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:onClick="launchEvent"
+        android:text="New Game"
+        android:textColor="#0AAAAA"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/statistics_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:onClick="launchEvent"
+        android:text="Statistics"
+        android:textColor="#0AAAAA"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/tutorial_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:onClick="launchEvent"
+        android:text="Tutorial"
+        android:textColor="#0AAAAA"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/settings_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:text="Settings"
+        android:textColor="#0AAAAA"
+        android:textSize="30sp" 
+        android:onClick="settingsEvent"
+        />
+
+    <Button
+        android:id="@+id/exit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:onClick="exitEvent"
+        android:text="Exit"
+        android:textColor="#0FAFAF"
+        android:textSize="30sp" />
+
+</LinearLayout>

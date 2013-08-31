@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/usb_android"
+          android:icon="@drawable/usb_android"
+          android:title="b Android"
+          android:showAsAction="ifRoom"/>
+    <item android:id="@+id/ic_launcher"
+          android:icon="@drawable/ic_launcher"
+          android:title="Ic Launcher" 
+          android:showAsAction="ifRoom"/>
+</menu>
