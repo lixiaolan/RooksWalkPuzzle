@@ -15,6 +15,6 @@ void main()
 	// Multiply the color by the diffuse illumination level and texture value to get final output color.
     mediump vec4 text_color = texture2D(text_texture,v_TexCoordinate);
     mediump vec4 o_color = texture2D(u_Texture, v_TexCoordinate);                                  	
-    gl_FragColor = text_color*0.5+o_color*(1.0-0.5);
+    gl_FragColor = text_color*0.5+o_color*0.5;
 }                                                                     	
 

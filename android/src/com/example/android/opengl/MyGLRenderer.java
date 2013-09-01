@@ -324,16 +324,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	private void drawTile(float[] center, float size,int texture)
 	{
 		GLES20.glEnable(GLES20.GL_BLEND);
-		//GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_);
+		GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 		
 		GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle[texture]);
 		// Tell the texture uniform sampuse this texture in the shader by binding to texture unit 0.
 		GLES20.glUniform1i(mTextureUniformHandle, 1);
 		//ATTEMPT TO TEXTURE WITH TEXT////////////////////////////////////////
-		GLES20.glActiveTexture(GLES20.GL_TEXTURE2);        
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,mTextureDataHandle[(texture+1)%2]);
-        GLES20.glUniform1i(mTextureText, 2); 
+		//GLES20.glActiveTexture(GLES20.GL_TEXTURE2);        
+        //GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,mTextureDataHandle[(texture+1)%2]);
+        //GLES20.glUniform1i(mTextureText, 2); 
         /**///END ATTEMPT//////////////////////////////////////////////////////
         
         
