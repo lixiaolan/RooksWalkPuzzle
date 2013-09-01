@@ -17,6 +17,7 @@ iotest.txt
 android/bin/
 android/gen/
 android/libs/
+android/obj/
 
 # Local configuration file (sdk path, etc)
 android/local.properties
