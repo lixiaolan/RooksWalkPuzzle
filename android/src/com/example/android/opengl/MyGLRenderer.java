@@ -62,9 +62,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	/** Store our model data in a float buffer. */
 	private final FloatBuffer mSquarePositions;
-	private final FloatBuffer mSquareColors;
 	private final FloatBuffer mSquareTextureCoordinates;
 
+	/** Colors. This way sucks. */
+	private final FloatBuffer mSquareWhiteColor;
+	private final FloatBuffer mSquareBlueColor;
+	private final FloatBuffer mSquareBlackColor;
+
+	
 	/** This will be used to pass in the transformation matrix. */
 	private int mMVPMatrixHandle;
 	/** This will be used to pass in the modelview matrix. */
@@ -118,20 +123,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 				1.0f, -1.0f, 0.0f,
 				1.0f, 1.0f, 0.0f,
 			};	
-
-		// R, G, B, A
-		final float[] squareColorData =
-			{
-				// Left face (white)
-				1.0f, 1.0f, 1.0f, 1.0f,				
-				1.0f, 1.0f, 1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f, 1.0f,				
-				1.0f, 1.0f, 1.0f, 1.0f,
-				1.0f, 1.0f, 1.0f, 1.0f,
-
-			};
-
+		
 
 		final float[] squareTextureCoordinateData =
 			{							 // Front face
@@ -145,10 +137,24 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		// Initialize the buffers.
 		mSquarePositions = ByteBuffer.allocateDirect(squarePositionData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		mSquarePositions.put(squarePositionData).position(0);		
-		mSquareColors = ByteBuffer.allocateDirect(squareColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
-		mSquareColors.put(squareColorData).position(0);
+
 		mSquareTextureCoordinates = ByteBuffer.allocateDirect(squareTextureCoordinateData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		mSquareTextureCoordinates.put(squareTextureCoordinateData).position(0);
+
+		
+		final float[] squareWhiteColorData = Colors.squareWhite;
+		final float[] squareBlueColorData = Colors.squareBlue;	
+		final float[] squareBlackColorData = Colors.squareBlack;
+		
+		mSquareWhiteColor = ByteBuffer.allocateDirect(squareWhiteColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+		mSquareWhiteColor.put(squareWhiteColorData).position(0);
+		
+		mSquareBlueColor = ByteBuffer.allocateDirect(squareBlueColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+		mSquareBlueColor.put(squareBlueColorData).position(0);
+
+		mSquareBlackColor = ByteBuffer.allocateDirect(squareBlackColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+		mSquareBlackColor.put(squareBlackColorData).position(0);
+		
 	}
 
 	protected String getVertexShader()
@@ -164,18 +170,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-
-
 		mModel = new Model();
 
 		//Set the background frame col// or
-		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		GLES20.glClearColor(0.5f, 0.5f, 0.0f, 1.0f);
 		GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 
 		// Position the eye in front of the origin.
 		final float eyeX = 0.0f;
 		final float eyeY = 0.0f;
-		final float eyeZ = -1.0f;
+		final float eyeZ = -1.5f;
 
 		// We are looking toward the distance
 		final float lookX = 0.0f;
@@ -302,18 +306,32 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	private void drawModel() {
 		//Animate the Model
 		mModel.animate();
-
+		FloatBuffer color;
 		// Draw the board
 		float[] center;
 		float size;
 		int[] texture = new int[2];
+		int texture_toggle = 1;
 		for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
 			center = mModel.mBoard.puzzleTiles[i].center;
 			size =  mModel.mBoard.puzzleTiles[i].size;
-			texture[0] = TM.library.get(Integer.toString(i%9));
+			if(mModel.mBoard.puzzleTiles[i].true_solution > 0) {
+				texture[0] = TM.library.get(Integer.toString(mModel.mBoard.puzzleTiles[i].true_solution));
+			}
+		
 			String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
 			texture[1] = TM.library.get(arrows[i%4]);
-			drawTile(center, size, texture);
+			
+			if(mModel.mBoard.puzzleTiles[i].touched_flag){
+				color = mSquareBlueColor;
+			} else {
+				color = mSquareWhiteColor;
+			}
+			
+			if(mModel.mBoard.puzzleTiles[i].true_solution == -1){
+				color = mSquareBlackColor;
+			}
+			drawTile(center, size, texture, color);
 		}
 
 		// Draw the Menu
@@ -321,16 +339,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
 				center =  mModel.mMenu.menuTiles[i].center;
 				size =  mModel.mMenu.menuTiles[i].size;
-				texture[0] = TM.library.get(Integer.toString(i%9));
+				texture[0] = TM.library.get(Integer.toString((i+1)));
 				String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
 				texture[1] = TM.library.get(arrows[i%4]);
-				drawTile(center, size, texture);
+				drawTile(center, size, texture, mSquareWhiteColor);
 			}
 		}
 	}
 
 
-	private void drawTile(float[] center, float size,int[] texture)
+	private void drawTile(float[] center, float size,int[] texture, FloatBuffer mColor)
 	{
 
 		//Apply Textures
@@ -360,9 +378,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glEnableVertexAttribArray(mPositionHandle);        
 
 		// Pass in the color information
-		mSquareColors.position(0);
-		GLES20.glVertexAttribPointer(mColorHandle, mColorDataSize, GLES20.GL_FLOAT, false, 0, mSquareColors);        
-
+		mColor.position(0);
+		GLES20.glVertexAttribPointer(mColorHandle, mColorDataSize, GLES20.GL_FLOAT, false, 0, mColor);        
 		GLES20.glEnableVertexAttribArray(mColorHandle);
 
 		// Pass in the texture coordinate information
