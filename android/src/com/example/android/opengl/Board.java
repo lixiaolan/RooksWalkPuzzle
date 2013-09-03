@@ -72,8 +72,7 @@ class Board{
            
         }
     }
-    
-	
+    	
     public float[] touched(float[] pt) {
     	for (int i = 0; i < puzzleTiles.length; i++) {
     	    if( puzzleTiles[i].touched(pt) ) {
