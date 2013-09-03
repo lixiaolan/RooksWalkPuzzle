@@ -1,4 +1,3 @@
-
 package com.example.android.opengl;
 
 import android.app.Activity;
@@ -95,10 +94,8 @@ public class ViewActivity extends Activity {
     		mCMView.setVisibility(mCMView.VISIBLE);
     	} else {
     		mCMView.setVisibility(mCMView.INVISIBLE);
-    	}
-    	
+    	}	
     }
-
 }
 
 

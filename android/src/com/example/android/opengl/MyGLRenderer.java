@@ -24,8 +24,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     private static final String TAG = "MyGLRenderer";
     
-    //The game board!
-    private Board mBoard;
+    //This is the model
+    private Model mModel;
     
     //Don't know what it does
     private final Context mActivityContext;
@@ -95,7 +95,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private int mPointProgramHandle;
     
     /** This is a handle to our texture data. */
-    private int[] mTextureDataHandle = new int[2];
+    private int[] mTextureDataHandle = new int[5];
     
 
     /** Used only in "touched" */
@@ -172,8 +172,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 	
-
-	mBoard = new Board();
+	mModel = new Model();
 
         //Set the background frame col// or
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -212,8 +211,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	mProgramHandle = ShaderHelper.createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle, new String[] {"a_Position",  "a_Color", "a_TexCoordinate"});								               
 	
 	// Load the textures:
-        mTextureDataHandle[0] = TextureHelper.loadTexture(mActivityContext, R.drawable.test);
-        mTextureDataHandle[1] = TextureHelper.loadTexture(mActivityContext, R.drawable.stone_wall_public_domain);
+        // mTextureDataHandle[0] = TextureHelper.loadTexture(mActivityContext, R.drawable.test);
+        // mTextureDataHandle[1] = TextureHelper.loadTexture(mActivityContext, R.drawable.stone_wall_public_domain);
+	// mTextureDataHandle[2] = TextureHelper.loadTexture(mActivityContext, R.drawable.white);
+
+        mTextureDataHandle[0] = TextureHelper.loadTexture(mActivityContext, R.drawable.left);
+        mTextureDataHandle[1] = TextureHelper.loadTexture(mActivityContext, R.drawable.up);
+        mTextureDataHandle[2] = TextureHelper.loadTexture(mActivityContext, R.drawable.right);
+        mTextureDataHandle[3] = TextureHelper.loadTexture(mActivityContext, R.drawable.down);
+	mTextureDataHandle[4] = TextureHelper.loadTexture(mActivityContext, R.drawable.white);
     }
     
     
@@ -235,8 +241,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mColorHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Color");
         mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_TexCoordinate");        
 	
-	//Draw the Board!	
-	drawBoard();
+	//Draw the Model!	
+	drawModel();
     }
     
 
@@ -275,23 +281,58 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	pt[0] = outPt[0]/outPt[3];
 	pt[1] = outPt[1]/outPt[3];
+
+	mModel.touched(pt);
+    }
+
+
+    public void swiped(float[] pt, int direction) {
+	float[] inPt = new float[4];
+	float[] outPt = new float[4];
+	inPt[0] = pt[0];
+	inPt[1] = pt[1];
+	inPt[2] = -1.0f;
+	inPt[3] = 1.0f;
 	
-	mBoard.touched(pt);
+        // Calculate the projection and view transformation
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+	Matrix.invertM(mMVPMatrixInv, 0, mMVPMatrix, 0);   
+	Matrix.multiplyMV(outPt, 0,mMVPMatrixInv, 0,inPt, 0);
+	
+	pt[0] = outPt[0]/outPt[3];
+	pt[1] = outPt[1]/outPt[3];
+
+	mModel.swiped(pt, direction);
     }
    
 
-    private void drawBoard(){
-	// Loop though tiles and draw them
+    private void drawModel() {
+	//Animate the Model
+	mModel.animate();
+
+	// Draw the board
 	float[] center;
 	float size;
 	int texture;
-	for (int i = 0; i < mBoard.puzzleTiles.length; i++) {
-	    center = mBoard.puzzleTiles[i].center;
-	    size = mBoard.puzzleTiles[i].size;
-	    texture = mBoard.puzzleTiles[i].texture;
+	for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
+	    center = mModel.mBoard.puzzleTiles[i].center;
+	    size =  mModel.mBoard.puzzleTiles[i].size;
+	    texture =  mModel.mBoard.puzzleTiles[i].texture;
 	    drawTile(center, size, texture);
 	}
+
+	// Draw the Menu
+	if (mModel.mMenu.menuActive == true) {
+    	    for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
+    		center =  mModel.mMenu.menuTiles[i].center;
+    		size =  mModel.mMenu.menuTiles[i].size;
+    		texture =  mModel.mMenu.menuTiles[i].texture;
+    		drawTile(center, size, texture);
+    	    }
+    	}
+
     }
+
 
     private void drawTile(float[] center, float size,int texture)
     {

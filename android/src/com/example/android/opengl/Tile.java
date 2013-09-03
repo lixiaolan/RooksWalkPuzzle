@@ -20,17 +20,7 @@ class Tile {
 	texture = inTexture;
     }
     
-
-    public void touched(float[] pt) {
-        touched_flag =  (pt[0] < center[0]+size)&(pt[0] > center[0]-size)&(pt[1] < center[1]+size)&(pt[1] > center[1]-size);
-	if (touched_flag) {
-	    //size = size*0.9f;
-	    if (texture == 0) {
-		texture = 1;
-	    }
-	    else {
-		texture = 0;
-	    }
-	}
+    public boolean touched(float[] pt) {
+	return ((pt[0] < center[0]+size)&(pt[0] > center[0]-size)&(pt[1] < center[1]+size)&(pt[1] > center[1]-size));
     }
 }

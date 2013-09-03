@@ -14,7 +14,7 @@ class Board{
 
 
 	try {
-	    readBoard(stringFromJNI() );	
+	    readBoard(stringFromJNI(6,6, 8) );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
@@ -26,12 +26,16 @@ class Board{
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
 	    
 	    float center[] = { Sx, Sy, 0.0f};
-	    
-	    puzzleTiles[i] = new Tile(center, size, solution[i], 0);
+	    if (solution[i] == -1) {
+		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
+	    }
+	    else {
+		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
+	    }
 	}
     }
 
-    public native String stringFromJNI();
+    public native String stringFromJNI(int rows, int cols, int length);
     
     public void readBoard(String puzzleString) throws IOException{
 	Scanner scanner = null;
@@ -70,10 +74,38 @@ class Board{
     }
     
 	
-    public void touched(float[] pt) {
+    public float[] touched(float[] pt) {
     	for (int i = 0; i < puzzleTiles.length; i++) {
-    	    puzzleTiles[i].touched(pt);
+    	    if( puzzleTiles[i].touched(pt) ) {
+		puzzleTiles[i].touched_flag = !puzzleTiles[i].touched_flag;
+		puzzleTiles[i].texture = 4;
+		pt[0] = puzzleTiles[i].center[0];
+		pt[1] = puzzleTiles[i].center[1];
+	    }
     	}
+	return pt;
+    }
+    
+    public void swiped(float[] pt, int direction) {
+	for (int i = 0; i < puzzleTiles.length; i++) {
+    	    if( puzzleTiles[i].touched(pt) ) {
+		puzzleTiles[i].texture = direction;
+	    }
+    	}
+
+
+	// if (direction == 0) {
+	//     System.out.println("East");
+	// }
+	// if (direction == 1) {
+	//     System.out.println("North");
+	// }
+	// if (direction == 2) {
+	//     System.out.println("West");
+	// }
+	// if (direction == 3) {
+	//     System.out.println("South");
+	// }
     }
 
 
