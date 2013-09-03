@@ -41,7 +41,7 @@ class GameView extends GLSurfaceView {
 	    pt[0] = 2.0f*(x/getWidth())-1;
 	    pt[1] = -2.0f*(y/getHeight())+1;
 
-	    mRenderer.touched(pt);
+	    //mRenderer.touched(pt);
 	    requestRender();
 	    mPreviousX = x;
 	    mPreviousY = y;

@@ -67,20 +67,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	/** This will be used to pass in the transformation matrix. */
 	private int mMVPMatrixHandle;
-
 	/** This will be used to pass in the modelview matrix. */
 	private int mMVMatrixHandle;
-
 	/** This will be used to pass in the texture. */
-	private int mTextureUniformHandle;
-	private int mTextureText;
-	
+	private int mTextureArrowHandle;
+	private int mTextureTextHandle;	
 	/** This will be used to pass in model position information. */
 	private int mPositionHandle;
-
 	/** This will be used to pass in model color information. */
 	private int mColorHandle;
-
 	/** This will be used to pass in model texture coordinate information. */
 	private int mTextureCoordinateHandle;
 
@@ -102,12 +97,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	/** This is a handle to our light point program. */
 	private int mPointProgramHandle;
 
-	/** This is a handle to our texture data. */
-	private int[] mTextureDataHandle = new int[2];
-
-	private int[] textures = new int[1];
-    Bitmap bitmap;
-
+	private TextureManager TM;
 	/** Used only in "touched" */
 	private final float[] mMVPMatrixInv = new float[16];
 
@@ -144,27 +134,31 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 
 		final float[] squareTextureCoordinateData =
-			{												
-				// Front face
-				0.0f, 0.0f, 				
-				0.0f, 1.0f,
-				1.0f, 0.0f,
-				0.0f, 1.0f,
-				1.0f, 1.0f,
-				1.0f, 0.0f,				
+			{							 // Front face
+                1.0f, 0.0f,                             
+                1.0f, 1.0f,
+                0.0f, 0.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                0.0f, 0.0f,   					
 			};
-
+/*
+ * 
+ * 
+       		0.0f, 1.0f,                             
+                0.0f, 0.0f,
+                1.0f, 1.0f,
+                0.0f, 0.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f, 
+       */
+		
 		// Initialize the buffers.
 		mSquarePositions = ByteBuffer.allocateDirect(squarePositionData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
-
 		mSquarePositions.put(squarePositionData).position(0);		
-
 		mSquareColors = ByteBuffer.allocateDirect(squareColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
-
 		mSquareColors.put(squareColorData).position(0);
-
 		mSquareTextureCoordinates = ByteBuffer.allocateDirect(squareTextureCoordinateData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
-
 		mSquareTextureCoordinates.put(squareTextureCoordinateData).position(0);
 	}
 
@@ -186,9 +180,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		mBoard = new Board();
 
 		//Set the background frame col// or
-		//GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		//GLES20.glEnable(GLES20.GL_BLEND); 
-        //GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 
 		// Position the eye in front of the origin.
@@ -224,45 +216,35 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		//Handle for the program.
 		mProgramHandle = ShaderHelper.createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle, new String[] {"a_Position",  "a_Color", "a_TexCoordinate"});								               
 
-		// Load the textures:
-		mTextureDataHandle[0] = TextureHelper.loadTexture(mActivityContext, R.drawable.test);
-		mTextureDataHandle[1] = TextureHelper.loadTexture(mActivityContext, R.drawable.stone_wall_public_domain);
-        //Load text texture
-		
-		Bitmap bitmap = buildTextTex("A");
-		GLES20.glGenTextures(1, textures, 0);
-		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,GLES20.GL_NEAREST);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_NEAREST);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
-		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, bitmap,0); 
-		
-		bitmap.recycle();
-
-	
+		buildTextures();
 	}
 
 
+	public void buildTextures() {
+		TM = new TextureManager();
+		int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
+		int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
+		TM.buildTextures("0123456789", x_coords, y_coords);
+		TM.buildTextures(mActivityContext, R.drawable.up_arrow,"up_arrow");
+		TM.buildTextures(mActivityContext, R.drawable.down_arrow,"down_arrow");
+		TM.buildTextures(mActivityContext, R.drawable.left_arrow,"left_arrow");
+		TM.buildTextures(mActivityContext, R.drawable.right_arrow,"right_arrow");
+	}
+	
 	@Override
 	public void onDrawFrame(GL10 unused) {
-
-
 		// Draw background color
 		//GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT );//| GLES20.GL_DEPTH_BUFFER_BIT);			        
-
 		// Set our per-vertex lighting program.
 		GLES20.glUseProgram(mProgramHandle);
-
 		// Set program handles for square drawing.
 		mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVPMatrix");
 		mMVMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVMatrix"); 
-		mTextureUniformHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_Texture");
-		mTextureText = GLES20.glGetUniformLocation(mProgramHandle, "text_Texture");
+		mTextureArrowHandle = GLES20.glGetUniformLocation(mProgramHandle, "arrow_Texture");
+		mTextureTextHandle = GLES20.glGetUniformLocation(mProgramHandle, "text_Texture");
 		mPositionHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Position");
 		mColorHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Color");
 		mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_TexCoordinate");        
-
 		//Draw the Board!	
 		drawBoard();
 	}
@@ -288,7 +270,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	}
 
 
-	public void touched(float[] pt) {
+	/*public void touched(float[] pt) {
 		float[] inPt = new float[4];
 		float[] outPt = new float[4];
 		inPt[0] = pt[0];
@@ -306,47 +288,48 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 		mBoard.touched(pt);
 	}
-
+*/
 
 	private void drawBoard(){
 		// Loop though tiles and draw them
 		float[] center;
 		float size;
-		int texture;
+		int[] texture = new int[2];
 		for (int i = 0; i < mBoard.puzzleTiles.length; i++) {
 			center = mBoard.puzzleTiles[i].center;
 			size = mBoard.puzzleTiles[i].size;
-			texture = mBoard.puzzleTiles[i].texture;
+			texture[0] = TM.library.get(Integer.toString(i%9));
+			String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
+			texture[1] = TM.library.get(arrows[i%4]);
 			drawTile(center, size, texture);
+		}
+		
+		for (int i=0 ; i<12 ; i++){
+			
 		}
 	}
 
-	private void drawTile(float[] center, float size,int texture)
+	private void drawTile(float[] center, float size,int[] texture)
 	{
-		GLES20.glEnable(GLES20.GL_BLEND);
-		GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 		
-		GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
-		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle[texture]);
-		// Tell the texture uniform sampuse this texture in the shader by binding to texture unit 0.
-		GLES20.glUniform1i(mTextureUniformHandle, 1);
-		//ATTEMPT TO TEXTURE WITH TEXT////////////////////////////////////////
-		//GLES20.glActiveTexture(GLES20.GL_TEXTURE2);        
-        //GLES20.glBindTexture(GLES20.GL_TEXTURE_2D,mTextureDataHandle[(texture+1)%2]);
-        //GLES20.glUniform1i(mTextureText, 2); 
-        /**///END ATTEMPT//////////////////////////////////////////////////////
-        
+		//Apply Textures
+		GLES20.glActiveTexture(GLES20.GL_TEXTURE0);        
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
+        GLES20.glUniform1i(mTextureTextHandle, 0); 
+       
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE1);        
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[1]);
+        GLES20.glUniform1i(mTextureArrowHandle, 1); 
+       
         
 		// Determine position and size
 		Matrix.setIdentityM(mModelMatrix, 0);
 		Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
-		//Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);  	
 		Matrix.scaleM(mModelMatrix, 0, size, size, size);
 
 		// Pass in the position information
 		mSquarePositions.position(0);		
 		GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
-
 		GLES20.glEnableVertexAttribArray(mPositionHandle);        
 
 		// Pass in the position information
@@ -364,7 +347,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		// Pass in the texture coordinate information
 		mSquareTextureCoordinates.position(0);
 		GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mSquareTextureCoordinates);
-
 		GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
 
 		// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
@@ -380,36 +362,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 		// Pass in the combined matrix.
 		GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
-
-		// // Pass in the light position in eye space.        
-		// GLES20.glUniform3f(mLightPosHandle, mLightPosInEyeSpace[0], mLightPosInEyeSpace[1], mLightPosInEyeSpace[2]);
-
-		// Draw the square.
-		
-        
-		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);  
-		GLES20.glDisable(GLES20.GL_BLEND);
+		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);  		
 	} 
 	
-	 private Bitmap buildTextTex(String text){
-         Bitmap bitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888);
-         // get a canvas to paint over the bitmap
-         Canvas canvas = new Canvas(bitmap);
-         //bitmap.eraseColor(Color.TRANSPARENT);
-
-         // Draw the text
-         Paint textPaint = new Paint();
-         textPaint.setTextSize(40);
-         textPaint.setStyle(Style.STROKE);
-         textPaint.setStrokeWidth(4);
-         textPaint.setAntiAlias(true);
-         textPaint.setARGB(0xFF, 0x00, 0x00, 0xFF);
-         // draw the text centered
-         canvas.drawColor(Color.TRANSPARENT);
-         canvas.drawText(text, 64 , 64, textPaint);
-         return bitmap;
- }
-
 	
 }
 
