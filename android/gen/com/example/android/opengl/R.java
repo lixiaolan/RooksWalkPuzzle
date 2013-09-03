@@ -15,6 +15,7 @@ public final class R {
     }
     public static final class drawable {
         public static final int bumpy_bricks_public_domain=0x7f020000;
+<<<<<<< HEAD
         public static final int down=0x7f020001;
         public static final int ic_launcher=0x7f020002;
         public static final int icon_border=0x7f020003;
@@ -26,6 +27,18 @@ public final class R {
         public static final int up=0x7f020009;
         public static final int usb_android=0x7f02000a;
         public static final int white=0x7f02000b;
+=======
+        public static final int down_arrow=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int icon_border=0x7f020003;
+        public static final int left_arrow=0x7f020004;
+        public static final int noisy_grass_public_domain=0x7f020005;
+        public static final int right_arrow=0x7f020006;
+        public static final int stone_wall_public_domain=0x7f020007;
+        public static final int test=0x7f020008;
+        public static final int up_arrow=0x7f020009;
+        public static final int usb_android=0x7f02000a;
+>>>>>>> origin/master
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0a0000;

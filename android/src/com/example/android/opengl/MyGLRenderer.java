@@ -1,5 +1,6 @@
 package com.example.android.opengl;
 
+import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -8,8 +9,14 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.util.Log;
 import android.os.SystemClock;
@@ -29,19 +36,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     //Don't know what it does
     private final Context mActivityContext;
-
+    
     /**
-     Store the model matrix. This matrix is used to move 
-     models from object space (where each model can be thought
-     of being located at the center of the universe) to world space.
-     */
+       Store the model matrix. This matrix is used to move 
+       models from object space (where each model can be thought
+       of being located at the center of the universe) to world space.
+    */
     private float[] mModelMatrix = new float[16];
     
     /**
-     Store the view matrix. This can be thought of as our camera. 
-     This matrix transforms world space to eye space;
-     it positions things relative to our eye.
-     */
+       Store the view matrix. This can be thought of as our camera. 
+       This matrix transforms world space to eye space;
+       it positions things relative to our eye.
+    */
     private float[] mVMatrix = new float[16];
     
     /** Store the projection matrix. This is used to
@@ -60,19 +67,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     /** This will be used to pass in the transformation matrix. */
     private int mMVPMatrixHandle;
-    
     /** This will be used to pass in the modelview matrix. */
     private int mMVMatrixHandle;
-        
     /** This will be used to pass in the texture. */
-    private int mTextureUniformHandle;
-    
+    private int mTextureArrowHandle;
+    private int mTextureTextHandle;	
     /** This will be used to pass in model position information. */
     private int mPositionHandle;
-    
     /** This will be used to pass in model color information. */
     private int mColorHandle;
-     
     /** This will be used to pass in model texture coordinate information. */
     private int mTextureCoordinateHandle;
     
@@ -94,14 +97,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     /** This is a handle to our light point program. */
     private int mPointProgramHandle;
     
-    /** This is a handle to our texture data. */
-    private int[] mTextureDataHandle = new int[5];
-    
-
+    private TextureManager TM;
     /** Used only in "touched" */
     private final float[] mMVPMatrixInv = new float[16];
     
-
+    
     public MyGLRenderer(final Context activityContext) {
 	
 	mActivityContext = activityContext;
@@ -134,30 +134,23 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	
 	final float[] squareTextureCoordinateData =
-	    {												
-		// Front face
-		0.0f, 0.0f, 				
-		0.0f, 1.0f,
-		1.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f,				
+	    {							 // Front face
+                1.0f, 0.0f,                             
+                1.0f, 1.0f,
+                0.0f, 0.0f,
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                0.0f, 0.0f,   					
 	    };
-	
 	// Initialize the buffers.
 	mSquarePositions = ByteBuffer.allocateDirect(squarePositionData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
-	
 	mSquarePositions.put(squarePositionData).position(0);		
-	
 	mSquareColors = ByteBuffer.allocateDirect(squareColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
-	
 	mSquareColors.put(squareColorData).position(0);
-		
 	mSquareTextureCoordinates = ByteBuffer.allocateDirect(squareTextureCoordinateData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
-	
 	mSquareTextureCoordinates.put(squareTextureCoordinateData).position(0);
     }
-      
+    
     protected String getVertexShader()
     {
 	return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.per_pixel_vertex_shader);
@@ -172,10 +165,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 	
+	
 	mModel = new Model();
-
-        //Set the background frame col// or
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	
+	//Set the background frame col// or
+	GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 	
 	// Position the eye in front of the origin.
 	final float eyeX = 0.0f;
@@ -196,59 +191,57 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
 	// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 	Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);		
-      
+	
 	// Calculate the projection and view transformation
 	//      Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
-
+	
 	final String vertexShader = getVertexShader();   		
 	final String fragmentShader = getFragmentShader();			
 	
 	final int vertexShaderHandle = ShaderHelper.compileShader(GLES20.GL_VERTEX_SHADER, vertexShader);		
-
+	
 	final int fragmentShaderHandle = ShaderHelper.compileShader(GLES20.GL_FRAGMENT_SHADER, fragmentShader);
 	
 	//Handle for the program.
 	mProgramHandle = ShaderHelper.createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle, new String[] {"a_Position",  "a_Color", "a_TexCoordinate"});								               
 	
-	// Load the textures:
-        // mTextureDataHandle[0] = TextureHelper.loadTexture(mActivityContext, R.drawable.test);
-        // mTextureDataHandle[1] = TextureHelper.loadTexture(mActivityContext, R.drawable.stone_wall_public_domain);
-	// mTextureDataHandle[2] = TextureHelper.loadTexture(mActivityContext, R.drawable.white);
-
-        mTextureDataHandle[0] = TextureHelper.loadTexture(mActivityContext, R.drawable.left);
-        mTextureDataHandle[1] = TextureHelper.loadTexture(mActivityContext, R.drawable.up);
-        mTextureDataHandle[2] = TextureHelper.loadTexture(mActivityContext, R.drawable.right);
-        mTextureDataHandle[3] = TextureHelper.loadTexture(mActivityContext, R.drawable.down);
-	mTextureDataHandle[4] = TextureHelper.loadTexture(mActivityContext, R.drawable.white);
+	buildTextures();
     }
     
+    
+    public void buildTextures() {
+	TM = new TextureManager();
+	int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
+	int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
+	TM.buildTextures("0123456789", x_coords, y_coords);
+	TM.buildTextures(mActivityContext, R.drawable.up_arrow,"up_arrow");
+	TM.buildTextures(mActivityContext, R.drawable.down_arrow,"down_arrow");
+	TM.buildTextures(mActivityContext, R.drawable.left_arrow,"left_arrow");
+	TM.buildTextures(mActivityContext, R.drawable.right_arrow,"right_arrow");
+    }
     
     @Override
     public void onDrawFrame(GL10 unused) {
-
-
-        // Draw background color
-	GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);			        
-        
-        // Set our per-vertex lighting program.
-        GLES20.glUseProgram(mProgramHandle);
-        
+	// Draw background color
+	//GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT );//| GLES20.GL_DEPTH_BUFFER_BIT);			        
+	// Set our per-vertex lighting program.
+	GLES20.glUseProgram(mProgramHandle);
 	// Set program handles for square drawing.
-        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVPMatrix");
-        mMVMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVMatrix"); 
-        mTextureUniformHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_Texture");
-        mPositionHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Position");
-        mColorHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Color");
-        mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_TexCoordinate");        
-	
-	//Draw the Model!	
+	mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVPMatrix");
+	mMVMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVMatrix"); 
+	mTextureArrowHandle = GLES20.glGetUniformLocation(mProgramHandle, "arrow_Texture");
+	mTextureTextHandle = GLES20.glGetUniformLocation(mProgramHandle, "text_Texture");
+	mPositionHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Position");
+	mColorHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Color");
+	mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_TexCoordinate");        
+	//Draw the Board!	
 	drawModel();
     }
     
-
+    
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-
+	
 	// Set the OpenGL viewport to the same size as the surface.
 	GLES20.glViewport(0, 0, width, height);
 	
@@ -264,8 +257,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, near, far);	
     }
-    
-    
+        
+
     public void touched(float[] pt) {
 	float[] inPt = new float[4];
 	float[] outPt = new float[4];
@@ -274,18 +267,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	inPt[2] = -1.0f;
 	inPt[3] = 1.0f;
 	
-        // Calculate the projection and view transformation
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+	// Calculate the projection and view transformation
+	Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 	Matrix.invertM(mMVPMatrixInv, 0, mMVPMatrix, 0);   
 	Matrix.multiplyMV(outPt, 0,mMVPMatrixInv, 0,inPt, 0);
 	
 	pt[0] = outPt[0]/outPt[3];
 	pt[1] = outPt[1]/outPt[3];
-
+	
 	mModel.touched(pt);
     }
-
-
+    
+    
     public void swiped(float[] pt, int direction) {
 	float[] inPt = new float[4];
 	float[] outPt = new float[4];
@@ -294,76 +287,76 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	inPt[2] = -1.0f;
 	inPt[3] = 1.0f;
 	
-        // Calculate the projection and view transformation
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+	// Calculate the projection and view transformation
+	Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 	Matrix.invertM(mMVPMatrixInv, 0, mMVPMatrix, 0);   
 	Matrix.multiplyMV(outPt, 0,mMVPMatrixInv, 0,inPt, 0);
 	
 	pt[0] = outPt[0]/outPt[3];
 	pt[1] = outPt[1]/outPt[3];
-
+	
 	mModel.swiped(pt, direction);
     }
-   
-
+    
+    
     private void drawModel() {
 	//Animate the Model
 	mModel.animate();
-
+	
 	// Draw the board
 	float[] center;
 	float size;
-	int texture;
+	int[] texture = new int[2];
 	for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
 	    center = mModel.mBoard.puzzleTiles[i].center;
 	    size =  mModel.mBoard.puzzleTiles[i].size;
-	    texture =  mModel.mBoard.puzzleTiles[i].texture;
+	    texture[0] = TM.library.get(Integer.toString(i%9));
+	    String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
+	    texture[1] = TM.library.get(arrows[i%4]);
 	    drawTile(center, size, texture);
 	}
-
+	
 	// Draw the Menu
 	if (mModel.mMenu.menuActive == true) {
-    	    for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
-    		center =  mModel.mMenu.menuTiles[i].center;
-    		size =  mModel.mMenu.menuTiles[i].size;
-    		texture =  mModel.mMenu.menuTiles[i].texture;
-    		drawTile(center, size, texture);
-    	    }
-    	}
-
+	    for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
+		center =  mModel.mMenu.menuTiles[i].center;
+		size =  mModel.mMenu.menuTiles[i].size;
+		texture[0] = TM.library.get(Integer.toString(i%9));
+		String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
+		texture[1] = TM.library.get(arrows[i%4]);
+		drawTile(center, size, texture);
+	    }
+	}
     }
-
-
-    private void drawTile(float[] center, float size,int texture)
+    
+    
+    private void drawTile(float[] center, float size,int[] texture)
     {
-        //long time = SystemClock.uptimeMillis() % 10000L;  
-	//       float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
-
-        // Set the active texture unit to texture unit 0.
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        
-        // Bind the texture to this unit.
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle[texture]);
 	
-        // Tell the texture uniform sampler to use this texture in the shader by binding to texture unit 0.
-        GLES20.glUniform1i(mTextureUniformHandle, 0);        
+	//Apply Textures
+	GLES20.glActiveTexture(GLES20.GL_TEXTURE0);        
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
+        GLES20.glUniform1i(mTextureTextHandle, 0); 
+	
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE1);        
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[1]);
+        GLES20.glUniform1i(mTextureArrowHandle, 1); 
+	
 	
 	// Determine position and size
-        Matrix.setIdentityM(mModelMatrix, 0);
+	Matrix.setIdentityM(mModelMatrix, 0);
 	Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
-	//Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);  	
 	Matrix.scaleM(mModelMatrix, 0, size, size, size);
-	      	
+	
 	// Pass in the position information
 	mSquarePositions.position(0);		
 	GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
-        
 	GLES20.glEnableVertexAttribArray(mPositionHandle);        
 	
 	// Pass in the position information
 	mSquarePositions.position(0);		
 	GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
-        
+	
 	GLES20.glEnableVertexAttribArray(mPositionHandle);        
 	
 	// Pass in the color information
@@ -375,13 +368,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// Pass in the texture coordinate information
 	mSquareTextureCoordinates.position(0);
 	GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mSquareTextureCoordinates);
-	
 	GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
 	
 	// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
 	// (which currently contains model * view).
 	Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, mModelMatrix, 0);   
-	    
+	
 	// Pass in the modelview matrix.
 	GLES20.glUniformMatrix4fv(mMVMatrixHandle, 1, false, mMVPMatrix, 0);                
 	
@@ -391,12 +383,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	// Pass in the combined matrix.
 	GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
-	
-	// // Pass in the light position in eye space.        
-	// GLES20.glUniform3f(mLightPosHandle, mLightPosInEyeSpace[0], mLightPosInEyeSpace[1], mLightPosInEyeSpace[2]);
-	
-	// Draw the square.
-	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);  
-    } 
+	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);  		
+    }   
 }
-

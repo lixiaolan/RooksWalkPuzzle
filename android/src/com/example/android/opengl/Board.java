@@ -6,12 +6,13 @@ import java.io.IOException;
 
 class Board{
 
-    public Tile[] puzzleTiles = new Tile[36];
-    public int[] solution ;
-    public int[][] path;
-    
-    public Board() {
+	public Tile[] puzzleTiles = new Tile[36];
+	public int[] solution ;
+	public int[][] path;
+	public int[] columnSums;
+	public int[] rowSums;
 
+	public Board() {
 
 	try {
 	    readBoard(stringFromJNI(6,6, 8) );	
@@ -19,12 +20,16 @@ class Board{
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
 
+	columnSums = new int[6];
+	rowSums = new int[6];
+
 
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    float size = .11f;
 	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
-	    
+	    columnSums[i%6] += Math.max(solution[i],0);
+	    rowSums[i/6] += Math.max(solution[i],0);
 	    float center[] = { Sx, Sy, 0.0f};
 	    if (solution[i] == -1) {
 		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
@@ -111,5 +116,4 @@ class Board{
     static {
 	System.loadLibrary("GeneratePuzzle");
     }
-
 }
