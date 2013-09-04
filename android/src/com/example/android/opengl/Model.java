@@ -8,10 +8,12 @@ import java.io.IOException;
 class Model{
     public Board mBoard;
     public Menu mMenu;
+    public Border mBorder;
 
     public Model() {
 	mBoard = new Board();
 	mMenu = new Menu();
+	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
 
     public void touched(float[] pt) {

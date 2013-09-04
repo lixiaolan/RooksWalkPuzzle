@@ -26,10 +26,13 @@ class Board{
 
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    float size = .11f;
+	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
+	    //Are they spiraling out?
 	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
-	//    columnSums[i%6] += Math.max(solution[i],0);
-	//    rowSums[i/6] += Math.max(solution[i],0);
+	    columnSums[i%6] += Math.max(solution[i],0);
+	    rowSums[i/6] += Math.max(solution[i],0);
+	    System.out.println("Column Sums "+Integer.toString(columnSums[i/6]));
 	    float center[] = { Sx, Sy, 0.0f};
 	    if (solution[i] == -1) {
 		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
@@ -37,6 +40,7 @@ class Board{
 	    else {
 		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
 	    }
+	    
 	}
     }
 

@@ -17,19 +17,19 @@ public class TextureManager {
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	
 	public TextureManager() {
-		library.put("clear", textureFromBitmap(bitmapFromString("",0,0)));
+		library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
 	}
 	
-	public void buildTextures(String a, int[] x, int[] y){
+	public void buildTextures(String a, int[] x, int[] y, int font){
 		String curr;
 		for(int i=0;i<a.length();i++){
 			curr = String.valueOf(a.charAt(i));
-			library.put(curr, textureFromBitmap(bitmapFromString(curr,x[i],y[i])));
+			library.put(curr, textureFromBitmap(bitmapFromString(curr,x[i],y[i],font)));
 		}
 	}
 
-	public void buildTextures(String a, int x, int y, String key ){
-		library.put(key, textureFromBitmap(bitmapFromString(a,x,y)));
+	public void buildTextures(String a, int x, int y, String key , int font){
+		library.put(key, textureFromBitmap(bitmapFromString(a,x,y, font)));
 	}
 
 	
@@ -87,7 +87,7 @@ public class TextureManager {
 		return texture[0];
 	}
 	
-	Bitmap bitmapFromString(String text, int x, int y){
+	Bitmap bitmapFromString(String text, int x, int y, int font){
 		Bitmap bitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888);
         // get a canvas to paint over the bitmap
         Canvas canvas = new Canvas(bitmap);
@@ -95,7 +95,7 @@ public class TextureManager {
 
         // Draw the text
         Paint textPaint = new Paint();
-        textPaint.setTextSize(64);
+        textPaint.setTextSize(font);
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setStyle(Style.FILL);
         textPaint.setStrokeWidth(4);

@@ -222,14 +222,23 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		TM = new TextureManager();
 		int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
 		int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
-		TM.buildTextures("0123456789", x_coords, y_coords);
+		TM.buildTextures("0123456789", x_coords, y_coords,64);
 		TM.buildTextures(mActivityContext, R.drawable.up_arrow,"up_arrow");
 		TM.buildTextures(mActivityContext, R.drawable.down_arrow,"down_arrow");
 		TM.buildTextures(mActivityContext, R.drawable.left_arrow,"left_arrow");
 		TM.buildTextures(mActivityContext, R.drawable.right_arrow,"right_arrow");
 		TM.buildTextures(mActivityContext, R.drawable.menu_circle,"menu_circle");
+		//Create Menu Textures
 		for(int i=0;i<mModel.mMenu.menuTiles.length;i++){
-			TM.buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1));
+			TM.buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
+		}
+		//Create Border Textures
+		for(int i=0;i<mModel.mBorder.rowTiles.length;i++){
+			System.out.println("Making Border Row texture "+Integer.toString(i)+" "+Integer.toString(mModel.mBorder.rowTiles[i].true_solution));
+			TM.buildTextures(Integer.toString(mModel.mBorder.rowTiles[i].true_solution),64,128,"border_row_"+Integer.toString(i),50);
+		}
+		for(int i=0;i<mModel.mBorder.columnTiles.length;i++){
+			TM.buildTextures(Integer.toString(mModel.mBorder.columnTiles[i].true_solution),105,64,"border_col_"+Integer.toString(i),50);
 		}
 	}
 
@@ -326,6 +335,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		float size;
 		int[] boardTileTextures = new int[2];
 		int[] menuTileTextures = new int[2]; 
+		int[] borderTileTextures = new int[2];
 		for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
 			resetTextureArray(boardTileTextures);
 			center = mModel.mBoard.puzzleTiles[i].center;
@@ -350,6 +360,23 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			drawTile(center, size, boardTileTextures, color);
 		}
 
+		//Draw the Border
+		for (int i = 0; i < mModel.mBorder.rowTiles.length; i++) {
+			resetTextureArray(borderTileTextures);
+			center = mModel.mBorder.columnTiles[i].center;
+			size =  mModel.mBorder.columnTiles[i].size;
+			color = mSquareTransparentColor;
+			borderTileTextures[0] = TM.library.get("border_col_"+Integer.toString(i));
+			drawTile(center, size, borderTileTextures, color);
+			
+			
+			center = mModel.mBorder.rowTiles[i].center;
+			size =  mModel.mBorder.rowTiles[i].size;
+			color = mSquareTransparentColor;
+			borderTileTextures[0] = TM.library.get("border_row_"+Integer.toString(i));
+			drawTile(center, size, borderTileTextures, color);
+		}
+
 		// Draw the Menu
 		if (mModel.mMenu.menuActive == true) {
 			for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
@@ -365,6 +392,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 				drawTile(center, size, menuTileTextures, color);
 			}
 		}
+		
+		
+		
 	}
 
 
