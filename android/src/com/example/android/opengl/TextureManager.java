@@ -16,6 +16,9 @@ import android.opengl.GLUtils;
 public class TextureManager {
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	
+	public TextureManager() {
+		library.put("clear", textureFromBitmap(bitmapFromString("",0,0)));
+	}
 	
 	public void buildTextures(String a, int[] x, int[] y){
 		String curr;
@@ -24,6 +27,11 @@ public class TextureManager {
 			library.put(curr, textureFromBitmap(bitmapFromString(curr,x[i],y[i])));
 		}
 	}
+
+	public void buildTextures(String a, int x, int y, String key ){
+		library.put(key, textureFromBitmap(bitmapFromString(a,x,y)));
+	}
+
 	
 	public void buildTextures(final Context context, final int resourceId, String key){
 		final int[] textureHandle = new int[1];
@@ -60,9 +68,7 @@ public class TextureManager {
 		library.put(key,textureHandle[0]);
 	}
 	
-	public void buildTextures(final Bitmap bmp, final String id){
-		
-	}
+
 	
 	int textureFromBitmap(Bitmap bmp){
 		int[] texture = new int[1];

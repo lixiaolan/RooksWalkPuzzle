@@ -7,7 +7,7 @@ public class Colors {
  
     // R, G, B, A
     public static float [] squareBlue ={
-		// Left face (Baby Blue)
+		// Baby Blue
 		0.0f, 0.8f, 1.0f, 1.0f,				
 		0.0f, 0.8f, 1.0f, 1.0f,
 		0.0f, 0.8f, 1.0f, 1.0f,
@@ -18,7 +18,7 @@ public class Colors {
 	}; 
     
     public static float [] squareWhite ={
-		// Left face (white)
+		// white
 		1.0f, 1.0f, 1.0f, 1.0f,				
 		1.0f, 1.0f, 1.0f, 1.0f,
 		1.0f, 1.0f, 1.0f, 1.0f,
@@ -29,13 +29,24 @@ public class Colors {
 	}; 
     
     public static float [] squareBlack ={
-		// Left face (white)
+		// Black
 		0.0f, 0.0f, 0.0f, 1.0f,				
 		0.0f, 0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 0.0f, 1.0f,				
 		0.0f, 0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 0.0f, 1.0f,
+
+	}; 
+    
+    public static float [] squareTransparent ={
+		//Transparent
+		1.0f, 1.0f, 1.0f, 0.0f,				
+		1.0f, 1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 1.0f, 0.0f,				
+		1.0f, 1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 1.0f, 0.0f,
 
 	}; 
     
