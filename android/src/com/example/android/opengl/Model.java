@@ -15,8 +15,27 @@ class Model{
     }
 
     public void touched(float[] pt) {
-	float[] val = mBoard.touched(pt);
-	mMenu.touched(val);
+	if( mMenu.menuActive) {
+	    mBoard.clearFlags();
+	    mMenu.menuActive = false;
+	    if (mMenu.touched(pt) ) {
+		//do work
+	    }
+	    else {
+		if( mBoard.touched(pt) ) {
+		    pt[0] = mBoard.activeCenter[0];
+		    pt[1] = mBoard.activeCenter[1];
+		    mMenu.activate(pt);
+		}	
+	    }
+	}
+	else {
+	    if( mBoard.touched(pt) ) {
+		pt[0] = mBoard.activeCenter[0];
+		pt[1] = mBoard.activeCenter[1];
+		mMenu.activate(pt);
+	    }
+	}
     }
     
     public void swiped(float[] pt, int direction) {

@@ -5,31 +5,31 @@ import java.util.Scanner;
 import java.io.IOException;
 
 class Board{
-
-	public Tile[] puzzleTiles = new Tile[36];
-	public int[] solution ;
-	public int[][] path;
-	public int[] columnSums;
-	public int[] rowSums;
-
-	public Board() {
-
+    
+    public Tile[] puzzleTiles = new Tile[36];
+    public int[] solution ;
+    public int[][] path;
+    public int[] columnSums;
+    public int[] rowSums;
+    public float[] activeCenter = new float[2];
+    
+    public Board() {
+	
 	try {
 	    readBoard(stringFromJNI(6,6, 8) );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
-
+	
 	columnSums = new int[6];
 	rowSums = new int[6];
-
-
+	
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    float size = .11f;
 	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
-	//    columnSums[i%6] += Math.max(solution[i],0);
-	//    rowSums[i/6] += Math.max(solution[i],0);
+	    columnSums[i%6] += Math.max(solution[i],0);
+	    rowSums[i/6] += Math.max(solution[i],0);
 	    float center[] = { Sx, Sy, 0.0f};
 	    if (solution[i] == -1) {
 		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
@@ -39,7 +39,7 @@ class Board{
 	    }
 	}
     }
-
+    
     public native String stringFromJNI(int rows, int cols, int length);
     
     public void readBoard(String puzzleString) throws IOException{
@@ -70,24 +70,23 @@ class Board{
 	    	path[i][1] = scanner.nextInt();
 		System.out.println("which l"+Integer.toString(i));
 	    }
-		
+	    
         } finally {
-            
-	    scanner.close();
-           
+	    scanner.close();	    
         }
     }
-    	
-    public float[] touched(float[] pt) {
+    
+    public boolean touched(float[] pt) {
     	for (int i = 0; i < puzzleTiles.length; i++) {
     	    if( puzzleTiles[i].touched(pt) ) {
 		puzzleTiles[i].touched_flag = !puzzleTiles[i].touched_flag;
 		puzzleTiles[i].texture = 4;
-		pt[0] = puzzleTiles[i].center[0];
-		pt[1] = puzzleTiles[i].center[1];
+		activeCenter[0] = puzzleTiles[i].center[0];
+		activeCenter[1] = puzzleTiles[i].center[1];
+		return true;
 	    }
     	}
-	return pt;
+	return false;
     }
     
     public void swiped(float[] pt, int direction) {
@@ -96,23 +95,28 @@ class Board{
 		puzzleTiles[i].texture = direction;
 	    }
     	}
-
-
-	 if (direction == 0) {
-	     System.out.println("East");
-	 }
-	 if (direction == 1) {
-	     System.out.println("North");
-	 }
-	 if (direction == 2) {
-	     System.out.println("West");
-	 }
-	 if (direction == 3) {
-	     System.out.println("South");
-	 }
+	
+	
+	if (direction == 0) {
+	    System.out.println("East");
+	}
+	if (direction == 1) {
+	    System.out.println("North");
+	}
+	if (direction == 2) {
+	    System.out.println("West");
+	}
+	if (direction == 3) {
+	    System.out.println("South");
+	}
     }
 
-
+    public void clearFlags() {
+	for (int i = 0; i < puzzleTiles.length; i++) {
+	    puzzleTiles[i].touched_flag = false;
+    	}
+    }
+    
     static {
 	System.loadLibrary("GeneratePuzzle");
     }

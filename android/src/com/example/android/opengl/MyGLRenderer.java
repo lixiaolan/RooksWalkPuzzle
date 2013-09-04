@@ -268,35 +268,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float right = ratio;
 	final float bottom = -1.0f;
 	final float top = 1.0f;
-	frustumNear = 0.5f;
+	frustumNear = 1.0f;
 	final float far = 5.0f;
 	
 	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);	
     }
-    
     
     public void touched(float[] pt) {
         pt = project(pt);
 	mModel.touched(pt);
     }
     
-    
     public void swiped(float[] pt, int direction) {
-	float[] inPt = new float[4];
-	float[] outPt = new float[4];
-	inPt[0] = pt[0];///////SWIPED!!!!!!!!!!!!!
-	inPt[1] = pt[1];///////SWIPED!!!!!!!!!!!!!
-	inPt[2] = -4.0f;///////SWIPED!!!!!!!!!!!!!
-	inPt[3] = 1.0f;///////SWIPED!!!!!!!!!!!!!
-	
-	// Calculate the projection and view transformation
-	Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
-	Matrix.invertM(mMVPMatrixInv, 0, mMVPMatrix, 0);   
-	Matrix.multiplyMV(outPt, 0,mMVPMatrixInv, 0,inPt, 0);
-	
-	pt[0] = outPt[0]/outPt[3];
-	pt[1] = outPt[1]/outPt[3];
-	
+        pt = project(pt);
 	mModel.swiped(pt, direction);
     }
 
@@ -369,9 +353,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
 	Matrix.scaleM(mModelMatrix, 0, size, size, size);
 
-	// long time = SystemClock.uptimeMillis() % 4000L;
-	// float angle = 0.090f * ((int) time);
-	// Matrix.rotateM(mModelMatrix, 0, angle, 0, 1.0f, -1.0f);	    
+	// long time = SystemClock.uptimeMillis() % 12000L;
+	// float angle = 0.030f * ((int) time);
+	// Matrix.rotateM(mModelMatrix, 0, angle, 1.0f, 1.0f, 0.0f);	    
 	
 	// Pass in the position information
 	mSquarePositions.position(0);		

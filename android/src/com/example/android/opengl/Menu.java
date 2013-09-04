@@ -32,15 +32,14 @@ class Menu{
 	}
     }    
 	
-    public void touched(float[] pt) {
-	menuActive = !menuActive;
+    public void activate(float[] pt) {
+	menuActive = true;
 	refTime = System.currentTimeMillis();
 	if (menuActive) {	    
 	    tilesCenter[0] = pt[0];
 	    tilesCenter[1] = pt[1];		
 	    tilesCenter[2] = 0.0f;
 	    for (int i = 0; i < menuTiles.length; i++) {
-
 		float tmpsin = (float)Math.sin(i*Math.PI/5.0f);
 		float tmpcos = (float)Math.cos(i*Math.PI/5.0f);
 		float Sx = tilesCenter[0] + radius*tmpcos;
@@ -49,6 +48,15 @@ class Menu{
 		menuTiles[i].center = center;
 	    }   
 	}
+    }
+
+    public boolean touched(float[] pt) {
+	for (int i = 0; i < menuTiles.length; i++) {
+	    if (menuTiles[i].touched(pt)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public void animate() {
