@@ -34,7 +34,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "MyGLRenderer";
     
     //This is the model
-    private Model mModel;
+    public Model mModel;
     
     //Don't know what it does
     private final Context mActivityContext;
@@ -121,10 +121,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     
     
-    public MyGLRenderer(final Context activityContext) {
+    public MyGLRenderer(final Context activityContext, Model m) {
 	
 	mActivityContext = activityContext;
-	
+	if(m != null){
+		mModel = m;
+	} else {
+		mModel = new Model();
+	}
 	// Define all info for a square.		
 	
 	final float[] squarePositionData =
@@ -188,8 +192,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
-	mModel = new Model();
-	
 	//Set the background frame col// or
 	GLES20.glClearColor(0.5f, 0.5f, 0.0f, 0.0f);
 	GLES20.glDisable(GLES20.GL_DEPTH_TEST);
@@ -247,11 +249,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	}
 	//Create Border Textures
 	for(int i=0;i<mModel.mBorder.rowTiles.length;i++){
-	    System.out.println("Making Border Row texture "+Integer.toString(i)+" "+Integer.toString(mModel.mBorder.rowTiles[i].true_solution));
-	    TM.buildTextures(Integer.toString(mModel.mBorder.rowTiles[i].true_solution),64,128,"border_row_"+Integer.toString(i),50);
+	    TM.buildTextures(Integer.toString(mModel.mBorder.rowTiles[i].value),64,128,"border_row_"+Integer.toString(i),50);
 	}
 	for(int i=0;i<mModel.mBorder.columnTiles.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBorder.columnTiles[i].true_solution),105,64,"border_col_"+Integer.toString(i),50);
+	    TM.buildTextures(Integer.toString(mModel.mBorder.columnTiles[i].value),105,64,"border_col_"+Integer.toString(i),50);
 	}
     }
     

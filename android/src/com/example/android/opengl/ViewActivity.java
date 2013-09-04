@@ -12,15 +12,20 @@ public class ViewActivity extends Activity {
 
     private GLSurfaceView mGLView;
     private TileMenuView mCMView;
-    private int stateTileMenu = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        mGLView = new GameView(this);
-        mCMView = new TileMenuView(this);
+        if(savedInstanceState != null){
+        	Model mModel = new Model((Board)savedInstanceState.getParcelable("board"));
+        	mGLView = new GameView(this, mModel);
+        } else {
+        	mGLView = new GameView(this, null);
+        }
+        	
+        	mCMView = new TileMenuView(this);
         
         RelativeLayout relativeLayout = new RelativeLayout(this);
 
@@ -48,12 +53,18 @@ public class ViewActivity extends Activity {
         relativeLayout.addView(mCMView);
         //Initially this will not be visible!
         mCMView.setVisibility(mCMView.GONE);
-        
-        
+   
         setContentView(relativeLayout,rlp);
         //setContentView(mGLView);
     }
-
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("board", ((GameView)mGLView).mRenderer.mModel.mBoard);
+        super.onSaveInstanceState(outState);
+    }
+    
+    
     @Override
     protected void onPause() {
         super.onPause();
@@ -73,29 +84,9 @@ public class ViewActivity extends Activity {
         mGLView.onResume();
     }
     
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent e) {
-    	super.dispatchTouchEvent(e);
-    	return true;
-    }
     
-    @Override
-    public boolean onTouchEvent(MotionEvent e){
-    	if (e.getActionMasked() == 0) {
-    		toggleTileMenu();
-    	}
-    	return true;
-    }
     
-    void toggleTileMenu(){
-    	stateTileMenu = (stateTileMenu+1) % 2;
-    	
-    	if(stateTileMenu==1){
-    		mCMView.setVisibility(mCMView.VISIBLE);
-    	} else {
-    		mCMView.setVisibility(mCMView.INVISIBLE);
-    	}	
-    }
+    
 }
 
 

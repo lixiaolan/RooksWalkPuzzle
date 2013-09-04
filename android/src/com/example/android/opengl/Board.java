@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.util.Scanner;
 import java.io.IOException;
 
-class Board{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+class Board implements Parcelable {
     
-    public Tile[] puzzleTiles = new Tile[36];
+    public BoardTile[] puzzleTiles = new BoardTile[36];
     public int[] solution ;
     public int[][] path;
     public int[] columnSums;
@@ -21,27 +24,46 @@ class Board{
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
 	
-	columnSums = new int[6];
-	rowSums = new int[6];
+	buildBoardFromSolution();
 	
-	for (int i = 0; i < puzzleTiles.length; i++) {
-	    float size = .11f;
-	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
-	    //Are they spiraling out?
-	    float Sx = ( (i/6) - 2.5f )/4.0f;
-	    float Sy = ( (i%6) - 2.5f )/4.0f;
-	    columnSums[i%6] += Math.max(solution[i],0);
-	    rowSums[i/6] += Math.max(solution[i],0);
-	    System.out.println("Column Sums "+Integer.toString(columnSums[i/6]));
-	    float center[] = { Sx, Sy, 0.0f};
-	    if (solution[i] == -1) {
-		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
-	    }
-	    else {
-		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
-	    }
-	    
-	}
+    }
+    
+    
+    
+    public Board(Parcel in) {
+    	in.readIntArray(solution);
+    	buildBoardFromSolution();
+    }
+    
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeIntArray(this.solution);
+     }
+     
+    /*
+     * Format of solution array must match specs laid out in README.txt 
+     */
+    public void buildBoardFromSolution() {
+    	columnSums = new int[6];
+    	rowSums = new int[6];
+    	
+    	for (int i = 0; i < puzzleTiles.length; i++) {
+    	    float size = .11f;
+    	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
+    	    //Are they spiraling out?
+    	    float Sx = ( (i/6) - 2.5f )/4.0f;
+    	    float Sy = ( (i%6) - 2.5f )/4.0f;
+    	    columnSums[i%6] += Math.max(solution[i],0);
+    	    rowSums[i/6] += Math.max(solution[i],0);
+    	    System.out.println("Column Sums "+Integer.toString(columnSums[i/6]));
+    	    float center[] = { Sx, Sy, 0.0f};
+    	    if (solution[i] == -1) {
+    		puzzleTiles[i] = new BoardTile(center, size, solution[i]);
+    	    }
+    	    else {
+    		puzzleTiles[i] = new BoardTile(center, size, solution[i]);
+    	    }
+    	    
+    	}
     }
     
     public native String stringFromJNI(int rows, int cols, int length);
@@ -98,20 +120,6 @@ class Board{
 		puzzleTiles[i].arrow = direction;
 	    }
     	}
-	
-	
-	// if (direction == 0) {
-	//     System.out.println("East");
-	// }
-	// if (direction == 1) {
-	//     System.out.println("North");
-	// }
-	// if (direction == 2) {
-	//     System.out.println("West");
-	// }
-	// if (direction == 3) {
-	//     System.out.println("South");
-	// }
     }
     
     public void clearFlags() {
@@ -123,4 +131,25 @@ class Board{
     static {
 	System.loadLibrary("GeneratePuzzle");
     }
+
+    public static final Parcelable.Creator<Board> CREATOR = new Parcelable.Creator<Board>() {
+    	 
+        @Override
+        public Board createFromParcel(Parcel source) {
+            return new Board(source); // RECREATE VENUE GIVEN SOURCE
+        }
+ 
+        @Override
+        public Board[] newArray(int size) {
+            return new Board[size]; // CREATING AN ARRAY OF VENUES
+        }
+ 
+    };
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

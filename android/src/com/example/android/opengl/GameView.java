@@ -6,18 +6,17 @@ import android.view.MotionEvent;
 
 class GameView extends GLSurfaceView {
 
-    private final MyGLRenderer mRenderer;
-
-    public GameView(Context context) {
+    public MyGLRenderer mRenderer;
+    
+    public GameView(Context context, Model m) {
         super(context);
 
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
 
         // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new MyGLRenderer(context);
+        mRenderer = new MyGLRenderer(context, m);
         setRenderer(mRenderer);
-
         // Render the view only when there is a change in the drawing data
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
