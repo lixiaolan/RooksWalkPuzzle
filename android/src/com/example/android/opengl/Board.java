@@ -11,7 +11,7 @@ class Board{
     public int[][] path;
     public int[] columnSums;
     public int[] rowSums;
-    public float[] activeCenter = new float[2];
+    public int activeTile;
     
     public Board() {
 	
@@ -26,10 +26,13 @@ class Board{
 	
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    float size = .11f;
+	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
+	    //Are they spiraling out?
 	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
 	    columnSums[i%6] += Math.max(solution[i],0);
 	    rowSums[i/6] += Math.max(solution[i],0);
+	    System.out.println("Column Sums "+Integer.toString(columnSums[i/6]));
 	    float center[] = { Sx, Sy, 0.0f};
 	    if (solution[i] == -1) {
 		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
@@ -37,6 +40,7 @@ class Board{
 	    else {
 		puzzleTiles[i] = new Tile(center, size, solution[i], 4);
 	    }
+	    
 	}
     }
     
@@ -81,8 +85,7 @@ class Board{
     	    if( puzzleTiles[i].touched(pt) ) {
 		puzzleTiles[i].touched_flag = !puzzleTiles[i].touched_flag;
 		puzzleTiles[i].texture = 4;
-		activeCenter[0] = puzzleTiles[i].center[0];
-		activeCenter[1] = puzzleTiles[i].center[1];
+		activeTile = i;
 		return true;
 	    }
     	}
@@ -92,25 +95,25 @@ class Board{
     public void swiped(float[] pt, int direction) {
 	for (int i = 0; i < puzzleTiles.length; i++) {
     	    if( puzzleTiles[i].touched(pt) ) {
-		puzzleTiles[i].texture = direction;
+		puzzleTiles[i].arrow = direction;
 	    }
     	}
 	
 	
-	if (direction == 0) {
-	    System.out.println("East");
-	}
-	if (direction == 1) {
-	    System.out.println("North");
-	}
-	if (direction == 2) {
-	    System.out.println("West");
-	}
-	if (direction == 3) {
-	    System.out.println("South");
-	}
+	// if (direction == 0) {
+	//     System.out.println("East");
+	// }
+	// if (direction == 1) {
+	//     System.out.println("North");
+	// }
+	// if (direction == 2) {
+	//     System.out.println("West");
+	// }
+	// if (direction == 3) {
+	//     System.out.println("South");
+	// }
     }
-
+    
     public void clearFlags() {
 	for (int i = 0; i < puzzleTiles.length; i++) {
 	    puzzleTiles[i].touched_flag = false;

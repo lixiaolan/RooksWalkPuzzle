@@ -50,13 +50,13 @@ class Menu{
 	}
     }
 
-    public boolean touched(float[] pt) {
+    public int touched(float[] pt) {
 	for (int i = 0; i < menuTiles.length; i++) {
 	    if (menuTiles[i].touched(pt)) {
-		return true;
+		return i;
 	    }
 	}
-	return false;
+	return -1;
     }
 
     public void animate() {

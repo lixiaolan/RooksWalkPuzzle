@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -57,6 +59,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     /** Allocate storage for the final combined matrix. 
 	This will be passed into the shader program. */
+    
     private float[] mMVPMatrix = new float[16];
     
     private float[] mRotationMatrix = new float[16];
@@ -69,15 +72,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final FloatBuffer mSquareWhiteColor;
     private final FloatBuffer mSquareBlueColor;
     private final FloatBuffer mSquareBlackColor;
-    
+    private final FloatBuffer mSquareTransparentColor;
     
     /** This will be used to pass in the transformation matrix. */
     private int mMVPMatrixHandle;
     /** This will be used to pass in the modelview matrix. */
     private int mMVMatrixHandle;
     /** This will be used to pass in the texture. */
-    private int mTextureArrowHandle;
-    private int mTextureTextHandle;	
+    private List<Integer> mTextureHandle = new ArrayList<Integer>();	
     /** This will be used to pass in model position information. */
     private int mPositionHandle;
     /** This will be used to pass in model color information. */
@@ -109,12 +111,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     
     //These are used in our custom projection.
-
+    
     private float screenHeight;
     private float screenWidth;
     private float cameraDistance;
     private float frustumNear;
-        
+    
+    
+    
+    
     
     public MyGLRenderer(final Context activityContext) {
 	
@@ -125,10 +130,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float[] squarePositionData =
 	    {
 		// Front face
-		-1.0f, 1.0f, 0.0f,				
+		-1.0f, 1.0f, 0.0f,
 		-1.0f, -1.0f, 0.0f,
 		1.0f, 1.0f, 0.0f, 
-		-1.0f, -1.0f, 0.0f, 				
+		-1.0f, -1.0f, 0.0f,		
 		1.0f, -1.0f, 0.0f,
 		1.0f, 1.0f, 0.0f,
 	    };	
@@ -150,9 +155,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	mSquareTextureCoordinates = ByteBuffer.allocateDirect(squareTextureCoordinateData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareTextureCoordinates.put(squareTextureCoordinateData).position(0);
 	
+	
 	final float[] squareWhiteColorData = Colors.squareWhite;
 	final float[] squareBlueColorData = Colors.squareBlue;	
 	final float[] squareBlackColorData = Colors.squareBlack;
+	final float[] squareTransparentColorData = Colors.squareTransparent;
 	
 	mSquareWhiteColor = ByteBuffer.allocateDirect(squareWhiteColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareWhiteColor.put(squareWhiteColorData).position(0);
@@ -162,6 +169,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	mSquareBlackColor = ByteBuffer.allocateDirect(squareBlackColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareBlackColor.put(squareBlackColorData).position(0);
+	
+	mSquareTransparentColor = ByteBuffer.allocateDirect(squareTransparentColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+	mSquareTransparentColor.put(squareTransparentColorData).position(0);
 	
     }
     
@@ -181,7 +191,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	mModel = new Model();
 	
 	//Set the background frame col// or
-	GLES20.glClearColor(0.5f, 0.5f, 0.0f, 1.0f);
+	GLES20.glClearColor(0.5f, 0.5f, 0.0f, 0.0f);
 	GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 	
 	// Position the eye in front of the origin.
@@ -189,7 +199,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float eyeY = 0.0f;
 	cameraDistance = 1.5f;
 	
-	// We are looking toward the origin?
+	// We are looking toward the distance
 	final float lookX = 0.0f;
 	final float lookY = 0.0f;
 	final float lookZ = 0.0f;
@@ -203,11 +213,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
 	// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 	Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, -cameraDistance, lookX, lookY, lookZ, upX, upY, upZ);		
-	//Matrix.setIdentityM(mVMatrix, 0);
-	
 	
 	// Calculate the projection and view transformation
-	//Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+	//      Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 	
 	final String vertexShader = getVertexShader();   		
 	final String fragmentShader = getFragmentShader();			
@@ -227,27 +235,41 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM = new TextureManager();
 	int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
 	int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
-	TM.buildTextures("0123456789", x_coords, y_coords);
+	TM.buildTextures("0123456789", x_coords, y_coords,64);
 	TM.buildTextures(mActivityContext, R.drawable.up_arrow,"up_arrow");
 	TM.buildTextures(mActivityContext, R.drawable.down_arrow,"down_arrow");
 	TM.buildTextures(mActivityContext, R.drawable.left_arrow,"left_arrow");
 	TM.buildTextures(mActivityContext, R.drawable.right_arrow,"right_arrow");
+	TM.buildTextures(mActivityContext, R.drawable.menu_circle,"menu_circle");
+	//Create Menu Textures
+	for(int i=0;i<mModel.mMenu.menuTiles.length;i++){
+	    TM.buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
+	}
+	//Create Border Textures
+	for(int i=0;i<mModel.mBorder.rowTiles.length;i++){
+	    System.out.println("Making Border Row texture "+Integer.toString(i)+" "+Integer.toString(mModel.mBorder.rowTiles[i].true_solution));
+	    TM.buildTextures(Integer.toString(mModel.mBorder.rowTiles[i].true_solution),64,128,"border_row_"+Integer.toString(i),50);
+	}
+	for(int i=0;i<mModel.mBorder.columnTiles.length;i++){
+	    TM.buildTextures(Integer.toString(mModel.mBorder.columnTiles[i].true_solution),105,64,"border_col_"+Integer.toString(i),50);
+	}
     }
     
     @Override
     public void onDrawFrame(GL10 unused) {
 	// Draw background color
+	GLES20.glClearColor(0.5f, 0.5f, 0.0f, 0.0f);
 	GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);			        
 	// Set our per-vertex lighting program.
 	GLES20.glUseProgram(mProgramHandle);
 	// Set program handles for square drawing.
 	mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVPMatrix");
 	mMVMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_MVMatrix"); 
-	mTextureArrowHandle = GLES20.glGetUniformLocation(mProgramHandle, "arrow_Texture");
-	mTextureTextHandle = GLES20.glGetUniformLocation(mProgramHandle, "text_Texture");
+	mTextureHandle.add(GLES20.glGetUniformLocation(mProgramHandle, "texture_0"));
+	mTextureHandle.add(GLES20.glGetUniformLocation(mProgramHandle, "texture_1"));
 	mPositionHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Position");
 	mColorHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Color");
-	mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_TexCoordinate");        
+	mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_TexCoordinate");   
 	//Draw the Board!	
 	drawModel();
     }
@@ -268,7 +290,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float right = ratio;
 	final float bottom = -1.0f;
 	final float top = 1.0f;
-	frustumNear = 1.0f;
+	frustumNear = 1.1f;
 	final float far = 5.0f;
 	
 	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);	
@@ -283,11 +305,17 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         pt = project(pt);
 	mModel.swiped(pt, direction);
     }
-
+    
     public float[] project(float[] pt) {	
 	pt[0] = -pt[0]*cameraDistance*(screenWidth/screenHeight)/frustumNear;
 	pt[1] = pt[1]*cameraDistance/frustumNear;
 	return pt;
+    }
+    
+    
+    public void resetTextureArray(int[] textures){
+	textures[0] = (TM.library.get("clear"));
+	textures[1] = (TM.library.get("clear"));
     }
     
     private void drawModel() {
@@ -297,65 +325,95 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// Draw the board
 	float[] center;
 	float size;
-	int[] texture = new int[2];
-	int texture_toggle = 1;
+	int[] boardTileTextures = new int[2];
+	int[] menuTileTextures = new int[2]; 
+	int[] borderTileTextures = new int[2];
+
+	String[] arrows  = {"right_arrow","up_arrow","left_arrow","down_arrow"};
+
 	for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
+	    resetTextureArray(boardTileTextures);
 	    center = mModel.mBoard.puzzleTiles[i].center;
 	    size =  mModel.mBoard.puzzleTiles[i].size;
-	    if(mModel.mBoard.puzzleTiles[i].true_solution > 0) {
-		texture[0] = TM.library.get(Integer.toString(mModel.mBoard.puzzleTiles[i].true_solution));
-	    }
 	    
-	    String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
-	    texture[1] = TM.library.get(arrows[i%4]);
-	    
-	    if(mModel.mBoard.puzzleTiles[i].touched_flag){
-		color = mSquareBlueColor;
-	    } else {
-		color = mSquareWhiteColor;
-	    }
-	    
-	    if(mModel.mBoard.puzzleTiles[i].true_solution == -1){
+	    int number = mModel.mBoard.puzzleTiles[i].number;
+	    int true_solution = mModel.mBoard.puzzleTiles[i].true_solution;
+	    int arrow = mModel.mBoard.puzzleTiles[i].arrow;
+	    if( true_solution == -1){
 		color = mSquareBlackColor;
+		
+	    } else {
+		if(number > 0) {
+		    boardTileTextures[0] = (TM.library.get(Integer.toString(number)));
+		} 
+		if (arrow != -1) {
+		    boardTileTextures[1] = TM.library.get(arrows[arrow%4]);
+		}
+		if(mModel.mBoard.puzzleTiles[i].touched_flag){
+		    color = mSquareBlueColor;
+		} else {
+		    color = mSquareWhiteColor;
+		}
 	    }
-	    drawTile(center, size, texture, color);
+	    drawTile(center, size, boardTileTextures, color);
+	}
+	
+	//Draw the Border
+	for (int i = 0; i < mModel.mBorder.rowTiles.length; i++) {
+	    resetTextureArray(borderTileTextures);
+	    center = mModel.mBorder.columnTiles[i].center;
+	    size =  mModel.mBorder.columnTiles[i].size;
+	    color = mSquareTransparentColor;
+	    borderTileTextures[0] = TM.library.get("border_col_"+Integer.toString(i));
+	    drawTile(center, size, borderTileTextures, color);
+	    
+	    
+	    center = mModel.mBorder.rowTiles[i].center;
+	    size =  mModel.mBorder.rowTiles[i].size;
+	    color = mSquareTransparentColor;
+	    borderTileTextures[0] = TM.library.get("border_row_"+Integer.toString(i));
+	    drawTile(center, size, borderTileTextures, color);
 	}
 	
 	// Draw the Menu
 	if (mModel.mMenu.menuActive == true) {
 	    for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
+		resetTextureArray(menuTileTextures);
 		center =  mModel.mMenu.menuTiles[i].center;
 		size =  mModel.mMenu.menuTiles[i].size;
-		texture[0] = TM.library.get(Integer.toString((i+1)));
-		String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
-		texture[1] = TM.library.get(arrows[i%4]);
-		drawTile(center, size, texture, mSquareWhiteColor);
+		color = mSquareTransparentColor;
+		System.out.println("menu_"+Integer.toString(i+1));
+		menuTileTextures[1] = TM.library.get("menu_"+Integer.toString(i+1));
+		menuTileTextures[0] = TM.library.get("menu_circle");
+		//String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
+		//texture[1] = TM.library.get(arrows[i%4]);
+		drawTile(center, size, menuTileTextures, color);
 	    }
-	}
+	}	
     }
     
     
-    private void drawTile(float[] center, float size,int[] texture, FloatBuffer mColor)
+    private void drawTile(float[] center, float size, int[] textures, FloatBuffer mColor)
     {
+	//Apply Textures. Need this to make transparent colors stay transparent.		
+	GLES20.glEnable(GLES20.GL_BLEND);
+	GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 	
-	//Apply Textures
-	GLES20.glActiveTexture(GLES20.GL_TEXTURE0);        
-	GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
-	GLES20.glUniform1i(mTextureTextHandle, 0); 
-	
-	GLES20.glActiveTexture(GLES20.GL_TEXTURE1);        
-	GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[1]);
-	GLES20.glUniform1i(mTextureArrowHandle, 1); 
+	for(int i=0;i<textures.length; i++){
+	    GLES20.glActiveTexture(GLES20.GL_TEXTURE0+i);        
+	    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[i]);
+	    GLES20.glUniform1i(mTextureHandle.get(i), i);
+	}
 	
 	
 	// Determine position and size
 	Matrix.setIdentityM(mModelMatrix, 0);
 	Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
 	Matrix.scaleM(mModelMatrix, 0, size, size, size);
-
+	
 	// long time = SystemClock.uptimeMillis() % 12000L;
 	// float angle = 0.030f * ((int) time);
-	// Matrix.rotateM(mModelMatrix, 0, angle, 1.0f, 1.0f, 0.0f);	    
+	// Matrix.rotateM(mModelMatrix, 0, angle, 1.0f, 1.0f, 0.0f);
 	
 	// Pass in the position information
 	mSquarePositions.position(0);		
@@ -378,7 +436,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mSquareTextureCoordinates);
 	GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
 	
-	
 	// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
 	// (which currently contains model * view).
 	Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, mModelMatrix, 0);   
@@ -392,7 +449,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	// Pass in the combined matrix.
 	GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
-	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6); 
-	
+	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
     }   
 }

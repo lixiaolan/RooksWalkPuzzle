@@ -21,15 +21,16 @@ public final class R {
         public static final int icon_border=0x7f020004;
         public static final int left=0x7f020005;
         public static final int left_arrow=0x7f020006;
-        public static final int noisy_grass_public_domain=0x7f020007;
-        public static final int right=0x7f020008;
-        public static final int right_arrow=0x7f020009;
-        public static final int stone_wall_public_domain=0x7f02000a;
-        public static final int test=0x7f02000b;
-        public static final int up=0x7f02000c;
-        public static final int up_arrow=0x7f02000d;
-        public static final int usb_android=0x7f02000e;
-        public static final int white=0x7f02000f;
+        public static final int menu_circle=0x7f020007;
+        public static final int noisy_grass_public_domain=0x7f020008;
+        public static final int right=0x7f020009;
+        public static final int right_arrow=0x7f02000a;
+        public static final int stone_wall_public_domain=0x7f02000b;
+        public static final int test=0x7f02000c;
+        public static final int up=0x7f02000d;
+        public static final int up_arrow=0x7f02000e;
+        public static final int usb_android=0x7f02000f;
+        public static final int white=0x7f020010;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0a0000;
