@@ -8,7 +8,7 @@ import android.os.SystemClock;
 
 class Menu{
 
-    public Tile[] menuTiles = new Tile[6];
+    public Tile[] menuTiles = new MenuTile[6];
     public boolean menuActive;
     public float radius;
     public float tiltAngle;
@@ -30,7 +30,7 @@ class Menu{
 	    float Sx = tilesCenter[0] + radius*tmpcos;
 	    float Sy = tilesCenter[1] + radius*tmpsin;
 	    float center[] = { Sx, Sy, 0.0f};
-	    menuTiles[i] = new Tile(center, tilesSize, 0, 4);
+	    menuTiles[i] = new MenuTile(center, tilesSize, 0);
 	}
     }    
 	

@@ -1,10 +1,5 @@
 package com.example.android.opengl;
 
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.util.Scanner;
-import java.io.IOException;
-
 class Model{
     public Board mBoard;
     public Menu mMenu;
@@ -16,6 +11,12 @@ class Model{
 	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
 
+    public Model(Board b){
+    	mBoard = b;
+    	mMenu = new Menu();
+    	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
+    }
+    
     public void touched(float[] pt) {
 	if( mMenu.menuActive) {
 	    mBoard.clearFlags();
