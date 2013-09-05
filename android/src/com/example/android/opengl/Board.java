@@ -16,7 +16,7 @@ class Board{
     public Board() {
 	
 	try {
-	    readBoard(stringFromJNI(6,6, 8) );	
+	    readBoard(stringFromJNI(6,6, 16) );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}

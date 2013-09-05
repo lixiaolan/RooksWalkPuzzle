@@ -57,6 +57,7 @@ private:
   
   void reorderLegalMoves(vector<pos> &);
   vector<pos> legalMoves();
+  vector<pos> legalMovesRightAngles();
   bool makeBoard(int);
   bool goodPlay(pos, int);
   void markUnused();

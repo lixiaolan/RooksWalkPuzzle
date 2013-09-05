@@ -89,6 +89,58 @@ vector<pos> RookBoard::legalMoves() {
   return legalMovesList;
 }
 
+
+// Generate all legal moves FOR RIGHT ANGLE MOVES
+// from a given position and board state:
+vector<pos> RookBoard::legalMovesRightAngles() {
+  // Find the last position.
+  pos last = *(positions.end()-1);
+  // Initiate the LegalMovesList
+  vector<pos> legalMovesList;
+  //Find the last move made.
+  pos lastMove(0,0);
+  if (positions.size() > 1) {
+    lastMove = *(positions.end()-1)-*(positions.end()-2);
+  }
+  
+  //Do a search for legal moves in the four directions
+  // This checks first that the direction is in fact legal
+  if (lastMove.r == 0) {
+    for (int i = last.r; i < height; i++) {
+      int temp = i - last.r;
+      if ((temp > 0)&&(goodPlay(pos(i,last.c),temp))) {
+	legalMovesList.push_back(pos(i,last.c));
+      }
+    }
+  }
+  if (lastMove.r == 0) {
+    for (int i = last.r; i >= 0; i--) {
+      int temp = last.r - i;
+      if ((temp > 0)&&(goodPlay(pos(i,last.c),temp))) {
+	legalMovesList.push_back(pos(i,last.c));
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i < width; i++) {
+      int temp = i - last.c;
+      if ((temp > 0)&&(goodPlay(pos(last.r,i),temp))) {
+	legalMovesList.push_back(pos(last.r,i));
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i >= 0; i--) {
+      int temp = last.c - i;
+      if ((temp > 0)&&(goodPlay(pos(last.r,i),temp))) {
+	legalMovesList.push_back(pos(last.r,i));
+      }
+    }
+  }
+  return legalMovesList;
+}
+
+
 //Function to reorder the elements of a vector to have the least amout possible of directional preference.
 void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
   pos last = *(positions.end()-1);
@@ -183,6 +235,7 @@ bool RookBoard::makeBoard(int depth) {
   // It has both come full circle and that the direction with which
   // it approaches the end location is compatible with the first move
   // made in the puzzle (ie they cannot be the same direction!);
+  //cout << depth << endl;
   if (depth == 0) {
     bool a = ((*(positions.begin())).r == (*(positions.end()-1)).r);
     bool b = ((*(positions.begin())).c == (*(positions.end()-1)).c);
@@ -200,12 +253,21 @@ bool RookBoard::makeBoard(int depth) {
     positions.push_back(pos(x,y));
   }
   //Generate all legalMoves from current location
-  vector<pos> lm = legalMoves();
+  // vector<pos> lm = legalMoves();
+
+
+  vector<pos> lm = legalMovesRightAngles();
+  //cout << lm.size() << endl;
+
   // If there are none, return false
   if (lm.size() == 0) return false;
   // Otherwise, reorder the legal moves according to preference
   // See "reorderLegalMoves" for details!
-  reorderLegalMoves(lm);
+  
+
+  random_shuffle(lm.begin(), lm.end() );
+  //reorderLegalMoves(lm);
+ 
   // Loop though all possible legal moves
   for (int i = 0; i < lm.size(); i++) {
     // Add the ith legal move to the list
