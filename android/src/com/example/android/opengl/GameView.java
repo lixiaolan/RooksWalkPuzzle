@@ -2,14 +2,15 @@ package com.example.android.opengl;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 class GameView extends GLSurfaceView {
 
     public MyGLRenderer mRenderer;
     
-    public GameView(Context context) {
-        super(context);
+    public GameView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);        
         // Set the Renderer for drawing on the GLSurfaceView

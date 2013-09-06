@@ -34,14 +34,17 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f0a0000;
+        public static final int ViewActivity_LinearLayout1=0x7f0a0006;
         public static final int exit_button=0x7f0a0005;
-        public static final int ic_launcher=0x7f0a0008;
-        public static final int menu_settings=0x7f0a0006;
+        public static final int menu_settings=0x7f0a0009;
+        public static final int new_game_action=0x7f0a000a;
         public static final int new_game_button=0x7f0a0001;
+        public static final int settings_action=0x7f0a000b;
         public static final int settings_button=0x7f0a0004;
         public static final int statistics_button=0x7f0a0002;
+        public static final int surface_view=0x7f0a0007;
+        public static final int timer=0x7f0a0008;
         public static final int tutorial_button=0x7f0a0003;
-        public static final int usb_android=0x7f0a0007;
     }
     public static final class layout {
         public static final int mainactivity=0x7f030000;
@@ -50,8 +53,7 @@ public final class R {
     }
     public static final class menu {
         public static final int mainactivity_actions=0x7f090000;
-        public static final int testmenuactivity=0x7f090001;
-        public static final int viewaction_actions=0x7f090002;
+        public static final int viewactivity_actions=0x7f090001;
     }
     public static final class raw {
         public static final int color_fragment_shader=0x7f050000;

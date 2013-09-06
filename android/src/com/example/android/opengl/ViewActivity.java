@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
@@ -14,7 +15,8 @@ public class ViewActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.viewactivity);
+        
         MyGLRenderer mRenderer;
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
@@ -24,10 +26,11 @@ public class ViewActivity extends Activity {
         } else {
         	mRenderer = new MyGLRenderer(this, new Model());
         }
-        mGLView = new GameView(this);
+        mGLView = (GameView)findViewById(R.id.surface_view);
         ((GameView)mGLView).setMyRenderer(mRenderer);
         
-        setContentView(mGLView);
+        
+       
     }
     
     @Override
@@ -56,7 +59,11 @@ public class ViewActivity extends Activity {
         //mGLView.onResume();
     }
     
-    
+    public boolean onCreateOptionsMenu(Menu menu) {
+      getMenuInflater().inflate(R.menu.viewactivity_actions, menu);
+      
+      return true;
+    } 
     
     
 }

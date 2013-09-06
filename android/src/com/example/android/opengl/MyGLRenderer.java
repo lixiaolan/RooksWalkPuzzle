@@ -124,11 +124,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     public MyGLRenderer(final Context activityContext, Model m) {
 	
 	mActivityContext = activityContext;
-	if(m != null){
-		mModel = m;
-	} else {
-		mModel = new Model();
-	}
+	mModel = m;
+	
 	// Define all info for a square.		
 	
 	final float[] squarePositionData =
@@ -193,7 +190,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 	//Set the background frame col// or
-	GLES20.glClearColor(0.5f, 0.5f, 0.0f, 0.0f);
+	GLES20.glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 	GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 	
 	// Position the eye in front of the origin.
@@ -259,7 +256,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onDrawFrame(GL10 unused) {
 	// Draw background color
-	GLES20.glClearColor(0.5f, 0.5f, 0.0f, 0.0f);
+	GLES20.glClearColor(0.95f, 0.90f, 0.8f, 0.0f);
 	GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);			        
 	// Set our per-vertex lighting program.
 	GLES20.glUseProgram(mProgramHandle);
@@ -295,7 +292,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float far = 5.0f;
 	
 	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);	
-	System.out.println("Got an ON SURFACE CHANGED");
     }
     
     public void touched(float[] pt) {
@@ -387,8 +383,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		System.out.println("menu_"+Integer.toString(i+1));
 		menuTileTextures[1] = TM.library.get("menu_"+Integer.toString(i+1));
 		menuTileTextures[0] = TM.library.get("menu_circle");
-		//String[] arrows  = {"up_arrow","down_arrow","left_arrow","right_arrow"};
-		//texture[1] = TM.library.get(arrows[i%4]);
 		drawTile(center, size, menuTileTextures, color);
 	    }
 	}	
