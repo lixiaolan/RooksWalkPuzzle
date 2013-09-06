@@ -28,7 +28,7 @@ class GameView extends GLSurfaceView {
     public void setMyRenderer(MyGLRenderer mR) {
     		this.mRenderer = mR;
     		setRenderer(this.mRenderer);
-    		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+    		//setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
     
     @Override
