@@ -14,7 +14,7 @@ class GameView extends GLSurfaceView {
         setEGLContextClientVersion(2);        
         // Set the Renderer for drawing on the GLSurfaceView
         // Render the view only when there is a change in the drawing data
-        //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        //
     }
 
     
@@ -25,8 +25,10 @@ class GameView extends GLSurfaceView {
     private float mUpY;
     float swipeTol = 10.0f;
 
-    public void getRenderer(MyGLRenderer mRenderer) {
-    		this.mRenderer = mRenderer;
+    public void setMyRenderer(MyGLRenderer mR) {
+    		this.mRenderer = mR;
+    		setRenderer(this.mRenderer);
+    		setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
     
     @Override

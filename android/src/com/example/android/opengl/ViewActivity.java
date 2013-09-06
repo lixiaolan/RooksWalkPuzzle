@@ -24,8 +24,8 @@ public class ViewActivity extends Activity {
         } else {
         	mRenderer = new MyGLRenderer(this, new Model());
         }
-        
-        mGL
+        mGLView = new GameView(this);
+        ((GameView)mGLView).setMyRenderer(mRenderer);
         
         setContentView(mGLView);
     }
@@ -53,7 +53,7 @@ public class ViewActivity extends Activity {
         // The following call resumes a paused rendering thread.
         // If you de-allocated graphic objects for onPause()
         // this is a good place to re-allocate them.
-        mGLView.onResume();
+        //mGLView.onResume();
     }
     
     
