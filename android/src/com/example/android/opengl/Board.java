@@ -19,7 +19,7 @@ class Board implements Parcelable {
     public Board() {
 	
 	try {
-	    readBoard(stringFromJNI(6,6, 16) );	
+	    readBoard(stringFromJNI(6,6, 12) );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
