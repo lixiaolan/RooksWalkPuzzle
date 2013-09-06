@@ -5,37 +5,41 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.RelativeLayout;
-
+import android.widget.Chronometer;
 
 public class ViewActivity extends Activity {
 
     private GLSurfaceView mGLView;
+    private Model mModel;
+    private MyGLRenderer mRenderer;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewactivity);
         
-        MyGLRenderer mRenderer;
+        
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
         if(savedInstanceState != null){
-        	Model mModel = new Model((Board)savedInstanceState.getParcelable("board"));
-        	mRenderer = new MyGLRenderer(this, mModel);
+        	mModel = new Model((Board)savedInstanceState.getParcelable("board"));        	
         } else {
-        	mRenderer = new MyGLRenderer(this, new Model());
+        	mModel = new Model();
         }
+        mRenderer = new MyGLRenderer(this, mModel);
+        
         mGLView = (GameView)findViewById(R.id.surface_view);
         ((GameView)mGLView).setMyRenderer(mRenderer);
         
-        
-       
+        Chronometer ch = (Chronometer)findViewById(R.id.puzzle_time);
+        ch.start();
     }
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("board", ((GameView)mGLView).mRenderer.mModel.mBoard);
+        outState.putParcelable("board", mModel.mBoard);
         super.onSaveInstanceState(outState);
     }
     
@@ -61,7 +65,23 @@ public class ViewActivity extends Activity {
     
     public boolean onCreateOptionsMenu(Menu menu) {
       getMenuInflater().inflate(R.menu.viewactivity_actions, menu);
-      
+      getActionBar().setDisplayShowTitleEnabled(false);
+      getActionBar().setDisplayShowHomeEnabled(false);
+      return true;
+    } 
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+      switch (item.getItemId()) {
+      case R.id.new_game_action:
+    	  System.out.println("CLICKED");
+    	  mModel.resetBoard();    	  
+        break;
+
+      default:
+        break;
+      }
+
       return true;
     } 
     

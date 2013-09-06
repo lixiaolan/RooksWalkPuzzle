@@ -39,11 +39,11 @@ public final class R {
         public static final int menu_settings=0x7f0a0009;
         public static final int new_game_action=0x7f0a000a;
         public static final int new_game_button=0x7f0a0001;
+        public static final int puzzle_time=0x7f0a0008;
         public static final int settings_action=0x7f0a000b;
         public static final int settings_button=0x7f0a0004;
         public static final int statistics_button=0x7f0a0002;
         public static final int surface_view=0x7f0a0007;
-        public static final int timer=0x7f0a0008;
         public static final int tutorial_button=0x7f0a0003;
     }
     public static final class layout {

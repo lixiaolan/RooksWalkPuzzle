@@ -17,6 +17,11 @@ class Model{
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
     
+    public void resetBoard(){
+    	mBoard = new Board();
+    	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
+    }
+    
     public void touched(float[] pt) {
 	if( mMenu.menuActive) {
 	    mBoard.clearFlags();
