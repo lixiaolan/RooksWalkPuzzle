@@ -8,25 +8,27 @@ class GameView extends GLSurfaceView {
 
     public MyGLRenderer mRenderer;
     
-    public GameView(Context context, Model m) {
+    public GameView(Context context) {
         super(context);
-
         // Create an OpenGL ES 2.0 context.
-        setEGLContextClientVersion(2);
-
+        setEGLContextClientVersion(2);        
         // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new MyGLRenderer(context, m);
-        setRenderer(mRenderer);
         // Render the view only when there is a change in the drawing data
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
+    
+    
     private float mDownX;
     private float mDownY;
     private float mUpX;
     private float mUpY;
     float swipeTol = 10.0f;
 
+    public void getRenderer(MyGLRenderer mRenderer) {
+    		this.mRenderer = mRenderer;
+    }
+    
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         // MotionEvent reports input details from the touch screen

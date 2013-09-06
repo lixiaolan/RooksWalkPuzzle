@@ -295,6 +295,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float far = 5.0f;
 	
 	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);	
+	System.out.println("Got an ON SURFACE CHANGED");
     }
     
     public void touched(float[] pt) {

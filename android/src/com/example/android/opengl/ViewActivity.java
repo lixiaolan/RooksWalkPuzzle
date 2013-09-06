@@ -11,51 +11,23 @@ import android.widget.RelativeLayout;
 public class ViewActivity extends Activity {
 
     private GLSurfaceView mGLView;
-    private TileMenuView mCMView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        MyGLRenderer mRenderer;
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
         if(savedInstanceState != null){
         	Model mModel = new Model((Board)savedInstanceState.getParcelable("board"));
-        	mGLView = new GameView(this, mModel);
+        	mRenderer = new MyGLRenderer(this, mModel);
         } else {
-        	mGLView = new GameView(this, null);
+        	mRenderer = new MyGLRenderer(this, new Model());
         }
-        	
-        	mCMView = new TileMenuView(this);
         
-        RelativeLayout relativeLayout = new RelativeLayout(this);
-
-        // Defining the RelativeLayout layout parameters.
-        // In this case I want to fill its parent
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT);
-
-        // Defining the layout parameters of the GameView
-        RelativeLayout.LayoutParams mGLViewlp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT);
-        mGLViewlp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        mGLView.setLayoutParams(mGLViewlp);
-        relativeLayout.addView(mGLView);
+        mGL
         
-     // Defining the layout parameters of the GameView
-        RelativeLayout.LayoutParams mCMViewlp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT);
-        //mCMViewlp.addRule(RelativeLayout.CENTER_IN_PARENT);
-        mCMViewlp.addRule(RelativeLayout.BELOW, mGLView.getId());
-        mGLView.setLayoutParams(mCMViewlp);
-        relativeLayout.addView(mCMView);
-        //Initially this will not be visible!
-        mCMView.setVisibility(mCMView.GONE);
-   
-        setContentView(relativeLayout,rlp);
-        //setContentView(mGLView);
+        setContentView(mGLView);
     }
     
     @Override
