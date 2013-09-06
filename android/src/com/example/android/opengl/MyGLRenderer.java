@@ -291,7 +291,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float right = ratio;
 	final float bottom = -1.0f;
 	final float top = 1.0f;
-	frustumNear = 1.1f;
+	frustumNear = 1.0f;
 	final float far = 5.0f;
 	
 	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);	

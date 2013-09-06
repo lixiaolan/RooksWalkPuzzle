@@ -50,6 +50,8 @@ class Model{
     }
     
     public void swiped(float[] pt, int direction) {
+	//if (mMenu.menuActive)
+
 	mBoard.swiped(pt, direction);
     }
 
