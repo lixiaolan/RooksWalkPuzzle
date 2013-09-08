@@ -14,3 +14,37 @@ The format of output file (currently "iotest.txt") is the following:
 <The numbers contained in the puzzle board listed by row first (n*m numbers). The format is: (numbers > 0) stand for numbers in the board, 0 stands for blank white square, -1 stands for black squares>
 <l # of positions>
 <2*l numbers which are the l positions in the board given by x,y cooridnates>
+
+
+
+
+#First release min content/fixes:
+
+1.) Tutorial ``slide show'' (see the Nikoli site).
+    Make the ``tutorial'' a self learning process as much as possible.
+2.) Rework the interface (Tam's fat fingers could not handle the swiping).
+    Make and ``active tile'' before input.
+3.) Clever system for caching puzzles.
+    You can only save one puzzle.
+4.) A difficulty rating system.
+    Lenghts + hints.
+5.) Re-structure the model.
+7.) Add the bee flower theme.
+6.) Cosmetic changes:
+    a. Need rotating tiles in the background spaced out and there is a bee dancing!
+    b. Tiles need a pattened texture on the back.
+    c. Need a cute animation for getting a puzzle correct.
+    d. perhaps change the ``grey circles''
+    e. Optional: Add ability to track path.
+    f. Optional: Add extra display option (red arrows underneath numbers).
+    g. Optional: create an animation which follows the path of the solution.
+
+7.) Optional: Daily puzzle site needs to be up.
+
+8.) Think of a fucking name!
+9.) display the correct dimensions for any display.
+10.)Look into the legal side of protecting the puzzle concept.
+11.)Optional: Sound effects.
+12.)Basic marketing strategy.
+
+Lets have a first release by October 1. Two weeks to alpha.
