@@ -14,8 +14,9 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ViewActivity_LinearLayout1"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -25,14 +26,67 @@
     <com.example.android.opengl.GameView
         android:id="@+id/surface_view"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="413dp"
+        android:layout_above="@+id/buttonLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_weight="0.12" />
+
+    <ViewSwitcher
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ViewSwitcher1"
+        android:layout_width="match_parent"
+        android:layout_height="414dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        tools:context=".MainMenuActivity" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="729dp"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FF0000"
+                android:onClick="switchView"
+                android:text="Button1" />
+
+        </LinearLayout>
+
+        <GridLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/GridLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="2"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_column="1"
+                android:layout_gravity="right|bottom"
+                android:layout_row="0"
+                android:background="#00FF00"
+                android:onClick="switchView"
+                android:text="Button2" />
+
+        </GridLayout>
+    </ViewSwitcher>
 
     <Button
         android:id="@+id/check_solution_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="checkSolution"
-        android:text="Check Solution" />
+        android:text="Check Solution" 
+        android:layout_gravity="bottom"/>
 
-</LinearLayout>
+</FrameLayout>

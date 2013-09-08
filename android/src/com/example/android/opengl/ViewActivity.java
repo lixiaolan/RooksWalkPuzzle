@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ViewSwitcher;
 
 public class ViewActivity extends Activity {
 
@@ -36,7 +37,6 @@ public class ViewActivity extends Activity {
 			mModel = new Model();
 		}
 		mRenderer = new MyGLRenderer(this, mModel);
-
 		mGLView = (GameView)findViewById(R.id.surface_view);
 		((GameView)mGLView).setMyRenderer(mRenderer);
 
@@ -82,7 +82,6 @@ public class ViewActivity extends Activity {
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setCustomView(actionBarLayout);
-
 		Chronometer ch = (Chronometer)findViewById(R.id.puzzle_timer);
 		ch.start();
 	
@@ -151,7 +150,11 @@ public class ViewActivity extends Activity {
 		}
 	}*/
 	
-	
+	  public void switchView(View v) {
+	    	System.out.println("Click me please");
+	    	ViewSwitcher main = (ViewSwitcher)findViewById(R.id.ViewSwitcher1);
+	    	main.showNext();
+	    }
 }
 
 
