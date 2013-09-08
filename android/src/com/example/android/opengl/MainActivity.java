@@ -40,6 +40,4 @@ public class MainActivity extends Activity {
 	public void exitEvent(View view) {
 		finish();
 	}
-	
-	
 }
