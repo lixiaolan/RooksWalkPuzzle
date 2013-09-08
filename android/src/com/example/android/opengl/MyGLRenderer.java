@@ -319,6 +319,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
     
     private void drawModel() {
+
+	
+
+
+
+
+
+
+
+
 	//Animate the Model
 	mModel.animate();
 	FloatBuffer color;
@@ -393,6 +403,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     private void drawTile(float[] center, float size, int[] textures, FloatBuffer mColor)
     {
+
+
+
+
+
+
+
 	//Apply Textures. Need this to make transparent colors stay transparent.		
 	GLES20.glEnable(GLES20.GL_BLEND);
 	GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
