@@ -45,27 +45,33 @@ public final class R {
         public static final int white=0x7f020010;
     }
     public static final class id {
+        public static final int GridLayout1=0x7f0b0015;
         public static final int LinearLayout1=0x7f0b0001;
         public static final int LinearLayout2=0x7f0b000a;
-        public static final int ViewActivity_LinearLayout1=0x7f0b000e;
+        public static final int RelativeLayout1=0x7f0b000e;
+        public static final int ViewSwitcher1=0x7f0b0014;
         public static final int average_testview=0x7f0b000d;
         public static final int button1=0x7f0b0009;
-        public static final int check_solution_button=0x7f0b0010;
-        public static final int clear_action=0x7f0b0014;
+        public static final int button2=0x7f0b0010;
+        public static final int buttonLayout=0x7f0b0013;
+        public static final int check_solution_button=0x7f0b0016;
+        public static final int chronometer1=0x7f0b000f;
+        public static final int clear_action=0x7f0b001a;
         public static final int edit_name=0x7f0b0007;
         public static final int exit_button=0x7f0b0006;
         public static final int fastest_textview=0x7f0b000c;
         public static final int good_job=0x7f0b0008;
         public static final int lineGraphView1=0x7f0b000b;
-        public static final int menu_settings=0x7f0b0012;
-        public static final int new_game_action=0x7f0b0013;
+        public static final int menu_settings=0x7f0b0018;
+        public static final int new_game_action=0x7f0b0019;
         public static final int new_game_button=0x7f0b0002;
-        public static final int puzzle_timer=0x7f0b0011;
+        public static final int puzzle_timer=0x7f0b0017;
         public static final int resolver_grid=0x7f0b0000;
-        public static final int settings_action=0x7f0b0015;
+        public static final int settings_action=0x7f0b001b;
         public static final int settings_button=0x7f0b0005;
         public static final int statistics_button=0x7f0b0003;
-        public static final int surface_view=0x7f0b000f;
+        public static final int surfaceView1=0x7f0b0011;
+        public static final int surface_view=0x7f0b0012;
         public static final int tutorial_button=0x7f0b0004;
     }
     public static final class layout {
@@ -74,8 +80,9 @@ public final class R {
         public static final int mainactivity=0x7f030002;
         public static final int solved_fragment=0x7f030003;
         public static final int statsactivity=0x7f030004;
-        public static final int viewactivity=0x7f030005;
-        public static final int viewactivity_actionbar=0x7f030006;
+        public static final int test=0x7f030005;
+        public static final int viewactivity=0x7f030006;
+        public static final int viewactivity_actionbar=0x7f030007;
     }
     public static final class menu {
         public static final int mainactivity_actions=0x7f0a0000;
