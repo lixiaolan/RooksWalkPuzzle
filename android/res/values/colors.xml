@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="errorColor">#f00</color>
+    <color name="action_bar">#ff0d0d0d</color>
+	<color name="white">#ffffffff</color>
+	<color name="off_white">#99ffffff</color>
+
+<!-- Text sizes -->
+	<dimen name="text_size_small">14.0sp</dimen>
+	<dimen name="text_size_medium">16.0sp</dimen>
+
+<!-- ActionBar color strip -->
+	<dimen name="colorstrip">5dp</dimen>
 </resources>

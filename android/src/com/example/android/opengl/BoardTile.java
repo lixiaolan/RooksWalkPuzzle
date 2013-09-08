@@ -21,9 +21,13 @@ class BoardTile extends Tile{
     touched_flag = false;
 	true_solution = solution;
 	arrow = -1;
-	number = 0;
+	number = -1;
 	center = inCenter;
 	size = inSize;
     }
 
+    public boolean check() {
+    	return true_solution == number;
+    }
+    
 }

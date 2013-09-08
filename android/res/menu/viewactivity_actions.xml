@@ -3,6 +3,9 @@
     <item android:id="@+id/new_game_action"
           android:title="New Game"
           android:showAsAction="ifRoom"/>
+    <item android:id="@+id/clear_action"
+          android:title="Clear Board" 
+          android:showAsAction="ifRoom"/>
     <item android:id="@+id/settings_action"
           android:title="Settings" 
           android:showAsAction="ifRoom"/>

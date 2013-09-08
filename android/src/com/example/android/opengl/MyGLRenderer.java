@@ -10,7 +10,9 @@ import java.util.List;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -296,7 +298,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     public void touched(float[] pt) {
         pt = project(pt);
-	mModel.touched(pt);
+        mModel.touched(pt);
     }
     
     public void swiped(float[] pt, int direction) {
