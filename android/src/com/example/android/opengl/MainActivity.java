@@ -32,6 +32,11 @@ public class MainActivity extends Activity {
 	    startActivity(intent);
 	}
 	
+	public void statisticsEvent(View view) {
+	    Intent intent = new Intent(this, StatsActivity.class);
+	    startActivity(intent);
+	}
+	
 	public void exitEvent(View view) {
 		finish();
 	}

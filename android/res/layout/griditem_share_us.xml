@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:padding="16dp">
+<!--               android:background="@android:drawable/activity_picker_bg" -->
+
+    <!-- Activity icon when presenting dialog
+         Size will be filled in by ResolverActivity -->
+    <ImageView android:id="@android:id/icon"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:scaleType="fitCenter" />
+
+    <!-- Activity name -->
+    <TextView android:id="@android:id/text1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:minLines="2"
+              android:maxLines="2"
+              android:paddingLeft="4dip"
+              android:paddingRight="4dip" />
+<!--               android:textAppearance="android:attr/textAppearanceSmall" -->
+</LinearLayout>

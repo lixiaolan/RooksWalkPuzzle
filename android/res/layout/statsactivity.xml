@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".StatsActivity" >
+
+    <com.example.android.opengl.LineGraphView
+        android:id="@+id/lineGraphView1"
+        android:layout_width="match_parent"
+       android:layout_height="0dp"
+        android:layout_weight="0.5" 
+        />
+
+    <TextView
+        android:id="@+id/fastest_textview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.30"
+        android:text="Fastest Time"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/average_testview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.33"
+        android:text="Average Time"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+</LinearLayout>

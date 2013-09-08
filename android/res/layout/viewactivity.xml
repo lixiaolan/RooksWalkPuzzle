@@ -28,10 +28,11 @@
         android:layout_height="38dp"
         android:layout_weight="0.12" />
 
-    <Chronometer
-        android:id="@+id/puzzle_time"
-        android:layout_width="100dp"
+    <Button
+        android:id="@+id/check_solution_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chronometer" />
+        android:onClick="checkSolution"
+        android:text="Check Solution" />
 
 </LinearLayout>

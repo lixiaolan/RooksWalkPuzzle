@@ -19,7 +19,7 @@ class Board implements Parcelable {
     public Board() {
 	
 	try {
-	    readBoard(stringFromJNI(6,6, 8) );	
+	    readBoard(stringFromJNI(6, 6, 4) );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
@@ -27,8 +27,6 @@ class Board implements Parcelable {
 	buildBoardFromSolution();
 	
     }
-    
-    
     
     public Board(Parcel in) {
     	in.readIntArray(solution);
@@ -152,4 +150,14 @@ class Board implements Parcelable {
 		return 0;
 	}
 
+	public boolean checkSolution() {
+		
+		for(int i =0;i<puzzleTiles.length;i++){
+			if(!puzzleTiles[i].check()){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 }

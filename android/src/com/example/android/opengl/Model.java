@@ -52,6 +52,7 @@ class Model{
 		mMenu.activate(pt);
 	    }
 	}
+		
     }
     
     public void swiped(float[] pt, int direction) {
