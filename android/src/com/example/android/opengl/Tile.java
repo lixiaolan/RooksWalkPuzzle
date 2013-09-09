@@ -8,7 +8,7 @@ class Tile {
  
     public float[] center;
     public float size;
-
+    
     public Tile(float[] inCenter,float inSize) {
 	center = inCenter;
 	size = inSize;
