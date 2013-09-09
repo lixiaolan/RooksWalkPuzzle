@@ -123,14 +123,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private float frustumNear;
     
     
-    
-    
+    //Used only in draw tile. colorMap is populated in the constructor.
+    private FloatBuffer mColor;
+    private int[] mTextures = new int[2];
+    private Map<String, FloatBuffer> colorMap = new HashMap<String, FloatBuffer>();
     
     public MyGLRenderer(final Context activityContext, Model m) {
 	
 	mActivityContext = activityContext;
 	mModel = m;
-	
+		
 	// Define all info for a square.		
 	
 	final float[] squarePositionData =
@@ -178,6 +180,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	mSquareTransparentColor = ByteBuffer.allocateDirect(squareTransparentColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareTransparentColor.put(squareTransparentColorData).position(0);
+	
+	colorMap.put("white", mSquareWhiteColor);
+	colorMap.put("black", mSquareBlackColor);
+	colorMap.put("blue", mSquareBlueColor);
+	colorMap.put("transparent",mSquareTransparentColor);
+
 	
     }
     
@@ -251,11 +259,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	    TM.buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
 	}
 	//Create Border Textures
-	for(int i=0;i<mModel.mBorder.rowTiles.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBorder.rowTiles[i].value),64,128,"border_row_"+Integer.toString(i),50);
+	for(int i=0;i<mModel.mBoard.rowSums.length;i++){
+	    TM.buildTextures(Integer.toString(mModel.mBoard.rowSums[i]),64,128,"border_row_"+Integer.toString(i),50);
 	}
-	for(int i=0;i<mModel.mBorder.columnTiles.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBorder.columnTiles[i].value),105,64,"border_col_"+Integer.toString(i),50);
+	for(int i=0;i<mModel.mBoard.columnSums.length;i++){
+	    TM.buildTextures(Integer.toString(mModel.mBoard.columnSums[i]),105,64,"border_col_"+Integer.toString(i),50);
 	}
     }
     
@@ -277,7 +285,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	//Draw the Board!	
 	drawModel();
     }
-    
     
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
@@ -306,99 +313,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	return pt;
     }
     
-    
     public void resetTextureArray(int[] textures){
 	textures[0] = (TM.library.get("clear"));
 	textures[1] = (TM.library.get("clear"));
     }
     
     private void drawModel() {
-
-	//Animate the Model
-	mModel.animate();
 	mModel.draw(this);
-
-	// FloatBuffer color;
-	// // Draw the board
-	// float[] center;
-	// float size;
-	// int[] boardTileTextures = new int[2];
-	// int[] menuTileTextures = new int[2]; 
-	// int[] borderTileTextures = new int[2];
-
-	// String[] arrows  = {"right_arrow","up_arrow","left_arrow","down_arrow"};
-
-	// for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
-	//     resetTextureArray(boardTileTextures);
-	//     center = mModel.mBoard.puzzleTiles[i].center;
-	//     size =  mModel.mBoard.puzzleTiles[i].size;
-	    
-	//     int number = mModel.mBoard.puzzleTiles[i].number;
-	//     int true_solution = mModel.mBoard.puzzleTiles[i].true_solution;
-	//     int arrow = mModel.mBoard.puzzleTiles[i].arrow;
-	//     if( true_solution == -1){
-	// 	color = mSquareBlackColor;
-		
-	//     } else {
-	// 	if(number > 0) {
-	// 	    boardTileTextures[0] = (TM.library.get(Integer.toString(number)));
-	// 	} 
-	// 	if (arrow != -1) {
-	// 	    boardTileTextures[1] = TM.library.get(arrows[arrow%4]);
-	// 	}
-	// 	if(mModel.mBoard.puzzleTiles[i].touched_flag){
-	// 	    color = mSquareBlueColor;
-	// 	} else {
-	// 	    color = mSquareWhiteColor;
-	// 	}
-	//     }
-	//     drawTile(center, size, boardTileTextures, color);
-	// }
-	
-	// //Draw the Border
-	// for (int i = 0; i < mModel.mBorder.rowTiles.length; i++) {
-	//     resetTextureArray(borderTileTextures);
-	//     center = mModel.mBorder.columnTiles[i].center;
-	//     size =  mModel.mBorder.columnTiles[i].size;
-	//     color = mSquareTransparentColor;
-	//     borderTileTextures[0] = TM.library.get("border_col_"+Integer.toString(i));
-	//     drawTile(center, size, borderTileTextures, color);
-	    
-	    
-	//     center = mModel.mBorder.rowTiles[i].center;
-	//     size =  mModel.mBorder.rowTiles[i].size;
-	//     color = mSquareTransparentColor;
-	//     borderTileTextures[0] = TM.library.get("border_row_"+Integer.toString(i));
-	//     drawTile(center, size, borderTileTextures, color);
-	// }
-	
-	// // Draw the Menu
-	// if (mModel.mMenu.menuActive == true) {
-	//     for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
-	// 	resetTextureArray(menuTileTextures);
-	// 	center =  mModel.mMenu.menuTiles[i].center;
-	// 	size =  mModel.mMenu.menuTiles[i].size;
-	// 	color = mSquareTransparentColor;
-	// 	System.out.println("menu_"+Integer.toString(i+1));
-	// 	menuTileTextures[1] = TM.library.get("menu_"+Integer.toString(i+1));
-	// 	menuTileTextures[0] = TM.library.get("menu_circle");
-	// 	drawTile(center, size, menuTileTextures, color);
-	//     }
-	// }	
     }
     
     
     public void drawTile(float[] center, float size, String[] textures, String color)
     {
 	
-	FloatBuffer mColor;
-	int[] mTextures = new int[2];
-	Map<String, FloatBuffer> colorMap = new HashMap<String, FloatBuffer>();
-	colorMap.put("white", mSquareWhiteColor);
-	colorMap.put("black", mSquareBlackColor);
-	colorMap.put("blue", mSquareBlueColor);
-	colorMap.put("transparent",mSquareTransparentColor);
-
 	mTextures[0] = TM.library.get(textures[0]);
 	mTextures[1] = TM.library.get(textures[1]);	
 	mColor = colorMap.get(color);

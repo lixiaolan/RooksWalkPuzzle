@@ -2,6 +2,7 @@ package com.example.android.opengl;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -90,20 +91,21 @@ public class ViewActivity extends Activity {
 	
 	  public void manageView(View v) {
 		  	if(state==State.MAIN_MENU){
-		  		AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this,R.anim.shrink_dance_button_anim);
-		  		set.setTarget((Button)findViewById(R.id.main_menu_dance_button));
-		  		set.start();
-		  	
-		  		Chronometer ch  = (Chronometer)findViewById(R.id.game_timer);
-		  		ch.setVisibility(View.VISIBLE);
-		  			  	
-		  		Button footsteps  = (Button)findViewById(R.id.footsteps);
-		  		footsteps.setVisibility(View.VISIBLE);
-		  	
-		  		Button stats  = (Button)findViewById(R.id.stats);
-		  		stats.setVisibility(View.INVISIBLE);
-		  		
-		  		state=State.GAME;
+		  			
+			    AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this,R.anim.shrink_dance_button_anim);
+			    set.setTarget((Button)findViewById(R.id.main_menu_dance_button));
+			    set.start();
+			    
+			    Chronometer ch  = (Chronometer)findViewById(R.id.game_timer);
+			    ch.setVisibility(View.VISIBLE);
+			    
+			    Button footsteps  = (Button)findViewById(R.id.footsteps);
+			    footsteps.setVisibility(View.VISIBLE);
+			    
+			    Button stats  = (Button)findViewById(R.id.stats);
+			    stats.setVisibility(View.INVISIBLE);
+			    
+			    state=State.GAME;
 		  	}
 		  	
 		  	

@@ -30,7 +30,6 @@ class Model{
 	    if (val != -1) {
 		int at = mBoard.activeTile;
 		if (val == 0) {
-		    //turn off the arrow:
 		    mBoard.puzzleTiles[at].arrow = "clear";
 		    mBoard.puzzleTiles[at].number = "clear";
 		}
@@ -62,12 +61,9 @@ class Model{
 	mBoard.swiped(pt, direction);
     }
 
-    public void animate() {
-	mMenu.animate();
-    }
-
     public void draw(MyGLRenderer r) {
 	mBoard.draw(r);
 	mMenu.draw(r);
+	mBorder.draw(r);
     }
 }
