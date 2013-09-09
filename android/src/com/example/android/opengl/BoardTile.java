@@ -9,25 +9,41 @@ class BoardTile extends Tile{
     public int true_solution;
     public int true_arrow;
    
-    public int number;
-    public int arrow;
+    public String number;
+    public String arrow;
 
-    public int texture;
-    public float[] center;
-    public float size;
+    public String color;
 
     public BoardTile(float[] inCenter,float inSize, int solution) {
-    super(inCenter, inSize);
-    touched_flag = false;
+	super(inCenter, inSize);
+	touched_flag = false;
 	true_solution = solution;
-	arrow = -1;
-	number = -1;
+	arrow = "clear";
+	number = "clear";
 	center = inCenter;
 	size = inSize;
+	if (solution == -1)
+	    color = "black";
+	else
+	    color = "white";
     }
 
     public boolean check() {
-    	return true_solution == number;
+    	//return true_solution == number;
+	return false;
     }
+
     
+    public void draw(MyGLRenderer r) {
+	String[] textures = new String[2];
+	textures[0] = arrow;
+	textures[1] = number;
+	String tColor;
+	if (touched_flag)
+	    tColor = "blue";
+	else
+	    tColor = color;
+
+	r.drawTile(center, size, textures, tColor);
+    }    
 }

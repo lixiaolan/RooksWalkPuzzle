@@ -8,7 +8,8 @@ import android.view.MotionEvent;
 class GameView extends GLSurfaceView {
 
     public MyGLRenderer mRenderer;
-    
+    public Model mModel;
+
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         // Create an OpenGL ES 2.0 context.
@@ -28,9 +29,12 @@ class GameView extends GLSurfaceView {
     float swipeTol = 10.0f;
 
     public void setMyRenderer(MyGLRenderer mR) {
-    		this.mRenderer = mR;
-    		setRenderer(this.mRenderer);
-    		
+    		mRenderer = mR;
+    		setRenderer(mRenderer);
+    }
+    
+    public void setModel(Model m) {
+	mModel = m;
     }
     
     @Override
@@ -72,30 +76,31 @@ class GameView extends GLSurfaceView {
 	    pt[0] = 2.0f*(mDownX/getWidth())-1;
 	    pt[1] = -2.0f*(mDownY/getHeight())+1;
 	    
-	    int direction; //0 east, 1 north, 2 west, 3 south
+	    String direction; //0 east, 1 north, 2 west, 3 south
 	    if ( Math.pow(x,2) + Math.pow(y,2)  > Math.pow(swipeTol,2) ) {
 		if (y >= x) {
 		    if ( y >= -x ) {
-			direction = 3; //Note the coordinate system is reflected about the x-axis
+			direction = "down_arrow"; //Note the coordinate system is reflected about the x-axis
 		    }
 		    else {
-			direction = 2;
+			direction = "left_arrow";
 		    }
 		}
 		else {
 		    if ( y >= -x) {
-			direction = 0;
+			direction = "right_arrow";
 		    }
 		    else {
-			direction = 1; //Note the coordinate system is reflected about the x-axis
+			direction = "up_arrow"; //Note the coordinate system is reflected about the x-axis
 		    }
 		}
-
-		mRenderer.swiped(pt, direction);
+		pt = mRenderer.project(pt);
+		mModel.swiped(pt, direction);
 		requestRender();
 	    }
 	    else {
-		mRenderer.touched(pt);
+		pt = mRenderer.project(pt);
+		mModel.touched(pt);
 		requestRender();
 	    }
 	    return true;

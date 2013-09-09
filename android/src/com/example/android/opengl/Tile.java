@@ -17,6 +17,5 @@ class Tile {
     public boolean touched(float[] pt) {
     	return ((pt[0] < center[0]+size)&(pt[0] > center[0]-size)&(pt[1] < center[1]+size)&(pt[1] > center[1]-size));
         }
-    
 }
 

@@ -17,7 +17,7 @@ class Model{
     	mMenu = new Menu();
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
-    
+
     public void resetBoard(){
     	mBoard = new Board();
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
@@ -28,12 +28,15 @@ class Model{
 	    mBoard.clearFlags();
 	    mMenu.menuActive = false;
 	    int val = mMenu.touched(pt);
-	    if (val != -1 ) {
+	    if (val != -1) {
 		int at = mBoard.activeTile;
-		mBoard.puzzleTiles[at].number = val;
 		if (val == 0) {
 		    //turn off the arrow:
-		    mBoard.puzzleTiles[at].arrow = -1;
+		    mBoard.puzzleTiles[at].arrow = "clear";
+		    mBoard.puzzleTiles[at].number = "clear";
+		}
+		else {
+		    mBoard.puzzleTiles[at].number = Integer.toString(val);
 		}
 	    }
 	    else {
@@ -56,13 +59,16 @@ class Model{
 		
     }
     
-    public void swiped(float[] pt, int direction) {
-	//if (mMenu.menuActive)
-
+    public void swiped(float[] pt, String direction) {
 	mBoard.swiped(pt, direction);
     }
 
     public void animate() {
 	mMenu.animate();
+    }
+
+    public void draw(MyGLRenderer r) {
+	mBoard.draw(r);
+	mMenu.draw(r);
     }
 }
