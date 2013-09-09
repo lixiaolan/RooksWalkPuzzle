@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2012 The Android Open Source Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-  
-          http://www.apache.org/licenses/LICENSE-2.0
-  
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
+     Copyright (C) 2012 The Android Open Source Project Licensed under the 
+	Apache License, Version 2.0 (the "License"); you may not use this file except 
+	in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout1"
+    android:id="@+id/FrameLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -25,19 +19,19 @@
 
     <com.example.android.opengl.GameView
         android:id="@+id/surface_view"
-        android:layout_width="match_parent"
-        android:layout_height="413dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_above="@+id/buttonLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_weight="0.12" />
 
-    <ViewSwitcher
+    <ViewAnimator
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/ViewSwitcher1"
-        android:layout_width="match_parent"
-        android:layout_height="414dp"
+        android:id="@+id/ViewAnimator1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -45,48 +39,63 @@
         android:background="@android:color/transparent"
         tools:context=".MainMenuActivity" >
 
-        <LinearLayout
+        <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="729dp"
+            android:id="@+id/MainMenuView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:orientation="vertical" >
 
             <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#FF0000"
-                android:onClick="switchView"
-                android:text="Button1" />
-
-        </LinearLayout>
-
-        <GridLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/GridLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnCount="2"
-            android:orientation="horizontal" >
+                android:id="@+id/stats"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="26dp"
+                android:layout_marginLeft="26dp"
+                android:background="@drawable/stats" />
 
             <Button
-                android:id="@+id/button2"
-                android:layout_column="1"
-                android:layout_gravity="right|bottom"
-                android:layout_row="0"
-                android:background="#00FF00"
-                android:onClick="switchView"
-                android:text="Button2" />
+                android:id="@+id/main_menu_dance_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="#00FFFFFF"
+                android:onClick="manageView"
+                android:text="Dance"
+                android:textAppearance="?android:attr/textAppearanceMediumInverse"
+                android:textColor="#000000"
+                android:textSize="60sp"
+                android:textStyle="normal"
+                android:typeface="sans" />
 
-        </GridLayout>
-    </ViewSwitcher>
+            <Chronometer
+                android:id="@+id/game_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/button1"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/stats"
+                android:layout_marginTop="20dp"
+                android:text="Game Timer"
+                android:visibility="invisible" />
 
-    <Button
-        android:id="@+id/check_solution_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="checkSolution"
-        android:text="Check Solution" 
-        android:layout_gravity="bottom"/>
+            <Button
+                android:id="@+id/footsteps"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBaseline="@+id/stats"
+                android:layout_alignBottom="@+id/stats"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/main_menu_dance_button"
+                android:background="@drawable/footsteps"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+
+    </ViewAnimator>
 
 </FrameLayout>
