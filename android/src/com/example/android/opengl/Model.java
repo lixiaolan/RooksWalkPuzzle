@@ -4,7 +4,8 @@ class Model{
     public Board mBoard;
     public Menu mMenu;
     public Border mBorder;
-
+    public Bee	mBee;
+    
     public Model() {
 	mBoard = new Board();
 	mMenu = new Menu();
