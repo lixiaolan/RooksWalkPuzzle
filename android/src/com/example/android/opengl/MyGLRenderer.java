@@ -6,6 +6,9 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -243,6 +246,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM.buildTextures(mActivityContext, R.drawable.right_arrow,"right_arrow");
 	TM.buildTextures(mActivityContext, R.drawable.menu_circle,"menu_circle");
 	//Create Menu Textures
+
 	for(int i=0;i<mModel.mMenu.menuTiles.length;i++){
 	    TM.buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
 	}
@@ -295,17 +299,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);	
     }
-    
-    public void touched(float[] pt) {
-        pt = project(pt);
-        mModel.touched(pt);
-    }
-    
-    public void swiped(float[] pt, int direction) {
-        pt = project(pt);
-	mModel.swiped(pt, direction);
-    }
-    
+     
     public float[] project(float[] pt) {	
 	pt[0] = -pt[0]*cameraDistance*(screenWidth/screenHeight)/frustumNear;
 	pt[1] = pt[1]*cameraDistance/frustumNear;
@@ -320,103 +314,103 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     private void drawModel() {
 
-	
-
-
-
-
-
-
-
-
 	//Animate the Model
 	mModel.animate();
-	FloatBuffer color;
-	// Draw the board
-	float[] center;
-	float size;
-	int[] boardTileTextures = new int[2];
-	int[] menuTileTextures = new int[2]; 
-	int[] borderTileTextures = new int[2];
+	mModel.draw(this);
 
-	String[] arrows  = {"right_arrow","up_arrow","left_arrow","down_arrow"};
+	// FloatBuffer color;
+	// // Draw the board
+	// float[] center;
+	// float size;
+	// int[] boardTileTextures = new int[2];
+	// int[] menuTileTextures = new int[2]; 
+	// int[] borderTileTextures = new int[2];
 
-	for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
-	    resetTextureArray(boardTileTextures);
-	    center = mModel.mBoard.puzzleTiles[i].center;
-	    size =  mModel.mBoard.puzzleTiles[i].size;
+	// String[] arrows  = {"right_arrow","up_arrow","left_arrow","down_arrow"};
+
+	// for (int i = 0; i < mModel.mBoard.puzzleTiles.length; i++) {
+	//     resetTextureArray(boardTileTextures);
+	//     center = mModel.mBoard.puzzleTiles[i].center;
+	//     size =  mModel.mBoard.puzzleTiles[i].size;
 	    
-	    int number = mModel.mBoard.puzzleTiles[i].number;
-	    int true_solution = mModel.mBoard.puzzleTiles[i].true_solution;
-	    int arrow = mModel.mBoard.puzzleTiles[i].arrow;
-	    if( true_solution == -1){
-		color = mSquareBlackColor;
+	//     int number = mModel.mBoard.puzzleTiles[i].number;
+	//     int true_solution = mModel.mBoard.puzzleTiles[i].true_solution;
+	//     int arrow = mModel.mBoard.puzzleTiles[i].arrow;
+	//     if( true_solution == -1){
+	// 	color = mSquareBlackColor;
 		
-	    } else {
-		if(number > 0) {
-		    boardTileTextures[0] = (TM.library.get(Integer.toString(number)));
-		} 
-		if (arrow != -1) {
-		    boardTileTextures[1] = TM.library.get(arrows[arrow%4]);
-		}
-		if(mModel.mBoard.puzzleTiles[i].touched_flag){
-		    color = mSquareBlueColor;
-		} else {
-		    color = mSquareWhiteColor;
-		}
-	    }
-	    drawTile(center, size, boardTileTextures, color);
-	}
+	//     } else {
+	// 	if(number > 0) {
+	// 	    boardTileTextures[0] = (TM.library.get(Integer.toString(number)));
+	// 	} 
+	// 	if (arrow != -1) {
+	// 	    boardTileTextures[1] = TM.library.get(arrows[arrow%4]);
+	// 	}
+	// 	if(mModel.mBoard.puzzleTiles[i].touched_flag){
+	// 	    color = mSquareBlueColor;
+	// 	} else {
+	// 	    color = mSquareWhiteColor;
+	// 	}
+	//     }
+	//     drawTile(center, size, boardTileTextures, color);
+	// }
 	
-	//Draw the Border
-	for (int i = 0; i < mModel.mBorder.rowTiles.length; i++) {
-	    resetTextureArray(borderTileTextures);
-	    center = mModel.mBorder.columnTiles[i].center;
-	    size =  mModel.mBorder.columnTiles[i].size;
-	    color = mSquareTransparentColor;
-	    borderTileTextures[0] = TM.library.get("border_col_"+Integer.toString(i));
-	    drawTile(center, size, borderTileTextures, color);
+	// //Draw the Border
+	// for (int i = 0; i < mModel.mBorder.rowTiles.length; i++) {
+	//     resetTextureArray(borderTileTextures);
+	//     center = mModel.mBorder.columnTiles[i].center;
+	//     size =  mModel.mBorder.columnTiles[i].size;
+	//     color = mSquareTransparentColor;
+	//     borderTileTextures[0] = TM.library.get("border_col_"+Integer.toString(i));
+	//     drawTile(center, size, borderTileTextures, color);
 	    
 	    
-	    center = mModel.mBorder.rowTiles[i].center;
-	    size =  mModel.mBorder.rowTiles[i].size;
-	    color = mSquareTransparentColor;
-	    borderTileTextures[0] = TM.library.get("border_row_"+Integer.toString(i));
-	    drawTile(center, size, borderTileTextures, color);
-	}
+	//     center = mModel.mBorder.rowTiles[i].center;
+	//     size =  mModel.mBorder.rowTiles[i].size;
+	//     color = mSquareTransparentColor;
+	//     borderTileTextures[0] = TM.library.get("border_row_"+Integer.toString(i));
+	//     drawTile(center, size, borderTileTextures, color);
+	// }
 	
-	// Draw the Menu
-	if (mModel.mMenu.menuActive == true) {
-	    for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
-		resetTextureArray(menuTileTextures);
-		center =  mModel.mMenu.menuTiles[i].center;
-		size =  mModel.mMenu.menuTiles[i].size;
-		color = mSquareTransparentColor;
-		System.out.println("menu_"+Integer.toString(i+1));
-		menuTileTextures[1] = TM.library.get("menu_"+Integer.toString(i+1));
-		menuTileTextures[0] = TM.library.get("menu_circle");
-		drawTile(center, size, menuTileTextures, color);
-	    }
-	}	
+	// // Draw the Menu
+	// if (mModel.mMenu.menuActive == true) {
+	//     for (int i = 0; i < mModel.mMenu.menuTiles.length; i++) {
+	// 	resetTextureArray(menuTileTextures);
+	// 	center =  mModel.mMenu.menuTiles[i].center;
+	// 	size =  mModel.mMenu.menuTiles[i].size;
+	// 	color = mSquareTransparentColor;
+	// 	System.out.println("menu_"+Integer.toString(i+1));
+	// 	menuTileTextures[1] = TM.library.get("menu_"+Integer.toString(i+1));
+	// 	menuTileTextures[0] = TM.library.get("menu_circle");
+	// 	drawTile(center, size, menuTileTextures, color);
+	//     }
+	// }	
     }
     
     
-    private void drawTile(float[] center, float size, int[] textures, FloatBuffer mColor)
+    public void drawTile(float[] center, float size, String[] textures, String color)
     {
+	
+	FloatBuffer mColor;
+	int[] mTextures = new int[2];
+	Map<String, FloatBuffer> colorMap = new HashMap<String, FloatBuffer>();
+	colorMap.put("white", mSquareWhiteColor);
+	colorMap.put("black", mSquareBlackColor);
+	colorMap.put("blue", mSquareBlueColor);
+	colorMap.put("transparent",mSquareTransparentColor);
+
+	mTextures[0] = TM.library.get(textures[0]);
+	mTextures[1] = TM.library.get(textures[1]);	
+	mColor = colorMap.get(color);
 
 
-
-
-
-
-
-	//Apply Textures. Need this to make transparent colors stay transparent.		
+	//Apply MTextures. Need this to make transparent colors stay transparent.		
 	GLES20.glEnable(GLES20.GL_BLEND);
 	GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 	
-	for(int i=0;i<textures.length; i++){
+	for(int i=0;i<mTextures.length; i++){
 	    GLES20.glActiveTexture(GLES20.GL_TEXTURE0+i);        
-	    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[i]);
+	    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[i]);
 	    GLES20.glUniform1i(mTextureHandle.get(i), i);
 	}
 	

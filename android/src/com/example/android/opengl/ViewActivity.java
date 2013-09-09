@@ -37,9 +37,10 @@ public class ViewActivity extends Activity {
 			mModel = new Model();
 		}
 		mRenderer = new MyGLRenderer(this, mModel);
+
 		mGLView = (GameView)findViewById(R.id.surface_view);
 		((GameView)mGLView).setMyRenderer(mRenderer);
-
+		((GameView)mGLView).setModel(mModel);
 	}
 
 	@Override

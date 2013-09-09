@@ -103,16 +103,17 @@ class Board implements Parcelable {
     public boolean touched(float[] pt) {
     	for (int i = 0; i < puzzleTiles.length; i++) {
     	    if( puzzleTiles[i].touched(pt) ) {
-		puzzleTiles[i].touched_flag = !puzzleTiles[i].touched_flag;
-		puzzleTiles[i].texture = 4;
-		activeTile = i;
-		return true;
+		if ( puzzleTiles[i].true_solution != -1) {
+		    puzzleTiles[i].touched_flag = true;
+		    activeTile = i;
+		    return true;
+		}
 	    }
     	}
 	return false;
     }
     
-    public void swiped(float[] pt, int direction) {
+    public void swiped(float[] pt, String direction) {
 	for (int i = 0; i < puzzleTiles.length; i++) {
     	    if( puzzleTiles[i].touched(pt) ) {
 		puzzleTiles[i].arrow = direction;
@@ -128,6 +129,12 @@ class Board implements Parcelable {
     
     static {
 	System.loadLibrary("GeneratePuzzle");
+    }
+
+    public void draw(MyGLRenderer r) {
+	for (int i = 0; i < puzzleTiles.length; i++) {
+	    puzzleTiles[i].draw(r);
+    	}
     }
 
     public static final Parcelable.Creator<Board> CREATOR = new Parcelable.Creator<Board>() {

@@ -8,7 +8,7 @@ import android.os.SystemClock;
 
 class Menu{
 
-    public Tile[] menuTiles = new MenuTile[6];
+    public MenuTile[] menuTiles = new MenuTile[6];
     public boolean menuActive;
     public float radius;
     public float tiltAngle;
@@ -30,7 +30,7 @@ class Menu{
 	    float Sx = tilesCenter[0] + radius*tmpcos;
 	    float Sy = tilesCenter[1] + radius*tmpsin;
 	    float center[] = { Sx, Sy, 0.0f};
-	    menuTiles[i] = new MenuTile(center, tilesSize, 0);
+	    menuTiles[i] = new MenuTile(center, tilesSize, i);
 	}
     }    
 	
@@ -77,7 +77,14 @@ class Menu{
 	    }   
 	}
     }
-    
+
+    public void draw(MyGLRenderer r) {
+	if (menuActive) {
+	    for (int i = 0; i < menuTiles.length; i++) {
+		menuTiles[i].draw(r);
+	    }
+	}
+    }
     // public void swiped(float[] pt, int direction) {
     // 	if (direction == 0) {
     // 	    System.out.println("East");
