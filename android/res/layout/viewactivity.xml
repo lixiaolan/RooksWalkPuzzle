@@ -64,7 +64,7 @@
                 android:layout_centerVertical="true"
                 android:background="#00FFFFFF"
                 android:onClick="manageView"
-                android:text="Dance"
+                android:text="B"
                 android:textAppearance="?android:attr/textAppearanceMediumInverse"
                 android:textColor="#000000"
                 android:textSize="60sp"

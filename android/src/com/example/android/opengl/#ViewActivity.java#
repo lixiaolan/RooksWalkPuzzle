@@ -31,7 +31,7 @@ public class ViewActivity extends Activity {
 	private MyGLRenderer mRenderer;
 	public static final String GAME_PREFS = "ScoreFile";
 	
-	public enum State {MAIN_MENU, GAME, STATS };
+	public enum State {MAIN_MENU,NEWGAME GAME, STATS };
 
 	private State state = State.MAIN_MENU;
 	
