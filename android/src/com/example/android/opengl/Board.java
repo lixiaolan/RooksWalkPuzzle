@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.util.Scanner;
 import java.io.IOException;
 
+import com.example.android.opengl.State.DrawPeriod;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Board extends Graphic implements Parcelable {
+class Board extends Graphic<BoardTile> implements Parcelable {
     
-    public BoardTile[] puzzleTiles;
     public int[] solution ;
     public int[][] path;
     public int[] columnSums;
@@ -25,22 +26,21 @@ class Board extends Graphic implements Parcelable {
     	}
     	
     	buildBoardFromSolution();
-    	state = new BoardMainMenu(puzzleTiles);
+    	state = new BoardMainMenu(tiles);
     }
     
     public Board(Parcel in) {
     	in.readIntArray(solution);
     	buildBoardFromSolution();
-    	state = new BoardMainMenu(puzzleTiles);
+    	state = new BoardMainMenu(tiles);
     }
         
     public void buildBoardFromSolution() {
     	tiles = new BoardTile[36];
-    	puzzleTiles = (BoardTile[])tiles;
     	columnSums = new int[6];
     	rowSums = new int[6];
     	
-    	for (int i = 0; i < puzzleTiles.length; i++) {
+    	for (int i = 0; i < tiles.length; i++) {
     	    float size = .11f;
     	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
     	    //Are they spiraling out?
@@ -51,10 +51,10 @@ class Board extends Graphic implements Parcelable {
     	    System.out.println("Column Sums "+Integer.toString(columnSums[i/6]));
     	    float center[] = { Sx, Sy, 0.0f};
     	    if (solution[i] == -1) {
-    		puzzleTiles[i] = new BoardTile(center, size, solution[i]);
+    		tiles[i] = new BoardTile(center, size, solution[i]);
     	    }
     	    else {
-    		puzzleTiles[i] = new BoardTile(center, size, solution[i]);
+    	    tiles[i] = new BoardTile(center, size, solution[i]);
     	    }
     	    
     	}
@@ -97,10 +97,10 @@ class Board extends Graphic implements Parcelable {
     }
     
     public boolean touched(float[] pt) {
-    	for (int i = 0; i < puzzleTiles.length; i++) {
-    	    if( puzzleTiles[i].touched(pt) ) {
-		if ( puzzleTiles[i].true_solution != -1) {
-		    puzzleTiles[i].touched_flag = true;
+    	for (int i = 0; i < tiles.length; i++) {
+    	    if( tiles[i].touched(pt) ) {
+		if ( tiles[i].true_solution != -1) {
+		    tiles[i].touched_flag = true;
 		    activeTile = i;
 		    return true;
 		}
@@ -110,16 +110,16 @@ class Board extends Graphic implements Parcelable {
     }
     
     public void swiped(float[] pt, String direction) {
-	for (int i = 0; i < puzzleTiles.length; i++) {
-    	    if( puzzleTiles[i].touched(pt) ) {
-		puzzleTiles[i].arrow = direction;
+	for (int i = 0; i < tiles.length; i++) {
+    	    if( tiles[i].touched(pt) ) {
+		tiles[i].arrow = direction;
 	    }
     	}
     }
     
     public void clearFlags() {
-	for (int i = 0; i < puzzleTiles.length; i++) {
-	    puzzleTiles[i].touched_flag = false;
+	for (int i = 0; i < tiles.length; i++) {
+	    tiles[i].touched_flag = false;
     	}
     }
     
@@ -160,61 +160,53 @@ class Board extends Graphic implements Parcelable {
 }
 
 
-class BoardMainMenu implements State {
+class BoardMainMenu extends State<BoardTile> {
 			
 	
-	public BoardMainMenu(Tile[] tiles) {
+	public BoardMainMenu(BoardTile[] tiles) {
 		for (int i = 0; i < tiles.length; i++) {
-    	    float size = .11f;
-    	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
-    	    //Are they spiraling out?
     	    double r = Math.random();
-    	    float Sx = (float)(-3*r+(1-r)*3);
+    	    float Sx = (float)(-2*r+(1-r)*2);
     	    r = Math.random();
-    	    float Sy = (float)(-3*r+(1-r)*3);
+    	    float Sy = (float)(-2*r+(1-r)*2);
     	    float center[] = { Sx, Sy, 0.0f};
     	    tiles[i].center = center;
     	}
+		
+		//Set textures
+		
+		for(int i = 0;i<tiles.length;i++){
+			tiles[i].setTextures("clear", "flower");
+			tiles[i].setColor("transparent");
+		}
+		
 	}
 	
-	public void draw(Tile[] tiles, MyGLRenderer r) {
-		for (int i = 0; i < tiles.length; i++) {
-		    tiles[i].draw(r);
-	    }
-	}
+	public void enterAnimation(BoardTile[] tiles) {}
 	
-	public void enterAnimation(Tile[] tiles) {}
+	public void duringAnimation(BoardTile[] tiles) {}
 	
-	public void exitAnimation(Tile[] tiles) {}
+	public void exitAnimation(BoardTile[] tiles) {}
 	
 }
 
 
-class BoardPlay implements State {
+class BoardPlay extends State<BoardTile> {
 	
 	public Tile[] originalTiles;
 	public long refTime;
 	
-	public BoardPlay(Tile[] tiles) {
+	public BoardPlay(BoardTile[] tiles) {
 		originalTiles = tiles;
 		refTime = System.currentTimeMillis();
 	}
-	
-	public void draw(final Tile[] tiles, MyGLRenderer r) {
-		enterAnimation(tiles);
-		for (int i = 0; i < tiles.length; i++) {
-		    tiles[i].draw(r);
-	    }
-		exitAnimation(tiles);
-	}
-	
-	public void enterAnimation(Tile[] tiles) {
+			
+	public void enterAnimation(BoardTile[] tiles) {
 		long time = System.currentTimeMillis() - refTime;
-		float totalTime = 3000f;
+		float totalTime = 2000f;
 		
 		if(time < totalTime) {
 			for (int i = 0; i < tiles.length; i++) {
-	    	    float size = .11f;
 	    	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    	    float Sy = ( (i%6) - 2.5f )/4.0f;
 	    	    float newX = originalTiles[i].center[0]+time/totalTime*(Sx - originalTiles[i].center[0]);
@@ -223,19 +215,33 @@ class BoardPlay implements State {
 	    	    tiles[i].center = center;
 	    	}
 			
-		} else {
+		} 
+		else if(time<1000.0f) {
 			for (int i = 0; i < tiles.length; i++) {
-	    	    float size = .11f;
-	    	    float Sx = ( (i/6) - 2.5f )/4.0f;
-	    	    float Sy = ( (i%6) - 2.5f )/4.0f;
-	    	    float center[] = { Sx, Sy, 0.0f};
-	    	    tiles[i].center = center;
-	    	}
+				tiles[i].angle = (time-totalTime)*2;
+			}
+		}		
+		else {
+			for(int i = 0;i<tiles.length;i++){
+				tiles[i].angle = 0;
+				tiles[i].setTextures();
+				tiles[i].setColor();
+			}
+			period = DrawPeriod.DURING;
 		}
-    	
 	}
 	
-	public void exitAnimation(Tile[] tiles) {
+	public void duringAnimation(BoardTile[] tiles) {
+		for (int i = 0; i < tiles.length; i++) {
+			((BoardTile)tiles[i]).setTextures();
+    	    float Sx = ( (i/6) - 2.5f )/4.0f;
+    	    float Sy = ( (i%6) - 2.5f )/4.0f;
+    	    float center[] = { Sx, Sy, 0.0f};
+    	    tiles[i].center = center;
+    	}
+	}
+	
+	public void exitAnimation(BoardTile[] tiles) {
 		
 	}
 	

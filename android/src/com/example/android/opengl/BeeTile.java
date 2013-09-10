@@ -16,7 +16,7 @@ public class BeeTile extends Tile{
 	    	String[] textures = new String[2];
 	    	textures[0] = "clear";
 	    	textures[1] = BGTexture;
-	    	r.drawTile(center, size, textures, color);
+	    	r.drawTile(center, size, textures, color, angle);
 	    }
 }
 

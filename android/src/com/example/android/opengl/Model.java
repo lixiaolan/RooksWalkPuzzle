@@ -35,18 +35,18 @@ class Model{
 	    if (val != -1) {
 		int at = mBoard.activeTile;
 		if (val == 0) {
-		    mBoard.puzzleTiles[at].arrow = "clear";
-		    mBoard.puzzleTiles[at].number = "clear";
+		    mBoard.tiles[at].arrow = "clear";
+		    mBoard.tiles[at].number = "clear";
 		}
 		else {
-		    mBoard.puzzleTiles[at].number = Integer.toString(val);
+		    mBoard.tiles[at].number = Integer.toString(val);
 		}
 	    }
 	    else {
 		if( mBoard.touched(pt) ) {
 		    int at = mBoard.activeTile;
-		    pt[0] = mBoard.puzzleTiles[at].center[0];
-		    pt[1] = mBoard.puzzleTiles[at].center[1];
+		    pt[0] = mBoard.tiles[at].center[0];
+		    pt[1] = mBoard.tiles[at].center[1];
 		    mMenu.activate(pt);
 		}	
 	    }
@@ -54,8 +54,8 @@ class Model{
 	else {
 	    if( mBoard.touched(pt) ) {
 		int at = mBoard.activeTile;
-		pt[0] = mBoard.puzzleTiles[at].center[0];
-		pt[1] = mBoard.puzzleTiles[at].center[1];
+		pt[0] = mBoard.tiles[at].center[0];
+		pt[1] = mBoard.tiles[at].center[1];
 		mMenu.activate(pt);
 	    }
 	}

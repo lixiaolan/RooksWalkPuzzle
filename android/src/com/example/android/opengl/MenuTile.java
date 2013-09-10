@@ -1,7 +1,5 @@
 package com.example.android.opengl;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
 
 class MenuTile extends Tile{
 
@@ -22,6 +20,6 @@ class MenuTile extends Tile{
 	String[] textures = new String[2];
 	textures[0] = BGTexture;
 	textures[1] = number;
-	r.drawTile(center, size, textures, color);
+	r.drawTile(center, size, textures, color, angle);
     }
 }

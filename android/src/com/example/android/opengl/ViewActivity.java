@@ -106,7 +106,11 @@ public class ViewActivity extends Activity {
 			    
 			    state=GameState.PLAY;
 			    mModel.setState(GameState.PLAY);
+		  	} else if(state==GameState.PLAY) {
+		  		state = GameState.MAIN_MENU;
+		  		mModel.setState(GameState.MAIN_MENU);
 		  	}
+		  	
 		  	
 		  	
 		  	//ViewAnimator main = (ViewAnimator)findViewById(R.id.ViewAnimator1);
