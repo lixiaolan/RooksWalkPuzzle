@@ -4,17 +4,22 @@ class Model{
     public Board mBoard;
     public Menu mMenu;
     public Border mBorder;
-
+    public Bee	mBee;
+    
+    private GameState state;
+    
     public Model() {
 	mBoard = new Board();
 	mMenu = new Menu();
 	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
+	mBee = new Bee();
     }
 
     public Model(Board b){
     	mBoard = b;
     	mMenu = new Menu();
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
+    	mBee = new Bee();
     }
 
     public void resetBoard(){
@@ -64,6 +69,13 @@ class Model{
     public void draw(MyGLRenderer r) {
 	mBoard.draw(r);
 	mMenu.draw(r);
-	mBorder.draw(r);
+	mBee.draw(r);
+	//mBorder.draw(r);
+    }
+
+    public void setState(GameState s){
+    	mBee.setState(s);
+    	mBoard.setState(s);
+    	System.out.println(mBee.currState());
     }
 }

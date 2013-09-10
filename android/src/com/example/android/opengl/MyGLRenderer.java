@@ -253,6 +253,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM.buildTextures(mActivityContext, R.drawable.left_arrow,"left_arrow");
 	TM.buildTextures(mActivityContext, R.drawable.right_arrow,"right_arrow");
 	TM.buildTextures(mActivityContext, R.drawable.menu_circle,"menu_circle");
+	TM.buildTextures(mActivityContext, R.drawable.bee,"bee");
+	TM.buildTextures(mActivityContext, R.drawable.flower,"flower");
 	//Create Menu Textures
 
 	for(int i=0;i<mModel.mMenu.menuTiles.length;i++){

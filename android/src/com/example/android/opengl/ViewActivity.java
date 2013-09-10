@@ -31,9 +31,8 @@ public class ViewActivity extends Activity {
 	private MyGLRenderer mRenderer;
 	public static final String GAME_PREFS = "ScoreFile";
 	
-	public enum State {MAIN_MENU, GAME, STATS };
 
-	private State state = State.MAIN_MENU;
+	private GameState state = GameState.MAIN_MENU;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +90,7 @@ public class ViewActivity extends Activity {
 	}
 	
 	  public void manageView(View v) {
-		  	if(state==State.MAIN_MENU){
+		  	if(state==GameState.MAIN_MENU){
 		  			
 			    ObjectAnimator animX = ObjectAnimator.ofFloat(this, "x", 30f);
 			    animX.setTarget((Button)findViewById(R.id.main_menu_dance_button));
@@ -114,7 +113,8 @@ public class ViewActivity extends Activity {
 			    Button stats  = (Button)findViewById(R.id.stats);
 			    stats.setVisibility(View.INVISIBLE);
 			    
-			    state=State.GAME;
+			    state=GameState.PLAY;
+			    mModel.setState(GameState.PLAY);
 		  	}
 		  	
 		  	
