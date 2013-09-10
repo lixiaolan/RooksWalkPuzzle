@@ -62,6 +62,16 @@ class Menu{
 	return -1;
     }
 
+    public void draw(MyGLRenderer r) {
+	if (menuActive) {
+	    animate();
+	    for (int i = 0; i < menuTiles.length; i++) {
+		menuTiles[i].draw(r);
+	    }
+	}
+    }
+
+
     public void animate() {
 	long time = System.currentTimeMillis() - refTime;  	
 	float tRadius = Math.min( radius, (radius / 250.0f) * ((int) time) ); 
@@ -78,13 +88,6 @@ class Menu{
 	}
     }
 
-    public void draw(MyGLRenderer r) {
-	if (menuActive) {
-	    for (int i = 0; i < menuTiles.length; i++) {
-		menuTiles[i].draw(r);
-	    }
-	}
-    }
     // public void swiped(float[] pt, int direction) {
     // 	if (direction == 0) {
     // 	    System.out.println("East");

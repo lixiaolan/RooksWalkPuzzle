@@ -5,11 +5,22 @@ import javax.microedition.khronos.opengles.GL10;
 
 class BorderTile extends Tile{
 
-   public int value;
+    public String number;
+    public String BGTexture;
+    public boolean touched_flag;
+    public String color;
 
-    public BorderTile(float[] inCenter,float inSize, int inValue) {
+    public BorderTile(float[] inCenter,float inSize, String inValue) {
     	super(inCenter, inSize);
-    	value = inValue;
+    	number = inValue;
+	color = "transparent";
+	BGTexture = "clear";
     }
-  
+
+    public void draw(MyGLRenderer r) {
+	String[] textures = new String[2];
+	textures[0] = BGTexture;
+	textures[1] = number;
+	r.drawTile(center, size, textures, color);
+    }
 }

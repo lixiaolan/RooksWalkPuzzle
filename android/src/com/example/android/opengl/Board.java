@@ -7,9 +7,9 @@ import java.io.IOException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Board implements Parcelable {
+class Board extends Graphic implements Parcelable {
     
-    public BoardTile[] puzzleTiles = new BoardTile[36];
+    public BoardTile[] puzzleTiles;
     public int[] solution ;
     public int[][] path;
     public int[] columnSums;
@@ -17,30 +17,26 @@ class Board implements Parcelable {
     public int activeTile;
     
     public Board() {
-	
-	try {
-	    readBoard(stringFromJNI(6, 6, 4) );	
-	} catch (IOException e) {
-	    System.err.println("Caught IOException: " + e.getMessage());
-	}
-	
-	buildBoardFromSolution();
-	
+
+    	try {
+    		readBoard(stringFromJNI(6, 6, 4) );	
+    	} catch (IOException e) {
+    		System.err.println("Caught IOException: " + e.getMessage());
+    	}
+    	
+    	buildBoardFromSolution();
+    	state = new BoardMainMenu(puzzleTiles);
     }
     
     public Board(Parcel in) {
     	in.readIntArray(solution);
     	buildBoardFromSolution();
+    	state = new BoardMainMenu(puzzleTiles);
     }
-    
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeIntArray(this.solution);
-     }
-     
-    /*
-     * Format of solution array must match specs laid out in README.txt 
-     */
+        
     public void buildBoardFromSolution() {
+    	tiles = new BoardTile[36];
+    	puzzleTiles = (BoardTile[])tiles;
     	columnSums = new int[6];
     	rowSums = new int[6];
     	
@@ -131,12 +127,6 @@ class Board implements Parcelable {
 	System.loadLibrary("GeneratePuzzle");
     }
 
-    public void draw(MyGLRenderer r) {
-	for (int i = 0; i < puzzleTiles.length; i++) {
-	    puzzleTiles[i].draw(r);
-    	}
-    }
-
     public static final Parcelable.Creator<Board> CREATOR = new Parcelable.Creator<Board>() {
     	 
         @Override
@@ -157,14 +147,96 @@ class Board implements Parcelable {
 		return 0;
 	}
 
-	public boolean checkSolution() {
-		
-		for(int i =0;i<puzzleTiles.length;i++){
-			if(!puzzleTiles[i].check()){
-				return false;
-			}
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeIntArray(this.solution);
+	}
+	
+	public void setState(GameState s){
+		switch(s) {
+			case MAIN_MENU: state = new BoardMainMenu(tiles); break;
+			case PLAY: state  = new BoardPlay(tiles); break;
 		}
-		return true;
+	}
+}
+
+
+class BoardMainMenu implements State {
+			
+	
+	public BoardMainMenu(Tile[] tiles) {
+		for (int i = 0; i < tiles.length; i++) {
+    	    float size = .11f;
+    	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
+    	    //Are they spiraling out?
+    	    double r = Math.random();
+    	    float Sx = (float)(-3*r+(1-r)*3);
+    	    r = Math.random();
+    	    float Sy = (float)(-3*r+(1-r)*3);
+    	    float center[] = { Sx, Sy, 0.0f};
+    	    tiles[i].center = center;
+    	}
+	}
+	
+	public void draw(Tile[] tiles, MyGLRenderer r) {
+		for (int i = 0; i < tiles.length; i++) {
+		    tiles[i].draw(r);
+	    }
+	}
+	
+	public void enterAnimation(Tile[] tiles) {}
+	
+	public void exitAnimation(Tile[] tiles) {}
+	
+}
+
+
+class BoardPlay implements State {
+	
+	public Tile[] originalTiles;
+	public long refTime;
+	
+	public BoardPlay(Tile[] tiles) {
+		originalTiles = tiles;
+		refTime = System.currentTimeMillis();
+	}
+	
+	public void draw(final Tile[] tiles, MyGLRenderer r) {
+		enterAnimation(tiles);
+		for (int i = 0; i < tiles.length; i++) {
+		    tiles[i].draw(r);
+	    }
+		exitAnimation(tiles);
+	}
+	
+	public void enterAnimation(Tile[] tiles) {
+		long time = System.currentTimeMillis() - refTime;
+		float totalTime = 3000f;
+		
+		if(time < totalTime) {
+			for (int i = 0; i < tiles.length; i++) {
+	    	    float size = .11f;
+	    	    float Sx = ( (i/6) - 2.5f )/4.0f;
+	    	    float Sy = ( (i%6) - 2.5f )/4.0f;
+	    	    float newX = originalTiles[i].center[0]+time/totalTime*(Sx - originalTiles[i].center[0]);
+	    	    float newY = originalTiles[i].center[1]+time/totalTime*(Sy - originalTiles[i].center[1]);
+	    	    float center[] = { newX, newY, 0.0f};
+	    	    tiles[i].center = center;
+	    	}
+			
+		} else {
+			for (int i = 0; i < tiles.length; i++) {
+	    	    float size = .11f;
+	    	    float Sx = ( (i/6) - 2.5f )/4.0f;
+	    	    float Sy = ( (i%6) - 2.5f )/4.0f;
+	    	    float center[] = { Sx, Sy, 0.0f};
+	    	    tiles[i].center = center;
+	    	}
+		}
+    	
+	}
+	
+	public void exitAnimation(Tile[] tiles) {
+		
 	}
 	
 }
