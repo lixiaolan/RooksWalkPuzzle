@@ -15,13 +15,14 @@ class StateButton {
 
     public StateButton(android.widget.Button b) {
 	mButton = b;
-	position[0] = -1000.0f;
+	position[0] = 0.0f;
 	position[1] = 0.0f;
 	size = 1.0f;
 	visible = false;
 	moved = true;
-	fadeOut = true;
+	fadeOut = false;
 	fadeIn = false;
+	mButton.setAlpha(0.0f);
     }
 
     // public StateButton(android.widget.Button b, boolean viz) {
@@ -40,7 +41,6 @@ class StateButton {
 
 	if ((visible == true)&(vis == false)){
 	    fadeOut = true;
-	    System.out.println("SET FADE OUT");
 	}
 	else
 	    fadeOut = false;
@@ -53,14 +53,14 @@ class StateButton {
     	size = siz;
 	visible = vis;
 
-	if (visible) {
-	    position[0] = x;
-	    position[1] = y;
-	}
-	else {
-	    position[0] = -1000.0f;
-	    position[1] = -1000.0f;
-	}
+	//	if (visible) {
+	position[0] = x;
+	position[1] = y;
+	    //}
+	// else {
+	//     position[0] = -1000.0f;
+	//     position[1] = -1000.0f;
+	//}
 
     }
 }

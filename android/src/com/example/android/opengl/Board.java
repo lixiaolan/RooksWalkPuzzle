@@ -27,6 +27,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	
     	buildBoardFromSolution();
     	state = new BoardMainMenu(tiles);
+	activeTile = -1;
     }
     
     public Board(Parcel in) {
@@ -99,6 +100,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public boolean touched(float[] pt) {
     	for (int i = 0; i < tiles.length; i++) {
     	    if( tiles[i].touched(pt) ) {
+		//Can't touch black squares (can't touch this! duuuun dun dun dun...)
 		if ( tiles[i].true_solution != -1) {
 		    tiles[i].touched_flag = true;
 		    activeTile = i;

@@ -9,141 +9,146 @@
 	the specific language governing permissions and limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
-    android:id="@+id/FrameLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp" >
+	     xmlns:app="http://schemas.android.com/tools"
+	     android:id="@+id/FrameLayout1"
+	     android:layout_width="fill_parent"
+	     android:layout_height="fill_parent"
+	     android:orientation="vertical"
+	     android:paddingLeft="0dp"
+	     android:paddingRight="0dp" >
+  
+  
+  <com.example.android.opengl.GameView
+      android:id="@+id/surface_view"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_above="@+id/buttonLayout"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentTop="true"
+      android:layout_weight="0.12" />
+  
+  <ViewAnimator
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/ViewAnimator1"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentTop="true"
+      android:background="@android:color/transparent"
+      tools:context=".MainMenuActivity" >
+    
+    
+    
+    <RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/MainMenuView"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+      
+      <Button
+	  android:id="@+id/stats"
+	  android:layout_width="30dp"
+	  android:layout_height="30dp"
+	  android:layout_alignParentBottom="true"
+	  android:layout_alignParentLeft="true"
+	  android:layout_marginBottom="26dp"
+	  android:layout_marginLeft="26dp"
+	  android:background="@drawable/stats"
+	  android:visibility="invisible" />
+      
+      <Button
+	  android:id="@+id/bee_puzzled"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_centerHorizontal="true"
+	  android:layout_centerVertical="true"
+	  android:background="#00FFFFFF"
+	  android:onClick="manageView"
+	  android:text="Bee Puzzled"
+	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
+	  android:textColor="#FF8C00"
+	  android:textSize="40sp"
+	  android:textStyle="normal"
+	  android:typeface="sans"
+	  android:visibility="invisible" />
+      
+      <Button
+	  android:id="@+id/new_game"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_centerHorizontal="true"
+	  android:layout_centerVertical="true"
+	  android:background="#00FFFFFF"
+	  android:onClick="manageView"
+	  android:text="New"
+	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
+	  android:textColor="#FF8C00"
+	  android:textSize="40sp"
+	  android:textStyle="normal"
+	  android:typeface="sans"
+	  android:visibility="invisible" />
+      
+      <Button
+	  android:id="@+id/easy"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_centerHorizontal="true"
+	  android:layout_centerVertical="true"
+	  android:background="#00FFFFFF"
+	  android:onClick="manageView"
+	  android:text="Easy"
+	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
+	  android:textColor="#FF8C00"
+	  android:textSize="40sp"
+	  android:textStyle="normal"
+	  android:typeface="sans"     
+	  android:visibility="invisible" />
 
-    <com.example.android.opengl.GameView
-        android:id="@+id/surface_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/buttonLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_weight="0.12" />
-
-    <ViewAnimator
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/ViewAnimator1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        tools:context=".MainMenuActivity" >
-
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/MainMenuView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/stats"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="26dp"
-                android:layout_marginLeft="26dp"
-                android:background="@drawable/stats"
-		android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/bee_puzzled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="#00FFFFFF"
-                android:onClick="manageView"
-                android:text="Bee Puzzled"
-                android:textAppearance="?android:attr/textAppearanceMediumInverse"
-                android:textColor="#000000"
-                android:textSize="40sp"
-                android:textStyle="normal"
-                android:typeface="sans" />
-
-            <Button
-                android:id="@+id/new_game"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="#00FFFFFF"
-                android:onClick="manageView"
-                android:text="New"
-                android:textAppearance="?android:attr/textAppearanceMediumInverse"
-                android:textColor="#000000"
-                android:textSize="40sp"
-                android:textStyle="normal"
-                android:typeface="sans" />
-
-            <Button
-                android:id="@+id/easy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="#00FFFFFF"
-                android:onClick="manageView"
-                android:text="Easy"
-                android:textAppearance="?android:attr/textAppearanceMediumInverse"
-                android:textColor="#000000"
-                android:textSize="40sp"
-                android:textStyle="normal"
-                android:typeface="sans"     
-                android:visibility="visible" />
-
-	    <Button
-                android:id="@+id/medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="#00FFFFFF"
-                android:onClick="manageView"
-                android:text="Medium"
-                android:textAppearance="?android:attr/textAppearanceMediumInverse"
-                android:textColor="#000000"
-                android:textSize="40sp"
-                android:textStyle="normal"
-                android:typeface="sans"
-                android:visibility="visible" />
-
-
-            <Chronometer
-                android:id="@+id/game_timer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/button1"
-                android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/stats"
-                android:layout_marginTop="20dp"
-                android:text="Game Timer"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/footsteps"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignBaseline="@+id/stats"
-                android:layout_alignBottom="@+id/stats"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/footsteps"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-
-
-    </ViewAnimator>
-
+      
+      <Button
+	  android:id="@+id/medium"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_centerHorizontal="true"
+	  android:layout_centerVertical="true"
+	  android:background="#00FFFFFF"
+	  android:onClick="manageView"
+	  android:text="Medium"
+	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
+	  android:textColor="#FF8C00"
+	  android:textSize="40sp"
+	  android:textStyle="normal"
+	  android:typeface="sans"
+	  android:visibility="invisible" />
+      
+      
+      <Chronometer
+	  android:id="@+id/game_timer"
+	  android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:layout_alignLeft="@+id/button1"
+	  android:layout_alignParentTop="true"
+	  android:layout_alignRight="@+id/stats"
+	  android:layout_marginTop="20dp"
+	  android:text="Game Timer"
+	  android:visibility="invisible" />
+      
+      <Button
+	  android:id="@+id/footsteps"
+	  android:layout_width="30dp"
+	  android:layout_height="30dp"
+	  android:layout_alignBaseline="@+id/stats"
+	  android:layout_alignBottom="@+id/stats"
+	  android:layout_marginLeft="20dp"
+	  android:background="@drawable/footsteps"
+	  android:visibility="invisible" />
+    </RelativeLayout>
+    
+    
+  </ViewAnimator>
+  
 </FrameLayout>

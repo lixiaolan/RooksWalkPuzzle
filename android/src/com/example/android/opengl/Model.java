@@ -28,8 +28,8 @@ class Model{
     }
     
     public void touched(float[] pt) {
+	int oldAt = mBoard.activeTile;
 	if( mMenu.menuActive) {
-	    mBoard.clearFlags();
 	    mMenu.menuActive = false;
 	    int val = mMenu.touched(pt);
 	    if (val != -1) {
@@ -43,27 +43,38 @@ class Model{
 		}
 	    }
 	    else {
+		mBoard.clearFlags();
 		if( mBoard.touched(pt) ) {
 		    int at = mBoard.activeTile;
 		    pt[0] = mBoard.tiles[at].center[0];
 		    pt[1] = mBoard.tiles[at].center[1];
 		    mMenu.activate(pt);
 		}	
+		else
+		    mBoard.activeTile = -1;
 	    }
 	}
+	
 	else {
+	    mBoard.clearFlags();
 	    if( mBoard.touched(pt) ) {
 		int at = mBoard.activeTile;
 		pt[0] = mBoard.tiles[at].center[0];
 		pt[1] = mBoard.tiles[at].center[1];
 		mMenu.activate(pt);
 	    }
+	    else 
+		mBoard.activeTile = -1;
 	}
 		
     }
     
     public void swiped(float[] pt, String direction) {
-	mBoard.swiped(pt, direction);
+	int at = mBoard.activeTile;
+	if (at != -1) {
+	    mBoard.tiles[at].arrow = direction; 
+	    mMenu.menuActive = false;
+	}
     }
 
     public void draw(MyGLRenderer r) {
