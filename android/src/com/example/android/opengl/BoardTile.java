@@ -10,7 +10,8 @@ class BoardTile extends Tile{
     public boolean touched_flag;
     public int true_solution;
     public int true_arrow;
-   
+    public boolean rotate = false;
+    
     public String number = "clear";
     public String arrow = "clear";
 
@@ -30,16 +31,21 @@ class BoardTile extends Tile{
    }
     
    public void setTextures(){
-	   textures[0]  = arrow;
-	   textures[1]  = number;
+	   if(true_solution != -1) {
+		   textures[0]  = arrow;
+		   textures[1]  = number;
+   		} else {
+   			textures[0] = "clear";
+   			textures[1] = "blacksquare";
+   		}
    }
    
    
    public void setColor() {
 		if (true_solution == -1)
-		    color = "black";
+		    color = "transparent";
 		else
-		    color = "white";
+		    color = "transparent";
 
    }
    
@@ -49,12 +55,13 @@ class BoardTile extends Tile{
    
    
     public void draw(MyGLRenderer r) {
-    	String tColor;
-    	if (touched_flag)
+    	String tColor = color;
+    	/*if (touched_flag)
     		tColor = "blue";
     	else
     		tColor = color;
-
+    	*/
+    	
     	r.drawTile(center, size, textures, tColor, angle);
     }    
 }

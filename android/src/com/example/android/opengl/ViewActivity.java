@@ -40,9 +40,9 @@ public class ViewActivity extends Activity {
 		// Create a GLSurfaceView instance and set it
 		// as the ContentView for this Activity
 		if(savedInstanceState != null){
-			mModel = new Model((Board)savedInstanceState.getParcelable("board"));        	
+			mModel = new Model((Board)savedInstanceState.getParcelable("board"), this);        	
 		} else {
-			mModel = new Model();
+			mModel = new Model(this);
 		}
 		mRenderer = new MyGLRenderer(this, mModel);
 

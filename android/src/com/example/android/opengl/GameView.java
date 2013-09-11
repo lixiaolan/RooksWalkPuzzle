@@ -63,6 +63,7 @@ class GameView extends GLSurfaceView {
 	    
 	    mDownX = x;
 	    mDownY = y;
+	    
 	    return true;
 
 	case (MotionEvent.ACTION_UP) :
@@ -94,14 +95,16 @@ class GameView extends GLSurfaceView {
 			direction = "up_arrow"; //Note the coordinate system is reflected about the x-axis
 		    }
 		}
+		System.out.println("I got swiped in GameView");
 		pt = mRenderer.project(pt);
 		mModel.swiped(pt, direction);
 		requestRender();
 	    }
 	    else {
-		pt = mRenderer.project(pt);
-		mModel.touched(pt);
-		requestRender();
+	    	System.out.println("I got touched in GameView");
+	    	pt = mRenderer.project(pt);
+			mModel.touched(pt);
+			requestRender();
 	    }
 	    return true;
 	}	

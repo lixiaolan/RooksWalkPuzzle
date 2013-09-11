@@ -1,6 +1,5 @@
 package com.example.android.opengl;
 
-import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -13,25 +12,14 @@ import java.util.HashMap;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.opengl.GLUtils;
 import android.opengl.Matrix;
-import android.util.Log;
-import android.os.SystemClock;
 
 import com.example.android.opengl.R;
 import com.example.android.opengl.common.RawResourceReader;
 import com.example.android.opengl.common.ShaderHelper;
-import com.example.android.opengl.common.TextureHelper;
 
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
@@ -203,7 +191,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 	//Set the background frame col// or
-	GLES20.glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+	GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 	
 	// Position the eye in front of the origin.
@@ -244,7 +232,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     
     public void buildTextures() {
-	TM = new TextureManager();
+	TM = new TextureManager(mActivityContext);
 	int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
 	int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
 	TM.buildTextures("0123456789", x_coords, y_coords,64);
@@ -255,6 +243,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM.buildTextures(mActivityContext, R.drawable.menu_circle,"menu_circle");
 	TM.buildTextures(mActivityContext, R.drawable.bee,"bee");
 	TM.buildTextures(mActivityContext, R.drawable.flower,"flower");
+	TM.buildTextures(mActivityContext, R.drawable.crayonsquare, "crayonbg");
+	TM.buildTextures(mActivityContext, R.drawable.papertexture2, "paperbg");
+	TM.buildTextures(mActivityContext, R.drawable.boardbg, "boardbg");
+	TM.buildTextures(mActivityContext, R.drawable.blacksquare, "blacksquare");
 	//Create Menu Textures
 
 	for(int i=0;i<mModel.mMenu.menuTiles.length;i++){
@@ -262,17 +254,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	}
 	//Create Border Textures
 	for(int i=0;i<mModel.mBoard.rowSums.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBoard.rowSums[i]),64,128,"border_row_"+Integer.toString(i),50);
+	    TM.buildTextures(Integer.toString(mModel.mBoard.rowSums[i]),64,128,"border_row_"+Integer.toString(mModel.mBoard.rowSums[i]),50);
 	}
 	for(int i=0;i<mModel.mBoard.columnSums.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBoard.columnSums[i]),105,64,"border_col_"+Integer.toString(i),50);
+		System.out.println("texture time "+"border_col_"+Integer.toString(i));
+		TM.buildTextures(Integer.toString(mModel.mBoard.columnSums[i]),105,64,"border_col_"+Integer.toString(mModel.mBoard.columnSums[i]),50);
 	}
     }
     
     @Override
     public void onDrawFrame(GL10 unused) {
 	// Draw background color
-	GLES20.glClearColor(0.95f, 0.90f, 0.8f, 0.0f);
+	GLES20.glClearColor(0.0f, 0.00f, 0.0f, 0.0f);
 	GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);			        
 	// Set our per-vertex lighting program.
 	GLES20.glUseProgram(mProgramHandle);
@@ -328,9 +321,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     public void drawTile(float[] center, float size, String[] textures, String color, float angle)
     {
 	
-	mTextures[0] = TM.library.get(textures[0]);
-	mTextures[1] = TM.library.get(textures[1]);	
-	mColor = colorMap.get(color);
+    	mTextures[0] = TM.library.get(textures[0]);
+    	mTextures[1] = TM.library.get(textures[1]);	
+    	mColor = colorMap.get(color);
 
 
 	//Apply MTextures. Need this to make transparent colors stay transparent.		
@@ -351,7 +344,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	// long time = SystemClock.uptimeMillis() % 12000L;
 	// float angle = 0.030f * ((int) time);
-	Matrix.rotateM(mModelMatrix, 0, angle, 1.0f, 1.0f, 0.0f);
+	Matrix.rotateM(mModelMatrix, 0, angle, 0.0f, 0.0f, 1.0f);
 	
 	// Pass in the position information
 	mSquarePositions.position(0);		

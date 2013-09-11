@@ -10,14 +10,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Typeface;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
 public class TextureManager {
 	Map <String, Integer> library = new HashMap<String, Integer>();
+	Typeface tf;
 	
-	public TextureManager() {
+	public TextureManager(Context context) {
 		library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
+		Typeface tf = Typeface.createFromAsset(context.getAssets(), "Archistico_Simple.ttf");
 	}
 	
 	public void buildTextures(String a, int[] x, int[] y, int font){
@@ -97,10 +100,11 @@ public class TextureManager {
         Paint textPaint = new Paint();
         textPaint.setTextSize(font);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setStyle(Style.FILL);
+        textPaint.setStyle(Style.STROKE);
         textPaint.setStrokeWidth(4);
         textPaint.setAntiAlias(true);
         textPaint.setARGB(0xFF, 0x00, 0x00, 0x00);
+        textPaint.setTypeface(tf);
         // draw the text centered
         canvas.drawColor(Color.TRANSPARENT);
         canvas.drawText(text, x , y, textPaint);
