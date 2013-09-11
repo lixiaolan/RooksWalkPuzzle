@@ -8,10 +8,12 @@ abstract class Tile {
  
     public float[] center;
     public float size;
+    public float angle;
     
     public Tile(float[] inCenter,float inSize) {
 	center = inCenter;
 	size = inSize;
+	angle = 0.0f;
     }
 
     public boolean touched(float[] pt) {

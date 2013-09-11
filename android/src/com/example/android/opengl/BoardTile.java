@@ -5,12 +5,14 @@ import javax.microedition.khronos.opengles.GL10;
 
 class BoardTile extends Tile{
 
+	public String[] textures = {"clear", "clear"};
+	
     public boolean touched_flag;
     public int true_solution;
     public int true_arrow;
    
-    public String number;
-    public String arrow;
+    public String number = "clear";
+    public String arrow = "clear";
 
     public String color;
 
@@ -18,32 +20,41 @@ class BoardTile extends Tile{
 	super(inCenter, inSize);
 	touched_flag = false;
 	true_solution = solution;
-	arrow = "clear";
-	number = "clear";
 	center = inCenter;
 	size = inSize;
-	if (solution == -1)
-	    color = "black";
-	else
-	    color = "white";
     }
 
-    public boolean check() {
-    	//return true_solution == number;
-	return false;
-    }
-
+   public void setTextures(String texture0, String texture1) {
+	   textures[0] = texture0;
+	   textures[1] = texture1;
+   }
     
-    public void draw(MyGLRenderer r) {
-	String[] textures = new String[2];
-	textures[0] = arrow;
-	textures[1] = number;
-	String tColor;
-	if (touched_flag)
-	    tColor = "blue";
-	else
-	    tColor = color;
+   public void setTextures(){
+	   textures[0]  = arrow;
+	   textures[1]  = number;
+   }
+   
+   
+   public void setColor() {
+		if (true_solution == -1)
+		    color = "black";
+		else
+		    color = "white";
 
-	r.drawTile(center, size, textures, tColor);
+   }
+   
+   public void setColor(String c) {
+	   color = c;
+   }
+   
+   
+    public void draw(MyGLRenderer r) {
+    	String tColor;
+    	if (touched_flag)
+    		tColor = "blue";
+    	else
+    		tColor = color;
+
+    	r.drawTile(center, size, textures, tColor, angle);
     }    
 }

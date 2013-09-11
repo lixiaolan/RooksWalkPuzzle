@@ -21,6 +21,6 @@ class BorderTile extends Tile{
 	String[] textures = new String[2];
 	textures[0] = BGTexture;
 	textures[1] = number;
-	r.drawTile(center, size, textures, color);
+	r.drawTile(center, size, textures, color, angle);
     }
 }

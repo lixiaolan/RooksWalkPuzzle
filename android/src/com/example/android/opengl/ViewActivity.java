@@ -96,6 +96,7 @@ public class ViewActivity extends Activity {
 		animateButtons();
 	}
 	
+
     public void manageView(View v) {
 	//if(state==GameState.MAIN_MENU){
 	    switch (v.getId()) {

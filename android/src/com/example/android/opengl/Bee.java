@@ -25,7 +25,7 @@ public class Bee extends Graphic{
 
 }
 
-class BeeWander implements State {
+class BeeWander extends State {
 	public long refTime;
 
 	private float targetX = 0;
@@ -35,12 +35,12 @@ class BeeWander implements State {
 	private float startY = 0;
 
 
-	public void draw(Tile[] tiles, MyGLRenderer r) {
-		enterAnimation(tiles);
-		((BeeTile)(tiles[0])).draw(r);
+	public void enterAnimation(Tile[] tiles){
+		period = DrawPeriod.DURING;
 	}
 
-	public void enterAnimation(Tile[] tiles){
+
+	public void duringAnimation(Tile[] tiles) {
 		BeeTile bee = (BeeTile)tiles[0];
 		long time = System.currentTimeMillis() - refTime;
 		float interval = 5000f;
@@ -57,25 +57,26 @@ class BeeWander implements State {
 			targetY = -1.5f*r+(1-r)*1.5f;
 		}
 	}
-
+	
 	public void exitAnimation(Tile[] tiles){
 
 	}
 
 }
 
-class BeeFixed implements State {
-	public void draw(Tile[] tiles, MyGLRenderer r) {
-		enterAnimation(tiles);
-		((BeeTile)(tiles[0])).draw(r);
-		exitAnimation(tiles);
-	}
-
+class BeeFixed extends State {
+	
+	float[] c  = {-.75f,-.75f,0.0f};
+	
 	public void enterAnimation(Tile[] tiles){
-		float[] c  = {-.75f,-.75f,0.0f};
+		
 		tiles[0].center = c;
 	}
 
+	public void duringAnimation(Tile[] tiles) {
+		tiles[0].center = c;
+	}
+	
 	public void exitAnimation(Tile[] tiles){
 
 	}
