@@ -5,16 +5,16 @@ import android.os.Vibrator;
 
 
 class Model{
-    private Board mBoard;
-    private Menu mMenu;
-    private Border mBorder;
-    private Bee	mBee;
-    private Background mBg;
-    private Background mBoardBg;
-    private GameState state;
+    public Board mBoard;
+    public Menu mMenu;
+    public Border mBorder;
+    public Bee	mBee;
+    public Background mBg;
+    public Background mBoardBg;
+    public GameState state;
     
-    private Vibrator vibe;
-    private Context context;
+    public Vibrator vibe;
+    public Context context;
     
     public Model(Context c) {
     	initiateMembers(c,new Board());
