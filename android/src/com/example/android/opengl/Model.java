@@ -5,41 +5,37 @@ import android.os.Vibrator;
 
 
 class Model{
-    public Board mBoard;
-    public Menu mMenu;
-    public Border mBorder;
-    public Bee	mBee;
-    public Background mBg;
-    public Background mBoardBg;
+    private Board mBoard;
+    private Menu mMenu;
+    private Border mBorder;
+    private Bee	mBee;
+    private Background mBg;
+    private Background mBoardBg;
     private GameState state;
     
-    Vibrator vibe;
-    Context context;
+    private Vibrator vibe;
+    private Context context;
     
     public Model(Context c) {
-	mBoard = new Board();
-	mMenu = new Menu();
-	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
-	mBee = new Bee();
-	mBg = new Background("paperbg", 2f);
-	mBoardBg = new Background("boardbg", .75f);
-    context = c;
-	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
-	state = GameState.MAIN_MENU;
+    	initiateMembers(c,new Board());
     }
 
-    public Model(Board b, Context c){
+    public Model(Context c, Board b){
+    	initiateMembers(c, b);
+    }
+
+    public void initiateMembers(Context c, Board b){
     	mBoard = b;
     	mMenu = new Menu();
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     	mBee = new Bee();
     	mBg = new Background("paperbg", 2f);
-    	mBoardBg = new Background("boardbg", .9f);
+    	mBoardBg = new Background("boardbg", .75f);
     	context = c;
     	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
-        state = GameState.MAIN_MENU;
+    	state = GameState.MAIN_MENU;
     }
-
+    
     public void resetBoard(){
     	mBoard = new Board();
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
@@ -104,11 +100,11 @@ class Model{
     }
     
     public void swiped(float[] pt, String direction) {
-	int at = mBoard.activeTile;
-	if (at != -1) {
-	    mBoard.tiles[at].arrow = direction; 
-	    mMenu.menuActive = false;
-	}
+    	int at = mBoard.activeTile;
+    	if (at != -1) {
+    		mBoard.tiles[at].arrow = direction; 
+    		mMenu.menuActive = false;
+    	}
     }
 
     public void draw(MyGLRenderer r) {
@@ -127,6 +123,5 @@ class Model{
     	state = s;
     	mBee.setState(s);
     	mBoard.setState(s);
-    	System.out.println(mBee.currState());
     }
 }

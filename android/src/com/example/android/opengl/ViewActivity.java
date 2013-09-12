@@ -31,11 +31,8 @@ public class ViewActivity extends Activity {
 
     private GLSurfaceView mGLView;
     private Model mModel;
-    private MyGLRenderer mRenderer;
-    public static final String GAME_PREFS = "ScoreFile";
-    
-    public StateButton[] allButtons = new StateButton[4];
-    
+    private MyGLRenderer mRenderer;    
+    private StateButton[] allButtons = new StateButton[4];
     private GameState state = GameState.MAIN_MENU;
    	
     @Override
@@ -47,9 +44,9 @@ public class ViewActivity extends Activity {
 	// Create a GLSurfaceView instance and set it
 	// as the ContentView for this Activity
 	if(savedInstanceState != null){
-	    mModel = new Model((Board)savedInstanceState.getParcelable("board"));        	
+	    mModel = new Model(this, (Board)savedInstanceState.getParcelable("board"));        	
 	} else {
-	    mModel = new Model();
+	    mModel = new Model(this);
 	}
 	mRenderer = new MyGLRenderer(this, mModel);
 	
@@ -77,18 +74,17 @@ public class ViewActivity extends Activity {
 	    });
 
 
-	// String fontPath = "Archistico_Simple.ttf";
-	// Button bee_puzzled = (Button) findViewById(R.id.bee_puzzled);
-	// // Loading Font Face
-	// Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
-	// // Applying font
-	// bee_puzzled.setTypeface(tf);
+	String fontPath = "Archistico_Simple.ttf";
+	Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
+	for(int i=0;i< allButtons.length;i++){
+		allButtons[i].mButton.setTypeface(tf);
+	}
 	
     }
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-	outState.putParcelable("board", mModel.mBoard);
+	//outState.putParcelable("board", mModel.mBoard);
 	super.onSaveInstanceState(outState);
     }
     
