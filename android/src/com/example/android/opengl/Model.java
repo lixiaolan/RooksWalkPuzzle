@@ -79,9 +79,10 @@ class Model{
 
     public void draw(MyGLRenderer r) {
 	mBoard.draw(r);
+	mBorder.draw(r);
 	mMenu.draw(r);
 	mBee.draw(r);
-	mBorder.draw(r);
+
     }
 
     public void setState(GameState s){
