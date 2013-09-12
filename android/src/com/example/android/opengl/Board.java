@@ -13,9 +13,9 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public int[] columnSums;
     public int[] rowSums;
     
-    public Board() {
+    public Board(int length) {
     	try {
-    		readBoard(stringFromJNI(6, 6, 6) );	
+    		readBoard(stringFromJNI(6, 6, length) );	
     	} catch (IOException e) {
     		System.err.println("Caught IOException: " + e.getMessage());
     	}

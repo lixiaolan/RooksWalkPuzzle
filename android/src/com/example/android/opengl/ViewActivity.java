@@ -32,10 +32,11 @@ public class ViewActivity extends Activity {
     private GLSurfaceView mGLView;
     private Model mModel;
     private MyGLRenderer mRenderer;    
-    private StateButton[] allButtons = new StateButton[4];
     private GameState state = GameState.MAIN_MENU;
-   	
-    @Override
+   	StateButton bee_puzzled;
+   	StateButton short_puz;
+   	StateButton medium_puz;
+   	@Override
     public void onCreate(Bundle savedInstanceState) {
 
 	super.onCreate(savedInstanceState);
@@ -56,11 +57,10 @@ public class ViewActivity extends Activity {
 	
 
 	//Store all buttons in one array for now.  Change to a map later for clarity.
-	allButtons[0] = new StateButton((Button)findViewById(R.id.bee_puzzled));
-	allButtons[1] = new StateButton((Button)findViewById(R.id.new_game));
-	allButtons[2] = new StateButton((Button)findViewById(R.id.easy));
-	allButtons[3] = new StateButton((Button)findViewById(R.id.medium));
-
+	bee_puzzled = new StateButton((Button)findViewById(R.id.bee_puzzled));
+	short_puz = new StateButton((Button)findViewById(R.id.short_puz));
+	medium_puz = new StateButton((Button)findViewById(R.id.medium_puz));
+	
 	View yourLayout = findViewById(R.id.surface_view);
 	final ViewTreeObserver vto = yourLayout.getViewTreeObserver();
 	vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
@@ -69,17 +69,17 @@ public class ViewActivity extends Activity {
 		    float h = (float) mGLView.getHeight();
 		    float w = (float) mGLView.getWidth();
 		    long[] pOne = {0,0,1000};
-		    allButtons[0].setState(0.1f*w, 0.5f*h, 1.0f, true, pOne);
+		    bee_puzzled.setState(0.1f*w, 0.5f*h, 1.0f, true, pOne);
 		}
 	    });
 
-
+/*
 	String fontPath = "Archistico_Simple.ttf";
 	Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
 	for(int i=0;i< allButtons.length;i++){
 		allButtons[i].mButton.setTypeface(tf);
 	}
-	
+	*/
 	
 	
     }
@@ -124,29 +124,27 @@ public class ViewActivity extends Activity {
 	long[] pTwo = {1000, 1000, 0};
 	switch (v.getId()) {
 	case R.id.bee_puzzled:
-
-	    allButtons[0].setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
-	    allButtons[1].setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
-	    allButtons[2].setState(0.1f*w,0.5f*h, 1.0f, false,pOne);
-	    allButtons[3].setState(0.1f*w,0.5f*h, 1.0f, false,pOne);
-
+		bee_puzzled.setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
+		short_puz.setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
+		medium_puz.setState(0.1f*w,0.6f*h, 1.0f, true,pOne);
 	    break;
-	case R.id.new_game:
-	    allButtons[0].setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
-	    allButtons[1].setState(0.1f*w,0.2f*h, 1.0f, true,pOne);	
-	    allButtons[2].setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
-	    allButtons[3].setState(0.1f*w,0.6f*h, 1.0f, true,pOne);
-
-	    break;
-	case R.id.easy:
-	    allButtons[0].setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
-	    allButtons[1].setState(0.1f*w,0.2f*h, 1.0f, false,pTwo);
-	    allButtons[2].setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
-	    allButtons[3].setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
-
-	    state=GameState.PLAY;
-	    mModel.setState(GameState.PLAY);
 	    
+	case R.id.short_puz:
+		bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+		short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+		medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+	    state=GameState.PLAY;
+	    mModel.mBoard = new Board(10);
+	    mModel.setState(GameState.PLAY);
+	    break;
+	    
+	case R.id.medium_puz:
+		bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+		short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+		medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+	    state=GameState.PLAY;
+	    mModel.mBoard = new Board(14);
+	    mModel.setState(GameState.PLAY);
 	    break;
 	}
 	//}

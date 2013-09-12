@@ -17,7 +17,7 @@ class Model{
     private Context context;
     
     public Model(Context c) {
-    	initiateMembers(c,new Board());
+    	initiateMembers(c, new Board(6));
     }
 
     public Model(Context c, Board b){
@@ -37,7 +37,7 @@ class Model{
     }
     
     public void resetBoard(){
-    	mBoard = new Board();
+    	mBoard = new Board(6);
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
     
@@ -65,16 +65,16 @@ class Model{
     			break;
     	
     	case MAIN_MENU: 
-    		if(pt[0]< mBee.bee.center[0]+0.25f && pt[0] > mBee.bee.center[0]-.25f 
-    				&& pt[1]< mBee.bee.center[1]+0.25f && pt[1] > mBee.bee.center[1]-.25f ){
-    			vibe.vibrate(500);
-    		}
     		at = mBoard.touched(pt);
     		if(at != -1) {
     			mBoard.tiles[at].rotate = true;
     		}
     		break;
     		} 
+    	
+    		if(mBee.touched(pt)){
+			vibe.vibrate(500);
+			}
     	}
     
     

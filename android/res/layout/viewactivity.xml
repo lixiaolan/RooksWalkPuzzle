@@ -76,31 +76,17 @@
 	  android:typeface="sans"
 	  android:visibility="invisible" />
       
-      <Button
-	  android:id="@+id/new_game"
-	  android:layout_width="wrap_content"
-	  android:layout_height="wrap_content"
-	  android:layout_centerHorizontal="true"
-	  android:layout_centerVertical="true"
-	  android:background="#00FFFFFF"
-	  android:onClick="manageView"
-	  android:text="New"
-	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
-	  android:textColor="#FF8C00"
-	  android:textSize="40sp"
-	  android:textStyle="normal"
-	  android:typeface="sans"
-	  android:visibility="invisible" />
+     
       
       <Button
-	  android:id="@+id/easy"
+	  android:id="@+id/short_puz"
 	  android:layout_width="wrap_content"
 	  android:layout_height="wrap_content"
 	  android:layout_centerHorizontal="true"
 	  android:layout_centerVertical="true"
 	  android:background="#00FFFFFF"
 	  android:onClick="manageView"
-	  android:text="Easy"
+	  android:text="Stroll"
 	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
 	  android:textColor="#FF8C00"
 	  android:textSize="40sp"
@@ -110,14 +96,14 @@
 
       
       <Button
-	  android:id="@+id/medium"
+	  android:id="@+id/medium_puz"
 	  android:layout_width="wrap_content"
 	  android:layout_height="wrap_content"
 	  android:layout_centerHorizontal="true"
 	  android:layout_centerVertical="true"
 	  android:background="#00FFFFFF"
 	  android:onClick="manageView"
-	  android:text="Medium"
+	  android:text="Walk"
 	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
 	  android:textColor="#FF8C00"
 	  android:textSize="40sp"
