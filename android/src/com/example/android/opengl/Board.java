@@ -24,6 +24,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	
     	buildBoardFromSolution();
     	state = new BoardMainMenu(tiles);
+	activeTile = -1;
     }
     
     public Board(Parcel in) {

@@ -272,7 +272,7 @@ bool RookBoard::makeBoard(int depth) {
   for (int i = 0; i < lm.size(); i++) {
     // Add the ith legal move to the list
     positions.push_back(lm[i]);
-    // and put the correct number into the borad.
+    // and put the correct number into the board.
     pos last = (*(positions.end()-1) - *(positions.end()-2));
     moveArea[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
     // Now recursivly call makeBoard with one less depth.

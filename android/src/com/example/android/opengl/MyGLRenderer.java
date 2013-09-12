@@ -193,27 +193,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	//Set the background frame col// or
 	GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	GLES20.glDisable(GLES20.GL_DEPTH_TEST);
-	
-	// Position the eye in front of the origin.
-	final float eyeX = 0.0f;
-	final float eyeY = 0.0f;
-	cameraDistance = 1.5f;
-	
-	// We are looking toward the distance
-	final float lookX = 0.0f;
-	final float lookY = 0.0f;
-	final float lookZ = 0.0f;
-	
-	// Set our up vector. This is where our head would be pointing were we holding the camera.
-	final float upX = 0.0f;
-	final float upY = 1.0f;
-	final float upZ = 0.0f;
-	
-	// Set the view matrix. This matrix can be said to represent the camera position.
-	// NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
-	// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
-	Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, -cameraDistance, lookX, lookY, lookZ, upX, upY, upZ);		
-	
+		
+
+	//ViewMatrix Used to be here!!!!!!!!!!!!!!!!!!! NOw in "onSurfaceChanged"
+
+
+
 	// Calculate the projection and view transformation
 	//      Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 	
@@ -283,6 +268,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
+
+	float magicNumber = 1.0f;
 	
 	// Set the OpenGL viewport to the same size as the surface.
 	GLES20.glViewport(0, 0, width, height);
@@ -299,7 +286,30 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	frustumNear = 1.0f;
 	final float far = 5.0f;
 	
-	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);	
+	Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, frustumNear, far);
+
+	// Position the eye in front of the origin.
+	final float eyeX = 0.0f;
+	final float eyeY = 0.0f;
+	cameraDistance = magicNumber*frustumNear/ratio;
+	
+	// We are looking toward the distance
+	final float lookX = 0.0f;
+	final float lookY = 0.0f;
+	final float lookZ = 0.0f;
+	
+	// Set our up vector. This is where our head would be pointing were we holding the camera.
+	final float upX = 0.0f;
+	final float upY = 1.0f;
+	final float upZ = 0.0f;
+	
+	// Set the view matrix. This matrix can be said to represent the camera position.
+	// NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
+	// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
+	Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, -cameraDistance, lookX, lookY, lookZ, upX, upY, upZ);		
+
+
+	
     }
      
     public float[] project(float[] pt) {	

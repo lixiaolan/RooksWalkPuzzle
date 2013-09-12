@@ -104,7 +104,11 @@ class Model{
     }
     
     public void swiped(float[] pt, String direction) {
-	mBoard.swiped(pt, direction);
+	int at = mBoard.activeTile;
+	if (at != -1) {
+	    mBoard.tiles[at].arrow = direction; 
+	    mMenu.menuActive = false;
+	}
     }
 
     public void draw(MyGLRenderer r) {
