@@ -20,7 +20,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public Board() {
 
     	try {
-    		readBoard(stringFromJNI(6, 6, 4) );	
+    		readBoard(stringFromJNI(6, 6, 14) );	
     	} catch (IOException e) {
     		System.err.println("Caught IOException: " + e.getMessage());
     	}

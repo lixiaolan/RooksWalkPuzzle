@@ -247,10 +247,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	}
 	//Create Border Textures
 	for(int i=0;i<mModel.mBoard.rowSums.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBoard.rowSums[i]),64,128,"border_row_"+Integer.toString(i),50);
+	    TM.buildTextures(Integer.toString(mModel.mBoard.rowSums[i]),64,128,"border_row_"+Integer.toString(mModel.mBoard.rowSums[i]),50);
 	}
 	for(int i=0;i<mModel.mBoard.columnSums.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBoard.columnSums[i]),105,64,"border_col_"+Integer.toString(i),50);
+	    TM.buildTextures(Integer.toString(mModel.mBoard.columnSums[i]),105,64,"border_col_"+Integer.toString(mModel.mBoard.columnSums[i]),50);
 	}
     }
     

@@ -81,7 +81,7 @@ class Model{
 	mBoard.draw(r);
 	mMenu.draw(r);
 	mBee.draw(r);
-	//mBorder.draw(r);
+	mBorder.draw(r);
     }
 
     public void setState(GameState s){
