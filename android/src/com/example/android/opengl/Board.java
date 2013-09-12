@@ -1,10 +1,7 @@
 package com.example.android.opengl;
-import java.io.FileReader;
-import java.io.BufferedReader;
 import java.util.Scanner;
 import java.io.IOException;
 
-import com.example.android.opengl.State.DrawPeriod;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -20,7 +17,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public Board() {
 
     	try {
-    		readBoard(stringFromJNI(6, 6, 16) );	
+    		readBoard(stringFromJNI(6, 6, 14) );	
     	} catch (IOException e) {
     		System.err.println("Caught IOException: " + e.getMessage());
     	}
@@ -42,9 +39,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	rowSums = new int[6];
     	
     	for (int i = 0; i < tiles.length; i++) {
-    	    float size = .11f;
-    	    //2.5, why? Also, somehow these constants should come down from model? Needs a restructuring.
-    	    //Are they spiraling out?
+    	    float size = .12f;
     	    float Sx = ( (i/6) - 2.5f )/4.0f;
     	    float Sy = ( (i%6) - 2.5f )/4.0f;
     	    columnSums[i%6] += Math.max(solution[i],0);
@@ -100,13 +95,10 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public boolean touched(float[] pt) {
     	for (int i = 0; i < tiles.length; i++) {
     	    if( tiles[i].touched(pt) ) {
-		//Can't touch black squares (can't touch this! duuuun dun dun dun...)
-		if ( tiles[i].true_solution != -1) {
-		    tiles[i].touched_flag = true;
-		    activeTile = i;
-		    return true;
-		}
-	    }
+    	    	tiles[i].touched_flag = true;
+    	    	activeTile = i;
+    	    	return true;
+    	    }
     	}
 	return false;
     }
@@ -164,6 +156,8 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 
 class BoardMainMenu extends State<BoardTile> {
 			
+	boolean[] rotateTiles = new boolean[36];
+	long[] refTime = new long[36];
 	
 	public BoardMainMenu(BoardTile[] tiles) {
 		for (int i = 0; i < tiles.length; i++) {
@@ -184,9 +178,29 @@ class BoardMainMenu extends State<BoardTile> {
 		
 	}
 	
-	public void enterAnimation(BoardTile[] tiles) {}
+	public void enterAnimation(BoardTile[] tiles) {
+		period = DrawPeriod.DURING;
+	}
 	
-	public void duringAnimation(BoardTile[] tiles) {}
+	public void duringAnimation(BoardTile[] tiles) {
+		for(int i=0;i<tiles.length;i++){
+			if(tiles[i].rotate){
+				System.out.println("I need to rotate bad.");
+				refTime[i] = System.currentTimeMillis();
+				rotateTiles[i] = true;
+				tiles[i].rotate = false;
+			}
+			long time = System.currentTimeMillis()-refTime[i];
+			if(time < 1000f && rotateTiles[i]==true){
+				System.out.println("ROTATE ME");
+				tiles[i].angle = time*.1f;
+			} else{
+				rotateTiles[i] = false;
+				tiles[i].angle = 0;
+			}
+			
+		}
+	}
 	
 	public void exitAnimation(BoardTile[] tiles) {}
 	
