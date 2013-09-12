@@ -71,9 +71,8 @@ public class ViewActivity extends Activity {
 		public void onGlobalLayout() {
 		    float h = (float) mGLView.getHeight();
 		    float w = (float) mGLView.getWidth();
-		    allButtons[0].setState(0.1f*w, 0.5f*h, 1.0f, true);
-		    allButtons[0].mButton.setAlpha(0.0f);
-		    animateButtons();
+		    long[] pOne = {0,0,1000};
+		    allButtons[0].setState(0.1f*w, 0.5f*h, 1.0f, true, pOne);
 		    //vto.removeOnGlobalLayoutListener(this);
 		}
 	    });
@@ -123,27 +122,31 @@ public class ViewActivity extends Activity {
 	//if(state==GameState.MAIN_MENU){
 	float h = (float) mGLView.getHeight();
 	float w = (float) mGLView.getWidth();
+
+	long[] pOne = {0,1000,1000};
+	long[] pTwo = {1000, 1000, 0};
 	switch (v.getId()) {
 	case R.id.bee_puzzled:
-	    allButtons[0].setState(0.1f*w,0.1f*h, 1.0f, true);
-	    allButtons[1].setState(0.1f*w,0.5f*h, 1.0f, true);
-	    allButtons[2].setState(0.1f*w,0.5f*h, 1.0f, false);
-	    allButtons[3].setState(0.1f*w,0.5f*h, 1.0f, false);
-	    animateButtons();
+
+	    allButtons[0].setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
+	    allButtons[1].setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
+	    allButtons[2].setState(0.1f*w,0.5f*h, 1.0f, false,pOne);
+	    allButtons[3].setState(0.1f*w,0.5f*h, 1.0f, false,pOne);
+
 	    break;
 	case R.id.new_game:
-	    allButtons[0].setState(0.1f*w,0.1f*h, 1.0f, true);
-	    allButtons[1].setState(0.1f*w,0.2f*h, 1.0f, true);	
-	    allButtons[2].setState(0.1f*w,0.5f*h,1.0f, true);
-	    allButtons[3].setState(0.1f*w,0.6f*h,1.0f, true);
-	    animateButtons();
+	    allButtons[0].setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
+	    allButtons[1].setState(0.1f*w,0.2f*h, 1.0f, true,pOne);	
+	    allButtons[2].setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
+	    allButtons[3].setState(0.1f*w,0.6f*h, 1.0f, true,pOne);
+
 	    break;
 	case R.id.easy:
-	    allButtons[0].setState(0.1f*w,0.9f*h, 1.0f, true);
-	    allButtons[1].setState(0.1f*w,0.2f*h, 1.0f, false);
-	    allButtons[2].setState(0.1f*w,0.5f*h,1.0f, false);
-	    allButtons[3].setState(0.1f*w,0.6f*h,1.0f, false);
-	    animateButtons();
+	    allButtons[0].setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+	    allButtons[1].setState(0.1f*w,0.2f*h, 1.0f, false,pTwo);
+	    allButtons[2].setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+	    allButtons[3].setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+
 	    state=GameState.PLAY;
 	    mModel.setState(GameState.PLAY);
 	    break;
@@ -156,148 +159,5 @@ public class ViewActivity extends Activity {
     //needed based on any change of state in the StateButtons.
     //This provides a flexible way for the menu to have smooth
     //animations between its different layouts.
-    public void animateButtons() {
-	boolean test;
-	long duration = 1000;
-	long delay = 0;
-	int len = (int)allButtons.length;
-	
-        AnimatorSet AllAnimSets[] = new AnimatorSet[len];
-	
-	ObjectAnimator fadeOutAnim[] = new ObjectAnimator[len];
-	ObjectAnimator fadeInAnim[] = new ObjectAnimator[len];
-	ObjectAnimator xAnim[] = new ObjectAnimator[len];
-	ObjectAnimator yAnim[] = new ObjectAnimator[len];
-	
-	boolean outTest = false;
-	boolean moveTest = false;
-	boolean inTest = false;
-	
-	for (int i = 0; i < len; i++) {
-	    AllAnimSets[i] = new AnimatorSet();
-	}
-	
-	for (int i = 0; i < allButtons.length; i++) {
-	    outTest |= allButtons[i].fadeOut;
-	    moveTest |= allButtons[i].moved;
-	    inTest |= allButtons[i].fadeIn;
-	}
-	
-	
-	
-	//Fade outs first!
-	for (int i = 0; i < allButtons.length; i++) {
-	    //fade out
-	    if (allButtons[i].fadeOut) {
-		fadeOutAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.0f);
-		fadeOutAnim[i].setTarget(allButtons[i].mButton);
-	    }
-	    else {  
-		if (allButtons[i].fadeIn) {
-		    fadeOutAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 0.0f);
-		    fadeOutAnim[i].setTarget(allButtons[i].mButton);
-		}
-		else {
-		    if (allButtons[i].visible) {
-			fadeOutAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 1.0f);
-			fadeOutAnim[i].setTarget(allButtons[i].mButton);
-		    }
-		    else {
-			fadeOutAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 0.0f);
-			fadeOutAnim[i].setTarget(allButtons[i].mButton);
-		    }
-		    
-		}		
-	    }
-	    fadeOutAnim[i].setDuration(outTest ? duration : 0);
-	    
-	    //move
-	    xAnim[i] = ObjectAnimator.ofFloat(this, "x", allButtons[i].position[0]);
-	    yAnim[i] = ObjectAnimator.ofFloat(this, "y", allButtons[i].position[1]);
-	    
-	    xAnim[i].setTarget(allButtons[i].mButton);
-	    yAnim[i].setTarget(allButtons[i].mButton);
-	    
-	    xAnim[i].setDuration(moveTest ? duration : 0);
-	    yAnim[i].setDuration(moveTest ? duration : 0);
-	    
-	    //fade in
-	    if (allButtons[i].fadeIn) {
-		fadeInAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 1.0f);
-		fadeInAnim[i].setTarget(allButtons[i].mButton);
-		fadeInAnim[i].setDuration(duration);
-	    }
-	    else {  
-		if (allButtons[i].fadeOut) {
-		    fadeInAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 0.0f);
-		    fadeInAnim[i].setTarget(allButtons[i].mButton);
-		    fadeInAnim[i].setDuration(0);
-		}
-		else {
-		    if (allButtons[i].visible) {
-			fadeInAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 1.0f);
-			fadeInAnim[i].setTarget(allButtons[i].mButton);
-			fadeInAnim[i].setDuration(0);
-		    }
-		    else {
-			fadeInAnim[i] = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 0.0f);
-			fadeInAnim[i].setTarget(allButtons[i].mButton);
-			fadeInAnim[i].setDuration(0);
-		    }
-		    
-		}
-	    }
-	    fadeInAnim[i].setDuration(inTest ? duration : 0);
-	    
-	    
-	    //Build animation sets
-	    AllAnimSets[i].play(fadeOutAnim[i]).before(xAnim[i]);
-	    AllAnimSets[i].play(xAnim[i]).with(yAnim[i]);
-	    AllAnimSets[i].play(fadeInAnim[i]).after(xAnim[i]);
-	    
-	    if (allButtons[i].visible) {
-		AllAnimSets[i].addListener(new Animator.AnimatorListener(){
-			@Override
-			public void onAnimationStart(Animator arg0) {
-			    ArrayList<Animator> al = ((AnimatorSet)arg0).getChildAnimations();
-			    Button b = (Button)((ObjectAnimator)al.get(0)).getTarget();
-			    b.setVisibility(View.VISIBLE);
-			}           
-			@Override
-			public void onAnimationRepeat(Animator arg0) {
-			}           
-			@Override
-			public void onAnimationEnd(Animator arg0) {
-			}
-			@Override
-			public void onAnimationCancel(Animator arg0) {
-			    
-			}
-			
-		    });
-	    }
-	    else {
-		AllAnimSets[i].addListener(new Animator.AnimatorListener(){
-			@Override
-			public void onAnimationStart(Animator arg0) {
-			}           
-			@Override
-			public void onAnimationRepeat(Animator arg0) {
-			}           
-			@Override
-			public void onAnimationEnd(Animator arg0) {
-			    ArrayList<Animator> al = ((AnimatorSet)arg0).getChildAnimations();
-			    Button b = (Button)((ObjectAnimator)al.get(0)).getTarget();
-			    b.setVisibility(View.INVISIBLE);
-			}
-			@Override
-			public void onAnimationCancel(Animator arg0) {
-			    
-			}
-			
-		    });
-	    }
-	    AllAnimSets[i].start();
-	}
-    }
+
 }
