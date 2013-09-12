@@ -17,11 +17,18 @@ import android.opengl.GLUtils;
 public class TextureManager {
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
+	GameState state;
+	Context context;
 	
 	public TextureManager(Context context) {
 		library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
-		Typeface tf = Typeface.createFromAsset(context.getAssets(), "Archistico_Simple.ttf");
+		tf = Typeface.createFromAsset(context.getAssets(), "Archistico_Simple.ttf");
+		state = GameState.MAIN_MENU;
+		this.context = context; 
 	}
+	
+	
+	
 	
 	public void buildTextures(String a, int[] x, int[] y, int font){
 		String curr;
@@ -79,10 +86,8 @@ public class TextureManager {
 		System.out.println("Texture");
 		System.out.println(texture[0]);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,GLES20.GL_NEAREST);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_NEAREST);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,GLES20.GL_LINEAR);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_LINEAR);
 		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, bmp,0); 
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
 		System.out.println(texture[0]);
@@ -113,3 +118,61 @@ public class TextureManager {
 	
 	
 }
+
+
+
+/*public void setState(GameState s, int[] rowSums, int[] columnSums) {
+switch(s) {
+case MAIN_MENU: loadMainMenuTextures();
+				 break;
+case PLAY:  cleanTextures();
+			loadPlayTextures(rowSums,columnSums);
+			break;
+}
+}
+
+private void cleanTextures() {
+Integer[] values = library.values().toArray(new Integer[0]);
+int[] a = new int[values.length];
+for(int i=0; i<values.length;i++){
+	a[i] = values[i].intValue();
+}
+	GLES20.glDeleteTextures(a.length, a,0);	
+	library.clear();
+}
+
+private void loadMainMenuTextures() {
+buildTextures(context, R.drawable.bee,"bee");
+buildTextures(context, R.drawable.flower,"flower");
+buildTextures(context, R.drawable.papertexture2, "paperbg");
+//Create Menu Textures
+}
+
+private void loadPlayTextures(int[] columnSums, int[] rowSums) {
+int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
+int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
+buildTextures("0123456789", x_coords, y_coords,64);
+buildTextures(context, R.drawable.up_arrow,"up_arrow");
+buildTextures(context, R.drawable.down_arrow,"down_arrow");
+buildTextures(context, R.drawable.left_arrow,"left_arrow");
+buildTextures(context, R.drawable.right_arrow,"right_arrow");
+buildTextures(context, R.drawable.menu_circle,"menu_circle");
+buildTextures(context, R.drawable.bee,"bee");
+buildTextures(context, R.drawable.flower,"flower");
+buildTextures(context, R.drawable.crayonsquare, "crayonbg");
+buildTextures(context, R.drawable.papertexture2, "paperbg");
+buildTextures(context, R.drawable.boardbg, "boardbg");
+buildTextures(context, R.drawable.blacksquare, "blacksquare");
+library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
+//Create Menu Textures
+for(int i=0;i<6;i++){
+    buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
+}
+//Create Border Textures
+for(int i=0;i<rowSums.length;i++){
+    buildTextures(Integer.toString(rowSums[i]),64,128,"border_row_"+Integer.toString(rowSums[i]),50);
+}
+for(int i=0;i<columnSums.length;i++){
+	buildTextures(Integer.toString(columnSums[i]),105,64,"border_col_"+Integer.toString(columnSums[i]),50);
+}
+}*/

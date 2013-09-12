@@ -23,10 +23,6 @@ class BackgroundPlay extends State<BackgroundTile> {
 	}
 
 	@Override
-	public void exitAnimation(BackgroundTile[] tiles) {
-	}
-
-	@Override
 	public void duringAnimation(BackgroundTile[] tiles) {
 	}
 	

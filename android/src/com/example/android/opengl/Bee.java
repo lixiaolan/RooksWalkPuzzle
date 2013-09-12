@@ -23,6 +23,15 @@ public class Bee extends Graphic<BeeTile>{
 		System.out.println("new State?");
 		System.out.println(state.getClass().getName());
 	}
+	
+	
+	public boolean touched(float[] pt) {
+		if(pt[0]< bee.center[0]+0.25f && pt[0] > bee.center[0]-.25f 
+				&& pt[1]< bee.center[1]+0.25f && pt[1] > bee.center[1]-.25f ){
+			return true;
+		}
+		return false;
+	}
 
 }
 

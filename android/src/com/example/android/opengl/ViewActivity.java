@@ -80,6 +80,8 @@ public class ViewActivity extends Activity {
 		allButtons[i].mButton.setTypeface(tf);
 	}
 	
+	
+	
     }
     
     @Override
@@ -144,6 +146,7 @@ public class ViewActivity extends Activity {
 
 	    state=GameState.PLAY;
 	    mModel.setState(GameState.PLAY);
+	    
 	    break;
 	}
 	//}

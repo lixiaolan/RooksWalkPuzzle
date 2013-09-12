@@ -10,12 +10,14 @@ abstract class Tile {
     public float size;
     public float angle;
     public boolean rotate;
+    public String[] textures = {"clear","clear"};;
+    public String color;
     
     public Tile(float[] inCenter,float inSize) {
-	center = inCenter;
-	size = inSize;
-	angle = 0.0f;
-	rotate = false;
+    	center = inCenter;
+    	size = inSize;
+    	angle = 0.0f;
+    	rotate = false;
     }
 
     public boolean touched(float[] pt) {

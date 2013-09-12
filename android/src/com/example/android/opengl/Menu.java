@@ -54,12 +54,17 @@ class Menu{
     }
 
     public int touched(float[] pt) {
-	for (int i = 0; i < menuTiles.length; i++) {
-	    if (menuTiles[i].touched(pt)) {
-		return i;
-	    }
-	}
-	return -1;
+    	//Deactivate menu!!
+    	if(!menuActive) {
+    		return -1;
+    	}
+    	menuActive=false;
+    	for (int i = 0; i < menuTiles.length; i++) {
+    		if (menuTiles[i].touched(pt)) {	    	
+    			return i;
+    		}
+    	}
+    	return -1;
     }
 
     public void draw(MyGLRenderer r) {
@@ -88,19 +93,6 @@ class Menu{
 	}
     }
 
-    // public void swiped(float[] pt, int direction) {
-    // 	if (direction == 0) {
-    // 	    System.out.println("East");
-    // 	}
-    // 	if (direction == 1) {
-    // 	    System.out.println("North");
-    // 	}
-    // 	if (direction == 2) {
-    // 	    System.out.println("West");
-    // 	}
-    // 	if (direction == 3) {
-    // 	    System.out.println("South");
-    // 	}
-    // }
+    
 
 }
