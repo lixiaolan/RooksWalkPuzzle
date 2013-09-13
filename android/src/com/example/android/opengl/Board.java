@@ -186,12 +186,18 @@ class BoardMainMenu extends State<BoardTile> {
 				tiles[i].rotate = false;
 			}
 			long time = System.currentTimeMillis()-refTime[i];
-			if(time < 1000f && rotateTiles[i]==true){
+			if(time < 2000f && rotateTiles[i]==true){
 				System.out.println("ROTATE ME");
-				tiles[i].angle = time*.1f;
+				tiles[i].angle = time*.4f;
+				if(time<1000f) {
+					tiles[i].textures[0] = Integer.toString((int)(10*Math.random()));
+					tiles[i].textures[1] = "up_arrow";
+				}
 			} else{
 				rotateTiles[i] = false;
 				tiles[i].angle = 0;
+				tiles[i].textures[0]="flower";
+				tiles[i].textures[1] ="clear";
 			}
 			
 		}
