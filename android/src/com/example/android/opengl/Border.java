@@ -14,7 +14,6 @@ class Border{
     	tilesSize = 0.11f;
 	String tString;
 	for (int i = 0; i < 6; i++) {
-	    System.out.println("COL SUMS: "+Integer.toString(columnSums[i]));
 	    float Sx = ( (i/6) - 2.5f )/4.0f-(-3.5f-2.5f)/4.0f;
 	    float Sy = ( (i%6) - 2.5f )/4.0f;
 	    float[] center1 = { Sx, Sy, 0.0f};

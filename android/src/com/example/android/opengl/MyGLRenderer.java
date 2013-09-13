@@ -27,7 +27,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "MyGLRenderer";
     
     //This is the model
-    public Model mModel;
+    private Model mModel;
     
     //Don't know what it does
     private final Context mActivityContext;
@@ -98,7 +98,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     /** This is a handle to our light point program. */
     private int mPointProgramHandle;
     
-    private TextureManager TM;
+    public TextureManager TM;
     /** Used only in "touched" */
     private final float[] mMVPMatrixInv = new float[16];
     
@@ -212,12 +212,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	//Handle for the program.
 	mProgramHandle = ShaderHelper.createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle, new String[] {"a_Position",  "a_Color", "a_TexCoordinate"});								               
 	
-	buildTextures();
+	//buildTextures();
+		TM = new TextureManager(mActivityContext);
+		//TM.setState(GameState.MAIN_MENU,null, null);
+		buildTextures();
     }
     
     
     public void buildTextures() {
-	TM = new TextureManager(mActivityContext);
 	int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
 	int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
 	TM.buildTextures("0123456789", x_coords, y_coords,64);
@@ -242,7 +244,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	    TM.buildTextures(Integer.toString(mModel.mBoard.rowSums[i]),64,128,"border_row_"+Integer.toString(mModel.mBoard.rowSums[i]),50);
 	}
 	for(int i=0;i<mModel.mBoard.columnSums.length;i++){
-		System.out.println("texture time "+"border_col_"+Integer.toString(i));
 		TM.buildTextures(Integer.toString(mModel.mBoard.columnSums[i]),105,64,"border_col_"+Integer.toString(mModel.mBoard.columnSums[i]),50);
 	}
     }
@@ -268,7 +269,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-
+    
 	float magicNumber = 1.0f;
 	
 	// Set the OpenGL viewport to the same size as the surface.
@@ -308,8 +309,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 	Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, -cameraDistance, lookX, lookY, lookZ, upX, upY, upZ);		
 
-
-	
     }
      
     public float[] project(float[] pt) {	
@@ -330,7 +329,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     public void drawTile(float[] center, float size, String[] textures, String color, float angle)
     {
-	
+    	
     	mTextures[0] = TM.library.get(textures[0]);
     	mTextures[1] = TM.library.get(textures[1]);	
     	mColor = colorMap.get(color);

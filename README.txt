@@ -48,3 +48,24 @@ The format of output file (currently "iotest.txt") is the following:
 12.)Basic marketing strategy.
 
 Lets have a first release by October 1. Two weeks to alpha.
+
+
+#Revised first releas content/fixes
+
+1.)  Tutorial!!
+2.)  Interface: swipe sensitivity needs to go down.
+3.)  Parceling!
+4.)  Different difficulties which load different boards!
+5.)
+     a. Get artwork from Nathan
+     b. Change the color of circles 
+     c. Change the font of the numbers
+     e. Optional: ability to track path.
+6.)  Look into the legal side of protecting the puzzle concept.
+7.)  Optional: Sound effects.
+8.)  Basic marketing strategy.
+9.)  Restructure touched!
+10.) Make the menus version dependant.
+11.) Swipe sensitivity turned down.
+12.) Hints or no hints.
+13.) States system.

@@ -11,13 +11,13 @@ class Model{
     public Bee	mBee;
     public Background mBg;
     public Background mBoardBg;
-    public GameState state;
-    
-    public Vibrator vibe;
-    public Context context;
+    private GameState state;
+    private int at = -1;
+    private Vibrator vibe;
+    private Context context;
     
     public Model(Context c) {
-    	initiateMembers(c,new Board());
+    	initiateMembers(c, new Board(6));
     }
 
     public Model(Context c, Board b){
@@ -37,70 +37,48 @@ class Model{
     }
     
     public void resetBoard(){
-    	mBoard = new Board();
+    	mBoard = new Board(6);
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
     
     public void touched(float[] pt) {
-    	if(state == GameState.PLAY) {
-    		if( mMenu.menuActive) {
-     			mBoard.clearFlags();
-    			mMenu.menuActive = false;
+    	switch(state){
+    		case PLAY: 
+    			//Internally close menu.    		
     			int val = mMenu.touched(pt);
-    			if (val != -1) {
-    				int at = mBoard.activeTile;
-    				if (val == 0) {
-    					mBoard.tiles[at].arrow = "clear";
-    					mBoard.tiles[at].number = "clear";
+    			if(val == -1){
+    				if (at != -1) {
+    					mBoard.tiles[at].setColor("transparent");
     				}
-    				else {
-    					mBoard.tiles[at].number = Integer.toString(val);
-    				}
-    			}
-    			else {
-    				if( mBoard.touched(pt) ) {
-    					int at = mBoard.activeTile;
-    					pt[0] = mBoard.tiles[at].center[0];
-    					pt[1] = mBoard.tiles[at].center[1];
-    					System.out.println(Integer.toString(at));
-    					System.out.println(Integer.toString(mBoard.tiles[at].true_solution));
+    				at = mBoard.touched(pt);
+    				if(at != -1 ) {
     					if(mBoard.tiles[at].true_solution != -1) {
+    						mBoard.tiles[at].setColor("blue");
     						mMenu.activate(pt);
-    					} else {
-    						mMenu.menuActive = false;
     					}
-    				}	
+    				}
+    			} else {
+    				if (at != -1)
+    					mBoard.tiles[at].setUserInput(val);
     			}
-    		}
-    		else {
-    			if( mBoard.touched(pt) ) {
-    				int at = mBoard.activeTile;
-    				pt[0] = mBoard.tiles[at].center[0];
-    				pt[1] = mBoard.tiles[at].center[1];
-					System.out.println(Integer.toString(at));
-					System.out.println(Integer.toString(mBoard.tiles[at].true_solution));
-					if(mBoard.tiles[at].true_solution != -1) {
-						mMenu.activate(pt);
-					} else {
-						mMenu.menuActive = false;
-					}
-    			}
-    		}
-    	} else if(state==GameState.MAIN_MENU) {
-    		if(pt[0]< mBee.bee.center[0]+0.25f && pt[0] > mBee.bee.center[0]-.25f 
-    				&& pt[1]< mBee.bee.center[1]+0.25f && pt[1] > mBee.bee.center[1]-.25f ){
-    			vibe.vibrate(500);
-    		}
-    		
-    		if(mBoard.touched(pt)) {
-    			int at = mBoard.activeTile;
+    				
+    			break;
+    	
+    	case MAIN_MENU: 
+    		at = mBoard.touched(pt);
+    		if(at != -1) {
     			mBoard.tiles[at].rotate = true;
     		}
+    		break;
+    		} 
+    	
+    		if(mBee.touched(pt)){
+			vibe.vibrate(500);
+			}
     	}
-    }
+    
     
     public void swiped(float[] pt, String direction) {
-    	int at = mBoard.activeTile;
     	if (at != -1) {
     		mBoard.tiles[at].arrow = direction; 
     		mMenu.menuActive = false;

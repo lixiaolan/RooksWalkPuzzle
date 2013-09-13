@@ -1,28 +1,20 @@
 package com.example.android.opengl;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
 
 class BoardTile extends Tile{
 
-	public String[] textures = {"clear", "clear"};
-	
-    public boolean touched_flag;
     public int true_solution;
-    public int true_arrow;
-    public boolean rotate = false;
-    
+
     public String number = "clear";
     public String arrow = "clear";
 
     public String color;
 
     public BoardTile(float[] inCenter,float inSize, int solution) {
-	super(inCenter, inSize);
-	touched_flag = false;
-	true_solution = solution;
-	center = inCenter;
-	size = inSize;
+    	super(inCenter, inSize);
+    	true_solution = solution;
+    	center = inCenter;
+    	size = inSize;
     }
 
    public void setTextures(String texture0, String texture1) {
@@ -54,14 +46,16 @@ class BoardTile extends Tile{
    }
    
    
+   public void setUserInput(int val){
+	   if(val == 0 && true_solution != -1){
+		   number = "clear";
+		   arrow = "clear";
+	   } else {
+	   number = Integer.toString(val);
+	   }
+   }
+   
     public void draw(MyGLRenderer r) {
-    	String tColor = color;
-    	/*if (touched_flag)
-    		tColor = "blue";
-    	else
-    		tColor = color;
-    	*/
-    	
-    	r.drawTile(center, size, textures, tColor, angle);
+    	r.drawTile(center, size, textures, color, angle);
     }    
 }

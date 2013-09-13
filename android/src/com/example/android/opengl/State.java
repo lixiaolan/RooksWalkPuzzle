@@ -11,13 +11,12 @@ package com.example.android.opengl;
 	public abstract class State<T extends Tile> {
 		
 		enum DrawPeriod {
-			ENTER, DURING, EXIT
+			ENTER, DURING
 		}
 		
 		DrawPeriod period = DrawPeriod.ENTER;
 		
 		public abstract void enterAnimation(T[] tiles);
-		public abstract void exitAnimation(T[] tiles);
 		public abstract void duringAnimation(T[] tiles);
 		
 		
@@ -25,7 +24,6 @@ package com.example.android.opengl;
 			switch(period) {
 				case ENTER: enterAnimation(tiles); break;
 				case DURING: duringAnimation(tiles); break;
-				case EXIT: exitAnimation(tiles); break;
 			}
 			
 			for (int i = 0; i < tiles.length; i++) {

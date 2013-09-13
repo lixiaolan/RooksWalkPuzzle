@@ -12,19 +12,16 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public int[][] path;
     public int[] columnSums;
     public int[] rowSums;
-    public int activeTile;
     
-    public Board() {
-
+    public Board(int length) {
     	try {
-    		readBoard(stringFromJNI(6, 6, 14) );	
+	    readBoard(stringFromJNI(6, 6, length) );	
     	} catch (IOException e) {
     		System.err.println("Caught IOException: " + e.getMessage());
     	}
     	
     	buildBoardFromSolution();
     	state = new BoardMainMenu(tiles);
-	activeTile = -1;
     }
     
     public Board(Parcel in) {
@@ -44,81 +41,56 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	    float Sy = ( (i%6) - 2.5f )/4.0f;
     	    columnSums[i%6] += Math.max(solution[i],0);
     	    rowSums[i/6] += Math.max(solution[i],0);
-    	    System.out.println("Column Sums "+Integer.toString(columnSums[i/6]));
-    	    float center[] = { Sx, Sy, 0.0f};
-    	    if (solution[i] == -1) {
-    		tiles[i] = new BoardTile(center, size, solution[i]);
-    	    }
-    	    else {
-    	    tiles[i] = new BoardTile(center, size, solution[i]);
-    	    }
-    	    
+    	    float center[] = { Sx, Sy, 0.0f};    	   
+    	    tiles[i] = new BoardTile(center, size, solution[i]);    	    
     	}
     }
     
     public native String stringFromJNI(int rows, int cols, int length);
     
     public void readBoard(String puzzleString) throws IOException{
-	Scanner scanner = null;
-	try {	    
-            scanner = new Scanner(puzzleString);
-	    
-	    //Get dimensions
-	    int m = scanner.nextInt();
-	    int n = scanner.nextInt();
-	    System.out.println("m is "+Integer.toString(m));
-	    solution = new int[m*n];
-	    int a  = 0;
-	    //Update all the solutions
-	    for(int i = 0; i<m*n; i++){
-	    	a = scanner.nextInt(); 
-		solution[i] = a;
-		System.out.println(Integer.toString(a));
-	    }
-	    
-	    //Get path length
-	    int l = scanner.nextInt();
-	    path = new int[2*l][2];
-	    
-	    //Update path
-	    for(int i = 0; i < l; i++){
-	    	path[i][0] = scanner.nextInt();
-	    	path[i][1] = scanner.nextInt();
-		System.out.println("which l"+Integer.toString(i));
-	    }
-	    
-        } finally {
-	    scanner.close();	    
-        }
+    	Scanner scanner = null;
+    	try {	    
+    		scanner = new Scanner(puzzleString);
+    		int m = scanner.nextInt();
+    		int n = scanner.nextInt();
+    		solution = new int[m*n];
+    		int a  = 0;
+    		for(int i = 0; i<m*n; i++){
+    			a = scanner.nextInt(); 
+    			solution[i] = a;
+    		}
+    		int l = scanner.nextInt();
+    		path = new int[2*l][2];
+    		for(int i = 0; i < l; i++){
+    			path[i][0] = scanner.nextInt();
+    			path[i][1] = scanner.nextInt();
+    		}
+    	} finally {
+    		scanner.close();	    
+    	}
     }
     
-    public boolean touched(float[] pt) {
+    public int touched(float[] pt) {
     	for (int i = 0; i < tiles.length; i++) {
-    	    if( tiles[i].touched(pt) ) {
-    	    	tiles[i].touched_flag = true;
-    	    	activeTile = i;
-    	    	return true;
+    	    if( tiles[i].touched(pt)) {
+    	    	return i;
     	    }
     	}
-	return false;
+	return -1;
     }
     
     public void swiped(float[] pt, String direction) {
 	for (int i = 0; i < tiles.length; i++) {
     	    if( tiles[i].touched(pt) ) {
-		tiles[i].arrow = direction;
-	    }
+    	    	tiles[i].arrow = direction;
+    	    }
     	}
     }
     
-    public void clearFlags() {
-	for (int i = 0; i < tiles.length; i++) {
-	    tiles[i].touched_flag = false;
-    	}
-    }
     
     static {
-	System.loadLibrary("GeneratePuzzle");
+    	System.loadLibrary("GeneratePuzzle");
     }
 
     public static final Parcelable.Creator<Board> CREATOR = new Parcelable.Creator<Board>() {
@@ -201,9 +173,6 @@ class BoardMainMenu extends State<BoardTile> {
 			
 		}
 	}
-	
-	public void exitAnimation(BoardTile[] tiles) {}
-	
 }
 
 
@@ -257,8 +226,5 @@ class BoardPlay extends State<BoardTile> {
     	}
 	}
 	
-	public void exitAnimation(BoardTile[] tiles) {
-		
-	}
 	
 }
