@@ -22,7 +22,7 @@ public class TextureManager {
 	
 	public TextureManager(Context context) {
 		library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
-		tf = Typeface.createFromAsset(context.getAssets(), "Archistico_Simple.ttf");
+		tf = Typeface.createFromAsset(context.getAssets(), "MileyTwerk.ttf");
 		state = GameState.MAIN_MENU;
 		this.context = context; 
 	}
@@ -105,7 +105,7 @@ public class TextureManager {
         Paint textPaint = new Paint();
         textPaint.setTextSize(font);
         textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setStyle(Style.STROKE);
+        textPaint.setStyle(Style.FILL);
         textPaint.setStrokeWidth(4);
         textPaint.setAntiAlias(true);
         textPaint.setARGB(0xFF, 0x00, 0x00, 0x00);

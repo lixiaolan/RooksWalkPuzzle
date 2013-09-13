@@ -15,6 +15,7 @@ class BoardTile extends Tile{
     	true_solution = solution;
     	center = inCenter;
     	size = inSize;
+    	color = "transparent";
     }
 
    public void setTextures(String texture0, String texture1) {

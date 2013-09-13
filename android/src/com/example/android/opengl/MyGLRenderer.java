@@ -24,9 +24,7 @@ import com.example.android.opengl.common.ShaderHelper;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
     
-    private static final String TAG = "MyGLRenderer";
-    
-    //This is the model
+  //This is the model
     private Model mModel;
     
     //Don't know what it does
@@ -236,16 +234,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM.buildTextures(mActivityContext, R.drawable.blacksquare, "blacksquare");
 	//Create Menu Textures
 
-	for(int i=0;i<mModel.mMenu.menuTiles.length;i++){
+	for(int i=0;i<6;i++){
 	    TM.buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
 	}
 	//Create Border Textures
-	for(int i=0;i<mModel.mBoard.rowSums.length;i++){
-	    TM.buildTextures(Integer.toString(mModel.mBoard.rowSums[i]),64,128,"border_row_"+Integer.toString(mModel.mBoard.rowSums[i]),50);
+	for(int i=0;i<15;i++){
+	    TM.buildTextures(Integer.toString(i),64,128,"border_"+Integer.toString(i),60);
 	}
-	for(int i=0;i<mModel.mBoard.columnSums.length;i++){
-		TM.buildTextures(Integer.toString(mModel.mBoard.columnSums[i]),105,64,"border_col_"+Integer.toString(mModel.mBoard.columnSums[i]),50);
-	}
+	
     }
     
     @Override

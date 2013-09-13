@@ -13,14 +13,8 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public int[] columnSums;
     public int[] rowSums;
     
-    public Board(int length) {
-    	try {
-    		readBoard(stringFromJNI(6, 6, length) );	
-    	} catch (IOException e) {
-    		System.err.println("Caught IOException: " + e.getMessage());
-    	}
-    	
-    	buildBoardFromSolution();
+    public Board() {
+    	emptyBoard();
     	state = new BoardMainMenu(tiles);
     }
     
@@ -30,6 +24,30 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	state = new BoardMainMenu(tiles);
     }
         
+    public void createPuzzle(int length){
+    	try {
+    		readBoard(stringFromJNI(6, 6, length) );	
+    	} catch (IOException e) {
+    		System.err.println("Caught IOException: " + e.getMessage());
+    	}
+    	buildBoardFromSolution();
+    }
+
+    public void emptyBoard() {
+    	tiles = new BoardTile[36];
+    	columnSums = new int[6];
+    	rowSums = new int[6];
+    	for (int i = 0; i < tiles.length; i++) {
+    	    float size = .12f;
+    	    float Sx = ( (i/6) - 2.5f )/4.0f;
+    	    float Sy = ( (i%6) - 2.5f )/4.0f;
+    	    columnSums[i%6] += 0;
+    	    rowSums[i/6] += 0;
+    	    float center[] = { Sx, Sy, 0.0f};    	   
+    	    tiles[i] = new BoardTile(center, size, 0);    	    
+    	}
+    }
+    
     public void buildBoardFromSolution() {
     	tiles = new BoardTile[36];
     	columnSums = new int[6];
@@ -121,6 +139,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 		switch(s) {
 			case MAIN_MENU: state = new BoardMainMenu(tiles); break;
 			case PLAY: state  = new BoardPlay(tiles); break;
+			case GAME_MENU: state  = new BoardPlay(tiles); break;
 		}
 	}
 }

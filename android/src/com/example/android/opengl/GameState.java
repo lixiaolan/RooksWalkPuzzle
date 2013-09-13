@@ -2,7 +2,7 @@ package com.example.android.opengl;
 
 public enum GameState {
     MAIN_MENU,
-    NEW, 
+    GAME_MENU,
     PLAY, 
     STATS 
 };

@@ -5,19 +5,19 @@ import android.os.Vibrator;
 
 
 class Model{
-    public Board mBoard;
-    public Menu mMenu;
-    public Border mBorder;
-    public Bee	mBee;
-    public Background mBg;
-    public Background mBoardBg;
+    private Board mBoard;
+    private Menu mMenu;
+    private Border mBorder;
+    private Bee	mBee;
+    private Background mBg;
+    private Background mBoardBg;
     private GameState state;
     private int at = -1;
     private Vibrator vibe;
     private Context context;
     
     public Model(Context c) {
-    	initiateMembers(c, new Board(6));
+    	initiateMembers(c, new Board());
     }
 
     public Model(Context c, Board b){
@@ -37,7 +37,12 @@ class Model{
     }
     
     public void resetBoard(){
-    	mBoard = new Board(6);
+    	mBoard = new Board();
+    	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
+    }
+    
+    public void createPuzzle(int length) {
+    	mBoard.createPuzzle(length);
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
     
@@ -70,11 +75,14 @@ class Model{
     			mBoard.tiles[at].rotate = true;
     		}
     		break;
-    		} 
+    		
     	
-    		if(mBee.touched(pt)){
+    	case GAME_MENU: break;
+    	
+    	}
+    	if(mBee.touched(pt)){
 			vibe.vibrate(500);
-			}
+		}
     	}
     
     
@@ -90,7 +98,7 @@ class Model{
     	mBoard.draw(r);
     	mMenu.draw(r);
     	mBee.draw(r);
-    	if(state == GameState.PLAY){
+    	if(state != GameState.MAIN_MENU){
         	mBoardBg.draw(r);
         	mBorder.draw(r);
     	}

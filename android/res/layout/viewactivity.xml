@@ -71,7 +71,7 @@
 	  android:text="Bee Puzzled"
 	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
 	  android:textColor="#FF8C00"
-	  android:textSize="40sp"
+	  android:textSize="70sp"
 	  android:textStyle="normal"
 	  android:typeface="sans"
 	  android:visibility="invisible" />
@@ -89,7 +89,7 @@
 	  android:text="Stroll"
 	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
 	  android:textColor="#FF8C00"
-	  android:textSize="40sp"
+	  android:textSize="50sp"
 	  android:textStyle="normal"
 	  android:typeface="sans"     
 	  android:visibility="invisible" />
@@ -106,7 +106,7 @@
 	  android:text="Walk"
 	  android:textAppearance="?android:attr/textAppearanceMediumInverse"
 	  android:textColor="#FF8C00"
-	  android:textSize="40sp"
+	  android:textSize="50sp"
 	  android:textStyle="normal"
 	  android:typeface="sans"
 	  android:visibility="invisible" />

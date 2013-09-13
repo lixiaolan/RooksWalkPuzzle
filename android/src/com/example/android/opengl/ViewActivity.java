@@ -73,13 +73,12 @@ public class ViewActivity extends Activity {
 		}
 	    });
 
-/*
-	String fontPath = "Archistico_Simple.ttf";
+
+	String fontPath = "MileyTwerk.ttf";
 	Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
-	for(int i=0;i< allButtons.length;i++){
-		allButtons[i].mButton.setTypeface(tf);
-	}
-	*/
+	bee_puzzled.mButton.setTypeface(tf);
+	short_puz.mButton.setTypeface(tf);
+	medium_puz.mButton.setTypeface(tf);
 	
 	
     }
@@ -116,38 +115,75 @@ public class ViewActivity extends Activity {
     //Otherwise, the positinos would not work out correctly :(
     
     public void manageView(View v) {
-	//if(state==GameState.MAIN_MENU){
-	float h = (float) mGLView.getHeight();
-	float w = (float) mGLView.getWidth();
+    	float h = (float) mGLView.getHeight()-mGLView.getPaddingBottom()-mGLView.getPaddingTop();
+		float w = (float) mGLView.getWidth();
 
-	long[] pOne = {0,1000,1000};
-	long[] pTwo = {1000, 1000, 0};
-	switch (v.getId()) {
-	case R.id.bee_puzzled:
-		bee_puzzled.setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
-		short_puz.setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
-		medium_puz.setState(0.1f*w,0.6f*h, 1.0f, true,pOne);
-	    break;
-	    
-	case R.id.short_puz:
-		bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
-		short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
-		medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
-	    state=GameState.PLAY;
-	    mModel.mBoard = new Board(10);
-	    mModel.setState(GameState.PLAY);
-	    break;
-	    
-	case R.id.medium_puz:
-		bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
-		short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
-		medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
-	    state=GameState.PLAY;
-	    mModel.mBoard = new Board(14);
-	    mModel.setState(GameState.PLAY);
-	    break;
-	}
-	//}
+		long[] pOne = {0,1000,1000};
+		long[] pTwo = {1000, 1000, 0};
+    	if(state==GameState.MAIN_MENU){
+    		switch (v.getId()) {
+    		case R.id.bee_puzzled:
+    			bee_puzzled.setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
+    			short_puz.setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
+    			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, true,pOne);
+    			break;
+
+    		case R.id.short_puz:
+    			bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+    			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+    			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+    			state=GameState.PLAY;
+    			mModel.createPuzzle(10);
+    			mModel.setState(GameState.PLAY);
+    			break;
+
+    		case R.id.medium_puz:
+    			bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+    			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+    			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+    			state=GameState.PLAY;
+    			mModel.createPuzzle(14);
+    			mModel.setState(GameState.PLAY);
+    			break;
+    		} 
+    		} else if(state == GameState.PLAY) {
+    			
+        			bee_puzzled.setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
+        			short_puz.setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
+        			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, true,pOne);
+        			state = GameState.GAME_MENU;
+        			mModel.setState(GameState.GAME_MENU);
+        		
+    		} else if(state==GameState.GAME_MENU) {
+    			switch (v.getId()) {
+        		case R.id.bee_puzzled:
+        			bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+        			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+        			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+        			state = GameState.PLAY;
+        			mModel.setState(GameState.PLAY);
+        			break;
+
+        		case R.id.short_puz:
+        			bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+        			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+        			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+        			state=GameState.PLAY;
+        			mModel.createPuzzle(10);
+        			mModel.setState(GameState.PLAY);
+        			break;
+
+        		case R.id.medium_puz:
+        			bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
+        			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
+        			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+        			state=GameState.PLAY;
+        			mModel.createPuzzle(14);
+        			mModel.setState(GameState.PLAY);
+        			break;
+        		} 
+    		}
+    	
     }
     
     //This function peforms animatinos on the array of buttons allButtons.
