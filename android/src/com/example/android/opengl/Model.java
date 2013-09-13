@@ -91,6 +91,7 @@ class Model{
     }
 
     public void draw(MyGLRenderer r) {
+
     	mBg.draw(r);
     	mBoard.draw(r);
     	mMenu.draw(r);

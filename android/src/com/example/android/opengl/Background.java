@@ -1,5 +1,19 @@
 package com.example.android.opengl;
 
+
+class BackgroundPlay extends State<BackgroundTile> {
+
+	@Override
+	public void enterAnimation(BackgroundTile[] tiles) {
+	}
+
+	@Override
+	public void duringAnimation(BackgroundTile[] tiles) {
+	}
+	
+}
+
+
 public class Background extends Graphic<BackgroundTile> {
 	
 	public Background(String bg, float size) {
@@ -16,15 +30,4 @@ public class Background extends Graphic<BackgroundTile> {
 
 }
 
-class BackgroundPlay extends State<BackgroundTile> {
-
-	@Override
-	public void enterAnimation(BackgroundTile[] tiles) {
-	}
-
-	@Override
-	public void duringAnimation(BackgroundTile[] tiles) {
-	}
-	
-}
 
