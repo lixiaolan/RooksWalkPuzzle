@@ -28,17 +28,12 @@ class Model{
     	mBoard = b;
     	mMenu = new Menu();
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
-    	mBee = new Bee();
+    	mBee = new Bee(mBoard);
     	mBg = new Background("paperbg", 2f);
     	mBoardBg = new Background("boardbg", .75f);
     	context = c;
     	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
     	state = GameState.MAIN_MENU;
-    }
-    
-    public void resetBoard(){
-    	mBoard = new Board();
-    	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
     
     public void createPuzzle(int length) {

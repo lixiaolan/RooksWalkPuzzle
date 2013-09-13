@@ -2,12 +2,14 @@ package com.example.android.opengl;
 
 public class Bee extends Graphic<BeeTile>{
 	public BeeTile bee ;
+	private Board mBoard;
 	
-	public Bee() {
+	public Bee(Board b) {
 		float[] center= {0.0f,0.0f,0.0f};
 		tiles = new BeeTile[1];
 		tiles[0] = new BeeTile(center,0.2f);
 		bee = tiles[0];
+		mBoard = b;
 		setState(GameState.MAIN_MENU); 
 	}
 
@@ -15,10 +17,10 @@ public class Bee extends Graphic<BeeTile>{
 		System.out.println("In Bee");
 		System.out.println(s);
 		switch(s){
-			case MAIN_MENU : state = new BeeWander();break;
+			case MAIN_MENU : state = new BeeWander(mBoard);break;
 			case PLAY: state = new BeeFixed();
 								System.out.println("Found Play"); break;
-			case STATS: state  = new BeeWander(); break;
+			case GAME_MENU: state  = new BeeWander(mBoard); break;
 		}
 		System.out.println("new State?");
 		System.out.println(state.getClass().getName());
@@ -44,7 +46,12 @@ class BeeWander extends State<BeeTile> {
 	private float startX = 0;
 	private float startY = 0;
 
-
+	private Board mBoard;
+	
+	public BeeWander(Board b){
+		mBoard = b;
+	}
+	
 	public void enterAnimation(BeeTile[] tiles){
 		period = DrawPeriod.DURING;
 	}
@@ -57,14 +64,16 @@ class BeeWander extends State<BeeTile> {
 		if(time < interval){
 			bee.center[0] = startX + time/interval*(targetX-startX);
 			bee.center[1] = startY + time/interval*(targetY-startY);
-		} else {
+		} else if (time <interval+1000.0f){
+			//Ya. Do nothing. Just chill.
+		}
+			else {
 			startX = bee.center[0];
 			startY = bee.center[1];
 			refTime = System.currentTimeMillis();
-			float r = (float)Math.random();
-			targetX = -1.5f*r+(1.0f-r)*1.5f;
-			r = (float)Math.random();
-			targetY = -1.5f*r+(1-r)*1.5f;
+			int r = ((int)(Math.random()*36));
+			targetX = mBoard.tiles[r].center[0];
+			targetY = mBoard.tiles[r].center[1];
 		}
 	}
 	
