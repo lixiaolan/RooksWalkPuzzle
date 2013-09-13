@@ -12,6 +12,7 @@ abstract class Tile {
     public boolean rotate;
     public String[] textures = {"clear","clear"};;
     public String color;
+    public float[] pivot = {0,0,1};
     
     public Tile(float[] inCenter,float inSize) {
     	center = inCenter;

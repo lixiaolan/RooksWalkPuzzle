@@ -47,6 +47,9 @@ class BeeWander extends State<BeeTile> {
 	private float startY = 0;
 
 	private Board mBoard;
+	boolean flipped = true;
+	int r = 0;
+	float[] pivot = {1,0,1};
 	
 	public BeeWander(Board b){
 		mBoard = b;
@@ -64,16 +67,19 @@ class BeeWander extends State<BeeTile> {
 		if(time < interval){
 			bee.center[0] = startX + time/interval*(targetX-startX);
 			bee.center[1] = startY + time/interval*(targetY-startY);
-		} else if (time <interval+1000.0f){
-			//Ya. Do nothing. Just chill.
+		} else if(time<interval+200f){
+			if(!flipped){
+				mBoard.setRotate(r,pivot );
+			}
 		}
 			else {
 			startX = bee.center[0];
 			startY = bee.center[1];
 			refTime = System.currentTimeMillis();
-			int r = ((int)(Math.random()*36));
+			r = ((int)(Math.random()*36));
 			targetX = mBoard.tiles[r].center[0];
 			targetY = mBoard.tiles[r].center[1];
+			flipped = false;
 		}
 	}
 	

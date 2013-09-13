@@ -105,7 +105,11 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	    }
     	}
     }
-    
+    ;
+    public void setRotate(int i, float[] pivot){
+    	tiles[i].rotate = true;
+    	tiles[i].pivot = pivot;
+    }
     
     static {
     	System.loadLibrary("GeneratePuzzle");
@@ -153,9 +157,9 @@ class BoardMainMenu extends State<BoardTile> {
 	public BoardMainMenu(BoardTile[] tiles) {
 		for (int i = 0; i < tiles.length; i++) {
     	    double r = Math.random();
-    	    float Sx = (float)(-2*r+(1-r)*2);
+    	    float Sx = (float)(-1.5*r+(1-r)*1.5);
     	    r = Math.random();
-    	    float Sy = (float)(-2*r+(1-r)*2);
+    	    float Sy = (float)(-1.5*r+(1-r)*1.5);
     	    float center[] = { Sx, Sy, 0.0f};
     	    tiles[i].center = center;
     	}

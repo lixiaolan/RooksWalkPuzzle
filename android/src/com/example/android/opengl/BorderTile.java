@@ -14,6 +14,6 @@ class BorderTile extends Tile{
     public void draw(MyGLRenderer r) {
     	textures[0] = number;
     	textures[1] = "clear";
-    	r.drawTile(center, size, textures, color, 0);
+    	r.drawTile(center, size, textures, color, 0,   pivot);
     }
 }

@@ -57,6 +57,6 @@ class BoardTile extends Tile{
    }
    
     public void draw(MyGLRenderer r) {
-    	r.drawTile(center, size, textures, color, angle);
+    	r.drawTile(center, size, textures, color, angle, pivot);
     }    
 }

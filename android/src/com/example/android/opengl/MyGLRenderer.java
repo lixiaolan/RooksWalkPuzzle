@@ -323,7 +323,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
     
     
-    public void drawTile(float[] center, float size, String[] textures, String color, float angle)
+    public void drawTile(float[] center, float size, String[] textures, String color, float angle, float[] pivot)
     {
     	
     	mTextures[0] = TM.library.get(textures[0]);
@@ -349,7 +349,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	// long time = SystemClock.uptimeMillis() % 12000L;
 	// float angle = 0.030f * ((int) time);
-	Matrix.rotateM(mModelMatrix, 0, angle, 0.0f, 0.0f, 1.0f);
+	Matrix.rotateM(mModelMatrix, 0, angle, pivot[0], pivot[1], pivot[2]);
 	
 	// Pass in the position information
 	mSquarePositions.position(0);		

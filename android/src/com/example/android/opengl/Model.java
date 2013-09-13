@@ -67,7 +67,8 @@ class Model{
     	case MAIN_MENU: 
     		at = mBoard.touched(pt);
     		if(at != -1) {
-    			mBoard.tiles[at].rotate = true;
+    			float[] pivot = {0,0,1};
+    			mBoard.setRotate(at, pivot);
     		}
     		break;
     		
@@ -75,6 +76,7 @@ class Model{
     	case GAME_MENU: break;
     	
     	}
+  
     	if(mBee.touched(pt)){
 			vibe.vibrate(500);
 		}

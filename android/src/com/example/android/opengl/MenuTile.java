@@ -18,6 +18,6 @@ class MenuTile extends Tile{
 	String[] textures = new String[2];
 	textures[0] = "menu_circle";
 	textures[1] = number;
-	r.drawTile(center, size, textures, color, angle);
+	r.drawTile(center, size, textures, color, angle, pivot);
     }
 }
