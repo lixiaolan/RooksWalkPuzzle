@@ -9,7 +9,6 @@ abstract class Tile {
     public float[] center;
     public float size;
     public float angle;
-    public boolean rotate;
     public String[] textures = {"clear","clear"};;
     public String color;
     public float[] pivot = {0,0,1};
@@ -18,7 +17,6 @@ abstract class Tile {
     	center = inCenter;
     	size = inSize;
     	angle = 0.0f;
-    	rotate = false;
     }
 
     public boolean touched(float[] pt) {

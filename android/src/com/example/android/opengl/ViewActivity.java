@@ -33,8 +33,11 @@ public class ViewActivity extends Activity {
     private Model mModel;
     private MyGLRenderer mRenderer;    
     private GameState state = GameState.MAIN_MENU;
-    public MenuState mMenuState = new MenuState();
-    public ButtonManager mButtonManager;
+    private MenuState mMenuState = new MenuState();
+    private ButtonManager mButtonManager;
+    StateButton bee_puzzled;
+    StateButton short_puz;
+    StateButton medium_puz;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,15 +71,6 @@ public class ViewActivity extends Activity {
 		    mButtonManager.setHW(h, w);
 		}
 	    });
-
-
-	// String fontPath = "MileyTwerk.ttf";
-	// Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
-	// bee_puzzled.mButton.setTypeface(tf);
-	// short_puz.mButton.setTypeface(tf);
-	// medium_puz.mButton.setTypeface(tf);
-	
-	
     }
     
     @Override
@@ -107,6 +101,36 @@ public class ViewActivity extends Activity {
 	// set.setTarget((Button)findViewById(R.id.bee_puzzled));
 	// set.end();       
     }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	//Store all buttons in one array for now.  Change to a map later for clarity.
+    	bee_puzzled = new StateButton((Button)findViewById(R.id.bee_puzzled));
+    	short_puz = new StateButton((Button)findViewById(R.id.short_puz));
+    	medium_puz = new StateButton((Button)findViewById(R.id.medium_puz));
+    	
+    	View yourLayout = findViewById(R.id.surface_view);
+    	final ViewTreeObserver vto = yourLayout.getViewTreeObserver();
+    	vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+    		@Override
+    		public void onGlobalLayout() {
+    		    float h = (float) mGLView.getHeight();
+    		    float w = (float) mGLView.getWidth();
+    		    long[] pOne = {0,0,1000};
+    		    bee_puzzled.setState(0.1f*w, 0.5f*h, 1.0f, true, pOne);
+    		}
+    	    });
+
+
+    	String fontPath = "MileyTwerk.ttf";
+    	Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
+    	bee_puzzled.mButton.setTypeface(tf);
+    	short_puz.mButton.setTypeface(tf);
+    	medium_puz.mButton.setTypeface(tf);
+    	
+    }
+    
     //This is called after the constructor of GameView is complete.
     //Otherwise, the positinos would not work out correctly :(
     
@@ -116,13 +140,13 @@ public class ViewActivity extends Activity {
 	    switch (mMenuState.difficulty) {
 	    case 1:
 		state = GameState.PLAY;
+		mModel.createPuzzle(10,3);
 		mModel.setState(GameState.PLAY);
-		mModel.createPuzzle(10);
 		break;
 	    case 2:
 		state = GameState.PLAY;
+		mModel.createPuzzle(14,5);
 		mModel.setState(GameState.PLAY);
-		mModel.createPuzzle(14);
 		break;
 	    }
 	}

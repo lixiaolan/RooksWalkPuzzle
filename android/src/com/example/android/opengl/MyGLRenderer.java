@@ -52,9 +52,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	This will be passed into the shader program. */
     
     private float[] mMVPMatrix = new float[16];
-    
-    private float[] mRotationMatrix = new float[16];
-    
+       
     /** Store our model data in a float buffer. */
     private final FloatBuffer mSquarePositions;
     private final FloatBuffer mSquareTextureCoordinates;
@@ -93,14 +91,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     /** This is a handle to our square shading program. */
     private int mProgramHandle;
     
-    /** This is a handle to our light point program. */
-    private int mPointProgramHandle;
     
     public TextureManager TM;
     /** Used only in "touched" */
-    private final float[] mMVPMatrixInv = new float[16];
-    
-    
+        
     //These are used in our custom projection.
     
     private float screenHeight;
@@ -265,7 +259,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-    
+    buildTextures();
 	float magicNumber = 1.0f;
 	
 	// Set the OpenGL viewport to the same size as the surface.
