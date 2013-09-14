@@ -4,6 +4,9 @@ package com.example.android.opengl;
 class BoardTile extends Tile{
 
     public int true_solution;
+    public int true_direction;
+
+    public boolean hint;
 
     public String number = "clear";
     public String arrow = "clear";
@@ -16,6 +19,8 @@ class BoardTile extends Tile{
     	center = inCenter;
     	size = inSize;
     	color = "transparent";
+	true_direction = -1;
+	hint = false;
     }
 
    public void setTextures(String texture0, String texture1) {

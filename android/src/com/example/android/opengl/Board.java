@@ -8,6 +8,7 @@ import android.os.Parcelable;
 
 class Board extends Graphic<BoardTile> implements Parcelable {
     
+    public int hints;
     public int[] solution ;
     public int[][] path;
     public int[] columnSums;
@@ -24,12 +25,13 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	state = new BoardMainMenu(tiles);
     }
         
-    public void createPuzzle(int length){
+    public void createPuzzle(int length, int inHints){
     	try {
     		readBoard(stringFromJNI(6, 6, length) );	
     	} catch (IOException e) {
     		System.err.println("Caught IOException: " + e.getMessage());
     	}
+	hints = inHints;
     	buildBoardFromSolution();
     }
 
@@ -60,9 +62,38 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	    columnSums[i%6] += Math.max(solution[i],0);
     	    rowSums[i/6] += Math.max(solution[i],0);
     	    float center[] = { Sx, Sy, 0.0f};    	   
-    	    tiles[i] = new BoardTile(center, size, solution[i]);    	    
-    	}
-    }
+    	    tiles[i] = new BoardTile(center, size, solution[i]);
+	    // if (solution[i] > 0)
+	    // tiles[i].number = Integer.toString(solution[i]);
+	}
+
+	for (int i = 0; i < path.length-1; i++) {
+	    int dx = path[i+1][0]-path[i][0];
+	    int dy = path[i+1][1]-path[i][1];
+
+	    if (dx > 0) {
+		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 0;
+		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
+	    }
+	    if (dx < 0) {
+		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 2;
+		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
+	    }
+	    if (dy > 0) {
+		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 3;
+		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
+	    }
+	    if (dy < 0) {
+		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 1;
+		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
+	    }
+	}
+	int temp;
+	for (int i = 0; i < hints; i ++) {
+	    temp = (int)(Math.random()*path.length);
+	    tiles[6*path[i+1][0] + path[i+1][1]].hint = true;
+	}    
+}
     
     public native String stringFromJNI(int rows, int cols, int length);
     

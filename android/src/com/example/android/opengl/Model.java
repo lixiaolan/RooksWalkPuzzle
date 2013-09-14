@@ -37,7 +37,7 @@ class Model{
     }
     
     public void createPuzzle(int length) {
-    	mBoard.createPuzzle(length);
+    	mBoard.createPuzzle(length, 0);
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     }
     
