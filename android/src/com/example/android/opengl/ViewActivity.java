@@ -55,32 +55,6 @@ public class ViewActivity extends Activity {
 	((GameView)mGLView).setMyRenderer(mRenderer);
 	((GameView)mGLView).setModel(mModel);
 	
-
-	//Store all buttons in one array for now.  Change to a map later for clarity.
-	bee_puzzled = new StateButton((Button)findViewById(R.id.bee_puzzled));
-	short_puz = new StateButton((Button)findViewById(R.id.short_puz));
-	medium_puz = new StateButton((Button)findViewById(R.id.medium_puz));
-	
-	View yourLayout = findViewById(R.id.surface_view);
-	final ViewTreeObserver vto = yourLayout.getViewTreeObserver();
-	vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-		@Override
-		public void onGlobalLayout() {
-		    float h = (float) mGLView.getHeight();
-		    float w = (float) mGLView.getWidth();
-		    long[] pOne = {0,0,1000};
-		    bee_puzzled.setState(0.1f*w, 0.5f*h, 1.0f, true, pOne);
-		}
-	    });
-
-
-	String fontPath = "MileyTwerk.ttf";
-	Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
-	bee_puzzled.mButton.setTypeface(tf);
-	short_puz.mButton.setTypeface(tf);
-	medium_puz.mButton.setTypeface(tf);
-	
-	
     }
     
     @Override
@@ -111,6 +85,36 @@ public class ViewActivity extends Activity {
 	// set.setTarget((Button)findViewById(R.id.bee_puzzled));
 	// set.end();       
     }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	//Store all buttons in one array for now.  Change to a map later for clarity.
+    	bee_puzzled = new StateButton((Button)findViewById(R.id.bee_puzzled));
+    	short_puz = new StateButton((Button)findViewById(R.id.short_puz));
+    	medium_puz = new StateButton((Button)findViewById(R.id.medium_puz));
+    	
+    	View yourLayout = findViewById(R.id.surface_view);
+    	final ViewTreeObserver vto = yourLayout.getViewTreeObserver();
+    	vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+    		@Override
+    		public void onGlobalLayout() {
+    		    float h = (float) mGLView.getHeight();
+    		    float w = (float) mGLView.getWidth();
+    		    long[] pOne = {0,0,1000};
+    		    bee_puzzled.setState(0.1f*w, 0.5f*h, 1.0f, true, pOne);
+    		}
+    	    });
+
+
+    	String fontPath = "MileyTwerk.ttf";
+    	Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
+    	bee_puzzled.mButton.setTypeface(tf);
+    	short_puz.mButton.setTypeface(tf);
+    	medium_puz.mButton.setTypeface(tf);
+    	
+    }
+    
     //This is called after the constructor of GameView is complete.
     //Otherwise, the positinos would not work out correctly :(
     
@@ -133,7 +137,7 @@ public class ViewActivity extends Activity {
     			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
     			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
     			state=GameState.PLAY;
-    			mModel.createPuzzle(10);
+    			mModel.createPuzzle(10,3);
     			mModel.setState(GameState.PLAY);
     			break;
 
@@ -142,7 +146,7 @@ public class ViewActivity extends Activity {
     			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
     			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
     			state=GameState.PLAY;
-    			mModel.createPuzzle(14);
+    			mModel.createPuzzle(14,5);
     			mModel.setState(GameState.PLAY);
     			break;
     		} 
@@ -169,7 +173,7 @@ public class ViewActivity extends Activity {
         			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
         			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
         			state=GameState.PLAY;
-        			mModel.createPuzzle(10);
+        			mModel.createPuzzle(10, 3);
         			mModel.setState(GameState.PLAY);
         			break;
 
@@ -178,7 +182,7 @@ public class ViewActivity extends Activity {
         			short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
         			medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
         			state=GameState.PLAY;
-        			mModel.createPuzzle(14);
+        			mModel.createPuzzle(14, 5);
         			mModel.setState(GameState.PLAY);
         			break;
         		} 

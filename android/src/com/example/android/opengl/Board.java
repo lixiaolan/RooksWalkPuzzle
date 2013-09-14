@@ -14,59 +14,60 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public int[] rowSums;
     
     public Board() {
-    	emptyBoard();
+    	buildEmptyBoard();
     	state = new BoardMainMenu(tiles);
     }
     
     public Board(Parcel in) {
     	in.readIntArray(solution);
-    	buildBoardFromSolution();
-    	state = new BoardMainMenu(tiles);
+    	//NEED TO TRACK DIFFICULTY OF PUZZLE
+    	//buildBoardFromSolution();
+    	state = new BoardPlay(tiles);
     }
         
-    public void createPuzzle(int length){
+    public void createPuzzle(int length, int hints){
     	try {
-    		readBoard(stringFromJNI(6, 6, length) );	
+    		readSolution(stringFromJNI(6, 6, length) );	
     	} catch (IOException e) {
     		System.err.println("Caught IOException: " + e.getMessage());
     	}
-    	buildBoardFromSolution();
+    	buildBoardFromSolution(hints);
     }
 
-    public void emptyBoard() {
+    public void buildEmptyBoard() {
     	tiles = new BoardTile[36];
-    	columnSums = new int[6];
-    	rowSums = new int[6];
+    	float size = .12f;
     	for (int i = 0; i < tiles.length; i++) {
-    	    float size = .12f;
-    	    float Sx = ( (i/6) - 2.5f )/4.0f;
-    	    float Sy = ( (i%6) - 2.5f )/4.0f;
-    	    columnSums[i%6] += 0;
-    	    rowSums[i/6] += 0;
-    	    float center[] = { Sx, Sy, 0.0f};    	   
-    	    tiles[i] = new BoardTile(center, size, 0);    	    
+    	    float center[] = { 0, 0, 0.0f};    	   
+    	    tiles[i] = new BoardTile(center, size);    	    
     	}
     }
     
-    public void buildBoardFromSolution() {
-    	tiles = new BoardTile[36];
+    public void buildBoardFromSolution(int hints) {
     	columnSums = new int[6];
     	rowSums = new int[6];
-    	
+    	int hintsCreated = 0;
     	for (int i = 0; i < tiles.length; i++) {
-    	    float size = .12f;
-    	    float Sx = ( (i/6) - 2.5f )/4.0f;
-    	    float Sy = ( (i%6) - 2.5f )/4.0f;
     	    columnSums[i%6] += Math.max(solution[i],0);
     	    rowSums[i/6] += Math.max(solution[i],0);
-    	    float center[] = { Sx, Sy, 0.0f};    	   
-    	    tiles[i] = new BoardTile(center, size, solution[i]);    	    
+    	    System.out.println(Integer.toString(solution[i]));
+    	    //tiles[i].setTrueSolution(0);
+    	    tiles[i].setTrueSolution(solution[i]);  
     	}
+    	
+    	while(hintsCreated < hints) {
+    		int r = (int)(36*Math.random());
+    		if(tiles[r].isClickable() != false){
+    			tiles[r].setHint();
+    			hintsCreated +=1;
+    		}
+    	}
+    	
     }
     
     public native String stringFromJNI(int rows, int cols, int length);
     
-    public void readBoard(String puzzleString) throws IOException{
+    public void readSolution(String puzzleString) throws IOException{
     	Scanner scanner = null;
     	try {	    
     		scanner = new Scanner(puzzleString);
@@ -95,7 +96,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	    	return i;
     	    }
     	}
-	return -1;
+    	return -1;
     }
     
     public void swiped(float[] pt, String direction) {
@@ -142,7 +143,8 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 	public void setState(GameState s){
 		switch(s) {
 			case MAIN_MENU: state = new BoardMainMenu(tiles); break;
-			case PLAY: state  = new BoardPlay(tiles); break;
+			case PLAY: state  = new BoardPlay(tiles); 
+			break;
 			case GAME_MENU: state  = new BoardPlay(tiles); break;
 		}
 	}
@@ -164,8 +166,7 @@ class BoardMainMenu extends State<BoardTile> {
     	    tiles[i].center = center;
     	}
 		
-		//Set textures
-		
+		//Set textures	
 		for(int i = 0;i<tiles.length;i++){
 			tiles[i].setTextures("clear", "flower");
 			tiles[i].setColor("transparent");
@@ -239,7 +240,7 @@ class BoardPlay extends State<BoardTile> {
 			for(int i = 0;i<tiles.length;i++){
 				tiles[i].angle = 0;
 				tiles[i].setTextures();
-				tiles[i].setColor();
+				tiles[i].setColor("transparent");
 			}
 			period = DrawPeriod.DURING;
 		}

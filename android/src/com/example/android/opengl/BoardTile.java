@@ -1,30 +1,53 @@
 package com.example.android.opengl;
-
+//In the future. Expose this class to state as well.
 
 class BoardTile extends Tile{
 
-    public int true_solution;
-
+    private int true_solution;
     public String number = "clear";
     public String arrow = "clear";
-
+    private boolean clickable = true;
     public String color;
+    protected boolean rotate = false;
+    
+    public boolean isClickable() {
+		return clickable;
+	}
 
-    public BoardTile(float[] inCenter,float inSize, int solution) {
+    public boolean isBlack() {
+		if(true_solution == -1)
+			return true;
+		else
+			return false;
+	}
+    
+    public BoardTile(float[] inCenter,float inSize) {
     	super(inCenter, inSize);
-    	true_solution = solution;
     	center = inCenter;
     	size = inSize;
     	color = "transparent";
     }
 
+    public void setHint(){
+    	number  = Integer.toString(true_solution);
+    	clickable = false;
+    }
+    
+    public void setTrueSolution(int solution){
+    	this.true_solution = solution;
+    	if(true_solution != -1){
+    		clickable = true;
+    	}
+
+    }
+    
    public void setTextures(String texture0, String texture1) {
 	   textures[0] = texture0;
 	   textures[1] = texture1;
    }
     
    public void setTextures(){
-	   if(true_solution != -1) {
+	   if(!isBlack()) {
 		   textures[0]  = arrow;
 		   textures[1]  = number;
    		} else {
@@ -34,13 +57,6 @@ class BoardTile extends Tile{
    }
    
    
-   public void setColor() {
-		if (true_solution == -1)
-		    color = "transparent";
-		else
-		    color = "transparent";
-
-   }
    
    public void setColor(String c) {
 	   color = c;
@@ -52,7 +68,7 @@ class BoardTile extends Tile{
 		   number = "clear";
 		   arrow = "clear";
 	   } else {
-	   number = Integer.toString(val);
+		   number = Integer.toString(val);
 	   }
    }
    

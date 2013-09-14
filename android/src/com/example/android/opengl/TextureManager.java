@@ -83,14 +83,11 @@ public class TextureManager {
 	int textureFromBitmap(Bitmap bmp){
 		int[] texture = new int[1];
 		GLES20.glGenTextures(1, texture, 0);
-		System.out.println("Texture");
-		System.out.println(texture[0]);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,GLES20.GL_LINEAR);
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_LINEAR);
 		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, bmp,0); 
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
-		System.out.println(texture[0]);
 		bmp.recycle();
 		return texture[0];
 	}

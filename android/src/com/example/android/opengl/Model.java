@@ -26,19 +26,18 @@ class Model{
 
     public void initiateMembers(Context c, Board b){
     	mBoard = b;
-    	mMenu = new Menu();
-    	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     	mBee = new Bee(mBoard);
     	mBg = new Background("paperbg", 2f);
-    	mBoardBg = new Background("boardbg", .75f);
     	context = c;
     	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
     	state = GameState.MAIN_MENU;
     }
     
-    public void createPuzzle(int length) {
-    	mBoard.createPuzzle(length);
+    public void createPuzzle(int length, int hints) {
+    	mBoard.createPuzzle(length, hints);
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
+    	mBoardBg = new Background("boardbg", .75f);
+    	mMenu = new Menu();
     }
     
     public void touched(float[] pt) {
@@ -52,9 +51,10 @@ class Model{
     				}
     				at = mBoard.touched(pt);
     				if(at != -1 ) {
-    					if(mBoard.tiles[at].true_solution != -1) {
+    					if(mBoard.tiles[at].isBlack() == false) {
     						mBoard.tiles[at].setColor("blue");
-    						mMenu.activate(pt);
+    						if(mBoard.tiles[at].isClickable())
+    							mMenu.activate(pt);
     					}
     				}
     			} else {
@@ -94,13 +94,12 @@ class Model{
 
     	mBg.draw(r);
     	mBoard.draw(r);
-    	mMenu.draw(r);
     	mBee.draw(r);
     	if(state != GameState.MAIN_MENU){
         	mBoardBg.draw(r);
         	mBorder.draw(r);
-    	}
-    	
+        	mMenu.draw(r);
+    	} 	
     }
 
     public void setState(GameState s){
