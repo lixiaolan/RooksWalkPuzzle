@@ -7,7 +7,6 @@ class BoardTile extends Tile{
     public String number = "clear";
     public String arrow = "clear";
     private boolean clickable = true;
-    public String color;
     protected boolean rotate = false;
     
     public boolean isClickable() {
@@ -41,11 +40,6 @@ class BoardTile extends Tile{
 
     }
     
-   public void setTextures(String texture0, String texture1) {
-	   textures[0] = texture0;
-	   textures[1] = texture1;
-   }
-    
    public void setTextures(){
 	   if(!isBlack()) {
 		   textures[0]  = arrow;
@@ -56,15 +50,34 @@ class BoardTile extends Tile{
    		}
    }
    
-   
-   
-   public void setColor(String c) {
-	   color = c;
+   public void setRotate(boolean rotate){
+	   this.rotate = rotate;
    }
    
+   public void setArrow(String arrow){
+	   this.arrow = arrow;
+   }
+
+   public String getArrow(){
+	   return arrow;
+   }
+
+   
+   public void setNumber(String number){
+	   this.number = number;
+   }
+
+   public String getNumber(){
+	   return number;
+   }
+
+   
+   public int getTrueSolution(){
+	   return true_solution;
+   }
    
    public void setUserInput(int val){
-	   if(val == 0 && true_solution != -1){
+	   if(val == 0 && !isBlack()){
 		   number = "clear";
 		   arrow = "clear";
 	   } else {

@@ -1,40 +1,19 @@
 package com.example.android.opengl;
 
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.app.ActionBar;
+
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.opengl.GLSurfaceView;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.ViewAnimator;
-import android.widget.ViewSwitcher;
-import java.util.ArrayList;
+
 
 
 //Manages transitions between MenuStates.
-
 class ButtonManager{
     public StateButton bee_puzzled;
     public StateButton short_puz;
     public StateButton medium_puz;
+    public StateButton resume;
     public MenuState mMenuState;
     
     private float h;
@@ -48,7 +27,6 @@ class ButtonManager{
 	bee_puzzled = new StateButton((Button)va.findViewById(R.id.bee_puzzled));
 	short_puz = new StateButton((Button)va.findViewById(R.id.short_puz));
 	medium_puz = new StateButton((Button)va.findViewById(R.id.medium_puz));
-
 	mMenuState = ms;
     }
 

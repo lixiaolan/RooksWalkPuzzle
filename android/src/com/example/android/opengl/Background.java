@@ -28,6 +28,9 @@ public class Background extends Graphic<BackgroundTile> {
 	
 	}
 
+	public void setCenter(float[] center){
+		tiles[0].center = center;
+	}
 }
 
 

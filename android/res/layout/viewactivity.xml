@@ -89,4 +89,18 @@
 
     </ViewAnimator>
 
+    <Button
+        android:id="@+id/resume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:onClick="RestoreGame"
+        android:text="Resume Puzzle"
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
+        android:textColor="#FF8C00"
+        android:textSize="30sp"
+        android:textStyle="normal"
+        android:typeface="sans"
+        android:visibility="invisible" />
+
 </FrameLayout>

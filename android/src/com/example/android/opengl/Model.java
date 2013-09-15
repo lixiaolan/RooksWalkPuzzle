@@ -5,12 +5,13 @@ import android.os.Vibrator;
 
 
 class Model{
-    private Board mBoard;
+	public Board mBoard;
     private Menu mMenu;
     private Border mBorder;
     private Bee	mBee;
     private Background mBg;
     private Background mBoardBg;
+    private Background mCheck;
     private GameState state;
     private int at = -1;
     private Vibrator vibe;
@@ -28,13 +29,23 @@ class Model{
     	mBoard = b;
     	mBee = new Bee(mBoard);
     	mBg = new Background("paperbg", 2f);
+    	mCheck  = new Background("check",.11f);
+    	float[] center = {-.7f,1f, 0f};
+    	mCheck.setCenter(center);
     	context = c;
     	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
     	state = GameState.MAIN_MENU;
     }
     
     public void createPuzzle(int length, int hints) {
-    	mBoard.createPuzzle(length, hints);
+    	mBoard.createPuzzleFromJNI(length, hints);
+    	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
+    	mBoardBg = new Background("boardbg", .75f);
+    	mMenu = new Menu();
+    }
+    
+    public void restorePuzzle(int[] solution,String[] numbers, String[] arrows){
+    	mBoard.restoreBoard(solution, numbers, arrows);
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
     	mBoardBg = new Background("boardbg", .75f);
     	mMenu = new Menu();
@@ -68,7 +79,8 @@ class Model{
     		at = mBoard.touched(pt);
     		if(at != -1) {
     			float[] pivot = {0,0,1};
-    			mBoard.setRotate(at, pivot);
+    			mBoard.tiles[at].setPivot(pivot);
+    			mBoard.tiles[at].setRotate(true);
     		}
     		break;
     		
@@ -99,6 +111,7 @@ class Model{
         	mBoardBg.draw(r);
         	mBorder.draw(r);
         	mMenu.draw(r);
+        	mCheck.draw(r);
     	} 	
     }
 

@@ -226,6 +226,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM.buildTextures(mActivityContext, R.drawable.papertexture2, "paperbg");
 	TM.buildTextures(mActivityContext, R.drawable.boardbg, "boardbg");
 	TM.buildTextures(mActivityContext, R.drawable.blacksquare, "blacksquare");
+	TM.buildTextures(mActivityContext, R.drawable.check, "check");
 	//Create Menu Textures
 
 	for(int i=0;i<6;i++){
@@ -319,7 +320,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     public void drawTile(float[] center, float size, String[] textures, String color, float angle, float[] pivot)
     {
-    	
     	mTextures[0] = TM.library.get(textures[0]);
     	mTextures[1] = TM.library.get(textures[1]);	
     	mColor = colorMap.get(color);

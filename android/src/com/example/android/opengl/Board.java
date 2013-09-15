@@ -21,19 +21,47 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     public Board(Parcel in) {
     	in.readIntArray(solution);
     	//NEED TO TRACK DIFFICULTY OF PUZZLE
-    	//buildBoardFromSolution();
+    	buildBoardFromSolution(5);
     	state = new BoardPlay(tiles);
     }
-        
-    public void createPuzzle(int length, int hints){
-    	try {
-    		readSolution(stringFromJNI(6, 6, length) );	
-    	} catch (IOException e) {
-    		System.err.println("Caught IOException: " + e.getMessage());
+   
+    public void restoreBoard(int[] solution, String[] numbers, String[] arrows){
+    	columnSums = new int[36];
+    	rowSums = new int[36];
+    	for(int i=0;i<36;i++){
+    		tiles[i].setTrueSolution(solution[i]);
+    		tiles[i].setArrow(arrows[i]);
+    		tiles[i].setNumber(numbers[i]);
+    		columnSums[i%6] += Math.max(solution[i],0);
+    	    rowSums[i/6] += Math.max(solution[i],0);
     	}
-    	buildBoardFromSolution(hints);
+    	
     }
-
+    
+    public int[] dumpSolution() {
+    	int[] solution = new int[36];
+    	for(int i =0;i<36;i++){
+    		solution[i] = tiles[i].getTrueSolution();
+    	}
+    	return solution;
+    }
+    
+    public String[] dumpArrows() {
+    	String[] arrows = new String[36];
+    	for(int i =0;i<36;i++){
+    		arrows[i] = tiles[i].getArrow();
+    	}
+    	return arrows;
+    }
+    
+    public String[] dumpNumbers() {
+    	String[] numbers = new String[36];
+    	for(int i =0; i<36; i++){
+    		numbers[i] = tiles[i].getNumber();
+    	}
+    	return numbers;
+    }
+    
     public void buildEmptyBoard() {
     	tiles = new BoardTile[36];
     	float size = .12f;
@@ -51,23 +79,35 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	    columnSums[i%6] += Math.max(solution[i],0);
     	    rowSums[i/6] += Math.max(solution[i],0);
     	    System.out.println(Integer.toString(solution[i]));
-    	    //tiles[i].setTrueSolution(0);
-    	    tiles[i].setTrueSolution(solution[i]);  
-    	}
-    	
+    	    tiles[i].setTrueSolution(solution[i]);
+    	    //This does a hard reset on the board.
+    	    tiles[i].number = "clear";
+    	    tiles[i].arrow = "clear";
+    	} 
+    	//FIXED: Creates concurrncy issues. Basically, I am setting the number before I 
+    	//switch state! May lead to a texture of -1 being drawn
     	while(hintsCreated < hints) {
     		int r = (int)(36*Math.random());
-    		if(tiles[r].isClickable() != false){
+    		if(tiles[r].isBlack() == false){
     			tiles[r].setHint();
     			hintsCreated +=1;
     		}
     	}
     	
     }
+   
+    public void createPuzzleFromJNI(int length, int hints){
+    	try {
+    		readSolutionFromJni(stringFromJNI(6, 6, length) );	
+    	} catch (IOException e) {
+    		System.err.println("Caught IOException: " + e.getMessage());
+    	}
+    	buildBoardFromSolution(hints);
+    }
     
     public native String stringFromJNI(int rows, int cols, int length);
     
-    public void readSolution(String puzzleString) throws IOException{
+    public void readSolutionFromJni(String puzzleString) throws IOException{
     	Scanner scanner = null;
     	try {	    
     		scanner = new Scanner(puzzleString);
@@ -106,12 +146,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
     	    }
     	}
     }
-    ;
-    public void setRotate(int i, float[] pivot){
-    	tiles[i].rotate = true;
-    	tiles[i].pivot = pivot;
-    }
-    
+ 
     static {
     	System.loadLibrary("GeneratePuzzle");
     }
@@ -143,8 +178,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 	public void setState(GameState s){
 		switch(s) {
 			case MAIN_MENU: state = new BoardMainMenu(tiles); break;
-			case PLAY: state  = new BoardPlay(tiles); 
-			break;
+			case PLAY: state  = new BoardPlay(tiles); break;
 			case GAME_MENU: state  = new BoardPlay(tiles); break;
 		}
 	}
@@ -181,22 +215,20 @@ class BoardMainMenu extends State<BoardTile> {
 	public void duringAnimation(BoardTile[] tiles) {
 		for(int i=0;i<tiles.length;i++){
 			if(tiles[i].rotate){
-				System.out.println("I need to rotate bad.");
 				refTime[i] = System.currentTimeMillis();
 				rotateTiles[i] = true;
 				tiles[i].rotate = false;
 			}
 			long time = System.currentTimeMillis()-refTime[i];
 			if(time < 2000f && rotateTiles[i]==true){
-				System.out.println("ROTATE ME");
-				tiles[i].angle = time*.4f;
+				tiles[i].setAngle(time*.4f);
 				if(time<1000f) {
 					tiles[i].textures[0] = Integer.toString((int)(10*Math.random()));
 					tiles[i].textures[1] = "up_arrow";
 				}
 			} else{
 				rotateTiles[i] = false;
-				tiles[i].angle = 0;
+				tiles[i].setAngle(0);
 				tiles[i].textures[0]="flower";
 				tiles[i].textures[1] ="clear";
 			}
@@ -222,24 +254,26 @@ class BoardPlay extends State<BoardTile> {
 		
 		if(time < totalTime) {
 			for (int i = 0; i < tiles.length; i++) {
+				tiles[i].setTextures("flower","clear");
 	    	    float Sx = ( (i/6) - 2.5f )/4.0f;
 	    	    float Sy = ( (i%6) - 2.5f )/4.0f;
 	    	    float newX = originalTiles[i].center[0]+time/totalTime*(Sx - originalTiles[i].center[0]);
 	    	    float newY = originalTiles[i].center[1]+time/totalTime*(Sy - originalTiles[i].center[1]);
 	    	    float center[] = { newX, newY, 0.0f};
 	    	    tiles[i].center = center;
-	    	}
-			
+	    	}			
 		} 
-		else if(time<1000.0f) {
+		else if( time < 4000.0f && time > totalTime) {
+			float[] pivot = {1,0,0};
 			for (int i = 0; i < tiles.length; i++) {
-				tiles[i].angle = (time-totalTime)*2;
+				tiles[i].setPivot(pivot);
+				tiles[i].setAngle((time-totalTime)*.045f);
 			}
-		}		
+		}	
 		else {
 			for(int i = 0;i<tiles.length;i++){
-				tiles[i].angle = 0;
-				tiles[i].setTextures();
+				tiles[i].setAngle(0);
+				///tiles[i].setTextures();
 				tiles[i].setColor("transparent");
 			}
 			period = DrawPeriod.DURING;
@@ -249,10 +283,6 @@ class BoardPlay extends State<BoardTile> {
 	public void duringAnimation(BoardTile[] tiles) {
 		for (int i = 0; i < tiles.length; i++) {
 			((BoardTile)tiles[i]).setTextures();
-    	    float Sx = ( (i/6) - 2.5f )/4.0f;
-    	    float Sy = ( (i%6) - 2.5f )/4.0f;
-    	    float center[] = { Sx, Sy, 0.0f};
-    	    tiles[i].center = center;
     	}
 	}
 	
