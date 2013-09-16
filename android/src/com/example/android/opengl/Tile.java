@@ -1,17 +1,14 @@
 package com.example.android.opengl;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
 abstract class Tile {
 
  
     public float[] center;
     public float size;
-    public float angle;
-    public String[] textures = {"clear","clear"};;
-    public String color;
-    public float[] pivot = {0,0,1};
+    float angle;
+    String[] textures = {"clear","clear"};;
+    String color = "transparent";
+    float[] pivot = {0,0,1};
     
     public Tile(float[] inCenter,float inSize) {
     	center = inCenter;
@@ -24,6 +21,26 @@ abstract class Tile {
         }
     
     public abstract void draw(MyGLRenderer r);
+    
+    public void setPivot(float[] pivot){
+    	this.pivot = pivot;
+    }
+    
+    public void setAngle(float angle){
+    	this.angle = angle;
+    }
+ 
+    public void setTextures(String texture0, String texture1) {
+ 	   textures[0] = texture0;
+ 	   textures[1] = texture1;
+    }
+    
+    
+    public void setColor(String c) {
+ 	   color = c;
+    }
+    
+    
     
 }
 

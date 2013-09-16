@@ -5,13 +5,17 @@ class BoardTile extends Tile{
 
 
     public int true_solution;
-    public int true_direction;
+    public String true_arrow;
 
     public String number = "clear";
     public String arrow = "clear";
     private boolean clickable = true;
-    public String color;
     protected boolean rotate = false;
+
+    public void setTrueArrow(String arrow) {
+    	this.true_arrow = arrow;
+    }
+    
     
     public boolean isClickable() {
 		return clickable;
@@ -29,7 +33,7 @@ class BoardTile extends Tile{
     	center = inCenter;
     	size = inSize;
     	color = "transparent";
-	true_direction = -1;
+    	true_arrow = "clear";
     }
 
     public void setHint(){
@@ -45,11 +49,6 @@ class BoardTile extends Tile{
 
     }
     
-   public void setTextures(String texture0, String texture1) {
-	   textures[0] = texture0;
-	   textures[1] = texture1;
-   }
-    
    public void setTextures(){
 	   if(!isBlack()) {
 		   textures[0]  = arrow;
@@ -60,15 +59,38 @@ class BoardTile extends Tile{
    		}
    }
    
-   
-   
-   public void setColor(String c) {
-	   color = c;
+   public void setRotate(boolean rotate){
+	   this.rotate = rotate;
    }
    
+   public void setArrow(String arrow){
+	   this.arrow = arrow;
+   }
+
+   public String getArrow(){
+	   return arrow;
+   }
+
+   
+   public void setNumber(String number){
+	   this.number = number;
+   }
+
+   public String getNumber(){
+	   return number;
+   }
+
+   
+   public int getTrueSolution(){
+	   return true_solution;
+   }
+   
+   public String getTrueArrow(){
+	   return true_arrow;
+   }
    
    public void setUserInput(int val){
-	   if(val == 0 && true_solution != -1){
+	   if(val == 0 && !isBlack()){
 		   number = "clear";
 		   arrow = "clear";
 	   } else {
@@ -79,4 +101,30 @@ class BoardTile extends Tile{
     public void draw(MyGLRenderer r) {
     	r.drawTile(center, size, textures, color, angle, pivot);
     }    
+    
+    public boolean checkArrows() {
+    	if(isBlack()) 
+    		return true;
+    	else {
+    		return arrow==true_arrow;
+    	}
+    	
+    }
+    
+    public boolean checkSolutions(){	
+    	if(isBlack()){
+    		return true;
+    	} else {
+    		if(number == "clear"){
+    			if(true_solution == 0){
+    				return true;
+    			}
+    		} else {
+    			if(Integer.toString(true_solution) == number)
+    				return true;
+    		}
+    	}
+    	return false;
+    }
+    
 }

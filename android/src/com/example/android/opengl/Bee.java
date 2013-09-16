@@ -69,7 +69,8 @@ class BeeWander extends State<BeeTile> {
 			bee.center[1] = startY + time/interval*(targetY-startY);
 		} else if(time<interval+200f){
 			if(!flipped){
-				mBoard.setRotate(r,pivot );
+				mBoard.tiles[r].setPivot(pivot);
+				mBoard.tiles[r].setRotate(true);
 			}
 		}
 			else {
