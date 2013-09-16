@@ -65,19 +65,19 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 
 	    if (dx > 0) {
 		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 0;
-		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
+		tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 	    }
 	    if (dx < 0) {
 		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 2;
-		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
+		tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 	    }
 	    if (dy > 0) {
 		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 3;
-		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
+		tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
 	    }
 	    if (dy < 0) {
 		tiles[6*path[i+1][0] + path[i+1][1]].true_direction = 1;
-		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
+		tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 	    }
 	}
     	

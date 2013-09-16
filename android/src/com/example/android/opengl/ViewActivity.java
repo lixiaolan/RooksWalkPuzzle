@@ -35,9 +35,6 @@ public class ViewActivity extends Activity {
     private GameState state = GameState.MAIN_MENU;
     private MenuState mMenuState = new MenuState();
     private ButtonManager mButtonManager;
-    StateButton bee_puzzled;
-    StateButton short_puz;
-    StateButton medium_puz;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,28 +103,10 @@ public class ViewActivity extends Activity {
     protected void onStart() {
     	super.onStart();
     	//Store all buttons in one array for now.  Change to a map later for clarity.
-    	bee_puzzled = new StateButton((Button)findViewById(R.id.bee_puzzled));
-    	short_puz = new StateButton((Button)findViewById(R.id.short_puz));
-    	medium_puz = new StateButton((Button)findViewById(R.id.medium_puz));
+    	// bee_puzzled = new StateButton((Button)findViewById(R.id.bee_puzzled));
+    	// short_puz = new StateButton((Button)findViewById(R.id.short_puz));
+    	// medium_puz = new StateButton((Button)findViewById(R.id.medium_puz));
     	
-    	View yourLayout = findViewById(R.id.surface_view);
-    	final ViewTreeObserver vto = yourLayout.getViewTreeObserver();
-    	vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-    		@Override
-    		public void onGlobalLayout() {
-    		    float h = (float) mGLView.getHeight();
-    		    float w = (float) mGLView.getWidth();
-    		    long[] pOne = {0,0,1000};
-    		    bee_puzzled.setState(0.1f*w, 0.5f*h, 1.0f, true, pOne);
-    		}
-    	    });
-
-
-    	String fontPath = "MileyTwerk.ttf";
-    	Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
-    	bee_puzzled.mButton.setTypeface(tf);
-    	short_puz.mButton.setTypeface(tf);
-    	medium_puz.mButton.setTypeface(tf);
     	
     }
     
@@ -145,7 +124,17 @@ public class ViewActivity extends Activity {
 		break;
 	    case 2:
 		state = GameState.PLAY;
-		mModel.createPuzzle(14,5);
+		mModel.createPuzzle(12,4);
+		mModel.setState(GameState.PLAY);
+		break;
+	    case 3:
+		state = GameState.PLAY;
+		mModel.createPuzzle(14,4);
+		mModel.setState(GameState.PLAY);
+		break;
+	    case 4:
+		state = GameState.PLAY;
+		mModel.createPuzzle(16,5);
 		mModel.setState(GameState.PLAY);
 		break;
 	    }

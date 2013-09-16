@@ -3,10 +3,11 @@ package com.example.android.opengl;
 public enum MenuStateEnum {
     OPENING,
     LIST,
-    GAME_PLAY,
     NEW,
+    RESUME,
     OPTIONS,
-    STATS, 
+    STATS,
+    GAME_PLAY,
 }
 
 

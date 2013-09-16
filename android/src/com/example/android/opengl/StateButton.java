@@ -11,7 +11,6 @@ import android.view.View;
 class StateButton {
     public Button mButton;
     public float[] position = new float[2];
-    public float size;
     public boolean visible;
 
     //For animation purposes
@@ -24,7 +23,6 @@ class StateButton {
 	mButton = b;
 	position[0] = 0.0f;
 	position[1] = 0.0f;
-	size = 1.0f;
 	visible = false;
 	moved = true;
 	fadeOut = false;
@@ -32,7 +30,7 @@ class StateButton {
 	mButton.setAlpha(0.0f);
     }
 
-    public void setState(float x, float y, float siz, boolean vis, long[] durations) {
+    public void setState(float x, float y, boolean vis, long[] durations) {
 	if ((x == position[0])&(y == position[1]))
 	    moved = false;
 	else
@@ -50,7 +48,6 @@ class StateButton {
 	else 
 	    fadeIn = false;
 
-    	size = siz;
 	visible = vis;
 
 	position[0] = x;

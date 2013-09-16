@@ -55,6 +55,105 @@
             android:typeface="sans"
             android:visibility="invisible" />
 
+
+        <Button
+            android:id="@+id/bee_puzzled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="Bee Puzzled"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="40sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+
+        <Button
+            android:id="@+id/new_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="new"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="resume"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="options"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/hints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="blank"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+
+        <Button
+            android:id="@+id/stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="stats"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
         <Button
             android:id="@+id/short_puz"
             android:layout_width="wrap_content"
@@ -63,7 +162,7 @@
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
             android:onClick="manageView"
-            android:text="Stroll"
+            android:text="short"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
             android:textSize="30sp"
@@ -79,7 +178,39 @@
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
             android:onClick="manageView"
-            android:text="Walk"
+            android:text="medium"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/longer_puz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="longer"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/longest_puz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="#00FFFFFF"
+            android:onClick="manageView"
+            android:text="longest"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
             android:textSize="30sp"

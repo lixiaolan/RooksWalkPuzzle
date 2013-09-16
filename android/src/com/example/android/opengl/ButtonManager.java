@@ -33,23 +33,57 @@ import java.util.ArrayList;
 
 class ButtonManager{
     public StateButton bee_puzzled;
+
+    public StateButton new_game;
+    public StateButton resume;
+    public StateButton options;
+    public StateButton stats;
+    
     public StateButton short_puz;
     public StateButton medium_puz;
+    public StateButton longer_puz;
+    public StateButton longest_puz;
+
+    public StateButton hints;
+
     public MenuState mMenuState;
     
     private float h;
     private float w;
-    private long[] pOne = {0,1000,1000};
-    private long[] pTwo = {1000, 1000, 0};
-    private long[] pThree = {0,0,1000};
+    
+    private float[] offSet = {.1f, .2f, .3f};
+    private float[] stack = {.1f, .2f, .3f, .4f, .5f, .6f, .7f, .8f, .9f};
+
+    private long[] MoveFadeIn = {0,1000,1000};
+    private long[] FadeOutMove = {1000, 1000, 0};
+    private long[] FadeIn = {0,0,1000};
+    private long[] Move = {0,1000,0};
+    private long[] None = {0,0,0};
+
 
     public ButtonManager(MenuState ms, Activity va) {
-	
-	bee_puzzled = new StateButton((Button)va.findViewById(R.id.bee_puzzled));
-	short_puz = new StateButton((Button)va.findViewById(R.id.short_puz));
-	medium_puz = new StateButton((Button)va.findViewById(R.id.medium_puz));
 
 	mMenuState = ms;
+	
+	bee_puzzled = new StateButton((Button)va.findViewById(R.id.bee_puzzled));
+
+	new_game = new StateButton((Button)va.findViewById(R.id.new_game));
+	resume = new StateButton((Button)va.findViewById(R.id.resume));
+	options = new StateButton((Button)va.findViewById(R.id.options));
+	stats = new StateButton((Button)va.findViewById(R.id.stats));
+
+	hints = new StateButton((Button)va.findViewById(R.id.hints));
+
+	if (ms.hints)
+	    hints.mButton.setText("Hints On");
+	else
+	    hints.mButton.setText("Hints Off");
+
+	short_puz = new StateButton((Button)va.findViewById(R.id.short_puz));
+	medium_puz = new StateButton((Button)va.findViewById(R.id.medium_puz));
+	longer_puz = new StateButton((Button)va.findViewById(R.id.longer_puz));
+	longest_puz = new StateButton((Button)va.findViewById(R.id.longest_puz));
+
     }
 
     public void setHW(float height, float width) {
@@ -63,6 +97,31 @@ class ButtonManager{
 	    case R.id.bee_puzzled:
 		mMenuState.state = MenuStateEnum.LIST;
 	 	break;
+
+	    case R.id.new_game:
+		mMenuState.state = MenuStateEnum.NEW;
+	 	break;
+
+	    // case R.id.resume:
+	    // 	mMenuState.state = MenuStateEnum.RESUME;
+	    // 	break;
+
+	    case R.id.options:
+	    	mMenuState.state = MenuStateEnum.OPTIONS;
+	    	break;
+
+	    case R.id.hints:
+		mMenuState.hints = !mMenuState.hints;
+		if (mMenuState.hints)
+		    hints.mButton.setText("Hints On");
+		else
+		    hints.mButton.setText("Hints Off");
+	    	break;
+
+
+	    // case R.id.stats:
+	    // 	mMenuState.state = MenuStateEnum.STATS;
+	    // 	break;
 		
 	    case R.id.short_puz:
 		mMenuState.state = MenuStateEnum.GAME_PLAY;
@@ -73,30 +132,110 @@ class ButtonManager{
 		mMenuState.state = MenuStateEnum.GAME_PLAY;
 		mMenuState.difficulty = 2;
 		break;
+
+	    case R.id.longer_puz:
+		mMenuState.state = MenuStateEnum.GAME_PLAY;
+		mMenuState.difficulty = 3;
+		break;
+
+  	    case R.id.longest_puz:
+		mMenuState.state = MenuStateEnum.GAME_PLAY;
+		mMenuState.difficulty = 4;
+		break;
+
 	    }
 	 switchState();
     }
     
     public void switchState() {	
+
 	switch (mMenuState.state) {
 	case OPENING:
-	    bee_puzzled.setState(0.1f*w,0.5f*h, 1.0f, true,pThree);
-	    short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pThree);
-	    medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pThree);
+	    bee_puzzled.setState(offSet[0]*w,0.5f*h, true,FadeIn);
+
+	    new_game.setState(offSet[1]*w,0.0f*h, false,None);
+	    resume.setState(offSet[1]*w,0.0f*h, false,None);
+	    options.setState(offSet[1]*w,0.0f*h, false,None);
+	    stats.setState(offSet[1]*w,0.0f*h, false,None);
+
+	    hints.setState(offSet[2]*w,0.0f*h, false,None);
+
+	    short_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    medium_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    longer_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    longest_puz.setState(offSet[2]*w,0.0f*h, false,None);
 	    break;
 
 	case LIST:
-	    bee_puzzled.setState(0.1f*w,0.1f*h, 1.0f, true,pOne);
-	    short_puz.setState(0.1f*w,0.5f*h, 1.0f, true,pOne);
-	    medium_puz.setState(0.1f*w,0.6f*h, 1.0f, true,pOne);
+
+	    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,MoveFadeIn);
+
+	    new_game.setState(offSet[1]*w,stack[1]*h, true,MoveFadeIn);
+	    resume.setState(offSet[1]*w,stack[2]*h, true,MoveFadeIn);
+	    options.setState(offSet[1]*w,stack[3]*h, true,MoveFadeIn);
+	    stats.setState(offSet[1]*w,stack[4]*h, true,MoveFadeIn);
+
+	    hints.setState(offSet[2]*w,0.0f*h, false, None);
+
+	    short_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    medium_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    longer_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    longest_puz.setState(offSet[2]*w,0.0f*h, false,None);
 	    break;
 
+	case NEW:
+	    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,MoveFadeIn);
+
+	    new_game.setState(offSet[1]*w,stack[1]*h, true,MoveFadeIn);
+	    resume.setState(offSet[1]*w,0.0f*h, false,None);
+	    options.setState(offSet[1]*w,0.0f*h, false,None);
+	    stats.setState(offSet[1]*w,0.0f*h, false,None);
+
+	    hints.setState(offSet[2]*w,0.5f*h, false,None);
+
+	    short_puz.setState(offSet[2]*w,stack[2]*h, true,MoveFadeIn);
+	    medium_puz.setState(offSet[2]*w,stack[3]*h, true,MoveFadeIn);
+	    longer_puz.setState(offSet[2]*w,stack[4]*h, true,MoveFadeIn);
+	    longest_puz.setState(offSet[2]*w,stack[5]*h, true,MoveFadeIn);
+	    break;
+
+	case OPTIONS:
+
+	    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,MoveFadeIn);
+
+	    new_game.setState(offSet[1]*w,0.0f*h, false,None);
+	    resume.setState(offSet[1]*w,0.0f*h, false,None);
+	    options.setState(offSet[1]*w,stack[1]*h, true,MoveFadeIn);
+	    stats.setState(offSet[1]*w,0.0f*h, false,None);
+
+	    hints.setState(offSet[2]*w,stack[2]*h, true,MoveFadeIn);
+
+	    short_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    medium_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    longer_puz.setState(offSet[2]*w,0.0f*h, false,None);
+	    longest_puz.setState(offSet[2]*w,0.0f*h, false,None);
+
+	    break;
+
+
 	case GAME_PLAY:
-	    bee_puzzled.setState(0.1f*w,0.9f*h, 1.0f, true,pTwo);
-	    short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
-	    medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+	    bee_puzzled.setState(offSet[0]*w,0.8f*h, true,Move);
+
+	    new_game.setState(offSet[1]*w,0.0f*h, false,None);
+	    resume.setState(offSet[1]*w,0.0f*h, false,None);
+	    options.setState(offSet[1]*w,0.0f*h, false,None);
+	    stats.setState(offSet[1]*w,0.0f*h, false,None);
+
+	    hints.setState(offSet[2]*w,0.0f*h, false,None);
+
+	    short_puz.setState(offSet[2]*w,0.5f*h, false,None);
+	    medium_puz.setState(offSet[2]*w,0.6f*h, false,None);
+	    longer_puz.setState(offSet[2]*w,0.7f*h, false,None);
+	    longest_puz.setState(offSet[2]*w,0.8f*h, false,None);
+
 	    break;
 	}
+
     }
 }
     
