@@ -156,6 +156,7 @@ public class ViewActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		mModel.setState(GameState.MAIN_MENU);
+		mModel.setButtonManager(mButtonManager);
 		mButtonManager.reset();
 		File file = new File(this.getFilesDir(), savefile);
 		if(file.exists()){
@@ -169,8 +170,9 @@ public class ViewActivity extends Activity {
 	//This is called after the constructor of GameView is complete.
 	//Otherwise, the positions would not work out correctly :(
 
-	public void manageView(View v) {
-		mButtonManager.manageState(v, mModel.getState());
+	public void newGame(View v) {
+		manageView(v);
+		//mButtonManager.manageState(v, mModel.getState());
 		//NOTE: menu state is getting changed to GAME_PLAY after the buttons leave the screen.
 		if (mMenuState.state == MenuStateEnum.GAME_PLAY && mMenuState.createGame) {
 				switch (mMenuState.difficulty) {
@@ -190,18 +192,22 @@ public class ViewActivity extends Activity {
 				mMenuState.createGame = false;
 				mModel.setState(GameState.PLAY);
 
-			} else if(mMenuState.state == MenuStateEnum.GAME_RESUME && mMenuState.createGame){
-				if(savedGame) {
-					restoreGame();
-				}
-				mMenuState.createGame = false;
-				mModel.setState(GameState.PLAY);
-			}
-		
+			} 
 	}
 
+	public void resumeGame(View v) {
+		manageView(v);
+		//mButtonManager.manageState(v, mModel.getState());
+		if(mMenuState.state == MenuStateEnum.GAME_RESUME && mMenuState.createGame){
+			if(savedGame) {
+				restoreGameUtil();
+			}
+			mMenuState.createGame = false;
+			mModel.setState(GameState.PLAY);
+		}	
+	}
 	
-	public void restoreGame(){
+	public void restoreGameUtil(){
 		try{
 		int[] solution = new int[36];
 		String[] numbers = new String[36];
@@ -242,8 +248,8 @@ public class ViewActivity extends Activity {
 		
 	}
     
-
 	public void resetGame(View v){
+		manageView(v);
 		try{
     		File file = new File(this.getFilesDir(), savefile);
     		if(file.delete()){
@@ -256,12 +262,13 @@ public class ViewActivity extends Activity {
     	}
 		
 		savedGame = false;
-		mButtonManager.reset();
 		mModel.setState(GameState.MAIN_MENU);
 
 	}
 	
-	
+	public void manageView(View v){
+		mButtonManager.manageState(v, mModel.getState());
+	}
 	//This function peforms animatinos on the array of buttons allButtons.
 	//It works by sequentially activating the various animatinos
 	//needed based on any change of state in the StateButtons.

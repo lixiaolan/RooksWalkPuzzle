@@ -55,7 +55,6 @@
             android:typeface="sans"
             android:visibility="invisible" />
 
-
         <Button
             android:id="@+id/bee_puzzled"
             android:layout_width="wrap_content"
@@ -71,7 +70,6 @@
             android:textStyle="normal"
             android:typeface="sans"
             android:visibility="invisible" />
-
 
         <Button
             android:id="@+id/new_game"
@@ -96,7 +94,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
-            android:onClick="manageView"
+            android:onClick="resumeGame"
             android:text="resume"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
@@ -137,7 +135,6 @@
             android:typeface="sans"
             android:visibility="invisible" />
 
-
         <Button
             android:id="@+id/stats"
             android:layout_width="wrap_content"
@@ -161,8 +158,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
-            android:onClick="manageView"
-            android:text="short"
+	        android:onClick="newGame"
+	        android:text="short"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
             android:textSize="30sp"
@@ -177,7 +174,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
-            android:onClick="manageView"
+			android:onClick="newGame"
             android:text="medium"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
@@ -193,7 +190,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
-            android:onClick="manageView"
+            android:onClick="newGame"
             android:text="longer"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
@@ -209,7 +206,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
-            android:onClick="manageView"
+ 			android:onClick="newGame"
             android:text="longest"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
@@ -218,20 +215,32 @@
             android:typeface="sans"
             android:visibility="invisible" />
 
-    </ViewAnimator>
+        <Button
+            android:id="@+id/share_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:text="Share"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
 
-    <Button
-        android:id="@+id/resume"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:onClick="RestoreGame"
-        android:text="Resume Puzzle"
-        android:textAppearance="?android:attr/textAppearanceMediumInverse"
-        android:textColor="#FF8C00"
-        android:textSize="30sp"
-        android:textStyle="normal"
-        android:typeface="sans"
-        android:visibility="invisible" />
+        <Button
+            android:id="@+id/main_menu_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="resetGame"
+            android:text="Main Menu"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+    </ViewAnimator>
 
 </FrameLayout>

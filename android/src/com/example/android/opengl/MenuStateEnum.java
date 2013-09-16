@@ -10,7 +10,8 @@ public enum MenuStateEnum {
     GAME_PLAY,
     GAME_RESUME,
     MENU_MAIN_MENU,
-    MENU_DURING_GAME
+    MENU_DURING_GAME,
+    END
 }
 
 

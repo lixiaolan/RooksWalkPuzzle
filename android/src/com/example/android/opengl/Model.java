@@ -17,7 +17,8 @@ class Model{
 	private int at = -1;
 	private Vibrator vibe;
 	private Context context;
-
+	private ButtonManager bm;
+	
 	public Model(Context c) {
 		initiateMembers(c, new Board());
 	}
@@ -53,6 +54,10 @@ class Model{
 		mMenu = new Menu();
 	}
 
+	public void setButtonManager(ButtonManager bm) {
+		this.bm = bm;
+	}
+	
 	public void touched(float[] pt) {
 		switch(state){
 		case PLAY: 
@@ -77,9 +82,7 @@ class Model{
 
 			if(mCheck.touched(pt)){
 				if(mBoard.checkSolution()){
-					//state = GameState.END; 
-					EndDialog ed = new EndDialog(context);
-					ed.show();
+					bm.setState(MenuStateEnum.END);
 				} else {
 					vibe.vibrate(500);
 				}
