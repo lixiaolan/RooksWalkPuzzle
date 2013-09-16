@@ -14,7 +14,7 @@ class BackgroundPlay extends State<BackgroundTile> {
 }
 
 
-public class Background extends Graphic<BackgroundTile> {
+public class Background extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	
 	public Background(String bg, float size) {
 		state = new BackgroundPlay();

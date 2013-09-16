@@ -1,10 +1,8 @@
 package com.example.android.opengl;
 
-public class Bee extends Graphic<BeeTile>{
-    public BeeTile bee ;
+public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
+    public BeeTile bee;
     private Board mBoard;    
-
-    private GamePlayBee mood = new GamePlayBee(Mood.ASLEEP);
     
     public Bee(Board b) {
 	float[] center= {0.0f,0.0f,0.0f};
@@ -16,16 +14,12 @@ public class Bee extends Graphic<BeeTile>{
     }
     
     public void setState(GameState s){
-	System.out.println("In Bee");
-	System.out.println(s);
+	
 	switch(s){
-	case MAIN_MENU : state = new BeeWander(mBoard);break;
-	case PLAY: state = new BeeFixed(mBoard, mood);
-	    System.out.println("Found Play"); break;
-	case GAME_MENU: state  = new BeeWander(mBoard); break;
+	case MAIN_MENU: state = new BeeWander(mBoard, Mood.ASLEEP); break;
+	case PLAY: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
+	case GAME_MENU: state  = new BeeWander(mBoard, Mood.ASLEEP); break;
 	}
-	System.out.println("new State?");
-	System.out.println(state.getClass().getName());
     }
     
     
@@ -38,27 +32,26 @@ public class Bee extends Graphic<BeeTile>{
     }    
 
     public void setMood(Mood m) {
-	mood.state = m;
+	state.setMood(m);
     }
 
 }
 
-class BeeWander extends State<BeeTile> {
+class BeeWander extends BeeState<BeeTile> {
     public long refTime;
     
     private float targetX = 0;
     private float targetY = 0;
-    
     private float startX = 0;
     private float startY = 0;
     
-    private Board mBoard;
     boolean flipped = true;
     int r = 0;
     float[] pivot = {1,0,1};
     
-    public BeeWander(Board b){
-	mBoard = b;
+    public BeeWander(Board b, Mood m) {
+	setBoard(b);
+	setMood(m);
     }
     
     public void enterAnimation(BeeTile[] tiles){
@@ -91,13 +84,10 @@ class BeeWander extends State<BeeTile> {
     
     public void exitAnimation(BeeTile[] tiles){
 	
-    }
-    
+    }    
 }
 
-class BeeFixed extends State<BeeTile> {
-    
-    private GamePlayBee mood;
+class BeeFixed extends BeeState<BeeTile> {
     
     public long refTime;    
     private float targetX = 0.0f;
@@ -105,7 +95,8 @@ class BeeFixed extends State<BeeTile> {
     private float startX = 0.0f;
     private float startY = 0.0f;
     
-    private Board mBoard;
+    private float interval = 0.0f;
+
     boolean flipped = true;
     int index = 0;
     int r = 0;
@@ -115,26 +106,22 @@ class BeeFixed extends State<BeeTile> {
     float[] fixedPos = {-.75f,-.75f,0.0f};
     
     
-    public BeeFixed(Board b, GamePlayBee m){
-	mBoard = b;
-	mood = m;
-	length = mBoard.path.length-1;
-    }
+    public BeeFixed(Board b, Mood m) {
+	setBoard(b);
+	setMood(m);
+    }   
     
     public void enterAnimation(BeeTile[] tiles){
 	period = DrawPeriod.DURING;
     }
     
-    
     public void duringAnimation(BeeTile[] tiles) {
 	BeeTile bee = (BeeTile)tiles[0];
 	long time = System.currentTimeMillis() - refTime;
-	float interval = 5000f;
-
-	switch (mood.state) {
+	
+	length = (mBoard.path.length-1)/2;
+	switch (mood) {
 	case HAPPY:
-	    
-	    
 	    if(time < interval){
 		bee.center[0] = startX + time/interval*(targetX-startX);
 		bee.center[1] = startY + time/interval*(targetY-startY);
@@ -150,10 +137,11 @@ class BeeFixed extends State<BeeTile> {
 		refTime = System.currentTimeMillis();
 		r = 6*mBoard.path[index][0] + mBoard.path[index][1];
 		System.out.println("ARRRRRRRRRRRRR: " + Integer.toString(r));
-
+		
 		index = ((index-1)%length + length)%length;
 		targetX = mBoard.tiles[r].center[0];
 		targetY = mBoard.tiles[r].center[1];
+		interval = 500f*(Math.abs(startX - targetX)+Math.abs(startY - targetY));
 		flipped = false;
 	    }
 	    break;

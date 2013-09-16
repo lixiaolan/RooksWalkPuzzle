@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 
 class Model{
-	public Board mBoard;
+    public Board mBoard;
     private Menu mMenu;
     private Border mBorder;
     private Bee	mBee;
@@ -76,25 +76,25 @@ class Model{
     			}
 
 
-	    // if(mCheck.touched(pt)){
-	    // 	if(mBoard.checkSolution()){
-	    // 	    mBee.setMood(Mood.HAPPY);
-	    // 	    Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
-	    // 	} else {
-	    // 	    Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
-	    // 	}
-	    // }
+	    if(mCheck.touched(pt)){
+	    	// if(mBoard.checkSolution()){
+	            mBee.setMood(Mood.HAPPY);
+	    	    Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
+	    	// } else {
+	    	//     Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
+	    	// }
+	    }
 
     			
-    			if(mCheck.touched(pt)){
-    				if(mBoard.checkSolution()){
-    					state = GameState.END; 
-    					EndDialog ed = new EndDialog(context);
-    					ed.show();
-    				} else {
-    					vibe.vibrate(500);
-    				}
-    			}
+    			// if(mCheck.touched(pt)){
+    			// 	if(mBoard.checkSolution()){
+    			// 		state = GameState.END; 
+    			// 		EndDialog ed = new EndDialog(context);
+    			// 		ed.show();
+    			// 	} else {
+    			// 		vibe.vibrate(500);
+    			// 	}
+    			// }
     			
     			break;
        

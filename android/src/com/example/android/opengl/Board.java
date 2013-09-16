@@ -6,7 +6,7 @@ import java.io.IOException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Board extends Graphic<BoardTile> implements Parcelable {
+class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable {
 
 	public int hints;
 	public int[] solution ;
@@ -132,6 +132,8 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 	public native String stringFromJNI(int rows, int cols, int length);
 
 	public void readSolutionFromJni(String puzzleString) throws IOException{
+	    int temp;
+	    System.out.println(puzzleString);
 		Scanner scanner = null;
 		try {	    
 			scanner = new Scanner(puzzleString);
@@ -146,9 +148,11 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 			int l = scanner.nextInt();
 			path = new int[2*l][2];
 			for(int i = 0; i < l; i++){
-				path[i][0] = scanner.nextInt();
-				path[i][1] = scanner.nextInt();
+			    path[i][0] = scanner.nextInt();
+			    path[i][1] = scanner.nextInt();
 			}
+
+
 		} finally {
 			scanner.close();	    
 		}

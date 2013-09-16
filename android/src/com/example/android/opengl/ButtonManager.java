@@ -71,6 +71,7 @@ class ButtonManager{
     }
 
     public void manageState(View v) {
+
 	 switch (v.getId()) {
 	    case R.id.bee_puzzled:
 		mMenuState.state = MenuStateEnum.LIST;

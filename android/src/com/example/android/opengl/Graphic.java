@@ -1,8 +1,8 @@
 package com.example.android.opengl;
 
-public abstract class Graphic<T extends Tile> {
+public abstract class Graphic<T extends Tile, S extends State<T> > {
     T[] tiles;
-    State<T> state;
+    S state;
     
     public void draw(MyGLRenderer r){
 	state.draw(tiles,r );
