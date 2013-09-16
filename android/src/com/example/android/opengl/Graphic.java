@@ -1,8 +1,5 @@
 package com.example.android.opengl;
 
-
-
-
 public abstract class Graphic<T extends Tile> {
 	T[] tiles;
 	State<T> state;

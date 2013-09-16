@@ -55,76 +55,77 @@ class Model{
     
     public void touched(float[] pt) {
     	switch(state){
-    		case PLAY: 
-    			//Internally close menu.    		
-    			int val = mMenu.touched(pt);
-    			if(val == -1){
-    				if (at != -1) {
-    					mBoard.tiles[at].setColor("transparent");
-    				}
-    				at = mBoard.touched(pt);
-    				if(at != -1 ) {
-    					if(mBoard.tiles[at].isBlack() == false) {
-    						mBoard.tiles[at].setColor("blue");
-    						if(mBoard.tiles[at].isClickable())
-    							mMenu.activate(pt);
-    					}
-    				}
-    			} else {
-    				if (at != -1)
-    					mBoard.tiles[at].setUserInput(val);
-    			}
-    			
-    			if(mCheck.touched(pt)){
-    				if(mBoard.checkSolution()){
-    					Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
-    				} else {
-    					Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
-    				}
-    			}
-    			
-    			break;
-    	
-    	case MAIN_MENU: 
-    		at = mBoard.touched(pt);
-    		if(at != -1) {
-    			float[] pivot = {0,0,1};
-    			mBoard.tiles[at].setPivot(pivot);
-    			mBoard.tiles[at].setRotate(true);
-    		}
-    		break;
-    		
-    	
-    	case GAME_MENU: break;
-    	
-    	}
-  
-    	if(mBee.touched(pt)){
-			vibe.vibrate(500);
+	case PLAY: 
+	    //Internally close menu.    		
+	    int val = mMenu.touched(pt);
+	    if(val == -1){
+		if (at != -1) {
+		    mBoard.tiles[at].setColor("transparent");
 		}
+		at = mBoard.touched(pt);
+		if(at != -1 ) {
+		    if(mBoard.tiles[at].isBlack() == false) {
+			mBoard.tiles[at].setColor("blue");
+			if(mBoard.tiles[at].isClickable())
+			    mMenu.activate(pt);
+		    }
+		}
+	    } else {
+		if (at != -1)
+		    mBoard.tiles[at].setUserInput(val);
+	    }
+	    
+	    if(mCheck.touched(pt)){
+		if(mBoard.checkSolution()){
+		    mBee.setMood(Mood.HAPPY);
+		    Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
+		} else {
+		    Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
+		}
+	    }
+	    
+	    break;
+	    
+    	case MAIN_MENU: 
+	    at = mBoard.touched(pt);
+	    if(at != -1) {
+		float[] pivot = {0,0,1};
+		mBoard.tiles[at].setPivot(pivot);
+		mBoard.tiles[at].setRotate(true);
+	    }
+	    break;
+	    
+	    
+    	case GAME_MENU: break;
+	    
     	}
+	
+    	if(mBee.touched(pt)){
+	    vibe.vibrate(500);
+	}
+    }
     
     
     public void swiped(float[] pt, String direction) {
     	if (at != -1) {
-    		mBoard.tiles[at].arrow = direction; 
-    		mMenu.menuActive = false;
+	    mBoard.tiles[at].arrow = direction; 
+	    mMenu.menuActive = false;
     	}
     }
-
+    
     public void draw(MyGLRenderer r) {
-
+	
     	mBg.draw(r);
     	mBoard.draw(r);
     	mBee.draw(r);
     	if(state != GameState.MAIN_MENU){
-        	mBoardBg.draw(r);
-        	mBorder.draw(r);
-        	mMenu.draw(r);
-        	mCheck.draw(r);
+	    mBoardBg.draw(r);
+	    mBorder.draw(r);
+	    mMenu.draw(r);
+	    mCheck.draw(r);
     	} 	
     }
-
+    
     public void setState(GameState s){
     	state = s;
     	mBee.setState(s);
