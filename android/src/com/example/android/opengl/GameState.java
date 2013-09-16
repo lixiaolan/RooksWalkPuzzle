@@ -3,7 +3,8 @@ package com.example.android.opengl;
 public enum GameState {
     MAIN_MENU,
     GAME_MENU,
-    PLAY, 
+    PLAY,
+    END,
     STATS 
 };
 

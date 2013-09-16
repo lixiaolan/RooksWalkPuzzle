@@ -77,9 +77,11 @@ class Model{
     			
     			if(mCheck.touched(pt)){
     				if(mBoard.checkSolution()){
-    					Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
+    					state = GameState.END; 
+    					EndDialog ed = new EndDialog(context);
+    					ed.show();
     				} else {
-    					Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
+    					vibe.vibrate(500);
     				}
     			}
     			
@@ -130,4 +132,9 @@ class Model{
     	mBee.setState(s);
     	mBoard.setState(s);
     }
+    
+    public GameState getState() {
+    	return state;
+    }
+    
 }

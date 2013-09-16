@@ -47,7 +47,7 @@ public class ViewActivity extends Activity {
 	private GLSurfaceView mGLView;
 	private Model mModel;
 	private MyGLRenderer mRenderer;    
-	private GameState state = GameState.MAIN_MENU;
+	
 	private MenuState mMenuState = new MenuState();
 	private ButtonManager mButtonManager;
 	boolean savedGame = false;
@@ -114,7 +114,7 @@ public class ViewActivity extends Activity {
 		System.out.println("paused");
 		mGLView.onPause();
 		
-		if(state ==GameState.PLAY){
+		if(mModel.getState() ==GameState.PLAY){
 			String filename = "savefile";
 			File file = new File(this.getFilesDir(),filename);
 			int[] solutions = mModel.mBoard.dumpSolution();
@@ -164,9 +164,7 @@ public class ViewActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
-		state = GameState.MAIN_MENU;
-		mModel.setState(state);
+		mModel.setState(GameState.MAIN_MENU);
 		
 	
 		File file = new File(this.getFilesDir(), "savefile");
@@ -186,12 +184,12 @@ public class ViewActivity extends Activity {
 		if (mMenuState.state == MenuStateEnum.GAME_PLAY) {
 			switch (mMenuState.difficulty) {
 			case 1:
-				state = GameState.PLAY;
+				
 				mModel.createPuzzle(4,1);
 				mModel.setState(GameState.PLAY);
 				break;
 			case 2:
-				state = GameState.PLAY;
+				
 				mModel.createPuzzle(14,5);
 				mModel.setState(GameState.PLAY);
 				break;
@@ -226,8 +224,7 @@ public class ViewActivity extends Activity {
 				arrows[i] = m;
 			}
 			mModel.restorePuzzle(solution, numbers, arrows);
-			state = GameState.PLAY;
-			mModel.setState(state);
+			mModel.setState(GameState.PLAY);
 		} 
 		}
 		

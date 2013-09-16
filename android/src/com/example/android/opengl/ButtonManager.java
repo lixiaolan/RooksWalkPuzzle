@@ -197,7 +197,7 @@ class ButtonManager{
 
 
 	case GAME_PLAY:
-	    bee_puzzled.setState(offSet[0]*w,0.8f*h, true,Move);
+	    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,Move);
 
 	    new_game.setState(offSet[1]*w,0.0f*h, false,None);
 	    resume.setState(offSet[1]*w,0.0f*h, false,None);
