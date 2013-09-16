@@ -118,7 +118,7 @@ class BoardTile extends Tile{
     		if(number == "clear"){
     			if(true_solution == 0){
     				return true;
-    			}
+    			}   
     		} else {
     			if(Integer.toString(true_solution) == number)
     				return true;

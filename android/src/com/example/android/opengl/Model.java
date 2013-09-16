@@ -77,7 +77,7 @@ class Model{
 
 			if(mCheck.touched(pt)){
 				if(mBoard.checkSolution()){
-					state = GameState.END; 
+					//state = GameState.END; 
 					EndDialog ed = new EndDialog(context);
 					ed.show();
 				} else {

@@ -88,15 +88,20 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 		rowSums = new int[6];
 		List<Integer> numbers = new ArrayList<Integer>();
 		for (int i = 0; i < tiles.length; i++) {	
+			tiles[i].number = "clear";
+			tiles[i].arrow = "clear";
+			tiles[i].setTrueSolution(0);
+			tiles[i].setTrueArrow("clear");
 			if(solution [i] > 0){
 				columnSums[i%6] += Math.max(solution[i],0);
 				rowSums[i/6] += Math.max(solution[i],0);
 				numbers.add(i);
+				tiles[i].setNumber(Integer.toString(solution[i]));
 			}
 			tiles[i].setTrueSolution(solution[i]);
 			//This does a hard reset on the board.
-			tiles[i].number = "clear";
-			tiles[i].arrow = "clear";
+			//tiles[i].number = "clear";
+			//tiles[i].arrow = "clear";
 		} 
 		int dx;
 		int dy;
@@ -106,19 +111,19 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 
 			if (dx > 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
+				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 			}
 			if (dx < 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
+				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 			}
 			if (dy > 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
+				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
 			}
 			if (dy < 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
+				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 			}
 		}
 		Collections.shuffle(numbers);

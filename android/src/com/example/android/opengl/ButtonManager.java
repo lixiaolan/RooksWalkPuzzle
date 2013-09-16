@@ -23,7 +23,6 @@ class ButtonManager{
     public StateButton longest_puz;
 
     public StateButton hints;
-
     public MenuState mMenuState;
     
     private float h;
@@ -70,19 +69,40 @@ class ButtonManager{
 	switchState();
     }
 
-    public void manageState(View v) {
+    public void manageState(View v, GameState state) {	
 	 switch (v.getId()) {
 	    case R.id.bee_puzzled:
-		mMenuState.state = MenuStateEnum.LIST;
-	 	break;
+	    	if(mMenuState.open == false){
+	    		switch(state){
+	    			case MAIN_MENU: 
+	    				mMenuState.state = MenuStateEnum.MENU_MAIN_MENU;
+	    				break;
+	    			case PLAY: 
+	    				mMenuState.state = MenuStateEnum.MENU_DURING_GAME;
+	    				break;
+	    		}
+	    		mMenuState.open = true;
+	    	} else {
+	    		mMenuState.open = false;
+	    		switch(state){
+    			case MAIN_MENU: 
+    				mMenuState.state = MenuStateEnum.OPENING;
+    				break;
+    			case PLAY: 
+    				mMenuState.state = MenuStateEnum.GAME_PLAY;
+    				break;
+    		}
+	    	}
+	    	break;
 
 	    case R.id.new_game:
-		mMenuState.state = MenuStateEnum.NEW;
-	 	break;
+	    	mMenuState.state = MenuStateEnum.NEW;
+	    	break;
 
-	    // case R.id.resume:
-	    // 	mMenuState.state = MenuStateEnum.RESUME;
-	    // 	break;
+	    case R.id.resume:
+	    	mMenuState.state = MenuStateEnum.GAME_RESUME;
+	    	mMenuState.createGame = true;
+	    	break;
 
 	    case R.id.options:
 	    	mMenuState.state = MenuStateEnum.OPTIONS;
@@ -104,21 +124,25 @@ class ButtonManager{
 	    case R.id.short_puz:
 		mMenuState.state = MenuStateEnum.GAME_PLAY;
 		mMenuState.difficulty = 1;
+		mMenuState.createGame = true;
 		break;
 		
 	    case R.id.medium_puz:
 		mMenuState.state = MenuStateEnum.GAME_PLAY;
 		mMenuState.difficulty = 2;
+		mMenuState.createGame = true;
 		break;
 
 	    case R.id.longer_puz:
 		mMenuState.state = MenuStateEnum.GAME_PLAY;
 		mMenuState.difficulty = 3;
+		mMenuState.createGame = true;
 		break;
 
   	    case R.id.longest_puz:
 		mMenuState.state = MenuStateEnum.GAME_PLAY;
 		mMenuState.difficulty = 4;
+		mMenuState.createGame = true;
 		break;
 
 	    }
@@ -144,7 +168,7 @@ class ButtonManager{
 	    longest_puz.setState(offSet[2]*w,0.0f*h, false,None);
 	    break;
 
-	case LIST:
+	case MENU_MAIN_MENU:
 
 	    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,MoveFadeIn);
 
@@ -161,6 +185,24 @@ class ButtonManager{
 	    longest_puz.setState(offSet[2]*w,0.0f*h, false,None);
 	    break;
 
+	 case MENU_DURING_GAME:
+		    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,Move);
+
+		    new_game.setState(offSet[1]*w,stack[1]*h, true,None);
+		    resume.setState(offSet[1]*w,0.0f*h, false,None);
+		    options.setState(offSet[1]*w,0.0f*h, false,None);
+		    stats.setState(offSet[1]*w,0.0f*h, false,None);
+
+		    hints.setState(offSet[2]*w,0.0f*h, false,None);
+
+		    short_puz.setState(offSet[2]*w,0.5f*h, false,None);
+		    medium_puz.setState(offSet[2]*w,0.6f*h, false,None);
+		    longer_puz.setState(offSet[2]*w,0.7f*h, false,None);
+		    longest_puz.setState(offSet[2]*w,0.8f*h, false,None);
+
+		    break;    
+	    
+	    
 	case NEW:
 	    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,MoveFadeIn);
 
@@ -212,9 +254,34 @@ class ButtonManager{
 	    longest_puz.setState(offSet[2]*w,0.8f*h, false,None);
 
 	    break;
-	}
+	    
+	case GAME_RESUME:
+	    bee_puzzled.setState(offSet[0]*w,stack[0]*h, true,Move);
 
+	    new_game.setState(offSet[1]*w,0.0f*h, false,None);
+	    resume.setState(offSet[1]*w,0.0f*h, false,None);
+	    options.setState(offSet[1]*w,0.0f*h, false,None);
+	    stats.setState(offSet[1]*w,0.0f*h, false,None);
+
+	    hints.setState(offSet[2]*w,0.0f*h, false,None);
+
+	    short_puz.setState(offSet[2]*w,0.5f*h, false,None);
+	    medium_puz.setState(offSet[2]*w,0.6f*h, false,None);
+	    longer_puz.setState(offSet[2]*w,0.7f*h, false,None);
+	    longest_puz.setState(offSet[2]*w,0.8f*h, false,None);
+
+	    break;    
+
+   
+	}
+	}
+	
+    public void reset() {
+    	mMenuState.state = MenuStateEnum.OPENING;
+    	mMenuState.difficulty = -1;
     }
+    
 }
+
     
     
