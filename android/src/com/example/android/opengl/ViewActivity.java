@@ -120,14 +120,8 @@ public class ViewActivity extends Activity {
 			int[] solutions = mModel.mBoard.dumpSolution();
 			String[] arrows  = mModel.mBoard.dumpArrows();
 			String[] numbers  = mModel.mBoard.dumpNumbers();
+			String[] trueArrows = mModel.mBoard.dumpTrueArrows();
 			
-			for(int i=0; i<36; i++){
-				System.out.println("Why am I empty? "+numbers[i]);
-			}
-			
-			System.out.println("lenght solution+ "+Integer.toString(solutions.length));
-			System.out.println("lenght arrows+ "+Integer.toString(arrows.length));
-			System.out.println("lenght numbers+ "+Integer.toString(numbers.length));
 
 			try {
 				PrintWriter outputStream = new PrintWriter(new FileWriter(file));
@@ -141,6 +135,9 @@ public class ViewActivity extends Activity {
 				for(int i =0; i< arrows.length;i++){
 					System.out.println("Saving "+Integer.toString(i)+" "+arrows[i]);
 					outputStream.println(arrows[i]);
+				}
+				for(int i =0; i< trueArrows.length;i++){
+					outputStream.println(trueArrows[i]);
 				}
 				outputStream.close();
 			} catch (Exception e) {
@@ -184,12 +181,10 @@ public class ViewActivity extends Activity {
 		if (mMenuState.state == MenuStateEnum.GAME_PLAY) {
 			switch (mMenuState.difficulty) {
 			case 1:
-				
 				mModel.createPuzzle(4,1);
 				mModel.setState(GameState.PLAY);
 				break;
 			case 2:
-				
 				mModel.createPuzzle(14,5);
 				mModel.setState(GameState.PLAY);
 				break;
@@ -203,6 +198,7 @@ public class ViewActivity extends Activity {
 		int[] solution = new int[36];
 		String[] numbers = new String[36];
 		String[] arrows = new String[36];
+		String[] trueArrows = new String[36];
 		File file = new File(this.getFilesDir(), "savefile");
 		
 		if(file.exists()){
@@ -210,20 +206,22 @@ public class ViewActivity extends Activity {
 			Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
 			for(int i=0; i<36;i++){
 				int m = scanner.nextInt();
-				System.out.println(Integer.toString(i)+": "+Integer.toString(m));
 				solution[i] = m;
 			}
 			for(int i=0; i<36;i++){
 				String m = scanner.next();
-				System.out.println(Integer.toString(i)+": "+m);
 				numbers[i] = m;
 			}
 			for(int i=0; i<36;i++){
 				String m = scanner.next();
-				System.out.println(Integer.toString(i)+": "+m);
 				arrows[i] = m;
 			}
-			mModel.restorePuzzle(solution, numbers, arrows);
+			for(int i=0; i<36;i++){
+				String m = scanner.next();
+				trueArrows[i] = m;
+			}
+
+			mModel.restorePuzzle(solution, numbers, arrows, trueArrows);
 			mModel.setState(GameState.PLAY);
 		} 
 		}

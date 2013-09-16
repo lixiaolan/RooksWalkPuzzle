@@ -1,4 +1,7 @@
 package com.example.android.opengl;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
 
@@ -26,13 +29,14 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 		state = new BoardPlay(tiles);
 	}
 
-	public void restoreBoard(int[] solution, String[] numbers, String[] arrows){
+	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows){
 		columnSums = new int[36];
 		rowSums = new int[36];
 		for(int i=0;i<36;i++){
 			tiles[i].setTrueSolution(solution[i]);
 			tiles[i].setArrow(arrows[i]);
 			tiles[i].setNumber(numbers[i]);
+			tiles[i].setTrueArrow(trueArrows[i]);
 			columnSums[i%6] += Math.max(solution[i],0);
 			rowSums[i/6] += Math.max(solution[i],0);
 		}
@@ -61,6 +65,14 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 		}
 		return numbers;
 	}
+	
+	public String[] dumpTrueArrows() {
+		String[] arrows = new String[36];
+		for(int i =0; i<36; i++){
+			arrows[i] = tiles[i].getTrueArrow();
+		}
+		return arrows;
+	}
 
 	public void buildEmptyBoard() {
 		tiles = new BoardTile[36];
@@ -74,19 +86,18 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 	public void buildBoardFromSolution(int hints) {
 		columnSums = new int[6];
 		rowSums = new int[6];
-		int hintsCreated = 0;
-		for (int i = 0; i < tiles.length; i++) {
-			columnSums[i%6] += Math.max(solution[i],0);
-			rowSums[i/6] += Math.max(solution[i],0);
-			System.out.println(Integer.toString(solution[i]));
+		List<Integer> numbers = new ArrayList<Integer>();
+		for (int i = 0; i < tiles.length; i++) {	
+			if(solution [i] > 0){
+				columnSums[i%6] += Math.max(solution[i],0);
+				rowSums[i/6] += Math.max(solution[i],0);
+				numbers.add(i);
+			}
 			tiles[i].setTrueSolution(solution[i]);
 			//This does a hard reset on the board.
 			tiles[i].number = "clear";
 			tiles[i].arrow = "clear";
 		} 
-		//FIXED: Creates concurrncy issues. Basically, I am setting the number before I 
-		//switch state! May lead to a texture of -1 being drawn
-
 		int dx;
 		int dy;
 		for (int i = 0; i < path.length-1; i++) {
@@ -110,16 +121,14 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 			}
 		}
-		while(hintsCreated < hints) {
-			int r = (int)(36*Math.random());
-			if(tiles[r].isBlack() == false){
-				tiles[r].setHint();
-				hintsCreated +=1;
-			}
+		Collections.shuffle(numbers);
+		//Note we are assuming that hints<numbers
+		for(int i=0;i<hints;i++){
+			int r = numbers.get(i);
+			tiles[r].setHint();
 		}
-
 	}
-
+	
 	public void createPuzzleFromJNI(int length, int hints){
 		try {
 			readSolutionFromJni(stringFromJNI(6, 6, length) );	
