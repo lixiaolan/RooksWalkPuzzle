@@ -20,7 +20,7 @@ class ButtonManager{
     private float w;
     private long[] pOne = {0,1000,1000};
     private long[] pTwo = {1000, 1000, 0};
-
+    private long[] pThree = {0,0,1000};
 
     public ButtonManager(MenuState ms, Activity va) {
 	
@@ -58,9 +58,9 @@ class ButtonManager{
     public void switchState() {	
 	switch (mMenuState.state) {
 	case OPENING:
-	    bee_puzzled.setState(0.1f*w,0.5f*h, 1.0f, true,pTwo);
-	    short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pTwo);
-	    medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pTwo);
+	    bee_puzzled.setState(0.1f*w,0.5f*h, 1.0f, true,pThree);
+	    short_puz.setState(0.1f*w,0.5f*h, 1.0f, false,pThree);
+	    medium_puz.setState(0.1f*w,0.6f*h, 1.0f, false,pThree);
 	    break;
 
 	case LIST:

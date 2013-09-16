@@ -194,7 +194,7 @@ public class ViewActivity extends Activity {
 			switch (mMenuState.difficulty) {
 			case 1:
 				state = GameState.PLAY;
-				mModel.createPuzzle(10,3);
+				mModel.createPuzzle(4,1);
 				mModel.setState(GameState.PLAY);
 				break;
 			case 2:

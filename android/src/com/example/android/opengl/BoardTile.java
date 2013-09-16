@@ -3,11 +3,19 @@ package com.example.android.opengl;
 
 class BoardTile extends Tile{
 
-    private int true_solution;
+
+    public int true_solution;
+    public String true_arrow;
+
     public String number = "clear";
     public String arrow = "clear";
     private boolean clickable = true;
     protected boolean rotate = false;
+
+    public void setTrueArrow(String arrow) {
+    	this.true_arrow = arrow;
+    }
+    
     
     public boolean isClickable() {
 		return clickable;
@@ -25,6 +33,7 @@ class BoardTile extends Tile{
     	center = inCenter;
     	size = inSize;
     	color = "transparent";
+    	true_arrow = "clear";
     }
 
     public void setHint(){
@@ -76,6 +85,10 @@ class BoardTile extends Tile{
 	   return true_solution;
    }
    
+   public String getTrueArrow(){
+	   return true_arrow;
+   }
+   
    public void setUserInput(int val){
 	   if(val == 0 && !isBlack()){
 		   number = "clear";
@@ -88,4 +101,30 @@ class BoardTile extends Tile{
     public void draw(MyGLRenderer r) {
     	r.drawTile(center, size, textures, color, angle, pivot);
     }    
+    
+    public boolean checkArrows() {
+    	if(isBlack()) 
+    		return true;
+    	else {
+    		return arrow==true_arrow;
+    	}
+    	
+    }
+    
+    public boolean checkSolutions(){	
+    	if(isBlack()){
+    		return true;
+    	} else {
+    		if(number == "clear"){
+    			if(true_solution == 0){
+    				return true;
+    			}
+    		} else {
+    			if(Integer.toString(true_solution) == number)
+    				return true;
+    		}
+    	}
+    	return false;
+    }
+    
 }

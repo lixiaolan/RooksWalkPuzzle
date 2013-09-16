@@ -31,6 +31,15 @@ public class Background extends Graphic<BackgroundTile> {
 	public void setCenter(float[] center){
 		tiles[0].center = center;
 	}
+	
+	public boolean touched(float[] pt){
+		for (int i = 0; i < tiles.length; i++) {
+			if( tiles[i].touched(pt)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 

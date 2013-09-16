@@ -2,6 +2,7 @@ package com.example.android.opengl;
 
 import android.content.Context;
 import android.os.Vibrator;
+import android.widget.Toast;
 
 
 class Model{
@@ -37,6 +38,7 @@ class Model{
     	state = GameState.MAIN_MENU;
     }
     
+
     public void createPuzzle(int length, int hints) {
     	mBoard.createPuzzleFromJNI(length, hints);
     	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
@@ -72,7 +74,15 @@ class Model{
     				if (at != -1)
     					mBoard.tiles[at].setUserInput(val);
     			}
-    				
+    			
+    			if(mCheck.touched(pt)){
+    				if(mBoard.checkSolution()){
+    					Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
+    				} else {
+    					Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
+    				}
+    			}
+    			
     			break;
     	
     	case MAIN_MENU: 
