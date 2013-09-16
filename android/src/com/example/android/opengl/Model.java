@@ -55,37 +55,49 @@ class Model{
     
     public void touched(float[] pt) {
     	switch(state){
-	case PLAY: 
-	    //Internally close menu.    		
-	    int val = mMenu.touched(pt);
-	    if(val == -1){
-		if (at != -1) {
-		    mBoard.tiles[at].setColor("transparent");
-		}
-		at = mBoard.touched(pt);
-		if(at != -1 ) {
-		    if(mBoard.tiles[at].isBlack() == false) {
-			mBoard.tiles[at].setColor("blue");
-			if(mBoard.tiles[at].isClickable())
-			    mMenu.activate(pt);
-		    }
-		}
-	    } else {
-		if (at != -1)
-		    mBoard.tiles[at].setUserInput(val);
-	    }
-	    
-	    if(mCheck.touched(pt)){
-		if(mBoard.checkSolution()){
-		    mBee.setMood(Mood.HAPPY);
-		    Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
-		} else {
-		    Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
-		}
-	    }
-	    
-	    break;
-	    
+    		case PLAY: 
+    			//Internally close menu.    		
+    			int val = mMenu.touched(pt);
+    			if(val == -1){
+    				if (at != -1) {
+    					mBoard.tiles[at].setColor("transparent");
+    				}
+    				at = mBoard.touched(pt);
+    				if(at != -1 ) {
+    					if(mBoard.tiles[at].isBlack() == false) {
+    						mBoard.tiles[at].setColor("blue");
+    						if(mBoard.tiles[at].isClickable())
+    							mMenu.activate(pt);
+    					}
+    				}
+    			} else {
+    				if (at != -1)
+    					mBoard.tiles[at].setUserInput(val);
+    			}
+
+
+	    // if(mCheck.touched(pt)){
+	    // 	if(mBoard.checkSolution()){
+	    // 	    mBee.setMood(Mood.HAPPY);
+	    // 	    Toast.makeText(context, "You win sexy ;)", Toast.LENGTH_SHORT).show();
+	    // 	} else {
+	    // 	    Toast.makeText(context, "No way jose ;(", Toast.LENGTH_SHORT).show();
+	    // 	}
+	    // }
+
+    			
+    			if(mCheck.touched(pt)){
+    				if(mBoard.checkSolution()){
+    					state = GameState.END; 
+    					EndDialog ed = new EndDialog(context);
+    					ed.show();
+    				} else {
+    					vibe.vibrate(500);
+    				}
+    			}
+    			
+    			break;
+       
     	case MAIN_MENU: 
 	    at = mBoard.touched(pt);
 	    if(at != -1) {
@@ -131,4 +143,9 @@ class Model{
     	mBee.setState(s);
     	mBoard.setState(s);
     }
+    
+    public GameState getState() {
+    	return state;
+    }
+    
 }

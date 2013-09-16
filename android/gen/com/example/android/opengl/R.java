@@ -17,6 +17,7 @@ public final class R {
         public static final int action_bar=0x7f070001;
         public static final int errorColor=0x7f070000;
         public static final int off_white=0x7f070003;
+        public static final int transparent=0x7f070004;
         public static final int white=0x7f070002;
     }
     public static final class dimen {
@@ -58,42 +59,46 @@ public final class R {
         public static final int white=0x7f02001a;
     }
     public static final class id {
-        public static final int FrameLayout1=0x7f0c000b;
-        public static final int LinearLayout1=0x7f0c0001;
-        public static final int LinearLayout2=0x7f0c0007;
-        public static final int ViewAnimator1=0x7f0c000e;
-        public static final int average_testview=0x7f0c000a;
-        public static final int bee_puzzled=0x7f0c000f;
-        public static final int buttonLayout=0x7f0c000d;
-        public static final int clear_action=0x7f0c001b;
-        public static final int exit_button=0x7f0c0006;
-        public static final int fastest_textview=0x7f0c0009;
-        public static final int hints=0x7f0c0013;
-        public static final int lineGraphView1=0x7f0c0008;
-        public static final int longer_puz=0x7f0c0017;
-        public static final int longest_puz=0x7f0c0018;
-        public static final int medium_puz=0x7f0c0016;
-        public static final int menu_settings=0x7f0c0019;
-        public static final int new_game=0x7f0c0010;
-        public static final int new_game_action=0x7f0c001a;
-        public static final int new_game_button=0x7f0c0002;
-        public static final int options=0x7f0c0012;
+        public static final int FrameLayout1=0x7f0c000e;
+        public static final int LinearLayout1=0x7f0c0004;
+        public static final int LinearLayout2=0x7f0c000a;
+        public static final int ViewAnimator1=0x7f0c0011;
+        public static final int average_testview=0x7f0c000d;
+        public static final int bee_puzzled=0x7f0c0012;
+        public static final int buttonLayout=0x7f0c0010;
+        public static final int clear_action=0x7f0c001e;
+        public static final int end_dialog_main_menu=0x7f0c0003;
+        public static final int end_dialog_share=0x7f0c0002;
+        public static final int exit_button=0x7f0c0009;
+        public static final int fastest_textview=0x7f0c000c;
+        public static final int hints=0x7f0c0016;
+        public static final int lineGraphView1=0x7f0c000b;
+        public static final int longer_puz=0x7f0c001a;
+        public static final int longest_puz=0x7f0c001b;
+        public static final int medium_puz=0x7f0c0019;
+        public static final int menu_settings=0x7f0c001c;
+        public static final int new_game=0x7f0c0013;
+        public static final int new_game_action=0x7f0c001d;
+        public static final int new_game_button=0x7f0c0005;
+        public static final int options=0x7f0c0015;
         public static final int resolver_grid=0x7f0c0000;
-        public static final int resume=0x7f0c0011;
-        public static final int settings_action=0x7f0c001c;
-        public static final int settings_button=0x7f0c0005;
-        public static final int short_puz=0x7f0c0015;
-        public static final int statistics_button=0x7f0c0003;
-        public static final int stats=0x7f0c0014;
-        public static final int surface_view=0x7f0c000c;
-        public static final int tutorial_button=0x7f0c0004;
+        public static final int resume=0x7f0c0014;
+        public static final int settings_action=0x7f0c001f;
+        public static final int settings_button=0x7f0c0008;
+        public static final int short_puz=0x7f0c0018;
+        public static final int statistics_button=0x7f0c0006;
+        public static final int stats=0x7f0c0017;
+        public static final int surface_view=0x7f0c000f;
+        public static final int textView2=0x7f0c0001;
+        public static final int tutorial_button=0x7f0c0007;
     }
     public static final class layout {
         public static final int dialog_share_us_chooser=0x7f030000;
-        public static final int griditem_share_us=0x7f030001;
-        public static final int mainactivity=0x7f030002;
-        public static final int statsactivity=0x7f030003;
-        public static final int viewactivity=0x7f030004;
+        public static final int end_dialog=0x7f030001;
+        public static final int griditem_share_us=0x7f030002;
+        public static final int mainactivity=0x7f030003;
+        public static final int statsactivity=0x7f030004;
+        public static final int viewactivity=0x7f030005;
     }
     public static final class menu {
         public static final int mainactivity_actions=0x7f0b0000;
@@ -122,6 +127,7 @@ public final class R {
         public static final int title_activity_test_menu=0x7f090005;
     }
     public static final class style {
+        public static final int DialogLight=0x7f0a0002;
         /** 
      Theme for a wallpaper's setting activity that is designed to be on
          top of a dark background.
