@@ -75,7 +75,7 @@ class ButtonManager{
 		share_end = new StateButton((Button)va.findViewById(R.id.share_end));
 		
 	}
-
+/*
 	public void setHW(float height, float width) {
 		h = height;
 		w = width;
@@ -362,7 +362,7 @@ class ButtonManager{
 		mMenuState.state = MenuStateEnum.OPENING;
 		mMenuState.difficulty = -1;
 	}
-
+*/
 }
 
 

@@ -9,6 +9,7 @@ class MenuManager {
 	public MenuManager(GlobalState s, Model m) {
 		state = s;
 		mModel = m;
+		updateState();
 	}
 	//Each case statement should have a declaration of
 	//a new menu.
@@ -18,7 +19,7 @@ class MenuManager {
 	public void updateState() {
 		float[] pos1 = {-.75f, 0f, 0f};
 		float[] pos2 = {0f,-1f, 0f};
-		float scale1 = .5f;
+		float scale1 = .3f;
 		float scale2  = .2f;
 		
 		switch (state.state) {
@@ -65,34 +66,69 @@ class MenuManager {
 		}
 	}
 
-	public void touched(float[] pt) {
-		int val = mGameMenu.touched(pt);
+	public int touched(float[] pt) {
+		return mGameMenu.touched(pt);
 	}
 
 	public void onTouched(int val) {
 		mCallback.callback(val);
 	}
 
-
+	public void draw(MyGLRenderer r){
+		mGameMenu.draw(r);
+	}
+	
+	
 	class Callback_MAIN_MENU_OPENING extends Callback {
-
 		@Override
 		public void callback(int val) {
-			// TODO Auto-generated method stub
-
+			state.state = GameState.MAIN_MENU_LIST;
+			updateState();
 		}
 
 	}
 
 	class Callback_MAIN_MENU_LIST extends Callback {
 		public void callback(int val) {
-
+			switch(val) {
+			
+			case 1: state.state = GameState.MAIN_MENU_NEW;
+					updateState();
+					break;
+			case 4: state.state = GameState.MAIN_MENU_OPENING;
+					updateState();
+					break;
+			}
 		}
 	}
 
 	class Callback_MAIN_MENU_NEW extends Callback{
 		public void callback(int val) {
-
+			switch(val) {
+			case 1: mModel.createPuzzle(4,2);
+			mModel.setState(GameState.GAME_OPENING);
+			state.state = GameState.GAME_OPENING;
+			updateState();
+			break;
+			case 2: mModel.createPuzzle(10,3);
+			mModel.setState(GameState.GAME_OPENING);
+			state.state = GameState.GAME_OPENING;
+			updateState();
+			break;
+			case 3: mModel.createPuzzle(12,4);
+			mModel.setState(GameState.GAME_OPENING);
+			state.state = GameState.GAME_OPENING;
+			updateState();
+			break;
+			case 4: mModel.createPuzzle(20,3);
+			mModel.setState(GameState.GAME_OPENING);
+			state.state = GameState.GAME_OPENING;
+			updateState();
+			break;
+			case 5: state.state = GameState.MAIN_MENU_LIST;
+			updateState();
+			break;
+			}
 		}
 	}
 

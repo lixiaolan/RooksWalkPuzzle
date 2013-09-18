@@ -95,8 +95,8 @@ public class ViewActivity extends Activity {
 	// you should consider de-allocating objects that
 	// consume significant memory here.
 	mGLView.onPause();
-	
-	if(mModel.getState() ==GameState.PLAY){
+	/*
+	if(true){
 	    File file = new File(this.getFilesDir(), savefile);
 	    int[] solutions = mModel.mBoard.dumpSolution();
 	    String[] arrows  = mModel.mBoard.dumpArrows();
@@ -123,6 +123,7 @@ public class ViewActivity extends Activity {
 		e.printStackTrace();
 	    }
 	}
+	*/
     }
     
     @Override

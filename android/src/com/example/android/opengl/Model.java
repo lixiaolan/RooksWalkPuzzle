@@ -16,7 +16,6 @@ class Model{
     private Background mBg;
     private Background mBoardBg;
     private Background mCheck;
-    private GameState state;
     private int at = -1;
     private Vibrator vibe;
     private Context context;
@@ -39,7 +38,8 @@ class Model{
 	mCheck.setCenter(center);
 	context = c;
 	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
-	state = GlobalState();
+	state = new GlobalState();
+	mMenuManager = new MenuManager(state, this);
     }
     
     
@@ -62,10 +62,11 @@ class Model{
     }
     
     public void touched(float[] pt) {
-	switch(state.state){
+	int val = -1;
+    switch(state.state){
 	case GAME_OPENING: 
 	    //Internally close menu.    		
-	    int val = mMenu.touched(pt);
+	    val = mMenu.touched(pt);
 	    if(val == -1){
 		if (at != -1) {
 		    mBoard.tiles[at].setColor("transparent");
@@ -103,6 +104,12 @@ class Model{
 		mBoard.tiles[at].setPivot(pivot);
 		mBoard.tiles[at].setRotate(true);
 	    }
+	    
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+	    	mMenuManager.onTouched(val);
+	    }
+	    
 	    break;
 	default: break;
 	}
@@ -146,13 +153,13 @@ class Model{
     }
     
     public void setState(GameState s){
-	state = s;
+	state.state = s;
 	mBee.setState(s);
 	mBoard.setState(s);
     }
     
     public GameState getState() {
-	return state;
+	return state.state;
     }
     
     public void clearBoard() {

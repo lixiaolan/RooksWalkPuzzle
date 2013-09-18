@@ -228,7 +228,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 	dest.writeIntArray(this.solution);
     }
     
-    public void setState(GlobalState s){
+    public void setState(GameState s){
 	switch(s) {
 	case MAIN_MENU_OPENING: state = new BoardMainMenu(tiles); break;
 	case GAME_OPENING: state  = new BoardPlay(tiles); break;

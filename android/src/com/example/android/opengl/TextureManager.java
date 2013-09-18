@@ -39,7 +39,6 @@ public class TextureManager {
 	
 	
 	public TextureManager(Context context) {
-		library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
 		tf = Typeface.createFromAsset(context.getAssets(), "MileyTwerk.ttf");
 		this.context = context; 
 	}
@@ -71,23 +70,23 @@ public class TextureManager {
 		    buildTextures(Integer.toString(i),64,128,"border_"+Integer.toString(i),60);
 		}
 		
-	    buildTextures(START, 0,64, START, 20);
-	    buildTextures(NEW, 0,64, NEW, 20);
-	    buildTextures(RESUME, 0,64, RESUME, 20);
-	    buildTextures(OPTIONS, 0,64, OPTIONS, 20);
-	    buildTextures(BACK, 0,64, BACK, 20);
-	    buildTextures(SHORT, 0,64, SHORT, 20);
-	    buildTextures(MEDIUM, 0,64, MEDIUM, 20);
-	    buildTextures(LONGER, 0,64, LONGER, 20);
-	    buildTextures(LONGEST, 0,64, LONGEST, 20);
-	    buildTextures(HINTS_ON, 0,64, HINTS_ON, 20);
-	    buildTextures(HINTS_OFF, 0,64, HINTS_OFF, 20);
-	    buildTextures(CLEAR_BOARD, 0,64, CLEAR_BOARD, 20);
-	    buildTextures(QUIT, 0,64, QUIT, 20);
-	    buildTextures(YES, 0,64, YES, 20);
-	    buildTextures(NO, 0,64, NO, 20);
-	    buildTextures(SHARE, 0,64, SHARE, 20);
-	    buildTextures(CLEAR, 0,64, CLEAR, 20);
+	    buildTextures(START, 64,64, START, 20);
+	    buildTextures(NEW, 64,64, NEW, 20);
+	    buildTextures(RESUME, 64,64, RESUME, 20);
+	    buildTextures(OPTIONS, 64,64, OPTIONS, 20);
+	    buildTextures(BACK, 64,64, BACK, 20);
+	    buildTextures(SHORT, 64,64, SHORT, 20);
+	    buildTextures(MEDIUM, 64,64, MEDIUM, 20);
+	    buildTextures(LONGER, 64,64, LONGER, 20);
+	    buildTextures(LONGEST, 64,64, LONGEST, 20);
+	    buildTextures(HINTS_ON, 64,64, HINTS_ON, 20);
+	    buildTextures(HINTS_OFF, 64,64, HINTS_OFF, 20);
+	    buildTextures(CLEAR_BOARD, 64,64, CLEAR_BOARD, 20);
+	    buildTextures(QUIT, 64,64, QUIT, 20);
+	    buildTextures(YES, 64,64, YES, 20);
+	    buildTextures(NO, 64,64, NO, 20);
+	    buildTextures(SHARE, 64,64, SHARE, 20);
+	    buildTextures("", 64,64, CLEAR, 20);
 	    }
 	
 	
