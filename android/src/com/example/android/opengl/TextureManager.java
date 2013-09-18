@@ -31,7 +31,8 @@ public class TextureManager {
     public static final String YES = "yes";
     public static final String NO = "no";
     public static final String SHARE = "share";
-
+    public static final String CLEAR = "clear";
+    
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	GameState state;

@@ -14,6 +14,13 @@ class MenuTile extends Tile{
 	color = "transparent";
     }
     
+    public MenuTile(float[] inCenter,float inSize, String inVal) {
+    	super(inCenter, inSize);
+    	touched_flag = false;
+    	number = inVal;
+    	color = "transparent";
+    }
+        
     public void draw(MyGLRenderer r) {
 	String[] textures = new String[2];
 	textures[0] = "menu_circle";
