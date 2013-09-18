@@ -35,17 +35,60 @@ public class TextureManager {
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
-	GameState state;
 	Context context;
+	
 	
 	public TextureManager(Context context) {
 		library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
 		tf = Typeface.createFromAsset(context.getAssets(), "MileyTwerk.ttf");
-		state = GameState.MAIN_MENU;
 		this.context = context; 
 	}
 	
 	
+	public void buildTextures() {
+		int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
+		int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
+		buildTextures("0123456789", x_coords, y_coords,64);
+		buildTextures(context, R.drawable.up_arrow,"up_arrow");
+		buildTextures(context, R.drawable.down_arrow,"down_arrow");
+		buildTextures(context, R.drawable.left_arrow,"left_arrow");
+		buildTextures(context, R.drawable.right_arrow,"right_arrow");
+		buildTextures(context, R.drawable.menu_circle,"menu_circle");
+		buildTextures(context, R.drawable.bee,"bee");
+		buildTextures(context, R.drawable.flower,"flower");
+		buildTextures(context, R.drawable.crayonsquare, "crayonbg");
+		//TM.buildTextures(context, R.drawable.papertexture2, "paperbg");
+		buildTextures(context, R.drawable.boardbg, "boardbg");
+		buildTextures(context, R.drawable.blacksquare, "blacksquare");
+		buildTextures(context, R.drawable.check, "check");
+		//Create Menu Textures
+
+		for(int i=0;i<6;i++){
+		    buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
+		}
+		//Create Border Textures
+		for(int i=0;i<15;i++){
+		    buildTextures(Integer.toString(i),64,128,"border_"+Integer.toString(i),60);
+		}
+		
+	    buildTextures(START, 0,64, START, 20);
+	    buildTextures(NEW, 0,64, NEW, 20);
+	    buildTextures(RESUME, 0,64, RESUME, 20);
+	    buildTextures(OPTIONS, 0,64, OPTIONS, 20);
+	    buildTextures(BACK, 0,64, BACK, 20);
+	    buildTextures(SHORT, 0,64, SHORT, 20);
+	    buildTextures(MEDIUM, 0,64, MEDIUM, 20);
+	    buildTextures(LONGER, 0,64, LONGER, 20);
+	    buildTextures(LONGEST, 0,64, LONGEST, 20);
+	    buildTextures(HINTS_ON, 0,64, HINTS_ON, 20);
+	    buildTextures(HINTS_OFF, 0,64, HINTS_OFF, 20);
+	    buildTextures(CLEAR_BOARD, 0,64, CLEAR_BOARD, 20);
+	    buildTextures(QUIT, 0,64, QUIT, 20);
+	    buildTextures(YES, 0,64, YES, 20);
+	    buildTextures(NO, 0,64, NO, 20);
+	    buildTextures(SHARE, 0,64, SHARE, 20);
+	    buildTextures(CLEAR, 0,64, CLEAR, 20);
+	    }
 	
 	
 	public void buildTextures(String a, int[] x, int[] y, int font){
