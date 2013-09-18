@@ -207,37 +207,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	//buildTextures();
 		TM = new TextureManager(mActivityContext);
 		//TM.setState(GameState.MAIN_MENU,null, null);
-		buildTextures();
+		TM.buildTextures();
     }
     
     
-    public void buildTextures() {
-	int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
-	int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
-	TM.buildTextures("0123456789", x_coords, y_coords,64);
-	TM.buildTextures(mActivityContext, R.drawable.up_arrow,"up_arrow");
-	TM.buildTextures(mActivityContext, R.drawable.down_arrow,"down_arrow");
-	TM.buildTextures(mActivityContext, R.drawable.left_arrow,"left_arrow");
-	TM.buildTextures(mActivityContext, R.drawable.right_arrow,"right_arrow");
-	TM.buildTextures(mActivityContext, R.drawable.menu_circle,"menu_circle");
-	TM.buildTextures(mActivityContext, R.drawable.bee,"bee");
-	TM.buildTextures(mActivityContext, R.drawable.flower,"flower");
-	TM.buildTextures(mActivityContext, R.drawable.crayonsquare, "crayonbg");
-	//TM.buildTextures(mActivityContext, R.drawable.papertexture2, "paperbg");
-	TM.buildTextures(mActivityContext, R.drawable.boardbg, "boardbg");
-	TM.buildTextures(mActivityContext, R.drawable.blacksquare, "blacksquare");
-	TM.buildTextures(mActivityContext, R.drawable.check, "check");
-	//Create Menu Textures
-
-	for(int i=0;i<6;i++){
-	    TM.buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
-	}
-	//Create Border Textures
-	for(int i=0;i<15;i++){
-	    TM.buildTextures(Integer.toString(i),64,128,"border_"+Integer.toString(i),60);
-	}
-	
-    }
+    
     
     @Override
     public void onDrawFrame(GL10 unused) {
@@ -260,7 +234,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-    buildTextures();
+    TM.buildTextures();
 	float magicNumber = 1.0f;
 	
 	// Set the OpenGL viewport to the same size as the surface.

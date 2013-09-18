@@ -131,7 +131,6 @@ class Model{
 		//mBg.draw(r);
 		mBoard.draw(r);
 		mBee.draw(r);
-		
 		if(state != GameState.MAIN_MENU){
 			mBoardBg.draw(r);
 			mBorder.draw(r);
