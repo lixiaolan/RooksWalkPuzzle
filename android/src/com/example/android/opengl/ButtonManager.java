@@ -26,6 +26,9 @@ class ButtonManager{
 	public StateButton share_end;
 
 	public StateButton hints;
+	public StateButton quit;
+	public StateButton clear_board;
+	
 	public MenuState mMenuState;
 
 	private float h;
@@ -53,9 +56,10 @@ class ButtonManager{
 		stats = new StateButton((Button)va.findViewById(R.id.stats));
 
 		hints = new StateButton((Button)va.findViewById(R.id.hints));
-
+		
 		if (ms.hints)
 			hints.mButton.setText("Hints On");
+
 		else
 			hints.mButton.setText("Hints Off");
 
@@ -64,9 +68,12 @@ class ButtonManager{
 		longer_puz = new StateButton((Button)va.findViewById(R.id.longer_puz));
 		longest_puz = new StateButton((Button)va.findViewById(R.id.longest_puz));
 
+		clear_board = new StateButton((Button)va.findViewById(R.id.clear_board));
+		quit = new StateButton((Button)va.findViewById(R.id.quit));
+		
 		main_menu_end = new StateButton((Button)va.findViewById(R.id.main_menu_end));
 		share_end = new StateButton((Button)va.findViewById(R.id.share_end));
-
+		
 	}
 
 	public void setHW(float height, float width) {
@@ -154,6 +161,13 @@ class ButtonManager{
 		case R.id.main_menu_end:
 			mMenuState.state = MenuStateEnum.OPENING;
 			break;
+			
+		case R.id.quit:
+			mMenuState.state = MenuStateEnum.OPENING;
+	
+		case R.id.clear_board:
+			mMenuState.open = false;
+			mMenuState.state = MenuStateEnum.GAME_PLAY;
 		}
 		switchState();
 	}
@@ -178,6 +192,9 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.0f*h, false,None);
 			share_end.setState(offSet[2]*w,0.0f*h, false,None);
+			
+			quit.setState(offSet[2]*w,0.0f*h, false,None);
+			clear_board.setState(offSet[2]*w,0.0f*h, false,None);
 			break;
 
 		case MENU_MAIN_MENU:
@@ -198,6 +215,9 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.0f*h, false,None);
 			share_end.setState(offSet[2]*w,0.0f*h, false,None);
+			
+			quit.setState(offSet[2]*w,0.0f*h, false,None);
+			clear_board.setState(offSet[2]*w,0.0f*h, false,None);
 			break;
 
 		case MENU_DURING_GAME:
@@ -217,6 +237,9 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.0f*h, false,None);
 			share_end.setState(offSet[2]*w,0.0f*h, false,None);
+			
+			quit.setState(offSet[1]*w,stack[3]*h, true,None);
+			clear_board.setState(offSet[1]*w,stack[2]*h, true,None);
 			break;    
 
 
@@ -237,6 +260,8 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.0f*h, false,None);
 			share_end.setState(offSet[2]*w,0.0f*h, false,None);
+			quit.setState(offSet[2]*w,0.0f*h, false,None);
+			clear_board.setState(offSet[2]*w,0.0f*h, false,None);
 			break;
 
 		case OPTIONS:
@@ -257,6 +282,8 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.0f*h, false,None);
 			share_end.setState(offSet[2]*w,0.0f*h, false,None);
+			quit.setState(offSet[2]*w,0.0f*h, false,None);
+			clear_board.setState(offSet[2]*w,0.0f*h, false,None);
 			break;
 
 
@@ -277,6 +304,8 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.0f*h, false,None);
 			share_end.setState(offSet[2]*w,0.0f*h, false,None);
+			quit.setState(offSet[2]*w,0.0f*h, false,None);
+			clear_board.setState(offSet[2]*w,0.0f*h, false,None);
 			break;
 
 		case GAME_RESUME:
@@ -296,6 +325,8 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.0f*h, false,None);
 			share_end.setState(offSet[2]*w,0.0f*h, false,None);
+			quit.setState(offSet[2]*w,0.0f*h, false,None);
+			clear_board.setState(offSet[2]*w,0.0f*h, false,None);
 			break;
 
 		case END:
@@ -315,6 +346,8 @@ class ButtonManager{
 
 			main_menu_end.setState(offSet[2]*w,0.5f*h, true,None);
 			share_end.setState(offSet[2]*w,0.6f*h, true,None);
+			quit.setState(offSet[2]*w,0.0f*h, false,None);
+			clear_board.setState(offSet[2]*w,0.0f*h, false,None);
 			break;
 		}
 	}

@@ -126,7 +126,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="#00FFFFFF"
-            android:onClick="manageView"
+            android:onClick="toggleHints"
             android:text="blank"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"
@@ -241,6 +241,35 @@
             android:textStyle="normal"
             android:typeface="sans"
             android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/quit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="resetGame"
+            android:text="quit"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/clear_board"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:onClick="clearBoard"
+            android:text="cleear board"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse"
+            android:textColor="#FF8C00"
+            android:textSize="30sp"
+            android:textStyle="normal"
+            android:typeface="sans"
+            android:visibility="invisible" />
+
     </ViewAnimator>
 
 </FrameLayout>

@@ -170,6 +170,10 @@ public class ViewActivity extends Activity {
 	//This is called after the constructor of GameView is complete.
 	//Otherwise, the positions would not work out correctly :(
 
+	public void manageView(View v){
+		mButtonManager.manageState(v, mModel.getState());
+	}
+	
 	public void newGame(View v) {
 		manageView(v);
 		//mButtonManager.manageState(v, mModel.getState());
@@ -180,13 +184,13 @@ public class ViewActivity extends Activity {
 					mModel.createPuzzle(4,2);
 					break;
 				case 2:
-					mModel.createPuzzle(6,5);
+					mModel.createPuzzle(10,3);
 					break;
 				case 3:
 					mModel.createPuzzle(12,4);
 					break;
 				case 4:
-					mModel.createPuzzle(16,5);
+					mModel.createPuzzle(20,3);
 					break;
 				}
 				mMenuState.createGame = false;
@@ -235,6 +239,7 @@ public class ViewActivity extends Activity {
 			}
 			mModel.restorePuzzle(solution, numbers, arrows, trueArrows);
 			savedGame = false;
+			scanner.close();
 		} 
 		}
 		
@@ -255,7 +260,7 @@ public class ViewActivity extends Activity {
     		if(file.delete()){
     			System.out.println(file.getName() + " is deleted!");
     		}else{
-    			System.out.println("Delete operation is failed.");
+    			System.out.println("Delete operation failed.");
     		}
     	}catch(Exception e){
     		e.printStackTrace();
@@ -266,9 +271,16 @@ public class ViewActivity extends Activity {
 
 	}
 	
-	public void manageView(View v){
-		mButtonManager.manageState(v, mModel.getState());
+	public void clearBoard(View v){
+		manageView(v);
+		mModel.clearBoard();
 	}
+	
+	public void toggleHints(View v){
+		manageView(v);
+		mModel.toggleHints(mMenuState.hints);
+	}
+	
 	//This function peforms animatinos on the array of buttons allButtons.
 	//It works by sequentially activating the various animatinos
 	//needed based on any change of state in the StateButtons.

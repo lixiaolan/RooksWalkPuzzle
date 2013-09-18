@@ -30,7 +30,7 @@ class Model{
 	public void initiateMembers(Context c, Board b){
 		mBoard = b;
 		mBee = new Bee(mBoard);
-		mBg = new Background("paperbg", 2f);
+		//mBg = new Background("paperbg", 2f);
 		mCheck  = new Background("check",.11f);
 		float[] center = {-.7f,1f, 0f};
 		mCheck.setCenter(center);
@@ -54,6 +54,10 @@ class Model{
 		mMenu = new Menu();
 	}
 
+	public void toggleHints(boolean toggle) {
+		mBoard.toggleHints(toggle);
+	}
+	
 	public void setButtonManager(ButtonManager bm) {
 		this.bm = bm;
 	}
@@ -83,13 +87,13 @@ class Model{
 			if(mCheck.touched(pt)){
 				if(mBoard.checkSolution()){
 					bm.setState(MenuStateEnum.END);
+					mBee.setMood(Mood.HAPPY);
 				} else {
 					vibe.vibrate(500);
 				}
 			}
 
 			break;
-
 		case MAIN_MENU: 
 			at = mBoard.touched(pt);
 			if(at != -1) {
@@ -98,8 +102,6 @@ class Model{
 				mBoard.tiles[at].setRotate(true);
 			}
 			break;
-
-
 		case GAME_MENU: break;
 
 		}
@@ -109,11 +111,10 @@ class Model{
 		}
 	}
 
-
 	public void swiped(float[] pt, String direction) {
 		switch(state){
 		case PLAY:
-			if (at != -1) {
+			if (at != -1 && mBoard.tiles[at].isClickable()) {
 				mBoard.tiles[at].arrow = direction; 
 				mMenu.menuActive = false;
 			}
@@ -124,7 +125,7 @@ class Model{
 
 	public void draw(MyGLRenderer r) {
 
-		mBg.draw(r);
+		//mBg.draw(r);
 		mBoard.draw(r);
 		mBee.draw(r);
 		if(state != GameState.MAIN_MENU){
@@ -143,6 +144,10 @@ class Model{
 
 	public GameState getState() {
 		return state;
+	}
+	
+	public void clearBoard() {
+		mBoard.clearBoard();
 	}
 
 }

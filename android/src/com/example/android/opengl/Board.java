@@ -9,14 +9,15 @@ import java.io.IOException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Board extends Graphic<BoardTile> implements Parcelable {
+class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable {
 
 	public int hints;
 	public int[] solution ;
 	public int[][] path;
 	public int[] columnSums;
 	public int[] rowSums;
-
+	private boolean toggleHints = true;
+	
 	public Board() {
 		buildEmptyBoard();
 		state = new BoardMainMenu(tiles);
@@ -88,6 +89,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 		rowSums = new int[6];
 		List<Integer> numbers = new ArrayList<Integer>();
 		for (int i = 0; i < tiles.length; i++) {	
+			//This does a hard reset on the board.
 			tiles[i].number = "clear";
 			tiles[i].arrow = "clear";
 			tiles[i].setTrueSolution(0);
@@ -96,12 +98,9 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 				columnSums[i%6] += Math.max(solution[i],0);
 				rowSums[i/6] += Math.max(solution[i],0);
 				numbers.add(i);
-				tiles[i].setNumber(Integer.toString(solution[i]));
+				//tiles[i].setNumber(Integer.toString(solution[i]));
 			}
 			tiles[i].setTrueSolution(solution[i]);
-			//This does a hard reset on the board.
-			//tiles[i].number = "clear";
-			//tiles[i].arrow = "clear";
 		} 
 		int dx;
 		int dy;
@@ -111,28 +110,40 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 
 			if (dx > 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
-				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 			}
 			if (dx < 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
-				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 			}
 			if (dy > 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
-				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
 			}
 			if (dy < 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
-				tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 			}
 		}
-		Collections.shuffle(numbers);
-		//Note we are assuming that hints<numbers
-		for(int i=0;i<hints;i++){
-			int r = numbers.get(i);
-			tiles[r].setHint();
+		//Note we are assuming that hints<numbers and that we have a unique solution
+		if(toggleHints){
+			Collections.shuffle(numbers);
+			for(int i=0;i<hints;i++){
+				int r = numbers.get(i);
+				tiles[r].setHint();
+			}
 		}
 	}
+	
+	public void clearBoard() {
+		for(int i=0;i<tiles.length;i++){
+			if(tiles[i].isClickable()){
+				tiles[i].setNumber("clear");
+				tiles[i].setArrow("clear");
+			}
+		}
+	}
+	
 	
 	public void createPuzzleFromJNI(int length, int hints){
 		try {
@@ -146,6 +157,7 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 	public native String stringFromJNI(int rows, int cols, int length);
 
 	public void readSolutionFromJni(String puzzleString) throws IOException{
+	    System.out.println(puzzleString);
 		Scanner scanner = null;
 		try {	    
 			scanner = new Scanner(puzzleString);
@@ -160,9 +172,11 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 			int l = scanner.nextInt();
 			path = new int[2*l][2];
 			for(int i = 0; i < l; i++){
-				path[i][0] = scanner.nextInt();
-				path[i][1] = scanner.nextInt();
+			    path[i][0] = scanner.nextInt();
+			    path[i][1] = scanner.nextInt();
 			}
+
+
 		} finally {
 			scanner.close();	    
 		}
@@ -234,6 +248,10 @@ class Board extends Graphic<BoardTile> implements Parcelable {
 		return true;
 	}
 
+	public void toggleHints(boolean toggle){
+		toggleHints = toggle;
+	}
+	
 }
 
 class BoardMainMenu extends State<BoardTile> {

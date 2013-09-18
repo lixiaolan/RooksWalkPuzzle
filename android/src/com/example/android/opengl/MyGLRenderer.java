@@ -223,7 +223,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM.buildTextures(mActivityContext, R.drawable.bee,"bee");
 	TM.buildTextures(mActivityContext, R.drawable.flower,"flower");
 	TM.buildTextures(mActivityContext, R.drawable.crayonsquare, "crayonbg");
-	TM.buildTextures(mActivityContext, R.drawable.papertexture2, "paperbg");
+	//TM.buildTextures(mActivityContext, R.drawable.papertexture2, "paperbg");
 	TM.buildTextures(mActivityContext, R.drawable.boardbg, "boardbg");
 	TM.buildTextures(mActivityContext, R.drawable.blacksquare, "blacksquare");
 	TM.buildTextures(mActivityContext, R.drawable.check, "check");

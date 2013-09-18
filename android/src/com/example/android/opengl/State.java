@@ -7,30 +7,26 @@ package com.example.android.opengl;
  *  be exposed to global state changes. It might make sense to only allow entry and during animations. This needs to be
  *  thought about. Actually I think this might be forced upon us... Think more about this.
  */
-
-	public abstract class State<T extends Tile> {
-		
-		enum DrawPeriod {
-			ENTER, DURING
-		}
-		
-		DrawPeriod period = DrawPeriod.ENTER;
-		
-		public abstract void enterAnimation(T[] tiles);
-		public abstract void duringAnimation(T[] tiles);
-		
-		
-		public void draw(T[] tiles, MyGLRenderer r){
-			switch(period) {
-				case ENTER: enterAnimation(tiles); break;
-				case DURING: duringAnimation(tiles); break;
-			}
-			
-			for (int i = 0; i < tiles.length; i++) {
-			    tiles[i].draw(r);
-		    }
-		}
-	
-		
-	
+public abstract class State<T extends Tile> {
+    
+    enum DrawPeriod {
+	ENTER, DURING
+    }
+    
+    DrawPeriod period = DrawPeriod.ENTER;
+    
+    public abstract void enterAnimation(T[] tiles);
+    public abstract void duringAnimation(T[] tiles);
+    
+    
+    public void draw(T[] tiles, MyGLRenderer r){
+	switch(period) {
+	case ENTER: enterAnimation(tiles); break;
+	case DURING: duringAnimation(tiles); break;
 	}
+	
+	for (int i = 0; i < tiles.length; i++) {
+	    tiles[i].draw(r);
+	}
+    }    
+}

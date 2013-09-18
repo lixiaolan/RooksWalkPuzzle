@@ -38,6 +38,7 @@ class BoardTile extends Tile{
 
     public void setHint(){
     	number  = Integer.toString(true_solution);
+    	arrow = true_arrow;
     	clickable = false;
     }
     
@@ -90,7 +91,7 @@ class BoardTile extends Tile{
    }
    
    public void setUserInput(int val){
-	   if(val == 0 && !isBlack()){
+	   if(val == 0 && !isClickable()){
 		   number = "clear";
 		   arrow = "clear";
 	   } else {
