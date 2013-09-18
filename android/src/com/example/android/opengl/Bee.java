@@ -10,15 +10,14 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 	tiles[0] = new BeeTile(center,0.2f);
 	bee = tiles[0];
 	mBoard = b;
-	setState(GameState.MAIN_MENU); 
+	setState(GameState.MAIN_MENU_OPENING); 
     }
     
     public void setState(GameState s){
 	
-	switch(s){
-	case MAIN_MENU: state = new BeeWander(mBoard, Mood.ASLEEP); break;
-	case PLAY: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
-	case GAME_MENU: state  = new BeeWander(mBoard, Mood.ASLEEP); break;
+	switch(s.state){
+	case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
+	case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
 	}
     }
     
@@ -34,7 +33,6 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     public void setMood(Mood m) {
 	state.setMood(m);
     }
-
 }
 
 class BeeWander extends BeeState<BeeTile> {
@@ -112,7 +110,6 @@ class BeeFixed extends BeeState<BeeTile> {
     float[] fixedPos = {-.75f,-1.0f,0.0f};
     
     
-
     public BeeFixed(Board b, Mood m) {
 	setBoard(b);
 	setMood(m);
@@ -164,7 +161,6 @@ class BeeFixed extends BeeState<BeeTile> {
 		    }
 		}
 		newAngle = newAngle - 90.0f;
-
 			
 		r = 6*mBoard.path[index][0] + mBoard.path[index][1];
 		index = ((index-1)%length + length)%length;

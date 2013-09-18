@@ -24,7 +24,7 @@ public class Background extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	}
 	
 	@Override
-	public void setState(GameState s) {
+	public void setState(GlobalState s) {
 	
 	}
 
