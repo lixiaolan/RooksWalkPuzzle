@@ -32,7 +32,7 @@ class Menu{
 	    float center[] = { Sx, Sy, 0.0f};
 	    menuTiles[i] = new MenuTile(center, tilesSize, i);
 	}
-    }    
+    }
 	
     public void activate(float[] pt) {
 	menuActive = true;
@@ -92,7 +92,4 @@ class Menu{
 	    }   
 	}
     }
-
-    
-
 }

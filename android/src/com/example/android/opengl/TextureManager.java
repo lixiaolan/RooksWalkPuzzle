@@ -2,7 +2,6 @@ package com.example.android.opengl;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +13,25 @@ import android.graphics.Typeface;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
+
 public class TextureManager {
+    public static final String START = "start";
+    public static final String NEW = "new";
+    public static final String RESUME = "resume";
+    public static final String OPTIONS = "options";
+    public static final String BACK = "back";
+    public static final String SHORT = "short";
+    public static final String MEDIUM = "medium";
+    public static final String LONGER = "longer";
+    public static final String LONGEST = "longest";
+    public static final String HINTS_ON = "hints_on";
+    public static final String HINTS_OFF = "hints_off";
+    public static final String CLEAR_BOARD = "clear_board";
+    public static final String QUIT = "quit";
+    public static final String YES = "yes";
+    public static final String NO = "no";
+    public static final String SHARE = "share";
+
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	GameState state;

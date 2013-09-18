@@ -96,6 +96,7 @@ class BeeFixed extends BeeState<BeeTile> {
     private float dX = 0.0f;
     private float dY = 0.0f;
     
+
     private float oldAngle = 0.0f;
     private float newAngle = 0.0f;
 
@@ -108,8 +109,10 @@ class BeeFixed extends BeeState<BeeTile> {
     int length;
     
     float[] pivot = {1,0,1};
-    float[] fixedPos = {-.75f,-.75f,0.0f};
-        
+    float[] fixedPos = {-.75f,-1.0f,0.0f};
+    
+    
+
     public BeeFixed(Board b, Mood m) {
 	setBoard(b);
 	setMood(m);
@@ -121,7 +124,8 @@ class BeeFixed extends BeeState<BeeTile> {
     
     public void duringAnimation(BeeTile[] tiles) {
 	BeeTile bee = (BeeTile)tiles[0];
-	long time = System.currentTimeMillis() - refTime;	
+	long time = System.currentTimeMillis() - refTime;
+
 	length = (mBoard.path.length-1)/2;
 
 	switch (mood) {

@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:background="#00FFFFFF"
+            android:onClick="resetGame"
             android:text="Main Menu"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textColor="#FF8C00"

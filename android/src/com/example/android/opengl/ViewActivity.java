@@ -8,6 +8,7 @@ import android.animation.Animator.AnimatorListener;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
@@ -51,6 +52,7 @@ public class ViewActivity extends Activity {
 	private MenuState mMenuState = new MenuState();
 	private ButtonManager mButtonManager;
 	boolean savedGame = false;
+	String savefile = "savefile";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,13 +65,10 @@ public class ViewActivity extends Activity {
 		if(savedInstanceState != null){
 			System.out.println("Restored some shit");
 			mModel = new Model(this, (Board)savedInstanceState.getParcelable("board"));        	
-			mButtonManager = new ButtonManager((MenuState)savedInstanceState.getParcelable("menu"), this);
-
 		} else {
 			mModel = new Model(this);
-			mButtonManager = new ButtonManager(mMenuState, this);
-
 		}
+		mButtonManager = new ButtonManager(mMenuState, this);
 
 		mRenderer = new MyGLRenderer(this, mModel);
 
@@ -99,7 +98,6 @@ public class ViewActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable("board", mModel.mBoard);
-		outState.putParcelable("menu", mMenuState);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -111,24 +109,14 @@ public class ViewActivity extends Activity {
 		// If your OpenGL application is memory intensive,
 		// you should consider de-allocating objects that
 		// consume significant memory here.
-		System.out.println("paused");
 		mGLView.onPause();
 		
 		if(mModel.getState() ==GameState.PLAY){
-			String filename = "savefile";
-			File file = new File(this.getFilesDir(),filename);
+			File file = new File(this.getFilesDir(), savefile);
 			int[] solutions = mModel.mBoard.dumpSolution();
 			String[] arrows  = mModel.mBoard.dumpArrows();
 			String[] numbers  = mModel.mBoard.dumpNumbers();
-			
-			for(int i=0; i<36; i++){
-				System.out.println("Why am I empty? "+numbers[i]);
-			}
-			
-			System.out.println("lenght solution+ "+Integer.toString(solutions.length));
-			System.out.println("lenght arrows+ "+Integer.toString(arrows.length));
-			System.out.println("lenght numbers+ "+Integer.toString(numbers.length));
-
+			String[] trueArrows = mModel.mBoard.dumpTrueArrows();
 			try {
 				PrintWriter outputStream = new PrintWriter(new FileWriter(file));
 				for(int i =0; i< solutions.length;i++){
@@ -141,6 +129,9 @@ public class ViewActivity extends Activity {
 				for(int i =0; i< arrows.length;i++){
 					System.out.println("Saving "+Integer.toString(i)+" "+arrows[i]);
 					outputStream.println(arrows[i]);
+				}
+				for(int i =0; i< trueArrows.length;i++){
+					outputStream.println(trueArrows[i]);
 				}
 				outputStream.close();
 			} catch (Exception e) {
@@ -165,9 +156,9 @@ public class ViewActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		mModel.setState(GameState.MAIN_MENU);
-		
-	
-		File file = new File(this.getFilesDir(), "savefile");
+		mModel.setButtonManager(mButtonManager);
+		mButtonManager.reset();
+		File file = new File(this.getFilesDir(), savefile);
 		if(file.exists()){
 				savedGame = true;				
 		}	
@@ -179,58 +170,76 @@ public class ViewActivity extends Activity {
 	//This is called after the constructor of GameView is complete.
 	//Otherwise, the positions would not work out correctly :(
 
-	public void manageView(View v) {
-		mButtonManager.manageState(v);
-		if (mMenuState.state == MenuStateEnum.GAME_PLAY) {
-			switch (mMenuState.difficulty) {
-			case 1:
-			    mModel.createPuzzle(6,2);
-			    mModel.setState(GameState.PLAY);
-			    break;
-			case 2:
-			    mModel.createPuzzle(10,3);
-			    mModel.setState(GameState.PLAY);
-			    break;
-			case 3:
-			    mModel.createPuzzle(12,4);
-			    mModel.setState(GameState.PLAY);
-			    break;
-			case 4:
-			    mModel.createPuzzle(16,5);
-			    mModel.setState(GameState.PLAY);
-			    break;
-			}
-		}
+	public void manageView(View v){
+		mButtonManager.manageState(v, mModel.getState());
+	}
+	
+	public void newGame(View v) {
+		manageView(v);
+		//mButtonManager.manageState(v, mModel.getState());
+		//NOTE: menu state is getting changed to GAME_PLAY after the buttons leave the screen.
+		if (mMenuState.state == MenuStateEnum.GAME_PLAY && mMenuState.createGame) {
+				switch (mMenuState.difficulty) {
+				case 1:
+					mModel.createPuzzle(4,2);
+					break;
+				case 2:
+					mModel.createPuzzle(10,3);
+					break;
+				case 3:
+					mModel.createPuzzle(12,4);
+					break;
+				case 4:
+					mModel.createPuzzle(20,3);
+					break;
+				}
+				mMenuState.createGame = false;
+				mModel.setState(GameState.PLAY);
+
+			} 
 	}
 
+	public void resumeGame(View v) {
+		manageView(v);
+		//mButtonManager.manageState(v, mModel.getState());
+		if(mMenuState.state == MenuStateEnum.GAME_RESUME && mMenuState.createGame){
+			if(savedGame) {
+				restoreGameUtil();
+			}
+			mMenuState.createGame = false;
+			mModel.setState(GameState.PLAY);
+		}	
+	}
 	
-	public void RestoreGame(View v){
+	public void restoreGameUtil(){
 		try{
 		int[] solution = new int[36];
 		String[] numbers = new String[36];
 		String[] arrows = new String[36];
+		String[] trueArrows = new String[36];
 		File file = new File(this.getFilesDir(), "savefile");
 		
 		if(file.exists()){
-			savedGame = true;
 			Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
 			for(int i=0; i<36;i++){
 				int m = scanner.nextInt();
-				System.out.println(Integer.toString(i)+": "+Integer.toString(m));
 				solution[i] = m;
 			}
 			for(int i=0; i<36;i++){
 				String m = scanner.next();
-				System.out.println(Integer.toString(i)+": "+m);
 				numbers[i] = m;
 			}
 			for(int i=0; i<36;i++){
 				String m = scanner.next();
-				System.out.println(Integer.toString(i)+": "+m);
 				arrows[i] = m;
 			}
-			mModel.restorePuzzle(solution, numbers, arrows);
-			mModel.setState(GameState.PLAY);
+			for(int i=0; i<36;i++){
+				String m = scanner.next();
+				trueArrows[i] = m;
+			}
+			mModel.restorePuzzle(solution, numbers, arrows, trueArrows);
+			savedGame = false;
+			scanner.close();
 		} 
 		}
 		
@@ -244,6 +253,34 @@ public class ViewActivity extends Activity {
 		
 	}
     
+	public void resetGame(View v){
+		manageView(v);
+		try{
+    		File file = new File(this.getFilesDir(), savefile);
+    		if(file.delete()){
+    			System.out.println(file.getName() + " is deleted!");
+    		}else{
+    			System.out.println("Delete operation failed.");
+    		}
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+		
+		savedGame = false;
+		mModel.setState(GameState.MAIN_MENU);
+
+	}
+	
+	public void clearBoard(View v){
+		manageView(v);
+		mModel.clearBoard();
+	}
+	
+	public void toggleHints(View v){
+		manageView(v);
+		mModel.toggleHints(mMenuState.hints);
+	}
+	
 	//This function peforms animatinos on the array of buttons allButtons.
 	//It works by sequentially activating the various animatinos
 	//needed based on any change of state in the StateButtons.
