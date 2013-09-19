@@ -97,7 +97,7 @@ class Model{
 	case MAIN_MENU_OPENING:    
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_NEW:
-	case MAIN_MENU_OPTION:
+	case MAIN_MENU_OPTIONS:
 	    at = mBoard.touched(pt);
 	    if(at != -1) {
 		float[] pivot = {0,0,1};

@@ -21,7 +21,7 @@ class GameView extends GLSurfaceView {
         // Render the view only when there is a change in the drawing data
         //
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
- }
+    }
 
     
     
@@ -29,7 +29,7 @@ class GameView extends GLSurfaceView {
     private float mDownY;
     private float mUpX;
     private float mUpY;
-    float swipeTol = 10.0f;
+    float swipeTol = 20.0f;
 
     public void setMyRenderer(MyGLRenderer mR) {
     		mRenderer = mR;
@@ -98,13 +98,11 @@ class GameView extends GLSurfaceView {
 			direction = "up_arrow"; //Note the coordinate system is reflected about the x-axis
 		    }
 		}
-		System.out.println("I got swiped in GameView");
 		pt = mRenderer.project(pt);
 		mModel.swiped(pt, direction);
 		requestRender();
 	    }
 	    else {
-	    	System.out.println("I got touched in GameView");
 	    	pt = mRenderer.project(pt);
 			mModel.touched(pt);
 			requestRender();
