@@ -43,7 +43,7 @@ class ButtonManager{
 	private long[] Move = {0,1000,0};
 	private long[] None = {0,0,0};
 
-
+/*
 	public ButtonManager(MenuState ms, Activity va) {
 
 		mMenuState = ms;
@@ -75,7 +75,7 @@ class ButtonManager{
 		share_end = new StateButton((Button)va.findViewById(R.id.share_end));
 		
 	}
-/*
+
 	public void setHW(float height, float width) {
 		h = height;
 		w = width;

@@ -32,6 +32,12 @@ public class TextureManager {
     public static final String NO = "no";
     public static final String SHARE = "share";
     public static final String CLEAR = "clear";
+    public static final String BEE = "bee";
+    public static final String MENUCIRCLE = "menu_circle";
+    public static final String UPARROW = "up_arrow";
+    public static final String DOWNARROW = "down_arrow";
+    public static final String LEFTARROW = "left_arrow";
+    public static final String RIGHTARROW = "right_arrow";
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -48,13 +54,26 @@ public class TextureManager {
 		int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
 		int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
 		buildTextures("0123456789", x_coords, y_coords,64);
-		buildTextures(context, R.drawable.up_arrow,"up_arrow");
-		buildTextures(context, R.drawable.down_arrow,"down_arrow");
-		buildTextures(context, R.drawable.left_arrow,"left_arrow");
-		buildTextures(context, R.drawable.right_arrow,"right_arrow");
-		buildTextures(context, R.drawable.menu_circle,"menu_circle");
-		buildTextures(context, R.drawable.bee,"bee");
-		buildTextures(context, R.drawable.flower,"flower");
+		buildTextures(context, R.drawable.up_arrow, UPARROW);
+		buildTextures(context, R.drawable.down_arrow, DOWNARROW);
+		buildTextures(context, R.drawable.left_arrow, LEFTARROW);
+		buildTextures(context, R.drawable.right_arrow, RIGHTARROW);
+		buildTextures(context, R.drawable.menu_circle, MENUCIRCLE);
+		buildTextures(context, R.drawable.beenathan, BEE);
+		
+		buildTextures(context, R.drawable.flower1,"flower0");
+		buildTextures(context, R.drawable.flower2,"flower1");
+		buildTextures(context, R.drawable.flower3,"flower2");
+		buildTextures(context, R.drawable.flower4,"flower3");
+		buildTextures(context, R.drawable.flower5,"flower4");
+		buildTextures(context, R.drawable.flower6,"flower5");
+		buildTextures(context, R.drawable.flower7,"flower6");
+		buildTextures(context, R.drawable.flower8,"flower7");
+		buildTextures(context, R.drawable.flower9,"flower8");
+		
+		buildTextures(context, R.drawable.grass1,"grass0");
+		
+		
 		buildTextures(context, R.drawable.crayonsquare, "crayonbg");
 		//TM.buildTextures(context, R.drawable.papertexture2, "paperbg");
 		buildTextures(context, R.drawable.boardbg, "boardbg");
@@ -89,6 +108,16 @@ public class TextureManager {
 	    buildTextures("", 64,64, CLEAR, 20);
 	    }
 	
+	
+	public static String getFlowerTexture() {
+		int r = (int)(Math.random()*9.0f);
+		return "flower"+Integer.toString(r);
+	}
+	
+	public static String getGrassTexture() {
+		int r = (int)(Math.random()*1.0f);
+		return "grass"+Integer.toString(r);
+	}
 	
 	public void buildTextures(String a, int[] x, int[] y, int font){
 		String curr;
