@@ -77,7 +77,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
     
     public void buildEmptyBoard() {
 	tiles = new BoardTile[36];
-	float size = .12f;
+	float size = .20f;
 	for (int i = 0; i < tiles.length; i++) {
 	    float center[] = { 0, 0, 0.0f};    	   
 	    tiles[i] = new BoardTile(center, size);    	    
@@ -90,10 +90,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 	List<Integer> numbers = new ArrayList<Integer>();
 	for (int i = 0; i < tiles.length; i++) {	
 	    //This does a hard reset on the board.
-	    tiles[i].number = "clear";
-	    tiles[i].arrow = "clear";
+	    tiles[i].number = TextureManager.CLEAR;
+	    tiles[i].arrow = TextureManager.CLEAR;
 	    tiles[i].setTrueSolution(0);
-	    tiles[i].setTrueArrow("clear");
+	    tiles[i].setTrueArrow(TextureManager.CLEAR);
 	    if(solution [i] > 0){
 		columnSums[i%6] += Math.max(solution[i],0);
 		rowSums[i/6] += Math.max(solution[i],0);
@@ -138,8 +138,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
     public void clearBoard() {
 	for(int i=0;i<tiles.length;i++){
 	    if(tiles[i].isClickable()){
-		tiles[i].setNumber("clear");
-		tiles[i].setArrow("clear");
+		tiles[i].setNumber(TextureManager.CLEAR);
+		tiles[i].setArrow(TextureManager.CLEAR);
 	    }
 	}
     }
@@ -270,7 +270,7 @@ class BoardMainMenu extends State<BoardTile> {
 	
 	//Set textures	
 	for(int i = 0;i<tiles.length;i++){
-	    tiles[i].setTextures("clear", "flower");
+	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 	    tiles[i].setColor("transparent");
 	}
 	
@@ -297,8 +297,7 @@ class BoardMainMenu extends State<BoardTile> {
 	    } else{
 		rotateTiles[i] = false;
 		tiles[i].setAngle(0);
-		tiles[i].textures[0]="flower";
-		tiles[i].textures[1] ="clear";
+		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 	    }
 	    
 	}
@@ -322,9 +321,10 @@ class BoardPlay extends State<BoardTile> {
 	
 	if(time < totalTime) {
 	    for (int i = 0; i < tiles.length; i++) {
-		tiles[i].setTextures("flower","clear");
+		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 		float Sx = ( (i/6) - 2.5f )/4.0f;
 		float Sy = ( (i%6) - 2.5f )/4.0f;
+		tiles[i].setSize(.12f*time/totalTime+(1-time/totalTime)*.2f);
 		float newX = originalTiles[i].center[0]+time/totalTime*(Sx - originalTiles[i].center[0]);
 		float newY = originalTiles[i].center[1]+time/totalTime*(Sy - originalTiles[i].center[1]);
 		float center[] = { newX, newY, 0.0f};
@@ -341,7 +341,7 @@ class BoardPlay extends State<BoardTile> {
 	else {
 	    for(int i = 0;i<tiles.length;i++){
 		tiles[i].setAngle(0);
-		///tiles[i].setTextures();
+		tiles[i].setSize(.12f);
 		tiles[i].setColor("transparent");
 	    }
 	    period = DrawPeriod.DURING;

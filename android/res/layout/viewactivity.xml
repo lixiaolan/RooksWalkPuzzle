@@ -26,19 +26,4 @@
         android:layout_alignParentTop="true"
         android:layout_weight="0.12" />
 
-    <ViewAnimator
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/ViewAnimator1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        tools:context=".MainMenuActivity" >
-
-    </ViewAnimator>
-
 </FrameLayout>

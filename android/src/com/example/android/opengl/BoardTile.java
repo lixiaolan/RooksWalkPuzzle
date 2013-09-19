@@ -7,8 +7,11 @@ class BoardTile extends Tile{
     public int true_solution;
     public String true_arrow;
 
-    public String number = "clear";
-    public String arrow = "clear";
+    public String flowerTexture;
+    public String grassTexture;
+    
+    public String number = TextureManager.CLEAR;
+    public String arrow = TextureManager.CLEAR;
     private boolean clickable = true;
     protected boolean rotate = false;
 
@@ -33,7 +36,9 @@ class BoardTile extends Tile{
     	center = inCenter;
     	size = inSize;
     	color = "transparent";
-    	true_arrow = "clear";
+    	true_arrow = TextureManager.CLEAR;
+    	flowerTexture  = TextureManager.getFlowerTexture();
+    	grassTexture  = TextureManager.getGrassTexture();
     }
 
     public void setHint(){
@@ -55,8 +60,8 @@ class BoardTile extends Tile{
 		   textures[0]  = arrow;
 		   textures[1]  = number;
    		} else {
-   			textures[0] = "clear";
-   			textures[1] = "blacksquare";
+   			textures[0] = TextureManager.CLEAR;
+   			textures[1] = grassTexture;
    		}
    }
    
@@ -91,9 +96,9 @@ class BoardTile extends Tile{
    }
    
    public void setUserInput(int val){
-	   if(val == 0 && !isClickable()){
-		   number = "clear";
-		   arrow = "clear";
+	   if(val == 0 && isClickable()){
+		   number = TextureManager.CLEAR;
+		   arrow = TextureManager.CLEAR;
 	   } else {
 		   number = Integer.toString(val);
 	   }
@@ -110,6 +115,10 @@ class BoardTile extends Tile{
     		return arrow==true_arrow;
     	}
     	
+    }
+    
+    public void setSize(float s) {
+    	size = s;
     }
     
     public boolean checkSolutions(){	
