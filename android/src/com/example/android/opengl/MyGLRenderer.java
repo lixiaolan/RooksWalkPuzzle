@@ -183,7 +183,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 	//Set the background frame col// or
-	GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	GLES20.glDisable(GLES20.GL_DEPTH_TEST);
 		
 
@@ -216,7 +216,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onDrawFrame(GL10 unused) {
 	// Draw background color
-	GLES20.glClearColor(0.0f, 0.00f, 0.0f, 0.0f);
+	GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);			        
 	// Set our per-vertex lighting program.
 	GLES20.glUseProgram(mProgramHandle);

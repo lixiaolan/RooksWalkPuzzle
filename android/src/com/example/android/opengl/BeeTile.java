@@ -7,7 +7,7 @@ public class BeeTile extends Tile{
 	    	super(inCenter, inSize);
 	    	touched_flag = false;
 	    	color = "transparent";
-	    	textures[0] = "bee";
+	    	textures[0] = TextureManager.BEE;
 	    }
 	    
 	    public void draw(MyGLRenderer r) {
