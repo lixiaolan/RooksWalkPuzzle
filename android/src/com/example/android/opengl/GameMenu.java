@@ -19,7 +19,7 @@ class GameMenu{
     public GameMenu(float[] pos, float size, String[] textures, String centerTexture) {
 	tilesSize = size;
 	tilesCenter = pos;
-	tiltAngle = -((float)(textures.length-1))*((float)Math.PI)/5.0f+((float)Math.PI)/2;
+	tiltAngle = -((float)(textures.length-1))*((float)Math.PI)/5.0f+((float)Math.PI)/2.2f;
 	radius = size*4.0f;
 	menuTiles = new MenuTile[textures.length];
 	for (int i = 0; i < menuTiles.length; i++) {
@@ -41,6 +41,7 @@ class GameMenu{
     			return i+1;
     		}
     	}
+    	
     	if (centerTile.touched(pt)) {
     		return 0; 
     	}

@@ -201,7 +201,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
     }
     
     static {
-	System.loadLibrary("GeneratePuzzle");
+    	System.loadLibrary("GeneratePuzzle");
     }
     
     public static final Parcelable.Creator<Board> CREATOR = new Parcelable.Creator<Board>() {
