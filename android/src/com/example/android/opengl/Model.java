@@ -101,8 +101,8 @@ class Model{
 	    at = mBoard.touched(pt);
 	    if(at != -1) {
 		float[] pivot = {0,0,1};
-		mBoard.tiles[at].setPivot(pivot);
-		mBoard.tiles[at].setRotate(true);
+			mBoard.tiles[at].setPivot(pivot);
+			mBoard.tiles[at].setRotate(true);
 	    }
 	    
 	    val = mMenuManager.touched(pt);

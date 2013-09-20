@@ -257,6 +257,7 @@ class BoardMainMenu extends State<BoardTile> {
     
     boolean[] rotateTiles = new boolean[36];
     long[] refTime = new long[36];
+    String number = "5";
     
     public BoardMainMenu(BoardTile[] tiles) {
 	for (int i = 0; i < tiles.length; i++) {
@@ -281,23 +282,30 @@ class BoardMainMenu extends State<BoardTile> {
     }
     
     public void duringAnimation(BoardTile[] tiles) {
+    float totalTime  = 10000;
 	for(int i=0;i<tiles.length;i++){
 	    if(tiles[i].rotate){
-		refTime[i] = System.currentTimeMillis();
-		rotateTiles[i] = true;
-		tiles[i].rotate = false;
+	    	refTime[i] = System.currentTimeMillis();
+	    	rotateTiles[i] = true;
+	    	tiles[i].rotate = false;
+	    	float[] p = {tiles[i].center[0], tiles[i].center[1], 0};
+	    	tiles[i].setPivot(p);
 	    }
+	    
 	    long time = System.currentTimeMillis()-refTime[i];
-	    if(time < 2000f && rotateTiles[i]==true){
-		tiles[i].setAngle(time*.4f);
-		if(time<1000f) {
-		    tiles[i].textures[0] = Integer.toString((int)(10*Math.random()));
-		    tiles[i].textures[1] = "up_arrow";
-		}
+	    float angle = (((float)time)/totalTime)*360;
+	    float time1 = .25f*totalTime;
+	    if(time < totalTime && rotateTiles[i]==true){
+	    	tiles[i].setAngle(angle);
+	    	if(time > time1 && time < (totalTime-time1)) {
+	    		tiles[i].setTextures(number,TextureManager.UPARROW);
+	    	} else if(time >= totalTime-time1 && time < totalTime){
+	    		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
+	    	}
 	    } else{
-		rotateTiles[i] = false;
-		tiles[i].setAngle(0);
-		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
+	    	rotateTiles[i] = false;
+	    	tiles[i].setAngle(0);
+	    	tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 	    }
 	    
 	}

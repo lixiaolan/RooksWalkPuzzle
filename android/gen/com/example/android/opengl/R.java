@@ -31,34 +31,35 @@ public final class R {
     }
     public static final class drawable {
         public static final int bee=0x7f020000;
-        public static final int beenathan=0x7f020001;
-        public static final int blacksquare=0x7f020002;
-        public static final int boardbg=0x7f020003;
-        public static final int check=0x7f020004;
-        public static final int crayonsquare=0x7f020005;
-        public static final int down_arrow=0x7f020006;
-        public static final int flower=0x7f020007;
-        public static final int flower1=0x7f020008;
-        public static final int flower2=0x7f020009;
-        public static final int flower3=0x7f02000a;
-        public static final int flower4=0x7f02000b;
-        public static final int flower5=0x7f02000c;
-        public static final int flower6=0x7f02000d;
-        public static final int flower7=0x7f02000e;
-        public static final int flower8=0x7f02000f;
-        public static final int flower9=0x7f020010;
-        public static final int grass1=0x7f020011;
-        public static final int grass2=0x7f020012;
-        public static final int grass3=0x7f020013;
-        public static final int grass4=0x7f020014;
-        public static final int hive=0x7f020015;
-        public static final int icon_border=0x7f020016;
-        public static final int left_arrow=0x7f020017;
-        public static final int menu_circle=0x7f020018;
-        public static final int right_arrow=0x7f020019;
-        public static final int share=0x7f02001a;
-        public static final int up_arrow=0x7f02001b;
-        public static final int white=0x7f02001c;
+        public static final int beecolor=0x7f020001;
+        public static final int beenathan=0x7f020002;
+        public static final int blacksquare=0x7f020003;
+        public static final int boardbg=0x7f020004;
+        public static final int check=0x7f020005;
+        public static final int crayonsquare=0x7f020006;
+        public static final int down_arrow=0x7f020007;
+        public static final int flower=0x7f020008;
+        public static final int flower1=0x7f020009;
+        public static final int flower2=0x7f02000a;
+        public static final int flower3=0x7f02000b;
+        public static final int flower4=0x7f02000c;
+        public static final int flower5=0x7f02000d;
+        public static final int flower6=0x7f02000e;
+        public static final int flower7=0x7f02000f;
+        public static final int flower8=0x7f020010;
+        public static final int flower9=0x7f020011;
+        public static final int grass1=0x7f020012;
+        public static final int grass2=0x7f020013;
+        public static final int grass3=0x7f020014;
+        public static final int grass4=0x7f020015;
+        public static final int hive=0x7f020016;
+        public static final int icon_border=0x7f020017;
+        public static final int left_arrow=0x7f020018;
+        public static final int menu_circle=0x7f020019;
+        public static final int right_arrow=0x7f02001a;
+        public static final int share=0x7f02001b;
+        public static final int up_arrow=0x7f02001c;
+        public static final int white=0x7f02001d;
     }
     public static final class id {
         public static final int FrameLayout1=0x7f0c000e;
@@ -97,16 +98,18 @@ public final class R {
         public static final int viewactivity_actions=0x7f0b0002;
     }
     public static final class raw {
-        public static final int color_fragment_shader=0x7f060000;
-        public static final int color_vertex_shader=0x7f060001;
-        public static final int per_pixel_fragment_shader=0x7f060002;
-        public static final int per_pixel_fragment_shader_no_tex=0x7f060003;
-        public static final int per_pixel_fragment_shader_tex_and_light=0x7f060004;
-        public static final int per_pixel_vertex_shader=0x7f060005;
-        public static final int per_pixel_vertex_shader_no_tex=0x7f060006;
-        public static final int per_pixel_vertex_shader_tex_and_light=0x7f060007;
-        public static final int point_fragment_shader=0x7f060008;
-        public static final int point_vertex_shader=0x7f060009;
+        public static final int buzz=0x7f060000;
+        public static final int color_fragment_shader=0x7f060001;
+        public static final int color_vertex_shader=0x7f060002;
+        public static final int per_pixel_fragment_shader=0x7f060003;
+        public static final int per_pixel_fragment_shader_no_tex=0x7f060004;
+        public static final int per_pixel_fragment_shader_tex_and_light=0x7f060005;
+        public static final int per_pixel_vertex_shader=0x7f060006;
+        public static final int per_pixel_vertex_shader_no_tex=0x7f060007;
+        public static final int per_pixel_vertex_shader_tex_and_light=0x7f060008;
+        public static final int point_fragment_shader=0x7f060009;
+        public static final int point_vertex_shader=0x7f06000a;
+        public static final int test=0x7f06000b;
     }
     public static final class string {
         public static final int app_name=0x7f090001;

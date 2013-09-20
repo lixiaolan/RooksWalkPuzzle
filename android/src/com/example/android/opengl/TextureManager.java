@@ -59,7 +59,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.left_arrow, LEFTARROW);
 		buildTextures(context, R.drawable.right_arrow, RIGHTARROW);
 		buildTextures(context, R.drawable.menu_circle, MENUCIRCLE);
-		buildTextures(context, R.drawable.beenathan, BEE);
+		buildTextures(context, R.drawable.beecolor, BEE);
 		
 		buildTextures(context, R.drawable.flower1,"flower0");
 		buildTextures(context, R.drawable.flower2,"flower1");
