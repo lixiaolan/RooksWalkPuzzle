@@ -23,6 +23,7 @@ class MenuManager {
 	float[] pos2 = {0f,-1.1f, 0f};
 	float scale1 = .3f;
 	float scale2  = .2f;
+	float tiltAngle = -1.0f*(float)Math.PI/2;
 	
 	switch (state.state) {
 	case MAIN_MENU_OPENING:
@@ -36,7 +37,7 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_LIST();
 	    break;
 	case MAIN_MENU_NEW:
-	    String[] textures3 = {TextureManager.LONGEST, TextureManager.LONGER, TextureManager.MEDIUM, TextureManager.SHORT,    TextureManager.BACK};
+	    String[] textures3 = { TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST,  TextureManager.BACK};
 	    mGameMenu = new GameMenu(pos1, scale1, textures3, TextureManager.NEW); 
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
@@ -53,17 +54,17 @@ class MenuManager {
 	    break;
 	case GAME_OPENING:
 	    String[] textures5 = {};
-	    mGameMenu = new GameMenu(pos2, scale2, textures5, TextureManager.CLEAR); 
+	    mGameMenu = new GameMenu(pos2, scale2, textures5, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_OPENING();
 	    break;
 	case GAME_MENU_LIST:
 	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.QUIT, TextureManager.BACK};
-	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.CLEAR); 
+	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_LIST();
 	    break;
 	case GAME_MENU_END:
 	    String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
-	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR); 
+	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_END();
 	    break;
 	}

@@ -80,9 +80,6 @@ class BeeWander extends BeeState<BeeTile> {
 	}
     }
     
-    public void exitAnimation(BeeTile[] tiles){
-	
-    }    
 }
 
 class BeeFixed extends BeeState<BeeTile> {
@@ -116,7 +113,7 @@ class BeeFixed extends BeeState<BeeTile> {
     }   
     
     public void enterAnimation(BeeTile[] tiles){
-	period = DrawPeriod.DURING;
+    	period = DrawPeriod.DURING;
     }
     
     public void duringAnimation(BeeTile[] tiles) {
@@ -174,8 +171,6 @@ class BeeFixed extends BeeState<BeeTile> {
 	    break;
 	}
     }
-    
-    public void exitAnimation(BeeTile[] tiles){
-	
-    }
 }
+
+

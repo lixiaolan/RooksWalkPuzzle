@@ -16,24 +16,35 @@ class GameMenu{
     public float tilesSize;
     public long refTime;
     
-    public GameMenu(float[] pos, float size, String[] textures, String centerTexture) {
-	tilesSize = size;
-	tilesCenter = pos;
-	tiltAngle = -((float)(textures.length-1))*((float)Math.PI)/5.0f+((float)Math.PI)/2.2f;
-	radius = size*4.0f;
-	menuTiles = new MenuTile[textures.length];
-	for (int i = 0; i < menuTiles.length; i++) {
-	    float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
-	    float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
-	    float Sx = tilesCenter[0] + radius*tmpcos;
-	    float Sy = tilesCenter[1] + radius*tmpsin;
-	    float center[] = { Sx, Sy, 0.0f};
-	    menuTiles[i] = new MenuTile(center, tilesSize, textures[i]);
-	}
-	centerTile = new MenuTile(tilesCenter, tilesSize, centerTexture);	
-	refTime = System.currentTimeMillis();    
+    public GameMenu(float[] pos, float size, String[] textures, String centerTexture, float tAngle) {
+    	tiltAngle = tAngle;
+    	initialize(pos, size, textures, centerTexture);
     }
 	
+    public GameMenu(float[] pos, float size, String[] textures, String centerTexture){
+    	tiltAngle = -((float)(textures.length-1))*((float)Math.PI)/5.0f+((float)Math.PI)/2.2f;
+    	initialize(pos, size, textures, centerTexture);
+    }
+    
+    private void initialize(float[] pos, float size, String[] textures, String centerTexture) {
+    	tilesSize = size;
+    	tilesCenter = pos;
+    	radius = size*4.0f;
+    	
+    	menuTiles = new MenuTile[textures.length];
+    	for (int i = 0; i < menuTiles.length; i++) {
+    	    float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
+    	    float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
+    	    float Sx = tilesCenter[0] + radius*tmpcos;
+    	    float Sy = tilesCenter[1] - radius*tmpsin;
+    	    float center[] = { Sx, Sy, 0.0f};
+    	    menuTiles[i] = new MenuTile(center, tilesSize, textures[i]);
+    	}
+    	centerTile = new MenuTile(tilesCenter, tilesSize, centerTexture);	
+    	refTime = System.currentTimeMillis();
+    }
+    
+
     public int touched(float[] pt) {
     	
     	for (int i = 0; i < menuTiles.length; i++) {
@@ -57,7 +68,6 @@ class GameMenu{
 	    centerTile.draw(r);
     }
 
-
     public void animate() {
 	long time = System.currentTimeMillis() - refTime;  	
 	float tRadius = Math.min( radius, (radius / 250.0f) * ((int) time) ); 
@@ -65,7 +75,7 @@ class GameMenu{
 		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
 		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
 		float Sx = tilesCenter[0] + tRadius*tmpcos;
-		float Sy = tilesCenter[1] + tRadius*tmpsin;
+		float Sy = tilesCenter[1] - tRadius*tmpsin;
 		float center[] = { Sx, Sy, 0.0f};
 		menuTiles[i].center = center;
 	
