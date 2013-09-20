@@ -19,12 +19,12 @@ class GameMenu{
     public GameMenu(float[] pos, float size, String[] textures, String centerTexture) {
 	tilesSize = size;
 	tilesCenter = pos;
-	tiltAngle = (float)(-1*Math.PI)/4.0f;
+	tiltAngle = -((float)(textures.length-1))*((float)Math.PI)/5.0f+((float)Math.PI)/2;
 	radius = size*4.0f;
 	menuTiles = new MenuTile[textures.length];
 	for (int i = 0; i < menuTiles.length; i++) {
-	    float tmpsin = (float)Math.sin(i*Math.PI/5.0f);
-	    float tmpcos = (float)Math.cos(i*Math.PI/5.0f);
+	    float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
+	    float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
 	    float Sx = tilesCenter[0] + radius*tmpcos;
 	    float Sy = tilesCenter[1] + radius*tmpsin;
 	    float center[] = { Sx, Sy, 0.0f};
@@ -70,4 +70,13 @@ class GameMenu{
 	
 	}
     }
+    
+    public void setTexture(int loc, String texture) {
+	if (loc < menuTiles.length) {
+	    float[] center = menuTiles[loc].center;
+	    float size = menuTiles[loc].size;
+	    menuTiles[loc] = new MenuTile(center, size, texture);
+	}
+    }
+
 }

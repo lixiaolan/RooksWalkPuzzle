@@ -10,69 +10,69 @@ import android.widget.Button;
 
 //Manages transitions between MenuStates.
 class ButtonManager{
-	public StateButton bee_puzzled;
+	// public StateButton bee_puzzled;
 
-	public StateButton new_game;
-	public StateButton resume;
-	public StateButton options;
-	public StateButton stats;
+	// public StateButton new_game;
+	// public StateButton resume;
+	// public StateButton options;
+	// public StateButton stats;
 
-	public StateButton short_puz;
-	public StateButton medium_puz;
-	public StateButton longer_puz;
-	public StateButton longest_puz;
+	// public StateButton short_puz;
+	// public StateButton medium_puz;
+	// public StateButton longer_puz;
+	// public StateButton longest_puz;
 
-	public StateButton main_menu_end;
-	public StateButton share_end;
+	// public StateButton main_menu_end;
+	// public StateButton share_end;
 
-	public StateButton hints;
-	public StateButton quit;
-	public StateButton clear_board;
+	// public StateButton hints;
+	// public StateButton quit;
+	// public StateButton clear_board;
 	
-	public MenuState mMenuState;
+	// public MenuState mMenuState;
 
-	private float h;
-	private float w;
+	// private float h;
+	// private float w;
 
-	private float[] offSet = {.1f, .2f, .3f};
-	private float[] stack = {.1f, .2f, .3f, .4f, .5f, .6f, .7f, .8f, .9f};
+	// private float[] offSet = {.1f, .2f, .3f};
+	// private float[] stack = {.1f, .2f, .3f, .4f, .5f, .6f, .7f, .8f, .9f};
 
-	private long[] MoveFadeIn = {0,1000,1000};
-	private long[] FadeOutMove = {1000, 1000, 0};
-	private long[] FadeIn = {0,0,1000};
-	private long[] Move = {0,1000,0};
-	private long[] None = {0,0,0};
+	// private long[] MoveFadeIn = {0,1000,1000};
+	// private long[] FadeOutMove = {1000, 1000, 0};
+	// private long[] FadeIn = {0,0,1000};
+	// private long[] Move = {0,1000,0};
+	// private long[] None = {0,0,0};
 
 /*
 	public ButtonManager(MenuState ms, Activity va) {
 
-		mMenuState = ms;
+	// 	mMenuState = ms;
 
-		bee_puzzled = new StateButton((Button)va.findViewById(R.id.bee_puzzled));
+	// 	bee_puzzled = new StateButton((Button)va.findViewById(R.id.bee_puzzled));
 
-		new_game = new StateButton((Button)va.findViewById(R.id.new_game));
-		resume = new StateButton((Button)va.findViewById(R.id.resume));
-		options = new StateButton((Button)va.findViewById(R.id.options));
-		stats = new StateButton((Button)va.findViewById(R.id.stats));
+	// 	new_game = new StateButton((Button)va.findViewById(R.id.new_game));
+	// 	resume = new StateButton((Button)va.findViewById(R.id.resume));
+	// 	options = new StateButton((Button)va.findViewById(R.id.options));
+	// 	stats = new StateButton((Button)va.findViewById(R.id.stats));
 
-		hints = new StateButton((Button)va.findViewById(R.id.hints));
+	// 	hints = new StateButton((Button)va.findViewById(R.id.hints));
 		
-		if (ms.hints)
-			hints.mButton.setText("Hints On");
+	// 	if (ms.hints)
+	// 		hints.mButton.setText("Hints On");
 
-		else
-			hints.mButton.setText("Hints Off");
+	// 	else
+	// 		hints.mButton.setText("Hints Off");
 
-		short_puz = new StateButton((Button)va.findViewById(R.id.short_puz));
-		medium_puz = new StateButton((Button)va.findViewById(R.id.medium_puz));
-		longer_puz = new StateButton((Button)va.findViewById(R.id.longer_puz));
-		longest_puz = new StateButton((Button)va.findViewById(R.id.longest_puz));
+	// 	short_puz = new StateButton((Button)va.findViewById(R.id.short_puz));
+	// 	medium_puz = new StateButton((Button)va.findViewById(R.id.medium_puz));
+	// 	longer_puz = new StateButton((Button)va.findViewById(R.id.longer_puz));
+	// 	longest_puz = new StateButton((Button)va.findViewById(R.id.longest_puz));
 
-		clear_board = new StateButton((Button)va.findViewById(R.id.clear_board));
-		quit = new StateButton((Button)va.findViewById(R.id.quit));
+	// 	clear_board = new StateButton((Button)va.findViewById(R.id.clear_board));
+	// 	quit = new StateButton((Button)va.findViewById(R.id.quit));
 		
-		main_menu_end = new StateButton((Button)va.findViewById(R.id.main_menu_end));
-		share_end = new StateButton((Button)va.findViewById(R.id.share_end));
+	// 	main_menu_end = new StateButton((Button)va.findViewById(R.id.main_menu_end));
+	// 	share_end = new StateButton((Button)va.findViewById(R.id.share_end));
 		
 	}
 
