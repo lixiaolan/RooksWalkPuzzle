@@ -4,6 +4,7 @@ package com.example.android.opengl;
 class BoardTile extends Tile{
 
 
+    public float[] velocity = new float[2];
     public int true_solution;
     public String true_arrow;
 
@@ -39,6 +40,8 @@ class BoardTile extends Tile{
     	true_arrow = TextureManager.CLEAR;
     	flowerTexture  = TextureManager.getFlowerTexture();
     	grassTexture  = TextureManager.getGrassTexture();
+	velocity[0] = 0.0f;
+	velocity[1] = 0.0f;
     }
 
     public void setHint(){

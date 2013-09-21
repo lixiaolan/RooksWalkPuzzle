@@ -188,8 +188,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 		return i;
 	    }
 	}
-	return -1;
-	
+	return -1;	
     }
     
     public void swiped(float[] pt, String direction) {
@@ -251,12 +250,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 	toggleHints = toggle;
     }
     
+
 }
 
 class BoardMainMenu extends State<BoardTile> {
-    
-    boolean[] rotateTiles = new boolean[36];
-    long[] refTime = new long[36];
+   
+    long refTime;
     
     public BoardMainMenu(BoardTile[] tiles) {
 	for (int i = 0; i < tiles.length; i++) {
@@ -273,36 +272,123 @@ class BoardMainMenu extends State<BoardTile> {
 	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 	    tiles[i].setColor("transparent");
 	}
-	
     }
     
     public void enterAnimation(BoardTile[] tiles) {
 	period = DrawPeriod.DURING;
+	refTime = System.currentTimeMillis();
     }
     
     public void duringAnimation(BoardTile[] tiles) {
+	    long time = System.currentTimeMillis()-refTime;
+	    float dt =((float)time)/1000.0f;
+	    refTime = System.currentTimeMillis();
+	    float[] force = new float[2];
 	for(int i=0;i<tiles.length;i++){
-	    if(tiles[i].rotate){
-		refTime[i] = System.currentTimeMillis();
-		rotateTiles[i] = true;
-		tiles[i].rotate = false;
-	    }
-	    long time = System.currentTimeMillis()-refTime[i];
-	    if(time < 2000f && rotateTiles[i]==true){
-		tiles[i].setAngle(time*.4f);
-		if(time<1000f) {
-		    tiles[i].textures[0] = Integer.toString((int)(10*Math.random()));
-		    tiles[i].textures[1] = "up_arrow";
-		}
-	    } else{
-		rotateTiles[i] = false;
-		tiles[i].setAngle(0);
-		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
-	    }
-	    
+	    force = getForce(tiles, i);
+	    tiles[i].setCenter2D(vSum(tiles[i].getCenter2D(), vSProd(dt, tiles[i].velocity)));
+	    tiles[i].velocity = vSum(tiles[i].velocity, vSProd(dt, force));
 	}
     }
+
+    public float[] getForce(BoardTile[] tiles, int i) {
+	float[] force = {0.0f, 0.0f};
+	float[] temp;
+	for (int j = 0; j < tiles.length; j++) {
+	    if (j != i) {
+		temp = vDiff(tiles[i].center,tiles[j].center);
+		force = vSum(force, vSProd((float)Math.exp(-Math.pow(3*abs(temp),2))/abs(temp), temp));
+	    }
+	}
+	force = vSum(force, vSProd(-0.5f,tiles[i].velocity));
+	force[0] = force[0] - .1f*(tiles[i].center[0]+0.75f);
+	force[1] = force[1] - .1f*tiles[i].center[1];
+	return force;
+    }
+
+    public float[] vDiff(float[] left, float[] right) {
+	float[] ret = new float[2];
+	ret[0] = left[0] - right[0];
+	ret[1] = left[1] - right[1];
+	return ret;
+    }
+
+    public float[] vSum(float[] left, float[] right) {
+	float[] ret = new float[2];
+	for (int i = 0; i < left.length; i++)
+	    ret[i] = left[i] + right[i];
+	return ret;
+    }
+    
+    public float[] vSProd(float scalar, float[] vec) {
+	float[] ret = new float[2];
+	for (int i = 0; i < vec.length; i++)
+	    ret[i] = vec[i]*scalar;
+	return ret;
+    }
+
+    public float abs(float[] vec) {
+	float ret = 0.0f;
+	for (int i = 0; i < vec.length; i++)
+	    ret += vec[i]*vec[i];
+	ret = (float)Math.sqrt(ret);
+	return ret;
+    }
+
+
 }
+
+// class BoardMainMenu extends State<BoardTile> {
+    
+//     boolean[] rotateTiles = new boolean[36];
+//     long[] refTime = new long[36];
+    
+//     public BoardMainMenu(BoardTile[] tiles) {
+// 	for (int i = 0; i < tiles.length; i++) {
+// 	    double r = Math.random();
+// 	    float Sx = (float)(-1.5*r+(1-r)*1.5);
+// 	    r = Math.random();
+// 	    float Sy = (float)(-1.5*r+(1-r)*1.5);
+// 	    float center[] = { Sx, Sy, 0.0f};
+// 	    tiles[i].center = center;
+// 	}
+	
+// 	//Set textures	
+// 	for(int i = 0;i<tiles.length;i++){
+// 	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
+// 	    tiles[i].setColor("transparent");
+// 	}
+	
+//     }
+    
+//     public void enterAnimation(BoardTile[] tiles) {
+// 	period = DrawPeriod.DURING;
+//     }
+    
+//     public void duringAnimation(BoardTile[] tiles) {
+// 	for(int i=0;i<tiles.length;i++){
+// 	    if(tiles[i].rotate){
+// 		refTime[i] = System.currentTimeMillis();
+// 		rotateTiles[i] = true;
+// 		tiles[i].rotate = false;
+// 	    }
+// 	    long time = System.currentTimeMillis()-refTime[i];
+// 	    if(time < 2000f && rotateTiles[i]==true){
+// 		tiles[i].setAngle(time*.4f);
+// 		if(time<1000f) {
+// 		    tiles[i].textures[0] = Integer.toString((int)(10*Math.random()));
+// 		    tiles[i].textures[1] = "up_arrow";
+// 		}
+// 	    } else{
+// 		rotateTiles[i] = false;
+// 		tiles[i].setAngle(0);
+// 		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
+// 	    }
+	    
+// 	}
+//     }
+
+// }
 
 
 class BoardPlay extends State<BoardTile> {
@@ -353,6 +439,7 @@ class BoardPlay extends State<BoardTile> {
 	    ((BoardTile)tiles[i]).setTextures();
 	}
     }
+
 }
 
 

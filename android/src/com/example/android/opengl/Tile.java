@@ -29,6 +29,20 @@ abstract class Tile {
     public void setAngle(float angle){
     	this.angle = angle;
     }
+
+    public void setCenter2D(float[] in) {
+	center[0] = in[0];
+	center[1] = in[1];
+    }
+
+    public float[] getCenter2D() {
+	float[] ret = new float[2];
+	ret[0] = center[0];
+	ret[1] = center[1];
+	return ret;
+    }
+
+    
  
     public void setTextures(String texture0, String texture1) {
  	   textures[0] = texture0;
