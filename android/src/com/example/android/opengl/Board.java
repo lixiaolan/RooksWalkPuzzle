@@ -77,7 +77,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
     
     public void buildEmptyBoard() {
 	tiles = new BoardTile[36];
-	float size = .20f;
+	float size = .15f;
 	for (int i = 0; i < tiles.length; i++) {
 	    float center[] = { 0, 0, 0.0f};    	   
 	    tiles[i] = new BoardTile(center, size);    	    
@@ -188,7 +188,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 		return i;
 	    }
 	}
-	return -1;	
+	return -1;   
     }
     
     public void swiped(float[] pt, String direction) {
@@ -250,11 +250,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 	toggleHints = toggle;
     }
     
-
 }
 
 class BoardMainMenu extends State<BoardTile> {
-   
+    
     long refTime;
     
     public BoardMainMenu(BoardTile[] tiles) {
@@ -266,12 +265,6 @@ class BoardMainMenu extends State<BoardTile> {
 	    float center[] = { Sx, Sy, 0.0f};
 	    tiles[i].center = center;
 	}
-	
-	//Set textures	
-	for(int i = 0;i<tiles.length;i++){
-	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
-	    tiles[i].setColor("transparent");
-	}
     }
     
     public void enterAnimation(BoardTile[] tiles) {
@@ -280,17 +273,17 @@ class BoardMainMenu extends State<BoardTile> {
     }
     
     public void duringAnimation(BoardTile[] tiles) {
-	    long time = System.currentTimeMillis()-refTime;
-	    float dt =((float)time)/1000.0f;
-	    refTime = System.currentTimeMillis();
-	    float[] force = new float[2];
+	long time = System.currentTimeMillis()-refTime;
+	float dt =((float)time)/1000.0f;
+	refTime = System.currentTimeMillis();
+	float[] force = new float[2];
 	for(int i=0;i<tiles.length;i++){
 	    force = getForce(tiles, i);
 	    tiles[i].setCenter2D(vSum(tiles[i].getCenter2D(), vSProd(dt, tiles[i].velocity)));
 	    tiles[i].velocity = vSum(tiles[i].velocity, vSProd(dt, force));
 	}
     }
-
+    
     public float[] getForce(BoardTile[] tiles, int i) {
 	float[] force = {0.0f, 0.0f};
 	float[] temp;
@@ -305,14 +298,14 @@ class BoardMainMenu extends State<BoardTile> {
 	force[1] = force[1] - .1f*tiles[i].center[1];
 	return force;
     }
-
+    
     public float[] vDiff(float[] left, float[] right) {
 	float[] ret = new float[2];
 	ret[0] = left[0] - right[0];
 	ret[1] = left[1] - right[1];
 	return ret;
     }
-
+    
     public float[] vSum(float[] left, float[] right) {
 	float[] ret = new float[2];
 	for (int i = 0; i < left.length; i++)
@@ -326,7 +319,7 @@ class BoardMainMenu extends State<BoardTile> {
 	    ret[i] = vec[i]*scalar;
 	return ret;
     }
-
+    
     public float abs(float[] vec) {
 	float ret = 0.0f;
 	for (int i = 0; i < vec.length; i++)
@@ -334,15 +327,13 @@ class BoardMainMenu extends State<BoardTile> {
 	ret = (float)Math.sqrt(ret);
 	return ret;
     }
-
-
 }
 
 // class BoardMainMenu extends State<BoardTile> {
-    
+
 //     boolean[] rotateTiles = new boolean[36];
 //     long[] refTime = new long[36];
-    
+
 //     public BoardMainMenu(BoardTile[] tiles) {
 // 	for (int i = 0; i < tiles.length; i++) {
 // 	    double r = Math.random();
@@ -352,19 +343,19 @@ class BoardMainMenu extends State<BoardTile> {
 // 	    float center[] = { Sx, Sy, 0.0f};
 // 	    tiles[i].center = center;
 // 	}
-	
+
 // 	//Set textures	
 // 	for(int i = 0;i<tiles.length;i++){
 // 	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 // 	    tiles[i].setColor("transparent");
 // 	}
-	
+
 //     }
-    
+
 //     public void enterAnimation(BoardTile[] tiles) {
 // 	period = DrawPeriod.DURING;
 //     }
-    
+
 //     public void duringAnimation(BoardTile[] tiles) {
 // 	for(int i=0;i<tiles.length;i++){
 // 	    if(tiles[i].rotate){
@@ -384,7 +375,7 @@ class BoardMainMenu extends State<BoardTile> {
 // 		tiles[i].setAngle(0);
 // 		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 // 	    }
-	    
+
 // 	}
 //     }
 
@@ -410,7 +401,7 @@ class BoardPlay extends State<BoardTile> {
 		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 		float Sx = ( (i/6) - 2.5f )/4.0f;
 		float Sy = ( (i%6) - 2.5f )/4.0f;
-		tiles[i].setSize(.12f*time/totalTime+(1-time/totalTime)*.2f);
+		tiles[i].setSize(.12f*time/totalTime+(1-time/totalTime)*.15f);
 		float newX = originalTiles[i].center[0]+time/totalTime*(Sx - originalTiles[i].center[0]);
 		float newY = originalTiles[i].center[1]+time/totalTime*(Sy - originalTiles[i].center[1]);
 		float center[] = { newX, newY, 0.0f};
@@ -439,7 +430,7 @@ class BoardPlay extends State<BoardTile> {
 	    ((BoardTile)tiles[i]).setTextures();
 	}
     }
-
+    
 }
 
 

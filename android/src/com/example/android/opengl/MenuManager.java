@@ -1,5 +1,7 @@
 package com.example.android.opengl;
 
+import android.app.Activity;
+
 class MenuManager {
     private GlobalState state;
     public GameMenu mGameMenu;
@@ -18,9 +20,10 @@ class MenuManager {
     // Which have access to information model!  Cool!
     public void updateState() {
 	float[] pos1 = {-.75f, 0f, 0f};
-	float[] pos2 = {0f,-1f, 0f};
+	float[] pos2 = {0f,-1.1f, 0f};
 	float scale1 = .3f;
 	float scale2  = .2f;
+	float tiltAngle = -1.0f*(float)Math.PI/2;
 	
 	switch (state.state) {
 	case MAIN_MENU_OPENING:
@@ -29,12 +32,12 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_OPENING();
 	    break;
 	case MAIN_MENU_LIST:
-	    String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.OPTIONS, TextureManager.BACK};
+	    String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.OPTIONS,   TextureManager.BACK};
 	    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
 	    mCallback = new Callback_MAIN_MENU_LIST();
 	    break;
 	case MAIN_MENU_NEW:
-	    String[] textures3 = {TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER, TextureManager.LONGEST, TextureManager.BACK};
+	    String[] textures3 = { TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST,  TextureManager.BACK};
 	    mGameMenu = new GameMenu(pos1, scale1, textures3, TextureManager.NEW); 
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
@@ -50,33 +53,33 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_OPTIONS();
 	    break;
 	case GAME_OPENING:
-	    String[] textures5 = new String[0];
-	    mGameMenu = new GameMenu(pos2, scale2, textures5, TextureManager.CLEAR); 
+	    String[] textures5 = {};
+	    mGameMenu = new GameMenu(pos2, scale2, textures5, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_OPENING();
 	    break;
 	case GAME_MENU_LIST:
 	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.QUIT, TextureManager.BACK};
-	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.CLEAR); 
+	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_LIST();
 	    break;
 	case GAME_MENU_END:
 	    String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
-	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR); 
+	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_END();
 	    break;
 	}
     }
     
     public int touched(float[] pt) {
-	return mGameMenu.touched(pt);
+    	return mGameMenu.touched(pt);
     }
     
     public void onTouched(int val) {
-	mCallback.callback(val);
+    	mCallback.callback(val);
     }
     
     public void draw(MyGLRenderer r){
-	mGameMenu.draw(r);
+    	mGameMenu.draw(r);
     }
     
     
@@ -146,6 +149,7 @@ class MenuManager {
 		    mGameMenu.setTexture(0,TextureManager.HINTS_ON);
 		else
 		    mGameMenu.setTexture(0,TextureManager.HINTS_OFF);
+		mModel.toggleHints(state.hintsOn);
 		break;
 	    case 2: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
@@ -159,8 +163,9 @@ class MenuManager {
 	
 	@Override
 	public void callback(int val) {
-	    // TODO Auto-generated method stub
-	    
+		System.out.println("Game Menu opening");
+		state.state = GameState.GAME_MENU_LIST;
+	    updateState();
 	}
 	
     }
@@ -169,8 +174,19 @@ class MenuManager {
 	
 	@Override
 	public void callback(int val) {
-	    // TODO Auto-generated method stub
-	    
+		switch(val) {
+	    case 1: state.state = GameState.GAME_OPENING;
+	    mModel.clearBoard();
+		updateState();
+		break;
+	    case 2: state.state = GameState.MAIN_MENU_OPENING;
+	    mModel.setState(GameState.MAIN_MENU_OPENING);
+		updateState();
+		break;
+	    case 3: state.state = GameState.GAME_OPENING;
+		updateState();
+		break;
+	    }
 	}
 	
     }
@@ -179,7 +195,16 @@ class MenuManager {
 	
 	@Override
 	public void callback(int val) {
-	    // TODO Auto-generated method stub
+		switch(val) {
+	    case 1: state.state = GameState.MAIN_MENU_OPENING;
+	    mModel.setState(GameState.MAIN_MENU_OPENING);
+		updateState();
+		break;
+	    case 2: 
+	    	ShareHelper sh = new ShareHelper((Activity)mModel.context, "1","2","3","4","5");
+	    	sh.share();
+		break;
+	    }
 	    
 	}
 	

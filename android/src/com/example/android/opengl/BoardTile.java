@@ -15,7 +15,7 @@ class BoardTile extends Tile{
     public String arrow = TextureManager.CLEAR;
     private boolean clickable = true;
     protected boolean rotate = false;
-
+        
     public void setTrueArrow(String arrow) {
     	this.true_arrow = arrow;
     }
@@ -34,8 +34,6 @@ class BoardTile extends Tile{
     
     public BoardTile(float[] inCenter,float inSize) {
     	super(inCenter, inSize);
-    	center = inCenter;
-    	size = inSize;
     	color = "transparent";
     	true_arrow = TextureManager.CLEAR;
     	flowerTexture  = TextureManager.getFlowerTexture();
@@ -108,7 +106,7 @@ class BoardTile extends Tile{
    }
    
     public void draw(MyGLRenderer r) {
-    	r.drawTile(center, size, textures, color, angle, pivot);
+    		r.drawTile(center, size, textures, color, angle, pivot);    
     }    
     
     public boolean checkArrows() {
@@ -123,6 +121,8 @@ class BoardTile extends Tile{
     public void setSize(float s) {
     	size = s;
     }
+    
+   
     
     public boolean checkSolutions(){	
     	if(isBlack()){

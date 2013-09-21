@@ -59,7 +59,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.left_arrow, LEFTARROW);
 		buildTextures(context, R.drawable.right_arrow, RIGHTARROW);
 		buildTextures(context, R.drawable.menu_circle, MENUCIRCLE);
-		buildTextures(context, R.drawable.beenathan, BEE);
+		buildTextures(context, R.drawable.beecolor, BEE);
 		
 		buildTextures(context, R.drawable.flower1,"flower0");
 		buildTextures(context, R.drawable.flower2,"flower1");
@@ -88,24 +88,24 @@ public class TextureManager {
 		for(int i=0;i<15;i++){
 		    buildTextures(Integer.toString(i),64,128,"border_"+Integer.toString(i),60);
 		}
-		
-	    buildTextures(START, 64,64, START, 20);
-	    buildTextures(NEW, 64,64, NEW, 20);
-	    buildTextures(RESUME, 64,64, RESUME, 20);
-	    buildTextures(OPTIONS, 64,64, OPTIONS, 20);
-	    buildTextures(BACK, 64,64, BACK, 20);
-	    buildTextures(SHORT, 64,64, SHORT, 20);
-	    buildTextures(MEDIUM, 64,64, MEDIUM, 20);
-	    buildTextures(LONGER, 64,64, LONGER, 20);
-	    buildTextures(LONGEST, 64,64, LONGEST, 20);
-	    buildTextures(HINTS_ON, 64,64, HINTS_ON, 20);
-	    buildTextures(HINTS_OFF, 64,64, HINTS_OFF, 20);
-	    buildTextures(CLEAR_BOARD, 64,64, CLEAR_BOARD, 20);
-	    buildTextures(QUIT, 64,64, QUIT, 20);
-	    buildTextures(YES, 64,64, YES, 20);
-	    buildTextures(NO, 64,64, NO, 20);
-	    buildTextures(SHARE, 64,64, SHARE, 20);
-	    buildTextures("", 64,64, CLEAR, 20);
+		int fontSize = 30; 
+	    buildTextures(START, 64,64, START, fontSize);
+	    buildTextures(NEW, 64,64, NEW, fontSize);
+	    buildTextures(RESUME, 64,64, RESUME, fontSize);
+	    buildTextures(OPTIONS, 64,64, OPTIONS, fontSize);
+	    buildTextures(BACK, 64,64, BACK, fontSize);
+	    buildTextures(SHORT, 64,64, SHORT, fontSize);
+	    buildTextures(MEDIUM, 64,64, MEDIUM, fontSize);
+	    buildTextures(LONGER, 64,64, LONGER, fontSize);
+	    buildTextures(LONGEST, 64,64, LONGEST, fontSize);
+	    buildTextures(HINTS_ON, 64,64, HINTS_ON, fontSize);
+	    buildTextures(HINTS_OFF, 64,64, HINTS_OFF, fontSize);
+	    buildTextures(CLEAR_BOARD, 64,64, CLEAR_BOARD, fontSize);
+	    buildTextures(QUIT, 64,64, QUIT, fontSize);
+	    buildTextures(YES, 64,64, YES, fontSize);
+	    buildTextures(NO, 64,64, NO, fontSize);
+	    buildTextures(SHARE, 64,64, SHARE, fontSize);
+	    buildTextures("", 64,64, CLEAR, fontSize);
 	    }
 	
 	

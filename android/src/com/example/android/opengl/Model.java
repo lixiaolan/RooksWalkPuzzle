@@ -18,7 +18,7 @@ class Model{
     private Background mCheck;
     private int at = -1;
     private Vibrator vibe;
-    private Context context;
+    public Context context;
     
     
     public Model(Context c) {
@@ -87,10 +87,18 @@ class Model{
 	    if(mCheck.touched(pt)){
 		if(mBoard.checkSolution()){
 		    state.state = GameState.GAME_MENU_END;
+		    mMenuManager.updateState();
 		    mBee.setMood(Mood.HAPPY);
 		} else {
 		    vibe.vibrate(500);
 		}
+	    }
+	    
+	case GAME_MENU_LIST:    
+	case GAME_MENU_END:
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+	    	mMenuManager.onTouched(val);
 	    }
 	    
 	    break;
@@ -101,8 +109,8 @@ class Model{
 	    at = mBoard.touched(pt);
 	    if(at != -1) {
 		float[] pivot = {0,0,1};
-		mBoard.tiles[at].setPivot(pivot);
-		mBoard.tiles[at].setRotate(true);
+			mBoard.tiles[at].setPivot(pivot);
+			mBoard.tiles[at].setRotate(true);
 	    }
 	    
 	    val = mMenuManager.touched(pt);
