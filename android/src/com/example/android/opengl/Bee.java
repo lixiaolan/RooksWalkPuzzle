@@ -36,12 +36,12 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 }
 
 class BeeWander extends BeeState<BeeTile> {
-    public long refTime;
-    
-    private float targetX = 0;
-    private float targetY = 0;
-    private float startX = 0;
-    private float startY = 0;
+    public long globalRefTime;
+    public long relativeRefTime;
+
+    BeeTile bee;
+
+    float interval = 7000f;
     
     boolean flipped = true;
     int r = 0;
@@ -54,30 +54,74 @@ class BeeWander extends BeeState<BeeTile> {
     
     public void enterAnimation(BeeTile[] tiles){
 	period = DrawPeriod.DURING;
+	globalRefTime = System.currentTimeMillis();
+	relativeRefTime = System.currentTimeMillis();
     }    
     
     public void duringAnimation(BeeTile[] tiles) {
-	BeeTile bee = (BeeTile)tiles[0];
-	long time = System.currentTimeMillis() - refTime;
-	float interval = 5000f;
+	bee = (BeeTile)tiles[0];
+	long time = System.currentTimeMillis() - globalRefTime;
+	float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
+	relativeRefTime = System.currentTimeMillis();
+
+	float[] force = new float[2];
 	if(time < interval){
-	    bee.center[0] = startX + time/interval*(targetX-startX);
-	    bee.center[1] = startY + time/interval*(targetY-startY);
-	} else if(time<interval+200f){
-	    if(!flipped){
-		mBoard.tiles[r].setPivot(pivot);
-		mBoard.tiles[r].setRotate(true);
-	    }
+	    force = getForce(mBoard.tiles[r]);
+	    bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
+	    bee.velocity = vSum(bee.velocity, vSProd(dt, force));
 	}
+	// } else if(time<interval+200f){
+	//     if(!flipped){
+	// 	mBoard.tiles[r].setPivot(pivot);
+	// 	mBoard.tiles[r].setRotate(true);
+	//     }
+	// }
+
+
 	else {
-	    startX = bee.center[0];
-	    startY = bee.center[1];
-	    refTime = System.currentTimeMillis();
+	    globalRefTime = System.currentTimeMillis();
+	    bee.velocity = vSProd(1/abs(bee.velocity),bee.velocity);
 	    r = ((int)(Math.random()*36));
-	    targetX = mBoard.tiles[r].center[0];
-	    targetY = mBoard.tiles[r].center[1];
-	    flipped = false;
+	    // flipped = false;
 	}
+    }
+
+    public float[] getForce(BoardTile tile) {
+	float[] force = {0.0f, 0.0f};
+
+	force = vSProd(-0.7f,vDiff(bee.center, tile.center)); 
+	force = vSum(force, vSProd(-1.2f,bee.velocity));
+
+	return force;
+    }
+    
+    public float[] vDiff(float[] left, float[] right) {
+	float[] ret = new float[2];
+	ret[0] = left[0] - right[0];
+	ret[1] = left[1] - right[1];
+	return ret;
+    }
+    
+    public float[] vSum(float[] left, float[] right) {
+	float[] ret = new float[2];
+	for (int i = 0; i < left.length; i++)
+	    ret[i] = left[i] + right[i];
+	return ret;
+    }
+    
+    public float[] vSProd(float scalar, float[] vec) {
+	float[] ret = new float[2];
+	for (int i = 0; i < vec.length; i++)
+	    ret[i] = vec[i]*scalar;
+	return ret;
+    }
+    
+    public float abs(float[] vec) {
+	float ret = 0.0f;
+	for (int i = 0; i < vec.length; i++)
+	    ret += vec[i]*vec[i];
+	ret = (float)Math.sqrt(ret);
+	return ret;
     }
     
 }
