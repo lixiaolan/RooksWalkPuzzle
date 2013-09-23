@@ -35,6 +35,8 @@ pos operator-(pos left, pos right);
 
 pos operator+(pos left, pos right);
 
+bool operator==(pos left, pos right);
+
 // class RooksWalk{
 // private:
 //   shared_ptr<RookBoard> board;
@@ -51,6 +53,8 @@ private:
   int width;
   int length;
   vector< vector<int> > moveArea;
+  vector< vector<bool> > leftRight;
+  vector< vector<bool> > upDown;
   vector<int> rowSums;
   vector<int> colSums;
   vector<pos> positions;
@@ -58,14 +62,26 @@ private:
   void reorderLegalMoves(vector<pos> &);
   vector<pos> legalMoves();
   vector<pos> legalMovesRightAngles();
+  vector<pos> legalMovesRightAnglesAnyNum();
+  vector<pos> legalMovesRightAnglesAnyNumNoPassOver();
+
   bool makeBoard(int);
+  bool makeBoardRightAnglesNoPassOver(int);
   bool goodPlay(pos, int);
+  bool goodPlayAnyNum(pos, int);
   void markUnused();
+
+  void markLRUD(pos, pos);
+  void unMarkLRUD(pos, pos);
+  
+
 public:
   RookBoard(int, int ,int);
   string print();
 };
 
 ofstream &operator<<(ofstream &, RookBoard &);  
+
+void printBool(vector<vector<bool> > &in);
 
 #endif

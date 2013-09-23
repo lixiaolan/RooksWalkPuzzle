@@ -112,17 +112,17 @@ class MenuManager {
     class Callback_MAIN_MENU_NEW extends Callback{
 	public void callback(int val) {
 	    switch(val) {
-	    case 1: mModel.createPuzzle(4,2);
+	    case 1: mModel.createPuzzle(8,2);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 2: mModel.createPuzzle(10,3);
+	    case 2: mModel.createPuzzle(12,2);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 3: mModel.createPuzzle(12,4);
+	    case 3: mModel.createPuzzle(16,3);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();

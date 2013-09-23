@@ -16,8 +16,6 @@ The format of output file (currently "iotest.txt") is the following:
 <2*l numbers which are the l positions in the board given by x,y cooridnates>
 
 
-
-
 #First release min content/fixes:
 
 1.) Tutorial ``slide show'' (see the Nikoli site).
@@ -69,3 +67,14 @@ Lets have a first release by October 1. Two weeks to alpha.
 11.) Swipe sensitivity turned down.
 12.) Hints or no hints.
 13.) States system.
+
+
+NEW RULES
+
+After extensive testing, I have settled on a rule set which is both simple but still makes an interesting puzzle:
+
+1. The bee flys in stright unobstructed vertical and horizontile lines (never flying over a flower!).
+2. The bee visits each flower exactly once ending where it started.
+3. The bee changes direction after every flower visit.
+
+The numbers in the row and column are given as hints.  Find the flower locations and the path.

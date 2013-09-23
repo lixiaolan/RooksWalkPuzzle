@@ -12,16 +12,16 @@ function rookPlotter()
 
 RandStream.setDefaultStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
-lenv = [12 12 12 12];
+lenv = [14 16 18 20];
 hv   = [1 2 4 5];
 
 for i = 1:4
     h   = hv(i);
     
     if (i < 3)
-        system(['./test 5 5 ', num2str(lenv(i))]);
+        system(['./test 6 6 ', num2str(lenv(i))]);
     else
-        system(['./test 5 5 ', num2str(lenv(i))]);
+        system(['./test 6 6 ', num2str(lenv(i))]);
     end
     
     [S,P] = boardRead('iotest.txt');

@@ -12,16 +12,25 @@ pos operator+(pos left, pos right) {
   return left;
 }
 
+bool operator==(pos left, pos right) {
+  bool ret = (left.r==right.r)&(left.c==right.c);
+  return ret;
+}
+
 RookBoard::RookBoard(int h, int w, int l) : height(h), width(w), length(l) {
   vector<int> temp;
+  vector<bool> bTemp;
   for (int j = 0; j < width; j++) {
     temp.push_back(0);
+    bTemp.push_back(false);
   }
   for (int i = 0; i < height; i++) {
     moveArea.push_back(temp);
+    leftRight.push_back(bTemp);
+    upDown.push_back(bTemp);
   }
 
-  makeBoard(l);
+  makeBoardRightAnglesNoPassOver(l);
 
   for (int j = 0; j < width; j++) {
     int sum = 0;
@@ -140,6 +149,154 @@ vector<pos> RookBoard::legalMovesRightAngles() {
   return legalMovesList;
 }
 
+// Generate all legal moves FOR RIGHT ANGLE MOVES
+// from a given position and board state:
+vector<pos> RookBoard::legalMovesRightAnglesAnyNum() {
+  // Find the last position.
+  pos last = *(positions.end()-1);
+  // Initiate the LegalMovesList
+  vector<pos> legalMovesList;
+  //Find the last move made.
+  pos lastMove(0,0);
+  if (positions.size() > 1) {
+    lastMove = *(positions.end()-1)-*(positions.end()-2);
+  }
+  
+  //Do a search for legal moves in the four directions
+  // This checks first that the direction is in fact legal
+  if (lastMove.r == 0) {
+    for (int i = last.r; i < height; i++) {
+      int temp = i - last.r;
+      if ((temp > 0)&&(goodPlayAnyNum(pos(i,last.c),temp))) {
+	legalMovesList.push_back(pos(i,last.c));
+      }
+    }
+  }
+  if (lastMove.r == 0) {
+    for (int i = last.r; i >= 0; i--) {
+      int temp = last.r - i;
+      if ((temp > 0)&&(goodPlayAnyNum(pos(i,last.c),temp))) {
+	legalMovesList.push_back(pos(i,last.c));
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i < width; i++) {
+      int temp = i - last.c;
+      if ((temp > 0)&&(goodPlayAnyNum(pos(last.r,i),temp))) {
+	legalMovesList.push_back(pos(last.r,i));
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i >= 0; i--) {
+      int temp = last.c - i;
+      if ((temp > 0)&&(goodPlayAnyNum(pos(last.r,i),temp))) {
+	legalMovesList.push_back(pos(last.r,i));
+      }
+    }
+  }
+  return legalMovesList;
+}
+
+// Generate all legal moves FOR RIGHT ANGLE MOVES
+// from a given position and board state:
+vector<pos> RookBoard::legalMovesRightAnglesAnyNumNoPassOver() {
+  // Find the last position.
+  pos last = *(positions.end()-1);
+  // Initiate the LegalMovesList
+  vector<pos> legalMovesList;
+  //Find the last move made.
+  pos lastMove(0,0);
+  if (positions.size() > 1) {
+    lastMove = *(positions.end()-1)-*(positions.end()-2);
+  }
+ 
+  pos im = *(positions.begin());
+ 
+  //Do a search for legal moves in the four directions
+  // This checks first that the direction is in fact legal
+   if (lastMove.r == 0) {
+    for (int i = last.r; i < height; i++) {
+      int temp = i - last.r;
+      if (temp > 0) {
+	if (pos(i,last.c) == im) {
+	  if (goodPlayAnyNum(pos(i,last.c),temp)) {
+	    legalMovesList.push_back(pos(i,last.c));
+	  }
+	  break;
+	}
+	if (upDown[i][last.c]==false) {
+	  if (leftRight[i][last.c]==false)
+	    if (goodPlayAnyNum(pos(i,last.c),temp)) {
+	      legalMovesList.push_back(pos(i,last.c));
+	    }
+	}
+	else
+	  break;
+      }
+    }
+  }
+  if (lastMove.r == 0) {
+    for (int i = last.r; i >= 0; i--) {
+      int temp = last.r - i;
+      if (temp > 0) {
+	if (pos(i,last.c) == im) {
+	  if (goodPlayAnyNum(pos(i,last.c),temp))
+	    legalMovesList.push_back(pos(i,last.c));
+	  break;
+	}
+	if (upDown[i][last.c]==false) {
+	  if (leftRight[i][last.c]==false)
+	    if (goodPlayAnyNum(pos(i,last.c),temp))
+	      legalMovesList.push_back(pos(i,last.c));
+	}
+	else
+	  break;
+	
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i < width; i++) {
+      int temp = i - last.c;
+      if (temp > 0) {
+	if (pos(last.r,i) == im) {
+	  if (goodPlayAnyNum(pos(last.r,i),temp))
+	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (leftRight[last.r][i] == false) {
+	  if (upDown[last.r][i] == false)
+	    if (goodPlayAnyNum(pos(last.r,i),temp))
+	      legalMovesList.push_back(pos(last.r,i));
+	}
+	else
+	  break;
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i >= 0; i--) {
+      int temp = last.c - i;
+      if (temp > 0) {
+	if (pos(last.r,i) == im) {
+	  if (goodPlayAnyNum(pos(last.r,i),temp))
+	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (leftRight[last.r][i]==false){
+	  if (upDown[last.r][i] == false)
+	    if (goodPlayAnyNum(pos(last.r,i),temp))
+	      legalMovesList.push_back(pos(last.r,i));
+	}
+	else
+	  break;
+      }
+    }
+  }
+  return legalMovesList;
+}
 
 //Function to reorder the elements of a vector to have the least amout possible of directional preference.
 void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
@@ -211,6 +368,13 @@ bool RookBoard::goodPlay(pos play, int num) {
   return false;
 }
 
+//Takes a sugested play and returns weither or not it is legal.
+bool RookBoard::goodPlayAnyNum(pos play, int num) {
+  // If the suggest move is already occupied, return false
+  if (moveArea[play.r][play.c] != 0) return false;
+  else return true;
+}
+
 //A text based print out of the generated game board.
 string RookBoard::print() {
   ostringstream oss;
@@ -245,6 +409,7 @@ bool RookBoard::makeBoard(int depth) {
     if (a&b&c) return true;
     else return false;
   }
+
   // If the puzzle has not been started, choose a random starting point
   if (positions.size() == 0) {
     srand ( unsigned ( time(0) ) );
@@ -256,7 +421,7 @@ bool RookBoard::makeBoard(int depth) {
   // vector<pos> lm = legalMoves();
 
 
-  vector<pos> lm = legalMovesRightAngles();
+  vector<pos> lm = legalMovesRightAnglesAnyNumNoPassOver();
   //cout << lm.size() << endl;
 
   // If there are none, return false
@@ -272,7 +437,7 @@ bool RookBoard::makeBoard(int depth) {
   for (int i = 0; i < lm.size(); i++) {
     // Add the ith legal move to the list
     positions.push_back(lm[i]);
-    // and put the correct number into the board.
+    // and put the correct number into the borad.
     pos last = (*(positions.end()-1) - *(positions.end()-2));
     moveArea[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
     // Now recursivly call makeBoard with one less depth.
@@ -285,6 +450,112 @@ bool RookBoard::makeBoard(int depth) {
   // Finally if none of our legal moves work out, we return false.
   return false;
 }
+
+//The recrusive board maker.
+bool RookBoard::makeBoardRightAnglesNoPassOver(int depth) {
+  // If our puzzle has already reached the desired length, make sure
+  // It has both come full circle and that the direction with which
+  // it approaches the end location is compatible with the first move
+  // made in the puzzle (ie they cannot be the same direction!);
+  //cout << depth << endl;
+  if (positions.size() != 0) {
+    bool a = ((*(positions.begin())).r == (*(positions.end()-1)).r);
+    bool b = ((*(positions.begin())).c == (*(positions.end()-1)).c);
+    bool c = (depth==0);
+    // pos dir1 = *(positions.begin()+1)-*(positions.begin());
+    // pos dir2 = *(positions.end()-1)-*(positions.end()-2);
+    // bool c = ((dir1.r*dir2.r + dir1.c*dir2.c) <= 0); 
+    if (a&b&c) return true;
+    if (a&b&!c) return false;
+    if (c&!(a&b)) return false;
+  }
+  
+  // If the puzzle has not been started, choose a random starting point
+  if (positions.size() == 0) {
+    srand ( unsigned ( time(0) ) );
+    int x = rand() % height;
+    int y = rand() % width;
+    positions.push_back(pos(x,y));
+  }
+  //Generate all legalMoves from current location
+  // vector<pos> lm = legalMoves();
+
+
+  vector<pos> lm = legalMovesRightAnglesAnyNumNoPassOver();
+  //cout << lm.size() << endl;
+
+  // If there are none, return false
+  if (lm.size() == 0) return false;
+  // Otherwise, reorder the legal moves according to preference
+  // See "reorderLegalMoves" for details!
+  
+
+  random_shuffle(lm.begin(), lm.end() );
+  //reorderLegalMoves(lm);
+ 
+  // Loop though all possible legal moves
+  for (int i = 0; i < lm.size(); i++) {
+    // Add the ith legal move to the list
+    positions.push_back(lm[i]);
+    // and put the correct number into the borad.
+    pos last = (*(positions.end()-1) - *(positions.end()-2));
+    moveArea[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
+    markLRUD(*(positions.end()-1), *(positions.end()-2));
+    // printBool(leftRight);
+    // cout << endl;
+    // printBool(upDown);
+    // int ii;
+    // cin >> ii; 
+    // Now recursivly call makeBoard with one less depth.
+    if (makeBoardRightAnglesNoPassOver(depth-1)) return true;
+    // If the recrusive call fails, we remove the move we maid from the list,
+    // clear that spot on the board and try the next legal move.
+    unMarkLRUD(*(positions.end()-1), *(positions.end()-2));
+    positions.pop_back();
+    moveArea[lm[i].r][lm[i].c] = 0;
+  }
+  // Finally if none of our legal moves work out, we return false.
+  return false;
+}
+
+void RookBoard::markLRUD(pos start, pos end) {
+  if (start.r == end.r) {
+    for (int i = min(end.c,start.c); i <= max(end.c,start.c); i++) {
+      leftRight[start.r][i] = true;
+    }
+  }
+  else {
+    for (int i = min(end.r,start.r); i <= max(end.r,start.r); i++) {
+      upDown[i][start.c] = true;
+    }
+  }
+  upDown[start.r][start.c] = true;
+  upDown[end.r][end.c] = true;
+  leftRight[start.r][start.c] = true;
+  leftRight[end.r][end.c] = true;
+
+}
+
+void RookBoard::unMarkLRUD(pos start, pos end) {
+  if (start.r == end.r) {
+    for (int i = min(end.c,start.c); i <= max(end.c,start.c); i++) {
+      leftRight[start.r][i] = false;
+    }
+  }
+  else {
+    for (int i = min(end.r,start.r); i <= max(end.r,start.r); i++) {
+      upDown[i][start.c] = false;
+    }
+  }
+
+  upDown[start.r][start.c] = false;
+  upDown[end.r][end.c] = false;
+  leftRight[start.r][start.c] = false;
+  leftRight[end.r][end.c] = false;
+
+}
+
+
 
 // This marks all spots on the final game borad which were never
 // visited or passed through during the course of the puzzle.
@@ -341,4 +612,14 @@ ofstream &operator<<(ofstream &ofs, RookBoard &RB) {
 	<< RB.positions[i].c << '\n';
   }
   return ofs;
+}
+
+void printBool(vector<vector<bool> > &in) {
+  for (int i = 0; i < in.size(); i++) {
+    for (int j = 0; j < in[0].size(); j++) {
+      cout << in[i][j] << " ";
+    }
+    cout << endl;
+  }
+  //return os;
 }
