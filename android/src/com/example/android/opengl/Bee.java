@@ -41,7 +41,7 @@ class BeeWander extends BeeState<BeeTile> {
 
     BeeTile bee;
 
-    float interval = 7000f;
+    float interval = 10000f;
     
     boolean flipped = true;
     int r = 0;
@@ -128,19 +128,11 @@ class BeeWander extends BeeState<BeeTile> {
 
 class BeeFixed extends BeeState<BeeTile> {
     
-    public long refTime = 0;    
-    private float startX = 0.0f;
-    private float startY = 0.0f;
+    public long globalRefTime = 0;    
+    public long relativeRefTime = 0;
+    public BeeTile bee;
 
-    private float dX = 0.0f;
-    private float dY = 0.0f;
-    
-
-    private float oldAngle = 0.0f;
-    private float newAngle = 0.0f;
-
-    private float flyInterval = 0.001f;
-    private float rotateInterval = 800.0f;
+    private float interval = 7000;
 
     boolean flipped = true;
     int index = 0;
@@ -154,67 +146,143 @@ class BeeFixed extends BeeState<BeeTile> {
     public BeeFixed(Board b, Mood m) {
 	setBoard(b);
 	setMood(m);
+	length = (mBoard.path.length-2)/2;
     }   
     
     public void enterAnimation(BeeTile[] tiles){
+	globalRefTime = System.currentTimeMillis();
+	relativeRefTime = System.currentTimeMillis();
     	period = DrawPeriod.DURING;
     }
     
     public void duringAnimation(BeeTile[] tiles) {
-	BeeTile bee = (BeeTile)tiles[0];
-	long time = System.currentTimeMillis() - refTime;
-
-	length = (mBoard.path.length-1)/2;
+	bee = (BeeTile)tiles[0];
+	long time = System.currentTimeMillis() - globalRefTime;
+	float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
+	relativeRefTime = System.currentTimeMillis();
+	float[] force = new float[2];
 
 	switch (mood) {
 	case HAPPY:
-	    if (time < rotateInterval) {
-		bee.setAngle(oldAngle + time/rotateInterval*(newAngle - oldAngle));
-	    }
 
-	    else if(time < flyInterval + rotateInterval){
-		bee.center[0] = startX + (time - rotateInterval)/flyInterval*(dX);
-		bee.center[1] = startY + (time - rotateInterval)/flyInterval*(dY);
-		//} else if(time<interval+200f){
-		// if(!flipped){
-		//     mBoard.tiles[r].setPivot(pivot);
-		//     mBoard.tiles[r].setRotate(true);
-		//}
-	    }
-	    else {
-		oldAngle = newAngle;
-		startX = bee.center[0];
-		startY = bee.center[1];
-		dX = mBoard.tiles[r].center[0] - startX;
-		dY = mBoard.tiles[r].center[1] - startY;
+	if(time < interval){
+	    force = getForce(mBoard.tiles[r]);
+	    bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
+	    bee.velocity = vSum(bee.velocity, vSProd(dt, force));
+	}
+	// } else if(time<interval+200f){
+	//     if(!flipped){
+	// 	mBoard.tiles[r].setPivot(pivot);
+	// 	mBoard.tiles[r].setRotate(true);
+	//     }
+	// }
 
-		if (dX > 0.0f) {
-		    newAngle = 45.0f*((float)(Math.atan(dY/dX)/Math.atan(1)));
-		}
-		else if (dX < 0.0f)
-		    newAngle = 180.0f + 45.0f*((float)(Math.atan(dY/dX)/Math.atan(1)));
-		else {
-		    if (dY > 0.0f) {
-			newAngle = 90.0f;
-		    }
-		    else {
-			newAngle = -90.0f;
-		    }
-		}
-		newAngle = newAngle - 90.0f;
-			
-		r = 6*mBoard.path[index][0] + mBoard.path[index][1];
-		index = ((index-1)%length + length)%length;
-		flyInterval = 500f*(Math.abs(dX)+Math.abs(dY));
-		flipped = false;
-		refTime = System.currentTimeMillis();
-	    }
-	    break;
+
+	else {
+	    globalRefTime = System.currentTimeMillis();
+	    //	    bee.velocity = vSProd(1/abs(bee.velocity),bee.velocity);
+	    r = 6*mBoard.path[index][0] + mBoard.path[index][1];
+	    index = ((index-1)%length + length)%length;
+	    globalRefTime = System.currentTimeMillis();
+
+	    // flipped = false;
+	}
+	break;
+
 	case ASLEEP:
 	    bee.center = fixedPos;
 	    break;
 	}
     }
+
+
+
+    public float[] getForce(BoardTile tile) {
+	float[] force = {0.0f, 0.0f};
+
+	force = vSProd(-1.0f,vDiff(bee.center, tile.center)); 
+	force = vSum(force, vSProd(-2.0f,bee.velocity));
+
+	return force;
+    }
+    
+    public float[] vDiff(float[] left, float[] right) {
+	float[] ret = new float[2];
+	ret[0] = left[0] - right[0];
+	ret[1] = left[1] - right[1];
+	return ret;
+    }
+    
+    public float[] vSum(float[] left, float[] right) {
+	float[] ret = new float[2];
+	for (int i = 0; i < left.length; i++)
+	    ret[i] = left[i] + right[i];
+	return ret;
+    }
+    
+    public float[] vSProd(float scalar, float[] vec) {
+	float[] ret = new float[2];
+	for (int i = 0; i < vec.length; i++)
+	    ret[i] = vec[i]*scalar;
+	return ret;
+    }
+    
+    public float abs(float[] vec) {
+	float ret = 0.0f;
+	for (int i = 0; i < vec.length; i++)
+	    ret += vec[i]*vec[i];
+	ret = (float)Math.sqrt(ret);
+	return ret;
+    }
+
+
+
+	    // if (time < rotateInterval) {
+	    // 	bee.setAngle(oldAngle + time/rotateInterval*(newAngle - oldAngle));
+	    // }
+
+	    // else if(time < flyInterval + rotateInterval){
+	    // 	bee.center[0] = startX + (time - rotateInterval)/flyInterval*(dX);
+	    // 	bee.center[1] = startY + (time - rotateInterval)/flyInterval*(dY);
+	    // 	//} else if(time<interval+200f){
+	    // 	// if(!flipped){
+	    // 	//     mBoard.tiles[r].setPivot(pivot);
+	    // 	//     mBoard.tiles[r].setRotate(true);
+	    // 	//}
+	    // }
+	    // else {
+	    // 	oldAngle = newAngle;
+	    // 	startX = bee.center[0];
+	    // 	startY = bee.center[1];
+	    // 	dX = mBoard.tiles[r].center[0] - startX;
+	    // 	dY = mBoard.tiles[r].center[1] - startY;
+
+	    // 	if (dX > 0.0f) {
+	    // 	    newAngle = 45.0f*((float)(Math.atan(dY/dX)/Math.atan(1)));
+	    // 	}
+	    // 	else if (dX < 0.0f)
+	    // 	    newAngle = 180.0f + 45.0f*((float)(Math.atan(dY/dX)/Math.atan(1)));
+	    // 	else {
+	    // 	    if (dY > 0.0f) {
+	    // 		newAngle = 90.0f;
+	    // 	    }
+	    // 	    else {
+	    // 		newAngle = -90.0f;
+	    // 	    }
+	    // 	}
+	    // 	newAngle = newAngle - 90.0f;
+			
+	    // 	r = 6*mBoard.path[index][0] + mBoard.path[index][1];
+	    // 	index = ((index-1)%length + length)%length;
+	    // 	flyInterval = 500f*(Math.abs(dX)+Math.abs(dY));
+	    // 	flipped = false;
+	    // 	refTime = System.currentTimeMillis();
+	    // }
+	    // break;
+	// case ASLEEP:
+	//     bee.center = fixedPos;
+	//     break;
+	// }
 }
 
 
