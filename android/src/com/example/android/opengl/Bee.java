@@ -132,7 +132,7 @@ class BeeFixed extends BeeState<BeeTile> {
     public long relativeRefTime = 0;
     public BeeTile bee;
 
-    private float interval = 7000;
+    private float interval = 4000;
 
     boolean flipped = true;
     int index = 0;
@@ -180,7 +180,7 @@ class BeeFixed extends BeeState<BeeTile> {
 
 	else {
 	    globalRefTime = System.currentTimeMillis();
-	    //	    bee.velocity = vSProd(1/abs(bee.velocity),bee.velocity);
+	    bee.velocity = vSProd(.2f/abs(bee.velocity),bee.velocity);
 	    r = 6*mBoard.path[index][0] + mBoard.path[index][1];
 	    index = ((index-1)%length + length)%length;
 	    globalRefTime = System.currentTimeMillis();
@@ -200,8 +200,10 @@ class BeeFixed extends BeeState<BeeTile> {
     public float[] getForce(BoardTile tile) {
 	float[] force = {0.0f, 0.0f};
 
-	force = vSProd(-1.0f,vDiff(bee.center, tile.center)); 
-	force = vSum(force, vSProd(-2.0f,bee.velocity));
+	force = vSProd(-2.0f,vDiff(bee.center, tile.center)); 
+	force[0] = 4.0f*(float)Math.pow(force[0],3);
+	force[1] = 4.0f*(float)Math.pow(force[1],3);
+	force = vSum(force, vSProd(-4.0f,bee.velocity));
 
 	return force;
     }

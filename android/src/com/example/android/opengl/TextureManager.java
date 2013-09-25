@@ -38,7 +38,11 @@ public class TextureManager {
     public static final String DOWNARROW = "down_arrow";
     public static final String LEFTARROW = "left_arrow";
     public static final String RIGHTARROW = "right_arrow";
-    
+    public static final String TUTORIAL = "tutorial";
+    public static final String NEXT = "next";
+    public static final String PREVIOUS = "previous";
+
+
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
@@ -105,7 +109,11 @@ public class TextureManager {
 	    buildTextures(YES, 64,64, YES, fontSize);
 	    buildTextures(NO, 64,64, NO, fontSize);
 	    buildTextures(SHARE, 64,64, SHARE, fontSize);
+	    buildTextures(TUTORIAL, 64,64, TUTORIAL, fontSize);
+	    buildTextures(NEXT, 64,64, NEXT, fontSize);
+	    buildTextures(PREVIOUS, 64,64, PREVIOUS, fontSize);
 	    buildTextures("", 64,64, CLEAR, fontSize);
+
 	    }
 	
 	

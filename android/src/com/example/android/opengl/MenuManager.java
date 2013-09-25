@@ -37,7 +37,7 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_LIST();
 	    break;
 	case MAIN_MENU_NEW:
-	    String[] textures3 = { TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST,  TextureManager.BACK};
+	    String[] textures3 = {TextureManager.TUTORIAL, TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST,  TextureManager.BACK};
 	    mGameMenu = new GameMenu(pos1, scale1, textures3, TextureManager.NEW); 
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
@@ -66,6 +66,11 @@ class MenuManager {
 	    String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
 	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_END();
+	    break;
+	case TUTORIAL:
+	    String[] textures8 = {TextureManager.NEXT, TextureManager.QUIT, TextureManager.PREVIOUS};
+	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR, tiltAngle); 
+	    mCallback = new Callback_TUTORIAL();
 	    break;
 	}
     }
@@ -112,27 +117,31 @@ class MenuManager {
     class Callback_MAIN_MENU_NEW extends Callback{
 	public void callback(int val) {
 	    switch(val) {
-	    case 1: mModel.createPuzzle(8,2);
+	    case 1: 
+		mModel.setState(GameState.TUTORIAL);
+		state.state = GameState.TUTORIAL;
+	    
+	    case 2: mModel.createPuzzle(8,2);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 2: mModel.createPuzzle(12,2);
+	    case 3: mModel.createPuzzle(12,2);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 3: mModel.createPuzzle(16,3);
+	    case 4: mModel.createPuzzle(16,3);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 4: mModel.createPuzzle(20,3);
+	    case 5: mModel.createPuzzle(20,3);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 5: state.state = GameState.MAIN_MENU_LIST;
+	    case 6: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
 		break;
 	    }
@@ -209,5 +218,22 @@ class MenuManager {
 	}
 	
     }
-    
+
+    class Callback_TUTORIAL extends Callback {
+	
+	@Override
+	public void callback(int val) {
+	    switch(val) {
+	    case 1:
+		mModel.mTutorialBoard.setState(val);
+		break;
+	    case 2:
+		mModel.setState(GameState.MAIN_MENU_OPENING);
+		break;
+	    case 3:
+		mModel.mTutorialBoard.setState(val);
+		break;
+	    }
+	}
+    }
 }

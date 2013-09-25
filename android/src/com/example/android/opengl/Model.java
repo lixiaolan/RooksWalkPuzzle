@@ -8,6 +8,7 @@ import android.widget.Toast;
 class Model{
     public GlobalState state;
     
+    private TutorialBoard mTutorailBoard;
     public Board mBoard;
     private Menu mMenu;
     private Border mBorder;
@@ -19,7 +20,6 @@ class Model{
     private int at = -1;
     private Vibrator vibe;
     public Context context;
-    
     
     public Model(Context c) {
 	initiateMembers(c, new Board());
@@ -40,6 +40,7 @@ class Model{
 	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
+	mTutorialBoard = new TutorialBoard();
     }
     
     
@@ -63,7 +64,7 @@ class Model{
     
     public void touched(float[] pt) {
 	int val = -1;
-    switch(state.state){
+	switch(state.state){
 	case GAME_OPENING: 
 	    //Internally close menu.    		
 	    val = mMenu.touched(pt);
@@ -109,8 +110,8 @@ class Model{
 	    at = mBoard.touched(pt);
 	    if(at != -1) {
 		float[] pivot = {0,0,1};
-			mBoard.tiles[at].setPivot(pivot);
-			mBoard.tiles[at].setRotate(true);
+		mBoard.tiles[at].setPivot(pivot);
+		mBoard.tiles[at].setRotate(true);
 	    }
 	    
 	    val = mMenuManager.touched(pt);
@@ -119,13 +120,22 @@ class Model{
 	    }
 	    
 	    break;
-	default: break;
-	}
+	    
 
+
+	default: break;
+
+
+
+	}
+	
 	if(mBee.touched(pt)){
 	    vibe.vibrate(500);
 	}
 
+
+
+	
     }
     
     public void swiped(float[] pt, String direction) {
@@ -143,7 +153,7 @@ class Model{
     public void draw(MyGLRenderer r) {
 	
 	//mBg.draw(r);
-	mBoard.draw(r);
+
 	mBee.draw(r);
 	mMenuManager.draw(r);
 	
@@ -155,7 +165,14 @@ class Model{
 	    mBorder.draw(r);
 	    mMenu.draw(r);
 	    mCheck.draw(r);
+	case MAIN_MENU_OPENING:
+	case MAIN_MENU_LIST:
+	case MAIN_MENU_NEW:
+	case MAIN_MENU_OPTIONS:
+	    mBoard.draw(r);
 	    break;
+	case TUTORIAL:
+	    mTutorialBoard.draw(r);
 	default: break;
 	}
     }
@@ -172,6 +189,5 @@ class Model{
     
     public void clearBoard() {
 	mBoard.clearBoard();
-    }
-    
+    }    
 }

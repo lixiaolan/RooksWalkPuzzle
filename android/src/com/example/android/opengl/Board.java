@@ -340,10 +340,8 @@ class BoardMainMenu extends State<BoardTile> {
 }
 
 // class BoardMainMenu extends State<BoardTile> {
-
 //     boolean[] rotateTiles = new boolean[36];
 //     long[] refTime = new long[36];
-
 //     public BoardMainMenu(BoardTile[] tiles) {
 // 	for (int i = 0; i < tiles.length; i++) {
 // 	    double r = Math.random();
@@ -353,19 +351,15 @@ class BoardMainMenu extends State<BoardTile> {
 // 	    float center[] = { Sx, Sy, 0.0f};
 // 	    tiles[i].center = center;
 // 	}
-
 // 	//Set textures	
 // 	for(int i = 0;i<tiles.length;i++){
 // 	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 // 	    tiles[i].setColor("transparent");
 // 	}
-
 //     }
-
 //     public void enterAnimation(BoardTile[] tiles) {
 // 	period = DrawPeriod.DURING;
 //     }
-
 //     public void duringAnimation(BoardTile[] tiles) {
 // 	for(int i=0;i<tiles.length;i++){
 // 	    if(tiles[i].rotate){
@@ -385,10 +379,8 @@ class BoardMainMenu extends State<BoardTile> {
 // 		tiles[i].setAngle(0);
 // 		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 // 	    }
-
 // 	}
 //     }
-
 // }
 
 
@@ -442,5 +434,7 @@ class BoardPlay extends State<BoardTile> {
     }
     
 }
+
+
 
 

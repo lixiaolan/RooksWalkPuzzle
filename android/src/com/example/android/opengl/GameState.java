@@ -8,8 +8,6 @@ public enum GameState {
     GAME_OPENING,
     GAME_MENU_LIST,
     GAME_MENU_END,
-    TUTORIAL_ONE,
-    TUTORIAL_TWO,
-    TUTORAIL_THREE,
+    TUTORIAL,
 };
 
