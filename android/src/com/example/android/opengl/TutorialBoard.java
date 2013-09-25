@@ -10,7 +10,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 class TutorialBoard extends Board {
-
     enum TutorialState {
 	ONE_TILE, WALKTHOUGH, SUMMARY
     }
@@ -26,10 +25,8 @@ class TutorialBoard extends Board {
 
     public setState(TutorialState s){
 	mTutorialState = s;
-    }
-    
+    }    
 }
-
 
 class WalkThrough extends State<BoardTile> {
 
