@@ -69,7 +69,7 @@ class MenuManager {
 	    break;
 	case TUTORIAL:
 	    String[] textures8 = {TextureManager.NEXT, TextureManager.QUIT, TextureManager.PREVIOUS};
-	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR, tiltAngle); 
+	    mGameMenu = new GameMenu(pos2, scale2, textures8, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_TUTORIAL();
 	    break;
 	}
@@ -120,7 +120,8 @@ class MenuManager {
 	    case 1: 
 		mModel.setState(GameState.TUTORIAL);
 		state.state = GameState.TUTORIAL;
-	    
+		updateState();
+	    break;
 	    case 2: mModel.createPuzzle(8,2);
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
@@ -225,13 +226,13 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 	    case 1:
-		mModel.mTutorialBoard.setState(val);
+		mModel.mTutorialBoard.setState();
 		break;
 	    case 2:
 		mModel.setState(GameState.MAIN_MENU_OPENING);
 		break;
 	    case 3:
-		mModel.mTutorialBoard.setState(val);
+		mModel.mTutorialBoard.setState();
 		break;
 	    }
 	}

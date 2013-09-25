@@ -8,7 +8,7 @@ import android.widget.Toast;
 class Model{
     public GlobalState state;
     
-    private TutorialBoard mTutorailBoard;
+    public TutorialBoard mTutorialBoard;
     public Board mBoard;
     private Menu mMenu;
     private Border mBorder;
@@ -154,8 +154,7 @@ class Model{
 	
 	//mBg.draw(r);
 
-	mBee.draw(r);
-	mMenuManager.draw(r);
+	
 	
 	switch(state.state) {
 	case GAME_OPENING:
@@ -175,12 +174,17 @@ class Model{
 	    mTutorialBoard.draw(r);
 	default: break;
 	}
+	
+	mBee.draw(r);
+	mMenuManager.draw(r);
     }
     
     public void setState(GameState s){
 	state.state = s;
 	mBee.setState(s);
 	mBoard.setState(s);
+	if(state.state == GameState.TUTORIAL)
+		mTutorialBoard.setState();
     }
     
     public GameState getState() {
