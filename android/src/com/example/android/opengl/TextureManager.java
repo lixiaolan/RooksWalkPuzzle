@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
@@ -41,8 +42,8 @@ public class TextureManager {
     public static final String TUTORIAL = "tutorial";
     public static final String NEXT = "next";
     public static final String PREVIOUS = "previous";
-
-
+    public static final String LONGSTRING = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sapien erat, interdum quis libero ultrices, scelerisque ullamcorper enim.";
+    
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
@@ -114,6 +115,8 @@ public class TextureManager {
 	    buildTextures(PREVIOUS, 64,64, PREVIOUS, fontSize);
 	    buildTextures("", 64,64, CLEAR, fontSize);
 
+	    buildLongTextures(LONGSTRING,2,30,LONGSTRING,12);
+	    
 	    }
 	
 	
@@ -131,14 +134,17 @@ public class TextureManager {
 		String curr;
 		for(int i=0;i<a.length();i++){
 			curr = String.valueOf(a.charAt(i));
-			library.put(curr, textureFromBitmap(bitmapFromString(curr,x[i],y[i],font)));
+			library.put(curr, textureFromBitmap(bitmapFromShortString(curr,x[i],y[i],font)));
 		}
 	}
 
 	public void buildTextures(String a, int x, int y, String key , int font){
-		library.put(key, textureFromBitmap(bitmapFromString(a,x,y, font)));
+		library.put(key, textureFromBitmap(bitmapFromShortString(a,x,y, font)));
 	}
 
+	public void buildLongTextures(String a, int x, int y, String key , int font){
+		library.put(key, textureFromBitmap(bitmapFromLongString(a,x,y, font)));
+	}
 	
 	public void buildTextures(final Context context, final int resourceId, String key){
 		final int[] textureHandle = new int[1];
@@ -175,7 +181,7 @@ public class TextureManager {
 		library.put(key,textureHandle[0]);
 	}
 	
-
+	
 	
 	int textureFromBitmap(Bitmap bmp){
 		int[] texture = new int[1];
@@ -189,7 +195,7 @@ public class TextureManager {
 		return texture[0];
 	}
 	
-	Bitmap bitmapFromString(String text, int x, int y, int font){
+	Bitmap bitmapFromShortString(String text, int x, int y, int font){
 		Bitmap bitmap = Bitmap.createBitmap(128, 128, Bitmap.Config.ARGB_8888);
         // get a canvas to paint over the bitmap
         Canvas canvas = new Canvas(bitmap);
@@ -198,7 +204,7 @@ public class TextureManager {
         // Draw the text
         Paint textPaint = new Paint();
         textPaint.setTextSize(font);
-        textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setTextAlign(Paint.Align.LEFT);
         textPaint.setStyle(Style.FILL);
         textPaint.setStrokeWidth(4);
         textPaint.setAntiAlias(true);
@@ -210,7 +216,47 @@ public class TextureManager {
         return bitmap;
 	}
 	
-	
+	Bitmap bitmapFromLongString(String text, int x, int y, int fontSize) {
+		int size = 256; //Must be a power of two
+		int length = text.length();
+		Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        // get a canvas to paint over the bitmap
+        Canvas canvas = new Canvas(bitmap);
+        //bitmap.eraseColor(Color.TRANSPARENT);
+
+        // Draw the text
+        Paint textPaint = new Paint();
+        textPaint.setTextSize(fontSize);
+        textPaint.setTextAlign(Paint.Align.LEFT);
+        textPaint.setStyle(Style.FILL);
+        textPaint.setStrokeWidth(4);
+        textPaint.setAntiAlias(true);
+        textPaint.setARGB(0xFF, 0x00, 0x00, 0x00);
+        textPaint.setSubpixelText(true);
+        textPaint.setTypeface(tf);
+        // draw the text centered
+        canvas.drawColor(Color.TRANSPARENT);
+        int index = 0;
+        int oldIndex = 0;
+        Rect bounds = new Rect();
+        while(text.length() != 0) {
+        	
+        	index = textPaint.breakText(text, true, (float)size, null)-1;
+        	oldIndex = index;
+        	while(text.charAt(index) != ' ' && index > 0){
+        		System.out.println(text);
+        		index--;
+        	} 
+        	if(index <= 0)
+        		index=oldIndex;
+        		
+        	canvas.drawText(text.substring(0, index+1), x, y, textPaint);
+        	text = text.substring(index+1);
+        	textPaint.getTextBounds(text, 0, text.length(), bounds);
+        	y += bounds.height();
+        }
+        return bitmap;
+	}
 }
 
 

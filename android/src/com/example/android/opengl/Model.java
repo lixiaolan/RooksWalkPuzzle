@@ -32,7 +32,7 @@ class Model{
     public void initiateMembers(Context c, Board b){
 	mBoard = b;
 	mBee = new Bee(mBoard);
-	//mBg = new Background("paperbg", 2f);
+	mBg = new Background(TextureManager.LONGSTRING, .75f);
 	mCheck  = new Background("check",.11f);
 	float[] center = {-.7f,1f, 0f};
 	mCheck.setCenter(center);
@@ -152,7 +152,7 @@ class Model{
     
     public void draw(MyGLRenderer r) {
 	
-	//mBg.draw(r);
+	mBg.draw(r);
 
 	
 	
@@ -160,23 +160,23 @@ class Model{
 	case GAME_OPENING:
 	case GAME_MENU_LIST:
 	case GAME_MENU_END:
-	    mBoardBg.draw(r);
-	    mBorder.draw(r);
-	    mMenu.draw(r);
-	    mCheck.draw(r);
+	    //mBoardBg.draw(r);
+	    //mBorder.draw(r);
+	    //mMenu.draw(r);
+	    //mCheck.draw(r);
 	case MAIN_MENU_OPENING:
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_NEW:
 	case MAIN_MENU_OPTIONS:
-	    mBoard.draw(r);
+	    //mBoard.draw(r);
 	    break;
 	case TUTORIAL:
-	    mTutorialBoard.draw(r);
+	    //mTutorialBoard.draw(r);
 	default: break;
 	}
 	
-	mBee.draw(r);
-	mMenuManager.draw(r);
+	//mBee.draw(r);
+	//mMenuManager.draw(r);
     }
     
     public void setState(GameState s){
