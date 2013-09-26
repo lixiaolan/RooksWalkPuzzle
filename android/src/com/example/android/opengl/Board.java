@@ -263,7 +263,7 @@ class BoardMainMenu extends State<BoardTile> {
     float[] centers;
     
     public BoardMainMenu(BoardTile[] tiles) {
-	centers = new float[2*BoardTile.length];
+	centers = new float[2*tiles.length];
 	
 	for (int i = 0; i < tiles.length; i++) {
 	    double r = Math.random();
@@ -279,9 +279,11 @@ class BoardMainMenu extends State<BoardTile> {
 	}
 	
 	for (int i = 0; i<tiles.length; i++ ) {
-	    float r = 55*i;
-	    centers[2*i] = i*Math.sin(i);
-	    centers[2*i+1] = i*Math.cos(i);
+	    float ii = (float)i;
+	    float r = (ii + 10*(1-1/(ii+1)))/25;
+	    float t = ii/1.5f; 
+	    centers[2*i] = r*((float)Math.sin(t));
+	    centers[2*i+1] = r*((float)Math.cos(t));
 	}
 	
     }
@@ -307,7 +309,7 @@ class BoardMainMenu extends State<BoardTile> {
 	float[] force = {0.0f, 0.0f};
 	float[] temp;
 	float[] mid = {centers[2*i],centers[2*i+1],0.0f};
-	force = vSProd(-2.0f,vDiff(tiles[i].center, tile.center)); 
+	force = vSProd(-2.0f,vDiff(tiles[i].center, mid)); 
 	force = vSum(force, vSProd(-1.2f,tiles[i].velocity));
 	return force;
     }

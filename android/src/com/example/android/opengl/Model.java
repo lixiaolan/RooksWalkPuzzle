@@ -8,7 +8,7 @@ import android.widget.Toast;
 class Model{
     public GlobalState state;
     
-    private TutorialBoard mTutorailBoard;
+    public TutorialBoard mTutorialBoard;
     public Board mBoard;
     private Menu mMenu;
     private Border mBorder;
@@ -40,15 +40,13 @@ class Model{
 	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
-	mTutorialBoard = new TutorialBoard();
-    }
-    
+	mMenu = new Menu();
+    }    
     
     public void createPuzzle(int length, int hints) {
 	mBoard.createPuzzleFromJNI(length, hints);
 	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
 	mBoardBg = new Background("boardbg", .75f);
-	mMenu = new Menu();
     }
     
     public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows){
@@ -117,16 +115,36 @@ class Model{
 	    val = mMenuManager.touched(pt);
 	    if(val != -1){
 	    	mMenuManager.onTouched(val);
-	    }
-	    
+	    }	    
 	    break;
-	    
 
+	case TUTORIAL:
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+	    	mMenuManager.onTouched(val);
+	    }
+
+	    val = mMenu.touched(pt);
+	    if (val != -1) {
+		System.out.println("Menu Touched!");
+		if ( mTutorialBoard.userNumberInput(val) ) {
+		    System.out.println("Passed the if");
+		    mMenu.menuActive = false;
+		}
+	    }
+	    else {
+		at = mTutorialBoard.state.touched(pt);
+		if (at != -1) {
+		    mMenu.activate(pt);
+		}
+		else {
+		    mMenu.menuActive = false;
+		}
+	    }
+
+	    break;
 
 	default: break;
-
-
-
 	}
 	
 	if(mBee.touched(pt)){
@@ -154,8 +172,7 @@ class Model{
 	
 	//mBg.draw(r);
 
-	mBee.draw(r);
-	mMenuManager.draw(r);
+	
 	
 	switch(state.state) {
 	case GAME_OPENING:
@@ -173,14 +190,22 @@ class Model{
 	    break;
 	case TUTORIAL:
 	    mTutorialBoard.draw(r);
+	    mMenu.draw(r);
 	default: break;
 	}
+	
+	mBee.draw(r);
+	mMenuManager.draw(r);
     }
     
     public void setState(GameState s){
 	state.state = s;
 	mBee.setState(s);
 	mBoard.setState(s);
+	if(state.state == GameState.TUTORIAL) {
+	    mTutorialBoard = new TutorialBoard();
+	    mTutorialBoard.setState();
+	}
     }
     
     public GameState getState() {

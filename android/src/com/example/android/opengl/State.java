@@ -29,4 +29,7 @@ public abstract class State<T extends Tile> {
 	    tiles[i].draw(r);
 	}
     }    
+
+    public int touched(float[] pt) { return 0;};
+
 }

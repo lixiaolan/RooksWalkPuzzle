@@ -105,11 +105,11 @@ class BoardTile extends Tile{
 	   }
    }
    
-    public void draw(MyGLRenderer r) {
+   public void draw(MyGLRenderer r) {
     		r.drawTile(center, size, textures, color, angle, pivot);    
     }    
     
-    public boolean checkArrows() {
+   public boolean checkArrows() {
     	if(isBlack()) 
     		return true;
     	else {
@@ -118,7 +118,7 @@ class BoardTile extends Tile{
     	
     }
     
-    public void setSize(float s) {
+   public void setSize(float s) {
     	size = s;
     }
     
