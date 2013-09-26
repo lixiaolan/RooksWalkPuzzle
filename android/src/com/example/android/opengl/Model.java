@@ -15,7 +15,6 @@ class Model{
     private Bee mBee;
     private MenuManager mMenuManager;
     private Background mBg;
-    private Background mBoardBg;
     private Background mCheck;
     private int at = -1;
     private Vibrator vibe;
@@ -32,7 +31,6 @@ class Model{
     public void initiateMembers(Context c, Board b){
 	mBoard = b;
 	mBee = new Bee(mBoard);
-	//mBg = new Background(TextureManager.LONGSTRING, .75f);
 	mCheck  = new Background("check",.11f);
 	float[] center = {-.7f,1f, 0f};
 	mCheck.setCenter(center);
@@ -46,13 +44,12 @@ class Model{
     public void createPuzzle(int length, int hints) {
 	mBoard.createPuzzleFromJNI(length, hints);
 	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
-	mBoardBg = new Background("boardbg", .75f);
+	
     }
     
     public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows){
 	mBoard.restoreBoard(solution, numbers, arrows, trueArrows);
 	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
-	mBoardBg = new Background("boardbg", .75f);
 	mMenu = new Menu();
     }
     
@@ -175,7 +172,6 @@ class Model{
 	case GAME_OPENING:
 	case GAME_MENU_LIST:
 	case GAME_MENU_END:
-	    mBoardBg.draw(r);
 	    mBorder.draw(r);
 	    mMenu.draw(r);
 	    mCheck.draw(r);

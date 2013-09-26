@@ -16,17 +16,20 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
     public int[][] path;
     public int[] columnSums;
     public int[] rowSums;
+    private Background mBoardBg;
     private boolean toggleHints = true;
     
     public Board() {
 	buildEmptyBoard();
 	state = new BoardMainMenu(tiles);
+	mBoardBg = new Background("boardbg", .75f);
     }
     
     public Board(Parcel in) {
 	in.readIntArray(solution);
 	//NEED TO TRACK DIFFICULTY OF PUZZLE
 	buildBoardFromSolution(5);
+	mBoardBg = new Background("boardbg", .75f);
 	state = new BoardPlay(tiles);
     }
     
@@ -148,6 +151,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 	}
     }
     
+    public void draw(MyGLRenderer r){
+    	mBoardBg.draw(r);
+    	super.draw(r);
+    	
+    }
     
     public void createPuzzleFromJNI(int length, int hints){
 	try {
