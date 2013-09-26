@@ -259,8 +259,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 class BoardMainMenu extends State<BoardTile> {
     
     long refTime;
+
+    float[] centers;
     
     public BoardMainMenu(BoardTile[] tiles) {
+	centers = new float[2*tiles.length];
+	
 	for (int i = 0; i < tiles.length; i++) {
 	    double r = Math.random();
 	    tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
@@ -269,12 +273,19 @@ class BoardMainMenu extends State<BoardTile> {
 	}
 
 	//Set textures	
-	for(int i = 0;i<tiles.length;i++){
+	for (int i = 0;i<tiles.length;i++){
 	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 	    tiles[i].setColor("transparent");
 	}
-
-
+	
+	for (int i = 0; i<tiles.length; i++ ) {
+	    float ii = (float)i;
+	    float r = (ii + 10*(1-1/(ii+1)))/25;
+	    float t = ii/1.5f; 
+	    centers[2*i] = r*((float)Math.sin(t));
+	    centers[2*i+1] = r*((float)Math.cos(t));
+	}
+	
     }
     
     public void enterAnimation(BoardTile[] tiles) {
@@ -297,15 +308,9 @@ class BoardMainMenu extends State<BoardTile> {
     public float[] getForce(BoardTile[] tiles, int i) {
 	float[] force = {0.0f, 0.0f};
 	float[] temp;
-	for (int j = 0; j < tiles.length; j++) {
-	    if (j != i) {
-		temp = vDiff(tiles[i].center,tiles[j].center);
-		force = vSum(force, vSProd((float)Math.exp(-Math.pow(3*abs(temp),2))/abs(temp), temp));
-	    }
-	}
+	float[] mid = {centers[2*i],centers[2*i+1],0.0f};
+	force = vSProd(-2.0f,vDiff(tiles[i].center, mid)); 
 	force = vSum(force, vSProd(-1.2f,tiles[i].velocity));
-	force[0] = force[0] - .1f*(tiles[i].center[0]+0.75f);
-	force[1] = force[1] - .1f*tiles[i].center[1];
 	return force;
     }
     

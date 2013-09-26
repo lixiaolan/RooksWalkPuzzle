@@ -35,22 +35,16 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	
 	}
 
-	public void setCenter(float[] center){
-		tiles[0].center = center;
+	public void setCenter(float a, float b){
+		tiles[0].center[0] = a;
+		tiles[0].center[1] = b;
 	}
 	
 	public void set(String string) {
 		tiles[0].setTextures(TextureManager.CLEAR, string);
 	}
 	
-	public boolean touched(float[] pt){
-		for (int i = 0; i < tiles.length; i++) {
-			if( tiles[i].touched(pt)) {
-				return true;
-			}
-		}
-		return false;
-	}
+	
 }
 
 

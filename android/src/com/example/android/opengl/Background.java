@@ -32,13 +32,13 @@ public class Background extends Graphic<BackgroundTile, State<BackgroundTile>> {
 		tiles[0].center = center;
 	}
 	
-	public boolean touched(float[] pt){
+	public int touched(float[] pt){
 		for (int i = 0; i < tiles.length; i++) {
 			if( tiles[i].touched(pt)) {
-				return true;
+				return 1;
 			}
 		}
-		return false;
+		return 0;
 	}
 }
 

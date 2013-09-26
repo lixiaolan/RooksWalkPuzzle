@@ -230,6 +230,7 @@ class MenuManager {
 		break;
 	    case 2:
 		mModel.setState(GameState.MAIN_MENU_OPENING);
+		updateState();
 		break;
 	    case 3:
 		mModel.mTutorialBoard.setState();

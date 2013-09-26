@@ -22,12 +22,12 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     }
     
     
-    public boolean touched(float[] pt) {
+    public int touched(float[] pt) {
 	if(pt[0]< bee.center[0]+0.25f && pt[0] > bee.center[0]-.25f 
 	   && pt[1]< bee.center[1]+0.25f && pt[1] > bee.center[1]-.25f ){
-	    return true;
+	    return 1;
 	}
-	return false;
+	return 0;
     }    
 
     public void setMood(Mood m) {

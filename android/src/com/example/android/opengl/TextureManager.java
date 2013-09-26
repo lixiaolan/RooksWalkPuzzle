@@ -115,8 +115,9 @@ public class TextureManager {
 	    buildTextures(PREVIOUS, 64,64, PREVIOUS, fontSize);
 	    buildTextures("", 64,64, CLEAR, fontSize);
 
-	    buildLongTextures(LONGSTRING,2,30,LONGSTRING,12);
-	    
+	    for(int i =0;i< TutorialInfo.banners.length;i++){
+	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),30);
+	    }
 	    }
 	
 	

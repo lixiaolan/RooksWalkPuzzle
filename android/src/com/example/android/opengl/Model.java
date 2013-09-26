@@ -22,7 +22,7 @@ class Model{
     public Context context;
     
     public Model(Context c) {
-	initiateMembers(c, new Board());
+    	initiateMembers(c, new Board());
     }
     
     public Model(Context c, Board b){
@@ -32,7 +32,7 @@ class Model{
     public void initiateMembers(Context c, Board b){
 	mBoard = b;
 	mBee = new Bee(mBoard);
-	mBg = new Background(TextureManager.LONGSTRING, .75f);
+	//mBg = new Background(TextureManager.LONGSTRING, .75f);
 	mCheck  = new Background("check",.11f);
 	float[] center = {-.7f,1f, 0f};
 	mCheck.setCenter(center);
@@ -40,15 +40,13 @@ class Model{
 	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
-	mTutorialBoard = new TutorialBoard();
-    }
-    
+	mMenu = new Menu();
+    }    
     
     public void createPuzzle(int length, int hints) {
 	mBoard.createPuzzleFromJNI(length, hints);
 	mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
 	mBoardBg = new Background("boardbg", .75f);
-	mMenu = new Menu();
     }
     
     public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows){
@@ -85,7 +83,7 @@ class Model{
 		    mBoard.tiles[at].setUserInput(val);
 	    }
 	    
-	    if(mCheck.touched(pt)){
+	    if(mCheck.touched(pt) == 1){
 		if(mBoard.checkSolution()){
 		    state.state = GameState.GAME_MENU_END;
 		    mMenuManager.updateState();
@@ -117,19 +115,39 @@ class Model{
 	    val = mMenuManager.touched(pt);
 	    if(val != -1){
 	    	mMenuManager.onTouched(val);
-	    }
-	    
+	    }	    
 	    break;
-	    
 
+	case TUTORIAL:
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+	    	mMenuManager.onTouched(val);
+	    }
+
+	    val = mMenu.touched(pt);
+	    if (val != -1) {
+		System.out.println("Menu Touched!");
+		if ( mTutorialBoard.userNumberInput(val) ) {
+		    System.out.println("Passed the if");
+		    mMenu.menuActive = false;
+		}
+	    }
+	    else {
+		at = mTutorialBoard.state.touched(pt);
+		if (at != -1) {
+		    mMenu.activate(pt);
+		}
+		else {
+		    mMenu.menuActive = false;
+		}
+	    }
+
+	    break;
 
 	default: break;
-
-
-
 	}
 	
-	if(mBee.touched(pt)){
+	if(mBee.touched(pt) == 1){
 	    vibe.vibrate(500);
 	}
 
@@ -152,39 +170,39 @@ class Model{
     
     public void draw(MyGLRenderer r) {
 	
-	mBg.draw(r);
-
-	
 	
 	switch(state.state) {
 	case GAME_OPENING:
 	case GAME_MENU_LIST:
 	case GAME_MENU_END:
-	    //mBoardBg.draw(r);
-	    //mBorder.draw(r);
-	    //mMenu.draw(r);
-	    //mCheck.draw(r);
+	    mBoardBg.draw(r);
+	    mBorder.draw(r);
+	    mMenu.draw(r);
+	    mCheck.draw(r);
 	case MAIN_MENU_OPENING:
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_NEW:
 	case MAIN_MENU_OPTIONS:
-	    //mBoard.draw(r);
+	    mBoard.draw(r);
 	    break;
 	case TUTORIAL:
-	    //mTutorialBoard.draw(r);
+	    mTutorialBoard.draw(r);
+	    mMenu.draw(r);
 	default: break;
 	}
 	
-	//mBee.draw(r);
-	//mMenuManager.draw(r);
+	mBee.draw(r);
+	mMenuManager.draw(r);
     }
     
     public void setState(GameState s){
 	state.state = s;
 	mBee.setState(s);
 	mBoard.setState(s);
-	if(state.state == GameState.TUTORIAL)
-		mTutorialBoard.setState();
+	if(state.state == GameState.TUTORIAL) {
+	    mTutorialBoard = new TutorialBoard();
+	    mTutorialBoard.setState();
+	}
     }
     
     public GameState getState() {
