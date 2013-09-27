@@ -43,8 +43,11 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	public void set(String string) {
 		tiles[0].setTextures(TextureManager.CLEAR, string);
 	}
-	
-	
+
+	@Override
+	public void draw(MyGLRenderer r) {
+	    tiles[0].draw(r, "TOPCENTER");
+	}
 }
 
 

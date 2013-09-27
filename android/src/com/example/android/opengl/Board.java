@@ -274,7 +274,7 @@ class BoardMainMenu extends State<BoardTile> {
 	    float ii = (float)i;
 	    float r = (ii + 10*(1-1/(ii+1)))/25;
 	    float t = ii/1.5f; 
-	    centers[2*i] = r*((float)Math.sin(t));
+	    centers[2*i] = -.75f + r*((float)Math.sin(t));
 	    centers[2*i+1] = r*((float)Math.cos(t));
 	}
 	

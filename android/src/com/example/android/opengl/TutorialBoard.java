@@ -15,7 +15,7 @@ class TutorialBoard extends Board {
 	public TutorialBoard() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 		super();
-		mBanner = new Banner(.7f);
+		mBanner = new Banner(.75f);
 		mBoardBg = new Background("boardbg", .75f);
 		mBanner.setCenter(0,.8f);
 		mTutorialState = TutorialState.ONE_TILE;

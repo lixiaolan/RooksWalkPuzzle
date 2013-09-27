@@ -28,7 +28,7 @@ class MenuManager {
 	switch (state.state) {
 	case MAIN_MENU_OPENING:
 	    String[] textures1  = {};
-	    mGameMenu = new GameMenu(pos1, scale1, textures1, TextureManager.START); 
+	    mGameMenu = new GameMenu(pos1, scale1, textures1, TextureManager.START);
 	    mCallback = new Callback_MAIN_MENU_OPENING();
 	    break;
 	case MAIN_MENU_LIST:
