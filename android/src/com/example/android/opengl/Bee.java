@@ -13,15 +13,20 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 	setState(GameState.MAIN_MENU_OPENING); 
     }
     
-    public void setState(GameState s){
-	
+    public void setState(GameState s){	
 	switch(s){
 		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
 		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
 	}
     }
-    
-    
+
+    public void setState(GameState s, int l){	
+	switch(s){
+		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
+	case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP, l); break;
+	}
+    }
+        
     public int touched(float[] pt) {
 	if(pt[0]< bee.center[0]+0.25f && pt[0] > bee.center[0]-.25f 
 	   && pt[1]< bee.center[1]+0.25f && pt[1] > bee.center[1]-.25f ){
@@ -147,6 +152,14 @@ class BeeFixed extends BeeState<BeeTile> {
 	setBoard(b);
 	setMood(m);
 	length = (mBoard.path.length-2)/2;
+	System.out.println("length: "+Integer.toString(length));
+    }
+
+    public BeeFixed(Board b, Mood m, int l) {
+	setBoard(b);
+	setMood(m);
+	length = l;
+	System.out.println("length: "+Integer.toString(length));
     }   
     
     public void enterAnimation(BeeTile[] tiles){
@@ -161,15 +174,13 @@ class BeeFixed extends BeeState<BeeTile> {
 	float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
 	relativeRefTime = System.currentTimeMillis();
 	float[] force = new float[2];
-
 	switch (mood) {
 	case HAPPY:
-
-	if(time < interval){
-	    force = getForce(mBoard.tiles[r]);
-	    bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
-	    bee.velocity = vSum(bee.velocity, vSProd(dt, force));
-	}
+	    if( abs(bee.velocity) > .01f ){
+		force = getForce(mBoard.tiles[r]);
+		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
+		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
+	    }
 	// } else if(time<interval+200f){
 	//     if(!flipped){
 	// 	mBoard.tiles[r].setPivot(pivot);
@@ -179,12 +190,15 @@ class BeeFixed extends BeeState<BeeTile> {
 
 
 	else {
-	    globalRefTime = System.currentTimeMillis();
+	    System.out.println("Got into the else");
+	    //	    globalRefTime = System.currentTimeMillis();
+	    if (abs(bee.velocity) == 0.0f) {
+		bee.velocity[0] = .00001f;
+	    }
 	    bee.velocity = vSProd(.2f/abs(bee.velocity),bee.velocity);
 	    r = 6*mBoard.path[index][0] + mBoard.path[index][1];
 	    index = ((index-1)%length + length)%length;
-	    globalRefTime = System.currentTimeMillis();
-
+	    //	    globalRefTime = System.currentTimeMillis();
 	    // flipped = false;
 	}
 	break;
@@ -201,10 +215,16 @@ class BeeFixed extends BeeState<BeeTile> {
 	float[] force = {0.0f, 0.0f};
 
 	force = vSProd(-2.0f,vDiff(bee.center, tile.center)); 
-	force[0] = 4.0f*(float)Math.pow(force[0],3);
-	force[1] = 4.0f*(float)Math.pow(force[1],3);
+	float abs = abs(force);
+	if (abs > .1) {
+	    force[0] = force[0]/abs;
+	    force[1] = force[1]/abs;
+	}
+	else {
+	    force[0] = 0.0f;
+	    force[1] = 0.0f;
+	}
 	force = vSum(force, vSProd(-4.0f,bee.velocity));
-
 	return force;
     }
     

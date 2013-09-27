@@ -42,7 +42,7 @@ class Model{
 		mMenu = new Menu();
 		mBoardBg = new Background("boardbg", .75f);
 		mTutorialBoard = new TutorialBoard();
-		mTutorialBoard.setBee(mBee);
+		//mTutorialBoard.setBee(mBee);
 	}    
 
 	public void createPuzzle(int length, int hints) {
@@ -170,14 +170,13 @@ class Model{
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
 			mBoard.draw(r);
+			mBee.draw(r);
 			break;
 		case TUTORIAL:
 			mTutorialBoard.draw(r);
 			mMenu.draw(r);
 		default: break;
 		}
-
-		mBee.draw(r);
 		mMenuManager.draw(r);
 	}
 

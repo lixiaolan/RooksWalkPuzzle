@@ -21,6 +21,9 @@ class TutorialBoard extends Board {
 		mBanner.setCenter(0,.8f);
 		mTutorialState = TutorialState.ONE_TILE;
 		state = new OneTile(tiles);
+		path = TutorialInfo.path;
+		mBee = new Bee(this);
+		mBee.setState(GameState.GAME_OPENING, TutorialInfo.length);
 	}
 
 	public void setState()	{
@@ -37,11 +40,10 @@ class TutorialBoard extends Board {
 			break;
 		case WALKTHROUGH: 
 			b = ((WalkThrough)state).setCounter();
-			System.out.println("I Got into Walkthrough");
 			if(!b){
-				state = new Summary(tiles);
-				mTutorialState = TutorialState.SUMMARY;
-				setState();
+			    state = new Summary(tiles);
+			    mTutorialState = TutorialState.SUMMARY;
+			    setState();
 			}
 			break;
 		case SUMMARY:
@@ -127,6 +129,7 @@ class TutorialBoard extends Board {
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
 			super.draw(tiles, r);
 			mBanner.draw(r);
+			mBee.draw(r);
 		}
 		
 	}
@@ -138,6 +141,7 @@ class TutorialBoard extends Board {
 		public ShowPath(BoardTile[] tiles){
 			refTime = System.currentTimeMillis();
 			mBanner.set(mTutorialInfo.ShowPathBanner);
+			System.out.println("I set the mood");
 			mBee.setMood(Mood.HAPPY);
 		}
 		
@@ -189,6 +193,7 @@ class TutorialBoard extends Board {
 			super.draw(tiles, r);
 			mBanner.draw(r);
 			mBoardBg.draw(r);
+			mBee.draw(r);
 		}
 		
 		
@@ -219,6 +224,7 @@ class TutorialBoard extends Board {
 			super.draw(tiles, r);
 			mBanner.draw(r);
 			mBoardBg.draw(r);
+			mBee.draw(r);
 		}
 
 		public boolean setCounter() {

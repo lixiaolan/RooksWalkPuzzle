@@ -10,6 +10,11 @@ class TutorialInfo {
 
     static String[] banners = {"left_arrow+3", "right_arrow", "boob", "dylan", "boob", "dylan", "boob", "dylan", "boob", "dylan", "boob", "dylan"};
     static int[] activeTile = {4, 15, 17, 29, 27, 21, 19, 30, 12, 13, 7, 10};
+    
+    static int[][] path  = {{0,3},{0,4},{1,4},{1,1},{2,1},{2,0},{5,0},{5,1},{3,1},{3,3},{4,3},{4,5},{2,5},{2,3}};
+    
+    static int length = 14;
+
     static String[] arrow = {"left_arrow", "right_arrow", "left_arrow", "none", "left_arrow", "right_arrow","left_arrow", "right_arrow","left_arrow", "right_arrow","left_arrow", "right_arrow"};
     static String[] number = {"3", "none", "3", "none", "3","none", "3","none", "3","none","3", "none", "3", "none", "3","none", "3","none", "3","none"};
 
