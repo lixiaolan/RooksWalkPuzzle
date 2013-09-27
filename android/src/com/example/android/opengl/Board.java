@@ -9,27 +9,24 @@ import java.io.IOException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable {
+class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     public int hints;
     public int[] solution ;
     public int[][] path;
     public int[] columnSums;
     public int[] rowSums;
-    private Background mBoardBg;
     private boolean toggleHints = true;
     
     public Board() {
-	buildEmptyBoard();
-	state = new BoardMainMenu(tiles);
-	mBoardBg = new Background("boardbg", .75f);
+    	buildEmptyBoard();
+    	state = new BoardMainMenu(tiles);
     }
     
     public Board(Parcel in) {
 	in.readIntArray(solution);
 	//NEED TO TRACK DIFFICULTY OF PUZZLE
 	buildBoardFromSolution(5);
-	mBoardBg = new Background("boardbg", .75f);
 	state = new BoardPlay(tiles);
     }
     
@@ -151,12 +148,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 	}
     }
     
-    public void draw(MyGLRenderer r){
-    	mBoardBg.draw(r);
-    	super.draw(r);
-    	
-    }
-    
     public void createPuzzleFromJNI(int length, int hints){
 	try {
 	    readSolutionFromJni(stringFromJNI(6, 6, length) );	
@@ -203,47 +194,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements Parcelable 
 	return -1;   
     }
     
-    public void swiped(float[] pt, String direction) {
-	for (int i = 0; i < tiles.length; i++) {
-	    if( tiles[i].touched(pt) ) {
-		tiles[i].arrow = direction;
-	    }
-	}
-    }
-    
+   
     static {
 	System.loadLibrary("GeneratePuzzle");
     }
     
-    public static final Parcelable.Creator<Board> CREATOR = new Parcelable.Creator<Board>() {
-	
-	@Override
-	public Board createFromParcel(Parcel source) {
-	    return new Board(source); // RECREATE VENUE GIVEN SOURCE
-	}
-	
-	@Override
-	public Board[] newArray(int size) {
-	    return new Board[size]; // CREATING AN ARRAY OF VENUES
-	}
-	
-    };
-    
-    @Override
-	public int describeContents() {
-	// TODO Auto-generated method stub
-	return 0;
-    }
-    
-    public void writeToParcel(Parcel dest, int flags) {
-	dest.writeIntArray(this.solution);
-    }
-    
     public void setState(GameState s){
-	switch(s) {
-	case MAIN_MENU_OPENING: state = new BoardMainMenu(tiles); break;
-	case GAME_OPENING: state  = new BoardPlay(tiles); break;
-	}
+    	switch(s) {
+    		case MAIN_MENU_OPENING: state = new BoardMainMenu(tiles); break;
+    		case GAME_OPENING: state  = new BoardPlay(tiles); break;
+    	}
     }
     
     public boolean checkSolution(){

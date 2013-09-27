@@ -16,8 +16,8 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     public void setState(GameState s){
 	
 	switch(s){
-	case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
-	case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
+		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
+		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
 	}
     }
     

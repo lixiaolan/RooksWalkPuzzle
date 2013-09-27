@@ -32,23 +32,23 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_OPENING();
 	    break;
 	case MAIN_MENU_LIST:
-	    String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.OPTIONS,   TextureManager.BACK};
+	    String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.OPTIONS};
 	    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
 	    mCallback = new Callback_MAIN_MENU_LIST();
 	    break;
 	case MAIN_MENU_NEW:
-	    String[] textures3 = {TextureManager.TUTORIAL, TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST,  TextureManager.BACK};
+	    String[] textures3 = {TextureManager.TUTORIAL, TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST};
 	    mGameMenu = new GameMenu(pos1, scale1, textures3, TextureManager.NEW); 
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
 	case MAIN_MENU_OPTIONS:
-	    String[] textures4 = new String[2];
+	    String[] textures4 = new String[1];
 	    if(state.hintsOn){
 		textures4[0] = TextureManager.HINTS_ON;
 	    } else {
 		textures4[0] = TextureManager.HINTS_OFF;
 	    }
-	    textures4[1] = TextureManager.BACK;
+	    
 	    mGameMenu = new GameMenu(pos1, scale1, textures4, TextureManager.OPTIONS); 
 	    mCallback = new Callback_MAIN_MENU_OPTIONS();
 	    break;
@@ -58,7 +58,7 @@ class MenuManager {
 	    mCallback = new Callback_GAME_OPENING();
 	    break;
 	case GAME_MENU_LIST:
-	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.QUIT, TextureManager.BACK};
+	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.QUIT};
 	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_LIST();
 	    break;
@@ -107,7 +107,7 @@ class MenuManager {
 	    case 3: state.state = GameState.MAIN_MENU_OPTIONS;
 		updateState();
 		break;
-	    case 4: state.state = GameState.MAIN_MENU_OPENING;
+	    case 0: state.state = GameState.MAIN_MENU_OPENING;
 		updateState();
 		break;
 	    }
@@ -142,7 +142,7 @@ class MenuManager {
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 6: state.state = GameState.MAIN_MENU_LIST;
+	    case 0: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
 		break;
 	    }
@@ -161,7 +161,7 @@ class MenuManager {
 		    mGameMenu.setTexture(0,TextureManager.HINTS_OFF);
 		mModel.toggleHints(state.hintsOn);
 		break;
-	    case 2: state.state = GameState.MAIN_MENU_LIST;
+	    case 0: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
 		break;
 	    }
@@ -193,7 +193,7 @@ class MenuManager {
 	    mModel.setState(GameState.MAIN_MENU_OPENING);
 		updateState();
 		break;
-	    case 3: state.state = GameState.GAME_OPENING;
+	    case 0: state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
 	    }

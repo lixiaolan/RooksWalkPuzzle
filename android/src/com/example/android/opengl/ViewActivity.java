@@ -82,8 +82,8 @@ public class ViewActivity extends Activity {
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-	outState.putParcelable("board", mModel.mBoard);
-	super.onSaveInstanceState(outState);
+	//outState.putParcelable("board", mModel.mBoard);
+	//super.onSaveInstanceState(outState);
     }
     
     

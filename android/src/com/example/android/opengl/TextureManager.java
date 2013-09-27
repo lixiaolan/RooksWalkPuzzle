@@ -118,6 +118,9 @@ public class TextureManager {
 	    for(int i =0;i< TutorialInfo.banners.length;i++){
 	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),30);
 	    }
+	    
+	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 30);
+	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 30);
 	    }
 	
 	
@@ -244,7 +247,7 @@ public class TextureManager {
         	
         	index = textPaint.breakText(text, true, (float)size, null)-1;
         	oldIndex = index;
-        	while(text.charAt(index) != ' ' && index > 0){
+        	while(text.charAt(index) != ' ' && index > 0 && index != length-1){
         		System.out.println(text);
         		index--;
         	} 

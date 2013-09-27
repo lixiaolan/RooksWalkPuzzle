@@ -31,5 +31,7 @@ public abstract class State<T extends Tile> {
     }    
 
     public int touched(float[] pt) { return 0;};
-
+    
+    public void touchHandler(Menu mMenu, float[] pt){};
+    public void swipeHandler(String direction){};
 }

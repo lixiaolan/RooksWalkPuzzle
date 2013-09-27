@@ -5,7 +5,7 @@ public abstract class Graphic<T extends Tile, S extends State<T> > {
     S state;
     
     public void draw(MyGLRenderer r){
-	state.draw(tiles,r);
+    	state.draw(tiles,r);
     }
     
     public int touched(float[] pt) {
