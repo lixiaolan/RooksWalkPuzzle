@@ -30,7 +30,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	state = new BoardPlay(tiles);
     }
     
-    public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows){
+    public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable ){
 	columnSums = new int[36];
 	rowSums = new int[36];
 	for(int i=0;i<36;i++){
@@ -38,9 +38,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    tiles[i].setArrow(arrows[i]);
 	    tiles[i].setNumber(numbers[i]);
 	    tiles[i].setTrueArrow(trueArrows[i]);
+	    if(clickable!=null)
+	    	if(!clickable[i])
+	    		tiles[i].setHint();
 	    columnSums[i%6] += Math.max(solution[i],0);
 	    rowSums[i/6] += Math.max(solution[i],0);
 	}
+	this.path = path;
     }
     
     public int[] dumpSolution() {
@@ -75,6 +79,18 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	return arrows;
     }
     
+    public boolean[] dumpClickable() {
+    	boolean[] clickable = new boolean[36];
+    	for(int i =0; i<36; i++){
+    	    clickable[i] = tiles[i].isClickable();
+    	}
+    	return clickable;
+    }
+    
+    public int[][] dumpPath() {
+    	return path;
+    }
+    
     public void buildEmptyBoard() {
 	tiles = new BoardTile[36];
 	float size = .15f;
@@ -99,11 +115,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    tiles[i].setTrueSolution(0);
 	    tiles[i].setTrueArrow(TextureManager.CLEAR);
 	    if(solution [i] > 0){
-		columnSums[i%6] += Math.max(solution[i],0);
-		rowSums[i/6] += Math.max(solution[i],0);
-		numbers.add(i);
-		//tiles[i].setNumber(Integer.toString(solution[i]));
+	    	columnSums[i%6] += Math.max(solution[i],0);
+			rowSums[i/6] += Math.max(solution[i],0);
+			numbers.add(i);
+			//tiles[i].setNumber(Integer.toString(solution[i]));
 	    }
+	    //Set the solution in the tile
 	    tiles[i].setTrueSolution(solution[i]);
 	} 
 	int dx;
@@ -133,8 +150,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	if(toggleHints){
 	    Collections.shuffle(numbers);
 	    for(int i=0;i<hints;i++){
-		int r = numbers.get(i);
-		tiles[r].setHint();
+	    	int r = numbers.get(i);
+			tiles[r].setHint();
 	    }
 	}
     }
@@ -194,7 +211,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	return -1;   
     }
     
+    public int[] getColumnSums(){
+    	return columnSums;
+    }
    
+    public int[] getRowSums(){
+    	return rowSums;
+    }
     static {
 	System.loadLibrary("GeneratePuzzle");
     }
@@ -210,8 +233,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	for(int i =0; i < 36; i++){
 	    if(!( tiles[i].checkArrows() && tiles[i].checkSolutions() ) ){ 
 		System.out.println(Integer.toString(i));
-		System.out.println(tiles[i].getArrow()+" "+tiles[i].getTrueArrow());
-		System.out.println(tiles[i].getNumber()+" "+Integer.toString(tiles[i].getTrueSolution()));
+		System.out.println(tiles[i].getArrow()+" "+tiles[i].getTrueArrow()+Boolean.toString(tiles[i].checkArrows()));
+		System.out.println(tiles[i].getNumber()+" "+Integer.toString(tiles[i].getTrueSolution())+Boolean.toString(tiles[i].checkSolutions()));
 		return false;
 	    }
 	}
@@ -222,7 +245,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	toggleHints = toggle;
     }
     
-}
+
 
 class BoardMainMenu extends State<BoardTile> {
     
@@ -232,6 +255,7 @@ class BoardMainMenu extends State<BoardTile> {
     
     public BoardMainMenu(BoardTile[] tiles) {
 	centers = new float[2*tiles.length];
+	clearBoard();
 	
 	for (int i = 0; i < tiles.length; i++) {
 	    double r = Math.random();
@@ -411,3 +435,4 @@ class BoardPlay extends State<BoardTile> {
 
 
 
+}

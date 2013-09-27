@@ -113,7 +113,7 @@ class BoardTile extends Tile{
     	if(isBlack()) 
     		return true;
     	else {
-    		return arrow==true_arrow;
+    		return arrow.equals(true_arrow);
     	}
     	
     }
@@ -128,12 +128,12 @@ class BoardTile extends Tile{
     	if(isBlack()){
     		return true;
     	} else {
-    		if(number == "clear"){
+    		if(number.equals("clear")){
     			if(true_solution == 0){
     				return true;
     			}   
     		} else {
-    			if(Integer.toString(true_solution) == number)
+    			if(Integer.toString(true_solution).equals(number))
     				return true;
     		}
     	}

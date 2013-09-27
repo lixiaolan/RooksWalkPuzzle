@@ -1,8 +1,16 @@
 package com.example.android.opengl;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import android.content.Context;
 import android.os.Vibrator;
-import android.widget.Toast;
+import android.util.Log;
+
 
 
 class Model{
@@ -47,13 +55,12 @@ class Model{
 
 	public void createPuzzle(int length, int hints) {
 		mBoard.createPuzzleFromJNI(length, hints);
-		mBorder = new Border(mBoard.columnSums, mBoard.rowSums);	
+		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());	
 	}
 
-	public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows){
-		mBoard.restoreBoard(solution, numbers, arrows, trueArrows);
-		mBorder = new Border(mBoard.columnSums, mBoard.rowSums);
-		mMenu = new Menu();
+	public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
+		mBoard.restoreBoard(solution, numbers, arrows, trueArrows, path, clickable);
+		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());
 	}
 
 	public void toggleHints(boolean toggle) {
@@ -87,6 +94,9 @@ class Model{
 				if(mBoard.checkSolution()){
 					state.state = GameState.GAME_MENU_END;
 					mMenuManager.updateState();
+					//No game to save. No game to resume.
+					state.saveCurrGame = false;
+					state.resumeGameExists = false;
 					mBee.setMood(Mood.HAPPY);
 				} else {
 					vibe.vibrate(500);
@@ -191,6 +201,68 @@ class Model{
 		return state.state;
 	}
 
+	 public void restoreGameUtil(){
+	     	try{
+	     	    int[] solution = new int[36];
+	     	    String[] numbers = new String[36];
+	     	    String[] arrows = new String[36];
+	     	    String[] trueArrows = new String[36];
+	     	    int[][] path;
+	     	    boolean[] clickable = new boolean[36];
+	     	    
+	     	    File file = new File(context.getFilesDir(), "savefile");
+		    
+	     	    if(file.exists()){
+	     		Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
+	     		for(int i=0; i<36;i++){
+	     		    int m = scanner.nextInt();
+	     		    solution[i] = m;
+	     		}
+	     		for(int i=0; i<36;i++){
+	     		    String m = scanner.next();
+	     		    numbers[i] = m;
+	     		}
+	     		for(int i=0; i<36;i++){
+	     		    String m = scanner.next();
+	     		    arrows[i] = m;
+	     		}
+	     		for(int i=0; i<36;i++){
+	     		    String m = scanner.next();
+	     		    trueArrows[i] = m;
+	     		}
+	     		
+	     		for(int i =0; i< clickable.length;i++){
+	     			boolean m = scanner.nextBoolean();
+	    		    clickable[i] = m;
+	    		}
+	     		
+	     		int path_length = scanner.nextInt();
+	     		int twiddle = scanner.nextInt();
+	     		path = new int[path_length][twiddle];
+	     		for(int i=0; i< path_length;i++){
+	     			for(int j = 0;j< twiddle;j++){
+	     				path[i][j] = scanner.nextInt();
+	     			}
+	     		}
+	     		scanner.close();
+	     		restorePuzzle(solution, numbers, arrows, trueArrows, path, clickable);
+	     	    } 
+	     	}
+		
+	     	catch (FileNotFoundException e) {
+	     	    Log.e("Exception", "File not found: " + e.toString());
+	     	} 
+	     	catch (InputMismatchException e) {
+	     	    System.out.print(e.getMessage()); //try to find out specific reason.
+	     	}
+		
+	     }
+
+	public void reset() {
+		setState(GameState.MAIN_MENU_OPENING);
+		mMenuManager.updateState();
+	}
+	 
 	public void clearBoard() {
 		mBoard.clearBoard();
 	}    

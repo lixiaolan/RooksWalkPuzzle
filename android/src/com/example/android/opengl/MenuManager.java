@@ -32,9 +32,15 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_OPENING();
 	    break;
 	case MAIN_MENU_LIST:
-	    String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.OPTIONS};
-	    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
-	    mCallback = new Callback_MAIN_MENU_LIST();
+		if(state.resumeGameExists){
+			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.OPTIONS};
+			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
+			mCallback = new Callback_MAIN_MENU_LIST_RESUME();
+		} else {
+			String[] textures2 = {TextureManager.NEW, TextureManager.OPTIONS};
+			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
+			mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
+		}
 	    break;
 	case MAIN_MENU_NEW:
 	    String[] textures3 = {TextureManager.TUTORIAL, TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST};
@@ -86,7 +92,7 @@ class MenuManager {
     public void draw(MyGLRenderer r){
     	mGameMenu.draw(r);
     }
-    
+   
     
     class Callback_MAIN_MENU_OPENING extends Callback {
 	@Override
@@ -97,14 +103,38 @@ class MenuManager {
 	
     }
     
-    class Callback_MAIN_MENU_LIST extends Callback {
+    class Callback_MAIN_MENU_LIST_RESUME extends Callback {
+    	public void callback(int val) {
+    	    switch(val) {
+    		
+    	    case 1: state.state = GameState.MAIN_MENU_NEW;
+    		updateState();
+    		break;
+    	    case 2: 
+    	    state.saveCurrGame = true;
+    	    mModel.restoreGameUtil();
+    	    mModel.setState(GameState.GAME_OPENING);
+    	    state.state = GameState.GAME_OPENING;
+    	    updateState();
+    		break;
+    	    case 3: state.state = GameState.MAIN_MENU_OPTIONS;
+    		updateState();
+    		break;
+    	    case 0: state.state = GameState.MAIN_MENU_OPENING;
+    		updateState();
+    		break;
+    	    }
+    	}
+        }
+    
+    class Callback_MAIN_MENU_LIST_NORESUME extends Callback {
 	public void callback(int val) {
 	    switch(val) {
 		
 	    case 1: state.state = GameState.MAIN_MENU_NEW;
 		updateState();
 		break;
-	    case 3: state.state = GameState.MAIN_MENU_OPTIONS;
+	    case 2: state.state = GameState.MAIN_MENU_OPTIONS;
 		updateState();
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -115,29 +145,34 @@ class MenuManager {
     }
     
     class Callback_MAIN_MENU_NEW extends Callback{
+    	//Is this really the right place to ensure that a savedGame file is toggled.
 	public void callback(int val) {
-	    switch(val) {
+		switch(val) {
 	    case 1: 
 		mModel.setState(GameState.TUTORIAL);
 		state.state = GameState.TUTORIAL;
 		updateState();
 	    break;
-	    case 2: mModel.createPuzzle(8,2);
-		mModel.setState(GameState.GAME_OPENING);
+	    case 2: mModel.createPuzzle(4,2);
+	    state.saveCurrGame = true;
+	    mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
 	    case 3: mModel.createPuzzle(12,2);
+	    state.saveCurrGame = true;
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
 	    case 4: mModel.createPuzzle(16,3);
+	    state.saveCurrGame = true;
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
 	    case 5: mModel.createPuzzle(20,3);
+	    state.saveCurrGame = true;
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
@@ -238,4 +273,7 @@ class MenuManager {
 	    }
 	}
     }
+    
+    
+    
 }
