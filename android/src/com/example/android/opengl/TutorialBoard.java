@@ -174,10 +174,11 @@ class TutorialBoard extends Board {
 						tiles[i].setAngle(0);
 						tiles[i].setSize(.12f);
 						tiles[i].setColor("transparent");
-						tiles[i].setNumber(Integer.toString(tiles[i].getTrueSolution()));
-						tiles[i].setArrow(tiles[i].getTrueArrow());
+						//tiles[i].setNumber(Integer.toString(tiles[i].getTrueSolution()));
+						//tiles[i].setArrow(tiles[i].getTrueArrow());
 						tiles[i].setTextures();
 					}
+					showSolution();
 					period = DrawPeriod.DURING;
 				}
 				System.out.println("Counter + "+Integer.toString(mTutorialInfo.getCounter()));
@@ -208,6 +209,14 @@ class TutorialBoard extends Board {
 
 		public void enterAnimation(BoardTile[] tiles) {			
 				period = DrawPeriod.DURING;
+				for(int i = 0;i<tiles.length;i++){
+					tiles[i].setAngle(0);
+					tiles[i].setSize(.12f);
+					tiles[i].setColor("transparent");
+					tiles[i].setNumber(mTutorialInfo.initialNumbers[i]);
+					tiles[i].setArrow(mTutorialInfo.initialArrows[i]);
+					tiles[i].setTextures();
+				}
 		}
 
 		public void duringAnimation(BoardTile[] tiles) {
