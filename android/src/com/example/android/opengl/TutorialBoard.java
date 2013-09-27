@@ -15,7 +15,6 @@ class TutorialBoard extends Board {
 	public TutorialBoard() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 		super();
-		restoreBoard(TutorialInfo.solutionNumbers, TutorialInfo.initialNumbers, TutorialInfo.initialArrows, TutorialInfo.solutionArrows, null, null);
 		mBanner = new Banner(.7f);
 		mBoardBg = new Background("boardbg", .75f);
 		mBanner.setCenter(0,.8f);
@@ -24,6 +23,7 @@ class TutorialBoard extends Board {
 		path = TutorialInfo.path;
 		mBee = new Bee(this);
 		mBee.setState(GameState.GAME_OPENING, TutorialInfo.length);
+		restoreBoard(TutorialInfo.solutionNumbers, TutorialInfo.initialNumbers, TutorialInfo.initialArrows, TutorialInfo.solutionArrows, path, null);
 	}
 
 	public void setState()	{
