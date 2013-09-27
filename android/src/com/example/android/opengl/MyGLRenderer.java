@@ -174,8 +174,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	colorMap.put("blue", mSquareBlueColor);
 	colorMap.put("dullyellow", mSquareDullYellowColor);
 	colorMap.put("transparent",mSquareTransparentColor);
-
-	
     }
     
     protected String getVertexShader()
@@ -194,14 +192,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	//Set the background frame col// or
 	GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	GLES20.glDisable(GLES20.GL_DEPTH_TEST);
-		
-
-	//ViewMatrix Used to be here!!!!!!!!!!!!!!!!!!! NOw in "onSurfaceChanged"
-
-
 
 	// Calculate the projection and view transformation
-	//      Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
+	// Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 	
 	final String vertexShader = getVertexShader();   		
 	final String fragmentShader = getFragmentShader();			
@@ -211,12 +204,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final int fragmentShaderHandle = ShaderHelper.compileShader(GLES20.GL_FRAGMENT_SHADER, fragmentShader);
 	
 	//Handle for the program.
-	mProgramHandle = ShaderHelper.createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle, new String[] {"a_Position",  "a_Color", "a_TexCoordinate"});								               
+	mProgramHandle = ShaderHelper.createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle, new String[] {"a_Position",  "a_Color", "a_TexCoordinate"});
 	
 	//buildTextures();
-		TM = new TextureManager(mActivityContext);
-		//TM.setState(GameState.MAIN_MENU,null, null);
-		TM.buildTextures();
+	TM = new TextureManager(mActivityContext);
+	//TM.setState(GameState.MAIN_MENU,null, null);
+	TM.buildTextures();
     }
     
     
@@ -283,6 +276,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 	Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, -cameraDistance, lookX, lookY, lookZ, upX, upY, upZ);		
 
+    }
+
+    public float[] getTopLeft() {
+	float[] ret = new float[3];
+	ret[0] = 1.0f;
+	ret[1] = cameraDistance;
+	ret[2] = 0.0f; 
+	return ret;
     }
      
     public float[] project(float[] pt) {	
@@ -363,5 +364,80 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// Pass in the combined matrix.
 	GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
 	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
-    }   
+    }
+
+    public void drawTilePos(String pos, float size, String[] textures, String color, float angle, float[] pivot)
+    {
+	float[] center = new float[3];
+	if (pos == "TOPLEFT") {
+	    center = getTopLeft();
+	    center[0] -= size;
+	    center[1] -= size;
+	}
+	else if (pos == "TOPCENTER") {
+	    center = getTopLeft();
+	    center[0] = 0.0f;
+	    center[1] -= size;
+	}
+	
+	mTextures[0] = TM.library.get(textures[0]);
+	mTextures[1] = TM.library.get(textures[1]);	
+	mColor = colorMap.get(color);
+	
+	//Apply MTextures. Need this to make transparent colors stay transparent.		
+	GLES20.glEnable(GLES20.GL_BLEND);
+	GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+	
+	for(int i=0;i<mTextures.length; i++){
+	    GLES20.glActiveTexture(GLES20.GL_TEXTURE0+i);        
+	    GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[i]);
+	    GLES20.glUniform1i(mTextureHandle.get(i), i);
+	}
+	
+	
+	// Determine position and size
+	Matrix.setIdentityM(mModelMatrix, 0);
+	Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
+	Matrix.scaleM(mModelMatrix, 0, size, size, size);
+	
+	// long time = SystemClock.uptimeMillis() % 12000L;
+	// float angle = 0.030f * ((int) time);
+	Matrix.rotateM(mModelMatrix, 0, angle, pivot[0], pivot[1], pivot[2]);
+	
+	// Pass in the position information
+	mSquarePositions.position(0);		
+	GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
+	GLES20.glEnableVertexAttribArray(mPositionHandle);        
+	
+	// Pass in the position information
+	mSquarePositions.position(0);		
+	GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
+	
+	GLES20.glEnableVertexAttribArray(mPositionHandle);        
+	
+	// Pass in the color information
+	mColor.position(0);
+	GLES20.glVertexAttribPointer(mColorHandle, mColorDataSize, GLES20.GL_FLOAT, false, 0, mColor);        
+	GLES20.glEnableVertexAttribArray(mColorHandle);
+	
+	// Pass in the texture coordinate information
+	mSquareTextureCoordinates.position(0);
+	GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mSquareTextureCoordinates);
+	GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
+	
+	// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
+	// (which currently contains model * view).
+	Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, mModelMatrix, 0);   
+	
+	// Pass in the modelview matrix.
+	GLES20.glUniformMatrix4fv(mMVMatrixHandle, 1, false, mMVPMatrix, 0);                
+	
+	// This multiplies the modelview matrix by the projection matrix, and stores the result in the MVP matrix
+	// (which now contains model * view * projection).
+	Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mMVPMatrix, 0);
+	
+	// Pass in the combined matrix.
+	GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+	GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);    
+    }
 }
