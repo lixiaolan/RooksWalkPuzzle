@@ -8,18 +8,55 @@ class TutorialInfo {
     	Counter = -1;
     }
 
-    static String[] banners = {"left_arrow+3", "right_arrow", "boob", "dylan", "boob", "dylan", "boob", "dylan", "boob", "dylan", "boob", "dylan"};
-    static int[] activeTile = {4, 15, 17, 29, 27, 21, 19, 30, 12, 13, 7, 10};
+    //Boob Dylan
+    static String[] banners = {"Rule 1: Column and row sums must match the border numbers",
+			       "Rule 1: Column and row sums must match the border numbers",
+			       "Rule 2: The bee must change direction",
+			       "Remember Rule 1...",
+			       "Rule 2: The bee must change direction",
+			       "Rule 3: The bee flys over empty spaces",
+			       "Remember Rule 1:",
+			       "Remember Rule 2:",
+			       "Put it all together",
+			       "Rule 3: The bee flys over empty spaces",
+                               "You are almost there!",
+			       "One more step!",
+			       "Can you trace out your path?"};
+    static int[] activeTile = {29, 27,27,21, 21, 19, 30, 30, 12, 7, 10, 4, 2};
     
     static int[][] path  = {{0,3},{0,4},{1,4},{1,1},{2,1},{2,0},{5,0},{5,1},{3,1},{3,3},{4,3},{4,5},{2,5},{2,3}};
     
     static int length = 14;
 
-    static String[] arrow = {"left_arrow", "right_arrow", "left_arrow", "none", "left_arrow", "right_arrow","left_arrow", "right_arrow","left_arrow", "right_arrow","left_arrow", "right_arrow"};
-    static String[] number = {"3", "none", "3", "none", "3","none", "3","none", "3","none","3", "none", "3", "none", "3","none", "3","none", "3","none"};
+    static String[] arrow = {"none",
+			     "none",
+			     "right_arrow",
+			     "none",
+			     "down_arrow",
+			     "left_arrow",
+			     "none",
+			     "right_arrow",
+			     "up_arrow",
+			     "up_arrow",
+			     "right_arrow",
+			     "down_arrow",
+			     "none"};
+    static String[] number = {"2",
+			      "1",
+			      "none",
+			      "2",
+			      "none",
+			      "none",
+			      "3",
+			      "none",
+			      "1",
+			      "3",
+			      "1",
+			      "1",
+			      "none"};
 
-    static String OneTileBanner = "Welcome to Bee-Line.";
-    static String ShowPathBanner = "The goal of this game is to create a closed path.";
+    static String OneTileBanner = "Touch. Swipe. Get excited!";
+    static String ShowPathBanner = "The bee solved this puzzle, can you?";
     
     static int[] solutionNumbers = {
 	-1, -1, -1, 2, 1, -1, 
