@@ -15,7 +15,7 @@ class TutorialBoard extends Board {
 	public TutorialBoard() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 		super();
-		restoreBoard(TutorialInfo.solutionNumbers, TutorialInfo.initialNumbers, TutorialInfo.initialArrows, TutorialInfo.solutionArrows);
+		restoreBoard(TutorialInfo.solutionNumbers, TutorialInfo.initialNumbers, TutorialInfo.initialArrows, TutorialInfo.solutionArrows, null, null);
 		mBanner = new Banner(.7f);
 		mBoardBg = new Background("boardbg", .75f);
 		mBanner.setCenter(0,.8f);
@@ -183,7 +183,6 @@ class TutorialBoard extends Board {
 				System.out.println("Counter + "+Integer.toString(mTutorialInfo.getCounter()));
 			}
 		
-
 		@Override
 		public void duringAnimation(BoardTile[] tiles) {
 		}
@@ -195,8 +194,6 @@ class TutorialBoard extends Board {
 			mBoardBg.draw(r);
 			mBee.draw(r);
 		}
-		
-		
 	}
 	
 	class WalkThrough extends State<BoardTile> {

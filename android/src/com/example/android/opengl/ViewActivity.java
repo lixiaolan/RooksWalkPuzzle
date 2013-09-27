@@ -50,7 +50,8 @@ public class ViewActivity extends Activity {
     private MyGLRenderer mRenderer;    
    
     boolean savedGame = false;
-    String savefile = "savefile";
+    static final String savefile = "savefile";
+    static final String settingsfile = "settingsfile";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,32 +59,13 @@ public class ViewActivity extends Activity {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.viewactivity);
 	
-	// Create a GLSurfaceView instance and set it
-	// as the ContentView for this Activity
-	if(savedInstanceState != null){
-	    System.out.println("Restored some shit");
-	    mModel = new Model(this, (Board)savedInstanceState.getParcelable("board"));        	
-	} else {
-	    mModel = new Model(this);
-	}
-	
+	mModel = new Model(this);
 	mRenderer = new MyGLRenderer(this, mModel);
 	
 	mGLView = (GameView)findViewById(R.id.surface_view);
 	((GameView)mGLView).setMyRenderer(mRenderer);
 	((GameView)mGLView).setModel(mModel);
 	
-	// String fontPath = "MileyTwerk.ttf";
-	// Typeface tf = Typeface.createFromAsset(getAssets(), fontPath);
-	// bee_puzzled.mButton.setTypeface(tf);
-	// short_puz.mButton.setTypeface(tf);
-	// medium_puz.mButton.setTypeface(tf);
-    }
-    
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-	//outState.putParcelable("board", mModel.mBoard);
-	//super.onSaveInstanceState(outState);
     }
     
     
@@ -95,35 +77,60 @@ public class ViewActivity extends Activity {
 	// you should consider de-allocating objects that
 	// consume significant memory here.
 	mGLView.onPause();
-	/*
-	if(true){
+	System.out.println("Should I dump data: "+Boolean.toString(mModel.state.saveCurrGame));
+	if(mModel.state.saveCurrGame){
 	    File file = new File(this.getFilesDir(), savefile);
 	    int[] solutions = mModel.mBoard.dumpSolution();
-	    String[] arrows  = mModel.mBoard.dumpArrows();
 	    String[] numbers  = mModel.mBoard.dumpNumbers();
+	    String[] arrows  = mModel.mBoard.dumpArrows();
 	    String[] trueArrows = mModel.mBoard.dumpTrueArrows();
+	    int[][] path = mModel.mBoard.dumpPath();
+	    boolean[] clickable = mModel.mBoard.dumpClickable();
+	    
 	    try {
 		PrintWriter outputStream = new PrintWriter(new FileWriter(file));
 		for(int i =0; i< solutions.length;i++){
 		    outputStream.println(Integer.toString(solutions[i]));
 		}
+		
 		for(int i =0; i< numbers.length;i++){
-		    System.out.println("Saving "+Integer.toString(i)+" "+numbers[i]);
+		    //System.out.println("Saving "+Integer.toString(i)+" "+numbers[i]);
 		    outputStream.println(numbers[i]);
 		}
+		
 		for(int i =0; i< arrows.length;i++){
-		    System.out.println("Saving "+Integer.toString(i)+" "+arrows[i]);
+		    //System.out.println("Saving "+Integer.toString(i)+" "+arrows[i]);
 		    outputStream.println(arrows[i]);
 		}
+		
 		for(int i =0; i< trueArrows.length;i++){
 		    outputStream.println(trueArrows[i]);
 		}
+		
+		for(int i =0; i< clickable.length;i++){
+		    outputStream.println(clickable[i]);
+		}
+		
+		outputStream.println(path.length);
+		outputStream.println(path[0].length);
+		
+		for(int i =0;i< path.length ;i++){
+			for(int j=0;j<path[0].length;j++){
+				outputStream.println(path[i][j]);
+			}
+		}
+		
 		outputStream.close();
+		SharedPreferences s  = getSharedPreferences(settingsfile, 0);
+		SharedPreferences.Editor editor = s.edit();
+	    editor.putBoolean("savedGameExists", true);
+	    editor.commit();
+	    System.out.println("Edited Shared Preferences");
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
 	}
-	*/
+	
     }
     
     @Override
@@ -142,12 +149,20 @@ public class ViewActivity extends Activity {
     protected void onStart() {
 	super.onStart();
 
-	File file = new File(this.getFilesDir(), savefile);
-	if(file.exists()){
-	    savedGame = true;				
-	}	
-	
+		SharedPreferences s  = getSharedPreferences(settingsfile, 0);
+		mModel.state.resumeGameExists = s.getBoolean("savedGameExists", false);	
+		System.out.println("Is there a resume game "+Boolean.toString( mModel.state.resumeGameExists));
+		mModel.reset();
+	/*File file = new File(this.getFilesDir(), savefile);
+		if(file.exists()){
+			savedGame = true;				
+		}	
+	*/
     }
+ 
+    
+   
+    
     
     //This is called after the constructor of GameView is complete.
     //Otherwise, the positions would not work out correctly :(
@@ -188,48 +203,7 @@ public class ViewActivity extends Activity {
     // 	}	
     // }
     
-    // public void restoreGameUtil(){
-    // 	try{
-    // 	    int[] solution = new int[36];
-    // 	    String[] numbers = new String[36];
-    // 	    String[] arrows = new String[36];
-    // 	    String[] trueArrows = new String[36];
-    // 	    File file = new File(this.getFilesDir(), "savefile");
-	    
-    // 	    if(file.exists()){
-    // 		Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
-    // 		for(int i=0; i<36;i++){
-    // 		    int m = scanner.nextInt();
-    // 		    solution[i] = m;
-    // 		}
-    // 		for(int i=0; i<36;i++){
-    // 		    String m = scanner.next();
-    // 		    numbers[i] = m;
-    // 		}
-    // 		for(int i=0; i<36;i++){
-    // 		    String m = scanner.next();
-    // 		    arrows[i] = m;
-    // 		}
-    // 		for(int i=0; i<36;i++){
-    // 		    String m = scanner.next();
-    // 		    trueArrows[i] = m;
-    // 		}
-    // 		mModel.restorePuzzle(solution, numbers, arrows, trueArrows);
-    // 		savedGame = false;
-    // 		scanner.close();
-    // 	    } 
-    // 	}
-	
-    // 	catch (FileNotFoundException e) {
-    // 	    Log.e("Exception", "File not found: " + e.toString());
-    // 	} 
-    // 	catch (InputMismatchException e) {
-    // 	    System.out.print(e.getMessage()); //try to find out specific reason.
-	    
-    // 	}
-	
-    // }
-    
+     
     // public void resetGame(View v){
     // 	manageView(v);
     // 	try{
@@ -264,4 +238,5 @@ public class ViewActivity extends Activity {
     //This provides a flexible way for the menu to have smooth
     //animations between its different layouts.
     
+
 }

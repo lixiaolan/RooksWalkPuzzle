@@ -208,7 +208,7 @@ public class TextureManager {
         // Draw the text
         Paint textPaint = new Paint();
         textPaint.setTextSize(font);
-        textPaint.setTextAlign(Paint.Align.LEFT);
+        textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setStyle(Style.FILL);
         textPaint.setStrokeWidth(4);
         textPaint.setAntiAlias(true);
@@ -248,7 +248,6 @@ public class TextureManager {
         	index = textPaint.breakText(text, true, (float)size, null)-1;
         	oldIndex = index;
         	while(text.charAt(index) != ' ' && index > 0 && index != length-1){
-        		System.out.println(text);
         		index--;
         	} 
         	if(index <= 0)
