@@ -6,8 +6,6 @@ import java.util.Scanner;
 import java.io.IOException;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 class Board extends Graphic<BoardTile, State<BoardTile> > {
     
@@ -17,17 +15,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public int[] columnSums;
     public int[] rowSums;
     private boolean toggleHints = true;
+    private float flowerSize = .15f;
+    private float tileSize = .11f;
     
     public Board() {
     	buildEmptyBoard();
     	state = new BoardMainMenu(tiles);
-    }
-    
-    public Board(Parcel in) {
-	in.readIntArray(solution);
-	//NEED TO TRACK DIFFICULTY OF PUZZLE
-	buildBoardFromSolution(5);
-	state = new BoardPlay(tiles);
     }
     
     public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable ){
@@ -156,11 +149,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
     }
     
-    public void clearBoard() {
+    public void resetBoard() {
 	for(int i=0;i<tiles.length;i++){
 	    if(tiles[i].isClickable()){
-		tiles[i].setNumber(TextureManager.CLEAR);
-		tiles[i].setArrow(TextureManager.CLEAR);
+	    	tiles[i].setNumber(TextureManager.CLEAR);
+	    	tiles[i].setArrow(TextureManager.CLEAR);
 	    }
 	}
     }
@@ -204,8 +197,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     public int touched(float[] pt) {
 	for (int i = 0; i < tiles.length; i++) {
-	    if( tiles[i].touched(pt)) {
-		return i;
+	    if( tiles[i].touched(pt) && tiles[i].isClickable()) {
+	    	return i;
 	    }
 	}
 	return -1;   
@@ -245,7 +238,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	toggleHints = toggle;
     }
     
-
+    public void showSolution(){
+    	String sol = "";
+    	for(int i =0;i<tiles.length;i++){
+    		if(tiles[i].getTrueSolution() == 0)
+    			sol  = "clear";
+    		else
+    			sol = Integer.toString(tiles[i].getTrueSolution());
+    		tiles[i].setNumber(sol);
+    		tiles[i].setArrow(tiles[i].getTrueArrow());
+    	}
+    }
 
 class BoardMainMenu extends State<BoardTile> {
     
@@ -255,19 +258,22 @@ class BoardMainMenu extends State<BoardTile> {
     
     public BoardMainMenu(BoardTile[] tiles) {
 	centers = new float[2*tiles.length];
-	clearBoard();
 	
 	for (int i = 0; i < tiles.length; i++) {
 	    double r = Math.random();
 	    tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
 	    r = Math.random();
 	    tiles[i].velocity[1] = (float)(-1*r+(1-r)*1);
+	    
 	}
-
+	float[] pivot = {0.0f,0.0f,1.0f};
 	//Set textures	
 	for (int i = 0;i<tiles.length;i++){
 	    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 	    tiles[i].setColor("transparent");
+	    tiles[i].setSize(flowerSize);
+	    tiles[i].setAngle(0f);
+	    tiles[i].setPivot(pivot);
 	}
 	
 	for (int i = 0; i<tiles.length; i++ ) {
@@ -299,7 +305,6 @@ class BoardMainMenu extends State<BoardTile> {
     
     public float[] getForce(BoardTile[] tiles, int i) {
 	float[] force = {0.0f, 0.0f};
-	float[] temp;
 	float[] mid = {centers[2*i],centers[2*i+1],0.0f};
 	force = vSProd(-2.0f,vDiff(tiles[i].center, mid)); 
 	force = vSum(force, vSProd(-1.2f,tiles[i].velocity));
@@ -387,8 +392,8 @@ class BoardPlay extends State<BoardTile> {
     public long refTime;
     
     public BoardPlay(BoardTile[] tiles) {
-	originalTiles = tiles;
-	refTime = System.currentTimeMillis();
+    	originalTiles = tiles;
+    	refTime = System.currentTimeMillis();
     }
     
     public void enterAnimation(BoardTile[] tiles) {
@@ -418,7 +423,7 @@ class BoardPlay extends State<BoardTile> {
 	    for(int i = 0;i<tiles.length;i++){
 		tiles[i].setAngle(0);
 		tiles[i].setSize(.12f);
-		tiles[i].setColor("transparent");
+		//tiles[i].setColor("transparent");
 	    }
 	    period = DrawPeriod.DURING;
 	}

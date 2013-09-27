@@ -38,13 +38,14 @@ class BoardTile extends Tile{
     	true_arrow = TextureManager.CLEAR;
     	flowerTexture  = TextureManager.getFlowerTexture();
     	grassTexture  = TextureManager.getGrassTexture();
-	velocity[0] = 0.0f;
-	velocity[1] = 0.0f;
+    	velocity[0] = 0.0f;
+    	velocity[1] = 0.0f;
     }
 
     public void setHint(){
     	number  = Integer.toString(true_solution);
     	arrow = true_arrow;
+    	color = "dullyellow";
     	clickable = false;
     }
     

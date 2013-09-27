@@ -25,9 +25,9 @@ public class TextureManager {
     public static final String MEDIUM = "medium";
     public static final String LONGER = "longer";
     public static final String LONGEST = "longest";
-    public static final String HINTS_ON = "hints_on";
-    public static final String HINTS_OFF = "hints_off";
-    public static final String CLEAR_BOARD = "clear_board";
+    public static final String HINTS_ON = "hints on";
+    public static final String HINTS_OFF = "hints off";
+    public static final String CLEAR_BOARD = "reset";
     public static final String QUIT = "quit";
     public static final String YES = "yes";
     public static final String NO = "no";
@@ -43,6 +43,7 @@ public class TextureManager {
     public static final String NEXT = "next";
     public static final String PREVIOUS = "previous";
     public static final String LONGSTRING = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sapien erat, interdum quis libero ultrices, scelerisque ullamcorper enim.";
+    public static final String SHOW_SOLUTION = "solution";
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -84,6 +85,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.boardbg, "boardbg");
 		buildTextures(context, R.drawable.blacksquare, "blacksquare");
 		buildTextures(context, R.drawable.check, "check");
+		buildTextures(context, R.drawable.share, SHARE);
 		//Create Menu Textures
 
 		for(int i=0;i<6;i++){
@@ -109,10 +111,11 @@ public class TextureManager {
 	    buildTextures(QUIT, 64,64, QUIT, fontSize);
 	    buildTextures(YES, 64,64, YES, fontSize);
 	    buildTextures(NO, 64,64, NO, fontSize);
-	    buildTextures(SHARE, 64,64, SHARE, fontSize);
+	    //buildTextures(SHARE, 64,64, R.drawable.share, fontSize);
 	    buildTextures(TUTORIAL, 64,64, TUTORIAL, fontSize);
 	    buildTextures(NEXT, 64,64, NEXT, fontSize);
 	    buildTextures(PREVIOUS, 64,64, PREVIOUS, fontSize);
+	    buildTextures(SHOW_SOLUTION, 64,64, SHOW_SOLUTION, fontSize);
 	    buildTextures("", 64,64, CLEAR, fontSize);
 
 	    for(int i =0;i< TutorialInfo.banners.length;i++){

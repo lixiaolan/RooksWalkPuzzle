@@ -20,7 +20,7 @@ class Model{
 	public Board mBoard;
 	private Menu mMenu;
 	private Border mBorder;
-	private Bee mBee;
+	public Bee mBee;
 	private MenuManager mMenuManager;
 	private Background mBoardBg;
 	private Background mCheck;
@@ -264,6 +264,6 @@ class Model{
 	}
 	 
 	public void clearBoard() {
-		mBoard.clearBoard();
+		mBoard.resetBoard();
 	}    
 }

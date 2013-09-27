@@ -64,7 +64,7 @@ class MenuManager {
 	    mCallback = new Callback_GAME_OPENING();
 	    break;
 	case GAME_MENU_LIST:
-	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.QUIT};
+	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.SHOW_SOLUTION, TextureManager.QUIT};
 	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_LIST();
 	    break;
@@ -224,7 +224,15 @@ class MenuManager {
 	    mModel.clearBoard();
 		updateState();
 		break;
-	    case 2: state.state = GameState.MAIN_MENU_OPENING;
+	    case 2: state.state = GameState.GAME_MENU_END;		
+		//No game to save. No game to resume.
+	    mModel.mBoard.showSolution();
+	    mModel.mBee.setMood(Mood.HAPPY);
+		state.saveCurrGame = false;
+		state.resumeGameExists = false;
+		updateState();
+		break;
+	    case 3: state.state = GameState.MAIN_MENU_OPENING;
 	    mModel.setState(GameState.MAIN_MENU_OPENING);
 		updateState();
 		break;

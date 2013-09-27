@@ -58,14 +58,15 @@ public class ViewActivity extends Activity {
 	
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.viewactivity);
-	
+
 	mModel = new Model(this);
 	mRenderer = new MyGLRenderer(this, mModel);
 	
-	mGLView = (GameView)findViewById(R.id.surface_view);
-	((GameView)mGLView).setMyRenderer(mRenderer);
-	((GameView)mGLView).setModel(mModel);
-	
+		mGLView = (GameView)findViewById(R.id.surface_view);
+		((GameView)mGLView).setMyRenderer(mRenderer);
+		((GameView)mGLView).setModel(mModel);
+
+    
     }
     
     
@@ -149,6 +150,7 @@ public class ViewActivity extends Activity {
     protected void onStart() {
 	super.onStart();
 
+	
 		SharedPreferences s  = getSharedPreferences(settingsfile, 0);
 		mModel.state.resumeGameExists = s.getBoolean("savedGameExists", false);	
 		System.out.println("Is there a resume game "+Boolean.toString( mModel.state.resumeGameExists));

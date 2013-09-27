@@ -62,6 +62,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final FloatBuffer mSquareBlueColor;
     private final FloatBuffer mSquareBlackColor;
     private final FloatBuffer mSquareTransparentColor;
+    private final FloatBuffer mSquareDullYellowColor;
+    
     
     /** This will be used to pass in the transformation matrix. */
     private int mMVPMatrixHandle;
@@ -148,6 +150,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float[] squareBlueColorData = Colors.squareBlue;	
 	final float[] squareBlackColorData = Colors.squareBlack;
 	final float[] squareTransparentColorData = Colors.squareTransparent;
+	final float[] squareDullYellowColorData = Colors.squareDullYellow;
+	
 	
 	mSquareWhiteColor = ByteBuffer.allocateDirect(squareWhiteColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareWhiteColor.put(squareWhiteColorData).position(0);
@@ -161,9 +165,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	mSquareTransparentColor = ByteBuffer.allocateDirect(squareTransparentColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareTransparentColor.put(squareTransparentColorData).position(0);
 	
+	mSquareDullYellowColor = ByteBuffer.allocateDirect(squareDullYellowColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+	mSquareDullYellowColor.put(squareDullYellowColorData).position(0);
+	
+	
 	colorMap.put("white", mSquareWhiteColor);
 	colorMap.put("black", mSquareBlackColor);
 	colorMap.put("blue", mSquareBlueColor);
+	colorMap.put("dullyellow", mSquareDullYellowColor);
 	colorMap.put("transparent",mSquareTransparentColor);
 
 	
