@@ -220,6 +220,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     	switch(s) {
     		case MAIN_MENU_OPENING: state = new BoardMainMenu(tiles); break;
     		case GAME_OPENING: state  = new BoardPlay(tiles); break;
+    		default:
+    			break;
     	}
     }
     

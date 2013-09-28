@@ -20,7 +20,7 @@ class TutorialBoard extends Board {
 		mBanner = new Banner(.75f);
 		mBanner.setPosition("TOPCENTER");
 		
-		mBottomBanner = new Banner(.65f);
+		mBottomBanner = new Banner(.75f);
 		mBottomBanner.setPosition("BANNERBOTTOM");
 
 		mBoardBg = new Background("boardbg", .75f);
@@ -211,7 +211,12 @@ class TutorialBoard extends Board {
 				for(int i = 0;i<tiles.length;i++){
 					tiles[i].setAngle(0);
 					tiles[i].setSize(.12f);
-					tiles[i].setColor("transparent");
+					if(!mTutorialInfo.initialNumbers[i].equals("clear")){
+						tiles[i].setColor("dullyellow");
+					} else if(mTutorialInfo.getActiveTile() != i){
+						tiles[i].setColor("transparent");
+					}
+					
 					tiles[i].setNumber(mTutorialInfo.initialNumbers[i]);
 					tiles[i].setArrow(mTutorialInfo.initialArrows[i]);
 					tiles[i].setTextures();

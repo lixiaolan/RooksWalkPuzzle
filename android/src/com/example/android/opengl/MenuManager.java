@@ -21,7 +21,7 @@ class MenuManager {
     public void updateState() {
 	float[] pos1 = {-.75f, 0f, 0f};
 	float[] pos2 = {0f,-1.1f, 0f};
-	float[] pos3 = {0f,-1.2f, 0f};
+	float[] pos3 = {0f,-1.3f, 0f};
 	float scale1 = .3f;
 	float scale2  = .2f;
 	float tiltAngle = -1.0f*(float)Math.PI/2;

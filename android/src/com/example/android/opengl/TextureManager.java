@@ -125,11 +125,11 @@ public class TextureManager {
 	    buildTextures("", 64,64, CLEAR, fontSize);
 
 	    for(int i =0;i< TutorialInfo.banners.length;i++){
-	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),30);
+	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),20);
 	    }
 
 	    for(int i =0;i< TutorialInfo.bottomBanners.length;i++){
-	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i),30);
+	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i),20);
 	    }
 
 	    
