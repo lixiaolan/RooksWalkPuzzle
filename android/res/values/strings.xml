@@ -18,49 +18,47 @@
     <string name="app_name">Bee-Line</string>
     <string-array name="quotes">
         <item>
-            "Float like a butterfly, sting like a bee." \n \n
-            \t - Muhammad Ali 
+            <![CDATA["Float like a butterfly, sting like a bee." <br/> <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp - Muhammad Ali ]]>
        </item>
        <item>
-           "What a kid I got, I told him about the birds and the bee and he told me about the butcher and my wife." \n\n
-           \t- Rodney Dangerfield 
+          <![CDATA[ "What a kid I got, I told him about the birds and the bee and he told me about the butcher and my wife." <br/><br/>
+           &nbsp;&nbsp;&nbsp;&nbsp- Rodney Dangerfield ]]> 
        </item>
        <item>
-           "Bees do have a smell, you know, and if they don\'t they should, for their feet are dusted with spices from a million flowers." \n\n
-          \t ― Ray Bradbury
+           <![CDATA["Bees do have a smell, you know, and if they don\'t they should, for their feet are dusted with spices from a million flowers." <br/><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp ― Ray Bradbury]]>
        </item>
        <item>
-       beeline:\n
-       noun\n
-       a straight line between two places\n\n
-       \t- The Oxford English Dictionary
+       <![CDATA[<b>beeline</b> <i>n</i>. a straight line between two points on the earth\'s surface, such as a bee was supposed instinctively to take in returning to its hive.<br/>
+       &nbsp;&nbsp;&nbsp;&nbsp <i>-The Oxford English Dictionary</i>]]>
     	</item>
        <item>
-           “Everything takes time. Bees have to move very fast to stay still.” \n\n
-			\t ― David Foster Wallace
+          <![CDATA[ “Everything takes time. Bees have to move very fast to stay still.” <br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp ― David Foster Wallace ]]>
        </item>
        <item>
-           “To make a prairie it takes a clover and one bee,\n
-			One clover, and a bee,\n
-			And revery.\n
-			The revery alone will do,\n
-			If bees are few.”\n\n
-			\t― Emily Dickinson
+          <![CDATA[ “To make a prairie it takes a clover and one bee,<br/>
+			One clover, and a bee,<br/>
+			And revery.<br/>
+			The revery alone will do,<br/>
+			If bees are few.”<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp― Emily Dickinson ]]>
        </item>
        <item>
-           “I\'m covered in bees!”\n \n
-			\t ― Eddie Izzard
+        <![CDATA[   <b>“I\'m covered in bees!”</b><br/> <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp ― Eddie Izzard ]]>
        </item>
        <item>
-           “I don\'t like to hear cut and dried sermons. No—when I hear a man preach, I like to see him act as if he were fighting bees.” \n\n
-			\t ― Abraham Lincoln
+        <![CDATA[   “I don\'t like to hear cut and dried sermons. No—when I hear a man preach, I like to see him act as if he were fighting bees.” <br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp ― Abraham Lincoln ]]>
        </item>
        <item>
-           His labor is a chant,\n
-		   His idleness a tune;\n
-           Oh, for a bee\'s experience\n
-			Of clovers and of noon!\n\n
-			\t - From The Bee by Emily Dickinson
+        <![CDATA[   His labor is a chant,<br/>
+		   His idleness a tune;<br/>
+           Oh, for a bee\'s experience<br/>
+			Of clovers and of noon!<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp - From The Bee by Emily Dickinson ]]>
        </item>
        
     </string-array>

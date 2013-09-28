@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -72,7 +73,7 @@ public class ViewActivity extends Activity {
 	Resources res = getResources();
 	String[] quotes = res.getStringArray(R.array.quotes);
 	int sel = (int)(Math.random()*quotes.length);
-	mQuoteView.setText(quotes[sel]);
+	mQuoteView.setText(Html.fromHtml(quotes[sel]));
     
     }
     
