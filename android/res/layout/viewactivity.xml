@@ -26,4 +26,18 @@
         android:layout_alignParentTop="true"
         android:layout_weight="0.12" />
 
+    <TextView
+        android:id="@+id/QuoteView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|center_vertical"
+        android:background="@color/white"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:onClick="closeQuoteScreen"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
 </FrameLayout>

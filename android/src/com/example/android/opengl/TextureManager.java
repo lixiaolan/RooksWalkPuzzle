@@ -44,6 +44,9 @@ public class TextureManager {
     public static final String PREVIOUS = "previous";
     public static final String LONGSTRING = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sapien erat, interdum quis libero ultrices, scelerisque ullamcorper enim.";
     public static final String SHOW_SOLUTION = "solution";
+    public static final String FOOT = "+";
+    public static final String GOOD_JOB = "Good job!";
+    public static final String TRY_AGAIN = "Keep trying...";
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -116,11 +119,19 @@ public class TextureManager {
 	    buildTextures(NEXT, 64,64, NEXT, fontSize);
 	    buildTextures(PREVIOUS, 64,64, PREVIOUS, fontSize);
 	    buildTextures(SHOW_SOLUTION, 64,64, SHOW_SOLUTION, fontSize);
+	    buildLongTextures(TRY_AGAIN, 64,64, TRY_AGAIN, fontSize);
+	    buildLongTextures(GOOD_JOB, 64,64, GOOD_JOB, fontSize);
+	    
 	    buildTextures("", 64,64, CLEAR, fontSize);
 
 	    for(int i =0;i< TutorialInfo.banners.length;i++){
 	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),30);
 	    }
+
+	    for(int i =0;i< TutorialInfo.bottomBanners.length;i++){
+	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i),30);
+	    }
+
 	    
 	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 30);
 	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 30);

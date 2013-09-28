@@ -27,7 +27,8 @@ class Model{
 	private int at = -1;
 	private Vibrator vibe;
 	public Context context;
-
+	private Banner mGameBanner;
+	
 	public Model(Context c) {
 		initiateMembers(c, new Board());
 	}
@@ -50,19 +51,27 @@ class Model{
 		mMenu = new Menu();
 		mBoardBg = new Background("boardbg", .75f);
 		mTutorialBoard = new TutorialBoard();
+		mGameBanner = new Banner(.75f);
+		mGameBanner.setPosition("TOPCENTER");
 		//mTutorialBoard.setBee(mBee);
 	}    
 
 	public void createPuzzle(int length, int hints) {
+		state.showGameBanner = false;
 		mBoard.createPuzzleFromJNI(length, hints);
 		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());	
 	}
 
 	public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
+		state.showGameBanner = false;
 		mBoard.restoreBoard(solution, numbers, arrows, trueArrows, path, clickable);
 		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());
 	}
 
+	public void createTutorial(){
+		mTutorialBoard = new TutorialBoard();
+	}
+	
 	public void toggleHints(boolean toggle) {
 		mBoard.toggleHints(toggle);
 	}
@@ -92,6 +101,8 @@ class Model{
 
 			if(mCheck.touched(pt) == 1){
 				if(mBoard.checkSolution()){
+					state.showGameBanner = true;
+					mGameBanner.set(TextureManager.GOOD_JOB);
 					state.state = GameState.GAME_MENU_END;
 					mMenuManager.updateState();
 					//No game to save. No game to resume.
@@ -99,6 +110,8 @@ class Model{
 					state.resumeGameExists = false;
 					mBee.setMood(Mood.HAPPY);
 				} else {
+					mGameBanner.set(TextureManager.TRY_AGAIN);
+					state.showGameBanner = true;
 					vibe.vibrate(500);
 				}
 			}
@@ -171,10 +184,16 @@ class Model{
 		case GAME_OPENING:
 		case GAME_MENU_LIST:
 		case GAME_MENU_END:
+			mBoard.draw(r);
+			mBee.draw(r);
 			mBoardBg.draw(r);
 			mBorder.draw(r);
 			mMenu.draw(r);
 			mCheck.draw(r);
+			if(state.showGameBanner){
+				mGameBanner.draw(r);
+			}
+			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:

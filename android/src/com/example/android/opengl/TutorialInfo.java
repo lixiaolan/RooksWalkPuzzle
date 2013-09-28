@@ -22,13 +22,29 @@ class TutorialInfo {
                                "You are almost there!",
 			       "One more step!",
 			       "Can you trace out your path?"};
-    static int[] activeTile = {29, 27,27,21, 21, 19, 30, 30, 12, 7, 10, 4, 2};
+
+    static String[] bottomBanners = {"Enter a number.",
+	       "Enter a number",
+	       "Enter an arrow",
+	       "Enter a number",
+	       "Enter an arrow",
+	       "Enter a number and arrow",
+	       "Enter a number",
+	       "Enter an arrow",
+	       "Enter a number and arrow",
+	       "Enter a number and arrow",
+                    "Enter a number and arrow",
+	       "Enter a number and arrow",
+	       "Good Job!"};
+
+    
+    static int[] activeTile = {29, 27,27,21, 21, 19, 30, 30, 12, 7, 10, 4, 3};
     
     static int[][] path  = {{0,3},{0,4},{1,4},{1,1},{2,1},{2,0},{5,0},{5,1},{3,1},{3,3},{4,3},{4,5},{2,5},{2,3}};
     
     static int length = 14;
 
-    static String[] arrow = {"none",
+    static String[] arrow = {"down_arrow",
 			     "none",
 			     "right_arrow",
 			     "none",
@@ -87,7 +103,7 @@ class TutorialInfo {
     static String[] initialArrows = {
 	"clear", "clear", "clear", "left_arrow", "clear", "clear", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
-	"clear", "right_arrow", "clear", "clear", "clear", "left_arrow", 
+	"clear", "right_arrow", "clear", "up_arrow", "clear", "left_arrow", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
 	"clear","down_arrow","clear","clear","clear","clear"};
@@ -123,7 +139,8 @@ class TutorialInfo {
    }
    
    public void incrementCounter(){
-	   Counter++;
+	   if(Counter<banners.length-1)
+		   Counter++;
    }
     
 }

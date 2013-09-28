@@ -176,14 +176,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	colorMap.put("transparent",mSquareTransparentColor);
     }
     
+    
     protected String getVertexShader()
     {
-	return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.per_pixel_vertex_shader);
+    	return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.per_pixel_vertex_shader);
     }
     
     protected String getFragmentShader()
     {
-	return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.per_pixel_fragment_shader);
+    	return RawResourceReader.readTextFileFromRawResource(mActivityContext, R.raw.per_pixel_fragment_shader);
     }
     
     
@@ -279,13 +280,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public float[] getTopLeft() {
-	float[] ret = new float[3];
-	ret[0] = 1.0f;
-	ret[1] = cameraDistance;
-	ret[2] = 0.0f; 
-	return ret;
+    	float[] ret = new float[3];
+    	ret[0] = 1.0f;
+    	ret[1] = cameraDistance;
+    	ret[2] = 0.0f; 
+    	return ret;
     }
-     
+    
+ 
+    
     public float[] project(float[] pt) {	
 	pt[0] = -pt[0]*cameraDistance*(screenWidth/screenHeight)/frustumNear;
 	pt[1] = pt[1]*cameraDistance/frustumNear;
@@ -379,6 +382,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	    center[0] = 0.0f;
 	    center[1] -= size;
 	}
+	else if (pos == "MENUBOTTOM") {
+	    center = getTopLeft();
+	    center[0] = 0.0f;
+	    center[1] += size;
+
+	} else if(pos == "BANNERBOTTOM"){
+		center = getTopLeft();
+		float height = Math.abs(center[1]);
+	    center[0] = .75f-size;
+	    center[1] = -1*(.75f+size);
+	}
+	
 	
 	mTextures[0] = TM.library.get(textures[0]);
 	mTextures[1] = TM.library.get(textures[1]);	

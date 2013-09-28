@@ -25,10 +25,10 @@ public class BackgroundTile extends Tile{
     
     @Override
     public void draw(MyGLRenderer r) {
-	r.drawTile(center,size,textures,color,0, pivot);
+    	r.drawTile(center,size,textures,color,0, pivot);
     }
     
     public void draw(MyGLRenderer r, String pos) {
-	r.drawTilePos(pos,size,textures,color,0, pivot);
+    	r.drawTilePos(pos,size,textures,color,0, pivot);
     }    
 }

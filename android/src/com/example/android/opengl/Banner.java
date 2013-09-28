@@ -16,6 +16,8 @@ class BannerPlay extends State<BackgroundTile> {
 
 public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	
+	String position;
+	
 	public Banner(String bg, float size) {
 		state = new BackgroundPlay();
 		float[] center = {0,0,0};
@@ -35,6 +37,10 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	
 	}
 
+	public void setPosition(String position){
+		this.position = position;
+	}
+	
 	public void setCenter(float a, float b){
 		tiles[0].center[0] = a;
 		tiles[0].center[1] = b;
@@ -46,7 +52,7 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 
 	@Override
 	public void draw(MyGLRenderer r) {
-	    tiles[0].draw(r, "TOPCENTER");
+	    tiles[0].draw(r, position);
 	}
 }
 

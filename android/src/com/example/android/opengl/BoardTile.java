@@ -123,8 +123,18 @@ class BoardTile extends Tile{
     	size = s;
     }
     
-   
+   public boolean hasNumber() {
+	   if(!number.equals("clear") )
+		   return true;
+	   return false;
+   }
     
+   public boolean hasArrow() {
+	   if(!arrow.equals("clear") )
+		   return true;
+	   return false;
+   }
+   
     public boolean checkSolutions(){	
     	if(isBlack()){
     		return true;

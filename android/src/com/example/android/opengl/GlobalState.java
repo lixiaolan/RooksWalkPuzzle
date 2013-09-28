@@ -5,6 +5,8 @@ public class GlobalState {
     boolean hintsOn = true;
     boolean resumeGameExists = false;
     boolean saveCurrGame = false;
+    boolean showPathToggle = false;
+    boolean showGameBanner = false;
     int difficulty = 0;
     
     public GlobalState() {

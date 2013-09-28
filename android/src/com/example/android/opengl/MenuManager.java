@@ -21,6 +21,7 @@ class MenuManager {
     public void updateState() {
 	float[] pos1 = {-.75f, 0f, 0f};
 	float[] pos2 = {0f,-1.1f, 0f};
+	float[] pos3 = {0f,-1.2f, 0f};
 	float scale1 = .3f;
 	float scale2  = .2f;
 	float tiltAngle = -1.0f*(float)Math.PI/2;
@@ -33,17 +34,17 @@ class MenuManager {
 	    break;
 	case MAIN_MENU_LIST:
 		if(state.resumeGameExists){
-			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.OPTIONS};
+			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.TUTORIAL, TextureManager.OPTIONS};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
 			mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {
-			String[] textures2 = {TextureManager.NEW, TextureManager.OPTIONS};
+			String[] textures2 = {TextureManager.NEW, TextureManager.TUTORIAL, TextureManager.OPTIONS};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
 			mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
 		}
 	    break;
 	case MAIN_MENU_NEW:
-	    String[] textures3 = {TextureManager.TUTORIAL, TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST};
+	    String[] textures3 = {TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST};
 	    mGameMenu = new GameMenu(pos1, scale1, textures3, TextureManager.NEW); 
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
@@ -70,12 +71,12 @@ class MenuManager {
 	    break;
 	case GAME_MENU_END:
 	    String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
-	    mGameMenu = new GameMenu(pos2, scale2, textures7, TextureManager.CLEAR, tiltAngle); 
+	    mGameMenu = new TutorialMenu(pos2, scale2, textures7, TextureManager.CLEAR); 
 	    mCallback = new Callback_GAME_MENU_END();
 	    break;
 	case TUTORIAL:
-	    String[] textures8 = {TextureManager.NEXT, TextureManager.QUIT, TextureManager.PREVIOUS};
-	    mGameMenu = new GameMenu(pos2, scale2, textures8, TextureManager.CLEAR, tiltAngle); 
+	    String[] textures8 = {TextureManager.QUIT, TextureManager.NEXT};
+	    mGameMenu = new TutorialMenu(pos3, scale2, textures8, TextureManager.CLEAR); 
 	    mCallback = new Callback_TUTORIAL();
 	    break;
 	}
@@ -117,7 +118,13 @@ class MenuManager {
     	    state.state = GameState.GAME_OPENING;
     	    updateState();
     		break;
-    	    case 3: state.state = GameState.MAIN_MENU_OPTIONS;
+    	    case 3: 
+    			mModel.createTutorial();
+    		    mModel.setState(GameState.TUTORIAL);
+    			state.state = GameState.TUTORIAL;
+    			updateState();
+    		    break;
+    	    case 4: state.state = GameState.MAIN_MENU_OPTIONS;
     		updateState();
     		break;
     	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -134,7 +141,13 @@ class MenuManager {
 	    case 1: state.state = GameState.MAIN_MENU_NEW;
 		updateState();
 		break;
-	    case 2: state.state = GameState.MAIN_MENU_OPTIONS;
+	    case 2: 
+			mModel.createTutorial();
+		    mModel.setState(GameState.TUTORIAL);
+			state.state = GameState.TUTORIAL;
+			updateState();
+		    break;
+	    case 3: state.state = GameState.MAIN_MENU_OPTIONS;
 		updateState();
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -148,30 +161,25 @@ class MenuManager {
     	//Is this really the right place to ensure that a savedGame file is toggled.
 	public void callback(int val) {
 		switch(val) {
-	    case 1: 
-		mModel.setState(GameState.TUTORIAL);
-		state.state = GameState.TUTORIAL;
-		updateState();
-	    break;
-	    case 2: mModel.createPuzzle(4,2);
+	    case 1: mModel.createPuzzle(4,2);
 	    state.saveCurrGame = true;
 	    mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 3: mModel.createPuzzle(12,2);
+	    case 2: mModel.createPuzzle(12,2);
 	    state.saveCurrGame = true;
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 4: mModel.createPuzzle(16,3);
+	    case 3: mModel.createPuzzle(16,3);
 	    state.saveCurrGame = true;
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
 		updateState();
 		break;
-	    case 5: mModel.createPuzzle(20,3);
+	    case 4: mModel.createPuzzle(20,3);
 	    state.saveCurrGame = true;
 		mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
@@ -268,10 +276,10 @@ class MenuManager {
 	@Override
 	public void callback(int val) {
 	    switch(val) {
-	    case 1:
+	    case 2:
 		mModel.mTutorialBoard.setState();
 		break;
-	    case 2:
+	    case 1:
 		mModel.setState(GameState.MAIN_MENU_OPENING);
 		updateState();
 		break;
