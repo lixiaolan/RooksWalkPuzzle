@@ -181,30 +181,21 @@ class BeeFixed extends BeeState<BeeTile> {
 		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
 		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
 	    }
-	// } else if(time<interval+200f){
-	//     if(!flipped){
-	// 	mBoard.tiles[r].setPivot(pivot);
-	// 	mBoard.tiles[r].setRotate(true);
-	//     }
-	// }
-
-
 	else {
-	    System.out.println("Got into the else");
-	    //	    globalRefTime = System.currentTimeMillis();
 	    if (abs(bee.velocity) == 0.0f) {
 		bee.velocity[0] = .00001f;
 	    }
 	    bee.velocity = vSProd(.2f/abs(bee.velocity),bee.velocity);
 	    r = 6*mBoard.path[index][0] + mBoard.path[index][1];
 	    index = ((index-1)%length + length)%length;
-	    //	    globalRefTime = System.currentTimeMillis();
-	    // flipped = false;
+	    mBoard.tiles[r].rotate = true;
 	}
 	break;
 
 	case ASLEEP:
 	    bee.center = fixedPos;
+	    bee.velocity[0] = 0.0f;
+	    bee.velocity[1] = 0.0f;
 	    break;
 	}
     }
@@ -219,12 +210,14 @@ class BeeFixed extends BeeState<BeeTile> {
 	if (abs > .1) {
 	    force[0] = force[0]/abs;
 	    force[1] = force[1]/abs;
+	    force = vSum(force, vSProd(-2.0f,bee.velocity));
 	}
 	else {
 	    force[0] = 0.0f;
 	    force[1] = 0.0f;
+	    force = vSum(force, vSProd(-7.0f,bee.velocity));
 	}
-	force = vSum(force, vSProd(-4.0f,bee.velocity));
+
 	return force;
     }
     

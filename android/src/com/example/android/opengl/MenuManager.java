@@ -234,8 +234,9 @@ class MenuManager {
 		break;
 	    case 2: state.state = GameState.GAME_MENU_END;		
 		//No game to save. No game to resume.
-	    mModel.mBoard.showSolution();
-	    mModel.mBee.setMood(Mood.HAPPY);
+		mModel.mBoard.showSolution();
+		mModel.mBoard.setState(GameState.GAME_MENU_END);
+		mModel.mBee.setMood(Mood.HAPPY);
 		state.saveCurrGame = false;
 		state.resumeGameExists = false;
 		updateState();

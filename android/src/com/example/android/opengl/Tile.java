@@ -42,7 +42,9 @@ abstract class Tile {
 	return ret;
     }
 
-    
+    public float[] getCenter() {
+	return center;
+    }
  
     public void setTextures(String texture0, String texture1) {
  	   textures[0] = texture0;
