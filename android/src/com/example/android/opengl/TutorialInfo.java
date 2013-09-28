@@ -9,7 +9,9 @@ class TutorialInfo {
     }
 
     //Boob Dylan
-    static String[] banners = {"Rule 1: Column and row sums must match the border numbers",
+    static String[] banners = {"Note that the bee follows the numbers and arrows.",
+    				"The bee follows some basic rules.",
+    				"Rule 1: Column and row sums must match the border numbers",
 			       "Rule 1: Column and row sums must match the border numbers",
 			       "Rule 2: The bee must change direction",
 			       "Remember Rule 1...",
@@ -22,13 +24,34 @@ class TutorialInfo {
                                "You are almost there!",
 			       "One more step!",
 			       "Can you trace out your path?"};
-    static int[] activeTile = {29, 27,27,21, 21, 19, 30, 30, 12, 7, 10, 4, 2};
+
+    static String[] bottomBanners = {
+    	"Tell the bee to go two to the left from the blue tile.",
+    	"The yellow squares are hints.",
+    	"Find the number.",
+	       "Find the number",
+	       "Find the arrow",
+	       "Find the number",
+	       "Find the arrow",
+	       "Find the number and arrow",
+	       "Find the number",
+	       "Find the arrow",
+	       "Find the number and arrow",
+	       "Find the number and arrow",
+                    "Find the number and arrow",
+	       "Find the number and arrow",
+	       "Good Job!"};
+
+    
+    static int[] activeTile = {17, 17, 29, 27,27,21, 21, 19, 30, 30, 12, 7, 10, 4, 3};
     
     static int[][] path  = {{0,3},{0,4},{1,4},{1,1},{2,1},{2,0},{5,0},{5,1},{3,1},{3,3},{4,3},{4,5},{2,5},{2,3}};
     
     static int length = 14;
 
-    static String[] arrow = {"none",
+    static String[] arrow = {"left_arrow",
+    			"none",
+    			"down_arrow",
 			     "none",
 			     "right_arrow",
 			     "none",
@@ -42,6 +65,8 @@ class TutorialInfo {
 			     "down_arrow",
 			     "none"};
     static String[] number = {"2",
+    			"none",
+    			  "2",
 			      "1",
 			      "none",
 			      "2",
@@ -79,7 +104,7 @@ class TutorialInfo {
     static String[] initialNumbers = {
 	"clear", "clear", "clear", "2", "clear", "clear", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
-	"clear", "1", "clear", "2", "clear", "2", 
+	"clear", "1", "clear", "2", "clear", "clear", 
 	"clear", "2", "clear", "clear", "clear", "clear", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
 	"clear","1","clear","clear","clear","clear"};
@@ -87,7 +112,7 @@ class TutorialInfo {
     static String[] initialArrows = {
 	"clear", "clear", "clear", "left_arrow", "clear", "clear", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
-	"clear", "right_arrow", "clear", "clear", "clear", "left_arrow", 
+	"clear", "right_arrow", "clear", "up_arrow", "clear", "clear", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
 	"clear", "clear", "clear", "clear", "clear", "clear", 
 	"clear","down_arrow","clear","clear","clear","clear"};
@@ -123,7 +148,8 @@ class TutorialInfo {
    }
    
    public void incrementCounter(){
-	   Counter++;
+	   if(Counter<banners.length-1)
+		   Counter++;
    }
     
 }

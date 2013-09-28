@@ -18,6 +18,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     private float flowerSize = .15f;
     private float tileSize = .11f;
     
+    
     public Board() {
     	buildEmptyBoard();
     	state = new BoardMainMenu(tiles);
@@ -217,9 +218,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     public void setState(GameState s){
     	switch(s) {
+
 	case MAIN_MENU_OPENING: state = new BoardMainMenu(tiles); break;
 	case GAME_OPENING: state  = new BoardPlay(tiles); break;
 	case GAME_MENU_END: state = new BoardGameEnd(tiles); break;
+    	default: break;
     	}
     }
     
@@ -250,6 +253,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    tiles[i].setArrow(tiles[i].getTrueArrow());
     	}
     }
+
+    public void showPath() {
+    	//This will be a hard thing to actually accomplish. Leaving it on the side for now.
+    	List<Integer> markedTiles = new ArrayList<Integer>();
+    	for(int i=0;i< 36;i++){
+    		if(tiles[i].hasNumber() && tiles[i].hasArrow()){
+    			markedTiles.add(i);
+    		}
+    	}
+    }
+    
     
     class BoardMainMenu extends State<BoardTile> {
 	

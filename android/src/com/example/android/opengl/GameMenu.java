@@ -26,6 +26,9 @@ class GameMenu{
     	initialize(pos, size, textures, centerTexture);
     }
     
+    public GameMenu(){
+    	
+    }
     private void initialize(float[] pos, float size, String[] textures, String centerTexture) {
     	tilesSize = size;
     	tilesCenter = pos;

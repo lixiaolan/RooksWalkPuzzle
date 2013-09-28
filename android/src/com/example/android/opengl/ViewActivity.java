@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,9 +26,11 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.ViewAnimator;
 import android.widget.ViewSwitcher;
 import android.content.Context;
+import android.content.res.Resources;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -48,7 +51,8 @@ public class ViewActivity extends Activity {
     private GLSurfaceView mGLView;
     private Model mModel;
     private MyGLRenderer mRenderer;    
-   
+    private TextView mQuoteView;
+    
     boolean savedGame = false;
     static final String savefile = "savefile";
     static final String settingsfile = "settingsfile";
@@ -62,10 +66,14 @@ public class ViewActivity extends Activity {
 	mModel = new Model(this);
 	mRenderer = new MyGLRenderer(this, mModel);
 	
-		mGLView = (GameView)findViewById(R.id.surface_view);
+	mGLView = (GameView)findViewById(R.id.surface_view);
 		((GameView)mGLView).setMyRenderer(mRenderer);
 		((GameView)mGLView).setModel(mModel);
-
+	mQuoteView = (TextView)findViewById(R.id.QuoteView);
+	Resources res = getResources();
+	String[] quotes = res.getStringArray(R.array.quotes);
+	int sel = (int)(Math.random()*quotes.length);
+	mQuoteView.setText(Html.fromHtml(quotes[sel]));
     
     }
     
@@ -148,9 +156,7 @@ public class ViewActivity extends Activity {
     
     @Override
     protected void onStart() {
-	super.onStart();
-
-	
+	super.onStart();	
 		SharedPreferences s  = getSharedPreferences(settingsfile, 0);
 		mModel.state.resumeGameExists = s.getBoolean("savedGameExists", false);	
 		System.out.println("Is there a resume game "+Boolean.toString( mModel.state.resumeGameExists));
@@ -162,9 +168,13 @@ public class ViewActivity extends Activity {
 	*/
     }
  
-    
+    public void closeQuoteScreen(View v) {
+    	System.out.println("I should close now");
+    	TextView w = (TextView)findViewById(R.id.QuoteView);
+    	w.setVisibility(View.INVISIBLE);
+    }
    
-    
+}    
     
     //This is called after the constructor of GameView is complete.
     //Otherwise, the positions would not work out correctly :(
@@ -241,4 +251,3 @@ public class ViewActivity extends Activity {
     //animations between its different layouts.
     
 
-}

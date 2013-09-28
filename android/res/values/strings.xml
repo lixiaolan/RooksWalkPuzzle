@@ -15,13 +15,52 @@
      limitations under the License.
 -->
 <resources>
-
-    <string name="hello">Hello, Rooks Walk!</string>
-    <string name="app_name">Rooks Walk!</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_test_menu">TestMenuActivity</string>
-    <string name="title_activity_stats">Statistics</string>
+    <string name="app_name">Bee-Line</string>
+    <string-array name="quotes">
+        <item>
+            <![CDATA["Float like a butterfly, sting like a bee." <br/> <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp - Muhammad Ali ]]>
+       </item>
+       <item>
+          <![CDATA[ "What a kid I got, I told him about the birds and the bee and he told me about the butcher and my wife." <br/><br/>
+           &nbsp;&nbsp;&nbsp;&nbsp- Rodney Dangerfield ]]> 
+       </item>
+       <item>
+           <![CDATA["Bees do have a smell, you know, and if they don\'t they should, for their feet are dusted with spices from a million flowers." <br/><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp ― Ray Bradbury]]>
+       </item>
+       <item>
+       <![CDATA[<b>beeline</b> <i>n</i>. a straight line between two points on the earth\'s surface, such as a bee was supposed instinctively to take in returning to its hive.<br/>
+       &nbsp;&nbsp;&nbsp;&nbsp <i>-The Oxford English Dictionary</i>]]>
+    	</item>
+       <item>
+          <![CDATA[ “Everything takes time. Bees have to move very fast to stay still.” <br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp ― David Foster Wallace ]]>
+       </item>
+       <item>
+          <![CDATA[ “To make a prairie it takes a clover and one bee,<br/>
+			One clover, and a bee,<br/>
+			And revery.<br/>
+			The revery alone will do,<br/>
+			If bees are few.”<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp― Emily Dickinson ]]>
+       </item>
+       <item>
+        <![CDATA[   <b>“I\'m covered in bees!”</b><br/> <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp ― Eddie Izzard ]]>
+       </item>
+       <item>
+        <![CDATA[   “I don\'t like to hear cut and dried sermons. No—when I hear a man preach, I like to see him act as if he were fighting bees.” <br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp ― Abraham Lincoln ]]>
+       </item>
+       <item>
+        <![CDATA[   His labor is a chant,<br/>
+		   His idleness a tune;<br/>
+           Oh, for a bee\'s experience<br/>
+			Of clovers and of noon!<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp - From The Bee by Emily Dickinson ]]>
+       </item>
+       
+    </string-array>
 
 </resources>

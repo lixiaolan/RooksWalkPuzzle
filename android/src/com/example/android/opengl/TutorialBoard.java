@@ -3,11 +3,13 @@ package com.example.android.opengl;
 
 class TutorialBoard extends Board {
 	enum TutorialState {
-		INIT, ONE_TILE, SHOW_PATH, WALKTHROUGH, SUMMARY
+		INIT, ONE_TILE, SHOW_PATH, WALKTHROUGH
 	}
 
 	Banner mBanner; 
+	Banner mBottomBanner;
 	Background mBoardBg;
+	Border mBorder;
 	TutorialState mTutorialState;
 	TutorialInfo mTutorialInfo = new TutorialInfo();
 	Bee mBee;
@@ -16,8 +18,12 @@ class TutorialBoard extends Board {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 		super();
 		mBanner = new Banner(.75f);
+		mBanner.setPosition("TOPCENTER");
+		
+		mBottomBanner = new Banner(.75f);
+		mBottomBanner.setPosition("BANNERBOTTOM");
+
 		mBoardBg = new Background("boardbg", .75f);
-		mBanner.setCenter(0,.8f);
 		mTutorialState = TutorialState.ONE_TILE;
 		state = new OneTile(tiles);
 		path = TutorialInfo.path;
@@ -28,7 +34,7 @@ class TutorialBoard extends Board {
 
 	public void setState()	{
 		System.out.println("Got called :(");
-		boolean b;
+		
 		switch(mTutorialState) {
 		case ONE_TILE:
 			state = new ShowPath(tiles);
@@ -39,15 +45,7 @@ class TutorialBoard extends Board {
 			mTutorialState = TutorialState.WALKTHROUGH;
 			break;
 		case WALKTHROUGH: 
-			b = ((WalkThrough)state).setCounter();
-			if(!b){
-			    state = new Summary(tiles);
-			    mTutorialState = TutorialState.SUMMARY;
-			    setState();
-			}
-			break;
-		case SUMMARY:
-
+			boolean b = ((WalkThrough)state).setCounter();
 			break;
 		}
 	}
@@ -143,6 +141,7 @@ class TutorialBoard extends Board {
 			mBanner.set(mTutorialInfo.ShowPathBanner);
 			System.out.println("I set the mood");
 			mBee.setMood(Mood.HAPPY);
+			mBorder = new Border(getColumnSums(), getRowSums());
 		}
 		
 		@Override
@@ -170,14 +169,16 @@ class TutorialBoard extends Board {
 					}
 				}	
 				else {
+					showSolution();
 					for(int i = 0;i<tiles.length;i++){
 						tiles[i].setAngle(0);
 						tiles[i].setSize(.12f);
 						tiles[i].setColor("transparent");
-						tiles[i].setNumber(Integer.toString(tiles[i].getTrueSolution()));
-						tiles[i].setArrow(tiles[i].getTrueArrow());
+						//tiles[i].setNumber(Integer.toString(tiles[i].getTrueSolution()));
+						//tiles[i].setArrow(tiles[i].getTrueArrow());
 						tiles[i].setTextures();
 					}
+					
 					period = DrawPeriod.DURING;
 				}
 				System.out.println("Counter + "+Integer.toString(mTutorialInfo.getCounter()));
@@ -205,9 +206,21 @@ class TutorialBoard extends Board {
 			setCounter();
 			mBee.setMood(Mood.ASLEEP);
 		}
-
 		public void enterAnimation(BoardTile[] tiles) {			
 				period = DrawPeriod.DURING;
+				for(int i = 0;i<tiles.length;i++){
+					tiles[i].setAngle(0);
+					tiles[i].setSize(.12f);
+					if(!mTutorialInfo.initialNumbers[i].equals("clear")){
+						tiles[i].setColor("dullyellow");
+					} else if(mTutorialInfo.getActiveTile() != i){
+						tiles[i].setColor("transparent");
+					}
+					
+					tiles[i].setNumber(mTutorialInfo.initialNumbers[i]);
+					tiles[i].setArrow(mTutorialInfo.initialArrows[i]);
+					tiles[i].setTextures();
+				}
 		}
 
 		public void duringAnimation(BoardTile[] tiles) {
@@ -220,8 +233,11 @@ class TutorialBoard extends Board {
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
 			super.draw(tiles, r);
 			mBanner.draw(r);
+			mBottomBanner.draw(r);
 			mBoardBg.draw(r);
 			mBee.draw(r);
+			mBorder.draw(r);
+			
 		}
 
 		public boolean setCounter() {
@@ -230,6 +246,7 @@ class TutorialBoard extends Board {
 			} 
 			mTutorialInfo.incrementCounter();
 			mBanner.set("banner_"+Integer.toString(mTutorialInfo.getCounter()));
+			mBottomBanner.set("bottom_banner_"+Integer.toString(mTutorialInfo.getCounter()));
 			if(mTutorialInfo.getCounter() >= mTutorialInfo.activeTile.length){
 				return false;
 			}
