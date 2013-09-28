@@ -1,10 +1,5 @@
 package com.example.android.opengl;
 
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-
-import android.os.SystemClock;
 
 class TutorialMenu extends GameMenu{
 
