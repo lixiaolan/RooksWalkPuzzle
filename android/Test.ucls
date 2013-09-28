@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="com.example.android.opengl.GameView" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/GameView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="223" width="204" x="6634" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.example.android.opengl.GameMenu" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/GameMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="277" width="231" x="3843" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.example.android.opengl.LineGraphView" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/LineGraphView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="187" width="207" x="1017" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.example.android.opengl.BeeState" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/BeeState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="115" width="130" x="2114" y="1501"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.example.android.opengl.MenuManager.Callback_MAIN_MENU_LIST_RESUME" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="236" x="5089" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.example.android.opengl.TutorialBoard.ShowPath" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TutorialBoard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="210" x="3380" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.example.android.opengl.MenuTile" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/MenuTile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="169" width="158" x="3860" y="3759"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.example.android.opengl.GamePlayBee" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/GamePlayBee.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="79" width="129" x="2728" y="1501"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.example.android.opengl.Bee" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Bee.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="164" x="2014" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.example.android.opengl.MenuManager.Callback_MAIN_MENU_OPTIONS" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="208" x="4114" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.example.android.opengl.MenuManager.Callback_GAME_OPENING" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="171" x="4878" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="com.example.android.opengl.State" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/State.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2718" y="549"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="com.example.android.opengl.TutorialBoard.OneTile" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TutorialBoard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="205" width="210" x="2468" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="com.example.android.opengl.BannerPlay" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Banner.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="115" width="214" x="1818" y="1501"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.example.android.opengl.MainActivity" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/MainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="187" width="208" x="1264" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.example.android.opengl.MenuManager.Callback_GAME_MENU_END" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="183" x="4362" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.example.android.opengl.Colors" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Colors.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="223" width="152" x="1881" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="com.example.android.opengl.ShareHelper" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/ShareHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="349" width="329" x="1512" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="19" language="java" name="com.example.android.opengl.TutorialBoard.TutorialState" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/TutorialBoard.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="169" width="173" x="3167" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="20" language="java" name="com.example.android.opengl.TileMenuView" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TileMenuView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="205" width="201" x="2073" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="com.example.android.opengl.BeeWander" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Bee.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="313" width="175" x="2093" y="2358"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="com.example.android.opengl.BackgroundPlay" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Background.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="115" width="214" x="2284" y="1501"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="com.example.android.opengl.Board" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Board.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2544" y="2494"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="24" language="java" name="com.example.android.opengl.GameState" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/GameState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="223" width="194" x="6258" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="25" language="java" name="com.example.android.opengl.MenuManager.Callback_MAIN_MENU_NEW" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="183" x="5365" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="com.example.android.opengl.Menu" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Menu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="259" width="156" x="6218" y="2358"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="com.example.android.opengl.EndDialog" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/EndDialog.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="139" x="2314" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="com.example.android.opengl.Callback" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Callback.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="97" width="129" x="5089" y="2981"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="com.example.android.opengl.BoardTile" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/BoardTile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="565" width="156" x="2718" y="3759"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="com.example.android.opengl.ViewActivity" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/ViewActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="223" width="159" x="6282" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="31" language="java" name="com.example.android.opengl.State.DrawPeriod" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/State.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="115" width="129" x="2538" y="1501"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="32" language="java" name="com.example.android.opengl.MenuManager.Callback_MAIN_MENU_LIST_NORESUME" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="253" x="4585" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="com.example.android.opengl.MenuManager.Callback_TUTORIAL" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="97" width="137" x="6060" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="com.example.android.opengl.TutorialInfo" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TutorialInfo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="457" width="159" x="2968" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="com.example.android.opengl.TutorialBoard.WalkThrough" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TutorialBoard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="259" width="210" x="2218" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="com.example.android.opengl.ButtonManager" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/ButtonManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="79" width="129" x="10" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="com.example.android.opengl.BackgroundTile" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/BackgroundTile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="169" width="190" x="3630" y="3759"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="com.example.android.opengl.Board.BoardMainMenu" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Board.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="241" width="185" x="2053" y="2981"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="39" language="java" name="com.example.android.opengl.Mood" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Mood.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="133" width="129" x="2728" y="2358"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="40" language="java" name="com.example.android.opengl.BorderTile" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/BorderTile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="115" width="165" x="6673" y="3759"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="com.example.android.opengl.Model" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="367" width="325" x="6471" y="1501"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="com.example.android.opengl.Border" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Border.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="133" width="156" x="6682" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="com.example.android.opengl.LA" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/LA.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="79" width="129" x="348" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="com.example.android.opengl.ShareHelper.ShareIntentAdapter" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/ShareHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="169" width="203" x="1512" y="644"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="com.example.android.opengl.StatsActivity" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/StatsActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="115" width="208" x="517" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="com.example.android.opengl.Graphic" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Graphic.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="156" x="2493" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="com.example.android.opengl.Tile" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="331" width="173" x="3630" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="com.example.android.opengl.StateButton" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/StateButton.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="223" width="212" x="765" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="49" language="java" name="com.example.android.opengl.Background" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Background.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="133" width="150" x="6492" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="50" language="java" name="com.example.android.opengl.TutorialBoard.Summary" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TutorialBoard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="210" x="2718" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="com.example.android.opengl.Banner" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Banner.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="169" width="156" x="1818" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="52" language="java" name="com.example.android.opengl.BeeTile" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/BeeTile.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="133" width="156" x="1778" y="3759"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="53" language="java" name="com.example.android.opengl.MenuManager" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="188" x="5239" y="2358"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="54" language="java" name="com.example.android.opengl.TutorialBoard" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TutorialBoard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="177" x="2939" y="2981"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="55" language="java" name="com.example.android.opengl.MenuState" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/MenuState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="129" x="179" y="255"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="56" language="java" name="com.example.android.opengl.MenuManager.Callback_GAME_MENU_LIST" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="185" x="5835" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="57" language="java" name="com.example.android.opengl.MyGLRenderer" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/MyGLRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="817" width="291" x="6322" y="644"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="58" language="java" name="com.example.android.opengl.Board.BoardPlay" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Board.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="133" width="185" x="3177" y="2981"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="59" language="java" name="com.example.android.opengl.MenuStateEnum" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/MenuStateEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="277" width="217" x="179" y="644"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="60" language="java" name="com.example.android.opengl.MenuManager.Callback_MAIN_MENU_OPENING" 
+    project="ViewActivity" file="/ViewActivity/src/com/example/android/opengl/MenuManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="97" width="207" x="5588" y="3262"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="61" language="java" name="com.example.android.opengl.BeeFixed" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/Bee.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="385" width="175" x="1818" y="2358"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="62" language="java" name="com.example.android.opengl.TextureManager" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/TextureManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="817" width="248" x="6183" y="1501"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="63" language="java" name="com.example.android.opengl.GlobalState" project="ViewActivity" 
+    file="/ViewActivity/src/com/example/android/opengl/GlobalState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="151" width="163" x="6258" y="2981"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="64">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="47"/>  
+  </generalization>  
+  <association id="65">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="66" name="state"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="63" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="54" navigable="false">      
+      <attribute id="69" name="mTutorialInfo"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="71">    
+    <end type="SOURCE" refId="54"/>    
+    <end type="TARGET" refId="35"/>  
+  </nesting>  
+  <nesting id="72">    
+    <end type="SOURCE" refId="54"/>    
+    <end type="TARGET" refId="50"/>  
+  </nesting>  
+  <generalization id="73">    
+    <bendpoint x="6451" y="2981"/>    
+    <bendpoint x="6404" y="2358"/>    
+    <bendpoint x="6152" y="1501"/>    
+    <bendpoint x="6152" y="644"/>    
+    <end type="SOURCE" refId="49"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <association id="74">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="75" name="menuTiles"/>      
+      <multiplicity id="76" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <nesting id="78">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="38"/>  
+  </nesting>  
+  <association id="79">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="80" name="mBoard"/>      
+      <multiplicity id="81" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="82">    
+    <bendpoint x="4550" y="2981"/>    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="83" name="mGameMenu"/>      
+      <multiplicity id="84" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="85">    
+    <bendpoint x="4685" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <generalization id="86">    
+    <bendpoint x="1787" y="2981"/>    
+    <bendpoint x="1787" y="2358"/>    
+    <bendpoint x="1787" y="1501"/>    
+    <bendpoint x="1787" y="644"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <generalization id="87">    
+    <bendpoint x="2062" y="2358"/>    
+    <bendpoint x="2062" y="1501"/>    
+    <end type="SOURCE" refId="38"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="88">    
+    <bendpoint x="2268" y="2981"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="89" name="mBoard"/>      
+      <multiplicity id="90" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="91">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="47"/>  
+  </generalization>  
+  <nesting id="92">    
+    <bendpoint x="5546" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="56"/>  
+  </nesting>  
+  <association id="93">    
+    <bendpoint x="6425" y="2358"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="94" name="state"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="63" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="97" name="rowTiles"/>      
+      <multiplicity id="98" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="99">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="100" name="mRenderer"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="57" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="102">    
+    <end type="SOURCE" refId="52"/>    
+    <end type="TARGET" refId="47"/>  
+  </generalization>  
+  <nesting id="103">    
+    <end type="SOURCE" refId="54"/>    
+    <end type="TARGET" refId="19"/>  
+  </nesting>  
+  <association id="104">    
+    <bendpoint x="6501" y="2358"/>    
+    <bendpoint x="6501" y="2981"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="105" name="mCheck"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="107">    
+    <end type="SOURCE" refId="63" navigable="false">      
+      <attribute id="108" name="state"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="110">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="111" name="mMenu"/>      
+      <multiplicity id="112" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="113">    
+    <bendpoint x="5423" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="60"/>  
+  </nesting>  
+  <association id="114">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="115" name="state"/>      
+      <multiplicity id="116" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="117">    
+    <bendpoint x="2083" y="1501"/>    
+    <bendpoint x="2083" y="644"/>    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <association id="118">    
+    <end type="SOURCE" refId="42" navigable="false">      
+      <attribute id="119" name="columnTiles"/>      
+      <multiplicity id="120" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <bendpoint x="3618" y="2358"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="122" name="mTutorialBoard"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="54" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="124">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="125" name="bee"/>      
+      <multiplicity id="126" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="128" name="mModel"/>      
+      <multiplicity id="129" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="130">    
+    <bendpoint x="4921" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="32"/>  
+  </nesting>  
+  <association id="131">    
+    <bendpoint x="6586" y="2358"/>    
+    <bendpoint x="6586" y="2981"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="132" name="mBorder"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="134">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="44"/>  
+  </nesting>  
+  <association id="135">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="136" name="mBoard"/>      
+      <multiplicity id="137" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="138">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="139" name="mood"/>      
+      <multiplicity id="140" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="141">    
+    <bendpoint x="6291" y="644"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="142" name="mModel"/>      
+      <multiplicity id="143" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="144">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <association id="145">    
+    <end type="SOURCE" refId="58" navigable="false">      
+      <attribute id="146" name="originalTiles"/>      
+      <multiplicity id="147" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="148">    
+    <end type="SOURCE" refId="57" navigable="false">      
+      <attribute id="149" name="TM"/>      
+      <multiplicity id="150" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="62" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="151">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="31"/>  
+  </nesting>  
+  <association id="152">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="153" name="mAdapter"/>      
+      <multiplicity id="154" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="155">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="58"/>  
+  </nesting>  
+  <nesting id="156">    
+    <bendpoint x="4810" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="16"/>  
+  </nesting>  
+  <generalization id="157">    
+    <bendpoint x="3186" y="2358"/>    
+    <bendpoint x="3186" y="1501"/>    
+    <end type="SOURCE" refId="58"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="158">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="159" name="tiles"/>      
+      <multiplicity id="160" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="161">    
+    <bendpoint x="1766" y="2981"/>    
+    <bendpoint x="1766" y="3262"/>    
+    <end type="SOURCE" refId="61" navigable="false">      
+      <attribute id="162" name="bee"/>      
+      <multiplicity id="163" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="164">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="165" name="mRenderer"/>      
+      <multiplicity id="166" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="57" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="167">    
+    <bendpoint x="2697" y="2981"/>    
+    <bendpoint x="2697" y="2358"/>    
+    <bendpoint x="2697" y="1501"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="168">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="169">    
+    <end type="SOURCE" refId="54" navigable="false">      
+      <attribute id="170" name="mBoardBg"/>      
+      <multiplicity id="171" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="172">    
+    <bendpoint x="5659" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="33"/>  
+  </nesting>  
+  <association id="173">    
+    <bendpoint x="3639" y="644"/>    
+    <bendpoint x="3639" y="1501"/>    
+    <bendpoint x="3639" y="2358"/>    
+    <bendpoint x="3639" y="2981"/>    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="174" name="tiles"/>      
+      <multiplicity id="175" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="176">    
+    <end type="SOURCE" refId="53" navigable="false">      
+      <attribute id="177" name="mCallback"/>      
+      <multiplicity id="178" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="179">    
+    <end type="SOURCE" refId="54" navigable="false">      
+      <attribute id="180" name="mBee"/>      
+      <multiplicity id="181" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="182">    
+    <bendpoint x="5248" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <generalization id="183">    
+    <end type="SOURCE" refId="54"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <generalization id="184">    
+    <end type="SOURCE" refId="61"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="185">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="186" name="tiles"/>      
+      <multiplicity id="187" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="188">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="47"/>  
+  </generalization>  
+  <association id="189">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="190" name="period"/>      
+      <multiplicity id="191" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="192">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="193" name="tiles"/>      
+      <multiplicity id="194" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="195">    
+    <bendpoint x="3165" y="2358"/>    
+    <bendpoint x="2866" y="2981"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="196" name="mBee"/>      
+      <multiplicity id="197" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="198">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="199" name="tiles"/>      
+      <multiplicity id="200" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="201">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <nesting id="202">    
+    <end type="SOURCE" refId="54"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
+  <generalization id="203">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="47"/>  
+  </generalization>  
+  <generalization id="204">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <nesting id="205">    
+    <bendpoint x="5058" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="11"/>  
+  </nesting>  
+  <association id="206">    
+    <end type="SOURCE" refId="54" navigable="false">      
+      <attribute id="207" name="mTutorialState"/>      
+      <multiplicity id="208" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="209">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="210" name="centerTile"/>      
+      <multiplicity id="211" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="212">    
+    <end type="SOURCE" refId="57" navigable="false">      
+      <attribute id="213" name="mModel"/>      
+      <multiplicity id="214" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="215">    
+    <end type="SOURCE" refId="46" navigable="false">      
+      <attribute id="216" name="state"/>      
+      <multiplicity id="217" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="218">    
+    <bendpoint x="5311" y="2981"/>    
+    <end type="SOURCE" refId="53"/>    
+    <end type="TARGET" refId="25"/>  
+  </nesting>  
+  <generalization id="219">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <nesting id="220">    
+    <end type="SOURCE" refId="54"/>    
+    <end type="TARGET" refId="13"/>  
+  </nesting>  
+  <association id="221">    
+    <end type="SOURCE" refId="54" navigable="false">      
+      <attribute id="222" name="mBanner"/>      
+      <multiplicity id="223" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="224">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <association id="225">    
+    <bendpoint x="6227" y="2981"/>    
+    <bendpoint x="6227" y="3262"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="226" name="menuTiles"/>      
+      <multiplicity id="227" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="228">    
+    <bendpoint x="1808" y="2981"/>    
+    <bendpoint x="1787" y="3262"/>    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="229" name="bee"/>      
+      <multiplicity id="230" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="52" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="231">    
+    <bendpoint x="6480" y="2358"/>    
+    <bendpoint x="6480" y="2981"/>    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="232" name="mBoardBg"/>      
+      <multiplicity id="233" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="49" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="234">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <generalization id="235">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <association id="236">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="237" name="mMenuManager"/>      
+      <multiplicity id="238" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="53" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="239">    
+    <bendpoint x="6643" y="644"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="240" name="mModel"/>      
+      <multiplicity id="241" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="242">    
+    <bendpoint x="2887" y="2981"/>    
+    <bendpoint x="2887" y="2358"/>    
+    <bendpoint x="2887" y="1501"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="243">    
+    <end type="SOURCE" refId="60"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <generalization id="244">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <association id="245">    
+    <end type="SOURCE" refId="55" navigable="false">      
+      <attribute id="246" name="state"/>      
+      <multiplicity id="247" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="59" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="248">    
+    <end type="SOURCE" refId="56"/>    
+    <end type="TARGET" refId="28"/>  
+  </generalization>  
+  <generalization id="249">    
+    <bendpoint x="3146" y="2981"/>    
+    <bendpoint x="3144" y="2358"/>    
+    <bendpoint x="3144" y="1501"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="250">    
+    <bendpoint x="1745" y="2981"/>    
+    <bendpoint x="1745" y="2358"/>    
+    <bendpoint x="1745" y="1501"/>    
+    <bendpoint x="1745" y="644"/>    
+    <end type="SOURCE" refId="51"/>    
+    <end type="TARGET" refId="46"/>  
+  </generalization>  
+  <generalization id="251">    
+    <bendpoint x="2908" y="2981"/>    
+    <bendpoint x="2908" y="2358"/>    
+    <bendpoint x="2908" y="1501"/>    
+    <end type="SOURCE" refId="50"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="252">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
