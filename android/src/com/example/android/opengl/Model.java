@@ -11,8 +11,6 @@ import android.content.Context;
 import android.os.Vibrator;
 import android.util.Log;
 
-
-
 class Model{
 	public GlobalState state;
 	public TutorialBoard mTutorialBoard;

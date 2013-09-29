@@ -145,7 +145,7 @@ class BeeFixed extends BeeState<BeeTile> {
     
     float[] pivot = {1,0,1};
     float[] fixedPos = {-0.375f,1.0f,0.0f};
-    float[] fixedPosHidden = {4.0f, 0.0f, 0.0f};
+    float[] fixedPosHidden = {-2.0f, 0.0f, 0.0f};
     
     public BeeFixed(Board b, Mood m) {
 	setBoard(b);
