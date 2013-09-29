@@ -38,7 +38,7 @@ class Model{
 		mBoard = b;
 		mBee = new Bee(mBoard);
 		mCheck  = new Background("check",.11f);
-		float[] center = {-.7f,1f, 0f};
+		float[] center = {-.7f,-1f, 0f};
 		mCheck.setCenter(center);
 		context = c;
 		vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
@@ -111,14 +111,17 @@ class Model{
 					vibe.vibrate(500);
 				}
 			}
-
+			
+			
 		case GAME_MENU_LIST:    
 		case GAME_MENU_END:
 			val = mMenuManager.touched(pt);
 			if(val != -1){
 				mMenuManager.onTouched(val);
 			}
-
+			if(mBee.touched(pt) == 1){
+				vibe.vibrate(500);
+			}
 			break;
 		case MAIN_MENU_OPENING:    
 		case MAIN_MENU_LIST:
@@ -135,8 +138,11 @@ class Model{
 			if(val != -1){
 				mMenuManager.onTouched(val);
 			}	    
+			if(mBee.touched(pt) == 1){
+				vibe.vibrate(500);
+			}
 			break;
-
+		
 		case TUTORIAL:
 			//Game Menu
 			val = mMenuManager.touched(pt);
@@ -148,9 +154,7 @@ class Model{
 		default: break;
 		}
 
-		if(mBee.touched(pt) == 1){
-			vibe.vibrate(500);
-		}
+		
 
 
 

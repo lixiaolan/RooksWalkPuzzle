@@ -119,7 +119,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	} 
 	int dx;
 	int dy;
-	int length = (path.length -2)/2;
+	int length = (path.length)/2;
 	for (int i = 0; i < length-1; i++) {
 	    dx = path[i+1][0]-path[i][0];
 	    dy = path[i+1][1]-path[i][1];
