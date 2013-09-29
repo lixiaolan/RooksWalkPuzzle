@@ -357,47 +357,72 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     
-    
+    //This state defines board behavior during game play
     class BoardPlay extends State<BoardTile> {
 	
 	public Tile[] originalTiles;
 	public long refTime;
-	
+	public boolean swap = false;
+	public float initSize;
+	public float finalSize = .12f;
+	public float[] oldX;
+	public float[] oldY;
+
 	public BoardPlay(BoardTile[] tiles) {
 	    originalTiles = tiles;
 	    refTime = System.currentTimeMillis();
+	    oldX = new float[tiles.length];
+	    oldY = new float[tiles.length];
 	    for (int i = 0; i < tiles.length; i++) {
 		tiles[i].rotate = false;
+		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
+		oldX[i] = tiles[i].center[0];
+		oldY[i] = tiles[i].center[1];
 	    }
+	    initSize = tiles[0].getSize();
 	}
 	
 	public void enterAnimation(BoardTile[] tiles) {
 	    long time = System.currentTimeMillis() - refTime;
 	    float totalTime = 2000f;
-	    
-	    if(time < totalTime) {
+	    // This does a simultaneous snap to position and shrink of tiles.
+	    if(time < totalTime/3) {
 		for (int i = 0; i < tiles.length; i++) {
-		    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 		    float Sx = ( (i/6) - 2.5f )/4.0f;
 		    float Sy = ( (i%6) - 2.5f )/4.0f;
-		    tiles[i].setSize(.12f*time/totalTime+(1-time/totalTime)*.15f);
-		    float newX = originalTiles[i].center[0]+time/totalTime*(Sx - originalTiles[i].center[0]);
-		    float newY = originalTiles[i].center[1]+time/totalTime*(Sy - originalTiles[i].center[1]);
-		    float center[] = { newX, newY, 0.0f};
+		    float newX = Sx + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldX[i]-Sx);
+		    float newY = Sy + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldY[i]-Sy);
+		    float center[] = {newX, newY, 0.0f};
 		    tiles[i].center = center;
 		}			
-	    } 
-	    else if( time < 4000.0f && time > totalTime) {
-		float[] pivot = {1,0,0};
+	    }
+	    //Tiles shirnk to zero then blow up with the
+	    //the correct game tiles.
+	    else if( time < 2*totalTime/3 && time > totalTime/3) {
 		for (int i = 0; i < tiles.length; i++) {
-		    tiles[i].setPivot(pivot);
-		    tiles[i].setAngle((time-totalTime)*.045f);
+		    tiles[i].setSize(initSize*(2-3*time/totalTime ) );
 		}
-	    }	
+	    }
+	    else if( time < totalTime && time > 2*totalTime/3) {
+		float[] pivot = {1,0,0};
+		if (!swap) {
+		    for (int i = 0; i < tiles.length; i++) {
+			tiles[i].setTextures();
+			float Sx = ( (i/6) - 2.5f )/4.0f;
+			float Sy = ( (i%6) - 2.5f )/4.0f;
+			float center[] = {Sx, Sy, 0.0f};
+			tiles[i].center = center;
+		    }
+		}
+		for (int i = 0; i < tiles.length; i++) {
+		    tiles[i].setSize(finalSize*(3*time/totalTime-2));
+		}
+	    }
+	
 	    else {
 		for(int i = 0;i<tiles.length;i++){
 		    tiles[i].setAngle(0);
-		    tiles[i].setSize(.12f);
+		    tiles[i].setSize(finalSize);
 		    //tiles[i].setColor("transparent");
 		}
 		period = DrawPeriod.DURING;
@@ -440,8 +465,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		    tiles[i].setPivot(tiles[i].getCenter());
 		}
 		long time = System.currentTimeMillis()-refTime[i];
+		//Note: rotateTiles[i] is triggered by the bee
+		//directly when it visits a flower.
 		if(time < 10000f && rotateTiles[i]==true){
-		    System.out.println("Made it in and i: " + Integer.toString(i));
 		    if(time<1000f) {
 			tiles[i].setAngle(180f*time/2000f);
 		    }
