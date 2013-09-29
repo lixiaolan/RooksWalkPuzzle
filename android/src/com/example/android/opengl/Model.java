@@ -47,7 +47,7 @@ class Model{
 		state = new GlobalState();
 		mMenuManager = new MenuManager(state, this);
 		mMenu = new Menu();
-		mBoardBg = new Background("boardbg", .752f);
+		mBoardBg = new Background("boardbg", .75f);
 		mGameBanner = new Banner(.75f);
 		mGameBanner.setPosition("TOPCENTER");
 	}    

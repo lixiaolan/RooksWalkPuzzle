@@ -1,5 +1,7 @@
 package com.example.android.opengl;
 
+import android.content.Context;
+
 
 class TutorialBoard extends Board {
 	enum TutorialState {
@@ -19,7 +21,6 @@ class TutorialBoard extends Board {
 		super();
 		mBanner = new Banner(.75f);
 		mBanner.setPosition("TOPCENTER");
-		
 		mBottomBanner = new Banner(.75f);
 		mBottomBanner.setPosition("BANNERBOTTOM");
 
@@ -100,6 +101,7 @@ class TutorialBoard extends Board {
 		}	
 
 		public void touchHandler(Menu mMenu, float[]  pt){
+			setState();
 			int val = mMenu.touched(pt);
 			if (val != -1) {
 				System.out.println("Menu Touched!");
@@ -195,6 +197,14 @@ class TutorialBoard extends Board {
 			mBoardBg.draw(r);
 			mBee.draw(r);
 		}
+		
+		
+		public void touchHandler(Menu menu, float[] pt) {
+			setState();
+		}
+		
+		
+		
 	}
 	
 	class WalkThrough extends State<BoardTile> {
@@ -291,22 +301,46 @@ class TutorialBoard extends Board {
 					mMenu.menuActive = false;
 				}
 			}
+			if(checkInput()){
+				setCounter();
+			}
 		}
 
+		private boolean checkInput() {
+			boolean correctNumber = false;
+			boolean correctArrow  = false;
+			String number = mTutorialInfo.getNumber();
+			String arrow = mTutorialInfo.getArrow();
+			if(!number.equals("none")){
+				if(number.equals(tiles[mTutorialInfo.getActiveTile()].getNumber())){
+					correctNumber = true;
+				}
+			} 
+			
+			if(!arrow.equals("none")){
+				if(arrow.equals(tiles[mTutorialInfo.getActiveTile()].getArrow())){
+					correctArrow = true;
+				}
+			}
+			
+			return correctNumber && correctArrow;
+			
+		}
+		
 		public void swipeHandler(String direction) {
 			if(mTutorialState == TutorialState.WALKTHROUGH){
 				if(direction.equals(mTutorialInfo.getArrow())){
 					tiles[mTutorialInfo.getActiveTile()].setArrow(direction);
 				}
+				if(checkInput()){
+					setCounter();
+				}
 			}
 		}
 
 		private boolean userNumberInput(int val) {
-			System.out.println("I got some input! ");
 			if(mTutorialState == TutorialState.WALKTHROUGH){
-
 				if( Integer.toString(val).equals(mTutorialInfo.getNumber())){
-					System.out.println("Found some correct input");
 					tiles[mTutorialInfo.getActiveTile()].setUserInput(val);
 					return true;
 				}

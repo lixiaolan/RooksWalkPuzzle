@@ -129,8 +129,7 @@ class BeeWander extends BeeState<BeeTile> {
 	    ret += vec[i]*vec[i];
 	ret = (float)Math.sqrt(ret);
 	return ret;
-    }
-    
+    }    
 }
 
 class BeeFixed extends BeeState<BeeTile> {
@@ -145,7 +144,7 @@ class BeeFixed extends BeeState<BeeTile> {
     int length;
     
     float[] pivot = {1,0,1};
-    float[] fixedPos = {-.75f,-1.0f,0.0f};
+    float[] fixedPos = {-0.375f,1.0f,0.0f};
     
     
     public BeeFixed(Board b, Mood m) {
@@ -176,30 +175,48 @@ class BeeFixed extends BeeState<BeeTile> {
 	float[] force = new float[2];
 	switch (mood) {
 	case HAPPY:
-	    if( abs(bee.velocity) > .01f ){
+	    if(abs(bee.velocity) > .01f){
 		force = getForce(mBoard.tiles[r]);
 		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
 		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
 	    }
-	else {
-	    if (abs(bee.velocity) == 0.0f) {
-		bee.velocity[0] = .00001f;
+	    else {
+		if (abs(bee.velocity) == 0.0f) {
+		    bee.velocity[0] = .00001f;
+		}
+		bee.velocity = vSProd(.2f/abs(bee.velocity),bee.velocity);
+		r = 6*mBoard.path[index][0] + mBoard.path[index][1];
+		index = ((index-1)%length + length)%length;
+		mBoard.tiles[r].rotate = true;
 	    }
-	    bee.velocity = vSProd(.2f/abs(bee.velocity),bee.velocity);
-	    r = 6*mBoard.path[index][0] + mBoard.path[index][1];
-	    index = ((index-1)%length + length)%length;
-	    mBoard.tiles[r].rotate = true;
-	}
-	break;
+	    break;
 
 	case ASLEEP:
-	    bee.center = fixedPos;
-	    bee.velocity[0] = 0.0f;
-	    bee.velocity[1] = 0.0f;
+	    if(abs(bee.velocity) > .0001f){
+		force = getForce(fixedPos);
+		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
+		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
+	    }
 	    break;
 	}
     }
 
+    public float[] getForce(float[] in) {
+	float[] force = {0.0f, 0.0f};
+	force = vSProd(-2.0f,vDiff(bee.center, in)); 
+	float abs = abs(force);
+	if (abs > .1) {
+	    force[0] = force[0]/abs;
+	    force[1] = force[1]/abs;
+	    force = vSum(force, vSProd(-2.0f,bee.velocity));
+	}
+	else {
+	    force[0] = 0.0f;
+	    force[1] = 0.0f;
+	    force = vSum(force, vSProd(-7.0f,bee.velocity));
+	}
+	return force;
+    }
 
 
     public float[] getForce(BoardTile tile) {

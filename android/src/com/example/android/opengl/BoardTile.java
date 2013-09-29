@@ -123,6 +123,11 @@ class BoardTile extends Tile{
     	size = s;
     }
     
+    public float getSize() {
+	return size;
+    }
+    
+    
    public boolean hasNumber() {
 	   if(!number.equals("clear") )
 		   return true;

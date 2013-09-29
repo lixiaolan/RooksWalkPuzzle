@@ -54,7 +54,7 @@ public class TextureManager {
 	
 	
 	public TextureManager(Context context) {
-		tf = Typeface.createFromAsset(context.getAssets(), "MileyTwerk.ttf");
+		tf = Typeface.createFromAsset(context.getAssets(), "Roboto-Regular.ttf");
 		this.context = context; 
 	}
 	
