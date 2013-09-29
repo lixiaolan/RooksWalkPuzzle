@@ -311,6 +311,7 @@ class TutorialBoard extends Board {
 			boolean correctArrow  = false;
 			String number = mTutorialInfo.getNumber();
 			String arrow = mTutorialInfo.getArrow();
+			if(!(number.equals("none") && arrow.equals("none"))){
 			if(!number.equals("none")){
 				if(number.equals(tiles[mTutorialInfo.getActiveTile()].getNumber())){
 					correctNumber = true;
@@ -322,7 +323,10 @@ class TutorialBoard extends Board {
 					correctArrow = true;
 				}
 			}
-			
+			} else {
+				correctNumber = true;
+				correctArrow = true;
+			}
 			return correctNumber && correctArrow;
 			
 		}

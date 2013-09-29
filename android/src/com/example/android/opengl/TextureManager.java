@@ -273,7 +273,7 @@ public class TextureManager {
         	text = text.substring(index+1);
         	
         	textPaint.getTextBounds(text, 0, text.length(), bounds);
-        	y += bounds.height();
+        	y += bounds.height()*1.15;
         }
         return bitmap;
 	}
