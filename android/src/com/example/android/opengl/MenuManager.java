@@ -216,7 +216,6 @@ class MenuManager {
 	
 	@Override
 	public void callback(int val) {
-		System.out.println("Game Menu opening");
 		state.state = GameState.GAME_MENU_LIST;
 	    updateState();
 	}

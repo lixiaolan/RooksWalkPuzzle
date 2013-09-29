@@ -172,7 +172,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public native String stringFromJNI(int rows, int cols, int length);
     
     public void readSolutionFromJni(String puzzleString) throws IOException{
-	System.out.println(puzzleString);
 	Scanner scanner = null;
 	try {	    
 	    scanner = new Scanner(puzzleString);
@@ -230,9 +229,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public boolean checkSolution(){
 	for(int i =0; i < 36; i++){
 	    if(!( tiles[i].checkArrows() && tiles[i].checkSolutions() ) ){ 
-		System.out.println(Integer.toString(i));
-		System.out.println(tiles[i].getArrow()+" "+tiles[i].getTrueArrow()+Boolean.toString(tiles[i].checkArrows()));
-		System.out.println(tiles[i].getNumber()+" "+Integer.toString(tiles[i].getTrueSolution())+Boolean.toString(tiles[i].checkSolutions()));
 		return false;
 	    }
 	}
@@ -304,7 +300,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	
 	public void enterAnimation(BoardTile[] tiles) {
 	    period = DrawPeriod.DURING;
-	refTime = System.currentTimeMillis();
+	    refTime = System.currentTimeMillis();
 	}
 	
 	public void duringAnimation(BoardTile[] tiles) {

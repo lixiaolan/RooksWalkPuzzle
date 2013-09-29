@@ -12,8 +12,7 @@ class TutorialInfo {
     static String[] banners = {"Your goal is to find the path the bee is following!",
 			       "The bee follows the directions on the tiles with numbers and arrows.",
 			       "Next you will learn how to find these numbers and arrows.",
-			       "Touch the blue square.",
-			       "Good, now enter the number 2...",
+			       "Touch the blue square and enter the number 2",
 			       "Now swipe the screen to the left to enter an arrow...",
 			       "Great, now you can input numbers and arrows!",
 			       "The bee follows some basic rules.",
@@ -50,7 +49,6 @@ class TutorialInfo {
 				      "touch to continue",
 				      "",
 				      "",
-				      "",
 				      "touch to continue",
 				      "touch to continue",
 				      "touch to continue",
@@ -82,14 +80,13 @@ class TutorialInfo {
 				      "",};
     
     
-    static int[] activeTile = {17, 17, 29, 27,27,21, 21, 19, 30, 30, 12, 7, 10, 4, 3};
+    static int[] activeTile = {17,17,17,17,17,17,17,17,29,29,29,29,29, 27,27,21, 21, 19,19,19,19,19, 30, 30, 12, 7, 10, 4, 3, 3, 3, 3, 3, 3};
     
     static int[][] path  = {{0,3},{0,4},{1,4},{1,1},{2,1},{2,0},{5,0},{5,1},{3,1},{3,3},{4,3},{4,5},{2,5},{2,3}};
     
     static int length = 14;
     
     static String[] arrow = {"none",
-			     "none",
 			     "none",
 			     "none",
 			     "none",
@@ -125,7 +122,6 @@ class TutorialInfo {
 			     "none"};
 
     static String[] number = {"none",
-			      "none",
 			      "none",
 			      "none",
 			      "2",

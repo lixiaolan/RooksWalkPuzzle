@@ -23,24 +23,19 @@ class TutorialBoard extends Board {
 		mBanner.setPosition("TOPCENTER");
 		mBottomBanner = new Banner(.75f);
 		mBottomBanner.setPosition("BANNERBOTTOM");
-
 		mBoardBg = new Background("boardbg", .75f);
-		mTutorialState = TutorialState.ONE_TILE;
-		state = new OneTile(tiles);
 		path = TutorialInfo.path;
 		mBee = new Bee(this);
 		mBee.setState(GameState.GAME_OPENING, TutorialInfo.length);
 		restoreBoard(TutorialInfo.solutionNumbers, TutorialInfo.initialNumbers, TutorialInfo.initialArrows, TutorialInfo.solutionArrows, path, null);
+		state = new ShowPath(tiles);
+		mTutorialState = TutorialState.SHOW_PATH;
 	}
 
 	public void setState()	{
 		System.out.println("Got called :(");
 		
 		switch(mTutorialState) {
-		case ONE_TILE:
-			state = new ShowPath(tiles);
-			mTutorialState = TutorialState.SHOW_PATH;
-			break;
 		case SHOW_PATH:
 			state = new WalkThrough(tiles, mTutorialInfo);
 			mTutorialState = TutorialState.WALKTHROUGH;
@@ -62,78 +57,9 @@ class TutorialBoard extends Board {
 
 	public void touchHandler(Menu mMenu, float[] pt) {
 		state.touchHandler(mMenu, pt);
-	}
-
-	class OneTile extends State<BoardTile> {
-
-		BoardTile[] tiles;
-		int at = -1;
-
-		public OneTile(BoardTile[] tiles) {
-			//Need a way to 
-			this.tiles = tiles;
-			for(int i=0;i<tiles.length;i++){
-				tiles[i].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-			}
-			tiles[15].setColor("blue");
-			float[] origin = {0,.3f};
-			tiles[15].setCenter2D(origin);
-			mBanner.set(mTutorialInfo.OneTileBanner);
-		}
-
-		@Override
-		public void enterAnimation(BoardTile[] tiles) {
-			period = DrawPeriod.DURING;
-		}
-
-		@Override
-		public void duringAnimation(BoardTile[] tiles) {
-			// TODO Auto-generated method stub
-		}
-
-		public int touched(float[] pt) {
-			for (int i = 0; i < tiles.length; i++) {
-				if( tiles[i].touched(pt)) {
-					return i;
-				}
-			}
-			return -1;
-		}	
-
-		public void touchHandler(Menu mMenu, float[]  pt){
-			setState();
-			int val = mMenu.touched(pt);
-			if (val != -1) {
-				System.out.println("Menu Touched!");
-				tiles[at].setUserInput(val);
-				//Can I just do this in tile
-				tiles[at].setTextures();
-				mMenu.menuActive = false;				
-			}
-			else {
-				at  = touched(pt);
-				if (at==15) {
-					mMenu.activate(pt);
-				}
-				else {
-					mMenu.menuActive = false;
-				}
-			}
-		}
-
-		public void swipeHandler(String direction){
-			tiles[15].setArrow(direction);
-			tiles[15].setTextures();
-		}
-
-		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			super.draw(tiles, r);
-			mBanner.draw(r);
-			mBee.draw(r);
-		}
 		
 	}
-	
+
 	class ShowPath extends State<BoardTile> {
 		BoardTile[] tiles;
 		long refTime;
@@ -307,26 +233,22 @@ class TutorialBoard extends Board {
 		}
 
 		private boolean checkInput() {
-			boolean correctNumber = false;
-			boolean correctArrow  = false;
+			boolean correctNumber = true;
+			boolean correctArrow  = true;
 			String number = mTutorialInfo.getNumber();
 			String arrow = mTutorialInfo.getArrow();
-			if(!(number.equals("none") && arrow.equals("none"))){
 			if(!number.equals("none")){
-				if(number.equals(tiles[mTutorialInfo.getActiveTile()].getNumber())){
-					correctNumber = true;
+				if(!number.equals(tiles[mTutorialInfo.getActiveTile()].getNumber())){
+					correctNumber = false;
 				}
 			} 
 			
 			if(!arrow.equals("none")){
-				if(arrow.equals(tiles[mTutorialInfo.getActiveTile()].getArrow())){
-					correctArrow = true;
+				if(!arrow.equals(tiles[mTutorialInfo.getActiveTile()].getArrow())){
+					correctArrow = false;
 				}
 			}
-			} else {
-				correctNumber = true;
-				correctArrow = true;
-			}
+
 			return correctNumber && correctArrow;
 			
 		}
