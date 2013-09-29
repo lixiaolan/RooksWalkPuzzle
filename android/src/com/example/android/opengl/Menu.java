@@ -1,10 +1,5 @@
 package com.example.android.opengl;
 
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-
-import android.os.SystemClock;
 
 class Menu{
 
@@ -37,7 +32,7 @@ class Menu{
     public void activate(float[] pt) {
 	menuActive = true;
 	refTime = System.currentTimeMillis();
-	if (menuActive) {	    
+	if (menuActive) {	 
 	    tilesCenter[0] = pt[0];
 	    tilesCenter[1] = pt[1];		
 	    tilesCenter[2] = 0.0f;

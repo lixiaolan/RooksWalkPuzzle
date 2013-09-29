@@ -5,10 +5,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
  
 public class TileMenuView extends View {
 		int cx;
@@ -94,8 +92,6 @@ public class TileMenuView extends View {
         	 if (e.getActionMasked() == 0) {
         		    float x = e.getX();
         		    float y = e.getY();
-
-        		    float currAngle = (float) Math.atan((cy-y)/(x-cx));
         		    if(Math.pow(x-cx, 2)+Math.pow(cy-y, 2) < getWidth()/2){
         		    }
         		  

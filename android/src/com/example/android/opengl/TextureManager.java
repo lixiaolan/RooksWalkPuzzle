@@ -258,10 +258,12 @@ public class TextureManager {
         int oldIndex = 0;
         Rect bounds = new Rect();
         while(text.length() != 0) {
-        	
+        	System.out.println(text);
         	index = textPaint.breakText(text, true, (float)size, null)-1;
+        	System.out.println(index);
+        	System.out.println(length);
         	oldIndex = index;
-        	while(text.charAt(index) != ' ' && index > 0 && index != length-1){
+        	while(text.charAt(index) != ' ' && index > 0 && index != text.length()-1){
         		index--;
         	} 
         	if(index <= 0)
@@ -269,6 +271,7 @@ public class TextureManager {
         		
         	canvas.drawText(text.substring(0, index+1), x, y, textPaint);
         	text = text.substring(index+1);
+        	
         	textPaint.getTextBounds(text, 0, text.length(), bounds);
         	y += bounds.height();
         }

@@ -1,10 +1,6 @@
 package com.example.android.opengl;
 
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
 
-import android.os.SystemClock;
 
 class GameMenu{
 
@@ -32,12 +28,12 @@ class GameMenu{
     private void initialize(float[] pos, float size, String[] textures, String centerTexture) {
     	tilesSize = size;
     	tilesCenter = pos;
-    	radius = size*4.0f;
+    	radius = 3.6f*size;//.9f;
     	
     	menuTiles = new MenuTile[textures.length];
     	for (int i = 0; i < menuTiles.length; i++) {
-    	    float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
-    	    float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
+    	    float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/4.0f);
+    	    float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/4.0f);
     	    float Sx = tilesCenter[0] + radius*tmpcos;
     	    float Sy = tilesCenter[1] - radius*tmpsin;
     	    float center[] = { Sx, Sy, 0.0f};

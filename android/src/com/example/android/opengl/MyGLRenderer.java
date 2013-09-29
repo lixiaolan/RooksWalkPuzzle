@@ -389,7 +389,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	} else if(pos == "BANNERBOTTOM"){
 		center = getTopLeft();
-		float height = Math.abs(center[1]);
 	    center[0] = .75f-size;
 	    center[1] = -1*(.75f+size);
 	}

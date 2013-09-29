@@ -3,7 +3,6 @@ import android.widget.Button;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
 import java.util.ArrayList;
 import android.view.View;
 
@@ -57,9 +56,8 @@ class StateButton {
     }
 
     public void animate(long[] durations) {
-	boolean test;
 	
-        AnimatorSet animSet = new AnimatorSet();
+    AnimatorSet animSet = new AnimatorSet();
 	
 	ObjectAnimator fadeOutAnim = new ObjectAnimator();
 	ObjectAnimator fadeInAnim = new ObjectAnimator();

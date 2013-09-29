@@ -1,14 +1,6 @@
 package com.example.android.opengl;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;

@@ -14,7 +14,7 @@ public abstract class Graphic<T extends Tile, S extends State<T> > {
 
     public abstract void setState(GameState s);
     
-    public State currState(){
+    public State<T> currState(){
 	return state;
     }
 

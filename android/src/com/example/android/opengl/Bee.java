@@ -17,6 +17,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 	switch(s){
 		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
 		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
+		default: break; 
 	}
     }
 
@@ -24,6 +25,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 	switch(s){
 		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
 	case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP, l); break;
+	default: break;
 	}
     }
         
@@ -135,8 +137,6 @@ class BeeFixed extends BeeState<BeeTile> {
     public long globalRefTime = 0;    
     public long relativeRefTime = 0;
     public BeeTile bee;
-
-    private float interval = 4000;
 
     boolean flipped = true;
     int index = 0;
