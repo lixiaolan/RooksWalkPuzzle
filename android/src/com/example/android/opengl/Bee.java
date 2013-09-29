@@ -145,7 +145,7 @@ class BeeFixed extends BeeState<BeeTile> {
     
     float[] pivot = {1,0,1};
     float[] fixedPos = {-0.375f,1.0f,0.0f};
-    
+    float[] fixedPosHidden = {4.0f, 0.0f, 0.0f};
     
     public BeeFixed(Board b, Mood m) {
 	setBoard(b);
@@ -194,6 +194,13 @@ class BeeFixed extends BeeState<BeeTile> {
 	case ASLEEP:
 	    if(abs(bee.velocity) > .0001f){
 		force = getForce(fixedPos);
+		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
+		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
+	    }
+	    break;
+	case HIDDEN:
+	    if(abs(bee.velocity) > .0001f){
+		force = getForce(fixedPosHidden);
 		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
 		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
 	    }
@@ -266,55 +273,5 @@ class BeeFixed extends BeeState<BeeTile> {
 	ret = (float)Math.sqrt(ret);
 	return ret;
     }
-
-
-
-	    // if (time < rotateInterval) {
-	    // 	bee.setAngle(oldAngle + time/rotateInterval*(newAngle - oldAngle));
-	    // }
-
-	    // else if(time < flyInterval + rotateInterval){
-	    // 	bee.center[0] = startX + (time - rotateInterval)/flyInterval*(dX);
-	    // 	bee.center[1] = startY + (time - rotateInterval)/flyInterval*(dY);
-	    // 	//} else if(time<interval+200f){
-	    // 	// if(!flipped){
-	    // 	//     mBoard.tiles[r].setPivot(pivot);
-	    // 	//     mBoard.tiles[r].setRotate(true);
-	    // 	//}
-	    // }
-	    // else {
-	    // 	oldAngle = newAngle;
-	    // 	startX = bee.center[0];
-	    // 	startY = bee.center[1];
-	    // 	dX = mBoard.tiles[r].center[0] - startX;
-	    // 	dY = mBoard.tiles[r].center[1] - startY;
-
-	    // 	if (dX > 0.0f) {
-	    // 	    newAngle = 45.0f*((float)(Math.atan(dY/dX)/Math.atan(1)));
-	    // 	}
-	    // 	else if (dX < 0.0f)
-	    // 	    newAngle = 180.0f + 45.0f*((float)(Math.atan(dY/dX)/Math.atan(1)));
-	    // 	else {
-	    // 	    if (dY > 0.0f) {
-	    // 		newAngle = 90.0f;
-	    // 	    }
-	    // 	    else {
-	    // 		newAngle = -90.0f;
-	    // 	    }
-	    // 	}
-	    // 	newAngle = newAngle - 90.0f;
-			
-	    // 	r = 6*mBoard.path[index][0] + mBoard.path[index][1];
-	    // 	index = ((index-1)%length + length)%length;
-	    // 	flyInterval = 500f*(Math.abs(dX)+Math.abs(dY));
-	    // 	flipped = false;
-	    // 	refTime = System.currentTimeMillis();
-	    // }
-	    // break;
-	// case ASLEEP:
-	//     bee.center = fixedPos;
-	//     break;
-	// }
 }
-
 
