@@ -5,13 +5,13 @@ class TutorialMenu extends GameMenu{
 
    
     
-    public TutorialMenu(float[] pos, float size, String[] textures, String centerTexture) {
-    	initialize(pos, size, textures, centerTexture);
+    public TutorialMenu(float[] pos, float size, String[] textures) {
+    	initialize(pos, size, textures);
     }
 	
     
     
-    private void initialize(float[] pos, float size, String[] textures, String centerTexture) {
+    private void initialize(float[] pos, float size, String[] textures) {
     	tilesSize = size;
     	tilesCenter = pos;
     	radius = size*2.0f;
@@ -25,7 +25,7 @@ class TutorialMenu extends GameMenu{
     	    float center[] = { Sx, Sy, 0.0f};
     	    menuTiles[i] = new MenuTile(center, tilesSize, textures[i]);
     	}
-    	centerTile = new MenuTile(tilesCenter, tilesSize, centerTexture);	
+    	centerTile = new MenuTile(tilesCenter, tilesSize, TextureManager.CLEAR);	
     	centerTile.setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
     	refTime = System.currentTimeMillis();
     }

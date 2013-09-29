@@ -7,13 +7,8 @@ package com.example.android.opengl;
 
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

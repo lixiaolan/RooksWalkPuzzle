@@ -9,9 +9,9 @@ class MenuManager {
     private Callback mCallback;
     
     public MenuManager(GlobalState s, Model m) {
-	state = s;
-	mModel = m;
-	updateState();
+    	state = s;
+    	mModel = m;
+    	updateState();
     }
     //Each case statement should have a declaration of
     //a new menu.
@@ -22,7 +22,7 @@ class MenuManager {
 	float[] pos1 = {-.75f, 0f, 0f};
 	float[] pos2 = {0f,-1.1f, 0f};
 	float[] pos3 = {0f,-1.3f, 0f};
-	float scale1 = .3f;
+	float scale1 = .25f;
 	float scale2  = .2f;
 	float tiltAngle = -1.0f*(float)Math.PI/2;
 	
@@ -35,17 +35,17 @@ class MenuManager {
 	case MAIN_MENU_LIST:
 		if(state.resumeGameExists){
 			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.TUTORIAL, TextureManager.OPTIONS};
-			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
+			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {
 			String[] textures2 = {TextureManager.NEW, TextureManager.TUTORIAL, TextureManager.OPTIONS};
-			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.CLEAR); 
+			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
 		}
 	    break;
 	case MAIN_MENU_NEW:
 	    String[] textures3 = {TextureManager.SHORT, TextureManager.MEDIUM, TextureManager.LONGER,  TextureManager.LONGEST};
-	    mGameMenu = new GameMenu(pos1, scale1, textures3, TextureManager.NEW); 
+	    mGameMenu = new GameMenu(pos1, scale1, textures3, TextureManager.BACK); 
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
 	case MAIN_MENU_OPTIONS:
@@ -66,17 +66,17 @@ class MenuManager {
 	    break;
 	case GAME_MENU_LIST:
 	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.SHOW_SOLUTION, TextureManager.QUIT};
-	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.CLEAR, tiltAngle); 
+	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.BACK, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_LIST();
 	    break;
 	case GAME_MENU_END:
 	    String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
-	    mGameMenu = new TutorialMenu(pos2, scale2, textures7, TextureManager.CLEAR); 
+	    mGameMenu = new TutorialMenu(pos2, scale2, textures7); 
 	    mCallback = new Callback_GAME_MENU_END();
 	    break;
 	case TUTORIAL:
 	    String[] textures8 = {TextureManager.QUIT, TextureManager.NEXT};
-	    mGameMenu = new TutorialMenu(pos3, scale2, textures8, TextureManager.CLEAR); 
+	    mGameMenu = new TutorialMenu(pos3, scale2, textures8); 
 	    mCallback = new Callback_TUTORIAL();
 	    break;
 	}

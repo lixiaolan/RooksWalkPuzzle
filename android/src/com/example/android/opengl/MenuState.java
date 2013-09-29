@@ -1,7 +1,5 @@
 package com.example.android.opengl;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 class MenuState{
 

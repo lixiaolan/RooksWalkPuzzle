@@ -15,7 +15,6 @@ import android.util.Log;
 
 class Model{
 	public GlobalState state;
-
 	public TutorialBoard mTutorialBoard;
 	public Board mBoard;
 	private Menu mMenu;
@@ -40,7 +39,6 @@ class Model{
 	public void initiateMembers(Context c, Board b){
 		mBoard = b;
 		mBee = new Bee(mBoard);
-		//mBg = new Background(TextureManager.LONGSTRING, .75f);
 		mCheck  = new Background("check",.11f);
 		float[] center = {-.7f,1f, 0f};
 		mCheck.setCenter(center);
@@ -50,10 +48,8 @@ class Model{
 		mMenuManager = new MenuManager(state, this);
 		mMenu = new Menu();
 		mBoardBg = new Background("boardbg", .75f);
-		mTutorialBoard = new TutorialBoard();
 		mGameBanner = new Banner(.75f);
 		mGameBanner.setPosition("TOPCENTER");
-		//mTutorialBoard.setBee(mBee);
 	}    
 
 	public void createPuzzle(int length, int hints) {
@@ -180,7 +176,6 @@ class Model{
 	}
 
 	public void draw(MyGLRenderer r) {
-
 
 		switch(state.state) {
 		case GAME_OPENING:

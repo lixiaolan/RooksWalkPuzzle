@@ -6,7 +6,7 @@ abstract class Tile {
     public float[] center;
     public float size;
     float angle;
-    String[] textures = {"clear","clear"};;
+    String[] textures = {"clear","clear"};
     String color = "transparent";
     float[] pivot = {0,0,1};
     
@@ -17,7 +17,12 @@ abstract class Tile {
     }
 
     public boolean touched(float[] pt) {
-    	return ((pt[0] < center[0]+size)&(pt[0] > center[0]-size)&(pt[1] < center[1]+size)&(pt[1] > center[1]-size));
+    	boolean b = ((pt[0] < center[0]+size)&(pt[0] > center[0]-size)&(pt[1] < center[1]+size)&(pt[1] > center[1]-size));
+    	if(b){
+    		pt[0] = center[0];
+    		pt[1] = center[1];
+    	}
+    	return b;
         }
     
     public abstract void draw(MyGLRenderer r);
