@@ -71,12 +71,12 @@ class MenuManager {
 	    break;
 	case GAME_MENU_END:
 	    String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
-	    mGameMenu = new TutorialMenu(pos2, scale2, textures7); 
+	    mGameMenu = new SelectTwoMenu(pos2, scale2, textures7); 
 	    mCallback = new Callback_GAME_MENU_END();
 	    break;
 	case TUTORIAL:
-	    String[] textures8 = {TextureManager.QUIT, TextureManager.NEXT};
-	    mGameMenu = new TutorialMenu(pos3, scale2, textures8); 
+	    String[] textures8 = {TextureManager.QUIT};
+	    mGameMenu = new SelectOneMenu(pos3, scale2, textures8); 
 	    mCallback = new Callback_TUTORIAL();
 	    break;
 	}
@@ -277,15 +277,9 @@ class MenuManager {
 	@Override
 	public void callback(int val) {
 	    switch(val) {
-	    case 2:
-		mModel.mTutorialBoard.setState();
-		break;
 	    case 1:
 		mModel.setState(GameState.MAIN_MENU_OPENING);
 		updateState();
-		break;
-	    case 3:
-		mModel.mTutorialBoard.setState();
 		break;
 	    }
 	}

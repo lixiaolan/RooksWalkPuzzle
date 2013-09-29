@@ -119,7 +119,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	} 
 	int dx;
 	int dy;
-	for (int i = 0; i < path.length-1; i++) {
+	int length = (path.length -2)/2;
+	for (int i = 0; i < length-1; i++) {
 	    dx = path[i+1][0]-path[i][0];
 	    dy = path[i+1][1]-path[i][1];
 	    
@@ -396,7 +397,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		    tiles[i].center = center;
 		}			
 	    }
-	    //Tiles shirnk to zero then blow up with the
+	    //Tiles shrink to zero then blow up with the
 	    //the correct game tiles.
 	    else if( time < 2*totalTime/3 && time > totalTime/3) {
 		for (int i = 0; i < tiles.length; i++) {
