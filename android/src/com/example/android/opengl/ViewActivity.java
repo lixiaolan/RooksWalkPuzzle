@@ -130,7 +130,6 @@ public class ViewActivity extends Activity {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override
@@ -162,81 +161,7 @@ public class ViewActivity extends Activity {
 		TextView w = (TextView)findViewById(R.id.QuoteView);
 		w.setVisibility(View.INVISIBLE);
 	}
-
 }    
 
-//This is called after the constructor of GameView is complete.
-//Otherwise, the positions would not work out correctly :(
-
-// public void newGame(View v) {
-// 	//mButtonManager.manageState(v, mModel.getState());
-// 	//NOTE: menu state is getting changed to GAME_PLAY after the buttons leave the screen.
-// 	if (mMenuState.state == MenuStateEnum.GAME_PLAY && mMenuState.createGame) {
-// 	    switch (mMenuState.difficulty) {
-// 	    case 1:
-// 		mModel.createPuzzle(4,2);
-// 		break;
-// 	    case 2:
-// 		mModel.createPuzzle(10,3);
-// 		break;
-// 	    case 3:
-// 		mModel.createPuzzle(12,4);
-// 		break;
-// 	    case 4:
-// 		mModel.createPuzzle(20,3);
-// 		break;
-// 	    }
-// 	    mMenuState.createGame = false;
-// 	    mModel.setState(GameState.PLAY);
-
-// 	} 
-// }
-
-// public void resumeGame(View v) {
-// 	manageView(v);
-// 	//mButtonManager.manageState(v, mModel.getState());
-// 	if(mMenuState.state == MenuStateEnum.GAME_RESUME && mMenuState.createGame){
-// 	    if(savedGame) {
-// 		restoreGameUtil();
-// 	    }
-// 	    mMenuState.createGame = false;
-// 	    mModel.setState(GameState.PLAY);
-// 	}	
-// }
-
-
-// public void resetGame(View v){
-// 	manageView(v);
-// 	try{
-// 	    File file = new File(this.getFilesDir(), savefile);
-// 	    if(file.delete()){
-// 		System.out.println(file.getName() + " is deleted!");
-// 	    }else{
-// 		System.out.println("Delete operation failed.");
-// 	    }
-// 	}catch(Exception e){
-// 	    e.printStackTrace();
-// 	}
-
-// 	savedGame = false;
-// 	mModel.setState(GameState.MAIN_MENU);
-
-// }
-
-// public void clearBoard(View v){
-// 	manageView(v);
-// 	mModel.clearBoard();
-// }
-
-// public void toggleHints(View v){
-// 	manageView(v);
-// 	mModel.toggleHints(mMenuState.hints);
-// }
-
-//This function peforms animatinos on the array of buttons allButtons.
-//It works by sequentially activating the various animatinos
-//needed based on any change of state in the StateButtons.
-//This provides a flexible way for the menu to have smooth
-//animations between its different layouts.
 
 

@@ -7,7 +7,13 @@ class MenuManager {
     public GameMenu mGameMenu;
     public Model mModel;
     private Callback mCallback;
-    
+    private float[] geometry = new float[3];
+    private float[] bottomPos1 = new float[3];
+    private float[] bottomPos2 = new float[3];
+    private float scale1;
+    private float scale2;
+
+
     public MenuManager(GlobalState s, Model m) {
     	state = s;
     	mModel = m;
@@ -22,8 +28,9 @@ class MenuManager {
 	float[] pos1 = {-.75f, 0f, 0f};
 	float[] pos2 = {0f,-1.1f, 0f};
 	float[] pos3 = {0f,-1.3f, 0f};
-	float scale1 = .25f;
-	float scale2  = .2f;
+	scale1 = .25f;
+	scale2  = .2f;
+
 	float tiltAngle = -1.0f*(float)Math.PI/2;
 	
 	switch (state.state) {
@@ -61,22 +68,22 @@ class MenuManager {
 	    break;
 	case GAME_OPENING:
 	    String[] textures5 = {};
-	    mGameMenu = new GameMenu(pos2, scale2, textures5, TextureManager.CLEAR, tiltAngle); 
+	    mGameMenu = new GameMenu(bottomPos2, scale2, textures5, TextureManager.CLEAR, tiltAngle); 
 	    mCallback = new Callback_GAME_OPENING();
 	    break;
 	case GAME_MENU_LIST:
 	    String[] textures6 = {TextureManager.CLEAR_BOARD, TextureManager.SHOW_SOLUTION, TextureManager.QUIT};
-	    mGameMenu = new GameMenu(pos2, scale2, textures6, TextureManager.BACK, tiltAngle); 
+	    mGameMenu = new GameMenu(bottomPos2, scale2, textures6, TextureManager.BACK, tiltAngle); 
 	    mCallback = new Callback_GAME_MENU_LIST();
 	    break;
 	case GAME_MENU_END:
 	    String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
-	    mGameMenu = new SelectTwoMenu(pos2, scale2, textures7); 
+	    mGameMenu = new SelectTwoMenu(bottomPos2, scale2, textures7); 
 	    mCallback = new Callback_GAME_MENU_END();
 	    break;
 	case TUTORIAL:
 	    String[] textures8 = {TextureManager.QUIT};
-	    mGameMenu = new SelectOneMenu(pos3, scale2, textures8); 
+	    mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures8); 
 	    mCallback = new Callback_TUTORIAL();
 	    break;
 	}
@@ -93,6 +100,18 @@ class MenuManager {
     public void draw(MyGLRenderer r){
     	mGameMenu.draw(r);
     }
+
+    public void setGeometry(float[] g) {
+	geometry = g;
+
+	bottomPos1[0] = 0.0f;
+	bottomPos1[1] = -geometry[1]+scale1;
+	bottomPos1[2] = 0.0f;
+
+	bottomPos2[0] = 0.0f;
+	bottomPos2[1] = -geometry[1]+scale2;
+	bottomPos2[2] = 0.0f;
+    }
    
     
     class Callback_MAIN_MENU_OPENING extends Callback {
@@ -100,8 +119,7 @@ class MenuManager {
 	public void callback(int val) {
 	    state.state = GameState.MAIN_MENU_LIST;
 	    updateState();
-	}
-	
+	}	
     }
     
     class Callback_MAIN_MENU_LIST_RESUME extends Callback {
