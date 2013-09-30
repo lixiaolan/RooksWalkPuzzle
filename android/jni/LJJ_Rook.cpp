@@ -98,7 +98,6 @@ vector<pos> RookBoard::legalMoves() {
   return legalMovesList;
 }
 
-
 // Generate all legal moves FOR RIGHT ANGLE MOVES
 // from a given position and board state:
 vector<pos> RookBoard::legalMovesRightAngles() {
@@ -462,9 +461,6 @@ bool RookBoard::makeBoardRightAnglesNoPassOver(int depth) {
     bool a = ((*(positions.begin())).r == (*(positions.end()-1)).r);
     bool b = ((*(positions.begin())).c == (*(positions.end()-1)).c);
     bool c = (depth==0);
-    // pos dir1 = *(positions.begin()+1)-*(positions.begin());
-    // pos dir2 = *(positions.end()-1)-*(positions.end()-2);
-    // bool c = ((dir1.r*dir2.r + dir1.c*dir2.c) <= 0); 
     if (a&b&c) return true;
     if (a&b&!c) return false;
     if (c&!(a&b)) return false;
@@ -501,11 +497,6 @@ bool RookBoard::makeBoardRightAnglesNoPassOver(int depth) {
     pos last = (*(positions.end()-1) - *(positions.end()-2));
     moveArea[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
     markLRUD(*(positions.end()-1), *(positions.end()-2));
-    // printBool(leftRight);
-    // cout << endl;
-    // printBool(upDown);
-    // int ii;
-    // cin >> ii; 
     // Now recursivly call makeBoard with one less depth.
     if (makeBoardRightAnglesNoPassOver(depth-1)) return true;
     // If the recrusive call fails, we remove the move we maid from the list,
@@ -554,8 +545,6 @@ void RookBoard::unMarkLRUD(pos start, pos end) {
   leftRight[end.r][end.c] = false;
 
 }
-
-
 
 // This marks all spots on the final game borad which were never
 // visited or passed through during the course of the puzzle.

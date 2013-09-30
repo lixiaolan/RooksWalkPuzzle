@@ -37,14 +37,6 @@ pos operator+(pos left, pos right);
 
 bool operator==(pos left, pos right);
 
-// class RooksWalk{
-// private:
-//   shared_ptr<RookBoard> board;
-//   void print() const;
-//   //  void export() const;
-//   RooksWalk(shared_ptr<RookBoard > rb): board(rb) {};
-// };
-
 class RookBoard {
 private:
   friend class RooksWalk;

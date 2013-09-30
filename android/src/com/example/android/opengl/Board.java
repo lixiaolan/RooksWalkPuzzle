@@ -375,6 +375,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 		oldX[i] = tiles[i].center[0];
 		oldY[i] = tiles[i].center[1];
+		tiles[i].setColor("transparent");
 	    }
 	    initSize = tiles[0].getSize();
 	}
@@ -409,6 +410,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			float Sy = ( (i%6) - 2.5f )/4.0f;
 			float center[] = {Sx, Sy, 0.0f};
 			tiles[i].center = center;
+			if(!tiles[i].isClickable())
+			    tiles[i].setHint();
 		    }
 		}
 		for (int i = 0; i < tiles.length; i++) {
@@ -420,7 +423,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		for(int i = 0;i<tiles.length;i++){
 		    tiles[i].setAngle(0);
 		    tiles[i].setSize(finalSize);
-		    //tiles[i].setColor("transparent");
+
 		}
 		period = DrawPeriod.DURING;
 	    }
