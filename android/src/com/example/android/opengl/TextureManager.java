@@ -54,7 +54,7 @@ public class TextureManager {
 	
 	
 	public TextureManager(Context context) {
-		tf = Typeface.createFromAsset(context.getAssets(), "Roboto-Regular.ttf");
+		tf = Typeface.createFromAsset(context.getAssets(), "font3.ttf");
 		this.context = context; 
 	}
 	
@@ -83,12 +83,11 @@ public class TextureManager {
 		buildTextures(context, R.drawable.grass1,"grass0");
 		
 		
-		buildTextures(context, R.drawable.crayonsquare, "crayonbg");
 		//TM.buildTextures(context, R.drawable.papertexture2, "paperbg");
 		buildTextures(context, R.drawable.boardbg, "boardbg");
-		buildTextures(context, R.drawable.blacksquare, "blacksquare");
 		buildTextures(context, R.drawable.check, "check");
 		buildTextures(context, R.drawable.share, SHARE);
+		buildTextures(context, R.drawable.title, "title");
 		//Create Menu Textures
 
 		for(int i=0;i<6;i++){
@@ -96,7 +95,7 @@ public class TextureManager {
 		}
 		//Create Border Textures
 		for(int i=0;i<15;i++){
-		    buildTextures(Integer.toString(i),64,128,"border_"+Integer.toString(i),60);
+		    buildTextures(Integer.toString(i),60,90,"border_"+Integer.toString(i),60);
 		}
 		int fontSize = 30; 
 	    buildTextures(START, 64,64, START, fontSize);
@@ -119,22 +118,23 @@ public class TextureManager {
 	    buildTextures(NEXT, 64,64, NEXT, fontSize);
 	    buildTextures(PREVIOUS, 64,64, PREVIOUS, fontSize);
 	    buildTextures(SHOW_SOLUTION, 64,64, SHOW_SOLUTION, fontSize);
-	    buildLongTextures(TRY_AGAIN, 64,64, TRY_AGAIN, fontSize);
-	    buildLongTextures(GOOD_JOB, 64,64, GOOD_JOB, fontSize);
+	    buildLongTextures(TRY_AGAIN, 64,64, TRY_AGAIN, fontSize, 256);
+	    buildLongTextures(GOOD_JOB, 64,64, GOOD_JOB, fontSize, 256);
 	    
 	    buildTextures("", 64,64, CLEAR, fontSize);
 
 	    for(int i =0;i< TutorialInfo.banners.length;i++){
-	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),20);
+	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),20, 256);
 	    }
 
 	    for(int i =0;i< TutorialInfo.bottomBanners.length;i++){
-	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i),20);
+	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i), 20, 256);
 	    }
 
 	    
-	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 30);
-	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 30);
+	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 20, 256);
+	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 20, 256);
+	    
 	    }
 	
 	
@@ -160,8 +160,8 @@ public class TextureManager {
 		library.put(key, textureFromBitmap(bitmapFromShortString(a,x,y, font)));
 	}
 
-	public void buildLongTextures(String a, int x, int y, String key , int font){
-		library.put(key, textureFromBitmap(bitmapFromLongString(a,x,y, font)));
+	public void buildLongTextures(String a, int x, int y, String key , int font, int size){
+		library.put(key, textureFromBitmap(bitmapFromLongString(a,x,y, font, size)));
 	}
 	
 	public void buildTextures(final Context context, final int resourceId, String key){
@@ -234,8 +234,8 @@ public class TextureManager {
         return bitmap;
 	}
 	
-	Bitmap bitmapFromLongString(String text, int x, int y, int fontSize) {
-		int size = 256; //Must be a power of two
+	Bitmap bitmapFromLongString(String text, int x, int y, int fontSize, int size) {
+		//int size = 128; //Must be a power of two
 		int length = text.length();
 		Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         // get a canvas to paint over the bitmap

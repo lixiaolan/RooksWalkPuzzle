@@ -7,7 +7,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     public Bee(Board b) {
 	float[] center= {0.0f,0.0f,0.0f};
 	tiles = new BeeTile[1];
-	tiles[0] = new BeeTile(center,0.2f);
+	tiles[0] = new BeeTile(center,0.12f);
 	bee = tiles[0];
 	mBoard = b;
 	setState(GameState.MAIN_MENU_OPENING); 
@@ -144,7 +144,8 @@ class BeeFixed extends BeeState<BeeTile> {
     int length;
     
     float[] pivot = {1,0,1};
-    float[] fixedPos = {-0.375f,1.0f,0.0f};
+    float[] fixedPos = {0.75f,-1.0f,0.0f};
+    
     float[] fixedPosHidden = {-2.0f, 0.0f, 0.0f};
     
     public BeeFixed(Board b, Mood m) {
@@ -196,8 +197,12 @@ class BeeFixed extends BeeState<BeeTile> {
 		force = getForce(fixedPos);
 		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
 		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
+	    } else {
+	    	float[] velocity = {0.0f, .00001f};
+	    	bee.velocity = velocity;
 	    }
 	    break;
+	    
 	case HIDDEN:
 	    if(abs(bee.velocity) > .0001f){
 		force = getForce(fixedPosHidden);

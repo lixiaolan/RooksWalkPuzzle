@@ -29,6 +29,7 @@ class Border{
     }
     
     public void draw(MyGLRenderer r) {
+    	
     		for (int i = 0; i < rowTiles.length; i++) {
     			columnTiles[i].draw(r);
     			rowTiles[i].draw(r);

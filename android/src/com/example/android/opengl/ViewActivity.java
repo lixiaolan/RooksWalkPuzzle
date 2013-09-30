@@ -65,6 +65,9 @@ public class ViewActivity extends Activity {
 		Resources res = getResources();
 		String[] quotes = res.getStringArray(R.array.quotes);
 		int sel = (int)(Math.random()*quotes.length);
+		
+		Typeface font = Typeface.createFromAsset(getAssets(), "font3.ttf");  
+		mQuoteView.setTypeface(font);
 		mQuoteView.setText(Html.fromHtml(quotes[sel]));
 
 	}
