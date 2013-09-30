@@ -67,7 +67,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.down_arrow, DOWNARROW);
 		buildTextures(context, R.drawable.left_arrow, LEFTARROW);
 		buildTextures(context, R.drawable.right_arrow, RIGHTARROW);
-		buildTextures(context, R.drawable.circle, MENUCIRCLE);
+		buildTextures(context, R.drawable.menu_circle_light_grey2, MENUCIRCLE);
 		buildTextures(context, R.drawable.beecolor, BEE);
 		
 		buildTextures(context, R.drawable.flower1,"flower0");
@@ -87,7 +87,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.boardbg, "boardbg");
 		buildTextures(context, R.drawable.check2, "check");
 		buildTextures(context, R.drawable.share, SHARE);
-		buildTextures(context, R.drawable.title, "title");
+		buildTextures(context, R.drawable.title_compact, "title");
 		//Create Menu Textures
 
 		buildTextures(context, R.drawable.red_x, "menu_1");
@@ -261,10 +261,7 @@ public class TextureManager {
         int oldIndex = 0;
         Rect bounds = new Rect();
         while(text.length() != 0) {
-        	System.out.println(text);
         	index = textPaint.breakText(text, true, (float)size, null)-1;
-        	System.out.println(index);
-        	System.out.println(length);
         	oldIndex = index;
         	while(text.charAt(index) != ' ' && index > 0 && index != text.length()-1){
         		index--;

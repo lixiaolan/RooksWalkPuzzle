@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.util.Log;
+import android.app.Activity;
 
 class Model{
 	public GlobalState state;
@@ -51,8 +52,8 @@ class Model{
 		mBoardBg = new Background("boardbg", .75f);
 		mGameBanner = new Banner(.75f);
 		mGameBanner.setPosition("TOPCENTER");
-		mTitle = new Background("title", .75f);
-		float[] titleCenter = {0.0f, 1.0f, 0.0f};
+		mTitle = new Background("title", .50f);
+		float[] titleCenter = {.5f, 0.8f, 0.0f};
 		mTitle.setCenter(titleCenter);
 	}    
 
@@ -342,4 +343,20 @@ class Model{
 	public void clearBoard() {
 		mBoard.resetBoard();
 	}    
-}
+	
+	public void onBack(){
+		switch(state.state){
+		case MAIN_MENU_LIST:
+		case MAIN_MENU_NEW:
+		case MAIN_MENU_OPTIONS:
+		case GAME_MENU_LIST:
+		   mMenuManager.callCallback(0);
+		   break;
+		case MAIN_MENU_OPENING:
+			((Activity)context).finish();
+			break;
+		}
+		}
+	}
+	
+

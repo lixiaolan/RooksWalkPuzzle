@@ -162,7 +162,12 @@ public class ViewActivity extends Activity {
 		TextView w = (TextView)findViewById(R.id.QuoteView);
 		w.setVisibility(View.INVISIBLE);
 	}
-
+	
+	public void onBackPressed() {
+		   mModel.onBack();
+		}
+	
+	
 }    
 
 //This is called after the constructor of GameView is complete.

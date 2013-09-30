@@ -17,6 +17,16 @@ public class Colors {
 
 	}; 
     
+    public static float [] squareGrey ={
+		// Baby Blue
+		.85f, 0.85f, .85f, 1.0f,
+		.85f, 0.85f, .85f, 1.0f,
+		.85f, 0.85f, .85f, 1.0f,
+		.85f, 0.85f, .85f, 1.0f,
+		.85f, 0.85f, .85f, 1.0f,
+		.85f, 0.85f, .85f, 1.0f
+	};
+    
     public static float [] squareWhite ={
 		// white
 		1.0f, 1.0f, 1.0f, 1.0f,				

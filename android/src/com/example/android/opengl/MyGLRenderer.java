@@ -111,7 +111,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Map<String, FloatBuffer> colorMap = new HashMap<String, FloatBuffer>();
     
     public MyGLRenderer(final Context activityContext, Model m) {
-	
+	System.out.println("Called MyGlRenderer constructor");
 	mActivityContext = activityContext;
 	mModel = m;
 		
@@ -147,7 +147,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	
 	final float[] squareWhiteColorData = Colors.squareWhite;
-	final float[] squareBlueColorData = Colors.squareBlue;	
+	final float[] squareBlueColorData = Colors.squareGrey;	
 	final float[] squareBlackColorData = Colors.squareBlack;
 	final float[] squareTransparentColorData = Colors.squareTransparent;
 	final float[] squareDullYellowColorData = Colors.squareDullYellow;
@@ -209,8 +209,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	//buildTextures();
 	TM = new TextureManager(mActivityContext);
-	//TM.setState(GameState.MAIN_MENU,null, null);
 	TM.buildTextures();
+    System.out.println("Called on Surface created. This might be the slowdown.");
     }
     
     
@@ -237,7 +237,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     
     @Override
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-    TM.buildTextures();
+    //TM.buildTextures();
+    System.out.println("Called on SurfaceChanged");
 	float magicNumber = 1.0f;
 	
 	// Set the OpenGL viewport to the same size as the surface.

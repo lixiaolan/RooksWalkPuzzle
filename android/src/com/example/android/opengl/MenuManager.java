@@ -16,6 +16,10 @@ class MenuManager {
     //Each case statement should have a declaration of
     //a new menu.
     
+    public void callCallback(int val) {
+    	mCallback.callback(val);
+    }
+    
     // Note that we could use closure here to declare funtions (callbacks)
     // Which have access to information model!  Cool!
     public void updateState() {
