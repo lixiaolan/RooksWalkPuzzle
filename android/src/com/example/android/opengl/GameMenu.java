@@ -11,7 +11,10 @@ class GameMenu{
     public float[] tilesCenter = new float[3];
     public float tilesSize;
     public long refTime;
-    
+    // public boolean useGeometry = false;//This indicates if we a using a custom GLRenderer draw function.
+    // public String geometry;//Stores the goemetry string used in the draw function to select draw style.
+    // public boolean gotGeometry = false;//Used to make sure we get screen info from GLRenderer only once.
+
     public GameMenu(float[] pos, float size, String[] textures, String centerTexture, float tAngle) {
     	tiltAngle = tAngle;
     	initialize(pos, size, textures, centerTexture);
@@ -21,10 +24,26 @@ class GameMenu{
     	tiltAngle = -((float)(textures.length-1))*((float)Math.PI)/5.0f+((float)Math.PI)/2.2f;
     	initialize(pos, size, textures, centerTexture);
     }
+    // //Constructors for useing GLRenderer draw function
+    // public GameMenu(float[] pos, float size, String[] textures, String centerTexture, float tAngle, String geo) {
+    // 	tiltAngle = tAngle;
+    // 	initialize(pos, size, textures, centerTexture);
+    // 	geometry = geo;
+    // 	useGeometry = true;
+    // }
+	
+    // public GameMenu(float[] pos, float size, String[] textures, String centerTexture, String geo){
+    // 	tiltAngle = -((float)(textures.length-1))*((float)Math.PI)/5.0f+((float)Math.PI)/2.2f;
+    // 	initialize(pos, size, textures, centerTexture);
+    // 	geometry = geo;
+    // 	useGeometry = true;
+    // }
+
     
     public GameMenu(){
     	
     }
+
     private void initialize(float[] pos, float size, String[] textures, String centerTexture) {
     	tilesSize = size;
     	tilesCenter = pos;
@@ -59,12 +78,20 @@ class GameMenu{
     }
 
     public void draw(MyGLRenderer r) {
-	
-	    animate();
-	    for (int i = 0; i < menuTiles.length; i++) {
-		menuTiles[i].draw(r);
-	    }
-	    centerTile.draw(r);
+	// if (!gotGeometry) {
+	//     if (geometry == "BOTTOMCENTER") {
+	// 	float[] c = new float[3];
+	// 	c = r.getTopLeft();
+	// 	tilesCenter[1] = -c[1]+tilesSize;
+	// 	tilesCenter[0] = 0.0f;
+	//     }
+	//     gotGeometry = true;
+	// }
+	animate();
+	for (int i = 0; i < menuTiles.length; i++) {
+	    menuTiles[i].draw(r);
+	}
+	centerTile.draw(r);
     }
 
     public void animate() {

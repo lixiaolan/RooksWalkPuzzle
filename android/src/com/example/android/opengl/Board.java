@@ -18,6 +18,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     private float flowerSize = .15f;
     private float tileSize = .11f;
     
+    private long lastTouchTime;
+    private float[] lastTouchPos = new float[2];
     
     public Board() {
     	buildEmptyBoard();
@@ -197,6 +199,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     public int touched(float[] pt) {
+	lastTouchPos = pt;
+	lastTouchTime = System.currentTimeMillis();
+	System.out.println("Got into touched");
 	for (int i = 0; i < tiles.length; i++) {
 	    if( tiles[i].touched(pt) && tiles[i].isClickable()) {
 	    	return i;
@@ -317,9 +322,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	
 	public float[] getForce(BoardTile[] tiles, int i) {
 	    float[] force = {0.0f, 0.0f};
+	    float[] temp = new float[2];
 	    float[] mid = {centers[2*i],centers[2*i+1],0.0f};
 	    force = vSProd(-2.0f,vDiff(tiles[i].center, mid)); 
 	    force = vSum(force, vSProd(-1.2f,tiles[i].velocity));
+	    //Compute wave of forces due to touch
+	    float time = (System.currentTimeMillis()-lastTouchTime)/1000f;
+	    temp = vDiff(tiles[i].center, lastTouchPos);
+	    float sTemp = abs(temp);
+	    if (sTemp<time && sTemp > time - .1f && sTemp > .00001f)
+		force = vSum(force, vSProd(5f/((float)Math.pow(sTemp,1)), temp));
 	    return force;
 	}
 	

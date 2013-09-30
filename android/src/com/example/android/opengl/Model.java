@@ -16,20 +16,21 @@ import android.util.Log;
 import android.app.Activity;
 
 class Model{
-	public GlobalState state;
-	public TutorialBoard mTutorialBoard;
-	public Board mBoard;
-	private Menu mMenu;
-	private Border mBorder;
-	public Bee mBee;
-	private MenuManager mMenuManager;
-	private Background mBoardBg;
-	private Background mCheck;
-	private int at = -1;
-	private Vibrator vibe;
-	public Context context;
-	private Banner mGameBanner;
-	private Background mTitle;
+    public GlobalState state;
+    public TutorialBoard mTutorialBoard;
+    public Board mBoard;
+    private Menu mMenu;
+    private Border mBorder;
+    public Bee mBee;
+    private MenuManager mMenuManager;
+    private Background mBoardBg;
+    private Background mCheck;
+    private int at = -1;
+    private Vibrator vibe;
+    public Context context;
+    private Banner mGameBanner;
+    private Background mTitle;
+    private float[] geometry = new float[3];
 	public Model(Context c) {
 		initiateMembers(c, new Board());
 	}
@@ -216,6 +217,11 @@ class Model{
 		}
 		mMenuManager.draw(r);
 	}
+
+    public void setGeometry(float[] g) {
+	geometry = g;
+	mMenuManager.setGeometry(g);
+    }
 
 	public void setState(GameState s){
 		state.state = s;

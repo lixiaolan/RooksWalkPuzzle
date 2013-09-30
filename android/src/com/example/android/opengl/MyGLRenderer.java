@@ -278,6 +278,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 	Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, -cameraDistance, lookX, lookY, lookZ, upX, upY, upZ);		
 
+	mModel.setGeometry(getGeometry());
+
     }
 
     public float[] getTopLeft() {
@@ -288,6 +290,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     	return ret;
     }
     
+    public float[] getGeometry() {
+    	float[] ret = new float[3];
+    	ret[0] = 1.0f;
+    	ret[1] = cameraDistance;
+    	ret[2] = 0.0f; 
+    	return ret;
+    }
  
     
     public float[] project(float[] pt) {	
