@@ -56,7 +56,7 @@ class MenuManager {
 		textures4[0] = TextureManager.HINTS_OFF;
 	    }
 	    
-	    mGameMenu = new GameMenu(pos1, scale1, textures4, TextureManager.OPTIONS); 
+	    mGameMenu = new GameMenu(pos1, scale1, textures4, TextureManager.BACK); 
 	    mCallback = new Callback_MAIN_MENU_OPTIONS();
 	    break;
 	case GAME_OPENING:
@@ -161,7 +161,7 @@ class MenuManager {
     	//Is this really the right place to ensure that a savedGame file is toggled.
 	public void callback(int val) {
 		switch(val) {
-	    case 1: mModel.createPuzzle(4,2);
+	    case 1: mModel.createPuzzle(8,2);
 	    state.saveCurrGame = true;
 	    mModel.setState(GameState.GAME_OPENING);
 		state.state = GameState.GAME_OPENING;
@@ -241,6 +241,8 @@ class MenuManager {
 		updateState();
 		break;
 	    case 3: state.state = GameState.MAIN_MENU_OPENING;
+	    mModel.saveGame();
+	    mModel.state.resumeGameExists  = true;
 	    mModel.setState(GameState.MAIN_MENU_OPENING);
 		updateState();
 		break;

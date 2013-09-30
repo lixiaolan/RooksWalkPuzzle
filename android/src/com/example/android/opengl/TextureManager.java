@@ -87,6 +87,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.boardbg, "boardbg");
 		buildTextures(context, R.drawable.check, "check");
 		buildTextures(context, R.drawable.share, SHARE);
+		buildTextures(context, R.drawable.title, "title");
 		//Create Menu Textures
 
 		for(int i=0;i<6;i++){
@@ -133,6 +134,7 @@ public class TextureManager {
 	    
 	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 20, 256);
 	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 20, 256);
+	    
 	    }
 	
 	

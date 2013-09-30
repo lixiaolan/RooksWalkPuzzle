@@ -34,7 +34,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    tiles[i].setTrueArrow(trueArrows[i]);
 	    if(clickable!=null)
 	    	if(!clickable[i])
-		    tiles[i].setHint();
+	    		tiles[i].setHint();
 	    columnSums[i%6] += Math.max(solution[i],0);
 	    rowSums[i/6] += Math.max(solution[i],0);
 	}
@@ -446,6 +446,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		tiles[i].setSize(.12f);
 		float center[] = { Sx, Sy, 0.0f};
 		tiles[i].center = center;
+		tiles[i].setColor("white");
 	    }
       	}
 

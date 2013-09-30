@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -25,7 +28,7 @@ class Model{
 	private Vibrator vibe;
 	public Context context;
 	private Banner mGameBanner;
-	
+	private Background mTitle;
 	public Model(Context c) {
 		initiateMembers(c, new Board());
 	}
@@ -48,6 +51,9 @@ class Model{
 		mBoardBg = new Background("boardbg", .75f);
 		mGameBanner = new Banner(.75f);
 		mGameBanner.setPosition("TOPCENTER");
+		mTitle = new Background("title", 1.0f);
+		float[] title = {0.0f, -1.0f, 0.0f};
+		mTitle.setCenter(center);
 	}    
 
 	public void createPuzzle(int length, int hints) {
@@ -182,13 +188,14 @@ class Model{
 		switch(state.state) {
 		case GAME_OPENING:
 		case GAME_MENU_LIST:
+			mCheck.draw(r);
 		case GAME_MENU_END:
+			mBoardBg.draw(r);
 			mBoard.draw(r);
 			mBee.draw(r);
 			mBoardBg.draw(r);
 			mBorder.draw(r);
 			mMenu.draw(r);
-			mCheck.draw(r);
 			if(state.showGameBanner){
 				mGameBanner.draw(r);
 			}
@@ -199,6 +206,7 @@ class Model{
 		case MAIN_MENU_OPTIONS:
 			mBoard.draw(r);
 			mBee.draw(r);
+			mTitle.draw(r);
 			break;
 		case TUTORIAL:
 			mTutorialBoard.draw(r);
@@ -280,6 +288,57 @@ class Model{
 		mMenuManager.updateState();
 	}
 	 
+	public void saveGame() {
+		File file = new File(context.getFilesDir(), "savefile");
+		int[] solutions = mBoard.dumpSolution();
+		String[] numbers  = mBoard.dumpNumbers();
+		String[] arrows  = mBoard.dumpArrows();
+		String[] trueArrows = mBoard.dumpTrueArrows();
+		int[][] path  = mBoard.dumpPath();
+		boolean[] clickable = mBoard.dumpClickable();
+
+		try {
+			PrintWriter outputStream = new PrintWriter(new FileWriter(file));
+			for(int i =0; i< solutions.length;i++){
+				outputStream.println(Integer.toString(solutions[i]));
+			}
+
+			for(int i =0; i< numbers.length;i++){
+				outputStream.println(numbers[i]);
+			}
+
+			for(int i =0; i< arrows.length;i++){
+				outputStream.println(arrows[i]);
+			}
+
+			for(int i =0; i< trueArrows.length;i++){
+				outputStream.println(trueArrows[i]);
+			}
+
+			for(int i =0; i< clickable.length;i++){
+				outputStream.println(clickable[i]);
+			}
+
+			outputStream.println(path.length);
+			outputStream.println(path[0].length);
+
+			for(int i =0;i< path.length ;i++){
+				for(int j=0;j<path[0].length;j++){
+					outputStream.println(path[i][j]);
+				}
+			}
+
+			outputStream.close();
+			SharedPreferences s  = context.getSharedPreferences("settingsfile", 0);
+			SharedPreferences.Editor editor = s.edit();
+			editor.putBoolean("savedGameExists", true);
+			editor.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	public void clearBoard() {
 		mBoard.resetBoard();
 	}    
