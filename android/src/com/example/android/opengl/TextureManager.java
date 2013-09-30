@@ -270,10 +270,9 @@ public class TextureManager {
         		index=oldIndex;
         		
         	canvas.drawText(text.substring(0, index+1), x, y, textPaint);
-        	text = text.substring(index+1);
-        	
         	textPaint.getTextBounds(text, 0, text.length(), bounds);
-        	y += bounds.height()*1.15;
+        	y += bounds.height()*1.03;
+        	text = text.substring(index+1);
         }
         return bitmap;
 	}

@@ -7,7 +7,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     public Bee(Board b) {
 	float[] center= {0.0f,0.0f,0.0f};
 	tiles = new BeeTile[1];
-	tiles[0] = new BeeTile(center,0.12f);
+	tiles[0] = new BeeTile(center,0.13f);
 	bee = tiles[0];
 	mBoard = b;
 	setState(GameState.MAIN_MENU_OPENING); 

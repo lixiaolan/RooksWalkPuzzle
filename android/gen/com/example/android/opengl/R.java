@@ -76,8 +76,9 @@ public final class R {
         public static final int menu_circle=0x7f020019;
         public static final int right_arrow=0x7f02001a;
         public static final int share=0x7f02001b;
-        public static final int up_arrow=0x7f02001c;
-        public static final int white=0x7f02001d;
+        public static final int title=0x7f02001c;
+        public static final int up_arrow=0x7f02001d;
+        public static final int white=0x7f02001e;
     }
     public static final class id {
         public static final int FrameLayout1=0x7f0c0004;

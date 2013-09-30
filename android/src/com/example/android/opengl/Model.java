@@ -51,9 +51,9 @@ class Model{
 		mBoardBg = new Background("boardbg", .75f);
 		mGameBanner = new Banner(.75f);
 		mGameBanner.setPosition("TOPCENTER");
-		mTitle = new Background("title", 1.0f);
-		float[] title = {0.0f, -1.0f, 0.0f};
-		mTitle.setCenter(center);
+		mTitle = new Background("title", .75f);
+		float[] titleCenter = {0.0f, 1.0f, 0.0f};
+		mTitle.setCenter(titleCenter);
 	}    
 
 	public void createPuzzle(int length, int hints) {
