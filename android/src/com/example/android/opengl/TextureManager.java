@@ -61,13 +61,13 @@ public class TextureManager {
 	
 	public void buildTextures() {
 		int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
-		int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
+		int[] y_coords = {64, 64, 64, 64, 64, 64, 64, 64, 64, 64};
 		buildTextures("0123456789", x_coords, y_coords,64);
 		buildTextures(context, R.drawable.up_arrow, UPARROW);
 		buildTextures(context, R.drawable.down_arrow, DOWNARROW);
 		buildTextures(context, R.drawable.left_arrow, LEFTARROW);
 		buildTextures(context, R.drawable.right_arrow, RIGHTARROW);
-		buildTextures(context, R.drawable.menu_circle, MENUCIRCLE);
+		buildTextures(context, R.drawable.circle, MENUCIRCLE);
 		buildTextures(context, R.drawable.beecolor, BEE);
 		
 		buildTextures(context, R.drawable.flower1,"flower0");
@@ -85,43 +85,46 @@ public class TextureManager {
 		
 		//TM.buildTextures(context, R.drawable.papertexture2, "paperbg");
 		buildTextures(context, R.drawable.boardbg, "boardbg");
-		buildTextures(context, R.drawable.check, "check");
+		buildTextures(context, R.drawable.check2, "check");
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title, "title");
 		//Create Menu Textures
 
-		for(int i=0;i<6;i++){
-		    buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
+		buildTextures(context, R.drawable.red_x, "menu_1");
+		for(int i=1;i<6;i++){
+		    buildTextures(Integer.toString(i),64,80,"menu_"+Integer.toString(i+1),50);
 		}
 		//Create Border Textures
 		for(int i=0;i<15;i++){
 		    buildTextures(Integer.toString(i),60,90,"border_"+Integer.toString(i),60);
 		}
-		int fontSize = 30; 
-	    buildTextures(START, 64,64, START, fontSize);
-	    buildTextures(NEW, 64,64, NEW, fontSize);
-	    buildTextures(RESUME, 64,64, RESUME, fontSize);
-	    buildTextures(OPTIONS, 64,64, OPTIONS, fontSize);
-	    buildTextures(BACK, 64,64, BACK, fontSize);
-	    buildTextures(SHORT, 64,64, SHORT, fontSize);
-	    buildTextures(MEDIUM, 64,64, MEDIUM, fontSize);
-	    buildTextures(LONGER, 64,64, LONGER, fontSize);
-	    buildTextures(LONGEST, 64,64, LONGEST, fontSize);
-	    buildTextures(HINTS_ON, 64,64, HINTS_ON, fontSize);
-	    buildTextures(HINTS_OFF, 64,64, HINTS_OFF, fontSize);
-	    buildTextures(CLEAR_BOARD, 64,64, CLEAR_BOARD, fontSize);
-	    buildTextures(QUIT, 64,64, QUIT, fontSize);
-	    buildTextures(YES, 64,64, YES, fontSize);
-	    buildTextures(NO, 64,64, NO, fontSize);
-	    //buildTextures(SHARE, 64,64, R.drawable.share, fontSize);
-	    buildTextures(TUTORIAL, 64,64, TUTORIAL, fontSize);
-	    buildTextures(NEXT, 64,64, NEXT, fontSize);
-	    buildTextures(PREVIOUS, 64,64, PREVIOUS, fontSize);
-	    buildTextures(SHOW_SOLUTION, 64,64, SHOW_SOLUTION, fontSize);
-	    buildLongTextures(TRY_AGAIN, 64,64, TRY_AGAIN, fontSize, 256);
-	    buildLongTextures(GOOD_JOB, 64,64, GOOD_JOB, fontSize, 256);
+		int fontSize = 25; 
+		int xpos = 64;
+		int ypos = 70;
+	    buildTextures(START, xpos, ypos, START, fontSize);
+	    buildTextures(NEW, xpos, ypos, NEW, fontSize);
+	    buildTextures(RESUME, xpos, ypos, RESUME, fontSize);
+	    buildTextures(OPTIONS, xpos, ypos, OPTIONS, fontSize);
+	    buildTextures(BACK, xpos, ypos, BACK, fontSize);
+	    buildTextures(SHORT, xpos, ypos, SHORT, fontSize);
+	    buildTextures(MEDIUM, xpos, ypos, MEDIUM, fontSize);
+	    buildTextures(LONGER, xpos, ypos, LONGER, fontSize);
+	    buildTextures(LONGEST, xpos, ypos, LONGEST, fontSize);
+	    buildTextures(HINTS_ON, xpos, ypos, HINTS_ON, fontSize);
+	    buildTextures(HINTS_OFF, xpos, ypos, HINTS_OFF, fontSize);
+	    buildTextures(CLEAR_BOARD, xpos, ypos, CLEAR_BOARD, fontSize);
+	    buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
+	    buildTextures(YES, xpos, ypos, YES, fontSize);
+	    buildTextures(NO, xpos, ypos, NO, fontSize);
+	    //buildTextures(SHARE, xpos, ypos, R.drawable.share, fontSize);
+	    buildTextures(TUTORIAL, xpos, ypos, TUTORIAL, fontSize);
+	    buildTextures(NEXT, xpos, ypos, NEXT, fontSize);
+	    buildTextures(PREVIOUS, xpos, ypos, PREVIOUS, fontSize);
+	    buildTextures(SHOW_SOLUTION, xpos, ypos, SHOW_SOLUTION, fontSize);
+	    buildLongTextures(TRY_AGAIN, xpos, ypos, TRY_AGAIN, fontSize, 256);
+	    buildLongTextures(GOOD_JOB, xpos, ypos, GOOD_JOB, fontSize, 256);
 	    
-	    buildTextures("", 64,64, CLEAR, fontSize);
+	    buildTextures("", xpos, ypos, CLEAR, fontSize);
 
 	    for(int i =0;i< TutorialInfo.banners.length;i++){
 	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),20, 256);
@@ -309,7 +312,7 @@ buildTextures(context, R.drawable.papertexture2, "paperbg");
 
 private void loadPlayTextures(int[] columnSums, int[] rowSums) {
 int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
-int[] y_coords = {64,64,64,64,64,64,64,64,64,64};
+int[] y_coords = {xpos, ypos,xpos, ypos,xpos, ypos,xpos, ypos,xpos, ypos};
 buildTextures("0123456789", x_coords, y_coords,64);
 buildTextures(context, R.drawable.up_arrow,"up_arrow");
 buildTextures(context, R.drawable.down_arrow,"down_arrow");
@@ -325,7 +328,7 @@ buildTextures(context, R.drawable.blacksquare, "blacksquare");
 library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
 //Create Menu Textures
 for(int i=0;i<6;i++){
-    buildTextures(Integer.toString(i),64,64,"menu_"+Integer.toString(i+1),64);
+    buildTextures(Integer.toString(i),xpos, ypos,"menu_"+Integer.toString(i+1),64);
 }
 //Create Border Textures
 for(int i=0;i<rowSums.length;i++){
