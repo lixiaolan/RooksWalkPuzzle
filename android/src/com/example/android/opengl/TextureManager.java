@@ -81,8 +81,11 @@ public class TextureManager {
 		buildTextures(context, R.drawable.flower9,"flower8");
 		
 		buildTextures(context, R.drawable.grass1,"grass0");
-		
-		
+		buildTextures(context, R.drawable.grass2,"grass1");
+		buildTextures(context, R.drawable.grass3,"grass2");
+		buildTextures(context, R.drawable.grass4,"grass3");
+		buildTextures(context, R.drawable.grass5,"grass4");
+		buildTextures(context, R.drawable.grass6,"grass5");
 		//TM.buildTextures(context, R.drawable.papertexture2, "paperbg");
 		buildTextures(context, R.drawable.boardbg, "boardbg");
 		buildTextures(context, R.drawable.check2, "check");
@@ -147,7 +150,7 @@ public class TextureManager {
 	}
 	
 	public static String getGrassTexture() {
-		int r = (int)(Math.random()*1.0f);
+		int r = (int)(Math.random()*5.0f);
 		return "grass"+Integer.toString(r);
 	}
 	

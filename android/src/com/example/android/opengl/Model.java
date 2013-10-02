@@ -219,8 +219,8 @@ class Model{
 	}
 
     public void setGeometry(float[] g) {
-	geometry = g;
-	mMenuManager.setGeometry(g);
+    	geometry = g;
+    	mMenuManager.setGeometry(g);
     }
 
 	public void setState(GameState s){
@@ -358,6 +358,7 @@ class Model{
 		case GAME_MENU_LIST:
 		   mMenuManager.callCallback(0);
 		   break;
+		   
 		case MAIN_MENU_OPENING:
 			((Activity)context).finish();
 			break;
