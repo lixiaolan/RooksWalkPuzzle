@@ -5,12 +5,12 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     private Board mBoard;    
     
     public Bee(Board b) {
-	float[] center= {0.0f,0.0f,0.0f};
-	tiles = new BeeTile[1];
-	tiles[0] = new BeeTile(center,0.13f);
-	bee = tiles[0];
-	mBoard = b;
-	setState(GameState.MAIN_MENU_OPENING); 
+    	float[] center= {0.0f,0.0f,0.0f};
+    	tiles = new BeeTile[1];
+    	tiles[0] = new BeeTile(center,0.13f);
+    	bee = tiles[0];
+    	mBoard = b;
+    	setState(GameState.MAIN_MENU_OPENING); 
     }
     
     public void setState(GameState s){	
@@ -24,11 +24,15 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     public void setState(GameState s, int l){	
 	switch(s){
 		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
-	case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP, l); break;
+		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP, l); 
+			System.out.println("Puttin be to sleep");
+			break;
 	default: break;
 	}
     }
-        
+    
+    
+    
     public int touched(float[] pt) {
 	if(pt[0]< bee.center[0]+0.25f && pt[0] > bee.center[0]-.25f 
 	   && pt[1]< bee.center[1]+0.25f && pt[1] > bee.center[1]-.25f ){
@@ -55,14 +59,14 @@ class BeeWander extends BeeState<BeeTile> {
     float[] pivot = {1,0,1};
     
     public BeeWander(Board b, Mood m) {
-	setBoard(b);
-	setMood(m);
+    	setBoard(b);
+    	setMood(m);
     }
     
     public void enterAnimation(BeeTile[] tiles){
-	period = DrawPeriod.DURING;
-	globalRefTime = System.currentTimeMillis();
-	relativeRefTime = System.currentTimeMillis();
+    	period = DrawPeriod.DURING;
+    	globalRefTime = System.currentTimeMillis();
+    	relativeRefTime = System.currentTimeMillis();
     }    
     
     public void duringAnimation(BeeTile[] tiles) {
@@ -137,7 +141,7 @@ class BeeFixed extends BeeState<BeeTile> {
     public long globalRefTime = 0;    
     public long relativeRefTime = 0;
     public BeeTile bee;
-
+    final float[] origin = {0.0f, 0.0f};
     boolean flipped = true;
     int index = 0;
     int r = 0;
@@ -149,17 +153,17 @@ class BeeFixed extends BeeState<BeeTile> {
     float[] fixedPosHidden = {-2.0f, 0.0f, 0.0f};
     
     public BeeFixed(Board b, Mood m) {
-	setBoard(b);
-	setMood(m);
-	length = (mBoard.path.length-2)/2;
-	System.out.println("length: "+Integer.toString(length));
+    	setBoard(b);
+    	setMood(m);
+    	length = (mBoard.path.length-2)/2;
+    	System.out.println("length: "+Integer.toString(length));
     }
 
     public BeeFixed(Board b, Mood m, int l) {
-	setBoard(b);
-	setMood(m);
-	length = l;
-	System.out.println("length: "+Integer.toString(length));
+    	setBoard(b);
+    	setMood(m);
+    	length = l;
+    	System.out.println("length: "+Integer.toString(length));
     }   
     
     public void enterAnimation(BeeTile[] tiles){
@@ -170,6 +174,7 @@ class BeeFixed extends BeeState<BeeTile> {
     
     public void duringAnimation(BeeTile[] tiles) {
 	bee = (BeeTile)tiles[0];
+	System.out.println("Bee game is on");
 	long time = System.currentTimeMillis() - globalRefTime;
 	float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
 	relativeRefTime = System.currentTimeMillis();
@@ -210,9 +215,33 @@ class BeeFixed extends BeeState<BeeTile> {
 		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
 	    }
 	    break;
+	    
+	case DIZZY:
+		System.out.println("Dizzy Bee");
+		force = getForceCentripetal(origin, bee.getCenter2D(), bee.velocity, 1.0f, 0.1f);
+		bee.setCenter2D(vSum(bee.getCenter2D(), vSProd(dt, bee.velocity)));
+		bee.velocity = vSum(bee.velocity, vSProd(dt, force));
+		break;
 	}
+	
+	
+		
+	
     }
 
+    public float[] getForceCentripetal(float[] dest, float[] initial, float[] velocity, float acc, float friction) {
+	    float[] force = {0.0f, 0.0f};
+	    force = LATools.vSProd(acc,LATools.vDiff(dest, initial)); 
+	    float[] dist = LATools.vDiff(dest, initial);
+	    float v = LATools.abs(velocity);
+	    float scale = v*v/(LATools.abs(dist));
+	    force = LATools.vSProd(scale, force);
+	    force = LATools.vSum(force, LATools.vSProd(friction,velocity));
+	    return force;
+	}
+    
+
+    
     public float[] getForce(float[] in) {
 	float[] force = {0.0f, 0.0f};
 	force = vSProd(-2.0f,vDiff(bee.center, in)); 

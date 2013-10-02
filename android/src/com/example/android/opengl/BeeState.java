@@ -13,11 +13,11 @@ public abstract class BeeState<T extends Tile> extends State<T> {
     protected Board mBoard;
 
     protected void setMood(Mood m) {
-	mood = m;
+    	mood = m;
     }
 
     protected void setBoard(Board b) {
-	mBoard = b;
+    	mBoard = b;
     }
 
 }

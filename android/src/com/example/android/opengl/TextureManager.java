@@ -47,7 +47,7 @@ public class TextureManager {
     public static final String FOOT = "+";
     public static final String GOOD_JOB = "Good job!";
     public static final String TRY_AGAIN = "Keep trying...";
-    
+    public static final String STORY = "story";
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
@@ -118,6 +118,7 @@ public class TextureManager {
 	    buildTextures(CLEAR_BOARD, xpos, ypos, CLEAR_BOARD, fontSize);
 	    buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
 	    buildTextures(YES, xpos, ypos, YES, fontSize);
+	    buildTextures(STORY, xpos, ypos, STORY, fontSize);
 	    buildTextures(NO, xpos, ypos, NO, fontSize);
 	    //buildTextures(SHARE, xpos, ypos, R.drawable.share, fontSize);
 	    buildTextures(TUTORIAL, xpos, ypos, TUTORIAL, fontSize);
@@ -135,6 +136,11 @@ public class TextureManager {
 
 	    for(int i =0;i< TutorialInfo.bottomBanners.length;i++){
 	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i), 20, 256);
+	    }
+
+	    
+	    for(int i =0;i< StoryBoardInfo.banners.length;i++){
+	    	buildLongTextures(StoryBoardInfo.banners[i],20,128,"story_banner_"+Integer.toString(i), 25, 256);
 	    }
 
 	    

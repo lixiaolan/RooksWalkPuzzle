@@ -31,6 +31,9 @@ class Model{
     private Banner mGameBanner;
     private Background mTitle;
     private float[] geometry = new float[3];
+    private StoryBoard mStoryBoard;
+    
+    
 	public Model(Context c) {
 		initiateMembers(c, new Board());
 	}
@@ -56,6 +59,7 @@ class Model{
 		mTitle = new Background("title", .50f);
 		float[] titleCenter = {.5f, 0.8f, 0.0f};
 		mTitle.setCenter(titleCenter);
+		mStoryBoard = new StoryBoard();
 	}    
 
 	public void createPuzzle(int length, int hints) {
@@ -159,6 +163,10 @@ class Model{
 			}
 			mTutorialBoard.touchHandler(mMenu, pt);
 			break;
+			
+		case STORY:
+			mStoryBoard.touchHandler();
+			
 		default: break;
 		}
 
@@ -188,6 +196,10 @@ class Model{
 	public void draw(MyGLRenderer r) {
 
 		switch(state.state) {
+		
+		case STORY:
+			mStoryBoard.draw(r);
+			break;
 		case GAME_OPENING:
 		case GAME_MENU_LIST:
 			mCheck.draw(r);
@@ -201,6 +213,7 @@ class Model{
 			if(state.showGameBanner){
 				mGameBanner.draw(r);
 			}
+			mMenuManager.draw(r);
 			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:
@@ -209,13 +222,15 @@ class Model{
 			mBoard.draw(r);
 			mBee.draw(r);
 			mTitle.draw(r);
+			mMenuManager.draw(r);
 			break;
 		case TUTORIAL:
 			mTutorialBoard.draw(r);
 			mMenu.draw(r);
+			mMenuManager.draw(r);
 		default: break;
 		}
-		mMenuManager.draw(r);
+		
 	}
 
     public void setGeometry(float[] g) {

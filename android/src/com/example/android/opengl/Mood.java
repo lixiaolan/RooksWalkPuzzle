@@ -4,5 +4,6 @@ public enum Mood {
     ASLEEP,
     HAPPY,
     HIDDEN,
-    PISSED
+    PISSED,
+    DIZZY
 }

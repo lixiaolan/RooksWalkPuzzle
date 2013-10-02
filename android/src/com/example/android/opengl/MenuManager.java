@@ -45,11 +45,11 @@ class MenuManager {
 	    break;
 	case MAIN_MENU_LIST:
 		if(state.resumeGameExists){
-			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.TUTORIAL, TextureManager.OPTIONS};
+			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.TUTORIAL, TextureManager.OPTIONS, TextureManager.STORY};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {
-			String[] textures2 = {TextureManager.NEW, TextureManager.TUTORIAL, TextureManager.OPTIONS};
+			String[] textures2 = {TextureManager.NEW, TextureManager.TUTORIAL, TextureManager.OPTIONS, TextureManager.STORY};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
 		}
@@ -149,6 +149,11 @@ class MenuManager {
     	    case 4: state.state = GameState.MAIN_MENU_OPTIONS;
     		updateState();
     		break;
+    	    case 5:
+    	    	state.state = GameState.STORY;
+    	    	mModel.setState(GameState.STORY);
+    	    	updateState();
+    	    	break;
     	    case 0: state.state = GameState.MAIN_MENU_OPENING;
     		updateState();
     		break;
@@ -172,6 +177,11 @@ class MenuManager {
 	    case 3: state.state = GameState.MAIN_MENU_OPTIONS;
 		updateState();
 		break;
+	    case 4:
+	    	state.state = GameState.STORY;
+	    	mModel.setState(GameState.STORY);
+	    	updateState();
+	    	break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
 		updateState();
 		break;

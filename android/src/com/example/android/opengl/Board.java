@@ -15,8 +15,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public int[] columnSums;
     public int[] rowSums;
     private boolean toggleHints = true;
-    private float flowerSize = .15f;
-    private float tileSize = .11f;
+    protected float flowerSize = .15f;
+    protected float tileSize = .11f;
     
     private long lastTouchTime;
     private float[] lastTouchPos = new float[2];
@@ -286,19 +286,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    float[] pivot = {0.0f,0.0f,1.0f};
 	    //Set textures	
 	    for (int i = 0;i<tiles.length;i++){
-		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
-		tiles[i].setColor("transparent");
-		tiles[i].setSize(flowerSize);
-		tiles[i].setAngle(0f);
-		tiles[i].setPivot(pivot);
+	    	tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
+	    	tiles[i].setColor("transparent");
+	    	tiles[i].setSize(flowerSize);
+	    	tiles[i].setAngle(0f);
+	    	tiles[i].setPivot(pivot);
 	    }
 	    
 	    for (int i = 0; i<tiles.length; i++ ) {
-		float ii = (float)i;
-		float r = (ii + 10*(1-1/(ii+1)))/25;
-		float t = ii/1.5f; 
-		centers[2*i] = -.75f + r*((float)Math.sin(t));
-		centers[2*i+1] = r*((float)Math.cos(t));
+	    	float ii = (float)i;
+	    	float r = (ii + 10*(1-1/(ii+1)))/25;
+	    	float t = ii/1.5f; 
+	    	centers[2*i] = -.75f + r*((float)Math.sin(t));
+	    	centers[2*i+1] = r*((float)Math.cos(t));
 	    }
 	    
 	}

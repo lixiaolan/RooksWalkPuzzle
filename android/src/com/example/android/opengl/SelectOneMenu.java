@@ -10,7 +10,6 @@ class SelectOneMenu extends GameMenu{
     }
 	
     
-    
     private void initialize(float[] pos, float size, String[] textures) {
     	tilesSize = size;
     	tilesCenter = pos;
