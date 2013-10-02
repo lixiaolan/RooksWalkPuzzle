@@ -161,12 +161,6 @@ class Model{
 			break;
 		default: break;
 		}
-
-		
-
-
-
-
 	}
 
 	public void swiped(float[] pt, String direction) {

@@ -326,6 +326,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    float[] mid = {centers[2*i],centers[2*i+1],0.0f};
 	    force = vSProd(-2.0f,vDiff(tiles[i].center, mid)); 
 	    force = vSum(force, vSProd(-1.2f,tiles[i].velocity));
+	    
+
 	    //Compute wave of forces due to touch
 	    float time = (System.currentTimeMillis()-lastTouchTime)/1000f;
 	    temp = vDiff(tiles[i].center, lastTouchPos);

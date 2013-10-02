@@ -138,6 +138,7 @@ class BeeFixed extends BeeState<BeeTile> {
     public long relativeRefTime = 0;
     public BeeTile bee;
 
+    boolean firstFlower = true;
     boolean flipped = true;
     int index = 0;
     int r = 0;
@@ -186,9 +187,14 @@ class BeeFixed extends BeeState<BeeTile> {
 		    bee.velocity[0] = .00001f;
 		}
 		bee.velocity = vSProd(.2f/abs(bee.velocity),bee.velocity);
+		if (firstFlower == true) {
+		    firstFlower = false;
+		}
+		else{
+		    mBoard.tiles[r].rotate = true;
+		}
 		r = 6*mBoard.path[index][0] + mBoard.path[index][1];
 		index = ((index-1)%length + length)%length;
-		mBoard.tiles[r].rotate = true;
 	    }
 	    break;
 
