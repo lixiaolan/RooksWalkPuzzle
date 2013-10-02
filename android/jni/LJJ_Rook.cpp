@@ -29,8 +29,8 @@ RookBoard::RookBoard(int h, int w, int l) : height(h), width(w), length(l) {
     leftRight.push_back(bTemp);
     upDown.push_back(bTemp);
   }
-
-  makeBoardRightAnglesNoPassOver(l);
+  //makeBoardRightAnglesNoPassOver(l);
+  makeBoardNoPassOver(l);
 
   for (int j = 0; j < width; j++) {
     int sum = 0;
@@ -297,6 +297,103 @@ vector<pos> RookBoard::legalMovesRightAnglesAnyNumNoPassOver() {
   return legalMovesList;
 }
 
+vector<pos> RookBoard::legalMovesNoPassOver() {
+  // Find the last position.
+  pos last = *(positions.end()-1);
+  // Initiate the LegalMovesList
+  vector<pos> legalMovesList;
+  //Find the last move made.
+  pos lastMove(0,0);
+  if (positions.size() > 1) {
+    lastMove = *(positions.end()-1)-*(positions.end()-2);
+  }
+ 
+  pos im = *(positions.begin());
+ 
+  //Do a search for legal moves in the four directions
+  // This checks first that the direction is in fact legal
+   if (lastMove.r == 0) {
+    for (int i = last.r; i < height; i++) {
+      int temp = i - last.r;
+      if (temp > 0) {
+	if (pos(i,last.c) == im) {
+	  if (goodPlay(pos(i,last.c),temp)) {
+	    legalMovesList.push_back(pos(i,last.c));
+	  }
+	  break;
+	}
+	if (upDown[i][last.c]==false) {
+	  if (leftRight[i][last.c]==false)
+	    if (goodPlay(pos(i,last.c),temp)) {
+	      legalMovesList.push_back(pos(i,last.c));
+	    }
+	}
+	else
+	  break;
+      }
+    }
+  }
+  if (lastMove.r == 0) {
+    for (int i = last.r; i >= 0; i--) {
+      int temp = last.r - i;
+      if (temp > 0) {
+	if (pos(i,last.c) == im) {
+	  if (goodPlay(pos(i,last.c),temp))
+	    legalMovesList.push_back(pos(i,last.c));
+	  break;
+	}
+	if (upDown[i][last.c]==false) {
+	  if (leftRight[i][last.c]==false)
+	    if (goodPlay(pos(i,last.c),temp))
+	      legalMovesList.push_back(pos(i,last.c));
+	}
+	else
+	  break;
+	
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i < width; i++) {
+      int temp = i - last.c;
+      if (temp > 0) {
+	if (pos(last.r,i) == im) {
+	  if (goodPlay(pos(last.r,i),temp))
+	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (leftRight[last.r][i] == false) {
+	  if (upDown[last.r][i] == false)
+	    if (goodPlay(pos(last.r,i),temp))
+	      legalMovesList.push_back(pos(last.r,i));
+	}
+	else
+	  break;
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i >= 0; i--) {
+      int temp = last.c - i;
+      if (temp > 0) {
+	if (pos(last.r,i) == im) {
+	  if (goodPlay(pos(last.r,i),temp))
+	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (leftRight[last.r][i]==false){
+	  if (upDown[last.r][i] == false)
+	    if (goodPlay(pos(last.r,i),temp))
+	      legalMovesList.push_back(pos(last.r,i));
+	}
+	else
+	  break;
+      }
+    }
+  }
+  return legalMovesList;
+}
+
 //Function to reorder the elements of a vector to have the least amout possible of directional preference.
 void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
   pos last = *(positions.end()-1);
@@ -343,6 +440,16 @@ void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
   legalMoves = result;
   return;
 }
+
+// //Function to put legal moves in shortest to longest order
+// void RookBoard::sortLegalMoves(pos initialPos, vector<pos> &legalMoves) {
+//   auto f = [initialPos](pos left, pos right) -> bool {return lengthOfMove(initialPos-left)<lengthOfMove(initialPos-right); };
+//   sort(legalMoves.begin(), legalMoves.end(), f);
+// }
+
+// int lengthOfMove(pos move) {
+//   return (abs(move.r) + abs(move.c) );
+// }
 
 //Takes a sugested play and returns weither or not it is legal.
 bool RookBoard::goodPlay(pos play, int num) {
@@ -419,8 +526,7 @@ bool RookBoard::makeBoard(int depth) {
   //Generate all legalMoves from current location
   // vector<pos> lm = legalMoves();
 
-
-  vector<pos> lm = legalMovesRightAnglesAnyNumNoPassOver();
+  vector<pos> lm = legalMoves();
   //cout << lm.size() << endl;
 
   // If there are none, return false
@@ -461,6 +567,9 @@ bool RookBoard::makeBoardRightAnglesNoPassOver(int depth) {
     bool a = ((*(positions.begin())).r == (*(positions.end()-1)).r);
     bool b = ((*(positions.begin())).c == (*(positions.end()-1)).c);
     bool c = (depth==0);
+    // pos dir1 = *(positions.begin()+1)-*(positions.begin());
+    // pos dir2 = *(positions.end()-1)-*(positions.end()-2);
+    // bool c = ((dir1.r*dir2.r + dir1.c*dir2.c) <= 0); 
     if (a&b&c) return true;
     if (a&b&!c) return false;
     if (c&!(a&b)) return false;
@@ -497,8 +606,81 @@ bool RookBoard::makeBoardRightAnglesNoPassOver(int depth) {
     pos last = (*(positions.end()-1) - *(positions.end()-2));
     moveArea[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
     markLRUD(*(positions.end()-1), *(positions.end()-2));
+    // printBool(leftRight);
+    // cout << endl;
+    // printBool(upDown);
+    // int ii;
+    // cin >> ii; 
     // Now recursivly call makeBoard with one less depth.
     if (makeBoardRightAnglesNoPassOver(depth-1)) return true;
+    // If the recrusive call fails, we remove the move we maid from the list,
+    // clear that spot on the board and try the next legal move.
+    unMarkLRUD(*(positions.end()-1), *(positions.end()-2));
+    positions.pop_back();
+    moveArea[lm[i].r][lm[i].c] = 0;
+  }
+  // Finally if none of our legal moves work out, we return false.
+  return false;
+}
+
+//The recrusive board maker.
+bool RookBoard::makeBoardNoPassOver(int depth) {
+  // If our puzzle has already reached the desired length, make sure
+  // It has both come full circle and that the direction with which
+  // it approaches the end location is compatible with the first move
+  // made in the puzzle (ie they cannot be the same direction!);
+  //cout << depth << endl;
+  if (positions.size() != 0) {
+    bool a = ((*(positions.begin())).r == (*(positions.end()-1)).r);
+    bool b = ((*(positions.begin())).c == (*(positions.end()-1)).c);
+    bool c = (depth==0);
+    // pos dir1 = *(positions.begin()+1)-*(positions.begin());
+    // pos dir2 = *(positions.end()-1)-*(positions.end()-2);
+    // bool c = ((dir1.r*dir2.r + dir1.c*dir2.c) <= 0); 
+    if (a&b&c) return true;
+    if (a&b&!c) return false;
+    if (c&!(a&b)) return false;
+  }
+  
+  // If the puzzle has not been started, choose a random starting point
+  if (positions.size() == 0) {
+    srand ( unsigned ( time(0) ) );
+    int x = rand() % height;
+    int y = rand() % width;
+    positions.push_back(pos(x,y));
+  }
+  //Generate all legalMoves from current location
+  // vector<pos> lm = legalMoves();
+
+
+  vector<pos> lm = legalMovesNoPassOver();
+  //cout << lm.size() << endl;
+
+  // If there are none, return false
+  if (lm.size() == 0) return false;
+  // Otherwise, reorder the legal moves according to preference
+  // See "reorderLegalMoves" for details!
+  
+
+  random_shuffle(lm.begin(), lm.end() );
+  //sortLegalMoves(*(positions.end()-1) , lm);
+  //reorderLegalMoves(lm);
+ 
+  // Loop though all possible legal moves
+  for (int i = 0; i < lm.size(); i++) {
+    // Add the ith legal move to the list
+    positions.push_back(lm[i]);
+    // and put the correct number into the borad.
+    pos last = (*(positions.end()-1) - *(positions.end()-2));
+    moveArea[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
+    markLRUD(*(positions.end()-1), *(positions.end()-2));
+    // printBool(leftRight);
+    // cout << endl;
+    // printBool(upDown);
+    // int ii;
+    // cin >> ii; 
+    // Now recursivly call makeBoard with one less depth.
+    if (makeBoardNoPassOver(depth-1)) return true;
     // If the recrusive call fails, we remove the move we maid from the list,
     // clear that spot on the board and try the next legal move.
     unMarkLRUD(*(positions.end()-1), *(positions.end()-2));

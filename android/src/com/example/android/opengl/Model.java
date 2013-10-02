@@ -196,7 +196,7 @@ class Model{
 			mBoard.draw(r);
 			mBee.draw(r);
 			mBoardBg.draw(r);
-			mBorder.draw(r);
+			//mBorder.draw(r);
 			mMenu.draw(r);
 			if(state.showGameBanner){
 				mGameBanner.draw(r);

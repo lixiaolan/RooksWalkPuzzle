@@ -12,16 +12,16 @@ function rookPlotter()
 
 RandStream.setDefaultStream(RandStream('mt19937ar','seed',sum(100*clock)));
 
-lenv = [18 20 24 28];
-hv   = [1 2 4 5];
+lenv = [10,10,10,10];
+hv   = [4 4 4 4];
 
-for i = 1:4
+for i = 3:4
     h   = hv(i);
     
     if (i < 3)
-        system(['./test 7 7 ', num2str(lenv(i))]);
+        system(['./test 6 6 ', num2str(lenv(i))]);
     else
-        system(['./test 7 7 ', num2str(lenv(i))]);
+        system(['./test 6 6 ', num2str(lenv(i))]);
     end
     
     [S,P] = boardRead('iotest.txt');
@@ -112,10 +112,10 @@ function boardplot(S,P,h)
     v1 = sum(S);
     v2 = sum(S');
     
-    for i = 1:N
-        text(i,0,num2str(v1(i)),'FontSize',14,'HorizontalAlignment','center')
-        text(0,-i,num2str(v2(i)),'FontSize',14,'HorizontalAlignment','center')
-    end
+%    for i = 1:N
+%        text(i,0,num2str(v1(i)),'FontSize',14,'HorizontalAlignment','center')
+%        text(0,-i,num2str(v2(i)),'FontSize',14,'HorizontalAlignment','center')
+%    end
        
     br = 0;
     while br == 0 
