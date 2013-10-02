@@ -441,15 +441,15 @@ void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
   return;
 }
 
-//Function to put legal moves in shortest to longest order
-void RookBoard::sortLegalMoves(pos initialPos, vector<pos> &legalMoves) {
-  auto f = [initialPos](pos left, pos right) -> bool {return lengthOfMove(initialPos-left)<lengthOfMove(initialPos-right); };
-  sort(legalMoves.begin(), legalMoves.end(), f);
-}
+// //Function to put legal moves in shortest to longest order
+// void RookBoard::sortLegalMoves(pos initialPos, vector<pos> &legalMoves) {
+//   auto f = [initialPos](pos left, pos right) -> bool {return lengthOfMove(initialPos-left)<lengthOfMove(initialPos-right); };
+//   sort(legalMoves.begin(), legalMoves.end(), f);
+// }
 
-int lengthOfMove(pos move) {
-  return (abs(move.r) + abs(move.c) );
-}
+// int lengthOfMove(pos move) {
+//   return (abs(move.r) + abs(move.c) );
+// }
 
 //Takes a sugested play and returns weither or not it is legal.
 bool RookBoard::goodPlay(pos play, int num) {
