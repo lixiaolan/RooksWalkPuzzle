@@ -44,7 +44,9 @@ public class ViewActivity extends Activity {
 	private Model mModel;
 	private MyGLRenderer mRenderer;    
 	private TextView mQuoteView;
-
+	private DataServer mDataServer;
+	
+	
 	boolean savedGame = false;
 	static final String savefile = "savefile";
 	static final String settingsfile = "settingsfile";
@@ -57,7 +59,9 @@ public class ViewActivity extends Activity {
 
 		mModel = new Model(this);
 		mRenderer = new MyGLRenderer(this, mModel);
-
+		mDataServer = new DataServer();
+		mDataServer.setContext(this);
+		mModel.setDataServer(mDataServer);
 		mGLView = (GameView)findViewById(R.id.surface_view);
 		((GameView)mGLView).setMyRenderer(mRenderer);
 		((GameView)mGLView).setModel(mModel);
@@ -82,53 +86,7 @@ public class ViewActivity extends Activity {
 		// consume significant memory here.
 		mGLView.onPause();
 		if(mModel.state.saveCurrGame){
-			File file = new File(this.getFilesDir(), savefile);
-			int[] solutions = mModel.mBoard.dumpSolution();
-			String[] numbers  = mModel.mBoard.dumpNumbers();
-			String[] arrows  = mModel.mBoard.dumpArrows();
-			String[] trueArrows = mModel.mBoard.dumpTrueArrows();
-			int[][] path = mModel.mBoard.dumpPath();
-			boolean[] clickable = mModel.mBoard.dumpClickable();
-
-			try {
-				PrintWriter outputStream = new PrintWriter(new FileWriter(file));
-				for(int i =0; i< solutions.length;i++){
-					outputStream.println(Integer.toString(solutions[i]));
-				}
-
-				for(int i =0; i< numbers.length;i++){
-					outputStream.println(numbers[i]);
-				}
-
-				for(int i =0; i< arrows.length;i++){
-					outputStream.println(arrows[i]);
-				}
-
-				for(int i =0; i< trueArrows.length;i++){
-					outputStream.println(trueArrows[i]);
-				}
-
-				for(int i =0; i< clickable.length;i++){
-					outputStream.println(clickable[i]);
-				}
-
-				outputStream.println(path.length);
-				outputStream.println(path[0].length);
-
-				for(int i =0;i< path.length ;i++){
-					for(int j=0;j<path[0].length;j++){
-						outputStream.println(path[i][j]);
-					}
-				}
-
-				outputStream.close();
-				SharedPreferences s  = getSharedPreferences(settingsfile, 0);
-				SharedPreferences.Editor editor = s.edit();
-				editor.putBoolean("savedGameExists", true);
-				editor.commit();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			mDataServer.saveGame(mModel.mBoard);
 		}
 	}
 
@@ -147,14 +105,9 @@ public class ViewActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();	
-		SharedPreferences s  = getSharedPreferences(settingsfile, 0);
-		mModel.state.resumeGameExists = s.getBoolean("savedGameExists", false);	
+		mModel.state.resumeGameExists = mDataServer.resumeExists();
+		mModel.state.firstRun = mDataServer.firstRun();
 		mModel.reset();
-		/*File file = new File(this.getFilesDir(), savefile);
-		if(file.exists()){
-			savedGame = true;				
-		}	
-		 */
 	}
 
 	public void closeQuoteScreen(View v) {

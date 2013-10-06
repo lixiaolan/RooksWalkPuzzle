@@ -10,7 +10,7 @@ package com.example.android.opengl;
 public abstract class State<T extends Tile> {
     
     enum DrawPeriod {
-	ENTER, DURING
+    	ENTER, DURING
     }
     
     DrawPeriod period = DrawPeriod.ENTER;

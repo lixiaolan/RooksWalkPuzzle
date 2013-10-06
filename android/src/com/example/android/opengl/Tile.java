@@ -11,7 +11,11 @@ abstract class Tile {
     float[] pivot = {0,0,1};
     
     public Tile(float[] inCenter,float inSize) {
-    	center = inCenter;
+    	//center = inCenter;
+    	center = new float[3];
+    	center[0] = inCenter[0];
+    	center[1] = inCenter[1];
+    	center[2] = inCenter[2];
     	size = inSize;
     	angle = 0.0f;
     }
@@ -56,6 +60,10 @@ abstract class Tile {
  	   textures[1] = texture1;
     }
     
+    
+    public void setSize(float size){
+    	this.size = size;
+    }
     
     public void setColor(String c) {
  	   color = c;

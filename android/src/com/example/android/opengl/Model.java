@@ -1,26 +1,22 @@
 package com.example.android.opengl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Vibrator;
-import android.util.Log;
 import android.app.Activity;
 
 class Model{
+	
+	public static final int SHORT = 8;
+	public static final int MEDIUM = 4;
+	public static final int LONGER = 16;
+	public static final int LONGEST = 20;
+	
     public GlobalState state;
     public TutorialBoard mTutorialBoard;
     public Board mBoard;
     private Menu mMenu;
-    private Border mBorder;
     public Bee mBee;
     private MenuManager mMenuManager;
     private Background mBoardBg;
@@ -32,6 +28,9 @@ class Model{
     private Background mTitle;
     private float[] geometry = new float[3];
     private StoryBoard mStoryBoard;
+    private DataServer mDataServer;
+    private StatsScreen mStatsScreen;
+   public boolean createTextures = false;
     
     
 	public Model(Context c) {
@@ -41,7 +40,7 @@ class Model{
 	public Model(Context c, Board b){
 		initiateMembers(c, b);
 	}
-
+	
 	public void initiateMembers(Context c, Board b){
 		mBoard = b;
 		mBee = new Bee(mBoard);
@@ -60,18 +59,13 @@ class Model{
 		float[] titleCenter = {.5f, 0.8f, 0.0f};
 		mTitle.setCenter(titleCenter);
 		mStoryBoard = new StoryBoard();
+		mStatsScreen = new StatsScreen(state);
+		
 	}    
 
 	public void createPuzzle(int length, int hints) {
 		state.showGameBanner = false;
 		mBoard.createPuzzleFromJNI(length, hints);
-		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());	
-	}
-
-	public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
-		state.showGameBanner = false;
-		mBoard.restoreBoard(solution, numbers, arrows, trueArrows, path, clickable);
-		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());
 	}
 
 	public void createTutorial(){
@@ -114,6 +108,7 @@ class Model{
 					//No game to save. No game to resume.
 					state.saveCurrGame = false;
 					state.resumeGameExists = false;
+					mDataServer.setLines(state.difficulty);
 					mBee.setMood(Mood.HAPPY);
 					mBoard.setState(GameState.GAME_MENU_END);
 				       
@@ -154,7 +149,6 @@ class Model{
 				vibe.vibrate(500);
 			}
 			break;
-		
 		case TUTORIAL:
 			//Game Menu
 			val = mMenuManager.touched(pt);
@@ -164,9 +158,13 @@ class Model{
 			mTutorialBoard.touchHandler(mMenu, pt);
 			break;
 			
-		case STORY:
-			mStoryBoard.touchHandler();
-			
+		case STATS:
+			val = mMenuManager.touched(pt);
+			if(val != -1){
+				mMenuManager.onTouched(val);
+			}
+			break;
+	
 		default: break;
 		}
 	}
@@ -201,8 +199,6 @@ class Model{
 			mBoardBg.draw(r);
 			mBoard.draw(r);
 			mBee.draw(r);
-			mBoardBg.draw(r);
-			//mBorder.draw(r);
 			mMenu.draw(r);
 			if(state.showGameBanner){
 				mGameBanner.draw(r);
@@ -222,6 +218,11 @@ class Model{
 			mTutorialBoard.draw(r);
 			mMenu.draw(r);
 			mMenuManager.draw(r);
+			break;
+		case STATS:
+			mStatsScreen.draw(r);
+			mMenuManager.draw(r);
+			break;
 		default: break;
 		}
 		
@@ -230,6 +231,7 @@ class Model{
     public void setGeometry(float[] g) {
     	geometry = g;
     	mMenuManager.setGeometry(g);
+    	mStatsScreen.setGeometry(g);
     }
 
 	public void setState(GameState s){
@@ -238,123 +240,30 @@ class Model{
 		mBoard.setState(s);
 	}
 
+	
+	public void setDataServer(DataServer d){
+		mDataServer = d;
+	}
+	
 	public GameState getState() {
 		return state.state;
 	}
 
-	 public void restoreGameUtil(){
-	     	try{
-	     	    int[] solution = new int[36];
-	     	    String[] numbers = new String[36];
-	     	    String[] arrows = new String[36];
-	     	    String[] trueArrows = new String[36];
-	     	    int[][] path;
-	     	    boolean[] clickable = new boolean[36];
-	     	    
-	     	    File file = new File(context.getFilesDir(), "savefile");
-		    
-	     	    if(file.exists()){
-	     		Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
-	     		for(int i=0; i<36;i++){
-	     		    int m = scanner.nextInt();
-	     		    solution[i] = m;
-	     		}
-	     		for(int i=0; i<36;i++){
-	     		    String m = scanner.next();
-	     		    numbers[i] = m;
-	     		}
-	     		for(int i=0; i<36;i++){
-	     		    String m = scanner.next();
-	     		    arrows[i] = m;
-	     		}
-	     		for(int i=0; i<36;i++){
-	     		    String m = scanner.next();
-	     		    trueArrows[i] = m;
-	     		}
-	     		
-	     		for(int i =0; i< clickable.length;i++){
-	     			boolean m = scanner.nextBoolean();
-	    		    clickable[i] = m;
-	    		}
-	     		
-	     		int path_length = scanner.nextInt();
-	     		int twiddle = scanner.nextInt();
-	     		path = new int[path_length][twiddle];
-	     		for(int i=0; i< path_length;i++){
-	     			for(int j = 0;j< twiddle;j++){
-	     				path[i][j] = scanner.nextInt();
-	     			}
-	     		}
-	     		scanner.close();
-	     		restorePuzzle(solution, numbers, arrows, trueArrows, path, clickable);
-	     	    } 
-	     	}
-		
-	     	catch (FileNotFoundException e) {
-	     	    Log.e("Exception", "File not found: " + e.toString());
-	     	} 
-	     	catch (InputMismatchException e) {
-	     	    System.out.print(e.getMessage()); //try to find out specific reason.
-	     	}
-		
-	     }
+	public void saveGame() {
+		mDataServer.saveGame(mBoard);
+		state.resumeGameExists  = true;
+	}
+	
+	public void resumeGame(){
+	     	mDataServer.restoreGame(mBoard);
+	     	state.showGameBanner = false;
+	 }
 
 	public void reset() {
 		setState(GameState.MAIN_MENU_OPENING);
 		mMenuManager.updateState();
 	}
 	 
-	public void saveGame() {
-		File file = new File(context.getFilesDir(), "savefile");
-		int[] solutions = mBoard.dumpSolution();
-		String[] numbers  = mBoard.dumpNumbers();
-		String[] arrows  = mBoard.dumpArrows();
-		String[] trueArrows = mBoard.dumpTrueArrows();
-		int[][] path  = mBoard.dumpPath();
-		boolean[] clickable = mBoard.dumpClickable();
-
-		try {
-			PrintWriter outputStream = new PrintWriter(new FileWriter(file));
-			for(int i =0; i< solutions.length;i++){
-				outputStream.println(Integer.toString(solutions[i]));
-			}
-
-			for(int i =0; i< numbers.length;i++){
-				outputStream.println(numbers[i]);
-			}
-
-			for(int i =0; i< arrows.length;i++){
-				outputStream.println(arrows[i]);
-			}
-
-			for(int i =0; i< trueArrows.length;i++){
-				outputStream.println(trueArrows[i]);
-			}
-
-			for(int i =0; i< clickable.length;i++){
-				outputStream.println(clickable[i]);
-			}
-
-			outputStream.println(path.length);
-			outputStream.println(path[0].length);
-
-			for(int i =0;i< path.length ;i++){
-				for(int j=0;j<path[0].length;j++){
-					outputStream.println(path[i][j]);
-				}
-			}
-
-			outputStream.close();
-			SharedPreferences s  = context.getSharedPreferences("settingsfile", 0);
-			SharedPreferences.Editor editor = s.edit();
-			editor.putBoolean("savedGameExists", true);
-			editor.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	
 	public void clearBoard() {
 		mBoard.resetBoard();
 	}    
@@ -365,14 +274,31 @@ class Model{
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
 		case GAME_MENU_LIST:
+		case STATS:
 		   mMenuManager.callCallback(0);
 		   break;
 		   
 		case MAIN_MENU_OPENING:
 			((Activity)context).finish();
 			break;
+		default:
+			break;
 		}
 		}
+
+	public void updateStats(TextureManager TM) {
+		int shortPuzz = mDataServer.getShortLines();
+		int medPuzz = mDataServer.getMediumLines();
+		int longerPuzz = mDataServer.getLongerLines();
+		int longestPuzz = mDataServer.getLongestLines();
+		
+		TM.buildLongTextures("Short Lines: "+Integer.toString(shortPuzz), 0, 30, TextureManager.SHORTSTATS, 25,  256);
+		TM.buildLongTextures("Medium Lines: "+Integer.toString(medPuzz), 0, 30, TextureManager.MEDIUMSTATS, 25, 256);
+		TM.buildLongTextures("Long Lines: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
+		TM.buildLongTextures("Longest Lines: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
+		
 	}
+	
+}
 	
 

@@ -211,6 +211,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	TM = new TextureManager(mActivityContext);
 	TM.buildTextures();
     System.out.println("Called on Surface created. This might be the slowdown.");
+    
     }
     
     
@@ -311,12 +312,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
     
     private void drawModel() {
-	mModel.draw(this);
+    	
+    	if(mModel.createTextures){
+    		mModel.updateStats(TM);
+    		mModel.createTextures = false;
+    	}
+    	mModel.draw(this);
+    	
     }
     
     
     public void drawTile(float[] center, float size, String[] textures, String color, float angle, float[] pivot)
     {
+    	
     	mTextures[0] = TM.library.get(textures[0]);
     	mTextures[1] = TM.library.get(textures[1]);	
     	mColor = colorMap.get(color);
