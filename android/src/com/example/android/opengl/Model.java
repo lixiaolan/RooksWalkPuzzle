@@ -8,13 +8,13 @@ import android.app.Activity;
 
 class Model{
 	
-	public static final int SHORT = 8;
-	public static final int MEDIUM = 4;
-	public static final int LONGER = 16;
-	public static final int LONGEST = 20;
+	public static final int SHORT = 6;
+	public static final int MEDIUM = 8;
+	public static final int LONGER = 12;
+	public static final int LONGEST = 14;
 	
     public GlobalState state;
-    public TutorialBoard mTutorialBoard;
+    public TutorialBoard2 mTutorialBoard;
     public Board mBoard;
     private Menu mMenu;
     public Bee mBee;
@@ -33,15 +33,15 @@ class Model{
    public boolean createTextures = false;
     
     
-	public Model(Context c) {
+    public Model(Context c) {
 		initiateMembers(c, new Board());
 	}
-
-	public Model(Context c, Board b){
+    
+    public Model(Context c, Board b){
 		initiateMembers(c, b);
 	}
-	
-	public void initiateMembers(Context c, Board b){
+
+    public void initiateMembers(Context c, Board b){
 		mBoard = b;
 		mBee = new Bee(mBoard);
 		mCheck  = new Background("check",.11f);
@@ -54,7 +54,6 @@ class Model{
 		mMenu = new Menu();
 		mBoardBg = new Background("boardbg", .75f);
 		mGameBanner = new Banner(.75f);
-		mGameBanner.setPosition("TOPCENTER");
 		mTitle = new Background("title", .50f);
 		float[] titleCenter = {.5f, 0.8f, 0.0f};
 		mTitle.setCenter(titleCenter);
@@ -62,21 +61,22 @@ class Model{
 		mStatsScreen = new StatsScreen(state);
 		
 	}    
-
-	public void createPuzzle(int length, int hints) {
+    
+    public void createPuzzle(int length, int hints) {
 		state.showGameBanner = false;
 		mBoard.createPuzzleFromJNI(length, hints);
 	}
 
 	public void createTutorial(){
-		mTutorialBoard = new TutorialBoard();
+		mTutorialBoard = new TutorialBoard2();
+		mTutorialBoard.setGeometry(geometry);
 	}
-	
-	public void toggleHints(boolean toggle) {
+    
+    public void toggleHints(boolean toggle) {
 		mBoard.toggleHints(toggle);
 	}
-
-	public void touched(float[] pt) {
+    
+    public void touched(float[] pt) {
 		int val = -1;
 		switch(state.state){
 		case GAME_OPENING: 
@@ -95,8 +95,10 @@ class Model{
 					}
 				}
 			} else {
-				if (at != -1)
-					mBoard.tiles[at].setUserInput(val);
+			    if (at != -1) {
+				mBoard.tiles[at].setUserInput(val);
+				mBoard.drawLines();
+			    }
 			}
 
 			if(mCheck.touched(pt) == 1){
@@ -168,24 +170,25 @@ class Model{
 		default: break;
 		}
 	}
-
-	public void swiped(float[] pt, String direction) {
+    
+    public void swiped(float[] pt, String direction) {
 		switch(state.state){
 		case GAME_OPENING:
-			if (at != -1 && mBoard.tiles[at].isClickable()) {
-				mBoard.tiles[at].setArrow(direction); 
-				mMenu.menuActive = false;
-			}
-			break;
-		
+		    if (at != -1 && mBoard.tiles[at].isClickable()) {
+			mBoard.tiles[at].setArrow(direction);
+			mBoard.drawLines(); 
+			mMenu.menuActive = false;
+		    }
+		    break;
+		    
 		case TUTORIAL:
-				mTutorialBoard.swipeHandler(direction); 
-				break;
+		    mTutorialBoard.swipeHandler(direction); 
+		    break;
 		default: break;
 		}
 	}
-
-	public void draw(MyGLRenderer r) {
+    
+    public void draw(MyGLRenderer r) {
 
 		switch(state.state) {
 		
@@ -196,14 +199,15 @@ class Model{
 		case GAME_MENU_LIST:
 			mCheck.draw(r);
 		case GAME_MENU_END:
-			mBoardBg.draw(r);
 			mBoard.draw(r);
 			mBee.draw(r);
+			mBoardBg.draw(r);
 			mMenu.draw(r);
 			if(state.showGameBanner){
 				mGameBanner.draw(r);
 			}
 			mMenuManager.draw(r);
+			
 			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:
@@ -227,14 +231,15 @@ class Model{
 		}
 		
 	}
-
+    
     public void setGeometry(float[] g) {
     	geometry = g;
     	mMenuManager.setGeometry(g);
     	mStatsScreen.setGeometry(g);
+    	mBoard.setGeometry(g);
     }
 
-	public void setState(GameState s){
+    public void setState(GameState s){
 		state.state = s;
 		mBee.setState(s);
 		mBoard.setState(s);
@@ -259,16 +264,15 @@ class Model{
 	     	state.showGameBanner = false;
 	 }
 
-	public void reset() {
+    public void reset() {
 		setState(GameState.MAIN_MENU_OPENING);
 		mMenuManager.updateState();
 	}
-	 
-	public void clearBoard() {
+     public void clearBoard() {
 		mBoard.resetBoard();
 	}    
-	
-	public void onBack(){
+    
+    public void onBack(){
 		switch(state.state){
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
@@ -290,15 +294,12 @@ class Model{
 		int shortPuzz = mDataServer.getShortLines();
 		int medPuzz = mDataServer.getMediumLines();
 		int longerPuzz = mDataServer.getLongerLines();
-		int longestPuzz = mDataServer.getLongestLines();
-		
+		int longestPuzz = mDataServer.getLongestLines();		
 		TM.buildLongTextures("Short Lines: "+Integer.toString(shortPuzz), 0, 30, TextureManager.SHORTSTATS, 25,  256);
 		TM.buildLongTextures("Medium Lines: "+Integer.toString(medPuzz), 0, 30, TextureManager.MEDIUMSTATS, 25, 256);
 		TM.buildLongTextures("Long Lines: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
 		TM.buildLongTextures("Longest Lines: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
-		
 	}
-	
 }
 	
 

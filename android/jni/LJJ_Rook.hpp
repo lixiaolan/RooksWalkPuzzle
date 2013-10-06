@@ -55,6 +55,10 @@ private:
   vector< vector<int> > moveArea;
   vector< vector<bool> > leftRight;
   vector< vector<bool> > upDown;
+
+  vector< vector<bool> > vertical;
+  vector< vector<bool> > leftUp;
+
   vector<int> rowSums;
   vector<int> colSums;
   vector<pos> positions;
@@ -67,14 +71,20 @@ private:
   vector<pos> legalMovesRightAnglesAnyNum();
   vector<pos> legalMovesRightAnglesAnyNumNoPassOver();
   vector<pos> legalMovesNoPassOver();
+  vector<pos> legalMovesNoPassOverNoPoint();
+
+  bool goodDir(pos, int, bool, bool);
 
   bool makeBoard(int);
   bool makeBoardRightAnglesNoPassOver(int);
   bool makeBoardNoPassOver(int);
   bool goodPlay(pos, int);
   bool goodPlayAnyNum(pos, int);
+  bool goodPlayProperDist(pos, int);
+  bool goodPlayNoPoint(pos, pos);
   void markUnused();
 
+  void setDir(pos, pos);
   void markLRUD(pos, pos);
   void unMarkLRUD(pos, pos);
   

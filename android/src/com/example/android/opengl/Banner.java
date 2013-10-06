@@ -37,8 +37,8 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	
 	}
 
-	public void setPosition(String position){
-		this.position = position;
+	public float getSize() {
+		return tiles[0].getSize();
 	}
 	
 	public void setCenter(float a, float b){
@@ -52,7 +52,7 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 
 	@Override
 	public void draw(MyGLRenderer r) {
-	    tiles[0].draw(r, position);
+	    tiles[0].draw(r);
 	}
 }
 

@@ -31,6 +31,10 @@ abstract class Tile {
     
     public abstract void draw(MyGLRenderer r);
     
+    public float getSize() {
+    	return size;
+    }
+    
     public void setPivot(float[] pivot){
     	this.pivot = pivot;
     }

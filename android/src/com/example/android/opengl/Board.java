@@ -14,13 +14,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public int[][] path;
     public int[] columnSums;
     public int[] rowSums;
+    public int boardWidth = 6;
+    public int boardHeight = 6;
     private boolean toggleHints = true;
+
     protected float flowerSize = .15f;
-    protected float tileSize = .11f;
-    
+    protected float tileSize = .11f;    
     private long lastTouchTime;
     private float[] lastTouchPos = new float[2];
-    
+    private float[] geometry = new float[3];    
+
     public Board() {
     	buildEmptyBoard();
     	state = new BoardMainMenu(tiles);
@@ -89,6 +92,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     public void buildEmptyBoard() {
 	tiles = new BoardTile[36];
+	
 	float size = .15f;
 	for (int i = 0; i < tiles.length; i++) {
 	    double r = Math.random();
@@ -96,7 +100,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    r = Math.random();
 	    float Sy = (float)(-1.5*r+(1-r)*1.5);
 	    float center[] = { Sx, Sy, 0.0f};
-	    tiles[i] = new BoardTile(center, size);    	    
+	    tiles[i] = new BoardTile(center, size);
 	}
     }
     
@@ -217,6 +221,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public int[] getRowSums(){
     	return rowSums;
     }
+
     static {
 	System.loadLibrary("GeneratePuzzle");
     }
@@ -266,7 +271,156 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     	}
     }
     
-    
+    public void setGeometry(float[] g) {
+	geometry = g;
+    }
+
+    // Class to draw the dotted lines on the board.  Called after every input
+    public void drawLines() {
+	float duration = .5f;
+	float delay = .25f;
+	//First remove the lines on tiles which are no longer pointed at.
+	markPointedAt();
+	for (int i = 0; i < tiles.length; i++ ) {
+	    if (!tiles[i].hasNumber() && !tiles[i].hasArrow() && !tiles[i].isBlack()) {
+		if (!tiles[i].vPointedAt) {
+		    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].textures[1]);
+		}
+		if (!tiles[i].hPointedAt) {
+		    tiles[i].setTextures(tiles[i].textures[0], TextureManager.CLEAR);
+		}
+	    }
+	}
+
+	//Now go though each tile and fill in pointed at tiles.
+	for (int i = 0; i < tiles.length; i++ ) {
+	    if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
+		int num = Integer.parseInt(tiles[i].number);
+		if (tiles[i].getArrow() == TextureManager.UPARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i%boardHeight + j < boardHeight) {
+			    if (tiles[i+j].needsVertDots()) {
+				String[] s1 = new String[2];
+				s1[0] = TextureManager.VERTDOTS;
+				s1[1] = tiles[i+j].textures[1];
+				float[] pivot = {1.0f,0.0f,0.0f};
+				tiles[i+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
+			    }
+			    if (tiles[i+j].isBlack() || !tiles[i+j].isBlank()) {
+				tiles[i+j].setAngryGlow(duration, j*delay, tiles[i+j].color);
+			    }
+			    else {
+				tiles[i+j].resetGlow();
+			    }
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.DOWNARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i%boardHeight - j >= 0) {
+			    if (tiles[i-j].needsVertDots()) {
+				String[] s2 = new String[2];
+				s2[0] = TextureManager.VERTDOTS;
+				s2[1] = tiles[i-j].textures[1];
+				float[] pivot = {1.0f,0.0f,0.0f};
+				tiles[i-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
+			    }
+			    if (tiles[i-j].isBlack() || !tiles[i-j].isBlank()) {
+				tiles[i-j].setAngryGlow(duration, j*delay, tiles[i-j].color);
+			    }
+			    else {
+				tiles[i-j].resetGlow();
+			    }
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.LEFTARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i/boardHeight + j < boardWidth) { 
+			    if (tiles[i+j*boardHeight].needsHorzDots()) {
+				String[] s3 = new String[2];
+				s3[1] = TextureManager.HORZDOTS;
+				s3[0] = tiles[i+j*boardHeight].textures[0];
+				float[] pivot = {0.0f,1.0f,0.0f};
+				tiles[i+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
+			    }
+			    if (tiles[i+j*boardHeight].isBlack() || !tiles[i+j*boardHeight].isBlank()) {
+				tiles[i+j*boardHeight].setAngryGlow(duration, j*delay, tiles[i+j*boardHeight].color);
+			    }
+			    else {
+				tiles[i+j*boardHeight].resetGlow();
+			    }
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.RIGHTARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i/boardHeight - j >= 0) {
+			    if (tiles[i-j*boardHeight].needsHorzDots()) {
+				String[] s4 = new String[2];
+				s4[1] = TextureManager.HORZDOTS;
+				s4[0] = tiles[i-j*boardHeight].textures[0];
+				float[] pivot = {0.0f,1.0f,0.0f};
+				tiles[i-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
+			    }
+			    if (tiles[i-j*boardHeight].isBlack() || !tiles[i-j*boardHeight].isBlank()) {
+				tiles[i-j*boardHeight].setAngryGlow(duration, j*delay, tiles[i-j*boardHeight].color);
+			    }
+			    else {
+				tiles[i-j*boardHeight].resetGlow();
+			    }			
+			}
+		    }
+		}
+	    }
+	}	
+    }
+
+    public void markPointedAt() {
+	//Marks all tiles pointed at either V or H
+	for (int i = 0; i < tiles.length; i++) {
+	    tiles[i].vPointedAt = false;
+	    tiles[i].hPointedAt = false;
+	}
+	for (int i = 0; i < tiles.length; i++ ) {
+	    if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
+		int num = Integer.parseInt(tiles[i].number);
+		if (tiles[i].getArrow() == TextureManager.UPARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i%boardHeight + j < boardHeight) {
+			    if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) 
+				tiles[i+j].vPointedAt = true;
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.DOWNARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i%boardHeight - j >= 0) {
+			    if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) 
+				tiles[i-j].vPointedAt = true;
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.LEFTARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i/boardHeight + j < boardWidth) {
+			    if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) 
+				tiles[i+j*boardHeight].hPointedAt = true;
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.RIGHTARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i/boardHeight - j >= 0) {
+			    if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) 
+				tiles[i-j*boardHeight].hPointedAt = true;
+			}
+		    }
+		}
+	    }
+	}
+    }
+
     class BoardMainMenu extends State<BoardTile> {
 	
 	long refTime;
@@ -365,7 +519,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
     }
     
-    
     //This state defines board behavior during game play
     class BoardPlay extends State<BoardTile> {
 	
@@ -388,6 +541,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		oldX[i] = tiles[i].center[0];
 		oldY[i] = tiles[i].center[1];
 		tiles[i].setColor("transparent");
+		tiles[i].vPointedAt = false;
+		tiles[i].hPointedAt = false;
+		tiles[i].isHint = false;
 	    }
 	    initSize = tiles[0].getSize();
 	}
@@ -443,7 +599,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	
 	public void duringAnimation(BoardTile[] tiles) {
 	    for (int i = 0; i < tiles.length; i++) {
-		((BoardTile)tiles[i]).setTextures();
+	    	((BoardTile)tiles[i]).setTextures();
 	    }
 	}
     }
@@ -461,7 +617,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		tiles[i].setSize(.12f);
 		float center[] = { Sx, Sy, 0.0f};
 		tiles[i].center = center;
-		tiles[i].setColor("white");
+		tiles[i].setColor("transparent");
 		refTime[i] = System.currentTimeMillis();
 		tiles[i].setPivot(tiles[i].getCenter());
 	    }
@@ -470,102 +626,32 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 
 	//The new animation:
 	public void enterAnimation(BoardTile[] tiles) {
-	    long time = System.currentTimeMillis()-refTime[0];
+	    //	    long time = System.currentTimeMillis()-refTime[0];
 	    for (int i = 0; i < tiles.length ; i++) {
 		if (tiles[i].true_solution >0) {
-		    if(time<500) {
-			tiles[i].setAngle(180f*time/1000f);
-		    }
-		    else if(time>500 && time<1000) {
-			if (!flipped[i]) {
-			    flipped[i] = true;
-			    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
-			}
-			tiles[i].setAngle(180f*time/1000f);
-		    }
-		    else {
-			period = DrawPeriod.DURING;
-		    }
+		    float[] pivot = {1.0f,1.0f,0.0f};
+		    String[] s = new String[2];
+		    s[0] = TextureManager.CLEAR;
+		    s[1] = tiles[i].flowerTexture;
+		    tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
 		}
 	    }
+	    period = DrawPeriod.DURING;
 	}
 
 	public void duringAnimation(BoardTile[] tiles) {
 	    for(int i=0;i<tiles.length;i++){
-		if(tiles[i].rotate && !rotateTiles[i]){
-		    refTime[i] = System.currentTimeMillis();
-		    rotateTiles[i] = true;
-		    //tiles[i].rotate = false;
-		}
-		long time = System.currentTimeMillis()-refTime[i];
-		//Note: rotateTiles[i] is triggered by the bee
-		//directly when it visits a flower.
-		if(time < 1000f && rotateTiles[i]==true){
-		    if (time < 500f) {
-			tiles[i].setAngle(180f + 180f*time/1000f);
-		    }
-		    else if (time>500f && time < 1000f) {
-			if (flipped[i]) {
-			    flipped[i] = false;
-			    tiles[i].setTextures();
-			}
-			tiles[i].setAngle(180f + 180f*time/1000f);
-		    }
-		    
-		} else{
-		//rotateTiles[i] = false;
-		    // tiles[i].setAngle(0);
-		    // tiles[i].setTextures();
-		}
+	    	if(tiles[i].rotate && !rotateTiles[i]){
+	    	    refTime[i] = System.currentTimeMillis();
+	    	    rotateTiles[i] = true;
+		    float[] pivot = {1.0f,1.0f,0.0f};
+		    String[] s = new String[2];
+		    s[0] = tiles[i].arrow;
+		    s[1] = tiles[i].number;
+		    tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+	    	    //tiles[i].rotate = false;
+	    	}
 	    }
 	}
-
-
-	// //The original animation:
-	// public void enterAnimation(BoardTile[] tiles) {
-	//     period = DrawPeriod.DURING;
-	// }
-
-	// public void duringAnimation(BoardTile[] tiles) {
-	//     for(int i=0;i<tiles.length;i++){
-	// 	if(tiles[i].rotate){
-	// 	    refTime[i] = System.currentTimeMillis();
-	// 	    rotateTiles[i] = true;
-	// 	    tiles[i].rotate = false;
-	// 	    tiles[i].setPivot(tiles[i].getCenter());
-	// 	}
-	// 	long time = System.currentTimeMillis()-refTime[i];
-	// 	//Note: rotateTiles[i] is triggered by the bee
-	// 	//directly when it visits a flower.
-	// 	if(time < 10000f && rotateTiles[i]==true){
-	// 	    if(time<1000f) {
-	// 		tiles[i].setAngle(180f*time/2000f);
-	// 	    }
-	// 	    else if(time>1000 && time<2000) {
-	// 		if (!flipped[i]) {
-	// 		    flipped[i] = true;
-	// 		    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
-	// 		}
-	// 		tiles[i].setAngle(180f*time/2000f);
-	// 	    }
-			
-	// 	    else if (time>8000f && time < 9000f) {
-	// 		tiles[i].setAngle(180f*(1+(time-8000f)/2000f));
-	// 	    }
-	// 	    else if (time>9000f) {
-	// 		if (flipped[i]) {
-	// 		    flipped[i] = false;
-	// 		    tiles[i].setTextures();
-	// 		}
-	// 		tiles[i].setAngle(180f*(1+(time-8000f)/2000f));
-	// 	    }
-		    
-	// 	} else{
-	// 	    rotateTiles[i] = false;
-	// 	    tiles[i].setAngle(0);
-	// 	    tiles[i].setTextures();
-	// 	}
-	//     }
-	// }
     }    
 }

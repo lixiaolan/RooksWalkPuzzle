@@ -48,13 +48,17 @@ public class TextureManager {
     public static final String GOOD_JOB = "Good job!";
     public static final String TRY_AGAIN = "Keep trying...";
     public static final String STORY = "story";
-   
     public static final String STATS = "Stats";
     public static final String SHORTSTATS = "shortstats";
     public static final String MEDIUMSTATS = "mediumstats";
     public static final String LONGERSTATS = "longerstats";
     public static final String LONGESTSTATS = "longeststats";
     public static final String TOTALLINES = "Total Lines";
+    public static final String HORZDOTS = "horz_dots";
+    public static final String VERTDOTS = "vert_dots";
+    public static final String HAND = "hand";
+
+    
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -99,7 +103,12 @@ public class TextureManager {
 		buildTextures(context, R.drawable.check2, "check");
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
+		buildTextures(context, R.drawable.hand, HAND);
+		
 		//Create Menu Textures
+
+		buildTextures(context, R.drawable.vert_dots, VERTDOTS);
+		buildTextures(context, R.drawable.horz_dots, HORZDOTS);
 
 		buildTextures(context, R.drawable.red_x, "menu_1");
 		for(int i=1;i<6;i++){
@@ -140,14 +149,9 @@ public class TextureManager {
 	    
 	    buildTextures("", xpos, ypos, CLEAR, fontSize);
 
-	    for(int i =0;i< TutorialInfo.banners.length;i++){
-	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),20, 256);
+	    for(int i =0;i< TutorialInfo2.banners.length;i++){
+	    	buildLongTextures(TutorialInfo2.banners[i],2,30,"banner_"+Integer.toString(i),20, 256);
 	    }
-
-	    for(int i =0;i< TutorialInfo.bottomBanners.length;i++){
-	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i), 20, 256);
-	    }
-
 	    
 	    for(int i =0;i< StoryBoardInfo.banners.length;i++){
 	    	buildLongTextures(StoryBoardInfo.banners[i],20,128,"story_banner_"+Integer.toString(i), 25, 256);
