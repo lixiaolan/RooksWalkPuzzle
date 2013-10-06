@@ -14,9 +14,6 @@ class GameView extends GLSurfaceView {
         super(context, attrs);
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);        
-
-	
-
         // Set the Renderer for drawing on the GLSurfaceView
         // Render the view only when there is a change in the drawing data
         //

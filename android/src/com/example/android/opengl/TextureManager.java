@@ -48,6 +48,10 @@ public class TextureManager {
     public static final String GOOD_JOB = "Good job!";
     public static final String TRY_AGAIN = "Keep trying...";
     public static final String STORY = "story";
+    public static final String HORZDOTS = "horz_dots";
+    public static final String VERTDOTS = "vert_dots";
+
+
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
@@ -92,6 +96,9 @@ public class TextureManager {
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
 		//Create Menu Textures
+
+		buildTextures(context, R.drawable.vert_dots, VERTDOTS);
+		buildTextures(context, R.drawable.horz_dots, HORZDOTS);
 
 		buildTextures(context, R.drawable.red_x, "menu_1");
 		for(int i=1;i<6;i++){

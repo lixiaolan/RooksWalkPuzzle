@@ -20,15 +20,20 @@ bool operator==(pos left, pos right) {
 RookBoard::RookBoard(int h, int w, int l) : height(h), width(w), length(l) {
   vector<int> temp;
   vector<bool> bTemp;
+
   for (int j = 0; j < width; j++) {
     temp.push_back(0);
     bTemp.push_back(false);
   }
+
   for (int i = 0; i < height; i++) {
     moveArea.push_back(temp);
     leftRight.push_back(bTemp);
     upDown.push_back(bTemp);
+    vertical.push_back(bTemp);
+    leftUp.push_back(bTemp);
   }
+
   //makeBoardRightAnglesNoPassOver(l);
   makeBoardNoPassOver(l);
 
@@ -394,6 +399,145 @@ vector<pos> RookBoard::legalMovesNoPassOver() {
   return legalMovesList;
 }
 
+vector<pos> RookBoard::legalMovesNoPassOverNoPoint() {
+  // Find the last position.
+  pos last = *(positions.end()-1);
+  // Initiate the LegalMovesList
+  vector<pos> legalMovesList;
+  //Find the last move made.
+  pos lastMove(0,0);
+  if (positions.size() > 1) {
+    lastMove = *(positions.end()-1)-*(positions.end()-2);
+  }
+ 
+  pos im = *(positions.begin());
+ 
+  //Do a search for legal moves in the four directions
+  // This checks first that the direction is in fact legal
+   if (lastMove.r == 0) {
+    for (int i = last.r; i < height; i++) {
+      int temp = i - last.r;
+      if (temp > 0) {
+	if (pos(i,last.c) == im) {
+	  if (goodPlayNoPoint(pos(i,last.c),last)) {
+	    legalMovesList.push_back(pos(i,last.c));
+	  }
+	  break;
+	}
+	if (upDown[i][last.c]==false) {
+	  if (leftRight[i][last.c]==false)
+	    if (goodPlayNoPoint(pos(i,last.c),last)) {
+	      legalMovesList.push_back(pos(i,last.c));
+	    }
+	}
+	else
+	  break;
+      }
+    }
+  }
+  if (lastMove.r == 0) {
+    for (int i = last.r; i >= 0; i--) {
+      int temp = last.r - i;
+      if (temp > 0) {
+	if (pos(i,last.c) == im) {
+	  if (goodPlayNoPoint(pos(i,last.c),last))
+	    legalMovesList.push_back(pos(i,last.c));
+	  break;
+	}
+	if (upDown[i][last.c]==false) {
+	  if (leftRight[i][last.c]==false)
+	    if (goodPlayNoPoint(pos(i,last.c),last))
+	      legalMovesList.push_back(pos(i,last.c));
+	}
+	else
+	  break;
+	
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i < width; i++) {
+      int temp = i - last.c;
+      if (temp > 0) {
+	if (pos(last.r,i) == im) {
+	  if (goodPlayNoPoint(pos(last.r,i),last))
+	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (leftRight[last.r][i] == false) {
+	  if (upDown[last.r][i] == false)
+	    if (goodPlayNoPoint(pos(last.r,i),last))
+	      legalMovesList.push_back(pos(last.r,i));
+	}
+	else
+	  break;
+      }
+    }
+  }
+  if (lastMove.c == 0) {
+    for (int i = last.c; i >= 0; i--) {
+      int temp = last.c - i;
+      if (temp > 0) {
+	if (pos(last.r,i) == im) {
+	  if (goodPlayNoPoint(pos(last.r,i),last))
+	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (leftRight[last.r][i]==false){
+	  if (upDown[last.r][i] == false)
+	    if (goodPlayNoPoint(pos(last.r,i),last))
+	      legalMovesList.push_back(pos(last.r,i));
+	}
+	else
+	  break;
+      }
+    }
+  }
+  return legalMovesList;
+}
+
+bool RookBoard::goodDir(pos in, int temp, bool v, bool ul) {
+  if (positions.size() == 1)
+    return true;
+
+  //int temp = moveArea[in.r][in.c];
+
+
+  if (v) {
+    if (ul) {
+      for (int i = in.r; i >=0; i--) {
+  	if (i != in.r && moveArea[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+    }
+    else {
+      for (int i = in.r; i < height; i++) {
+  	if (i != in.r && moveArea[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+    }
+  }
+  else {
+    if (ul) {
+      for (int i = in.c; i >=0; i--) {
+  	if (i != in.c && moveArea[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
+    }
+    else {
+      for (int i = in.c; i < width; i++) {
+  	if (i != in.c && moveArea[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
+    }
+  }
+  return true;
+}
+
 //Function to reorder the elements of a vector to have the least amout possible of directional preference.
 void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
   pos last = *(positions.end()-1);
@@ -472,6 +616,79 @@ bool RookBoard::goodPlay(pos play, int num) {
   if (rowColNums.find(num) == rowColNums.end())
     return true;
   return false;
+}
+
+//Takes a sugested play and returns weither or not it is legal.
+bool RookBoard::goodPlayProperDist(pos play, int num) {
+  // If the suggest move is already occupied, return false
+  if (moveArea[play.r][play.c] != 0) return false;
+  
+  // Otherwise, check that the number placed is a proper
+  // distance from any matching number in the row or col.
+
+  for (int i = 0; i < height; i++) {
+    if (moveArea[i][play.c]==num && abs(i-play.r) <= num) {
+      return false;
+    }
+  }
+  for (int i = 0; i < width; i++) {
+    if (moveArea[play.r][i]==num && abs(i-play.c) <= num) {
+      return false;
+    }
+  }
+  return true;
+}
+
+//Takes a sugested play and returns weither or not it is legal.
+bool RookBoard::goodPlayNoPoint(pos play, pos orig) {
+  // If the suggest move is already occupied, return false
+  if (moveArea[play.r][play.c] != 0) return false;
+  
+  // Otherwise, check that the number placed is a proper
+  // distance from any matching number in the row or col.
+
+  pos diff = play - orig;
+  int num = abs(diff.r)+abs(diff.c);    
+
+
+  if (!goodDir( play, num, diff.c == 0 ,(diff.c+diff.r)>0)) {
+    return false;
+  }
+  if (moveArea[orig.r][orig.c] == num)
+    return false;
+
+  for (int i = play.r; i < height; i++) {
+    if (i != play.r) {
+      if (moveArea[i][play.c] == num && vertical[i][play.c] && leftUp[i][play.c]) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.r; i >= 0; i--) {
+    if (i != play.r) {
+      if (moveArea[i][play.c] == num && vertical[i][play.c] && !leftUp[i][play.c]) {
+	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i < width; i++) {
+    if (i != play.c) {
+      if (moveArea[play.r][i] == num && !vertical[play.r][i] && leftUp[play.r][i]) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i >= 0; i--) {
+    if (i != play.c) {
+      if (moveArea[play.r][i] == num && !vertical[play.r][i] && !leftUp[play.r][i]) {
+  	return false;
+      }
+    }
+  }
+  return true;
 }
 
 //Takes a sugested play and returns weither or not it is legal.
@@ -641,6 +858,9 @@ bool RookBoard::makeBoardNoPassOver(int depth) {
     if (a&b&!c) return false;
     if (c&!(a&b)) return false;
   }
+  // if (depth == 0)
+  //   return true;
+
   
   // If the puzzle has not been started, choose a random starting point
   if (positions.size() == 0) {
@@ -652,14 +872,14 @@ bool RookBoard::makeBoardNoPassOver(int depth) {
   //Generate all legalMoves from current location
   // vector<pos> lm = legalMoves();
 
-
-  vector<pos> lm = legalMovesNoPassOver();
+  vector<pos> lm = legalMovesNoPassOverNoPoint();
+  //vector<pos> lm = legalMovesNoPassOver();
   //cout << lm.size() << endl;
 
   // If there are none, return false
   if (lm.size() == 0) return false;
   // Otherwise, reorder the legal moves according to preference
-  // See "reorderLegalMoves" for details!
+  // See "reorderLegalMoves" for detail>s!
   
 
   random_shuffle(lm.begin(), lm.end() );
@@ -672,8 +892,10 @@ bool RookBoard::makeBoardNoPassOver(int depth) {
     positions.push_back(lm[i]);
     // and put the correct number into the borad.
     pos last = (*(positions.end()-1) - *(positions.end()-2));
+    pos secLast = *(positions.end() -2);
     moveArea[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
     markLRUD(*(positions.end()-1), *(positions.end()-2));
+    setDir(last, *(positions.end()-1));
     // printBool(leftRight);
     // cout << endl;
     // printBool(upDown);
@@ -727,6 +949,27 @@ void RookBoard::unMarkLRUD(pos start, pos end) {
   leftRight[end.r][end.c] = false;
 
 }
+
+void RookBoard::setDir(pos lastMove, pos last) {
+  if (lastMove.r == 0) {
+    vertical[last.r][last.c] = false;
+    if (lastMove.c > 0) {
+      leftUp[last.r][last.c] = true;
+    }
+    else {
+      leftUp[last.r][last.c] = false;
+    }
+  }
+  else {
+    vertical[last.r][last.c] = true;
+    if (lastMove.r > 0) {
+      leftUp[last.r][last.c] = true;
+    }
+    else {
+      leftUp[last.r][last.c] = false;
+    }
+  }
+}  
 
 // This marks all spots on the final game borad which were never
 // visited or passed through during the course of the puzzle.

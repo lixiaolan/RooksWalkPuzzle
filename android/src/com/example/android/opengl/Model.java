@@ -34,15 +34,15 @@ class Model{
     private StoryBoard mStoryBoard;
     
     
-	public Model(Context c) {
+    public Model(Context c) {
 		initiateMembers(c, new Board());
 	}
-
-	public Model(Context c, Board b){
+    
+    public Model(Context c, Board b){
 		initiateMembers(c, b);
 	}
-
-	public void initiateMembers(Context c, Board b){
+    
+    public void initiateMembers(Context c, Board b){
 		mBoard = b;
 		mBee = new Bee(mBoard);
 		mCheck  = new Background("check",.11f);
@@ -61,28 +61,28 @@ class Model{
 		mTitle.setCenter(titleCenter);
 		mStoryBoard = new StoryBoard();
 	}    
-
-	public void createPuzzle(int length, int hints) {
+    
+    public void createPuzzle(int length, int hints) {
 		state.showGameBanner = false;
 		mBoard.createPuzzleFromJNI(length, hints);
 		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());	
 	}
-
-	public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
-		state.showGameBanner = false;
-		mBoard.restoreBoard(solution, numbers, arrows, trueArrows, path, clickable);
-		mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());
-	}
-
-	public void createTutorial(){
+    
+    public void restorePuzzle(int[] solution,String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
+	state.showGameBanner = false;
+	mBoard.restoreBoard(solution, numbers, arrows, trueArrows, path, clickable);
+	mBorder = new Border(mBoard.getColumnSums(), mBoard.getRowSums());
+    }
+    
+    public void createTutorial(){
 		mTutorialBoard = new TutorialBoard();
 	}
-	
-	public void toggleHints(boolean toggle) {
+    
+    public void toggleHints(boolean toggle) {
 		mBoard.toggleHints(toggle);
 	}
-
-	public void touched(float[] pt) {
+    
+    public void touched(float[] pt) {
 		int val = -1;
 		switch(state.state){
 		case GAME_OPENING: 
@@ -101,8 +101,10 @@ class Model{
 					}
 				}
 			} else {
-				if (at != -1)
-					mBoard.tiles[at].setUserInput(val);
+			    if (at != -1) {
+				mBoard.tiles[at].setUserInput(val);
+				mBoard.drawLines();
+			    }
 			}
 
 			if(mCheck.touched(pt) == 1){
@@ -170,24 +172,25 @@ class Model{
 		default: break;
 		}
 	}
-
-	public void swiped(float[] pt, String direction) {
+    
+    public void swiped(float[] pt, String direction) {
 		switch(state.state){
 		case GAME_OPENING:
-			if (at != -1 && mBoard.tiles[at].isClickable()) {
-				mBoard.tiles[at].setArrow(direction); 
-				mMenu.menuActive = false;
-			}
-			break;
-		
+		    if (at != -1 && mBoard.tiles[at].isClickable()) {
+			mBoard.tiles[at].setArrow(direction);
+			mBoard.drawLines(); 
+			mMenu.menuActive = false;
+		    }
+		    break;
+		    
 		case TUTORIAL:
-				mTutorialBoard.swipeHandler(direction); 
-				break;
+		    mTutorialBoard.swipeHandler(direction); 
+		    break;
 		default: break;
 		}
 	}
-
-	public void draw(MyGLRenderer r) {
+    
+    public void draw(MyGLRenderer r) {
 
 		switch(state.state) {
 		
@@ -226,23 +229,24 @@ class Model{
 		}
 		
 	}
-
+    
     public void setGeometry(float[] g) {
     	geometry = g;
     	mMenuManager.setGeometry(g);
+	mBoard.setGeometry(g);
     }
 
-	public void setState(GameState s){
+    public void setState(GameState s){
 		state.state = s;
 		mBee.setState(s);
 		mBoard.setState(s);
 	}
-
-	public GameState getState() {
+    
+    public GameState getState() {
 		return state.state;
 	}
-
-	 public void restoreGameUtil(){
+    
+    public void restoreGameUtil(){
 	     	try{
 	     	    int[] solution = new int[36];
 	     	    String[] numbers = new String[36];
@@ -299,12 +303,12 @@ class Model{
 		
 	     }
 
-	public void reset() {
+    public void reset() {
 		setState(GameState.MAIN_MENU_OPENING);
 		mMenuManager.updateState();
 	}
-	 
-	public void saveGame() {
+    
+    public void saveGame() {
 		File file = new File(context.getFilesDir(), "savefile");
 		int[] solutions = mBoard.dumpSolution();
 		String[] numbers  = mBoard.dumpNumbers();
@@ -353,13 +357,12 @@ class Model{
 			e.printStackTrace();
 		}
 	}
-
-	
-	public void clearBoard() {
+    
+    public void clearBoard() {
 		mBoard.resetBoard();
 	}    
-	
-	public void onBack(){
+    
+    public void onBack(){
 		switch(state.state){
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
@@ -373,6 +376,6 @@ class Model{
 			break;
 		}
 		}
-	}
+}
 	
 
