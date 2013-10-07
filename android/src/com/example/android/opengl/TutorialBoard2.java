@@ -44,6 +44,8 @@ class TutorialBoard2 extends Board {
 			mTutorialState = TutorialState.SLIDE1;
 			break;
 		case SLIDE1:
+			state = new SLIDE2();
+			mTutorialState = TutorialState.SLIDE2;
 			break;
 		case SLIDE2:
 			break;
@@ -129,6 +131,7 @@ class TutorialBoard2 extends Board {
 			refTime = System.currentTimeMillis();
 			tiles[27].setNumber(TextureManager.CLEAR);
 			tiles[27].setArrow(TextureManager.CLEAR);
+			tiles[27].setColor("blue");
 			drawLines();
 		}
 			@Override
@@ -183,21 +186,26 @@ class TutorialBoard2 extends Board {
 	
 	class SLIDE2 extends State<BoardTile>{
 		
-	}
+	
 		long refTime;
-		float[] pt0 = {.23f,.12f};
-		float[] pt1 = {-.11f, 0};
-		float[] pt2 = {0,.22f};
-		float[] pt3 = {.35f,-.22f};
-		float[] pt4 = {-.35f, -.22f};
-		boolean lines = true;
-		
+
+		private Banner mCheck;
+		private boolean lines  = true;
 		public SLIDE2(){
 			mBee.setMood(Mood.HIDDEN);
 			refTime = System.currentTimeMillis();
-			tiles[27].setNumber(TextureManager.CLEAR);
-			tiles[27].setArrow(TextureManager.CLEAR);
+			
+			tiles[27].setNumber("3");
+			tiles[27].setArrow("right_arrow");
+			tiles[27].setTextures();
+			tiles[27].setColor("transparent");
+			tiles[9].setColor("blue");
 			drawLines();
+			
+			mCheck  = new Banner(.22f);
+			mCheck.setCenter(-.68f, .11f);
+			mCheck.setColor("transparent");
+			mCheck.set("check");
 		}
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
@@ -208,34 +216,31 @@ class TutorialBoard2 extends Board {
 		@Override
 		public void duringAnimation(BoardTile[] tiles) {
 			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
-			if(time < 1) {
-			} else if(time < 2){
-				if(!mMenu.menuActive)
-					mMenu.activate(pt0);
-			} else if(time < 3){
-			} else if (time <4) {
-				mMenu.menuActive = false;
-				tiles[27].setNumber("3");
-				tiles[27].setTextures();
-			} else if(time <5){
-			} else if(time < 7){
-				tiles[27].setArrow(TextureManager.RIGHTARROW);
-				tiles[27].setTextures();
-				if(lines) {
+			if(time < 2) {
+				mCheck.set("check");
+				tiles[9].setNumber("2");
+				tiles[9].setArrow("down_arrow");
+				tiles[9].setTextures();
+			} else if(time < 4){
+				tiles[9].setNumber("2");
+				tiles[9].setArrow("left_arrow");
+				tiles[9].setTextures();
+				mCheck.set("menu_1");
+				if(lines){
 					drawLines();
 					lines = false;
 				}
 			} else {
 				lines = true;
-				tiles[27].setNumber(TextureManager.CLEAR);
-				tiles[27].setArrow(TextureManager.CLEAR);
-				tiles[27].setTextures();
-				drawLines();
 				refTime = System.currentTimeMillis();
 			}
 		}
 		
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
+			mBoardBg.draw(r);
+			super.draw(tiles, r);
+			mBanner.draw(r);
+			mCheck.draw(r);
 		}
 }
 	
