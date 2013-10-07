@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.io.IOException;
 
 
-
 class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     public int hints;
@@ -275,10 +274,106 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	geometry = g;
     }
 
+    public void animatePlay(int at) {
+	//Now go though each tile and fill in pointed at tiles.
+	float duration = .3f;
+	float delay = .15f;
+	clearLines();
+	if (tiles[at].hasNumber() && tiles[at].hasArrow()) {
+	    int num = Integer.parseInt(tiles[at].number);
+	    if (tiles[at].getArrow() == TextureManager.UPARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at%boardHeight + j < boardHeight) {
+			if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
+			    String[] s1 = new String[2];
+			    s1[0] = TextureManager.VERTDOTS;
+			    s1[1] = tiles[at+j].textures[1];
+			    float[] pivot = {1.0f,0.0f,0.0f};
+			    tiles[at+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
+			}
+			else {
+			    tiles[at+j].setAngryGlow(duration, j*delay, tiles[at+j].color);
+			}
+		    }
+		}
+	    }
+	    if (tiles[at].getArrow() == TextureManager.DOWNARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at%boardHeight - j >= 0) {
+			if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
+			    String[] s2 = new String[2];
+			    s2[0] = TextureManager.VERTDOTS;
+			    s2[1] = tiles[at-j].textures[1];
+			    float[] pivot = {1.0f,0.0f,0.0f};
+			    tiles[at-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
+			}
+			else {
+			    tiles[at-j].setAngryGlow(duration, j*delay, tiles[at-j].color);
+			}
+		    }
+		}
+	    }
+	    if (tiles[at].getArrow() == TextureManager.LEFTARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at/boardHeight + j < boardWidth) { 
+			if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
+			    String[] s3 = new String[2];
+			    s3[1] = TextureManager.HORZDOTS;
+			    s3[0] = tiles[at+j*boardHeight].textures[0];
+			    float[] pivot = {0.0f,1.0f,0.0f};
+			    tiles[at+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
+			}
+			else {
+			    tiles[at+j*boardHeight].setAngryGlow(duration, j*delay, tiles[at+j*boardHeight].color);
+			}
+		    }
+		}
+	    }
+	    if (tiles[at].getArrow() == TextureManager.RIGHTARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at/boardHeight - j >= 0) {
+			if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
+			    String[] s4 = new String[2];
+			    s4[1] = TextureManager.HORZDOTS;
+			    s4[0] = tiles[at-j*boardHeight].textures[0];
+			    float[] pivot = {0.0f,1.0f,0.0f};
+			    tiles[at-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
+			}
+			else {
+			    tiles[at-j*boardHeight].setAngryGlow(duration, j*delay, tiles[at-j*boardHeight].color);
+			}
+		    }
+		}
+	    }
+	}
+	else {
+	    drawLines();
+	}
+    }
+    
     // Class to draw the dotted lines on the board.  Called after every input
     public void drawLines() {
-	float duration = .5f;
-	float delay = .25f;
+	//First remove the lines on tiles which are no longer pointed at.
+	markPointedAt();
+	for (int i = 0; i < tiles.length; i++ ) {
+	    if (!tiles[i].hasNumber() && !tiles[i].hasArrow() && !tiles[i].isBlack()) {
+		if (!tiles[i].vPointedAt) {
+		    tiles[i].setTextures(TextureManager.CLEAR, tiles[i].textures[1]);
+		}
+		else {
+		    tiles[i].setTextures(TextureManager.VERTDOTS, tiles[i].textures[1]);
+		}
+		if (!tiles[i].hPointedAt) {
+		    tiles[i].setTextures(tiles[i].textures[0], TextureManager.CLEAR);
+		}
+		else {
+		    tiles[i].setTextures(tiles[i].textures[0], TextureManager.HORZDOTS);
+		}
+	    }
+	}	
+    }
+    
+    public void clearLines() {
 	//First remove the lines on tiles which are no longer pointed at.
 	markPointedAt();
 	for (int i = 0; i < tiles.length; i++ ) {
@@ -288,89 +383,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		}
 		if (!tiles[i].hPointedAt) {
 		    tiles[i].setTextures(tiles[i].textures[0], TextureManager.CLEAR);
-		}
-	    }
-	}
-
-	//Now go though each tile and fill in pointed at tiles.
-	for (int i = 0; i < tiles.length; i++ ) {
-	    if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
-		int num = Integer.parseInt(tiles[i].number);
-		if (tiles[i].getArrow() == TextureManager.UPARROW) {
-		    for (int j = 1; j < num; j++) {
-			if (i%boardHeight + j < boardHeight) {
-			    if (tiles[i+j].needsVertDots()) {
-				String[] s1 = new String[2];
-				s1[0] = TextureManager.VERTDOTS;
-				s1[1] = tiles[i+j].textures[1];
-				float[] pivot = {1.0f,0.0f,0.0f};
-				tiles[i+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
-			    }
-			    if (tiles[i+j].isBlack() || !tiles[i+j].isBlank()) {
-				tiles[i+j].setAngryGlow(duration, j*delay, tiles[i+j].color);
-			    }
-			    else {
-				tiles[i+j].resetGlow();
-			    }
-			}
-		    }
-		}
-		if (tiles[i].getArrow() == TextureManager.DOWNARROW) {
-		    for (int j = 1; j < num; j++) {
-			if (i%boardHeight - j >= 0) {
-			    if (tiles[i-j].needsVertDots()) {
-				String[] s2 = new String[2];
-				s2[0] = TextureManager.VERTDOTS;
-				s2[1] = tiles[i-j].textures[1];
-				float[] pivot = {1.0f,0.0f,0.0f};
-				tiles[i-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
-			    }
-			    if (tiles[i-j].isBlack() || !tiles[i-j].isBlank()) {
-				tiles[i-j].setAngryGlow(duration, j*delay, tiles[i-j].color);
-			    }
-			    else {
-				tiles[i-j].resetGlow();
-			    }
-			}
-		    }
-		}
-		if (tiles[i].getArrow() == TextureManager.LEFTARROW) {
-		    for (int j = 1; j < num; j++) {
-			if (i/boardHeight + j < boardWidth) { 
-			    if (tiles[i+j*boardHeight].needsHorzDots()) {
-				String[] s3 = new String[2];
-				s3[1] = TextureManager.HORZDOTS;
-				s3[0] = tiles[i+j*boardHeight].textures[0];
-				float[] pivot = {0.0f,1.0f,0.0f};
-				tiles[i+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
-			    }
-			    if (tiles[i+j*boardHeight].isBlack() || !tiles[i+j*boardHeight].isBlank()) {
-				tiles[i+j*boardHeight].setAngryGlow(duration, j*delay, tiles[i+j*boardHeight].color);
-			    }
-			    else {
-				tiles[i+j*boardHeight].resetGlow();
-			    }
-			}
-		    }
-		}
-		if (tiles[i].getArrow() == TextureManager.RIGHTARROW) {
-		    for (int j = 1; j < num; j++) {
-			if (i/boardHeight - j >= 0) {
-			    if (tiles[i-j*boardHeight].needsHorzDots()) {
-				String[] s4 = new String[2];
-				s4[1] = TextureManager.HORZDOTS;
-				s4[0] = tiles[i-j*boardHeight].textures[0];
-				float[] pivot = {0.0f,1.0f,0.0f};
-				tiles[i-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
-			    }
-			    if (tiles[i-j*boardHeight].isBlack() || !tiles[i-j*boardHeight].isBlank()) {
-				tiles[i-j*boardHeight].setAngryGlow(duration, j*delay, tiles[i-j*boardHeight].color);
-			    }
-			    else {
-				tiles[i-j*boardHeight].resetGlow();
-			    }			
-			}
-		    }
 		}
 	    }
 	}	

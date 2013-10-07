@@ -15,7 +15,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.app.Activity;
 
-class Model{
+class Model {
     public GlobalState state;
     public TutorialBoard mTutorialBoard;
     public Board mBoard;
@@ -103,7 +103,7 @@ class Model{
 			} else {
 			    if (at != -1) {
 				mBoard.tiles[at].setUserInput(val);
-				mBoard.drawLines();
+				mBoard.animatePlay(at);
 			    }
 			}
 
@@ -178,7 +178,7 @@ class Model{
 		case GAME_OPENING:
 		    if (at != -1 && mBoard.tiles[at].isClickable()) {
 			mBoard.tiles[at].setArrow(direction);
-			mBoard.drawLines(); 
+			mBoard.animatePlay(at); 
 			mMenu.menuActive = false;
 		    }
 		    break;

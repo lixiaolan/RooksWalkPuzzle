@@ -100,7 +100,6 @@ class BoardTile extends Tile{
 	    delay = delayTime;
 	    refTime = System.currentTimeMillis();
 	    active = true;
-	    hasGlowed = true;
 	    finalColor = fColor;
     	}
 	
@@ -135,13 +134,7 @@ class BoardTile extends Tile{
     }
 
     public void setAngryGlow(float durationTime, float delayTime, String fColor) {
-	if (angryGlow.hasGlowed == false) {
-	    angryGlow = new AngryGlow(durationTime, delayTime, fColor);
-	}
-    }
-
-    public void resetGlow() {
-	angryGlow.hasGlowed = false;
+	angryGlow = new AngryGlow(durationTime, delayTime, fColor);
     }
 
     public void setTrueArrow(String arrow) {
@@ -166,14 +159,6 @@ class BoardTile extends Tile{
 
     public boolean isBlank() {
 	return (number == TextureManager.CLEAR) && (arrow == TextureManager.CLEAR);
-    }
-
-    public boolean needsVertDots() {
-	return ((number == TextureManager.CLEAR) && (arrow == TextureManager.CLEAR) && (textures[0] != TextureManager.VERTDOTS) && !isBlack());
-    }
-    
-    public boolean needsHorzDots() {
-	return ((number == TextureManager.CLEAR) && (arrow == TextureManager.CLEAR) && (textures[1] != TextureManager.HORZDOTS) && !isBlack());
     }
 
     public BoardTile(float[] inCenter,float inSize) {
