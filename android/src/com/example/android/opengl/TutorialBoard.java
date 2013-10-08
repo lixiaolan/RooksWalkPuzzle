@@ -252,7 +252,6 @@ class TutorialBoard extends Board {
 			return true;
 		}
 
-		@Override
 		public int touched(float[] pt) {
 			int in = -1;
 			for (int i = 0; i < tiles.length; i++) {

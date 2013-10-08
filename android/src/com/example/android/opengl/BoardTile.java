@@ -254,6 +254,7 @@ class BoardTile extends Tile{
 		   textures[1] = TextureManager.CLEAR;
 	   } else {
 		   number = Integer.toString(val);
+		   setTextures();
 	   }
    }
    

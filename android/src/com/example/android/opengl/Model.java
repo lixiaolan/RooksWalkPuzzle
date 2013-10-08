@@ -96,8 +96,8 @@ class Model{
 				}
 			} else {
 			    if (at != -1) {
-				mBoard.tiles[at].setUserInput(val);
-				mBoard.drawLines();
+			    	mBoard.tiles[at].setUserInput(val);
+			    	mBoard.drawLines();
 			    }
 			}
 
@@ -157,7 +157,7 @@ class Model{
 			if(val != -1){
 				mMenuManager.onTouched(val);
 			}
-			mTutorialBoard.touchHandler(mMenu, pt);
+			mTutorialBoard.touchHandler(pt);
 			break;
 			
 		case STATS:
