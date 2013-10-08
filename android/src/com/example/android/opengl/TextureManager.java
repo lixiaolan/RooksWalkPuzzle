@@ -48,10 +48,18 @@ public class TextureManager {
     public static final String GOOD_JOB = "Good job!";
     public static final String TRY_AGAIN = "Keep trying...";
     public static final String STORY = "story";
+    public static final String STATS = "Stats";
+    public static final String SHORTSTATS = "shortstats";
+    public static final String MEDIUMSTATS = "mediumstats";
+    public static final String LONGERSTATS = "longerstats";
+    public static final String LONGESTSTATS = "longeststats";
+    public static final String TOTALLINES = "Total Lines";
     public static final String HORZDOTS = "horz_dots";
     public static final String VERTDOTS = "vert_dots";
+    public static final String HAND = "hand";
 
-
+    
+    
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
@@ -95,6 +103,8 @@ public class TextureManager {
 		buildTextures(context, R.drawable.check2, "check");
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
+		buildTextures(context, R.drawable.hand, HAND);
+		
 		//Create Menu Textures
 
 		buildTextures(context, R.drawable.vert_dots, VERTDOTS);
@@ -132,19 +142,16 @@ public class TextureManager {
 	    buildTextures(NEXT, xpos, ypos, NEXT, fontSize);
 	    buildTextures(PREVIOUS, xpos, ypos, PREVIOUS, fontSize);
 	    buildTextures(SHOW_SOLUTION, xpos, ypos, SHOW_SOLUTION, fontSize);
+	    buildTextures(STATS, xpos, ypos, STATS, fontSize);
+	    buildLongTextures(TOTALLINES, 0, 30, TOTALLINES, 30, 256);
 	    buildLongTextures(TRY_AGAIN, xpos, ypos, TRY_AGAIN, fontSize, 256);
 	    buildLongTextures(GOOD_JOB, xpos, ypos, GOOD_JOB, fontSize, 256);
 	    
 	    buildTextures("", xpos, ypos, CLEAR, fontSize);
 
-	    for(int i =0;i< TutorialInfo.banners.length;i++){
-	    	buildLongTextures(TutorialInfo.banners[i],2,30,"banner_"+Integer.toString(i),20, 256);
+	    for(int i =0;i< TutorialInfo2.banners.length;i++){
+	    	buildLongTextures(TutorialInfo2.banners[i],2,30,"banner_"+Integer.toString(i),20, 256);
 	    }
-
-	    for(int i =0;i< TutorialInfo.bottomBanners.length;i++){
-	    	buildLongTextures(TutorialInfo.bottomBanners[i],2,30,"bottom_banner_"+Integer.toString(i), 20, 256);
-	    }
-
 	    
 	    for(int i =0;i< StoryBoardInfo.banners.length;i++){
 	    	buildLongTextures(StoryBoardInfo.banners[i],20,128,"story_banner_"+Integer.toString(i), 25, 256);
@@ -154,6 +161,12 @@ public class TextureManager {
 	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 20, 256);
 	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 20, 256);
 	    
+	    
+	   /* buildTextures("Easy: ", 64, 70, SHORTSTATS, 25);
+		buildTextures("Medium: ", 64, 70, MEDIUMSTATS, 25);
+		buildTextures("Long: ", 64, 70, LONGERSTATS, 25);
+		buildTextures("Longest: ", 70, 64, LONGESTSTATS, 25);
+	    */
 	    }
 	
 	
@@ -218,7 +231,7 @@ public class TextureManager {
 		library.put(key,textureHandle[0]);
 	}
 	
-	
+	public 
 	
 	int textureFromBitmap(Bitmap bmp){
 		int[] texture = new int[1];

@@ -629,7 +629,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		tiles[i].setSize(.12f);
 		float center[] = { Sx, Sy, 0.0f};
 		tiles[i].center = center;
-		tiles[i].setColor("white");
+		tiles[i].setColor("transparent");
 		refTime[i] = System.currentTimeMillis();
 		tiles[i].setPivot(tiles[i].getCenter());
 	    }

@@ -260,11 +260,7 @@ class BoardTile extends Tile{
    public void setSize(float s) {
     	size = s;
     }
-    
-    public float getSize() {
-	return size;
-    }
-    
+       
     
    public boolean hasNumber() {
 	   if(!number.equals("clear") )

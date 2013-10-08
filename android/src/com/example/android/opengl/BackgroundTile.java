@@ -28,7 +28,4 @@ public class BackgroundTile extends Tile{
     	r.drawTile(center,size,textures,color,0, pivot);
     }
     
-    public void draw(MyGLRenderer r, String pos) {
-    	r.drawTilePos(pos,size,textures,color,0, pivot);
-    }    
 }

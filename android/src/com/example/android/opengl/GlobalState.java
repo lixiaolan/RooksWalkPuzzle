@@ -7,8 +7,10 @@ public class GlobalState {
     boolean saveCurrGame = false;
     boolean showPathToggle = false;
     boolean showGameBanner = false;
+    boolean firstRun = false;
+    boolean textureCreationFinished = true;
     int difficulty = 0;
-    
+   
     public GlobalState() {
     }
 }
