@@ -29,10 +29,10 @@ public abstract class State<T extends Tile> {
 	    tiles[i].draw(r);
 	}
     }    
-
-    public int touched(float[] pt) { return 0;};
-    
+  
     public void touchHandler(Menu mMenu, float[] pt){};
     public void swipeHandler(String direction){};
     public void touchHandler() {};
+    public void touchHandler(float[] pt) {};
+    
 }

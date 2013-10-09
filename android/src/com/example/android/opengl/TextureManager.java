@@ -3,7 +3,7 @@ package com.example.android.opengl;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.android.open.R;
+import com.example.android.opengl.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -60,7 +60,9 @@ public class TextureManager {
     public static final String HORZDOTS = "horz_dots";
     public static final String VERTDOTS = "vert_dots";
     public static final String HAND = "hand";
-
+    public static final String GEAR = "gear";
+    public static final String OPENCIRCLE = "opencircle";
+    public static final String CLOSEDCIRCLE = "closedcircle";
     
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
@@ -107,13 +109,18 @@ public class TextureManager {
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
 		buildTextures(context, R.drawable.hand, HAND);
-		
+		buildTextures(context, R.drawable.gear, GEAR);
 		//Create Menu Textures
 
 		buildTextures(context, R.drawable.vert_dots, VERTDOTS);
 		buildTextures(context, R.drawable.horz_dots, HORZDOTS);
-
+		buildTextures(context, R.drawable.opencircle, OPENCIRCLE);
+		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
+		
+		
 		buildTextures(context, R.drawable.red_x, "menu_1");
+		
+		
 		for(int i=1;i<6;i++){
 		    buildTextures(Integer.toString(i),64,80,"menu_"+Integer.toString(i+1),50);
 		}
@@ -161,8 +168,8 @@ public class TextureManager {
 	    }
 
 	    
-	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 20, 256);
-	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 20, 256);
+	    buildLongTextures(TutorialInfo.OneTileBanner, 2, 30, TutorialInfo.OneTileBanner, 20, 512);
+	    buildLongTextures(TutorialInfo.ShowPathBanner, 2, 30, TutorialInfo.ShowPathBanner, 20, 512);
 	    
 	    
 	   /* buildTextures("Easy: ", 64, 70, SHORTSTATS, 25);

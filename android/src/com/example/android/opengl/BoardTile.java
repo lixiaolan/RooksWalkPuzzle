@@ -26,10 +26,10 @@ class BoardTile extends Tile{
     	private long refTime;
     	private float duration;
     	private float swapTime;
-	private float delayTime;
+    	private float delayTime;
     	private boolean active = false;
-	private boolean swapped = false;
-	private String[] textures;
+    	private boolean swapped = false;
+    	private String[] textures;
 
     	public Flipper() {
 	    active = false;
@@ -45,11 +45,13 @@ class BoardTile extends Tile{
 	    float [] normPiv = LATools.vSProd(1/LATools.abs(piv), piv);
 	    float orthDist = LATools.abs(LATools.vDiff(center, LATools.vSProd(LATools.vDot(center, normPiv), normPiv) ) );
 	    if (LATools.vCross(center, normPiv) < 0) {
-		swapTime = duration/((float)Math.PI)*(float)Math.atan(eyeDist/orthDist);
+	    	swapTime = duration/((float)Math.PI)*(float)Math.atan(eyeDist/orthDist);
 	    }
 	    else {
-		swapTime = duration/((float)Math.PI)*(((float)Math.PI)-(float)Math.atan(eyeDist/orthDist));
+	    	swapTime = duration/((float)Math.PI)*(((float)Math.PI)-(float)Math.atan(eyeDist/orthDist));
+			
 	    }
+	    	System.out.println("swap time: "+Float.toString(swapTime));
 	    swapped = false;
 	    refTime = System.currentTimeMillis();
 	    active = true;
@@ -66,16 +68,17 @@ class BoardTile extends Tile{
 		}
 		else if (time - delayTime < duration) {
 		    if (!swapped) {
+		    	System.out.println("WE HAVE SWAPPED");
 			setTextures(textures[0], textures[1]);
 			swapped = true;
 		    }
 		    setAngle(180 + (time - delayTime)/duration*180);
 		}
-		else {
-		    setAngle(0);
-		    setTextures(textures[0], textures[1]);
-		    active = false;
-		}
+			else {
+				setAngle(0);
+				setTextures(textures[0], textures[1]);
+				active = false;
+			}
     	    }
     	}
     }
@@ -239,6 +242,7 @@ class BoardTile extends Tile{
 		   textures[1] = TextureManager.CLEAR;
 	   } else {
 		   number = Integer.toString(val);
+		   setTextures();
 	   }
    }
    

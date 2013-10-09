@@ -96,7 +96,7 @@ class TutorialBoard extends Board {
 			showSolution();
 			//    	    mBanner.set(mTutorialInfo.ShowPathBanner);
 			mBee.setMood(Mood.HAPPY);
-			mBorder = new Border(getColumnSums(), getRowSums());
+			//mBorder = new Border(getColumnSums(), getRowSums());
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {
@@ -252,7 +252,6 @@ class TutorialBoard extends Board {
 			return true;
 		}
 
-		@Override
 		public int touched(float[] pt) {
 			int in = -1;
 			for (int i = 0; i < tiles.length; i++) {

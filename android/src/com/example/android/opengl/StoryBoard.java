@@ -11,11 +11,13 @@ public class StoryBoard extends Board{
 
 	Bee mBee = new Bee(this);
 	Banner mStoryBanner;
+	Model mModel;
 	
-	public StoryBoard(){
+	public StoryBoard(Model mModel){
 		super();
 		mStoryBanner = new Banner(.6f);
 		state = new SLIDE0(tiles);
+		this.mModel = mModel; 
 		//state = new SLIDE2(tiles);
 		
 	}
@@ -37,12 +39,15 @@ public class StoryBoard extends Board{
 			}
 	}
 
-	public void touchHandler() {
+	public void touchHandler(float[] pt) {
+		if(mStoryState == StoryState.SLIDE_3){
+			mModel.reset();
+		}
 		setState();
 	}
 	
-	
 	public void draw() {}
+	
 	
 	class SLIDE0 extends State<BoardTile>{
 		
@@ -134,7 +139,60 @@ public class StoryBoard extends Board{
 		
 	}
 	
-	class SLIDE2 extends State<BoardTile>{
+	class SLIDE2  extends State<BoardTile> {
+		//Beatrice was a happy bee
+		
+				BoardTile[] tiles;
+				
+				public SLIDE2(BoardTile[] tiles){
+					this.tiles = tiles;
+					
+				}
+					@Override
+				public void enterAnimation(BoardTile[] tiles) {
+					state.period = DrawPeriod.DURING; 
+					mStoryBanner.set("story_banner_2");
+				}
+
+				@Override
+				public void duringAnimation(BoardTile[] tiles) {
+				}
+				
+				public void draw(BoardTile[] tiles, MyGLRenderer r){
+					super.draw(tiles, r);
+					mStoryBanner.draw(r);
+					mBee.draw(r);
+				}
+				
+	}
+
+	class SLIDE3  extends State<BoardTile> {
+		//Beatrice was a happy bee
+		
+				BoardTile[] tiles;
+				Background mTitleBanner;
+				public SLIDE3(BoardTile[] tiles){
+					this.tiles = tiles;
+					mTitleBanner = new Background("title", 1.0f);
+				}
+					@Override
+				public void enterAnimation(BoardTile[] tiles) {
+					state.period = DrawPeriod.DURING;
+				}
+
+				@Override
+				public void duringAnimation(BoardTile[] tiles) {
+				}
+				
+				public void draw(BoardTile[] tiles, MyGLRenderer r){
+					mTitleBanner.draw(r);
+					mBee.draw(r);
+				}
+				
+	}
+	
+	
+	class WIND1 extends State<BoardTile>{
 		
 		BoardTile[] tiles;
 		float[] centers;
@@ -147,7 +205,7 @@ public class StoryBoard extends Board{
 	    float[] newSwarmCenter  = new float[2];
 		float[] weights = new float[36];
 
-		public SLIDE2(BoardTile[] tiles){
+		public WIND1(BoardTile[] tiles){
 			this.tiles = tiles;
 			refTime = System.currentTimeMillis();
 			periodTime = refTime;
@@ -257,11 +315,11 @@ public class StoryBoard extends Board{
 		
 	}
 	
-	class SLIDE3 extends State<BoardTile> {
+	class WIND2 extends State<BoardTile> {
 
 		BoardTile[] tiles;
 		
-		public SLIDE3(BoardTile[] tiles){
+		public WIND2(BoardTile[] tiles){
 			this.tiles = tiles;
 			mStoryBanner.set("story_banner_3");
 			mBee.setState(GameState.GAME_OPENING, tiles.length);

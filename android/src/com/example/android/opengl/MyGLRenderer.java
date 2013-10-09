@@ -17,7 +17,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
-import com.example.android.open.R;
+import com.example.android.opengl.R;
 import com.example.android.opengl.common.RawResourceReader;
 import com.example.android.opengl.common.ShaderHelper;
 
@@ -63,7 +63,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final FloatBuffer mSquareBlackColor;
     private final FloatBuffer mSquareTransparentColor;
     private final FloatBuffer mSquareDullYellowColor;
-    
+    private final FloatBuffer mSquareRedColor;
     
     /** This will be used to pass in the transformation matrix. */
     private int mMVPMatrixHandle;
@@ -151,7 +151,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	final float[] squareBlackColorData = Colors.squareBlack;
 	final float[] squareTransparentColorData = Colors.squareTransparent;
 	final float[] squareDullYellowColorData = Colors.squareDullYellow;
-	
+	final float[] squareRedColorData = Colors.squareRed;
 	
 	mSquareWhiteColor = ByteBuffer.allocateDirect(squareWhiteColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareWhiteColor.put(squareWhiteColorData).position(0);
@@ -168,12 +168,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	mSquareDullYellowColor = ByteBuffer.allocateDirect(squareDullYellowColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 	mSquareDullYellowColor.put(squareDullYellowColorData).position(0);
 	
+	mSquareRedColor = ByteBuffer.allocateDirect(squareRedColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+	mSquareRedColor.put(squareRedColorData).position(0);
 	
 	colorMap.put("white", mSquareWhiteColor);
 	colorMap.put("black", mSquareBlackColor);
 	colorMap.put("blue", mSquareBlueColor);
 	colorMap.put("dullyellow", mSquareDullYellowColor);
 	colorMap.put("transparent",mSquareTransparentColor);
+	colorMap.put("red",mSquareTransparentColor);
     }
     
     

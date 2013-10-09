@@ -1,12 +1,9 @@
 package com.example.android.opengl;
 
-import com.example.android.opengl.State.DrawPeriod;
-
-import android.content.Context;
 
 class TutorialBoard2 extends Board {
 	enum TutorialState {
-		SHOW_PATH, SLIDE0, SLIDE1, SLIDE2, SLIDE3, SLIDE4
+		SHOW_PATH, SLIDE0, SLIDE1, SLIDE2, SLIDE3, PlayGame, PlayGameEnd
 	}
 
 	Banner mBanner; 
@@ -14,16 +11,17 @@ class TutorialBoard2 extends Board {
 	Background mBoardBg;
 	TutorialState mTutorialState;
 	TutorialInfo2 mTutorialInfo = new TutorialInfo2();
+	CircleProgressBar mCPB;
 	Bee mBee;
 	Menu mMenu;
-	float[] g;
 	
 	public TutorialBoard2() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 		super();
+		float[] center = {.20f,-1.0f, 0.0f };
+		mCPB = new CircleProgressBar(5, center, .05f);
 		mBanner = new Banner(.75f);
 		mBoardBg = new Background("boardbg", .75f);
-		path = TutorialInfo2.path;
 		mBee = new Bee(this);
 		mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);
 		state = new ShowPath(tiles,true);
@@ -32,12 +30,12 @@ class TutorialBoard2 extends Board {
 	}
 	
 	public void setGeometry(float[] g){
-		this.g = g;
+		super.setGeometry(g);
 		mBanner.setCenter(0, g[1] - mBanner.getSize());
 
 	}
 	
-	public void setState()	{
+	public void setStateForward()	{
 		switch(mTutorialState) {
 		case SHOW_PATH:
 			state = new SLIDE1();
@@ -48,28 +46,67 @@ class TutorialBoard2 extends Board {
 			mTutorialState = TutorialState.SLIDE2;
 			break;
 		case SLIDE2:
+			state = new SLIDE3();
+			mTutorialState = TutorialState.SLIDE3;
 			break;
 		case SLIDE3:
+			state = new PlayGame();
+			mTutorialState = TutorialState.PlayGame;
 			break;
-		case SLIDE4:
+		case PlayGame:
+			state = new PlayGameEnd();
+			mTutorialState = TutorialState.PlayGameEnd;
+		default:
 			break;
 		}
 	}
 
+	public void setStateBackward()	{
+		switch(mTutorialState) {
+		case SLIDE1:
+			state = new ShowPath(tiles,true);
+			mTutorialState = TutorialState.SHOW_PATH;
+			break;
+		case SLIDE2:
+			state = new SLIDE1();
+			mTutorialState = TutorialState.SLIDE1;
+			break;
+		case SLIDE3:
+			state = new SLIDE2();
+			mTutorialState = TutorialState.SLIDE2;
+			break;
+		default:
+			break;
+		}
+	}
+	
 	//The next three methods are all very specific to tutorialinfo and are used to handle input
 	public void setBee(Bee mBee){
 		this.mBee = mBee;
 	}
 
 	public void swipeHandler(String direction) {
+		if(mTutorialState == TutorialState.PlayGame){
+			state.swipeHandler(direction);
+		} else {
+			if(direction.equals("left_arrow")){
+				setStateForward();
+			} else if(direction.equals("right_arrow")){
+				setStateBackward();
+			}
+		}
 	}
 
-	public void touchHandler(Menu mMenu, float[] pt) {
-	}    
+	public void touchHandler(float[] pt) {
+		state.touchHandler(pt);
+	}
+	
 
 	class ShowPath extends State<BoardTile> {
 		public ShowPath(BoardTile[] tiles, boolean intro) {
 			//System.out.println("Entered ShowPath");
+			path = TutorialInfo2.path;
+			mCPB.setActiveCircle(0);
 			restoreBoard(TutorialInfo2.solutionNumbers, TutorialInfo2.initialNumbers, TutorialInfo2.initialArrows, TutorialInfo2.solutionArrows, path, null);
 			showSolution();
 
@@ -81,9 +118,8 @@ class TutorialBoard2 extends Board {
 			mBanner.set("banner_0");
 			mBee.setMood(Mood.HAPPY);			
 			drawLines();
-
 		}
-
+		
 		public void enterAnimation(BoardTile[] tiles) {
 				// This does a simultaneous snap to position and shrink of tiles.
 					for (int i = 0; i < tiles.length; i++) {
@@ -107,6 +143,7 @@ class TutorialBoard2 extends Board {
 			super.draw(tiles, r);
 			mBanner.draw(r);
 			mBee.draw(r);
+			mCPB.draw(r);
 		}
 
 	}    
@@ -133,6 +170,7 @@ class TutorialBoard2 extends Board {
 			tiles[27].setArrow(TextureManager.CLEAR);
 			tiles[27].setColor("blue");
 			drawLines();
+			mCPB.setActiveCircle(1);
 		}
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
@@ -180,33 +218,41 @@ class TutorialBoard2 extends Board {
 			mBanner.draw(r);
 			hand.draw(r);
 			mMenu.draw(r);
+			mCPB.draw(r);
 		}
 		
 	}
 	
 	class SLIDE2 extends State<BoardTile>{
-		
-	
 		long refTime;
 
 		private Banner mCheck;
 		private boolean lines  = true;
+		
+		
+		
 		public SLIDE2(){
 			mBee.setMood(Mood.HIDDEN);
 			refTime = System.currentTimeMillis();
 			
+			prepBoard();
+			
+			mCheck  = new Banner(.22f);
+			mCheck.setCenter(-.68f, .11f);
+			mCheck.setColor("transparent");
+			mCheck.set("check");
+			mCPB.setActiveCircle(2);
+		}
+		
+		private void prepBoard(){
 			tiles[27].setNumber("3");
 			tiles[27].setArrow("right_arrow");
 			tiles[27].setTextures();
 			tiles[27].setColor("transparent");
 			tiles[9].setColor("blue");
 			drawLines();
-			
-			mCheck  = new Banner(.22f);
-			mCheck.setCenter(-.68f, .11f);
-			mCheck.setColor("transparent");
-			mCheck.set("check");
 		}
+		
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
 			mBanner.set("banner_2");
@@ -241,199 +287,223 @@ class TutorialBoard2 extends Board {
 			super.draw(tiles, r);
 			mBanner.draw(r);
 			mCheck.draw(r);
+			mCPB.draw(r);
 		}
 }
 	
-/*
-	class WalkThrough extends State<BoardTile> {
-
-		BoardTile[] tiles;
-
-		public WalkThrough(BoardTile[] tiles){
-			System.out.println("Entered Walkthrough");
-			this.tiles = tiles;
+	class SLIDE3 extends State<BoardTile> {
+		long refTime;
+		private Banner mCheck;
+		private boolean lines  = true;
+		
+		public SLIDE3(){
 			mBee.setMood(Mood.HIDDEN);
+			refTime = System.currentTimeMillis();
+			
+			prepBoard();
+			
+			mCheck  = new Banner(.22f);
+			mCheck.setCenter(-.68f, .11f);
+			mCheck.setColor("transparent");
+			mCheck.set("check");
+			mBanner.set("banner_3");
+			mCPB.setActiveCircle(3);
 		}
-		public void enterAnimation(BoardTile[] tiles) {			
-			period = DrawPeriod.DURING;
-			for(int i = 0;i<tiles.length;i++){
-				tiles[i].setAngle(0);
-				tiles[i].setSize(.12f);
-				if(!mTutorialInfo.initialNumbers[i].equals("clear")){
-					tiles[i].setColor("dullyellow");
-				} else if(mTutorialInfo.getActiveTile() != i){
-					tiles[i].setColor("transparent");
-				}
 
-				tiles[i].setNumber(mTutorialInfo.initialNumbers[i]);
-				tiles[i].setArrow(mTutorialInfo.initialArrows[i]);
+		private void prepBoard() {
+			restoreBoard(TutorialInfo2.solutionNumbersSlide3, TutorialInfo2.initialNumbersSlide3, TutorialInfo2.initialArrowsSlide3, TutorialInfo2.solutionArrowsSlide3, path, null);
+			showSolution();
+			drawLines();
+			for (int i = 0; i < tiles.length; i++) {
+				tiles[i].rotate = false;
 				tiles[i].setTextures();
+				tiles[i].setSize(tileSize);
 			}
+			
+
+		}
+		
+		@Override
+		public void enterAnimation(BoardTile[] tiles) {
+			state.period = DrawPeriod.DURING; 
+		}
+
+		@Override
+		public void duringAnimation(BoardTile[] tiles) {
+			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
+			if(time < 2) {
+			} else if(time < 4){
+			} else {
+				lines = true;
+				refTime = System.currentTimeMillis();
+			}
+		}
+		
+		public void draw(BoardTile[] tiles, MyGLRenderer r){
+			mBoardBg.draw(r);
+			super.draw(tiles, r);
+			mBanner.draw(r);
+			mCheck.draw(r);
+			mCPB.draw(r);
+		}
+	}
+	
+	class PlayGame extends State<BoardTile> {
+		long refTime;
+		private Background mCheck;
+		Menu mMenu;
+		private int at = -1;
+		
+		
+		public PlayGame(){
+			mBee.setMood(Mood.ASLEEP);
+			refTime = System.currentTimeMillis();
+			prepBoard();		
+			mCheck  = new Background("check",.11f);
+			float[] center = {-.7f,-1f, 0f};
+			mCheck.setCenter(center);
+			mBanner.set("banner_4");
+			mMenu = new Menu();
+		}
+
+		private void prepBoard() {
+			restoreBoard(TutorialInfo2.solutionNumbersPlayGame, TutorialInfo2.initialNumbersPlayGame, TutorialInfo2.initialArrowsPlayGame, TutorialInfo2.solutionArrowsPlayGame, TutorialInfo2.pathPlayGame, TutorialInfo2.clickablePlayGame);
+			drawLines();
+			for (int i = 0; i < tiles.length; i++) {
+				tiles[i].rotate = false;
+				tiles[i].setTextures();
+				tiles[i].setSize(tileSize);
+			}
+		}
+		
+		@Override
+		public void enterAnimation(BoardTile[] tiles) {
+			state.period = DrawPeriod.DURING; 
+		}
+
+		@Override
+		public void duringAnimation(BoardTile[] tiles) {
+			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
+			if(time < 2) {
+			} else if(time < 4){
+			} else {
+				refTime = System.currentTimeMillis();
+			}
+		}
+		
+		public void draw(BoardTile[] tiles, MyGLRenderer r){
+			mBoardBg.draw(r);
+			super.draw(tiles, r);
+			mBanner.draw(r);
+			mMenu.draw(r);
+			mCheck.draw(r);
+			mBee.draw(r);
+			
+		}
+					
+		public void touchHandler(float[] pt){
+			int val = mMenu.touched(pt);			
+			if(val == -1){
+				if (at != -1) {
+					tiles[at].setColor("transparent");
+				}
+				at = touched(pt);
+				System.out.println(at);
+				if(at != -1 ) {
+					if(tiles[at].isBlack() == false) {
+						tiles[at].setColor("blue");
+						if(tiles[at].isClickable())
+							mMenu.activate(pt);
+					}
+				}
+			} else {
+			    if (at != -1) {
+			    	tiles[at].setUserInput(val);
+			    	drawLines();
+			    }
+			}
+	
+			if(mCheck.touched(pt) == 1){
+				if(checkSolution()){
+					setStateForward();      
+				} else {
+					mBanner.set(TextureManager.TRY_AGAIN);
+				}
+			}
+		}
+
+		public void swipeHandler(String direction){
+		    if (at != -1 && tiles[at].isClickable()) {
+		    	tiles[at].setArrow(direction);
+		    	tiles[at].setTextures();
+		    	drawLines(); 
+		    	mMenu.menuActive = false;
+		}}
+	
+	}
+	
+	class PlayGameEnd extends State<BoardTile> {
+		boolean[] rotateTiles = new boolean[36];
+		boolean[] flipped = new boolean[36];
+		long[] refTime = new long[36];
+		public PlayGameEnd() {
+			mBanner.set("banner_6");
+			mBee.setState(GameState.GAME_OPENING,TutorialInfo2.lengthPlayGame);
+			mBee.setMood(Mood.HAPPY);
+			for (int i = 0; i < tiles.length; i++) {
+				flipped[i] = false;
+				rotateTiles[i] = false;
+				float Sx = ( (i/6) - 2.5f )/4.0f;
+				float Sy = ( (i%6) - 2.5f )/4.0f;
+				tiles[i].setSize(.12f);
+				float center[] = { Sx, Sy, 0.0f};
+				tiles[i].center = center;
+				tiles[i].setColor("transparent");
+				refTime[i] = System.currentTimeMillis();
+				tiles[i].setPivot(tiles[i].getCenter());
+			}
+		}
+
+
+		//The new animation:
+		public void enterAnimation(BoardTile[] tiles) {
+			//	    long time = System.currentTimeMillis()-refTime[0];
+			for (int i = 0; i < tiles.length ; i++) {
+				if (tiles[i].true_solution >0) {
+					float[] pivot = {1.0f,1.0f,0.0f};
+					String[] s = new String[2];
+					s[0] = TextureManager.CLEAR;
+					s[1] = tiles[i].flowerTexture;
+					tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+				}
+			}
+			period = DrawPeriod.DURING;
 		}
 
 		public void duringAnimation(BoardTile[] tiles) {
-			for (int i = 0; i < tiles.length; i++) {
-				((BoardTile)tiles[i]).setTextures();
+			for(int i=0;i<tiles.length;i++){
+				if(tiles[i].rotate && !rotateTiles[i]){
+					refTime[i] = System.currentTimeMillis();
+					rotateTiles[i] = true;
+					float[] pivot = {1.0f,1.0f,0.0f};
+					String[] s = new String[2];
+					s[0] = tiles[i].arrow;
+					s[1] = tiles[i].number;
+					tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+					//tiles[i].rotate = false;
+				}
 			}
-		}	
-
-		@Override
+		}
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			super.draw(tiles, r);
 			mBoardBg.draw(r);
+			super.draw(tiles, r);
 			mBanner.draw(r);
-			mBottomBanner.draw(r);
 			mBee.draw(r);
-			mBorder.draw(r);		    
 		}
 
-		public boolean setCounter() {
-			if (mTutorialInfo.getCounter() >= 0) {
-				tiles[mTutorialInfo.getActiveTile()].setColor("white");
-			} 
-			mTutorialInfo.incrementCounter();
-			mBanner.set("banner_"+Integer.toString(mTutorialInfo.getCounter()));
-			mBottomBanner.set("bottom_banner_"+Integer.toString(mTutorialInfo.getCounter()));
-			if(mTutorialInfo.getCounter() >= mTutorialInfo.activeTile.length){
-				return false;
-			}
-			tiles[mTutorialInfo.getActiveTile()].setColor("blue"); 
-			if(mTutorialInfo.getCounter() > 0 ){
-				updateStep();
-			}
-			return true;
-		}
 
-		@Override
-		public int touched(float[] pt) {
-			int in = -1;
-			for (int i = 0; i < tiles.length; i++) {
-				if( tiles[i].touched(pt)) {
-					in =  i;
-					break;
-				}
-			}
-			if (mTutorialInfo.getCounter() < mTutorialInfo.activeTile.length)
-				if (in == mTutorialInfo.getActiveTile()) 
-					return in;
-			return -1;   
-		}	
+	}    
 
-		public void touchHandler(Menu mMenu, float[] pt) {
-			int val = mMenu.touched(pt);
-			if (val != -1) {
-				//System.out.println("Menu Touched!");
-				if ( userNumberInput(val) ) {
-					//System.out.println("Passed the if");
-					mMenu.menuActive = false;
-				}
-			}
-			else {
-				int at  = touched(pt);
-				if (at != -1 && isMenuOn()) {
-					mMenu.activate(pt);
-				}
-				else {
-					mMenu.menuActive = false;
-				}
-			}
-			if(checkInput()){
-				setCounter();
-			}
-			if (mTutorialInfo.getCounter() == 29)
-				setState();
-		}
-
-		private boolean checkInput() {
-			boolean correctNumber = true;
-			boolean correctArrow  = true;
-			String number = mTutorialInfo.getNumber();
-			String arrow = mTutorialInfo.getArrow();
-			if(!number.equals("none")){
-				if(!number.equals(tiles[mTutorialInfo.getActiveTile()].getNumber())){
-					correctNumber = false;
-				}
-			} 
-
-			if(!arrow.equals("none")){
-				if(!arrow.equals(tiles[mTutorialInfo.getActiveTile()].getArrow())){
-					correctArrow = false;
-				}
-			}	    
-			return correctNumber && correctArrow;
-
-		}
-
-		public void swipeHandler(String direction) {
-			if(direction.equals(mTutorialInfo.getArrow())){
-				tiles[mTutorialInfo.getActiveTile()].setArrow(direction);
-			}
-			if(checkInput()){
-				setCounter();
-			}	    
-			if (mTutorialInfo.getCounter() == 29)//
-				setState();
-		}
-
-		private boolean userNumberInput(int val) {
-			if(mTutorialState == TutorialState.WALKTHROUGH){
-				if( Integer.toString(val).equals(mTutorialInfo.getNumber())){
-					tiles[mTutorialInfo.getActiveTile()].setUserInput(val);
-					return true;
-				}
-			}  	
-			return false;
-		}
-
-		private boolean isMenuOn() {
-			if(mTutorialState==TutorialState.WALKTHROUGH){
-				if(!mTutorialInfo.getNumber().equals("none")){
-					return true;
-				}
-			}  	
-			return false;
-		}
-
-		public void updateStep(){
-			int m = mTutorialInfo.getPreviousActiveTile();
-			if(!mTutorialInfo.getPreviousArrow().equals("none"))
-				tiles[m].setArrow(mTutorialInfo.getPreviousArrow());
-			if(!mTutorialInfo.getPreviousNumber().equals("none"))
-				tiles[m].setNumber(mTutorialInfo.getPreviousNumber());
-		}
-
-	}
-*/
-	// class Summary extends State<BoardTile> {
-
-	// 	BoardTile[] tiles;
-
-	// 	public Summary(BoardTile[] tiles){
-	// 	    this.tiles = tiles;
-	// 	}
-
-	// 	public void enterAnimation(BoardTile[] tiles) {
-	// 	    period = DrawPeriod.DURING;
-	// 	}
-
-	// 	public void duringAnimation(BoardTile[] tiles) {
-
-	// 	    for (int i = 0; i < tiles.length; i++) {
-	// 		((BoardTile)tiles[i]).setTextures();
-	// 	    }
-	// 	}
-
-	// 	public void draw(BoardTile[] tiles, MyGLRenderer r){
-	// 	    super.draw(tiles,r);
-	// 	    //mBanner.draw(r);   
-	// 	}
-
-	// 	@Override
-	// 	    public int touched(float[] pt) {
-	// 	    return -1;
-	// 	}	
-
-
-	// }
-
+	
+	
 }
