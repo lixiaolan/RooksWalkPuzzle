@@ -2,6 +2,9 @@ package com.example.android.opengl;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.example.android.open.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

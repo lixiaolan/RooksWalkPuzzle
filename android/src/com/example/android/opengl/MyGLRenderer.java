@@ -17,7 +17,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
-import com.example.android.opengl.R;
+import com.example.android.open.R;
 import com.example.android.opengl.common.RawResourceReader;
 import com.example.android.opengl.common.ShaderHelper;
 

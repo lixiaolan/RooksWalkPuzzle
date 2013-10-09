@@ -351,6 +351,142 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
     }
     
+    public boolean checkRuleCollision(int at) {
+	//Now go though each tile and fill in pointed at tiles.
+	float duration = .3f;
+	float delay = 0.0f;
+	boolean satisfied = true;
+	if (tiles[at].hasNumber() && tiles[at].hasArrow()) {
+	    int num = Integer.parseInt(tiles[at].number);
+	    if (tiles[at].getArrow() == TextureManager.UPARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at%boardHeight + j < boardHeight) {
+			if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
+			}
+			else {
+			    tiles[at+j].setAngryGlow(duration, j*delay, tiles[at+j].color);
+			    satisfied = false;
+			}
+		    }
+		}
+	    }
+	    if (tiles[at].getArrow() == TextureManager.DOWNARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at%boardHeight - j >= 0) {
+			if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
+			}
+			else {
+			    tiles[at-j].setAngryGlow(duration, j*delay, tiles[at-j].color);
+			    satisfied = false;
+			}
+		    }
+		}
+	    }
+	    if (tiles[at].getArrow() == TextureManager.LEFTARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at/boardHeight + j < boardWidth) { 
+			if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
+			}
+			else {
+			    tiles[at+j*boardHeight].setAngryGlow(duration, j*delay, tiles[at+j*boardHeight].color);
+			    satisfied = false;
+			}
+		    }
+		}
+	    }
+	    if (tiles[at].getArrow() == TextureManager.RIGHTARROW) {
+		for (int j = 1; j < num; j++) {
+		    if (at/boardHeight - j >= 0) {
+			if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
+			}
+			else {
+			    tiles[at-j*boardHeight].setAngryGlow(duration, j*delay, tiles[at-j*boardHeight].color);
+			    satisfied = false;
+			}
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean checkRuleCollision() {
+	//Now go though each tile and fill in pointed at tiles.
+	float duration = .3f;
+	float delay = 0.0f;
+	boolean satisfied = true;
+	for (int i = 1; i < tiles.length; i++ ) {
+	    if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
+		int num = Integer.parseInt(tiles[i].number);
+		if (tiles[i].getArrow() == TextureManager.UPARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i%boardHeight + j < boardHeight) {
+			    if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) {
+			    }
+			    else {
+				tiles[i+j].setAngryGlow(duration, j*delay, tiles[i+j].color);
+				satisfied = false;
+			    }
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.DOWNARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i%boardHeight - j >= 0) {
+			    if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) { 
+			    }
+			    else {
+				tiles[i-j].setAngryGlow(duration, j*delay, tiles[i-j].color);
+				satisfied = false;
+			    }
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.LEFTARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i/boardHeight + j < boardWidth) { 
+			    if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) {
+			    }
+			    else {
+				tiles[i+j*boardHeight].setAngryGlow(duration, j*delay, tiles[i+j*boardHeight].color);
+				satisfied = false;
+			    }
+			}
+		    }
+		}
+		if (tiles[i].getArrow() == TextureManager.RIGHTARROW) {
+		    for (int j = 1; j < num; j++) {
+			if (i/boardHeight - j >= 0) {
+			    if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) {
+			    }
+			    else {
+				tiles[i-j*boardHeight].setAngryGlow(duration, j*delay, tiles[i-j*boardHeight].color);
+				satisfied = false;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean checkRuleRightAngles(int at) {
+	return true;
+    }
+
+    public boolean checkRuleRightAngles() {
+	return true;
+    }    
+
+    public boolean checkRulePoint(int at) {
+	return true;
+    }
+
+    public boolean checkRulePoint() {
+    	return true;
+    }
+
     // Class to draw the dotted lines on the board.  Called after every input
     public void drawLines() {
 	//First remove the lines on tiles which are no longer pointed at.
@@ -387,7 +523,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    }
 	}	
     }
-
+    
     public void markPointedAt() {
 	//Marks all tiles pointed at either V or H
 	for (int i = 0; i < tiles.length; i++) {
@@ -432,7 +568,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    }
 	}
     }
-
+    
     class BoardMainMenu extends State<BoardTile> {
 	
 	long refTime;

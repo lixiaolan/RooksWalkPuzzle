@@ -38,6 +38,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.io.File;
+
+import com.example.android.open.R;
 public class ViewActivity extends Activity {
 
 	private GLSurfaceView mGLView;
