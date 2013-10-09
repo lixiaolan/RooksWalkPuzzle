@@ -45,13 +45,19 @@ class MenuManager {
 	    mGameMenu = new GameMenu(pos1, scale1, textures1, TextureManager.START);
 	    mCallback = new Callback_MAIN_MENU_OPENING();
 	    break;
+	    
+	case MAIN_MENU_GEAR:
+		String[] texturesGear = {TextureManager.TUTORIAL, TextureManager.OPTIONS, TextureManager.STORY, TextureManager.STATS};
+		mGameMenu = new GameMenu(pos1,scale1, texturesGear, TextureManager.BACK); 
+		mCallback = new Callback_MAIN_MENU_GEAR();
+		break;
 	case MAIN_MENU_LIST:
 		if(state.resumeGameExists){
-			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.TUTORIAL, TextureManager.OPTIONS, TextureManager.STORY, TextureManager.STATS};
+			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.GEAR};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {
-			String[] textures2 = {TextureManager.NEW, TextureManager.TUTORIAL, TextureManager.OPTIONS, TextureManager.STORY, TextureManager.STATS};
+			String[] textures2 = {TextureManager.NEW, TextureManager.GEAR};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
 		}
@@ -88,14 +94,20 @@ class MenuManager {
 	    mCallback = new Callback_GAME_MENU_END();
 	    break;
 	case TUTORIAL:
-	    String[] textures8 = {TextureManager.NEXT, TextureManager.PREVIOUS};
-	    mGameMenu = new SelectThreeMenu(bottomPos2, scale2, textures8, TextureManager.QUIT); 
+		String[] texturesTUTORIAL = {TextureManager.QUIT};
+	    //String[] textures8 = {TextureManager.NEXT, TextureManager.PREVIOUS};
+	    mGameMenu = new SelectOneMenu(bottomPos2, scale2, texturesTUTORIAL); 
 	    mCallback = new Callback_TUTORIAL();
 	    break;
 	case STATS:
 		String[] textures9 = {TextureManager.QUIT};
 	    mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures9); 
 	    mCallback = new Callback_STATS();
+	    break;
+	case STORY:
+		String[] textures10 = {TextureManager.QUIT};
+	    mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures10); 
+	    mCallback = new Callback_STORY();
 	    break;
 	}
     }
@@ -132,6 +144,41 @@ class MenuManager {
 	}	
     }
     
+    class Callback_MAIN_MENU_GEAR extends Callback {
+		@Override
+		public void callback(int val) {
+			System.out.println("Gearing up");
+			switch(val) {
+    	    case 1: 
+    			mModel.createTutorial();
+    		    mModel.setState(GameState.TUTORIAL);
+    			state.state = GameState.TUTORIAL;
+    			updateState();
+    		    break;
+    	    case 2: state.state = GameState.MAIN_MENU_OPTIONS;
+    		updateState();
+    		break;
+    	    case 3:
+    	    	mModel.createStory();
+    	    	mModel.setState(GameState.STORY);
+    	    	updateState();
+    	    	break;
+    	    case 4:
+    	    	//mModel.updateStats();
+    	    	mModel.createTextures = true;
+    	    	state.state = GameState.STATS;
+    	    	mModel.setState(GameState.STATS);
+    	    	updateState();
+    	    	break;
+    	    case 0: state.state = GameState.MAIN_MENU_OPENING;
+    		updateState();
+    		break;
+
+		}
+    	
+    }
+		}
+    
     class Callback_MAIN_MENU_LIST_RESUME extends Callback {
     	public void callback(int val) {
     	    switch(val) {
@@ -146,27 +193,9 @@ class MenuManager {
     	    state.state = GameState.GAME_OPENING;
     	    updateState();
     		break;
-    	    case 3: 
-    			mModel.createTutorial();
-    		    mModel.setState(GameState.TUTORIAL);
-    			state.state = GameState.TUTORIAL;
-    			updateState();
-    		    break;
-    	    case 4: state.state = GameState.MAIN_MENU_OPTIONS;
-    		updateState();
-    		break;
-    	    case 5:
-    	    	state.state = GameState.STORY;
-    	    	mModel.setState(GameState.STORY);
-    	    	updateState();
-    	    	break;
-    	    case 6:
-    	    	//mModel.updateStats();
-    	    	mModel.createTextures = true;
-    	    	state.state = GameState.STATS;
-    	    	mModel.setState(GameState.STATS);
-    	    	updateState();
-    	    	break;
+    	    case 3: state.state = GameState.MAIN_MENU_GEAR;
+    	    updateState();
+    	    break;
     	    case 0: state.state = GameState.MAIN_MENU_OPENING;
     		updateState();
     		break;
@@ -178,30 +207,20 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 		
-	    case 1: state.state = GameState.MAIN_MENU_NEW;
-		updateState();
-		break;
-	    case 2: 
-			mModel.createTutorial();
+	    case 1: 
+	    if(state.firstRun){
+	    	mModel.createTutorial();
 		    mModel.setState(GameState.TUTORIAL);
 			state.state = GameState.TUTORIAL;
-			updateState();
-		    break;
-	    case 3: state.state = GameState.MAIN_MENU_OPTIONS;
+			state.firstRun = false;
+	    } else{
+	    	state.state = GameState.MAIN_MENU_NEW;
+	    }
 		updateState();
 		break;
-	    case 4:
-	    	state.state = GameState.STORY;
-	    	mModel.setState(GameState.STORY);
-	    	updateState();
-	    	break;
-	    case 5:
-	    	//mModel.updateStats();
-	    	mModel.createTextures = true;
-	    	state.state = GameState.STATS;
-	    	mModel.setState(GameState.STATS);
-	    	updateState();
-	    	break;
+	    case 2: state.state = GameState.MAIN_MENU_GEAR;
+	    updateState();
+	    break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
 		updateState();
 		break;
@@ -333,11 +352,11 @@ class MenuManager {
 	@Override
 	public void callback(int val) {
 	    switch(val) {
-	    case 1: mModel.mTutorialBoard.setState();
+	   /* case 1: mModel.mTutorialBoard.setState();
 	    	break;
 	    case 2: mModel.mTutorialBoard.setState();
-	    	break;
-	    case 0:
+	    	break;*/
+	    case 1:
 	    	state.state = GameState.MAIN_MENU_OPENING;
 		mModel.setState(GameState.MAIN_MENU_OPENING);
 		updateState();
@@ -360,6 +379,18 @@ class MenuManager {
     	}
         }
     
-    
+    class Callback_STORY extends Callback { 	
+    	@Override
+    	public void callback(int val) {
+
+    	    switch(val) {
+    	    case 1:
+    	    	state.state = GameState.MAIN_MENU_OPENING;
+    	    	mModel.setState(GameState.MAIN_MENU_OPENING);
+    	    	updateState();
+    		break;
+    	    }
+    	}
+        }
     
 }

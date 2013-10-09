@@ -69,4 +69,14 @@ public class Colors {
 		0.9965625f, 0.9553125f, 0.5859375f, 1.0f
 	};
     
+    public static float [] squareRed ={
+		// Baby Blue
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f, 0.0f, 0.0f, 1.0f
+	};
+    
 }

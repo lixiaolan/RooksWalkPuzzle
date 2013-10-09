@@ -8,23 +8,20 @@ import android.app.Activity;
 
 class Model{
 	
-	public static final int SHORT = 6;
-	public static final int MEDIUM = 8;
-	public static final int LONGER = 12;
-	public static final int LONGEST = 14;
+    public static final int SHORT = 6;
+    public static final int MEDIUM = 8;
+    public static final int LONGER = 12;
+    public static final int LONGEST = 14;
 	
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
     public Board mBoard;
-    private Menu mMenu;
     public Bee mBee;
     private MenuManager mMenuManager;
-    private Background mBoardBg;
     private Background mCheck;
     private int at = -1;
     private Vibrator vibe;
     public Context context;
-    private Banner mGameBanner;
     private Background mTitle;
     private float[] geometry = new float[3];
     private StoryBoard mStoryBoard;
@@ -51,16 +48,14 @@ class Model{
 		vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 		state = new GlobalState();
 		mMenuManager = new MenuManager(state, this);
-		mMenu = new Menu();
-		mBoardBg = new Background("boardbg", .75f);
-		mGameBanner = new Banner(.75f);
 		mTitle = new Background("title", .50f);
 		float[] titleCenter = {.5f, 0.8f, 0.0f};
 		mTitle.setCenter(titleCenter);
-		mStoryBoard = new StoryBoard();
 		mStatsScreen = new StatsScreen(state);
 		
 	}    
+    
+    
     
     public void createPuzzle(int length, int hints) {
 		state.showGameBanner = false;
@@ -72,6 +67,10 @@ class Model{
 		mTutorialBoard.setGeometry(geometry);
 	}
     
+	public void createStory(){
+		mStoryBoard = new StoryBoard(this);
+	}
+	
     public void toggleHints(boolean toggle) {
 		mBoard.toggleHints(toggle);
 	}
@@ -81,30 +80,11 @@ class Model{
 		switch(state.state){
 		case GAME_OPENING: 
 			//Internally close menu.    		
-			val = mMenu.touched(pt);
-			if(val == -1){
-				if (at != -1) {
-					mBoard.tiles[at].setColor("transparent");
-				}
-				at = mBoard.touched(pt);
-				if(at != -1 ) {
-					if(mBoard.tiles[at].isBlack() == false) {
-						mBoard.tiles[at].setColor("blue");
-						if(mBoard.tiles[at].isClickable())
-							mMenu.activate(pt);
-					}
-				}
-			} else {
-			    if (at != -1) {
-			    	mBoard.tiles[at].setUserInput(val);
-			    	mBoard.drawLines();
-			    }
-			}
-
+			mBoard.touchHandler(pt);
+			
 			if(mCheck.touched(pt) == 1){
 				if(mBoard.checkSolution()){
 					state.showGameBanner = true;
-					mGameBanner.set(TextureManager.GOOD_JOB);
 					state.state = GameState.GAME_MENU_END;
 					mMenuManager.updateState();
 					//No game to save. No game to resume.
@@ -115,7 +95,7 @@ class Model{
 					mBoard.setState(GameState.GAME_MENU_END);
 				       
 				} else {
-					mGameBanner.set(TextureManager.TRY_AGAIN);
+					mBoard.mGameBanner.set(TextureManager.TRY_AGAIN);
 					state.showGameBanner = true;
 					vibe.vibrate(500);
 				}
@@ -136,6 +116,7 @@ class Model{
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
+		case MAIN_MENU_GEAR:
 			at = mBoard.touched(pt);
 			if(at != -1) {
 				float[] pivot = {0,0,1};
@@ -166,7 +147,12 @@ class Model{
 				mMenuManager.onTouched(val);
 			}
 			break;
-	
+		case STORY:
+			val = mMenuManager.touched(pt);
+			if(val != -1){
+				mMenuManager.onTouched(val);
+			}
+			mStoryBoard.touchHandler(pt);
 		default: break;
 		}
 	}
@@ -174,11 +160,7 @@ class Model{
     public void swiped(float[] pt, String direction) {
 		switch(state.state){
 		case GAME_OPENING:
-		    if (at != -1 && mBoard.tiles[at].isClickable()) {
-			mBoard.tiles[at].setArrow(direction);
-			mBoard.drawLines(); 
-			mMenu.menuActive = false;
-		    }
+		    mBoard.swipeHandler(direction);
 		    break;
 		    
 		case TUTORIAL:
@@ -197,22 +179,17 @@ class Model{
 			break;
 		case GAME_OPENING:
 		case GAME_MENU_LIST:
-			mCheck.draw(r);
 		case GAME_MENU_END:
+			mCheck.draw(r);
 			mBoard.draw(r);
 			mBee.draw(r);
-			mBoardBg.draw(r);
-			mMenu.draw(r);
-			if(state.showGameBanner){
-				mGameBanner.draw(r);
-			}
-			mMenuManager.draw(r);
-			
+			mMenuManager.draw(r);		
 			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
+		case MAIN_MENU_GEAR:
 			mBoard.draw(r);
 			mBee.draw(r);
 			mTitle.draw(r);
@@ -220,7 +197,6 @@ class Model{
 			break;
 		case TUTORIAL:
 			mTutorialBoard.draw(r);
-			mMenu.draw(r);
 			mMenuManager.draw(r);
 			break;
 		case STATS:
@@ -245,7 +221,6 @@ class Model{
 		mBoard.setState(s);
 	}
 
-	
 	public void setDataServer(DataServer d){
 		mDataServer = d;
 	}
@@ -265,10 +240,17 @@ class Model{
 	 }
 
     public void reset() {
-		setState(GameState.MAIN_MENU_OPENING);
-		mMenuManager.updateState();
+    		setState(GameState.MAIN_MENU_OPENING);
+    		mMenuManager.updateState();
 	}
-     public void clearBoard() {
+    
+    public void firstRun() {
+    	setState(GameState.STORY);
+    	createStory();
+    	mMenuManager.updateState();
+    }
+    
+    public void clearBoard() {
 		mBoard.resetBoard();
 	}    
     
@@ -300,6 +282,9 @@ class Model{
 		TM.buildLongTextures("Long Lines: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
 		TM.buildLongTextures("Longest Lines: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
 	}
+
+
+
 }
 	
 

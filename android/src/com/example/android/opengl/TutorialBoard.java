@@ -96,7 +96,7 @@ class TutorialBoard extends Board {
 			showSolution();
 			//    	    mBanner.set(mTutorialInfo.ShowPathBanner);
 			mBee.setMood(Mood.HAPPY);
-			mBorder = new Border(getColumnSums(), getRowSums());
+			//mBorder = new Border(getColumnSums(), getRowSums());
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {

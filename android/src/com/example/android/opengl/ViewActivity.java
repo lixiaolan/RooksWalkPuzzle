@@ -107,7 +107,13 @@ public class ViewActivity extends Activity {
 		super.onStart();	
 		mModel.state.resumeGameExists = mDataServer.resumeExists();
 		mModel.state.firstRun = mDataServer.firstRun();
-		mModel.reset();
+		
+		if(mModel.state.firstRun){
+			mQuoteView.setVisibility(View.INVISIBLE);
+			mModel.firstRun();
+		} else {
+			mModel.reset();
+		}
 	}
 
 	public void closeQuoteScreen(View v) {

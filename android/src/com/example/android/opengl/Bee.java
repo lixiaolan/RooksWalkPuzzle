@@ -2,7 +2,8 @@ package com.example.android.opengl;
 
 public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     public BeeTile bee;
-    private Board mBoard;    
+    private Board mBoard;
+    
     
     public Bee(Board b) {
     	float[] center= {0.0f,0.0f,0.0f};
@@ -44,6 +45,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
     public void setMood(Mood m) {
 	state.setMood(m);
     }
+
 }
 
 class BeeWander extends BeeState<BeeTile> {
@@ -175,7 +177,6 @@ class BeeFixed extends BeeState<BeeTile> {
     
     public void duringAnimation(BeeTile[] tiles) {
 	bee = (BeeTile)tiles[0];
-	System.out.println("Bee game is on");
 	long time = System.currentTimeMillis() - globalRefTime;
 	float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
 	relativeRefTime = System.currentTimeMillis();
