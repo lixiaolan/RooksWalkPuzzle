@@ -11,7 +11,7 @@ class Model{
     public static final int SHORT = 6;
     public static final int MEDIUM = 8;
     public static final int LONGER = 12;
-    public static final int LONGEST = 14;
+    public static final int LONGEST = 16;
 	
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
@@ -58,104 +58,107 @@ class Model{
     
     
     public void createPuzzle(int length, int hints) {
-		state.showGameBanner = false;
-		mBoard.createPuzzleFromJNI(length, hints);
-	}
-
-	public void createTutorial(){
-		mTutorialBoard = new TutorialBoard2();
-		mTutorialBoard.setGeometry(geometry);
-	}
+	state.showGameBanner = false;
+	mBoard.createPuzzleFromJNI(length, hints);
+    }
     
-	public void createStory(){
-		mStoryBoard = new StoryBoard(this);
-	}
-	
+    public void createTutorial(){
+	mTutorialBoard = new TutorialBoard2();
+	mTutorialBoard.setGeometry(geometry);
+    }
+    
+    public void createStory(){
+	mStoryBoard = new StoryBoard(this);
+    }
+    
     public void toggleHints(boolean toggle) {
-		mBoard.toggleHints(toggle);
-	}
+	mBoard.toggleHints(toggle);
+    }
+    public void toggleLines(boolean toggle) {
+	mBoard.toggleLines(toggle);
+    }
     
     public void touched(float[] pt) {
-		int val = -1;
-		switch(state.state){
-		case GAME_OPENING: 
-			//Internally close menu.    		
-			mBoard.touchHandler(pt);
-			
-			if(mCheck.touched(pt) == 1){
-				if(mBoard.checkSolution()){
-					state.showGameBanner = true;
-					state.state = GameState.GAME_MENU_END;
-					mMenuManager.updateState();
-					//No game to save. No game to resume.
-					state.saveCurrGame = false;
-					state.resumeGameExists = false;
-					mDataServer.setLines(state.difficulty);
-					mBee.setMood(Mood.HAPPY);
-					mBoard.setState(GameState.GAME_MENU_END);
-				       
-				} else {
-					mBoard.mGameBanner.set(TextureManager.TRY_AGAIN);
-					state.showGameBanner = true;
-					vibe.vibrate(500);
-				}
-			}
-			
-			
-		case GAME_MENU_LIST:    
-		case GAME_MENU_END:
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
-			if(mBee.touched(pt) == 1){
-				vibe.vibrate(500);
-			}
-			break;
-		case MAIN_MENU_OPENING:    
-		case MAIN_MENU_LIST:
-		case MAIN_MENU_NEW:
-		case MAIN_MENU_OPTIONS:
-		case MAIN_MENU_GEAR:
-			at = mBoard.touched(pt);
-			if(at != -1) {
-				float[] pivot = {0,0,1};
-				mBoard.tiles[at].setPivot(pivot);
-				mBoard.tiles[at].setRotate(true);
-			}
-
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}	    
-			if(mBee.touched(pt) == 1){
-				vibe.vibrate(500);
-			}
-			break;
-		case TUTORIAL:
-			//Game Menu
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
-			mTutorialBoard.touchHandler(pt);
-			break;
-			
-		case STATS:
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
-			break;
-		case STORY:
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
-			mStoryBoard.touchHandler(pt);
-		default: break;
+	int val = -1;
+	switch(state.state){
+	case GAME_OPENING: 
+	    //Internally close menu.    		
+	    mBoard.touchHandler(pt);
+	    
+	    if(mCheck.touched(pt) == 1){
+		if(mBoard.checkSolution()){
+		    state.showGameBanner = true;
+		    state.state = GameState.GAME_MENU_END;
+		    mMenuManager.updateState();
+		    //No game to save. No game to resume.
+		    state.saveCurrGame = false;
+		    state.resumeGameExists = false;
+		    mDataServer.setLines(state.difficulty);
+		    mBee.setMood(Mood.HAPPY);
+		    mBoard.setState(GameState.GAME_MENU_END);
+		    
+		} else {
+		    mBoard.mGameBanner.set(TextureManager.TRY_AGAIN);
+		    state.showGameBanner = true;
+		    vibe.vibrate(500);
 		}
+	    }
+	    
+	    
+	case GAME_MENU_LIST:    
+	case GAME_MENU_END:
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+		mMenuManager.onTouched(val);
+	    }
+	    if(mBee.touched(pt) == 1){
+		vibe.vibrate(500);
+	    }
+	    break;
+	case MAIN_MENU_OPENING:    
+	case MAIN_MENU_LIST:
+	case MAIN_MENU_NEW:
+	case MAIN_MENU_OPTIONS:
+	case MAIN_MENU_GEAR:
+	    at = mBoard.touched(pt);
+	    if(at != -1) {
+		float[] pivot = {0,0,1};
+		mBoard.tiles[at].setPivot(pivot);
+		mBoard.tiles[at].setRotate(true);
+	    }
+	    
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+		mMenuManager.onTouched(val);
+	    }	    
+	    if(mBee.touched(pt) == 1){
+		vibe.vibrate(500);
+	    }
+	    break;
+	case TUTORIAL:
+	    //Game Menu
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+		mMenuManager.onTouched(val);
+	    }
+	    mTutorialBoard.touchHandler(pt);
+	    break;
+	    
+	case STATS:
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+		mMenuManager.onTouched(val);
+	    }
+	    break;
+	case STORY:
+	    val = mMenuManager.touched(pt);
+	    if(val != -1){
+		mMenuManager.onTouched(val);
+	    }
+	    mStoryBoard.touchHandler(pt);
+	default: break;
 	}
+    }
     
     public void swiped(float[] pt, String direction) {
 		switch(state.state){

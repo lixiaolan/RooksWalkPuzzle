@@ -30,6 +30,8 @@ public class TextureManager {
     public static final String LONGEST = "longest";
     public static final String HINTS_ON = "hints on";
     public static final String HINTS_OFF = "hints off";
+    public static final String LINES_ON = "lines on";
+    public static final String LINES_OFF = "lines off";
     public static final String CLEAR_BOARD = "reset";
     public static final String QUIT = "quit";
     public static final String YES = "yes";
@@ -142,6 +144,8 @@ public class TextureManager {
 	    buildTextures(LONGEST, xpos, ypos, LONGEST, fontSize);
 	    buildTextures(HINTS_ON, xpos, ypos, HINTS_ON, fontSize);
 	    buildTextures(HINTS_OFF, xpos, ypos, HINTS_OFF, fontSize);
+	    buildTextures(LINES_ON, xpos, ypos, LINES_ON, fontSize);
+	    buildTextures(LINES_OFF, xpos, ypos, LINES_OFF, fontSize);
 	    buildTextures(CLEAR_BOARD, xpos, ypos, CLEAR_BOARD, fontSize);
 	    buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
 	    buildTextures(YES, xpos, ypos, YES, fontSize);
