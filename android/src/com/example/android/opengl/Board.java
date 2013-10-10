@@ -823,6 +823,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		refTime[i] = System.currentTimeMillis();
 		tiles[i].setPivot(tiles[i].getCenter());
 	    }
+	    if (toggleLines) {
+		drawLines();
+	    }
 	}
 	
 	
@@ -836,6 +839,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		    s[0] = TextureManager.CLEAR;
 		    s[1] = tiles[i].flowerTexture;
 		    tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+		}
+		else {
+		    tiles[i].setTextures();
 		}
 	    }
 	    period = DrawPeriod.DURING;
