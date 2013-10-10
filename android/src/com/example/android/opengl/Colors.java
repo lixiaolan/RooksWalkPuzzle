@@ -70,7 +70,7 @@ public class Colors {
 	};
     
     public static float [] squareRed ={
-		// Baby Blue
+	//red
 		1.0f, 0.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 0.0f, 1.0f,
 		1.0f, 0.0f, 0.0f, 1.0f,

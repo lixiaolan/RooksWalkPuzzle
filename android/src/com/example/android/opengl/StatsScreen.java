@@ -7,7 +7,7 @@ public class StatsScreen extends Graphic<BackgroundTile, State<BackgroundTile>>{
 	GlobalState mGlobalState;
 	
 	public StatsScreen(GlobalState g){
-		tiles = new BackgroundTile[5];
+		tiles = new BackgroundTile[6];
 		state = new StaticScreen(tiles);
 		mGlobalState = g;
 		populateTiles();
@@ -29,31 +29,34 @@ public class StatsScreen extends Graphic<BackgroundTile, State<BackgroundTile>>{
 		//Title of this screen
 		center[0] = 0; center[1] = 1f;
 		tiles[0] = new BackgroundTile(center, scale);
-		tiles[0].setTextures(TextureManager.TOTALLINES, TextureManager.CLEAR);
+		tiles[0].setTextures(TextureManager.TOTALGAMES, TextureManager.CLEAR);
 		
 		//Short
-		center[0] = 0; center[1] = .4f;
-		tiles[1] = new BackgroundTile(center, scale);
+		float[] centerShort = {0,.4f,0};
+		tiles[1] = new BackgroundTile(centerShort, scale);
 		tiles[1].setTextures(TextureManager.SHORTSTATS, TextureManager.CLEAR);
 		
 		
 		//Medium
-		
-		center[0] = 0; center[1] = 0f;
-		tiles[2] = new BackgroundTile(center, scale);
+		float[] centerMedium = {0,0f,0};
+		tiles[2] = new BackgroundTile(centerMedium, scale);
 		tiles[2].setTextures(TextureManager.MEDIUMSTATS, TextureManager.CLEAR);
 	
 		
-		//Long
-		center[0] = 0; center[1] = -.4f;
-		tiles[3] = new BackgroundTile(center, scale);
+		//Long		
+		float[] centerLonger = {0,-.4f,0};
+		tiles[3] = new BackgroundTile(centerLonger, scale);
 		tiles[3].setTextures(TextureManager.LONGERSTATS, TextureManager.CLEAR);
 		
 		
 		//Longest
-		center[0] = 0; center[1] = -1f;
-		tiles[4] = new BackgroundTile(center, scale);
+		float[] centerLongest = {0,-.8f,0};
+		tiles[4] = new BackgroundTile(centerLongest, scale);
 		tiles[4].setTextures(TextureManager.LONGESTSTATS, TextureManager.CLEAR);
+		
+		float[] centerFlower = {0,-1.2f,0};
+		tiles[5] = new BackgroundTile(centerFlower, scale);
+		tiles[5].setTextures(TextureManager.FLOWERSVISITED, TextureManager.CLEAR);
 	}
 	
 	/*@Override 

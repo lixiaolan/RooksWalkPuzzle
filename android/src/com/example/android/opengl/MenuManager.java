@@ -68,13 +68,17 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
 	case MAIN_MENU_OPTIONS:
-	    String[] textures4 = new String[1];
+	    String[] textures4 = new String[2];
 	    if(state.hintsOn){
 		textures4[0] = TextureManager.HINTS_ON;
 	    } else {
 		textures4[0] = TextureManager.HINTS_OFF;
 	    }
-	    
+	    if(state.linesOn){
+		textures4[1] = TextureManager.LINES_ON;
+	    } else {
+		textures4[1] = TextureManager.LINES_OFF;
+	    }
 	    mGameMenu = new GameMenu(pos1, scale1, textures4, TextureManager.BACK); 
 	    mCallback = new Callback_MAIN_MENU_OPTIONS();
 	    break;
@@ -232,29 +236,25 @@ class MenuManager {
     	//Is this really the right place to ensure that a savedGame file is toggled.
 	public void callback(int val) {
 		switch(val) {
-	    case 1: mModel.createPuzzle(Model.SHORT,2);
-	    	mModel.state.difficulty = Model.SHORT;
+	    case 1: mModel.createPuzzle(1);
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;
 	    	updateState();
 		break;
-	    case 2: mModel.createPuzzle(Model.MEDIUM,2);
-	    	mModel.state.difficulty = Model.MEDIUM;
+	    case 2: mModel.createPuzzle(2);
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;
 	    	updateState();
 		break;
-	    case 3: mModel.createPuzzle(Model.LONGER,3);
-	    	mModel.state.difficulty = Model.LONGER;
+	    case 3: mModel.createPuzzle(3);
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;
 	    	updateState();
 		break;
-	    case 4: mModel.createPuzzle(Model.LONGEST,4);
-	    	mModel.state.difficulty = Model.LONGEST;
+	    case 4: mModel.createPuzzle(4);
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;
@@ -278,6 +278,13 @@ class MenuManager {
 		else
 		    mGameMenu.setTexture(0,TextureManager.HINTS_OFF);
 		mModel.toggleHints(state.hintsOn);
+		break;
+	    case 2: state.linesOn = !state.linesOn;
+		if (state.linesOn)
+		    mGameMenu.setTexture(1,TextureManager.LINES_ON);
+		else
+		    mGameMenu.setTexture(1,TextureManager.LINES_OFF);
+		mModel.toggleLines(state.linesOn);
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_LIST;
 		updateState();

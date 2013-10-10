@@ -2,6 +2,9 @@ package com.example.android.opengl;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.example.android.opengl.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +33,8 @@ public class TextureManager {
     public static final String LONGEST = "longest";
     public static final String HINTS_ON = "hints on";
     public static final String HINTS_OFF = "hints off";
+    public static final String LINES_ON = "lines on";
+    public static final String LINES_OFF = "lines off";
     public static final String CLEAR_BOARD = "reset";
     public static final String QUIT = "quit";
     public static final String YES = "yes";
@@ -45,18 +50,18 @@ public class TextureManager {
     public static final String TUTORIAL = "tutorial";
     public static final String NEXT = "next";
     public static final String PREVIOUS = "previous";
-    public static final String LONGSTRING = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sapien erat, interdum quis libero ultrices, scelerisque ullamcorper enim.";
     public static final String SHOW_SOLUTION = "solution";
     public static final String FOOT = "+";
     public static final String GOOD_JOB = "Good job!";
     public static final String TRY_AGAIN = "Keep trying...";
     public static final String STORY = "story";
     public static final String STATS = "Stats";
+    public static final String FLOWERSVISITED = "flowersvisited";
     public static final String SHORTSTATS = "shortstats";
     public static final String MEDIUMSTATS = "mediumstats";
     public static final String LONGERSTATS = "longerstats";
     public static final String LONGESTSTATS = "longeststats";
-    public static final String TOTALLINES = "Total Lines";
+    public static final String TOTALGAMES = "Total Games";
     public static final String HORZDOTS = "horz_dots";
     public static final String VERTDOTS = "vert_dots";
     public static final String HAND = "hand";
@@ -78,11 +83,11 @@ public class TextureManager {
 	
 	
 	public void buildTextures() {
-		int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
-		int[] y_coords = {64, 64, 64, 64, 64, 64, 64, 64, 64, 64};
+		int[] x_coords = {2*96,2*96,2*96,2*96,2*96,2*96,2*96,2*96,2*96,2*96};
+		int[] y_coords = {2*64, 2*64, 2*64, 2*64, 2*64, 2*64, 2*64, 2*64, 2*64, 2*64};
 		
 		//Graphics are built here
-		buildTextures("0123456789", x_coords, y_coords,64);
+		buildTextures("0123456789", x_coords, y_coords,128);
 		buildTextures(context, R.drawable.up_arrow, UPARROW);
 		buildTextures(context, R.drawable.down_arrow, DOWNARROW);
 		buildTextures(context, R.drawable.left_arrow, LEFTARROW);
@@ -138,7 +143,7 @@ public class TextureManager {
 	public void buildMenuBanners() {
 		buildTextures(context, R.drawable.red_x, "menu_1");
 		for(int i=1;i<6;i++){
-		    buildTextures(Integer.toString(i),64,80,"menu_"+Integer.toString(i+1),50);
+		    buildTextures(Integer.toString(i),2*64,2*80,"menu_"+Integer.toString(i+1),2*50);
 		}
 
 		
@@ -156,6 +161,8 @@ public class TextureManager {
 	    buildTextures(LONGEST, xpos, ypos, LONGEST, fontSize);
 	    buildTextures(HINTS_ON, xpos, ypos, HINTS_ON, fontSize);
 	    buildTextures(HINTS_OFF, xpos, ypos, HINTS_OFF, fontSize);
+	    buildTextures(LINES_ON, xpos, ypos, LINES_ON, fontSize);
+	    buildTextures(LINES_OFF, xpos, ypos, LINES_OFF, fontSize);
 	    buildTextures(CLEAR_BOARD, xpos, ypos, CLEAR_BOARD, fontSize);
 	    buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
 	    buildTextures(YES, xpos, ypos, YES, fontSize);
@@ -167,7 +174,7 @@ public class TextureManager {
 	    buildTextures(PREVIOUS, xpos, ypos, PREVIOUS, fontSize);
 	    buildTextures(SHOW_SOLUTION, xpos, ypos, SHOW_SOLUTION, fontSize);
 	    buildTextures(STATS, xpos, ypos, STATS, fontSize);
-	    buildLongTextures(TOTALLINES, 0, 30, TOTALLINES, 30, 256);
+	    buildLongTextures(TOTALGAMES, 0, 30, TOTALGAMES, 30, 256);
 
 	}
 	
