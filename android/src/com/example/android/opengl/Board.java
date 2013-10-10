@@ -30,7 +30,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		buildEmptyBoard();
 		state = new BoardMainMenu(tiles);
 		mBoardBg = new Background("boardbg", .75f);
-		mGameBanner = new Banner(.75f);
+		mGameBanner = new Banner(.8f);
 
 	}
 
@@ -269,7 +269,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	public void setGeometry(float[] g) {
 		super.setGeometry(g);
 		float top = mGameBanner.getSize();
-		mGameBanner.setCenter(0, top);
+		mGameBanner.setCenter(0, g[1]-top);
 	}
 
 	public void animatePlay(int at) {
@@ -558,6 +558,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				tiles[i].isHint = false;
 			}
 			initSize = tiles[0].getSize();
+			mGameBanner.set(TextureManager.CLEAR);
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {
