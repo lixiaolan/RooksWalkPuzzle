@@ -111,7 +111,7 @@ class BoardTile extends Tile{
 		float time = (System.currentTimeMillis()-refTime)/1000.0f;
 		if (time < delay) {}
 		else if (time - delay < duration) {
-		    color = "dullyellow";
+		    color = "red";
 		}
 		else {
 		    color = finalColor;

@@ -176,7 +176,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	colorMap.put("blue", mSquareBlueColor);
 	colorMap.put("dullyellow", mSquareDullYellowColor);
 	colorMap.put("transparent",mSquareTransparentColor);
-	colorMap.put("red",mSquareTransparentColor);
+	colorMap.put("red",mSquareRedColor);
     }
     
     
