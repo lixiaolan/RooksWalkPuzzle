@@ -26,7 +26,7 @@ class Model{
     
     
     public Model(Context c) {
-		initiateMembers(c, new Board());
+	initiateMembers(c, new Board(7,7));
 	}
     
     public Model(Context c, Board b){
@@ -70,7 +70,7 @@ class Model{
 	    mBoard.createPuzzleFromJNI(12 + modifyTwo, 2);
 	    break;
 	case 4:
-	    mBoard.createPuzzleFromJNI(14 + modifyOne, 3);
+	    mBoard.createPuzzleFromJNI(22, 5);
 	    break;
 	}
 

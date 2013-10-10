@@ -3,15 +3,18 @@ package com.example.android.opengl;
 
 class Menu{
 
-    public MenuTile[] menuTiles = new MenuTile[6];
+    public MenuTile[] menuTiles;
     public boolean menuActive;
     public float radius;
     public float tiltAngle;
     public float[] tilesCenter = new float[3];
     public float tilesSize;
     public long refTime;
+    public int tileCount;
     
-    public Menu() {
+    public Menu(int n) {
+	tileCount = n;
+	menuTiles = new MenuTile[tileCount];
 	menuActive = false;
 	tilesSize = 0.11f;
 	tilesCenter[0] = 0.0f;
@@ -20,8 +23,8 @@ class Menu{
 	tiltAngle = 0.0f;
 	radius = 0.4f;
 	for (int i = 0; i < menuTiles.length; i++) {
-	    float tmpsin = (float)Math.sin(i*Math.PI/5.0f);
-	    float tmpcos = (float)Math.cos(i*Math.PI/5.0f);
+	    float tmpsin = (float)Math.sin(i*Math.PI/(tileCount-1));
+	    float tmpcos = (float)Math.cos(i*Math.PI/(tileCount-1));
 	    float Sx = tilesCenter[0] + radius*tmpcos;
 	    float Sy = tilesCenter[1] + radius*tmpsin;
 	    float center[] = { Sx, Sy, 0.0f};
@@ -38,8 +41,8 @@ class Menu{
 	    tilesCenter[2] = 0.0f;
 	    tiltAngle = (float) Math.PI/2.0f*pt[0];
 	    for (int i = 0; i < menuTiles.length; i++) {
-		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
-		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
+		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/(tileCount-1));
+		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/(tileCount-1));
 		float Sx = tilesCenter[0] + radius*tmpcos;
 		float Sy = tilesCenter[1] + radius*tmpsin;
 		float center[] = { Sx, Sy, 0.0f};
@@ -78,8 +81,8 @@ class Menu{
  
 	if (menuActive) {	    
 	    for (int i = 0; i < menuTiles.length; i++) {     
-		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
-		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
+		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/(tileCount-1));
+		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/(tileCount-1));
 		float Sx = tilesCenter[0] + tRadius*tmpcos;
 		float Sy = tilesCenter[1] + tRadius*tmpsin;
 		float center[] = { Sx, Sy, 0.0f};

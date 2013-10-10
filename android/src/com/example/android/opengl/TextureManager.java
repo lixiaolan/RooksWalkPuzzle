@@ -123,7 +123,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.red_x, "menu_1");
 		
 		
-		for(int i=1;i<6;i++){
+		for(int i=1;i<7;i++){
 		    buildTextures(Integer.toString(i),64,80,"menu_"+Integer.toString(i+1),50);
 		}
 		//Create Border Textures

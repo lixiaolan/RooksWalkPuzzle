@@ -199,7 +199,7 @@ class BeeFixed extends BeeState<BeeTile> {
 		else{
 		    mBoard.tiles[r].rotate = true;
 		}
-		r = 6*mBoard.path[index][0] + mBoard.path[index][1];
+		r = mBoard.boardWidth*mBoard.path[index][0] + mBoard.path[index][1];
 		index = ((index-1)%length + length)%length;
 	    }
 	    break;

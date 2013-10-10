@@ -13,8 +13,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public int[][] path;
     public int[] columnSums;
     public int[] rowSums;
-    public int boardWidth = 6;
-    public int boardHeight = 6;
+    public int boardWidth;
+    public int boardHeight;
+    public int tileCount;
     private boolean toggleHints = true;
     private boolean toggleLines = true;
     
@@ -26,18 +27,20 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     private Background mBoardBg;
     public Banner mGameBanner;
         
-    public Board() {
+    public Board(int w, int h) {
+	boardWidth = w;
+	boardHeight = h;
+	tileCount = w*h;
 	buildEmptyBoard();
 	state = new BoardMainMenu(tiles);
 	mBoardBg = new Background("boardbg", .75f);
 	mGameBanner = new Banner(.75f);
-	
     }
     
     public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable ){
-	columnSums = new int[36];
-	rowSums = new int[36];
-	for(int i=0;i<36;i++){
+	columnSums = new int[tileCount];
+	rowSums = new int[tileCount];
+	for(int i=0;i<tileCount;i++){
 	    tiles[i].setTrueSolution(solution[i]);
 	    tiles[i].setArrow(arrows[i]);
 	    tiles[i].setNumber(numbers[i]);
@@ -45,47 +48,47 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    if(clickable!=null)
 		if(!clickable[i])
 		    tiles[i].setHint();
-	    columnSums[i%6] += Math.max(solution[i],0);
-	    rowSums[i/6] += Math.max(solution[i],0);
+	    columnSums[i%boardWidth] += Math.max(solution[i],0);
+	    rowSums[i/boardHeight] += Math.max(solution[i],0);
 	}
 	this.path = path;
     }
     
     public int[] dumpSolution() {
-	int[] solution = new int[36];
-	for(int i =0;i<36;i++){
+	int[] solution = new int[tileCount];
+	for(int i =0;i<tileCount;i++){
 	    solution[i] = tiles[i].getTrueSolution();
 	}
 	return solution;
     }
     
     public String[] dumpArrows() {
-	String[] arrows = new String[36];
-	for(int i =0;i<36;i++){
+	String[] arrows = new String[tileCount];
+	for(int i =0;i<tileCount;i++){
 	    arrows[i] = tiles[i].getArrow();
 	}
 	return arrows;
     }
     
     public String[] dumpNumbers() {
-	String[] numbers = new String[36];
-	for(int i =0; i<36; i++){
+	String[] numbers = new String[tileCount];
+	for(int i =0; i<tileCount; i++){
 	    numbers[i] = tiles[i].getNumber();
 	}
 	return numbers;
     }
     
     public String[] dumpTrueArrows() {
-	String[] arrows = new String[36];
-	for(int i =0; i<36; i++){
+	String[] arrows = new String[tileCount];
+	for(int i =0; i<tileCount; i++){
 	    arrows[i] = tiles[i].getTrueArrow();
 	}
 	return arrows;
     }
     
     public boolean[] dumpClickable() {
-	boolean[] clickable = new boolean[36];
-	for(int i =0; i<36; i++){
+	boolean[] clickable = new boolean[tileCount];
+	for(int i =0; i<tileCount; i++){
 	    clickable[i] = tiles[i].isClickable();
 	}
 	return clickable;
@@ -96,7 +99,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     public void buildEmptyBoard() {
-	tiles = new BoardTile[36];
+	tiles = new BoardTile[tileCount];
 	
 	float size = .15f;
 	for (int i = 0; i < tiles.length; i++) {
@@ -110,8 +113,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     public void buildBoardFromSolution(int hints) {
-	columnSums = new int[6];
-	rowSums = new int[6];
+	columnSums = new int[boardWidth];
+	rowSums = new int[boardHeight];
 	List<Integer> numbers = new ArrayList<Integer>();
 	for (int i = 0; i < tiles.length; i++) {	
 	    //This does a hard reset on the board.
@@ -120,8 +123,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    tiles[i].setTrueSolution(0);
 	    tiles[i].setTrueArrow(TextureManager.CLEAR);
 	    if(solution [i] > 0){
-		columnSums[i%6] += Math.max(solution[i],0);
-		rowSums[i/6] += Math.max(solution[i],0);
+		columnSums[i%boardWidth] += Math.max(solution[i],0);
+		rowSums[i/boardHeight] += Math.max(solution[i],0);
 		numbers.add(i);
 		//tiles[i].setNumber(Integer.toString(solution[i]));
 	    }
@@ -136,19 +139,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    dy = path[i+1][1]-path[i][1];
 	    
 	    if (dx > 0) {
-		tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
+		tiles[boardWidth*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
 		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 	    }
 	    if (dx < 0) {
-		tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
+		tiles[boardWidth*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
 		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 	    }
 	    if (dy > 0) {
-		tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
+		tiles[boardWidth*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
 		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
 	    }
 	    if (dy < 0) {
-		tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
+		tiles[boardWidth*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
 		//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 	    }
 	}
@@ -173,7 +176,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     public void createPuzzleFromJNI(int length, int hints){
 	try {
-	    readSolutionFromJni(stringFromJNI(6, 6, length) );	
+	    readSolutionFromJni(stringFromJNI(boardWidth, boardHeight, length) );	
 	} catch (IOException e) {
 	    System.err.println("Caught IOException: " + e.getMessage());
 	}
@@ -242,7 +245,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     public boolean checkSolution(){
-	for(int i =0; i < 36; i++){
+	for(int i =0; i < tileCount; i++){
 	    if(!( tiles[i].checkArrows() && tiles[i].checkSolutions() ) ){ 
 		return false;
 	    }
@@ -257,7 +260,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public void toggleLines(boolean toggle){
 	toggleLines = toggle;
     }
-
     
     public void showSolution(){
 	String sol = "";
@@ -570,6 +572,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public boolean checkRulePoint() {
     	return true;
     }
+
+    public float getCenterX(int i) {
+	return ( (i/boardWidth) - ((float)boardWidth-1.0f)/2 )/4.0f;
+    }
+
+    public float getCenterY(int i) {
+	return ( (i%boardHeight) - ((float)boardHeight-1.0f)/2 )/4.0f;
+    }
     
     class BoardMainMenu extends State<BoardTile> {
 	
@@ -687,7 +697,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    refTime = System.currentTimeMillis();
 	    oldX = new float[tiles.length];
 	    oldY = new float[tiles.length];
-	    mMenu = new Menu();
+	    //mMenu = new Menu(Math.max(boardWidth,boardHeight));
+	    mMenu = new Menu(7);
 	    for (int i = 0; i < tiles.length; i++) {
 		tiles[i].rotate = false;
 		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
@@ -707,8 +718,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    // This does a simultaneous snap to position and shrink of tiles.
 	    if(time < totalTime/3) {
 		for (int i = 0; i < tiles.length; i++) {
-		    float Sx = ( (i/6) - 2.5f )/4.0f;
-		    float Sy = ( (i%6) - 2.5f )/4.0f;
+		    float Sx = ( (i/boardWidth) - ((float)boardWidth-1.0f)/2 )/4.0f;
+		    float Sy = ( (i%boardHeight) - ((float)boardHeight-1.0f)/2 )/4.0f;
 		    float newX = Sx + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldX[i]-Sx);
 		    float newY = Sy + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldY[i]-Sy);
 		    float center[] = {newX, newY, 0.0f};
@@ -727,8 +738,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		if (!swap) {
 		    for (int i = 0; i < tiles.length; i++) {
 			tiles[i].setTextures();
-			float Sx = ( (i/6) - 2.5f )/4.0f;
-			float Sy = ( (i%6) - 2.5f )/4.0f;
+			float Sx = getCenterX(i);
+			float Sy = getCenterY(i);
 			float center[] = {Sx, Sy, 0.0f};
 			tiles[i].center = center;
 			if(!tiles[i].isClickable())
@@ -760,7 +771,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 	
 	public void draw(BoardTile[] tiles, MyGLRenderer r){
-	    mBoardBg.draw(r);
+	    //mBoardBg.draw(r);
 	    super.draw(tiles, r);
 	    mGameBanner.draw(r);
 	    mMenu.draw(r);
@@ -805,16 +816,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     //This is the board after completing the game.
     class BoardGameEnd extends State<BoardTile> {
-	boolean[] rotateTiles = new boolean[36];
-	boolean[] flipped = new boolean[36];
-	long[] refTime = new long[36];
+	boolean[] rotateTiles = new boolean[tileCount];
+	boolean[] flipped = new boolean[tileCount];
+	long[] refTime = new long[tileCount];
 	public BoardGameEnd(BoardTile[] tiles) {
 	    mGameBanner.set(TextureManager.GOOD_JOB);
 	    for (int i = 0; i < tiles.length; i++) {
 		flipped[i] = false;
 		rotateTiles[i] = false;
-		float Sx = ( (i/6) - 2.5f )/4.0f;
-		float Sy = ( (i%6) - 2.5f )/4.0f;
+		float Sx = getCenterX(i);
+		float Sy = getCenterY(i);
 		tiles[i].setSize(.12f);
 		float center[] = { Sx, Sy, 0.0f};
 		tiles[i].center = center;
@@ -861,7 +872,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    }
 	}
 	public void draw(BoardTile[] tiles, MyGLRenderer r){
-	    mBoardBg.draw(r);
+	    //mBoardBg.draw(r);
 	    super.draw(tiles, r);
 	    mGameBanner.draw(r);
 	}
