@@ -25,8 +25,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     private Background mBoardBg;
     public Banner mGameBanner;
-    
-    
+        
     public Board() {
 	buildEmptyBoard();
 	state = new BoardMainMenu(tiles);
@@ -669,7 +668,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    return ret;
 	}
     }
-    //This state defines board behavior during game play
+    //This state defines board behavior during game play.
     class BoardPlay extends State<BoardTile> {
 	
 	public Menu mMenu;
@@ -804,7 +803,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 	
     }
-    
+    //This is the board after completing the game.
     class BoardGameEnd extends State<BoardTile> {
 	boolean[] rotateTiles = new boolean[36];
 	boolean[] flipped = new boolean[36];
