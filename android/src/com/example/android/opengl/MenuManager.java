@@ -236,29 +236,29 @@ class MenuManager {
     	//Is this really the right place to ensure that a savedGame file is toggled.
 	public void callback(int val) {
 		switch(val) {
-	    case 1: mModel.createPuzzle(Model.SHORT,2);
-	    	mModel.state.difficulty = Model.SHORT;
+	    case 1: mModel.createPuzzle(1);
+	    	mModel.state.difficulty = 1;
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;
 	    	updateState();
 		break;
-	    case 2: mModel.createPuzzle(Model.MEDIUM,2);
-	    	mModel.state.difficulty = Model.MEDIUM;
+	    case 2: mModel.createPuzzle(2);
+	    	mModel.state.difficulty = 2;
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;
 	    	updateState();
 		break;
-	    case 3: mModel.createPuzzle(Model.LONGER,2);
-	    	mModel.state.difficulty = Model.LONGER;
+	    case 3: mModel.createPuzzle(3);
+	    	mModel.state.difficulty = 3;
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;
 	    	updateState();
 		break;
-	    case 4: mModel.createPuzzle(Model.LONGEST,3);
-	    	mModel.state.difficulty = Model.LONGEST;
+	    case 4: mModel.createPuzzle(4);
+	    	mModel.state.difficulty = 4;
 	    	state.saveCurrGame = true;
 	    	mModel.setState(GameState.GAME_OPENING);
 	    	state.state = GameState.GAME_OPENING;

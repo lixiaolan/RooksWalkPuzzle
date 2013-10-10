@@ -632,10 +632,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    force = vSProd(-2.0f,vDiff(tiles[i].center, mid)); 
 	    force = vSum(force, vSProd(-1.2f,tiles[i].velocity));
 	    //Compute wave of forces due to touch
-	    float time = (System.currentTimeMillis()-lastTouchTime)/1000f;
+	    float time = 2*(System.currentTimeMillis()-lastTouchTime)/1000f;
 	    temp = vDiff(tiles[i].center, lastTouchPos);
 	    float sTemp = abs(temp);
-	    if (sTemp<time && sTemp > time - .1f && sTemp > .00001f)
+	    if (sTemp<time && sTemp > time - .2f && sTemp > .00001f)
 		force = vSum(force, vSProd(5f/((float)Math.pow(sTemp,1)), temp));
 	    return force;
 	}

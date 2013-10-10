@@ -7,12 +7,7 @@ import android.os.Vibrator;
 import android.app.Activity;
 
 class Model{
-	
-    public static final int SHORT = 6;
-    public static final int MEDIUM = 8;
-    public static final int LONGER = 12;
-    public static final int LONGEST = 16;
-	
+       
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
     public Board mBoard;
@@ -39,27 +34,47 @@ class Model{
 	}
 
     public void initiateMembers(Context c, Board b){
-		mBoard = b;
-		mBee = new Bee(mBoard);
-		mCheck  = new Background("check",.11f);
-		float[] center = {-.7f,-1f, 0f};
-		mCheck.setCenter(center);
-		context = c;
-		vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
-		state = new GlobalState();
-		mMenuManager = new MenuManager(state, this);
-		mTitle = new Background("title", .50f);
-		float[] titleCenter = {.5f, 0.8f, 0.0f};
-		mTitle.setCenter(titleCenter);
-		mStatsScreen = new StatsScreen(state);
-		
-	}    
+	mBoard = b;
+	mBee = new Bee(mBoard);
+	mCheck  = new Background("check",.11f);
+	float[] center = {-.7f,-1f, 0f};
+	mCheck.setCenter(center);
+	context = c;
+	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
+	state = new GlobalState();
+	mMenuManager = new MenuManager(state, this);
+	mTitle = new Background("title", .50f);
+	float[] titleCenter = {.5f, 0.8f, 0.0f};
+	mTitle.setCenter(titleCenter);
+	mStatsScreen = new StatsScreen(state);
+    }    
     
-    
-    
-    public void createPuzzle(int length, int hints) {
+    //This is where difficulties are assigned for the different puzzle lengths:
+    public void createPuzzle(int level) {
+	int modifyOne = (int)(Math.random()*3);
+	if (modifyOne>0) modifyOne = 2;
+	
+	int modifyTwo = (int)(Math.random()*5);
+	if (modifyTwo>0 && modifyTwo < 4) {
+	    modifyTwo = 2;
+	}
+	    
+	switch (level) {
+	case 1:
+	    mBoard.createPuzzleFromJNI(6+(2-modifyOne), 1);
+	    break;
+	case 2:
+	    mBoard.createPuzzleFromJNI(8+modifyTwo, 2);
+	    break;
+	case 3:
+	    mBoard.createPuzzleFromJNI(12 + modifyTwo, 2);
+	    break;
+	case 4:
+	    mBoard.createPuzzleFromJNI(14 + modifyOne, 3);
+	    break;
+	}
+
 	state.showGameBanner = false;
-	mBoard.createPuzzleFromJNI(length, hints);
     }
     
     public void createTutorial(){
