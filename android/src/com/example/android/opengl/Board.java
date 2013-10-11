@@ -15,6 +15,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	public int boardHeight = 6;
 	private boolean toggleHints = true;
 	private boolean toggleLines = true;	
+	private boolean toggleError = true;
 	protected float flowerSize = .15f;
 	protected float tileSize = .11f;    
 	private long lastTouchTime;
@@ -784,15 +785,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					//If a tile was active close it. 
 					tiles[at].setColor("transparent");
 					//If this tile should be red, make sure it stays that way. Reset the banner
+					if(toggleError){
 					turnErrorRed(at);
 					mGameBanner.set(TextureManager.CLEAR);
+					}
 				}
 				at = touched(pt);
 				if(at != -1 ) {
 					//Open the menu at the tile that was touched. Display a banner if there is an error
+					if(toggleError){
 					turnErrorRed(at);
 					if(lt == at){
 						mGameBanner.set(mErrorLog.getError(at));
+					}
 					}
 					if(tiles[at].isBlack() == false) {
 						tiles[at].setColor("blue");
@@ -807,13 +812,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					if (toggleLines) {
 						animatePlay(at);
 					}
-					
+					if(toggleError){
 					mErrorLog.setLog();
 					updateErrors();
 					turnErrorRed(at);
 					mGameBanner.set(mErrorLog.getError(at));
 					lt = at;
-					
+					}
 				}
 			}
 		}
@@ -844,12 +849,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if (toggleLines) {
 					animatePlay(at); 
 				}
-				
+				if(toggleError){
 				mErrorLog.setLog();
 				turnErrorRed(at);
 				mGameBanner.set(mErrorLog.getError(at));
 				updateErrors();
+				}
 				mMenu.menuActive = false;
+				
 			}
 		}
 
