@@ -53,7 +53,6 @@ class BoardTile extends Tile{
 	    	swapTime = duration/((float)Math.PI)*(((float)Math.PI)-(float)Math.atan(eyeDist/orthDist));
 			
 	    }
-	    	System.out.println("swap time: "+Float.toString(swapTime));
 	    swapped = false;
 	    refTime = System.currentTimeMillis();
 	    active = true;
@@ -63,14 +62,12 @@ class BoardTile extends Tile{
     	public void animate() {
 	    float time = (System.currentTimeMillis()-refTime)/1000.0f;
     	    if (active) {
-		//System.out.println("time: " + Float.toString(time));
 		if (time < delayTime) {}
 		else if (time - delayTime < swapTime) {
 		    setAngle((time - delayTime)/duration*180);
 		}
 		else if (time - delayTime < duration) {
 		    if (!swapped) {
-		    	System.out.println("WE HAVE SWAPPED");
 			setTextures(textures[0], textures[1]);
 			swapped = true;
 		    }

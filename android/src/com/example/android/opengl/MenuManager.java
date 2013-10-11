@@ -32,8 +32,6 @@ class MenuManager {
     // Which have access to information model!  Cool!
     public void updateState() {
 	float[] pos1 = {-.75f, 0f, 0f};
-	float[] pos2 = {0f,-1.1f, 0f};
-	float[] pos3 = {0f,-1.3f, 0f};
 	scale1 = .25f;
 	scale2  = .2f;
 
@@ -53,11 +51,11 @@ class MenuManager {
 		break;
 	case MAIN_MENU_LIST:
 		if(state.resumeGameExists){
-			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.GEAR};
+			String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.MENU};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {
-			String[] textures2 = {TextureManager.NEW, TextureManager.GEAR};
+			String[] textures2 = {TextureManager.NEW, TextureManager.MENU};
 			mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 			mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
 		}
@@ -151,7 +149,6 @@ class MenuManager {
     class Callback_MAIN_MENU_GEAR extends Callback {
 		@Override
 		public void callback(int val) {
-			System.out.println("Gearing up");
 			switch(val) {
     	    case 1: 
     			mModel.createTutorial();
@@ -194,7 +191,6 @@ class MenuManager {
     	    state.saveCurrGame = true;
     	    mModel.resumeGame();
     	    mModel.setState(GameState.GAME_OPENING);
-    	    state.state = GameState.GAME_OPENING;
     	    updateState();
     		break;
     	    case 3: state.state = GameState.MAIN_MENU_GEAR;
@@ -317,6 +313,7 @@ class MenuManager {
 		//No game to save. No game to resume.
 		mModel.mBoard.showSolution();
 		mModel.mBoard.setState(GameState.GAME_MENU_END);
+		mModel.mBoard.mGameBanner.set(TextureManager.TRY_HARDER);
 		mModel.mBee.setMood(Mood.HAPPY);
 		state.saveCurrGame = false;
 		state.resumeGameExists = false;

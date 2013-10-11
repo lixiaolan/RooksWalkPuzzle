@@ -12,6 +12,7 @@ public class GlobalState {
     boolean showGameBanner = false;
     boolean firstRun = false;
     boolean textureCreationFinished = true;
+    boolean cheating = false;
     int difficulty = 0;
    
     public GlobalState() {

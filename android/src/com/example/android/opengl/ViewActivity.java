@@ -1,43 +1,14 @@
 package com.example.android.opengl;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.TextView;
-import android.widget.ViewAnimator;
-import android.widget.ViewSwitcher;
-import android.content.Context;
 import android.content.res.Resources;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
-import java.io.File;
 
 import com.example.android.opengl.R;
 public class ViewActivity extends Activity {

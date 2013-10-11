@@ -7,12 +7,12 @@ class TutorialInfo2 {
     }
 
     //Boob Dylan
-    static String[] banners = {"Create a loop and fill the board.",
-    							"Touch to enter a number. Swipe to enter an arrow.",
-    							"Always change directions.",
-    							"Remember, a number can't point to a square with the same number.",
-    							"Your turn to solve a puzzle. The yellow tiles are hints to help you. Press the check when done.",
-    							"Good Job! Now press quit and try a new puzzle! You can always return to the tutorial for a review. "
+    static String[] banners = {"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.",
+    							"Touch a square to enter a number. Swipe to enter an arrow.",
+    							"There are two easy rules. Rule 1: Every segment of your path must change direction.",
+    							"Rule 2: A number can't point to a square with the same number.",
+    							"Your turn to solve a puzzle. The yellow tiles are hints. Press the check when done.",
+    							"Good Job! You helped Beatrice visit these flowers! Now press quit and try a new puzzle! You can always return to the tutorial for a review. "
     							};
     
    
@@ -77,7 +77,7 @@ class TutorialInfo2 {
 
     static String[] initialNumbersSlide3 = {
         	"clear", "clear", "clear", "clear", "clear", "clear", 
-        	"clear", "clear", "clear", "clear", "clear", "clear", 
+        	"clear", "2", "clear", "clear", "clear", "clear", 
         	"clear", "clear", "clear", "clear", "clear", "clear", 
         	"clear", "clear", "clear", "clear", "clear", "clear", 
         	"clear", "clear", "clear", "clear", "clear", "clear", 
@@ -85,7 +85,7 @@ class TutorialInfo2 {
 
     static String[] initialArrowsSlide3 = {
         	"clear", "clear", "clear", "clear", "clear", "clear", 
-        	"clear", "clear", "clear", "clear", "clear", "clear", 
+        	"clear", "up_arrow", "clear", "clear", "clear", "clear", 
         	"clear", "clear", "clear", "clear", "clear", "clear", 
         	"clear", "clear", "clear", "clear", "clear", "clear", 
         	"clear", "clear", "clear", "clear", "clear", "clear", 

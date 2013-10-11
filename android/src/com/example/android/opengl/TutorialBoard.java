@@ -74,7 +74,6 @@ class TutorialBoard extends Board {
 		public boolean doIntro; 
 
 		public ShowPath(BoardTile[] tiles, boolean intro) {
-			//System.out.println("Entered ShowPath");
 			doIntro  = intro;
 			originalTiles = tiles;
 			if (doIntro) {
@@ -198,7 +197,6 @@ class TutorialBoard extends Board {
 		BoardTile[] tiles;
 
 		public WalkThrough(BoardTile[] tiles){
-			System.out.println("Entered Walkthrough");
 			this.tiles = tiles;
 			mBee.setMood(Mood.HIDDEN);
 		}
@@ -269,9 +267,7 @@ class TutorialBoard extends Board {
 		public void touchHandler(Menu mMenu, float[] pt) {
 			int val = mMenu.touched(pt);
 			if (val != -1) {
-				//System.out.println("Menu Touched!");
 				if ( userNumberInput(val) ) {
-					//System.out.println("Passed the if");
 					mMenu.menuActive = false;
 				}
 			}

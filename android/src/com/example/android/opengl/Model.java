@@ -48,7 +48,6 @@ class Model{
 	mTitle.setCenter(titleCenter);
 	mStatsScreen = new StatsScreen(state);
     }    
-    
     //This is where difficulties are assigned for the different puzzle lengths:
     public void createPuzzle(int level) {
 	int modifyOne = (int)(Math.random()*3);
@@ -97,6 +96,7 @@ class Model{
     public void toggleHints(boolean toggle) {
 	mBoard.toggleHints(toggle);
     }
+    
     public void toggleLines(boolean toggle) {
 	mBoard.toggleLines(toggle);
     }
@@ -117,10 +117,9 @@ class Model{
 		    state.saveCurrGame = false;
 		    state.resumeGameExists = false;
 		    mDataServer.setGames(state.gametype);
-		    System.out.println("What difficulty am I at?");
-		    System.out.println(state.difficulty);
 		    mDataServer.setFlowers(state.difficulty);
 		    mBee.setMood(Mood.HAPPY);
+		    mBoard.mGameBanner.set(TextureManager.GOOD_JOB);
 		    mBoard.setState(GameState.GAME_MENU_END);
 		    
 		} else {
@@ -265,7 +264,6 @@ class Model{
 	
 	public void resumeGame(){
 	     	mDataServer.restoreGame(mBoard);
-	     	state.showGameBanner = false;
 	 }
 
     public void reset() {
