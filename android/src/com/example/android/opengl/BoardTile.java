@@ -1,7 +1,7 @@
 package com.example.android.opengl;
 //In the future. Expose this class to state as well.
 
-class BoardTile extends Tile{
+class BoardTile extends Tile {
 
 
     public float[] velocity = new float[2];
@@ -141,7 +141,6 @@ class BoardTile extends Tile{
     	this.true_arrow = arrow;
     }
     
-    
     public boolean isClickable() {
 		return clickable;
 	}
@@ -215,7 +214,6 @@ class BoardTile extends Tile{
 	   return arrow;
    }
 
-   
    public void setNumber(String number){
 	   this.number = number;
    }
@@ -223,7 +221,6 @@ class BoardTile extends Tile{
    public String getNumber(){
 	   return number;
    }
-
    
    public int getTrueSolution(){
 	   return true_solution;
@@ -262,8 +259,7 @@ class BoardTile extends Tile{
     
    public void setSize(float s) {
     	size = s;
-    }
-       
+    }       
     
    public boolean hasNumber() {
 	   if(!number.equals("clear") )

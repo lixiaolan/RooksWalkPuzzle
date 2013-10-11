@@ -1,12 +1,15 @@
 package com.example.android.opengl;
 
 
-
+import android.media.MediaPlayer;
+import android.media.AudioManager;
 import android.content.Context;
 import android.os.Vibrator;
 import android.app.Activity;
 
-class Model{
+import com.example.android.opengl.R;
+
+class Model {
        
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
@@ -23,15 +26,19 @@ class Model{
     private DataServer mDataServer;
     private StatsScreen mStatsScreen;
     public boolean createTextures = false;
-    
+    public MediaPlayer mediaPlayer;    
     
     public Model(Context c) {
-		initiateMembers(c, new Board());
-	}
+	// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+	// mediaPlayer.start();
+	initiateMembers(c, new Board());
+    }
     
     public Model(Context c, Board b){
-		initiateMembers(c, b);
-	}
+        // mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+	// mediaPlayer.start();	
+	initiateMembers(c, b);
+    }
 
     public void initiateMembers(Context c, Board b){
 	mBoard = b;
@@ -249,20 +256,20 @@ class Model{
 		mBoard.setState(s);
 	}
 
-	public void setDataServer(DataServer d){
+    public void setDataServer(DataServer d){
 		mDataServer = d;
 	}
-	
-	public GameState getState() {
+    
+    public GameState getState() {
 		return state.state;
 	}
-
-	public void saveGame() {
+    
+    public void saveGame() {
 		mDataServer.saveGame(mBoard);
 		state.resumeGameExists  = true;
 	}
-	
-	public void resumeGame(){
+    
+    public void resumeGame(){
 	     	mDataServer.restoreGame(mBoard);
 	 }
 
@@ -299,7 +306,7 @@ class Model{
 		}
 		}
 
-	public void updateStats(TextureManager TM) {
+    public void updateStats(TextureManager TM) {
 		int shortPuzz = mDataServer.getShortGames();
 		int medPuzz = mDataServer.getMediumGames();
 		int longerPuzz = mDataServer.getLongerGames();
@@ -312,9 +319,6 @@ class Model{
 		TM.buildLongTextures("Longest Games: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
 		TM.buildLongTextures("Flowers Visited: "+Integer.toString(flowersVisited), 0, 30, TextureManager.FLOWERSVISITED, 25, 256);
 	}
-
-	
-
 
 }
 	

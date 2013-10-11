@@ -22,6 +22,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     
     private Background mBoardBg;
     public Banner mGameBanner;
+
     public Board() {
 	buildEmptyBoard();
 	state = new BoardMainMenu(tiles);
