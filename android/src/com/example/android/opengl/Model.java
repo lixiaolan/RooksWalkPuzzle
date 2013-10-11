@@ -29,14 +29,14 @@ class Model {
     public MediaPlayer mediaPlayer;    
     
     public Model(Context c) {
-	// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-	// mediaPlayer.start();
+	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+	mediaPlayer.start();
 	initiateMembers(c, new Board());
     }
     
     public Model(Context c, Board b){
-        // mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-	// mediaPlayer.start();	
+        mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+	mediaPlayer.start();	
 	initiateMembers(c, b);
     }
 
