@@ -11,38 +11,38 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public int hints;
     public int[] solution ;
     public int[][] path;
-	public int boardWidth = 6;
-	public int boardHeight = 6;
-	private boolean toggleHints = true;
-	private boolean toggleLines = true;	
-	protected float flowerSize = .15f;
-	protected float tileSize = .11f;    
-	private long lastTouchTime;
-	private float[] lastTouchPos = new float[2];
-
-	private Background mBoardBg;
-	public Banner mGameBanner;
-	public Board() {
-		buildEmptyBoard();
-		state = new BoardMainMenu(tiles);
-		mBoardBg = new Background("boardbg", .75f);
-		mGameBanner = new Banner(.8f);
-
-	}
-
-	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable ){
-		for(int i=0;i<36;i++){
-			tiles[i].setTrueSolution(solution[i]);
-			tiles[i].setArrow(arrows[i]);
+    public int boardWidth = 6;
+    public int boardHeight = 6;
+    private boolean toggleHints = true;
+    private boolean toggleLines = true;	
+    protected float flowerSize = .15f;
+    protected float tileSize = .11f;    
+    private long lastTouchTime;
+    private float[] lastTouchPos = new float[2];
+    
+    private Background mBoardBg;
+    public Banner mGameBanner;
+    public Board() {
+	buildEmptyBoard();
+	state = new BoardMainMenu(tiles);
+	mBoardBg = new Background("boardbg", .75f);
+	mGameBanner = new Banner(.8f);
+	
+    }
+    
+    public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable ){
+	for(int i=0;i<36;i++){
+	    tiles[i].setTrueSolution(solution[i]);
+	    tiles[i].setArrow(arrows[i]);
 			tiles[i].setNumber(numbers[i]);
 			tiles[i].setTrueArrow(trueArrows[i]);
 			if(clickable!=null)
-				if(!clickable[i])
-					tiles[i].setHint();
-		}
-		this.path = path;
+			    if(!clickable[i])
+				tiles[i].setHint();
 	}
-
+	this.path = path;
+    }
+    
     public int[] dumpSolution() {
 	int[] solution = new int[36];
 	for(int i =0;i<36;i++){
