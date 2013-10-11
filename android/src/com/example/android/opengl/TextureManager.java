@@ -71,9 +71,9 @@ public class TextureManager {
     public static final String CLOSEDCIRCLE = "closedcircle";
     public static final String MENU = "menu";
     
-    public static final String TURNINGRULE = "Turn Rule: Each segment of the path must turn.";
-    public static final String MATCHINGNUMBERRULE = "Number Rule: A number can't point in the direction of a square with the same number..";
-    public static final String PASSTHROUGHRULE = "Pass Through Rule: A segment in a path can't pass through a tile with a number.";
+    public static final String TURNINGRULE = "ERROR Turn Rule: Each segment of the path must turn.";
+    public static final String MATCHINGNUMBERRULE = "ERROR Number Rule: A number can't point in the direction of a square with the same number..";
+    public static final String PASSTHROUGHRULE = "ERROR Pass Through Rule: A segment in a path can't pass through a tile with a number or the grass.";
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -209,8 +209,9 @@ public class TextureManager {
 		buildLongTextures(TRY_AGAIN, 0, 2*fontHeight, TRY_AGAIN, 2*fontWidth, bannerSize);
 		buildLongTextures(TRY_HARDER, 0, 2*fontHeight, TRY_HARDER, (int)(1.5*fontWidth), bannerSize);
 	    buildLongTextures(GOOD_JOB, 0, 2*fontHeight, GOOD_JOB, 2*fontWidth, bannerSize);
-	    buildLongTextures(TURNINGRULE, 0, 2*fontHeight, TURNINGRULE, 2*fontWidth, bannerSize);
+	    buildLongTextures(TURNINGRULE, 0, fontHeight, TURNINGRULE, fontWidth, bannerSize);
 	    buildLongTextures(MATCHINGNUMBERRULE, 0, fontHeight, MATCHINGNUMBERRULE, fontWidth, bannerSize);
+	    buildLongTextures(PASSTHROUGHRULE, 0, fontHeight, PASSTHROUGHRULE, fontWidth, bannerSize);
 	}
 	
 	public void buildStoryBanners() {

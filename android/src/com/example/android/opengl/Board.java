@@ -284,9 +284,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 							float[] pivot = {1.0f,0.0f,0.0f};
 							tiles[at+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
 						}
-						else {
-							tiles[at+j].setAngryGlow(duration, j*delay);
-						}
+						
 					}
 				}
 			}
@@ -300,9 +298,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 							float[] pivot = {1.0f,0.0f,0.0f};
 							tiles[at-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
 						}
-						else {
-							tiles[at-j].setAngryGlow(duration, j*delay);
-						}
+						
 					}
 				}
 			}
@@ -316,9 +312,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 							float[] pivot = {0.0f,1.0f,0.0f};
 							tiles[at+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
 						}
-						else {
-							tiles[at+j*boardHeight].setAngryGlow(duration, j*delay);
-						}
+						
 					}
 				}
 			}
@@ -332,9 +326,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 							float[] pivot = {0.0f,1.0f,0.0f};
 							tiles[at-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
 						}
-						else {
-							tiles[at-j*boardHeight].setAngryGlow(duration, j*delay);
-						}
+						
 					}
 				}
 			}
@@ -349,16 +341,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		markPointedAt();
 		for (int i = 0; i < tiles.length; i++ ) {
 			if (!tiles[i].hasNumber() && !tiles[i].hasArrow() && !tiles[i].isBlack()) {
+				
 				if (!tiles[i].vPointedAt) {
 					tiles[i].setTextures(TextureManager.CLEAR, tiles[i].textures[1]);
 				}
 				else {
+					System.out.println("Made it into vert else");
 					tiles[i].setTextures(TextureManager.VERTDOTS, tiles[i].textures[1]);
 				}
 				if (!tiles[i].hPointedAt) {
 					tiles[i].setTextures(tiles[i].textures[0], TextureManager.CLEAR);
 				}
 				else {
+					System.out.println("Made it into horz else");
 					tiles[i].setTextures(tiles[i].textures[0], TextureManager.HORZDOTS);
 				}
 			}
@@ -387,35 +382,55 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			tiles[i].hPointedAt = false;
 		}
 		for (int i = 0; i < tiles.length; i++ ) {
+			if(tiles[i].isHint){
+				System.out.println("Checking hint lines");
+				System.out.println(i);
+				System.out.println(tiles[i].hasNumber());
+				System.out.println(tiles[i].getNumber());
+				System.out.println(tiles[i].hasArrow());
+				System.out.println(tiles[i].getArrow());
+			}
 			if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
 				int num = Integer.parseInt(tiles[i].number);
-				if (tiles[i].getArrow() == TextureManager.UPARROW) {
+				if (tiles[i].getArrow().equals(TextureManager.UPARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i%boardHeight + j < boardHeight) {
+							System.out.println(j);
+							System.out.println(tiles[i+j].isBlack());
+							System.out.println(tiles[i+j].isBlank());
 							if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) 
 								tiles[i+j].vPointedAt = true;
 						}
 					}
 				}
-				if (tiles[i].getArrow() == TextureManager.DOWNARROW) {
+				if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i%boardHeight - j >= 0) {
+							System.out.println(j);
+							System.out.println(tiles[i-j].isBlack());
+							System.out.println(tiles[i-j].isBlank());
 							if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) 
 								tiles[i-j].vPointedAt = true;
 						}
 					}
 				}
-				if (tiles[i].getArrow() == TextureManager.LEFTARROW) {
+				if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i/boardHeight + j < boardWidth) {
+							System.out.println(j);
+							System.out.println(tiles[i+j*boardHeight].isBlack());
+							System.out.println(tiles[i+j*boardHeight].isBlank());
 							if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) 
 								tiles[i+j*boardHeight].hPointedAt = true;
 						}
 					}
 				}
-				if (tiles[i].getArrow() == TextureManager.RIGHTARROW) {
+				if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i/boardHeight - j >= 0) {
+							System.out.println(j);
+							System.out.println(tiles[i-j*boardHeight].isBlack());
+							System.out.println(tiles[i-j*boardHeight].isBlank());
 							if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) 
 								tiles[i-j*boardHeight].hPointedAt = true;
 						}
@@ -432,7 +447,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		boolean satisfied = true;
 		if (tiles[at].hasNumber() && tiles[at].hasArrow()) {
 			int num = Integer.parseInt(tiles[at].number);
-			if (tiles[at].getArrow() == TextureManager.UPARROW) {
+			if (tiles[at].getArrow().equals(TextureManager.UPARROW)) {
 				for (int j = 1; j < num; j++) {
 					if (at%boardHeight + j < boardHeight) {
 						if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
@@ -444,7 +459,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					}
 				}
 			}
-			if (tiles[at].getArrow() == TextureManager.DOWNARROW) {
+			if (tiles[at].getArrow().equals(TextureManager.DOWNARROW)) {
 				for (int j = 1; j < num; j++) {
 					if (at%boardHeight - j >= 0) {
 						if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
@@ -456,7 +471,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					}
 				}
 			}
-			if (tiles[at].getArrow() == TextureManager.LEFTARROW) {
+			if (tiles[at].getArrow().equals(TextureManager.LEFTARROW)) {
 				for (int j = 1; j < num; j++) {
 					if (at/boardHeight + j < boardWidth) { 
 						if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
@@ -468,7 +483,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					}
 				}
 			}
-			if (tiles[at].getArrow() == TextureManager.RIGHTARROW) {
+			if (tiles[at].getArrow().equals(TextureManager.RIGHTARROW)) {
 				for (int j = 1; j < num; j++) {
 					if (at/boardHeight - j >= 0) {
 						if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
@@ -504,7 +519,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						}
 					}
 				}
-				if (tiles[i].getArrow() == TextureManager.DOWNARROW) {
+				if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i%boardHeight - j >= 0) {
 							if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) { 
@@ -516,7 +531,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						}
 					}
 				}
-				if (tiles[i].getArrow() == TextureManager.LEFTARROW) {
+				if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i/boardHeight + j < boardWidth) { 
 							if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) {
@@ -528,7 +543,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						}
 					}
 				}
-				if (tiles[i].getArrow() == TextureManager.RIGHTARROW) {
+				if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i/boardHeight - j >= 0) {
 							if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) {
@@ -670,6 +685,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		public float[] oldX;
 		public float[] oldY;
 		int at = -1;
+		int lt = -1;
 
 		public BoardPlay(BoardTile[] tiles) {
 			originalTiles = tiles;
@@ -723,6 +739,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						tiles[i].center = center;
 						if(!tiles[i].isClickable() && !tiles[i].isBlack())
 							tiles[i].setHint();
+						else 
+							tiles[i].nativeColor = "transparent";
 					}
 				}
 				for (int i = 0; i < tiles.length; i++) {
@@ -756,13 +774,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			mMenu.draw(r);
 		}
 
-		public void turnErrorRed(int at){
-			String error = !mErrorLog.getError(at); 
-			if(!error.equals(TextureManager.CLEAR)){
-				tiles[at].setColor("red");
-			}
-		}
-		
+				
 		@Override
 		public void touchHandler(float[] pt){
 			int val = mMenu.touched(pt);
@@ -771,7 +783,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if (at != -1) {
 					//If a tile was active close it. 
 					tiles[at].setColor("transparent");
-					
 					//If this tile should be red, make sure it stays that way. Reset the banner
 					turnErrorRed(at);
 					mGameBanner.set(TextureManager.CLEAR);
@@ -779,7 +790,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				at = touched(pt);
 				if(at != -1 ) {
 					//Open the menu at the tile that was touched. Display a banner if there is an error
-					mGameBanner.set(mErrorLog.getError(at));
+					turnErrorRed(at);
+					if(lt == at){
+						mGameBanner.set(mErrorLog.getError(at));
+					}
 					if(tiles[at].isBlack() == false) {
 						tiles[at].setColor("blue");
 						if(tiles[at].isClickable())
@@ -793,19 +807,36 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					if (toggleLines) {
 						animatePlay(at);
 					}
+					
+					mErrorLog.setLog();
 					updateErrors();
+					turnErrorRed(at);
+					mGameBanner.set(mErrorLog.getError(at));
+					lt = at;
+					
 				}
 			}
-
 		}
-
+		
 		public void updateErrors(){
-			mErrorLog.setLog();
-			String error;
 			for(int i =0;i<tiles.length;i++){
-					turnErrorRed(i);
+				String error = mErrorLog.getError(i); 
+				if(error.equals(TextureManager.CLEAR)){
+					tiles[i].setColor(tiles[i].nativeColor);
+					if(i == at){
+						tiles[i].setColor("blue");
+					}
+				}
 			}
 		}
+		
+		public void turnErrorRed(int at){
+			String error = mErrorLog.getError(at); 
+			if(!error.equals(TextureManager.CLEAR)){
+				tiles[at].setColor("red");
+			} 
+		}
+
 		
 		public void swipeHandler(String direction){
 			if (at != -1 && tiles[at].isClickable()) {
@@ -813,6 +844,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if (toggleLines) {
 					animatePlay(at); 
 				}
+				
+				mErrorLog.setLog();
+				turnErrorRed(at);
+				mGameBanner.set(mErrorLog.getError(at));
 				updateErrors();
 				mMenu.menuActive = false;
 			}

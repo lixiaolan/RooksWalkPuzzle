@@ -1,4 +1,7 @@
 package com.example.android.opengl;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /*
  * Philosophy of the state: State's have a period. A beginning, middle and end. The initial period
@@ -8,17 +11,18 @@ package com.example.android.opengl;
  *  thought about. Actually I think this might be forced upon us... Think more about this.
  */
 
-public abstract class BeeState<T extends Tile> extends State<T> {
+public class ErrorMap extends HashMap<Integer, ErrorBundle> {
 
-    protected Mood mood;
-    protected Board mBoard;
-
-    protected void setMood(Mood m) {
-    	mood = m;
+    public ErrorBundle get(Integer k) {
+	ErrorBundle v = super.get(k);
+	if (v == null) {
+	    ErrorBundle vv = new ErrorBundle();
+	    super.put(k, vv);
+	    return vv;
+	}
+	else {
+	    return v;
+	}
     }
-
-    protected void setBoard(Board b) {
-    	mBoard = b;
-    }
-
 }
+

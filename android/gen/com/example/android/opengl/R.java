@@ -135,6 +135,7 @@ public final class R {
         public static final int point_fragment_shader=0x7f060009;
         public static final int point_vertex_shader=0x7f06000a;
         public static final int test=0x7f06000b;
+        public static final int themesong=0x7f06000c;
     }
     public static final class string {
         public static final int app_name=0x7f090000;

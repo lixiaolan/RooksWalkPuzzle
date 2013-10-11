@@ -1,7 +1,7 @@
 package com.example.android.opengl;
 //In the future. Expose this class to state as well.
 
-class BoardTile extends Tile{
+class BoardTile extends Tile {
 
 
 	public float[] velocity = new float[2];
@@ -9,7 +9,7 @@ class BoardTile extends Tile{
 	public String true_arrow;
 	public String flowerTexture;
 	public String grassTexture;
-	private String nativeColor;
+	public String nativeColor;
 
 	public String number = TextureManager.CLEAR;
 	public String arrow = TextureManager.CLEAR;
