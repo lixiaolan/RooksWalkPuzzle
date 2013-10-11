@@ -208,7 +208,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public int touched(float[] pt) {
 	lastTouchPos = pt;
 	lastTouchTime = System.currentTimeMillis();
-	System.out.println("Got into touched");
 	for (int i = 0; i < tiles.length; i++) {
 	    if( tiles[i].touched(pt) && tiles[i].isClickable()) {
 		return i;
@@ -803,7 +802,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	boolean[] flipped = new boolean[36];
 	long[] refTime = new long[36];
 	public BoardGameEnd(BoardTile[] tiles) {
-	    mGameBanner.set(TextureManager.GOOD_JOB);
 	    for (int i = 0; i < tiles.length; i++) {
 		flipped[i] = false;
 		rotateTiles[i] = false;

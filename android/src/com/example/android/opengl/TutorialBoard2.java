@@ -103,7 +103,6 @@ class TutorialBoard2 extends Board {
 
 	class ShowPath extends State<BoardTile> {
 		public ShowPath(BoardTile[] tiles, boolean intro) {
-			//System.out.println("Entered ShowPath");
 			path = TutorialInfo2.path;
 			mCPB.setActiveCircle(0);
 			restoreBoard(TutorialInfo2.solutionNumbers, TutorialInfo2.initialNumbers, TutorialInfo2.initialArrows, TutorialInfo2.solutionArrows, path, null);
@@ -151,12 +150,16 @@ class TutorialBoard2 extends Board {
 		
 		Banner hand;
 		long refTime;
-		float[] pt0 = {.23f,.12f};
-
-		float[] pt1 = {-.11f, 0};
-		float[] pt2 = {0,.22f};
+		float[] pt0 = {.22f,-.33f};
+		float[] pt1 = {.22f, -.05f};
+		float[] pt2 = {-.20f,0f};
 		float[] pt3 = {.35f,-.22f};
 		float[] pt4 = {-.35f, -.22f};
+		int time1 = 1;
+		int time2 = 2;
+		int time3 = 3;
+		int time4 = 4;
+		int time5 = 5;
 		boolean lines = true;
 		
 		public SLIDE1(){
@@ -165,12 +168,36 @@ class TutorialBoard2 extends Board {
 			hand.set(TextureManager.HAND);
 			hand.setCenter(.23f, .12f);
 			refTime = System.currentTimeMillis();
+			prepBoard();
+			mCPB.setActiveCircle(1);
+		}
+		
+		public void prepBoard() {
+			//Active Tile in this animation
 			tiles[27].setNumber(TextureManager.CLEAR);
 			tiles[27].setArrow(TextureManager.CLEAR);
 			tiles[27].setColor("blue");
+			
+			//Toggle off some tiles
+			tiles[9].setNumber(TextureManager.CLEAR);
+			tiles[9].setArrow(TextureManager.CLEAR);
+			
+			tiles[28].setNumber(TextureManager.CLEAR);
+			tiles[28].setArrow(TextureManager.CLEAR);
+
+			tiles[16].setNumber(TextureManager.CLEAR);
+			tiles[16].setArrow(TextureManager.CLEAR);
+			
+			tiles[7].setNumber(TextureManager.CLEAR);
+			tiles[7].setArrow(TextureManager.CLEAR);
+			
+			tiles[13].setNumber(TextureManager.CLEAR);
+			tiles[13].setArrow(TextureManager.CLEAR);
+			
 			drawLines();
-			mCPB.setActiveCircle(1);
+
 		}
+		
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
 			mBanner.set("tutorial_banner_1");
@@ -180,19 +207,24 @@ class TutorialBoard2 extends Board {
 		@Override
 		public void duringAnimation(BoardTile[] tiles) {
 			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
-			if(time < 1) {
+			if(time < time1) {
+				//Move To initial position
 				hand.setCenter(pt1[0]*(time)+(1-(time))*pt0[0], pt1[1]*(time)+(1-(time))*pt0[1]);
-			} else if(time < 2){
+			} else if(time < time2){
+				//Activate Menu
 				if(!mMenu.menuActive)
-					mMenu.activate(pt0);
-			} else if(time < 3){
+					mMenu.activate(pt1);
+			} else if(time < time3){
+				//Move to correct bubble
 				hand.setCenter(pt2[0]*(time-2)+(1-(time-2))*pt1[0], pt2[1]*(time-2)+(1-(time-2))*pt1[1]);
-			} else if (time <4) {
+			} else if (time < time4) {
 				mMenu.menuActive = false;
 				tiles[27].setNumber("3");
 				tiles[27].setTextures();
+				//Move back down
 				hand.setCenter(pt3[0]*(time-3)+(1-(time-3))*pt2[0], pt3[1]*(time-3)+(1-(time-3))*pt2[1]);
-			} else if(time <5){
+			} else if(time < time5){
+				//Swipe across
 				hand.setCenter(pt4[0]*(time-4)+(1-(time-4))*pt3[0], pt4[1]*(time-4)+(1-(time-4))*pt3[1]);
 			} else if(time < 7){
 				tiles[27].setArrow(TextureManager.RIGHTARROW);
@@ -215,8 +247,8 @@ class TutorialBoard2 extends Board {
 			mBoardBg.draw(r);
 			super.draw(tiles, r);
 			mBanner.draw(r);
-			hand.draw(r);
 			mMenu.draw(r);
+			hand.draw(r);
 			mCPB.draw(r);
 		}
 		
@@ -293,8 +325,7 @@ class TutorialBoard2 extends Board {
 	class SLIDE3 extends State<BoardTile> {
 		long refTime;
 		private Banner mCheck;
-		private boolean lines  = true;
-		
+		boolean lines = true;
 		public SLIDE3(){
 			mBee.setMood(Mood.HIDDEN);
 			refTime = System.currentTimeMillis();
@@ -310,15 +341,16 @@ class TutorialBoard2 extends Board {
 		}
 
 		private void prepBoard() {
-			restoreBoard(TutorialInfo2.solutionNumbersSlide3, TutorialInfo2.initialNumbersSlide3, TutorialInfo2.initialArrowsSlide3, TutorialInfo2.solutionArrowsSlide3, path, null);
-			showSolution();
-			drawLines();
-			for (int i = 0; i < tiles.length; i++) {
-				tiles[i].rotate = false;
-				tiles[i].setTextures();
-				tiles[i].setSize(tileSize);
-			}
+			//restoreBoard(TutorialInfo2.solutionNumbersSlide3, TutorialInfo2.initialNumbersSlide3, TutorialInfo2.initialArrowsSlide3, TutorialInfo2.solutionArrowsSlide3, path, null);
+			//showSolution();
+			tiles[7].setNumber("2");
+			tiles[7].setArrow(TextureManager.UPARROW);
+			tiles[7].setTextures();
 			
+			tiles[27].setNumber(TextureManager.CLEAR);
+			tiles[27].setArrow(TextureManager.CLEAR);
+			tiles[27].setTextures();
+			drawLines();
 
 		}
 		
@@ -331,7 +363,19 @@ class TutorialBoard2 extends Board {
 		public void duringAnimation(BoardTile[] tiles) {
 			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
 			if(time < 2) {
+				mCheck.set("check");
+				tiles[9].setNumber("2");
+				tiles[9].setArrow("left_arrow");
+				tiles[9].setTextures();
 			} else if(time < 4){
+				tiles[9].setNumber("3");
+				tiles[9].setArrow("left_arrow");
+				tiles[9].setTextures();
+				mCheck.set("menu_1");
+				if(lines){
+					drawLines();
+					lines = false;
+				}
 			} else {
 				lines = true;
 				refTime = System.currentTimeMillis();
@@ -407,7 +451,6 @@ class TutorialBoard2 extends Board {
 					tiles[at].setColor("transparent");
 				}
 				at = touched(pt);
-				System.out.println(at);
 				if(at != -1 ) {
 					if(tiles[at].isBlack() == false) {
 						tiles[at].setColor("blue");

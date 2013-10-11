@@ -118,7 +118,6 @@ public class DataServer {
      		}
      		scanner.close();
      		mBoard.restoreBoard(solution, numbers, arrows, trueArrows, path, clickable);
-     		//restorePuzzle(solution, numbers, arrows, trueArrows, path, clickable);
      	    } 
      	}
 	

@@ -35,7 +35,8 @@ public class StoryBoard extends Board{
 			case SLIDE_2:
 				state = new SLIDE3(tiles);
 				mStoryState = StoryState.SLIDE_3;
-				
+			default:
+				break;
 			}
 	}
 

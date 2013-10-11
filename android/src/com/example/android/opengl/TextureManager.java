@@ -54,6 +54,7 @@ public class TextureManager {
     public static final String FOOT = "+";
     public static final String GOOD_JOB = "Good job!";
     public static final String TRY_AGAIN = "Keep trying...";
+    public static final String TRY_HARDER = "Try a bit harder next time!";
     public static final String STORY = "story";
     public static final String STATS = "Stats";
     public static final String FLOWERSVISITED = "flowersvisited";
@@ -68,7 +69,7 @@ public class TextureManager {
     public static final String GEAR = "gear";
     public static final String OPENCIRCLE = "opencircle";
     public static final String CLOSEDCIRCLE = "closedcircle";
-    
+    public static final String MENU = "menu";
     
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
@@ -150,7 +151,8 @@ public class TextureManager {
 		int fontSize = 50; 
 		int xpos = 128;
 		int ypos = 140;
-	    buildTextures(START, xpos, ypos, START, fontSize);
+	    buildTextures(MENU, xpos, ypos, MENU, fontSize);
+		buildTextures(START, xpos, ypos, START, fontSize);
 	    buildTextures(NEW, xpos, ypos, NEW, fontSize);
 	    buildTextures(RESUME, xpos, ypos, RESUME, fontSize);
 	    buildTextures(OPTIONS, xpos, ypos, OPTIONS, fontSize);
@@ -189,13 +191,11 @@ public class TextureManager {
 	     * Need the dpi info for scaling
 	     * 
 		*/
-		float dpi = context.getResources().getDisplayMetrics().density;
+		//float dpi = context.getResources().getDisplayMetrics().density;
 		int screenWidth = context.getResources().getDisplayMetrics().widthPixels;	
 		int bannerSize = closestPower((int)((.8*screenWidth)));
 		// Assume that banner size is .8 here
 		//.6 is the ratio of text width to height
-		System.out.println("Text properties");
-		System.out.println(bannerSize);
 		int fontWidth =  (int)(10*bannerSize/(6*CHAR_PER_LINE));
 		int fontHeight = fontWidth;
 		
@@ -204,6 +204,7 @@ public class TextureManager {
 	    }
 		
 		buildLongTextures(TRY_AGAIN, 0, 2*fontHeight, TRY_AGAIN, 2*fontWidth, bannerSize);
+		buildLongTextures(TRY_HARDER, 0, 2*fontHeight, TRY_HARDER, (int)(1.5*fontWidth), bannerSize);
 	    buildLongTextures(GOOD_JOB, 0, 2*fontHeight, GOOD_JOB, 2*fontWidth, bannerSize);
 	    
 	}
@@ -214,7 +215,7 @@ public class TextureManager {
 		 * Story banners are a bit of a different story.
 		 * 
 		 */
-		float dpi = context.getResources().getDisplayMetrics().density;
+		//float dpi = context.getResources().getDisplayMetrics().density;
 		int screenWidth = context.getResources().getDisplayMetrics().widthPixels;	
 		int bannerSize = closestPower((int)((.6*screenWidth)));
 		// Assume that banner size is .6 here
@@ -339,7 +340,6 @@ public class TextureManager {
 	
 	Bitmap bitmapFromLongString(String text, int x, int y, int fontSize, int size) {
 		//int size = 128; //Must be a power of two
-		int length = text.length();
 		Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         // get a canvas to paint over the bitmap
         Canvas canvas = new Canvas(bitmap);
