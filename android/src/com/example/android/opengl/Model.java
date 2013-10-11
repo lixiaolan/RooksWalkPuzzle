@@ -22,7 +22,7 @@ class Model{
     private StoryBoard mStoryBoard;
     private DataServer mDataServer;
     private StatsScreen mStatsScreen;
-   public boolean createTextures = false;
+    public boolean createTextures = false;
     
     
     public Model(Context c) {
@@ -61,16 +61,24 @@ class Model{
 	    
 	switch (level) {
 	case 1:
-	    mBoard.createPuzzleFromJNI(6+(2-modifyOne), 1);
+		state.gametype = GameType.SHORT;
+		state.difficulty = 6+(2-modifyOne);
+	    mBoard.createPuzzleFromJNI(state.difficulty, 1);
 	    break;
 	case 2:
-	    mBoard.createPuzzleFromJNI(8+modifyTwo, 2);
+		state.gametype = GameType.MEDIUM;
+		state.difficulty = 8+modifyTwo;
+	    mBoard.createPuzzleFromJNI(state.difficulty, 2);
 	    break;
 	case 3:
-	    mBoard.createPuzzleFromJNI(12 + modifyTwo, 2);
+		state.gametype = GameType.LONGER;
+		state.difficulty = 12 + modifyTwo;
+	    mBoard.createPuzzleFromJNI(state.difficulty, 2);
 	    break;
 	case 4:
-	    mBoard.createPuzzleFromJNI(14 + modifyOne, 3);
+		state.gametype = GameType.LONGEST;
+		state.difficulty  = 14 + modifyOne;
+	    mBoard.createPuzzleFromJNI(state.difficulty, 3);
 	    break;
 	}
 
@@ -108,7 +116,10 @@ class Model{
 		    //No game to save. No game to resume.
 		    state.saveCurrGame = false;
 		    state.resumeGameExists = false;
-		    mDataServer.setLines(state.difficulty);
+		    mDataServer.setGames(state.gametype);
+		    System.out.println("What difficulty am I at?");
+		    System.out.println(state.difficulty);
+		    mDataServer.setFlowers(state.difficulty);
 		    mBee.setMood(Mood.HAPPY);
 		    mBoard.setState(GameState.GAME_MENU_END);
 		    
@@ -291,16 +302,20 @@ class Model{
 		}
 
 	public void updateStats(TextureManager TM) {
-		int shortPuzz = mDataServer.getShortLines();
-		int medPuzz = mDataServer.getMediumLines();
-		int longerPuzz = mDataServer.getLongerLines();
-		int longestPuzz = mDataServer.getLongestLines();		
-		TM.buildLongTextures("Short Lines: "+Integer.toString(shortPuzz), 0, 30, TextureManager.SHORTSTATS, 25,  256);
-		TM.buildLongTextures("Medium Lines: "+Integer.toString(medPuzz), 0, 30, TextureManager.MEDIUMSTATS, 25, 256);
-		TM.buildLongTextures("Long Lines: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
-		TM.buildLongTextures("Longest Lines: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
+		int shortPuzz = mDataServer.getShortGames();
+		int medPuzz = mDataServer.getMediumGames();
+		int longerPuzz = mDataServer.getLongerGames();
+		int longestPuzz = mDataServer.getLongestGames();		
+		int flowersVisited = mDataServer.getFlowersVisited();
+		
+		TM.buildLongTextures("Short Games: "+Integer.toString(shortPuzz), 0, 30, TextureManager.SHORTSTATS, 25,  256);
+		TM.buildLongTextures("Medium Games: "+Integer.toString(medPuzz), 0, 30, TextureManager.MEDIUMSTATS, 25, 256);
+		TM.buildLongTextures("Longer Games: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
+		TM.buildLongTextures("Longest Games: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
+		TM.buildLongTextures("Flowers Visited: "+Integer.toString(flowersVisited), 0, 30, TextureManager.FLOWERSVISITED, 25, 256);
 	}
 
+	
 
 
 }

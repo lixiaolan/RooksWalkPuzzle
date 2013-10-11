@@ -7,50 +7,42 @@ import java.io.IOException;
 
 
 class Board extends Graphic<BoardTile, State<BoardTile> > {
-    
+
     public int hints;
     public int[] solution ;
     public int[][] path;
-    public int[] columnSums;
-    public int[] rowSums;
-    public int boardWidth = 6;
-    public int boardHeight = 6;
-    private boolean toggleHints = true;
-    private boolean toggleLines = true;
-    
-    protected float flowerSize = .15f;
-    protected float tileSize = .11f;    
-    private long lastTouchTime;
-    private float[] lastTouchPos = new float[2];
-    
-    private Background mBoardBg;
-    public Banner mGameBanner;
-        
-    public Board() {
-	buildEmptyBoard();
-	state = new BoardMainMenu(tiles);
-	mBoardBg = new Background("boardbg", .75f);
-	mGameBanner = new Banner(.75f);
-	
-    }
-    
-    public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable ){
-	columnSums = new int[36];
-	rowSums = new int[36];
-	for(int i=0;i<36;i++){
-	    tiles[i].setTrueSolution(solution[i]);
-	    tiles[i].setArrow(arrows[i]);
-	    tiles[i].setNumber(numbers[i]);
-	    tiles[i].setTrueArrow(trueArrows[i]);
-	    if(clickable!=null)
-		if(!clickable[i])
-		    tiles[i].setHint();
-	    columnSums[i%6] += Math.max(solution[i],0);
-	    rowSums[i/6] += Math.max(solution[i],0);
+	public int boardWidth = 6;
+	public int boardHeight = 6;
+	private boolean toggleHints = true;
+	private boolean toggleLines = true;	
+	protected float flowerSize = .15f;
+	protected float tileSize = .11f;    
+	private long lastTouchTime;
+	private float[] lastTouchPos = new float[2];
+
+	private Background mBoardBg;
+	public Banner mGameBanner;
+	public Board() {
+		buildEmptyBoard();
+		state = new BoardMainMenu(tiles);
+		mBoardBg = new Background("boardbg", .75f);
+		mGameBanner = new Banner(.8f);
+
 	}
-	this.path = path;
-    }
-    
+
+	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable ){
+		for(int i=0;i<36;i++){
+			tiles[i].setTrueSolution(solution[i]);
+			tiles[i].setArrow(arrows[i]);
+			tiles[i].setNumber(numbers[i]);
+			tiles[i].setTrueArrow(trueArrows[i]);
+			if(clickable!=null)
+				if(!clickable[i])
+					tiles[i].setHint();
+		}
+		this.path = path;
+	}
+
     public int[] dumpSolution() {
 	int[] solution = new int[36];
 	for(int i =0;i<36;i++){
@@ -110,8 +102,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     public void buildBoardFromSolution(int hints) {
-	columnSums = new int[6];
-	rowSums = new int[6];
 	List<Integer> numbers = new ArrayList<Integer>();
 	for (int i = 0; i < tiles.length; i++) {	
 	    //This does a hard reset on the board.
@@ -120,8 +110,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	    tiles[i].setTrueSolution(0);
 	    tiles[i].setTrueArrow(TextureManager.CLEAR);
 	    if(solution [i] > 0){
-		columnSums[i%6] += Math.max(solution[i],0);
-		rowSums[i/6] += Math.max(solution[i],0);
 		numbers.add(i);
 		//tiles[i].setNumber(Integer.toString(solution[i]));
 	    }
@@ -169,6 +157,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		tiles[i].setArrow(TextureManager.CLEAR);
 	    }
 	}
+		clearLines();
     }
     
     public void createPuzzleFromJNI(int length, int hints){
@@ -250,14 +239,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	return true;
     }
     
-    public void toggleHints(boolean toggle){
-	toggleHints = toggle;
-    }
-
     public void toggleLines(boolean toggle){
-	toggleLines = toggle;
+    	toggleLines = toggle;
     }
 
+    public void toggleHints(boolean toggle){
+    	toggleHints = toggle;
+        }
     
     public void showSolution(){
 	String sol = "";
@@ -272,10 +260,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     public void setGeometry(float[] g) {
-	super.setGeometry(g);
-	float top = mGameBanner.getSize();
-	mGameBanner.setCenter(0, top);
-    }
+		super.setGeometry(g);
+		float top = mGameBanner.getSize();
+		mGameBanner.setCenter(0, g[1]-top);
+	}
     
     public void animatePlay(int at) {
 	//Now go though each tile and fill in pointed at tiles.
@@ -295,7 +283,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    tiles[at+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
 			}
 			else {
-			    tiles[at+j].setAngryGlow(duration, j*delay, tiles[at+j].color);
+			    tiles[at+j].setAngryGlow(duration, j*delay);
 			}
 		    }
 		}
@@ -311,7 +299,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    tiles[at-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
 			}
 			else {
-			    tiles[at-j].setAngryGlow(duration, j*delay, tiles[at-j].color);
+			    tiles[at-j].setAngryGlow(duration, j*delay);
 			}
 		    }
 		}
@@ -327,7 +315,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    tiles[at+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
 			}
 			else {
-			    tiles[at+j*boardHeight].setAngryGlow(duration, j*delay, tiles[at+j*boardHeight].color);
+			    tiles[at+j*boardHeight].setAngryGlow(duration, j*delay);
 			}
 		    }
 		}
@@ -343,7 +331,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    tiles[at-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
 			}
 			else {
-			    tiles[at-j*boardHeight].setAngryGlow(duration, j*delay, tiles[at-j*boardHeight].color);
+			    tiles[at-j*boardHeight].setAngryGlow(duration, j*delay);
 			}
 		    }
 		}
@@ -448,7 +436,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
 			}
 			else {
-			    tiles[at+j].setAngryGlow(duration, j*delay, tiles[at+j].color);
+			    tiles[at+j].setAngryGlow(duration, j*delay);
 			    satisfied = false;
 			}
 		    }
@@ -460,10 +448,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
 			}
 			else {
-			    tiles[at-j].setAngryGlow(duration, j*delay, tiles[at-j].color);
+			    tiles[at-j].setAngryGlow(duration, j*delay);
 			    satisfied = false;
 			}
-		    }
+		}
 		}
 	    }
 	    if (tiles[at].getArrow() == TextureManager.LEFTARROW) {
@@ -472,7 +460,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
 			}
 			else {
-			    tiles[at+j*boardHeight].setAngryGlow(duration, j*delay, tiles[at+j*boardHeight].color);
+			    tiles[at+j*boardHeight].setAngryGlow(duration, j*delay);
 			    satisfied = false;
 			}
 		    }
@@ -484,14 +472,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
 			}
 			else {
-			    tiles[at-j*boardHeight].setAngryGlow(duration, j*delay, tiles[at-j*boardHeight].color);
+			    tiles[at-j*boardHeight].setAngryGlow(duration, j*delay);
 			    satisfied = false;
 			}
 		    }
 		}
 	    }
-	}
-	return false;
+		}
+	    return false;
     }
     
     public boolean checkRuleCollision() {
@@ -508,7 +496,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) {
 			    }
 			    else {
-				tiles[i+j].setAngryGlow(duration, j*delay, tiles[i+j].color);
+				tiles[i+j].setAngryGlow(duration, j*delay);
 				satisfied = false;
 			    }
 			}
@@ -520,7 +508,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) { 
 			    }
 			    else {
-				tiles[i-j].setAngryGlow(duration, j*delay, tiles[i-j].color);
+				tiles[i-j].setAngryGlow(duration, j*delay);
 				satisfied = false;
 			    }
 			}
@@ -532,7 +520,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) {
 			    }
 			    else {
-				tiles[i+j*boardHeight].setAngryGlow(duration, j*delay, tiles[i+j*boardHeight].color);
+				tiles[i+j*boardHeight].setAngryGlow(duration, j*delay);
 				satisfied = false;
 			    }
 			}
@@ -544,7 +532,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			    if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) {
 			    }
 			    else {
-				tiles[i-j*boardHeight].setAngryGlow(duration, j*delay, tiles[i-j*boardHeight].color);
+				tiles[i-j*boardHeight].setAngryGlow(duration, j*delay);
 				satisfied = false;
 			    }
 			}
@@ -698,6 +686,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		tiles[i].hPointedAt = false;
 		tiles[i].isHint = false;
 	    }
+	    mGameBanner.set(TextureManager.CLEAR);
 	    initSize = tiles[0].getSize();
 	}
 	

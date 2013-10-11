@@ -10,7 +10,6 @@ import java.util.Set;
 
 import org.apache.http.protocol.HTTP;
 
-import com.example.android.open.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

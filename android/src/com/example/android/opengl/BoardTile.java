@@ -7,10 +7,10 @@ class BoardTile extends Tile{
     public float[] velocity = new float[2];
     public int true_solution;
     public String true_arrow;
-
     public String flowerTexture;
     public String grassTexture;
-    
+    private String nativeColor;
+
     public String number = TextureManager.CLEAR;
     public String arrow = TextureManager.CLEAR;
     private boolean clickable = true;
@@ -20,6 +20,8 @@ class BoardTile extends Tile{
     private Flipper flipper;
     private AngryGlow angryGlow;
     public boolean isHint = false;
+    
+
     //Define an inner class to take care of flip animations
     class Flipper {
 	
@@ -88,7 +90,6 @@ class BoardTile extends Tile{
     	private long refTime;
     	private float duration;
 	private float delay;
-	private String finalColor;
     	private boolean active = false;
 	private boolean hasGlowed = false;
 
@@ -97,13 +98,12 @@ class BoardTile extends Tile{
 	    hasGlowed = false;
     	}
 
-    	public AngryGlow(float durationTime, float delayTime, String fColor) {
+    	public AngryGlow(float durationTime, float delayTime) {
 	    //Compute swap angle from geometry
 	    duration = durationTime;
 	    delay = delayTime;
 	    refTime = System.currentTimeMillis();
 	    active = true;
-	    finalColor = fColor;
     	}
 	
     	public void animate() {
@@ -114,7 +114,7 @@ class BoardTile extends Tile{
 		    color = "red";
 		}
 		else {
-		    color = finalColor;
+		    color = nativeColor;
 		    active = false;
 		}
     	    }
@@ -136,8 +136,8 @@ class BoardTile extends Tile{
 	}
     }
 
-    public void setAngryGlow(float durationTime, float delayTime, String fColor) {
-	angryGlow = new AngryGlow(durationTime, delayTime, fColor);
+    public void setAngryGlow(float durationTime, float delayTime) {
+	angryGlow = new AngryGlow(durationTime, delayTime);
     }
 
     public void setTrueArrow(String arrow) {
@@ -167,6 +167,7 @@ class BoardTile extends Tile{
     public BoardTile(float[] inCenter,float inSize) {
     	super(inCenter, inSize);
     	color = "transparent";
+	nativeColor = "transparent";
     	true_arrow = TextureManager.CLEAR;
     	flowerTexture  = TextureManager.getFlowerTexture();
     	grassTexture  = TextureManager.getGrassTexture();
@@ -180,6 +181,7 @@ class BoardTile extends Tile{
     	number  = Integer.toString(true_solution);
     	arrow = true_arrow;
     	color = "dullyellow";
+	nativeColor = "dullyellow";
     	clickable = false;
 	isHint = true;
     }
@@ -235,15 +237,15 @@ class BoardTile extends Tile{
    }
    
    public void setUserInput(int val){
-	   if(val == 0 && isClickable()){
-		   number = TextureManager.CLEAR;
-		   arrow = TextureManager.CLEAR;
-		   textures[0] = TextureManager.CLEAR;
-		   textures[1] = TextureManager.CLEAR;
-	   } else {
-		   number = Integer.toString(val);
-		   setTextures();
-	   }
+       if(val == 0 && isClickable()){
+	   number = TextureManager.CLEAR;
+	   arrow = TextureManager.CLEAR;
+	   textures[0] = TextureManager.CLEAR;
+	   textures[1] = TextureManager.CLEAR;
+       } else {
+	   number = Integer.toString(val);
+	   setTextures();
+       }
    }
    
    public void draw(MyGLRenderer r) {

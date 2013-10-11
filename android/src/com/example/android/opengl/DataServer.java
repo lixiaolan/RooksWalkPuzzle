@@ -149,58 +149,66 @@ public class DataServer {
 		return false;
 	}
 	
-	public int getTotalLines() {
+	public int getFlowersVisited() {
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
-		int totalLines = s.getInt("totalLines", 0);	
+		int totalLines = s.getInt("flowersVisited", 0);	
 		return totalLines;
 	}
 	
-	public void setLines(int difficulty){
+	public void setFlowers(int value){
+		
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
-		int totalLines = 0;
+		int totalFlowers = 0;
 		SharedPreferences.Editor editor = s.edit();
-		int r = difficulty;
-		switch(difficulty ) {
-		case Model.SHORT:
-			totalLines = s.getInt("shortLines", 0);
-			editor.putInt("shortLines", totalLines+r); 
-			break;
-		case Model.MEDIUM:
-			totalLines = s.getInt("mediumLines", 0);
-			editor.putInt("mediumLines", totalLines+r); 
-			break;
-		case Model.LONGER:
-			totalLines = s.getInt("longerLines", 0);
-			editor.putInt("longerLines", totalLines+r); 
-			break;
-		case Model.LONGEST:
-			totalLines = s.getInt("longestLines", 0);	
-			editor.putInt("longestLines", totalLines+r); 
-			break;
-		}
-       // It is no longer the first run
+		totalFlowers = s.getInt("flowersVisited", 0);
+		editor.putInt("flowersVisited", value+totalFlowers);
         editor.commit();
 	}
 
-	public int getShortLines(){
-		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("shortLines",0);
+	public void setGames(GameType g){
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
+		int totalGames = 0;
+		SharedPreferences.Editor editor = s.edit();
+	switch(g) {
+	case SHORT:
+		totalGames = s.getInt("shortGames", 0);
+		editor.putInt("shortGames", totalGames+1); 
+		break;
+	case MEDIUM:
+		totalGames = s.getInt("mediumGames", 0);
+		editor.putInt("mediumGames", totalGames+1); 
+		break;
+	case LONGER:
+		totalGames = s.getInt("longerGames", 0);
+		editor.putInt("longerGames", totalGames+1); 
+		break;
+	case LONGEST:
+		totalGames = s.getInt("longestGames", 0);	
+		editor.putInt("longestGames", totalGames+1); 
+		break;
+	}
+		editor.commit();
 	}
 	
-	public int getMediumLines() {
+	public int getShortGames(){
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("mediumLines",0);
+		return s.getInt("shortGames",0);
+	}
+	
+	public int getMediumGames() {
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
+		return s.getInt("mediumGames",0);
 		
 	}
 
-	public int getLongerLines() {
+	public int getLongerGames() {
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("longerLines",0);
+		return s.getInt("longerGames",0);
 	}
 	
-	public int getLongestLines() {
+	public int getLongestGames() {
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("longestLines",0);
+		return s.getInt("longestGames",0);
 	}
 	
 }

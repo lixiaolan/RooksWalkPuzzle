@@ -70,7 +70,7 @@ abstract class Tile {
     }
     
     public void setColor(String c) {
- 	   color = c;
+	color = c;
     }
     
     

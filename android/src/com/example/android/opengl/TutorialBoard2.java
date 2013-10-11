@@ -20,7 +20,7 @@ class TutorialBoard2 extends Board {
 		super();
 		float[] center = {.20f,-1.0f, 0.0f };
 		mCPB = new CircleProgressBar(5, center, .05f);
-		mBanner = new Banner(.75f);
+		mBanner = new Banner(.8f);
 		mBoardBg = new Background("boardbg", .75f);
 		mBee = new Bee(this);
 		mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);
@@ -31,8 +31,7 @@ class TutorialBoard2 extends Board {
 	
 	public void setGeometry(float[] g){
 		super.setGeometry(g);
-		mBanner.setCenter(0, g[1] - mBanner.getSize());
-
+		mBanner.setCenter(0, g[1] - mBanner.getSize() -.1f);
 	}
 	
 	public void setStateForward()	{
@@ -115,7 +114,7 @@ class TutorialBoard2 extends Board {
 					tiles[i].setTextures();
 					tiles[i].setSize(tileSize);
 				}
-			mBanner.set("banner_0");
+			mBanner.set("tutorial_banner_0");
 			mBee.setMood(Mood.HAPPY);			
 			drawLines();
 		}
@@ -174,7 +173,7 @@ class TutorialBoard2 extends Board {
 		}
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
-			mBanner.set("banner_1");
+			mBanner.set("tutorial_banner_1");
 			state.period = DrawPeriod.DURING; 
 		}
 
@@ -255,7 +254,7 @@ class TutorialBoard2 extends Board {
 		
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
-			mBanner.set("banner_2");
+			mBanner.set("tutorial_banner_2");
 			state.period = DrawPeriod.DURING; 
 		}
 
@@ -306,7 +305,7 @@ class TutorialBoard2 extends Board {
 			mCheck.setCenter(-.68f, .11f);
 			mCheck.setColor("transparent");
 			mCheck.set("check");
-			mBanner.set("banner_3");
+			mBanner.set("tutorial_banner_3");
 			mCPB.setActiveCircle(3);
 		}
 
@@ -362,7 +361,7 @@ class TutorialBoard2 extends Board {
 			mCheck  = new Background("check",.11f);
 			float[] center = {-.7f,-1f, 0f};
 			mCheck.setCenter(center);
-			mBanner.set("banner_4");
+			mBanner.set("tutorial_banner_4");
 			mMenu = new Menu();
 		}
 
@@ -447,7 +446,7 @@ class TutorialBoard2 extends Board {
 		boolean[] flipped = new boolean[36];
 		long[] refTime = new long[36];
 		public PlayGameEnd() {
-			mBanner.set("banner_6");
+			mBanner.set("tutorial_banner_5");
 			mBee.setState(GameState.GAME_OPENING,TutorialInfo2.lengthPlayGame);
 			mBee.setMood(Mood.HAPPY);
 			for (int i = 0; i < tiles.length; i++) {
