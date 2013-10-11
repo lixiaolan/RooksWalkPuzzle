@@ -363,7 +363,7 @@ class TutorialBoard2 extends Board {
 		public void duringAnimation(BoardTile[] tiles) {
 			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
 			if(time < 2) {
-				mCheck.set("check");
+				mCheck.set("menu_1");
 				tiles[9].setNumber("2");
 				tiles[9].setArrow("left_arrow");
 				tiles[9].setTextures();
@@ -371,7 +371,7 @@ class TutorialBoard2 extends Board {
 				tiles[9].setNumber("3");
 				tiles[9].setArrow("left_arrow");
 				tiles[9].setTextures();
-				mCheck.set("menu_1");
+				mCheck.set("check");
 				if(lines){
 					drawLines();
 					lines = false;
