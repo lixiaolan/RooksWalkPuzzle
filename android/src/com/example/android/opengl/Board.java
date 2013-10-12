@@ -353,14 +353,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					tiles[i].setTextures(TextureManager.CLEAR, tiles[i].textures[1]);
 				}
 				else {
-					System.out.println("Made it into vert else");
 					tiles[i].setTextures(TextureManager.VERTDOTS, tiles[i].textures[1]);
 				}
 				if (!tiles[i].hPointedAt) {
 					tiles[i].setTextures(tiles[i].textures[0], TextureManager.CLEAR);
 				}
 				else {
-					System.out.println("Made it into horz else");
 					tiles[i].setTextures(tiles[i].textures[0], TextureManager.HORZDOTS);
 				}
 			}
@@ -395,22 +393,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			tiles[i].hPointedAt = false;
 		}
 		for (int i = 0; i < tiles.length; i++ ) {
-			if(tiles[i].isHint){
-				System.out.println("Checking hint lines");
-				System.out.println(i);
-				System.out.println(tiles[i].hasNumber());
-				System.out.println(tiles[i].getNumber());
-				System.out.println(tiles[i].hasArrow());
-				System.out.println(tiles[i].getArrow());
-			}
 			if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
 				int num = Integer.parseInt(tiles[i].number);
 				if (tiles[i].getArrow().equals(TextureManager.UPARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i%boardHeight + j < boardHeight) {
-							System.out.println(j);
-							System.out.println(tiles[i+j].isBlack());
-							System.out.println(tiles[i+j].isBlank());
 							if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) 
 								tiles[i+j].vPointedAt = true;
 						}
@@ -419,9 +406,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i%boardHeight - j >= 0) {
-							System.out.println(j);
-							System.out.println(tiles[i-j].isBlack());
-							System.out.println(tiles[i-j].isBlank());
 							if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) 
 								tiles[i-j].vPointedAt = true;
 						}
@@ -430,9 +414,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i/boardHeight + j < boardWidth) {
-							System.out.println(j);
-							System.out.println(tiles[i+j*boardHeight].isBlack());
-							System.out.println(tiles[i+j*boardHeight].isBlank());
 							if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) 
 								tiles[i+j*boardHeight].hPointedAt = true;
 						}
@@ -441,9 +422,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
 					for (int j = 1; j < num; j++) {
 						if (i/boardHeight - j >= 0) {
-							System.out.println(j);
-							System.out.println(tiles[i-j*boardHeight].isBlack());
-							System.out.println(tiles[i-j*boardHeight].isBlank());
 							if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) 
 								tiles[i-j*boardHeight].hPointedAt = true;
 						}
