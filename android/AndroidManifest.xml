@@ -2,8 +2,8 @@
 <!--  versionName should be done as major.minor.point -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.opengl"
-    android:versionCode="1"
-    android:versionName="1.1" >
+    android:versionCode="0"
+    android:versionName="0.1" >
 
     <uses-sdk android:minSdkVersion="8" 
         	  android:targetSdkVersion="17"/>
