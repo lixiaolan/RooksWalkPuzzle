@@ -13,7 +13,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 		setState(GameState.MAIN_MENU_OPENING); 
 	}
 
-	public void setState(GameState s){	
+	public void setState(GameState s){
 		switch(s){
 		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
 		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
@@ -150,6 +150,7 @@ class BeeFixed extends BeeState<BeeTile> {
 			else {
 				if (LATools.abs(bee.velocity) == 0.0f) {
 					bee.velocity[0] = .00001f;
+					index = 0;
 				}
 				bee.velocity = LATools.vSProd(.2f/LATools.abs(bee.velocity),bee.velocity);
 				if (firstFlower == true) {
