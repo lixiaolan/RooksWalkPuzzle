@@ -17,7 +17,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp" >
 
-    <com.example.android.opengl.GameView
+    <com.seventhharmonic.android.freebeeline.GameView
         android:id="@+id/surface_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
