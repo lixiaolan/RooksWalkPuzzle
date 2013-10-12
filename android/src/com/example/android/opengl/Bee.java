@@ -1,9 +1,8 @@
 package com.example.android.opengl;
 
-public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
+public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	public BeeTile bee;
 	private Board mBoard;
-
 
 	public Bee(Board b) {
 		float[] center= {0.0f,0.0f,0.0f};
@@ -14,7 +13,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 		setState(GameState.MAIN_MENU_OPENING); 
 	}
 
-	public void setState(GameState s){	
+	public void setState(GameState s){
 		switch(s){
 		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
 		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
@@ -22,7 +21,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 		}
 	}
 
-	public void setState(GameState s, int l){	
+	public void setState(GameState s, int l){
 		switch(s){
 		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
 		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP, l); 
@@ -31,15 +30,13 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>>{
 		}
 	}
 
-
-
 	public int touched(float[] pt) {
 		if(pt[0]< bee.center[0]+0.25f && pt[0] > bee.center[0]-.25f 
 				&& pt[1]< bee.center[1]+0.25f && pt[1] > bee.center[1]-.25f ){
 			return 1;
 		}
 		return 0;
-	}    
+	}
 
 	public void setMood(Mood m) {
 		state.setMood(m);
@@ -60,33 +57,35 @@ class BeeWander extends BeeState<BeeTile> {
 	float[] pivot = {1,0,1};
 
 	public BeeWander(Board b, Mood m) {
-		setBoard(b);
-		setMood(m);
+	    setBoard(b);
+	    setMood(m);
 	}
 
 	public void enterAnimation(BeeTile[] tiles){
-		period = DrawPeriod.DURING;
-		globalRefTime = System.currentTimeMillis();
-		relativeRefTime = System.currentTimeMillis();
+	    bee = (BeeTile)tiles[0];
+	    globalRefTime = 0;
+	    relativeRefTime = System.currentTimeMillis();
+	    float[] vel = {.01f, .01f};
+	    bee.setVelocity2D(vel);
+	    period = DrawPeriod.DURING;
 	}    
 
 	public void duringAnimation(BeeTile[] tiles) {
-		bee = (BeeTile)tiles[0];
-		long time = System.currentTimeMillis() - globalRefTime;
-		float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
-		relativeRefTime = System.currentTimeMillis();
-
-		float[] force = new float[2];
-		if(time < interval){
-			force = getForce(mBoard.tiles[r]);
-			bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
-			bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
-		}
-		else {
-			globalRefTime = System.currentTimeMillis();
-			bee.velocity = LATools.vSProd(1/LATools.abs(bee.velocity),bee.velocity);
-			r = ((int)(Math.random()*36));
-		}
+	    long time = System.currentTimeMillis() - globalRefTime;
+	    float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
+	    relativeRefTime = System.currentTimeMillis();
+	    
+	    float[] force = new float[2];
+	    if(time < interval){
+		force = getForce(mBoard.tiles[r]);
+		bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
+		bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
+	    }
+	    else {
+		globalRefTime = System.currentTimeMillis();
+		bee.velocity = LATools.vSProd(1/LATools.abs(bee.velocity),bee.velocity);
+		r = ((int)(Math.random()*36));
+	    }
 	}
 
 	public float[] getForce(BoardTile tile) {
@@ -151,6 +150,7 @@ class BeeFixed extends BeeState<BeeTile> {
 			else {
 				if (LATools.abs(bee.velocity) == 0.0f) {
 					bee.velocity[0] = .00001f;
+					index = 0;
 				}
 				bee.velocity = LATools.vSProd(.2f/LATools.abs(bee.velocity),bee.velocity);
 				if (firstFlower == true) {
