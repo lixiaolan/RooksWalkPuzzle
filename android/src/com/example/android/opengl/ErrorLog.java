@@ -31,6 +31,8 @@ public class ErrorLog {
 	}
 	else if (e.pointsAtBadDir || e.pointedAtByBadDir) {
 	    return TextureManager.TURNINGRULE;
+	} else if (e.pointsOffBoard){
+		return TextureManager.OFFBOARD;
 	}
 	else {
 	    return TextureManager.CLEAR;

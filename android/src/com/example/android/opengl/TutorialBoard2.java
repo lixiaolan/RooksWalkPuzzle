@@ -426,12 +426,6 @@ class TutorialBoard2 extends Board {
 
 		@Override
 		public void duringAnimation(BoardTile[] tiles) {
-			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
-			if(time < 2) {
-			} else if(time < 4){
-			} else {
-				refTime = System.currentTimeMillis();
-			}
 		}
 		
 		public void draw(BoardTile[] tiles, MyGLRenderer r){

@@ -13,6 +13,7 @@ public class GlobalState {
     boolean firstRun = false;
     boolean textureCreationFinished = true;
     boolean cheating = false;
+    boolean ruleCheck = true;
     int difficulty = 0;
    
     public GlobalState() {

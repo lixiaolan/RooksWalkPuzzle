@@ -93,9 +93,9 @@ class TutorialInfo2 {
 /////////////////////////////////////////////
 ///////////////////////////////////Play Game    
     
-    static int[][] pathPlayGame = {{4,1},{1,1},{1,3},{4,3},{4,5},{0,5},{0,2}};
+    static int[][] pathPlayGame = {{4, 2}, {4,1},{1,1},{1,3},{4,3},{4,5},{0,5},{0,2}};
     
-    static int lengthPlayGame = 7;
+    static int lengthPlayGame = 8;
     
     static String[] playGameBanners = {"Your turn to solve a puzzle. The yellow tiles are hints to help you. Press the check when done.",
     									"Press the check when done",

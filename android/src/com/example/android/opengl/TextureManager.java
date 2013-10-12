@@ -35,6 +35,9 @@ public class TextureManager {
     public static final String HINTS_OFF = "hints off";
     public static final String LINES_ON = "lines on";
     public static final String LINES_OFF = "lines off";
+    public static final String RULE_CHECK_ON = "help on";
+    public static final String RULE_CHECK_OFF = "help off";
+    
     public static final String CLEAR_BOARD = "reset";
     public static final String QUIT = "quit";
     public static final String YES = "yes";
@@ -71,9 +74,10 @@ public class TextureManager {
     public static final String CLOSEDCIRCLE = "closedcircle";
     public static final String MENU = "menu";
     
-    public static final String TURNINGRULE = "ERROR Turn Rule: Each segment of the path must turn.";
-    public static final String MATCHINGNUMBERRULE = "ERROR Number Rule: A number can't point in the direction of a square with the same number..";
-    public static final String PASSTHROUGHRULE = "ERROR Pass Through Rule: A segment in a path can't pass through a tile with a number or the grass.";
+    public static final String TURNINGRULE = " Oops! The path should turn at each step.";
+    public static final String MATCHINGNUMBERRULE = "Watch out there! You can't point in the direction of a square with the same number.";
+    public static final String PASSTHROUGHRULE = "Your path can only go through empty squares.";
+    public static final String OFFBOARD = "Oh no! Your path went off the board!";
     
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -168,6 +172,9 @@ public class TextureManager {
 	    buildTextures(HINTS_OFF, xpos, ypos, HINTS_OFF, fontSize);
 	    buildTextures(LINES_ON, xpos, ypos, LINES_ON, fontSize);
 	    buildTextures(LINES_OFF, xpos, ypos, LINES_OFF, fontSize);
+	    
+	    buildTextures(RULE_CHECK_ON, xpos, ypos, RULE_CHECK_ON, fontSize);
+	    buildTextures(RULE_CHECK_OFF, xpos, ypos, RULE_CHECK_OFF, fontSize);
 	    buildTextures(CLEAR_BOARD, xpos, ypos, CLEAR_BOARD, fontSize);
 	    buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
 	    buildTextures(YES, xpos, ypos, YES, fontSize);
@@ -212,6 +219,7 @@ public class TextureManager {
 	    buildLongTextures(TURNINGRULE, 0, fontHeight, TURNINGRULE, fontWidth, bannerSize);
 	    buildLongTextures(MATCHINGNUMBERRULE, 0, fontHeight, MATCHINGNUMBERRULE, fontWidth, bannerSize);
 	    buildLongTextures(PASSTHROUGHRULE, 0, fontHeight, PASSTHROUGHRULE, fontWidth, bannerSize);
+	    buildLongTextures(OFFBOARD, 0, fontHeight, OFFBOARD, fontWidth, bannerSize);
 	}
 	
 	public void buildStoryBanners() {

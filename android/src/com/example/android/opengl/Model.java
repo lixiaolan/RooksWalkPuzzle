@@ -108,6 +108,10 @@ class Model {
 	mBoard.toggleLines(toggle);
     }
     
+    public void toggleRules(boolean toggle) {
+    	mBoard.toggleRules(toggle);
+    }
+    
     public void touched(float[] pt) {
 	int val = -1;
 	switch(state.state){
@@ -293,11 +297,12 @@ class Model {
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
+		case MAIN_MENU_GEAR:
 		case GAME_MENU_LIST:
 		case STATS:
+		case GAME_OPENING:
 		   mMenuManager.callCallback(0);
 		   break;
-		   
 		case MAIN_MENU_OPENING:
 			((Activity)context).finish();
 			break;

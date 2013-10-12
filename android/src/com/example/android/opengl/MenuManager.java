@@ -45,7 +45,7 @@ class MenuManager {
 	    break;
 	    
 	case MAIN_MENU_GEAR:
-		String[] texturesGear = {TextureManager.TUTORIAL, TextureManager.OPTIONS, TextureManager.STORY, TextureManager.STATS};
+		String[] texturesGear = {TextureManager.OPTIONS, TextureManager.TUTORIAL,  TextureManager.STORY, TextureManager.STATS};
 		mGameMenu = new GameMenu(pos1,scale1, texturesGear, TextureManager.BACK); 
 		mCallback = new Callback_MAIN_MENU_GEAR();
 		break;
@@ -66,7 +66,7 @@ class MenuManager {
 	    mCallback = new Callback_MAIN_MENU_NEW();
 	    break;
 	case MAIN_MENU_OPTIONS:
-	    String[] textures4 = new String[2];
+	    String[] textures4 = new String[3];
 	    if(state.hintsOn){
 		textures4[0] = TextureManager.HINTS_ON;
 	    } else {
@@ -77,6 +77,11 @@ class MenuManager {
 	    } else {
 		textures4[1] = TextureManager.LINES_OFF;
 	    }
+	    if(state.ruleCheck){
+			textures4[2] = TextureManager.RULE_CHECK_ON;
+		    } else {
+			textures4[2] = TextureManager.RULE_CHECK_OFF;
+		    }
 	    mGameMenu = new GameMenu(pos1, scale1, textures4, TextureManager.BACK); 
 	    mCallback = new Callback_MAIN_MENU_OPTIONS();
 	    break;
@@ -150,15 +155,15 @@ class MenuManager {
 		@Override
 		public void callback(int val) {
 			switch(val) {
-    	    case 1: 
+	   	    case 1: state.state = GameState.MAIN_MENU_OPTIONS;
+	    		updateState();
+	    		break;
+			case 2: 
     			mModel.createTutorial();
     		    mModel.setState(GameState.TUTORIAL);
     			state.state = GameState.TUTORIAL;
     			updateState();
     		    break;
-    	    case 2: state.state = GameState.MAIN_MENU_OPTIONS;
-    		updateState();
-    		break;
     	    case 3:
     	    	mModel.createStory();
     	    	mModel.setState(GameState.STORY);
@@ -282,6 +287,14 @@ class MenuManager {
 		    mGameMenu.setTexture(1,TextureManager.LINES_OFF);
 		mModel.toggleLines(state.linesOn);
 		break;
+	    case 3:
+	    	state.ruleCheck = !state.ruleCheck;
+			if (state.ruleCheck)
+			    mGameMenu.setTexture(2,TextureManager.RULE_CHECK_ON);
+			else
+			    mGameMenu.setTexture(2,TextureManager.RULE_CHECK_OFF);
+			mModel.toggleRules(state.ruleCheck);
+	    	break;
 	    case 0: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
 		break;

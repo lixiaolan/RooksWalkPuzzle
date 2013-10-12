@@ -22,7 +22,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	private float[] lastTouchPos = new float[2];
 	ErrorLog mErrorLog;
 
-	
+
 	private Background mBoardBg;
 	public Banner mGameBanner;
 	public Board() {
@@ -45,7 +45,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					tiles[i].setHint();
 			tiles[i].setTextures();
 		}
-		
+
 		this.path = path;
 	}
 
@@ -250,6 +250,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		toggleHints = toggle;
 	}
 
+	public void toggleRules(boolean toggle){
+		toggleError = toggle;
+	}
+
 	public void showSolution(){
 		String sol = "";
 		for(int i =0;i<tiles.length;i++){
@@ -269,74 +273,74 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 
 	public void animatePlay(int at) {
-	    //Now go though each tile and fill in pointed at tiles.
-	    float duration = .3f;
-	    float delay = .15f;
-	    clearLines();
-	    stopFlips();
-	    drawLines();
-	    if (tiles[at].hasNumber() && tiles[at].hasArrow()) {
-		int num = Integer.parseInt(tiles[at].getNumber());
-		if (tiles[at].getArrow().equals(TextureManager.UPARROW)) {
-		    for (int j = 1; j < num; j++) {
-			if (at%boardHeight + j < boardHeight) {
-			    if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
-				String[] s1 = new String[2];
-				s1[0] = TextureManager.VERTDOTS;
-				s1[1] = tiles[at+j].textures[1];
-				float[] pivot = {1.0f,0.0f,0.0f};
-				tiles[at+j].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-				tiles[at+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
-			    }
-			    
+		//Now go though each tile and fill in pointed at tiles.
+		float duration = .3f;
+		float delay = .15f;
+		clearLines();
+		stopFlips();
+		drawLines();
+		if (tiles[at].hasNumber() && tiles[at].hasArrow()) {
+			int num = Integer.parseInt(tiles[at].getNumber());
+			if (tiles[at].getArrow().equals(TextureManager.UPARROW)) {
+				for (int j = 1; j < num; j++) {
+					if (at%boardHeight + j < boardHeight) {
+						if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
+							String[] s1 = new String[2];
+							s1[0] = TextureManager.VERTDOTS;
+							s1[1] = tiles[at+j].textures[1];
+							float[] pivot = {1.0f,0.0f,0.0f};
+							tiles[at+j].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
+							tiles[at+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
+						}
+
+					}
+				}
 			}
-		    }
-		}
-		if (tiles[at].getArrow().equals(TextureManager.DOWNARROW)) {
-		    for (int j = 1; j < num; j++) {
-			if (at%boardHeight - j >= 0) {
-			    if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
-				String[] s2 = new String[2];
-				s2[0] = TextureManager.VERTDOTS;
-				s2[1] = tiles[at-j].textures[1];
-				float[] pivot = {1.0f,0.0f,0.0f};
-				tiles[at-j].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-				tiles[at-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
-			    }
-			    
+			if (tiles[at].getArrow().equals(TextureManager.DOWNARROW)) {
+				for (int j = 1; j < num; j++) {
+					if (at%boardHeight - j >= 0) {
+						if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
+							String[] s2 = new String[2];
+							s2[0] = TextureManager.VERTDOTS;
+							s2[1] = tiles[at-j].textures[1];
+							float[] pivot = {1.0f,0.0f,0.0f};
+							tiles[at-j].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
+							tiles[at-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
+						}
+
+					}
+				}
 			}
-		    }
-		}
-		if (tiles[at].getArrow().equals(TextureManager.LEFTARROW)) {
-		    for (int j = 1; j < num; j++) {
-			if (at/boardHeight + j < boardWidth) { 
-			    if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
-				String[] s3 = new String[2];
-				s3[1] = TextureManager.HORZDOTS;
-				s3[0] = tiles[at+j*boardHeight].textures[0];
-				float[] pivot = {0.0f,1.0f,0.0f};
-				tiles[at+j*boardHeight].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-				tiles[at+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
-			    }
-			    
+			if (tiles[at].getArrow().equals(TextureManager.LEFTARROW)) {
+				for (int j = 1; j < num; j++) {
+					if (at/boardHeight + j < boardWidth) { 
+						if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
+							String[] s3 = new String[2];
+							s3[1] = TextureManager.HORZDOTS;
+							s3[0] = tiles[at+j*boardHeight].textures[0];
+							float[] pivot = {0.0f,1.0f,0.0f};
+							tiles[at+j*boardHeight].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
+							tiles[at+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
+						}
+
+					}
+				}
 			}
-		    }
-		}
-		if (tiles[at].getArrow().equals(TextureManager.RIGHTARROW)) {
-		    for (int j = 1; j < num; j++) {
-			if (at/boardHeight - j >= 0) {
-			    if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
-				String[] s4 = new String[2];
-				s4[1] = TextureManager.HORZDOTS;
-				s4[0] = tiles[at-j*boardHeight].textures[0];
-				float[] pivot = {0.0f,1.0f,0.0f};
-				tiles[at-j*boardHeight].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-				tiles[at-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
-			    }
+			if (tiles[at].getArrow().equals(TextureManager.RIGHTARROW)) {
+				for (int j = 1; j < num; j++) {
+					if (at/boardHeight - j >= 0) {
+						if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
+							String[] s4 = new String[2];
+							s4[1] = TextureManager.HORZDOTS;
+							s4[0] = tiles[at-j*boardHeight].textures[0];
+							float[] pivot = {0.0f,1.0f,0.0f};
+							tiles[at-j*boardHeight].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
+							tiles[at-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
+						}
+					}
+				}
 			}
-		    }
 		}
-	    }
 	}
 	// Class to draw the dotted lines on the board.  Called after every input
 	public void drawLines() {
@@ -344,7 +348,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		markPointedAt();
 		for (int i = 0; i < tiles.length; i++ ) {
 			if (!tiles[i].hasNumber() && !tiles[i].hasArrow() && !tiles[i].isBlack()) {
-				
+
 				if (!tiles[i].vPointedAt) {
 					tiles[i].setTextures(TextureManager.CLEAR, tiles[i].textures[1]);
 				}
@@ -379,9 +383,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 
 	public void stopFlips() {
-	    for (int i = 0; i < tiles.length; i++) {
-		tiles[i].stopFlipper();
-	    }
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i].stopFlipper();
+		}
 	}
 
 	public void markPointedAt() {
@@ -783,7 +787,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			mMenu.draw(r);
 		}
 
-				
+
 		@Override
 		public void touchHandler(float[] pt){
 			int val = mMenu.touched(pt);
@@ -794,18 +798,18 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					tiles[at].setColor("transparent");
 					//If this tile should be red, make sure it stays that way. Reset the banner
 					if(toggleError){
-					turnErrorRed(at);
-					mGameBanner.set(TextureManager.CLEAR);
+						turnErrorRed(at);
+						mGameBanner.set(TextureManager.CLEAR);
 					}
 				}
 				at = touched(pt);
 				if(at != -1 ) {
 					//Open the menu at the tile that was touched. Display a banner if there is an error
 					if(toggleError){
-					turnErrorRed(at);
-					if(lt == at){
-						mGameBanner.set(mErrorLog.getError(at));
-					}
+						turnErrorRed(at);
+						if(lt == at){
+							mGameBanner.set(mErrorLog.getError(at));
+						}
 					}
 					if(tiles[at].isBlack() == false) {
 						tiles[at].setColor("blue");
@@ -821,16 +825,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						animatePlay(at);
 					}
 					if(toggleError){
-					mErrorLog.setLog();
-					updateErrors();
-					turnErrorRed(at);
-					mGameBanner.set(mErrorLog.getError(at));
-					lt = at;
+						mErrorLog.setLog();
+						updateErrors();
+						turnErrorRed(at);
+						mGameBanner.set(mErrorLog.getError(at));
+						lt = at;
 					}
 				}
 			}
 		}
-		
+
 		public void updateErrors(){
 			for(int i =0;i<tiles.length;i++){
 				String error = mErrorLog.getError(i); 
@@ -842,7 +846,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				}
 			}
 		}
-		
+
 		public void turnErrorRed(int at){
 			String error = mErrorLog.getError(at); 
 			if(!error.equals(TextureManager.CLEAR)){
@@ -850,7 +854,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			} 
 		}
 
-		
+
 		public void swipeHandler(String direction){
 			if (at != -1 && tiles[at].isClickable()) {
 				tiles[at].setArrow(direction);
@@ -858,13 +862,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					animatePlay(at); 
 				}
 				if(toggleError){
-				mErrorLog.setLog();
-				turnErrorRed(at);
-				mGameBanner.set(mErrorLog.getError(at));
-				updateErrors();
+					mErrorLog.setLog();
+					turnErrorRed(at);
+					mGameBanner.set(mErrorLog.getError(at));
+					updateErrors();
 				}
 				mMenu.menuActive = false;
-				
+
 			}
 		}
 
