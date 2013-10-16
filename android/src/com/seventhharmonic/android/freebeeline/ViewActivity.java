@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.content.res.Resources;
 
-import com.example.android.opengl.R;
 
 public class ViewActivity extends Activity {
 

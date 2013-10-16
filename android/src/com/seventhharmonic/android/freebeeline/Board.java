@@ -209,7 +209,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		lastTouchPos = pt;
 		lastTouchTime = System.currentTimeMillis();
 		for (int i = 0; i < tiles.length; i++) {
-			if( tiles[i].touched(pt) && tiles[i].isClickable()) {
+			if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
 				return i;
 			}
 		}

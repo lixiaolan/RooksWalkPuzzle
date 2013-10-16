@@ -3,7 +3,6 @@ package com.seventhharmonic.android.freebeeline;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.android.opengl.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;

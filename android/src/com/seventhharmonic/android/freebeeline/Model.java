@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Vibrator;
 import android.app.Activity;
 
-import com.example.android.opengl.R;
 
 class Model {
        
