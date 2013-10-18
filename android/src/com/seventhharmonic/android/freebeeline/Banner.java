@@ -16,8 +16,7 @@ class BannerPlay extends State<BackgroundTile> {
 
 public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	
-	String position;
-	
+
 	public Banner(String bg, float size) {
 		state = new BackgroundPlay();
 		float[] center = {0,0,0};

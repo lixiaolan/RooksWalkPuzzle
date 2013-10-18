@@ -8,6 +8,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.content.res.Resources;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class ViewActivity extends Activity {
@@ -86,12 +87,21 @@ public class ViewActivity extends Activity {
 		} else {
 			mModel.reset();
 		}
+		EasyTracker.getInstance(this).activityStart(this);
+		
 	}
 
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+	
 	public void closeQuoteScreen(View v) {
 		TextView w = (TextView)findViewById(R.id.QuoteView);
 		w.setVisibility(View.INVISIBLE);
 	}
+	
+	
 	public void onBackPressed() {
 		   mModel.onBack();
 		}

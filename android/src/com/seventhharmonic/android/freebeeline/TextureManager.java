@@ -78,6 +78,8 @@ public class TextureManager {
     public static final String PASSTHROUGHRULE = "Your path can only go through empty squares.";
     public static final String OFFBOARD = "Oh no! Your path went off the board!";
     
+    public static final String VERSION = "alpha-0.2";
+    
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
@@ -219,6 +221,7 @@ public class TextureManager {
 	    buildLongTextures(MATCHINGNUMBERRULE, 0, fontHeight, MATCHINGNUMBERRULE, fontWidth, bannerSize);
 	    buildLongTextures(PASSTHROUGHRULE, 0, fontHeight, PASSTHROUGHRULE, fontWidth, bannerSize);
 	    buildLongTextures(OFFBOARD, 0, fontHeight, OFFBOARD, fontWidth, bannerSize);
+	    buildLongTextures(VERSION, 0, fontHeight, VERSION, fontWidth, bannerSize);
 	}
 	
 	public void buildStoryBanners() {

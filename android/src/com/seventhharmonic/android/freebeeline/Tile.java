@@ -48,6 +48,12 @@ abstract class Tile {
 	center[1] = in[1];
     }
 
+    public void setCenter(float in0, float in1) {
+    	center[0] = in0;
+    	center[1] = in1;
+        }
+
+    
     public float[] getCenter2D() {
 	float[] ret = new float[2];
 	ret[0] = center[0];
