@@ -1,6 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
 
+
 class ScreenSelect extends Widget{
 
     public ScreenTile[] screenTiles;
@@ -42,10 +43,10 @@ class ScreenSelect extends Widget{
     }
     
     private void initialize(){
-    	if(currDirection.equals("left_arrow") && activeTile !=0){
+    	if(currDirection.equals("right_arrow") && activeTile !=0){
     		activeTile = activeTile -1;
     		active = true;
-    	} else if(currDirection.equals("right_arrow") && activeTile !=length-1){
+    	} else if(currDirection.equals("left_arrow") && activeTile !=length-1){
     		activeTile = activeTile + 1;
     		active = true;
     	}

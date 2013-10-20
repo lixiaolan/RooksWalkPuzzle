@@ -17,8 +17,8 @@ class Model {
 	public TutorialBoard2 mTutorialBoard;
 	public Board mBoard;
 	public Bee mBee;
-	private MenuManager mMenuManager;
-	private Background mCheck;
+	MenuManager mMenuManager;
+	Background mCheck;
 	private int at = -1;
 	private Vibrator vibe;
 	public Context context;
@@ -29,8 +29,9 @@ class Model {
 	private StatsScreen mStatsScreen;
 	public boolean createTextures = false;
 	public MediaPlayer mediaPlayer;    
-	private ScreenSelect mScreenSelect;
-	private Banner mVersionBanner;
+	ScreenSelect mScreenSelect;
+	Banner mVersionBanner;
+	Store mStore;
 	EasyTracker mTracker;
 
 	public Model(Context c) {
@@ -65,8 +66,9 @@ class Model {
 
 		mVersionBanner= new Banner(TextureManager.VERSION, .5f);
 		mVersionBanner.setCenter(.5f, -1.1f);
-		mScreenSelect = new ScreenSelect(10, .7f, .1f);
-	}    
+		mScreenSelect = new ScreenSelect(3, .7f, .1f);
+	}   
+	
 	//This is where difficulties are assigned for the different puzzle lengths:
 	public void createPuzzle(int level) {
 		int modifyOne = (int)(Math.random()*3);
@@ -165,7 +167,6 @@ class Model {
 				}
 			}
 
-
 		case GAME_MENU_LIST:    
 		case GAME_MENU_END:
 			val = mMenuManager.touched(pt);
@@ -173,7 +174,9 @@ class Model {
 				mMenuManager.onTouched(val);
 			}
 			if(mBee.touched(pt) == 1){
-				vibe.vibrate(500);
+				//vibe.vibrate(500);
+				System.out.println("Bee touched");
+				mBoard.showHint();
 				mTracker.send(MapBuilder
 						.createEvent("ui_action",     
 								"button_press",  
@@ -184,7 +187,7 @@ class Model {
 			}
 			break;
 		case MAIN_MENU_OPENING:   
-			//mScreenSelect.touchHandler(pt);
+			mScreenSelect.touchHandler(pt);
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
@@ -201,7 +204,7 @@ class Model {
 				mMenuManager.onTouched(val);
 			}	    
 			if(mBee.touched(pt) == 1){
-				vibe.vibrate(500);
+				vibe.vibrate(100);
 				mTracker.send(MapBuilder
 						.createEvent("ui_action",     
 								"button_press",  
@@ -239,7 +242,7 @@ class Model {
 	public void swiped(float[] pt, String direction) {
 		switch(state.state){
 		case MAIN_MENU_OPENING:
-			//mScreenSelect.swipeHandler(direction);
+			mScreenSelect.swipeHandler(direction);
 			break;
 		case GAME_OPENING:
 			mBoard.swipeHandler(direction);
@@ -268,8 +271,8 @@ class Model {
 			mMenuManager.draw(r);		
 			break;
 		case MAIN_MENU_OPENING:
-			//mScreenSelect.draw(r);
-			//break;
+			mScreenSelect.draw(r);
+			break;
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
@@ -310,6 +313,10 @@ class Model {
 		mDataServer = d;
 	}
 
+	public void setStore(Store s){
+		mStore = s; 
+	}
+	
 	public GameState getState() {
 		return state.state;
 	}

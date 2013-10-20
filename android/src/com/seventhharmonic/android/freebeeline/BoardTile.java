@@ -163,6 +163,10 @@ class BoardTile extends Tile {
 	    return false;
     }
     
+    public boolean isHint(){
+    	return !(isBlack() || isClickable());
+    }
+    
     public boolean isPointedAt() {
 	return vPointedAt || hPointedAt;
     }
@@ -239,6 +243,12 @@ class BoardTile extends Tile {
     
     public String getTrueArrow(){
 	return true_arrow;
+    }
+    
+    public void setSolution(){
+    	String sol = Integer.toString(getTrueSolution());
+		setNumber(sol);
+		setArrow(true_arrow);
     }
     
     public void setUserInput(int val){

@@ -40,4 +40,12 @@
         android:textColor="@color/black"
         android:textSize="20sp"/>
 
+    <Button
+        android:id="@+id/hintbutton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="hintClick"
+        android:text="Buy Hint" />
+
 </FrameLayout>

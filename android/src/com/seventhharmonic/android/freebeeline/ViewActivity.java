@@ -5,8 +5,10 @@ import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.content.Intent;
 import android.content.res.Resources;
 import com.google.analytics.tracking.android.EasyTracker;
 
@@ -18,12 +20,13 @@ public class ViewActivity extends Activity {
 	private MyGLRenderer mRenderer;    
 	private TextView mQuoteView;
 	private DataServer mDataServer;
-	
+	private Store mStore;
 	
 	boolean savedGame = false;
 	static final String savefile = "savefile";
 	static final String settingsfile = "settingsfile";
-
+	static final String TAG = "ViewActivity";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -46,7 +49,7 @@ public class ViewActivity extends Activity {
 		Typeface font = Typeface.createFromAsset(getAssets(), "font3.ttf");  
 		mQuoteView.setTypeface(font);
 		mQuoteView.setText(Html.fromHtml(quotes[sel]));
-
+		mStore = new Store(this);
 	}
 
 
@@ -91,9 +94,28 @@ public class ViewActivity extends Activity {
 		
 	}
 
+	
+	
 	protected void onStop() {
 		super.onStop();
 		EasyTracker.getInstance(this).activityStop(this);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+
+	    // Pass on the activity result to the helper for handling
+	    // NOTE: handleActivityResult() will update the state of the helper,
+	    // allowing you to make further calls without having it exception on you
+	    if (mStore.mHelper.handleActivityResult(requestCode, resultCode, data)) {
+	        Log.d(TAG, "onActivityResult handled by IABUtil.");
+	        //handlePurchaseResult(requestCode, resultCode, data);
+	        return;
+	    }
+
+	    // What you would normally do
+	    // ...
 	}
 	
 	public void closeQuoteScreen(View v) {
@@ -101,6 +123,9 @@ public class ViewActivity extends Activity {
 		w.setVisibility(View.INVISIBLE);
 	}
 	
+	public void hintClick(View v) {
+		mStore.onBuyHints(v);
+	}
 	
 	public void onBackPressed() {
 		   mModel.onBack();

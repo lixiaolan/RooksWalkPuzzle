@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+
 public class CircleProgressBar extends Widget {
 
 	CircleTile[] circleTiles;

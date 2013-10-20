@@ -25,12 +25,12 @@ public class DataServer {
 	
 	public void saveGame(Board mBoard) {
 		File file = new File(mContext.getFilesDir(), "savefile");
-		int[] solutions = mBoard.dumpSolution();
-		String[] numbers  = mBoard.dumpNumbers();
-		String[] arrows  = mBoard.dumpArrows();
-		String[] trueArrows = mBoard.dumpTrueArrows();
-		int[][] path  = mBoard.dumpPath();
-		boolean[] clickable = mBoard.dumpClickable();
+		int[] solutions = dumpSolution(mBoard);
+		String[] numbers  = dumpNumbers(mBoard);
+		String[] arrows  = dumpArrows(mBoard);
+		String[] trueArrows = dumpTrueArrows(mBoard);
+		int[][] path  = dumpPath(mBoard);
+		boolean[] clickable = dumpClickable(mBoard);
 
 		try {
 			PrintWriter outputStream = new PrintWriter(new FileWriter(file));
@@ -209,6 +209,52 @@ public class DataServer {
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
 		return s.getInt("longestGames",0);
 	}
+	
+	public int[] dumpSolution(Board mBoard) {
+		int[] solution = new int[36];
+		for(int i =0;i<36;i++){
+			solution[i] = mBoard.tiles[i].getTrueSolution();
+		}
+		return solution;
+	}
+
+	public String[] dumpArrows(Board mBoard) {
+		String[] arrows = new String[36];
+		for(int i =0;i<36;i++){
+			arrows[i] = mBoard.tiles[i].getArrow();
+		}
+		return arrows;
+	}
+
+	public String[] dumpNumbers(Board mBoard) {
+		String[] numbers = new String[36];
+		for(int i =0; i<36; i++){
+			numbers[i] = mBoard.tiles[i].getNumber();
+		}
+		return numbers;
+	}
+
+	public String[] dumpTrueArrows(Board mBoard) {
+		String[] arrows = new String[36];
+		for(int i =0; i<36; i++){
+			arrows[i] = mBoard.tiles[i].getTrueArrow();
+		}
+		return arrows;
+	}
+
+	public boolean[] dumpClickable(Board mBoard) {
+		boolean[] clickable = new boolean[36];
+		for(int i =0; i<36; i++){
+			clickable[i] = mBoard.tiles[i].isClickable();
+		}
+		return clickable;
+	}
+
+	public int[][] dumpPath(Board mBoard) {
+		return mBoard.path;
+	}
+
+	
 	
 }
 	

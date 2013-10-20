@@ -25,6 +25,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 
 	private Background mBoardBg;
 	public Banner mGameBanner;
+	
 	public Board() {
 		buildEmptyBoard();
 		state = new BoardMainMenu(tiles);
@@ -48,51 +49,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 
 		this.path = path;
 	}
-
-	public int[] dumpSolution() {
-		int[] solution = new int[36];
-		for(int i =0;i<36;i++){
-			solution[i] = tiles[i].getTrueSolution();
-		}
-		return solution;
-	}
-
-	public String[] dumpArrows() {
-		String[] arrows = new String[36];
-		for(int i =0;i<36;i++){
-			arrows[i] = tiles[i].getArrow();
-		}
-		return arrows;
-	}
-
-	public String[] dumpNumbers() {
-		String[] numbers = new String[36];
-		for(int i =0; i<36; i++){
-			numbers[i] = tiles[i].getNumber();
-		}
-		return numbers;
-	}
-
-	public String[] dumpTrueArrows() {
-		String[] arrows = new String[36];
-		for(int i =0; i<36; i++){
-			arrows[i] = tiles[i].getTrueArrow();
-		}
-		return arrows;
-	}
-
-	public boolean[] dumpClickable() {
-		boolean[] clickable = new boolean[36];
-		for(int i =0; i<36; i++){
-			clickable[i] = tiles[i].isClickable();
-		}
-		return clickable;
-	}
-
-	public int[][] dumpPath() {
-		return path;
-	}
-
+	
 	public void buildEmptyBoard() {
 		tiles = new BoardTile[36];
 		float size = .15f;
@@ -254,9 +211,27 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		toggleError = toggle;
 	}
 
+	
+	/**
+	 * Show a hint on the board. This should be trigerred when the bee is clicked.
+	 */
+	public void showHint() {
+		for(int i =0; i< tiles.length; i++){
+			if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
+				System.out.println("Found a potential tile");
+				if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
+					tiles[i].setSolution();
+					tiles[i].setTextures();
+					drawLines();
+					break;
+				}
+			}
+		}
+	}
+	
 	public void showSolution(){
 		String sol = "";
-		for(int i =0;i<tiles.length;i++){
+		for(int i =0;i <tiles.length;i++){
 			if(tiles[i].getTrueSolution() == 0)
 				sol  = "clear";
 			else
@@ -551,21 +526,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		return false;
 	}
 
-	public boolean checkRuleRightAngles(int at) {
-		return true;
-	}
-
-	public boolean checkRuleRightAngles() {
-		return true;
-	}    
-
-	public boolean checkRulePoint(int at) {
-		return true;
-	}
-
-	public boolean checkRulePoint() {
-		return true;
-	}
+	
 
 	class BoardMainMenu extends State<BoardTile> {
 
