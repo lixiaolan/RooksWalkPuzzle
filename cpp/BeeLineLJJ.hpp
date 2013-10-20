@@ -1,9 +1,8 @@
-#ifndef LJJ_Rook
-#define LJJ_Rook
+#ifndef BeeLineLJJ
+#define BeeLineLJJ
 
 #include <string.h>
 #include <jni.h>
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -18,8 +17,6 @@
 
 using namespace std;
 
-class RookBoard;
-
 class pos {
 public:
   int r;
@@ -31,62 +28,73 @@ public:
   }
 };
 
-pos operator-(pos left, pos right);
+pos operator-(pos left, pos right); 
 
 pos operator+(pos left, pos right);
 
 bool operator==(pos left, pos right);
 
-class RookBoard {
+template <typename T>
+class PosMatrix {
 private:
-  friend class RooksWalk;
-  friend ofstream &operator<<(ofstream &, RookBoard &);
+  vector< vector <T> > matrix;
+public:
+  T &operator()(pos p) {
+    return matrix[p.r][p.c];
+  }
+  PosMatrix(vector< vector <T> > in): matrix(in) {};
+};
+
+class BeeLinePuzzle {
+private:
+  friend ofstream &operator<<(ofstream &, BeeLinePuzzle &);
   int height;
   int width;
   int length;
+
   vector< vector<int> > moveArea;
+  vector< vector<int> > gameBoard;
+
   vector< vector<bool> > leftRight;
   vector< vector<bool> > upDown;
-
   vector< vector<bool> > vertical;
   vector< vector<bool> > leftUp;
-
-  vector<int> rowSums;
-  vector<int> colSums;
   vector<pos> positions;
+  vector<pos> tPosVec;
+
+  vector<pos> hintsPos;
+  vector<int> hintsNum;
+  vector<bool> hintsVertical;
+  vector<bool> hintsLeftUp;
   
-  void reorderLegalMoves(vector<pos> &);
-  void sortLegalMoves(pos, vector<pos> &);
+  void getHints(int);
+  void checkUnique();
 
   vector<pos> legalMoves();
-  vector<pos> legalMovesRightAngles();
-  vector<pos> legalMovesRightAnglesAnyNum();
-  vector<pos> legalMovesRightAnglesAnyNumNoPassOver();
-  vector<pos> legalMovesNoPassOver();
-  vector<pos> legalMovesNoPassOverNoPoint();
-
+  vector<pos> legalMovesTestUnique();
   bool goodDir(pos, int, bool, bool);
-
+  bool goodDirTestUnique(pos, int, bool, bool);
   bool makeBoard(int);
-  bool makeBoardRightAnglesNoPassOver(int);
-  bool makeBoardNoPassOver(int);
-  bool goodPlay(pos, int);
-  bool goodPlayAnyNum(pos, int);
-  bool goodPlayProperDist(pos, int);
-  bool goodPlayNoPoint(pos, pos);
+  void countAllSolutions();
+  bool goodPlay(pos, pos);
+  bool goodPlayTestUnique(pos, pos);
   void markUnused();
+  void clearBoolMats();
 
   void setDir(pos, pos);
   void markLRUD(pos, pos);
   void unMarkLRUD(pos, pos);
-  
+  bool boardIsFull();
 
 public:
-  RookBoard(int, int ,int);
+  BeeLinePuzzle(int, int ,int, int);
   string print();
+  string printUnique();
+  string printPuzzle();
+  int uniqueCounter;
 };
 
-ofstream &operator<<(ofstream &, RookBoard &);  
+ofstream &operator<<(ofstream &, BeeLinePuzzle &);  
 
 void printBool(vector<vector<bool> > &in);
 
