@@ -20,6 +20,15 @@ abstract class Tile {
     	angle = 0.0f;
     }
 
+    public Tile(float x, float y,  float inSize){
+    	center = new float[3];
+    	center[0] = x;
+    	center[1] = y;
+    	center[2] = 0.0f;
+    	size = inSize;
+    	angle = 0.0f;
+    }
+    
     public boolean touched(float[] pt) {
     	boolean b = ((pt[0] < center[0]+size)&(pt[0] > center[0]-size)&(pt[1] < center[1]+size)&(pt[1] > center[1]-size));
     	if(b){

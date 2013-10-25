@@ -1,7 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
 
-public class CircleProgressBar extends Widget {
+public class CircleProgressBarWidget extends Widget {
 
 	CircleTile[] circleTiles;
 	private int activeCircle;
@@ -9,7 +9,7 @@ public class CircleProgressBar extends Widget {
 	float tilesSize;
 	int length;
 
-	public CircleProgressBar(int length, float[] center, float size) {
+	public CircleProgressBarWidget(int length, float[] center, float size) {
 		this.length = length;
 		tilesSize = size;	
 		tilesCenter = center;

@@ -3,8 +3,12 @@ package com.seventhharmonic.android.freebeeline;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Logger.LogLevel;
+import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextureBridge;
+import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 import android.app.Application;
+import android.content.Context;
 
 
 /*
@@ -12,11 +16,14 @@ import android.app.Application;
  * in a subclass of Application. Note that this example assumes data
  * only needs to be sent to a single Google Analytics property ID.
  */
-public class MyTracker extends Application {
+public class GlobalApplication extends Application {
 
   private static GoogleAnalytics mGa;
   private static EasyTracker mTracker;
-
+  private static Context context;
+  private static LevelPackProvider mLPP;
+  private static Geometry geo;
+  private static TextureBridge mTextureBridge;
   /*
    * Google Analytics configuration values.
    */
@@ -43,7 +50,10 @@ public class MyTracker extends Application {
   private void initializeGa() {
     mGa = GoogleAnalytics.getInstance(this);
     mTracker = EasyTracker.getInstance(this);//mGa.getTracker(GA_PROPERTY_ID);
-
+    context = getApplicationContext();
+    geo = new Geometry();
+    mTextureBridge = new TextureBridge();
+    mLPP = new SAXLevelPackProvider();
   }
 
   @Override
@@ -65,4 +75,23 @@ public class MyTracker extends Application {
   public static GoogleAnalytics getGaInstance() {
     return mGa;
   }
+  
+  public static LevelPackProvider getLevelPackProvider() {
+	    return mLPP;
+	  }
+  
+  public static Geometry getGeometry() {
+	    return geo;
+  }
+
+  
+  public static Context getContext(){
+	  return context;
+  }
+  
+  
+  public static TextureBridge getTextureBridge(){
+	  return mTextureBridge;
+  }
+  
 }

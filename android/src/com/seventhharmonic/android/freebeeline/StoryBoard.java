@@ -1,6 +1,8 @@
 
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.util.LATools;
+
 public class StoryBoard extends Board{
 
 	public enum StoryState {

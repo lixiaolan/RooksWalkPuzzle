@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+
 public abstract class Graphic<T extends Tile, S extends State<T> > {
     T[] tiles;
     S state;

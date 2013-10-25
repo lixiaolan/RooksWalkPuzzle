@@ -5,15 +5,15 @@ class BorderTile extends Tile{
 
     public String number;
 
-    public BorderTile(float[] inCenter, float inSize, String inValue) {
+    public BorderTile(float[] inCenter, float inSize) {
     	super(inCenter, inSize);
-    	number = inValue;
-    	color = "transparent";
     }
-
+    
+    public BorderTile(float x, float y, float inSize) {
+    	super(x,y, inSize);
+    }
+    
     public void draw(MyGLRenderer r) {
-    	textures[0] = number;
-    	textures[1] = "clear";
-    	r.drawTile(center, size, textures, color, 0,   pivot);
+    	r.drawTile(center, size, textures, color, 0,   pivot, false);
     }
 }

@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+
 import android.content.Context;
 
 class TutorialBoard extends Board {

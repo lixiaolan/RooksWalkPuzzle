@@ -5,9 +5,16 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
 
+import android.util.Log;
+
+import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
+import com.seventhharmonic.android.freebeeline.util.LATools;
+import com.seventhharmonic.com.freebeeline.levelresources.Hint;
+import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
+
 
 class Board extends Graphic<BoardTile, State<BoardTile> > {
-
+	String TAG = "board";
 	public int hints;
 	public int[] solution ;
 	public int[][] path;
@@ -21,18 +28,31 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	private long lastTouchTime;
 	private float[] lastTouchPos = new float[2];
 	ErrorLog mErrorLog;
-
-
+	Border mBorder = new Border(boardWidth, boardHeight);
+	Background mCheck;
+	GameEventListener correctSolutionListener;
+	GameEventListener incorrectSolutionListener;
+	public TextWidget mGameBanner;
 	private Background mBoardBg;
-	public Banner mGameBanner;
+	Puzzle currPuzzle;
+	
+	
 	
 	public Board() {
 		buildEmptyBoard();
 		state = new BoardMainMenu(tiles);
-		mBoardBg = new Background("boardbg", .75f);
-		mGameBanner = new Banner(.8f);
+		mGameBanner = new TextWidget(0.0f, 0.0f, .9f, .4f, TextureManager.CLEAR);
+		mBoardBg = new Background("boardbg", 1.0f);
 		mErrorLog = new ErrorLog(this);
 
+	}
+	
+	public void setIncorrectGameEventListener(GameEventListener r){
+		this.incorrectSolutionListener  = r;
+	}
+	
+	public void setCorrectGameEventListener(GameEventListener r){
+		this.correctSolutionListener  = r;
 	}
 
 	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
@@ -47,6 +67,57 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			tiles[i].setTextures();
 		}
 
+		this.path = path;
+	}
+	
+	public void buildXMLBoard(int[] solution, int[][] path, int height, int width, int[] hints){
+		int tilesLength = height*width;
+		Log.d(TAG,Integer.toString(tilesLength));
+		for (int i = 0; i < tilesLength; i++) {	
+			//This does a hard reset on the board.
+			
+			tiles[i].number = TextureManager.CLEAR;
+			tiles[i].arrow = TextureManager.CLEAR;
+			tiles[i].setTrueSolution(0);
+			tiles[i].setTrueArrow(TextureManager.CLEAR);
+			//Set the solution in the tile
+			Log.d(TAG, Integer.toString(solution[i]));
+			tiles[i].setTrueSolution(solution[i]);
+		} 
+		
+		int dx;
+		int dy;
+		int length = (path.length)/2;
+		for (int i = 0; i < length-1; i++) {
+			dx = path[i+1][0]-path[i][0];
+			dy = path[i+1][1]-path[i][1];
+
+			if (dx > 0) {
+				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
+			}
+			if (dx < 0) {
+				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
+			}
+			if (dy > 0) {
+				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
+			}
+			if (dy < 0) {
+				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
+				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
+			}
+		}
+		
+		if(toggleHints){
+			for(int i=0;i<hints.length;i++){
+				int r = hints[i];
+				Log.d(TAG, "hint");
+				Log.d(TAG, Integer.toString(r));
+				tiles[r].setHint();
+			}
+		}
 		this.path = path;
 	}
 	
@@ -111,7 +182,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			}
 		}
 	}
-
+	
 	public void resetBoard() {
 		for(int i=0;i<tiles.length;i++){
 			if(tiles[i].isClickable()){
@@ -131,6 +202,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		buildBoardFromSolution(hints);
 	}
 
+	public void createPuzzleFromPuzzle(Puzzle p){
+		currPuzzle = p;
+		int[] solution = p.getBoard();
+		int[][] path = p.getPath();
+		
+		List<Hint> hints = p.getAllHints();
+		int[] hintList = new int[hints.size()];
+		for(int i = 0; i< hints.size();i++){
+			hintList[i] = hints.get(i).getIndex();
+		}
+		buildXMLBoard(solution, path, p.getHeight(), p.getWidth(), hintList);
+	}
+	
 	public native String stringFromJNI(int rows, int cols, int length);
 
 	public void readSolutionFromJni(String puzzleString) throws IOException{
@@ -211,24 +295,28 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		toggleError = toggle;
 	}
 
-	
 	/**
-	 * Show a hint on the board. This should be trigerred when the bee is clicked.
+	 * Show a hint on the board. This should be trigered when the bee is clicked.
 	 */
 	public void showHint() {
 		for(int i =0; i< tiles.length; i++){
 			if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
 				System.out.println("Found a potential tile");
 				if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
-					tiles[i].setSolution();
-					tiles[i].setTextures();
+					//tiles[i].setSolution();
+					//tiles[i].setTextures();
+					tiles[i].setHint();
 					drawLines();
+					
 					break;
 				}
 			}
 		}
 	}
 	
+	/*
+	 * Show solution at the end of the game. Currently just a utility function.
+	 */
 	public void showSolution(){
 		String sol = "";
 		for(int i =0;i <tiles.length;i++){
@@ -240,10 +328,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			tiles[i].setArrow(tiles[i].getTrueArrow());
 		}
 	}
-
+	
+	/*
+	 *	Get's called by Model's set geometry.
+	 */
 	public void setGeometry(float[] g) {
 		super.setGeometry(g);
-		float top = mGameBanner.getSize();
+		float top = mGameBanner.getHeight();
 		mGameBanner.setCenter(0, g[1]-top);
 	}
 
@@ -526,8 +617,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		return false;
 	}
 
-	
-
 	class BoardMainMenu extends State<BoardTile> {
 
 		long refTime;
@@ -576,8 +665,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			float[] force = new float[2];
 			for(int i=0;i<tiles.length;i++){
 				force = getForce(tiles, i);
-				tiles[i].setCenter2D(vSum(tiles[i].getCenter2D(), vSProd(dt, tiles[i].velocity)));
-				tiles[i].velocity = vSum(tiles[i].velocity, vSProd(dt, force));
+				tiles[i].setCenter2D(LATools.vSum(tiles[i].getCenter2D(), LATools.vSProd(dt, tiles[i].velocity)));
+				tiles[i].velocity = LATools.vSum(tiles[i].velocity, LATools.vSProd(dt, force));
 			}
 		}
 
@@ -585,45 +674,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			float[] force = {0.0f, 0.0f};
 			float[] temp = new float[2];
 			float[] mid = {centers[2*i],centers[2*i+1],0.0f};
-			force = vSProd(-2.0f,vDiff(tiles[i].center, mid)); 
-			force = vSum(force, vSProd(-1.2f,tiles[i].velocity));
+			force = LATools.vSProd(-2.0f,LATools.vDiff(tiles[i].center, mid)); 
+			force = LATools.vSum(force, LATools.vSProd(-1.2f,tiles[i].velocity));
 			//Compute wave of forces due to touch
 			float time = 2*(System.currentTimeMillis()-lastTouchTime)/1000f;
-			temp = vDiff(tiles[i].center, lastTouchPos);
-			float sTemp = abs(temp);
+			temp = LATools.vDiff(tiles[i].center, lastTouchPos);
+			float sTemp = LATools.abs(temp);
 			if (sTemp<time && sTemp > time - .2f && sTemp > .00001f)
-				force = vSum(force, vSProd(5f/((float)Math.pow(sTemp,1)), temp));
+				force = LATools.vSum(force, LATools.vSProd(5f/((float)Math.pow(sTemp,1)), temp));
 			return force;
 		}
 
-		public float[] vDiff(float[] left, float[] right) {
-			float[] ret = new float[2];
-			ret[0] = left[0] - right[0];
-			ret[1] = left[1] - right[1];
-			return ret;
-		}
-
-		public float[] vSum(float[] left, float[] right) {
-			float[] ret = new float[2];
-			for (int i = 0; i < left.length; i++)
-				ret[i] = left[i] + right[i];
-			return ret;
-		}
-
-		public float[] vSProd(float scalar, float[] vec) {
-			float[] ret = new float[2];
-			for (int i = 0; i < vec.length; i++)
-				ret[i] = vec[i]*scalar;
-			return ret;
-		}
-
-		public float abs(float[] vec) {
-			float ret = 0.0f;
-			for (int i = 0; i < vec.length; i++)
-				ret += vec[i]*vec[i];
-			ret = (float)Math.sqrt(ret);
-			return ret;
-		}
 	}
 	//This state defines board behavior during game play.
 	class BoardPlay extends State<BoardTile> {
@@ -655,8 +716,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				tiles[i].hPointedAt = false;
 				//tiles[i].isHint = false;
 			}
-			mGameBanner.set(TextureManager.CLEAR);
+			mGameBanner.setText(TextureManager.CLEAR);
 			initSize = tiles[0].getSize();
+			mCheck  = new Background("check",.11f);
+			float[] center = {-.7f,-1f, 0f};
+			mCheck.setCenter(center);
+
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {
@@ -720,10 +785,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
+			mGameBanner.draw(r);
 			mBoardBg.draw(r);
 			super.draw(tiles, r);
-			mGameBanner.draw(r);
 			mMenu.draw(r);
+			mCheck.draw(r);
 		}
 
 
@@ -738,7 +804,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					//If this tile should be red, make sure it stays that way. Reset the banner
 					if(toggleError){
 						turnErrorRed(at);
-						mGameBanner.set(TextureManager.CLEAR);
+						mGameBanner.setText(TextureManager.CLEAR);
 					}
 				}
 				at = touched(pt);
@@ -747,7 +813,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					if(toggleError){
 						turnErrorRed(at);
 						if(lt == at){
-							mGameBanner.set(mErrorLog.getError(at));
+							mGameBanner.setText(mErrorLog.getError(at));
 						}
 					}
 					if(tiles[at].isBlack() == false) {
@@ -767,11 +833,24 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						mErrorLog.setLog();
 						updateErrors();
 						turnErrorRed(at);
-						mGameBanner.set(mErrorLog.getError(at));
+						mGameBanner.setText(mErrorLog.getError(at));
 						lt = at;
 					}
 				}
 			}
+		
+			if(mCheck.touched(pt) == 1){
+				if(checkSolution()) {		
+					correctSolutionListener.event(0);
+					mGameBanner.setText(TextureManager.GOOD_JOB);
+					setState(GameState.GAME_MENU_END);
+					
+				} else {
+					mGameBanner.setText(TextureManager.TRY_AGAIN);
+					incorrectSolutionListener.event(0);
+				}
+			}
+		
 		}
 
 		public void updateErrors(){
@@ -803,7 +882,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if(toggleError){
 					mErrorLog.setLog();
 					turnErrorRed(at);
-					mGameBanner.set(mErrorLog.getError(at));
+					mGameBanner.setText(mErrorLog.getError(at));
 					updateErrors();
 				}
 				mMenu.menuActive = false;
@@ -817,7 +896,20 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		boolean[] rotateTiles = new boolean[36];
 		boolean[] flipped = new boolean[36];
 		long[] refTime = new long[36];
+		EndGameDialogWidgetLayout mDialog;
+		
 		public BoardGameEnd(BoardTile[] tiles) {
+			mDialog = new EndGameDialogWidgetLayout(.8f, TextureManager.GOOD_JOB);
+			mDialog.setNextClickListener(new GameEventListener(){
+				public void event(int i ){
+					Log.d("Dialog","Clicked");
+					mDialog.deactivate();
+					createPuzzleFromPuzzle(currPuzzle.getNextPuzzle());
+					setState(GameState.GAME_OPENING);
+				}
+				
+			});
+			mDialog.activate();
 			for (int i = 0; i < tiles.length; i++) {
 				flipped[i] = false;
 				rotateTiles[i] = false;
@@ -868,10 +960,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				}
 			}
 		}
+		
+		public void touchHandler(float[] pt){
+			mDialog.touchHandler(pt);
+		}
+		
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
+			mGameBanner.draw(r);
 			mBoardBg.draw(r);
 			super.draw(tiles, r);
-			mGameBanner.draw(r);
+			mDialog.draw(r);
 		}
 	}        
 }

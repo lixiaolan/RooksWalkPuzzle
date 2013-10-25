@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+
 public class StatsScreen extends Graphic<BackgroundTile, State<BackgroundTile>>{
 
 	

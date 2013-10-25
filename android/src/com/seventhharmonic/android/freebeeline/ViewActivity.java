@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.content.res.Resources;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 
 public class ViewActivity extends Activity {
@@ -35,12 +36,17 @@ public class ViewActivity extends Activity {
 
 		mModel = new Model(this);
 		mRenderer = new MyGLRenderer(this, mModel);
+		
+		GlobalApplication.getLevelPackProvider().initialize();
 		mDataServer = new DataServer();
 		mDataServer.setContext(this);
+		
 		mModel.setDataServer(mDataServer);
+		
 		mGLView = (GameView)findViewById(R.id.surface_view);
 		((GameView)mGLView).setMyRenderer(mRenderer);
 		((GameView)mGLView).setModel(mModel);
+		
 		mQuoteView = (TextView)findViewById(R.id.QuoteView);
 		Resources res = getResources();
 		String[] quotes = res.getStringArray(R.array.quotes);
@@ -50,6 +56,24 @@ public class ViewActivity extends Activity {
 		mQuoteView.setTypeface(font);
 		mQuoteView.setText(Html.fromHtml(quotes[sel]));
 		mStore = new Store(this);
+		LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
+		LevelPack mLP = mLPP.getLevelPack(0);
+		Log.d(TAG, mLP.getTitle());
+		Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
+		for(Chapter c: mLP.getAllChapters()){
+			Log.d(TAG, c.getTitle());
+			for(Puzzle p: c.getAllPuzzles()){
+				Log.d(TAG,p.board);
+				Log.d(TAG, p.path);
+				Log.d(TAG, "height width");
+				Log.d(TAG,Integer.toString(p.getHeight()));
+				Log.d(TAG,Integer.toString(p.getWidth()));
+				Log.d(TAG,Integer.toString(p.getAllHints().size()));
+				for(Hint h: p.getAllHints()){
+					Log.d(TAG,h.getDirection());
+				}
+			}
+		}
 	}
 
 

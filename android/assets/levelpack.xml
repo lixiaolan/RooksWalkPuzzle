@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<levelpack>
+    <title>LevelPack 1: When Beatrice went for a walk. </title>
+    <chapter title="Chapter 1">
+        <width>4</width>
+        <height>4</height>
+        <puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+        <puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+		<puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+        <puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+        <puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+        <puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+		<puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+        <puzzle> 1 </puzzle>
+        <puzzle> 2 </puzzle>
+    </chapter>
+    <chapter title="Chapter 2">
+        <width>2</width>
+        <height>2</height>
+        <puzzle> 3 </puzzle>
+        <puzzle> 4 </puzzle>
+        <puzzle> 3 </puzzle>
+        <puzzle> 4 </puzzle>
+    </chapter>
+    <chapter title="Chapter 3">
+        <width>1</width>
+        <height>1</height>
+        <puzzle> 5 </puzzle>
+    </chapter>
+</levelpack>

@@ -30,7 +30,7 @@ public class BeeTile extends Tile{
 	    }
 	}
 	angle = angle - 90.0f;
-	r.drawTile(center, size, textures, color, angle, pivot);
+	r.drawTile(center, size, textures, color, angle, pivot, true);
     }
     
     public void setVelocity2D(float[] in) {

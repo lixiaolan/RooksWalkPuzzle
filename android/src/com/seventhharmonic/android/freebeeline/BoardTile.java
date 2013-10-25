@@ -1,4 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
+
+import com.seventhharmonic.android.freebeeline.util.LATools;
 //In the future. Expose this class to state as well.
 
 class BoardTile extends Tile {
@@ -264,9 +266,9 @@ class BoardTile extends Tile {
     }
     
     public void draw(MyGLRenderer r) {
-	flipper.animate();
-	angryGlow.animate();
-	r.drawTile(center, size, textures, color, angle, pivot);    
+    	flipper.animate();
+		angryGlow.animate();
+		r.drawTile(center, size, textures, color, angle, pivot,true);    
     }    
     
     public boolean checkArrows() {

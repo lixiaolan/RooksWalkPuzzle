@@ -1,6 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
 
+
 class BannerPlay extends State<BackgroundTile> {
 
 	@Override

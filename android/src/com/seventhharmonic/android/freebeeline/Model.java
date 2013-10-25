@@ -1,13 +1,19 @@
 package com.seventhharmonic.android.freebeeline;
 
 
+import java.util.List;
+
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.MapBuilder;
+import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
+import com.seventhharmonic.com.freebeeline.levelresources.Hint;
+import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.content.Context;
 import android.os.Vibrator;
+import android.util.Log;
 import android.app.Activity;
 
 
@@ -18,7 +24,6 @@ class Model {
 	public Board mBoard;
 	public Bee mBee;
 	MenuManager mMenuManager;
-	Background mCheck;
 	private int at = -1;
 	private Vibrator vibe;
 	public Context context;
@@ -29,45 +34,46 @@ class Model {
 	private StatsScreen mStatsScreen;
 	public boolean createTextures = false;
 	public MediaPlayer mediaPlayer;    
-	ScreenSelect mScreenSelect;
+	
 	Banner mVersionBanner;
 	Store mStore;
 	EasyTracker mTracker;
 
+	TableOfContents toc;
+	
 	public Model(Context c) {
-		// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-		// mediaPlayer.start();
+		mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+		mediaPlayer.start();
 		initiateMembers(c, new Board());
-		mTracker = MyTracker.getGaTracker();
+		mTracker = GlobalApplication.getGaTracker();
+		
 	}
 
 	public Model(Context c, Board b){
-		// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-		// mediaPlayer.start();	
+		mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+		mediaPlayer.start();	
 		initiateMembers(c, b);
-		mTracker = MyTracker.getGaTracker();
+		mTracker = GlobalApplication.getGaTracker();
 	}
 
 	public void initiateMembers(Context c, Board b){
 		mBoard = b;
 		mBee = new Bee(mBoard);
-		mCheck  = new Background("check",.11f);
-		float[] center = {-.7f,-1f, 0f};
-		mCheck.setCenter(center);
 		context = c;
 		vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 		state = new GlobalState();
 		mMenuManager = new MenuManager(state, this);
-
 		mTitle = new Background("title", .50f);
 		float[] titleCenter = {.5f, 0.8f, 0.0f};
 		mTitle.setCenter(titleCenter);
 		mStatsScreen = new StatsScreen(state);
-
 		mVersionBanner= new Banner(TextureManager.VERSION, .5f);
 		mVersionBanner.setCenter(.5f, -1.1f);
-		mScreenSelect = new ScreenSelect(3, .7f, .1f);
-	}   
+	}
+	
+	public void createPuzzleFromPuzzle(Puzzle p){
+		mBoard.createPuzzleFromPuzzle(p);	
+	}
 	
 	//This is where difficulties are assigned for the different puzzle lengths:
 	public void createPuzzle(int level) {
@@ -78,7 +84,7 @@ class Model {
 		if (modifyTwo>0 && modifyTwo < 4) {
 			modifyTwo = 2;
 		}
-
+		state.saveCurrGame = true;
 		switch (level) {
 		case 1:
 			state.gametype = GameType.SHORT;
@@ -102,12 +108,45 @@ class Model {
 			break;
 		}
 
-		state.showGameBanner = false;
+		mBoard.setCorrectGameEventListener(new GameEventListener() {	
+			public void event(int i){
+				state.state = GameState.GAME_MENU_END;
+				mMenuManager.updateState();
+				//No game to save. No game to resume.
+				state.saveCurrGame = false;
+				state.resumeGameExists = false;
+				mDataServer.setGames(state.gametype);
+				mDataServer.setFlowers(state.difficulty);
+				mBee.setMood(Mood.HAPPY);			
+				mTracker.send(MapBuilder
+						.createEvent("game_action",     
+								"board_event",  
+								"game_completed",   
+								null)            
+								.build()
+						);
+		}
+			});
+		
+		mBoard.setIncorrectGameEventListener(new GameEventListener() {
+		
+			public void event(int i){
+				mTracker.send(MapBuilder
+						.createEvent("game_action",     
+								"board_event",  
+								"wrong_solution",   
+								null)            
+								.build()
+						);
+			}
+		});
+		setState(GameState.GAME_OPENING);
 	}
 
 	public void createTutorial(){
 		mTutorialBoard = new TutorialBoard2();
 		mTutorialBoard.setGeometry(geometry);
+		
 	}
 
 	public void createStory(){
@@ -127,52 +166,10 @@ class Model {
 	}
 
 	public void touched(float[] pt) {
-		int val = -1;
 		switch(state.state){
 		case GAME_OPENING: 
-			//Internally close menu.    		
-			mBoard.touchHandler(pt);
-
-			if(mCheck.touched(pt) == 1){
-				if(mBoard.checkSolution()){
-					state.showGameBanner = true;
-					state.state = GameState.GAME_MENU_END;
-					mMenuManager.updateState();
-					//No game to save. No game to resume.
-					state.saveCurrGame = false;
-					state.resumeGameExists = false;
-					mDataServer.setGames(state.gametype);
-					mDataServer.setFlowers(state.difficulty);
-					mBee.setMood(Mood.HAPPY);
-					mBoard.mGameBanner.set(TextureManager.GOOD_JOB);
-					mBoard.setState(GameState.GAME_MENU_END);
-					mTracker.send(MapBuilder
-							.createEvent("game_action",     
-									"board_event",  
-									"game_completed",   
-									null)            
-									.build()
-							);
-				} else {
-					mBoard.mGameBanner.set(TextureManager.TRY_AGAIN);
-					state.showGameBanner = true;
-					vibe.vibrate(500);
-					mTracker.send(MapBuilder
-							.createEvent("game_action",     
-									"board_event",  
-									"wrong_solution",   
-									null)            
-									.build()
-							);
-				}
-			}
-
 		case GAME_MENU_LIST:    
 		case GAME_MENU_END:
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
 			if(mBee.touched(pt) == 1){
 				//vibe.vibrate(500);
 				System.out.println("Bee touched");
@@ -185,9 +182,10 @@ class Model {
 								.build()
 						);
 			}
+			//Internally close menu.    		
+			mBoard.touchHandler(pt);
 			break;
 		case MAIN_MENU_OPENING:   
-			mScreenSelect.touchHandler(pt);
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
@@ -198,11 +196,6 @@ class Model {
 				mBoard.tiles[at].setPivot(pivot);
 				mBoard.tiles[at].setRotate(true);
 			}
-
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}	    
 			if(mBee.touched(pt) == 1){
 				vibe.vibrate(100);
 				mTracker.send(MapBuilder
@@ -216,33 +209,26 @@ class Model {
 			break;
 		case TUTORIAL:
 			//Game Menu
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
 			mTutorialBoard.touchHandler(pt);
 			break;
-
 		case STATS:
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
 			break;
 		case STORY:
-			val = mMenuManager.touched(pt);
-			if(val != -1){
-				mMenuManager.onTouched(val);
-			}
 			mStoryBoard.touchHandler(pt);
+			break;
+		case TABLE_OF_CONTENTS:
+			toc.touchHandler(pt);
+			break;
+		
 		default: break;
 		}
+		mMenuManager.touchHandler(pt);
 	}
 
 	public void swiped(float[] pt, String direction) {
 		switch(state.state){
-		case MAIN_MENU_OPENING:
-			mScreenSelect.swipeHandler(direction);
+		case TABLE_OF_CONTENTS:
+			toc.swipeHandler(direction);
 			break;
 		case GAME_OPENING:
 			mBoard.swipeHandler(direction);
@@ -265,23 +251,25 @@ class Model {
 		case GAME_OPENING:
 		case GAME_MENU_LIST:
 		case GAME_MENU_END:
-			mCheck.draw(r);
 			mBoard.draw(r);
 			mBee.draw(r);
 			mMenuManager.draw(r);		
 			break;
 		case MAIN_MENU_OPENING:
-			mScreenSelect.draw(r);
-			break;
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
 		case MAIN_MENU_GEAR:
-			mBoard.draw(r);
-			mBee.draw(r);
 			mTitle.draw(r);
-			mMenuManager.draw(r);
 			mVersionBanner.draw(r);
+			mBoard.draw(r);
+			mMenuManager.draw(r);
+			mBee.draw(r);
+			break;
+		case TABLE_OF_CONTENTS:
+			toc.draw(r);
+			mMenuManager.draw(r);
+			mBee.draw(r);
 			break;
 		case TUTORIAL:
 			mTutorialBoard.draw(r);
@@ -301,12 +289,20 @@ class Model {
 		mMenuManager.setGeometry(g);
 		mStatsScreen.setGeometry(g);
 		mBoard.setGeometry(g);
+		Log.d("Model","g");
+		Log.d("Model", Float.toString(g[1]));
+		Log.d("Model","global");
+		GlobalApplication.getGeometry().setGeometry(g[0], g[1]);
+		Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));
+
+		toc = new TableOfContents(this);
 	}
 
 	public void setState(GameState s){
 		state.state = s;
 		mBee.setState(s);
 		mBoard.setState(s);
+		mMenuManager.updateState();
 	}
 
 	public void setDataServer(DataServer d){

@@ -3,7 +3,6 @@ package com.seventhharmonic.android.freebeeline;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.MapBuilder;
-import com.google.analytics.tracking.android.Tracker;
 
 import android.app.Activity;
 
@@ -15,6 +14,7 @@ class MenuManager {
 	private float[] geometry = new float[3];
 	private float[] bottomPos1 = new float[3];
 	private float[] bottomPos2 = new float[3];
+	private float[] bottomRight = new float[3];
 	private float scale1;
 	private float scale2;
 	EasyTracker mTracker;
@@ -23,7 +23,7 @@ class MenuManager {
 		state = s;
 		mModel = m;
 		updateState();
-		mTracker = MyTracker.getGaTracker();
+		mTracker = GlobalApplication.getGaTracker();
 
 	}
 	//Each case statement should have a declaration of
@@ -58,11 +58,11 @@ class MenuManager {
 			break;
 		case MAIN_MENU_LIST:
 			if(state.resumeGameExists){
-				String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.MENU};
+				String[] textures2 = {TextureManager.NEW, TextureManager.RESUME, TextureManager.MENU, TextureManager.TABLE_OF_CONTENTS};
 				mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 				mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 			} else {
-				String[] textures2 = {TextureManager.NEW, TextureManager.MENU};
+				String[] textures2 = {TextureManager.NEW, TextureManager.MENU, TextureManager.TABLE_OF_CONTENTS};
 				mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 				mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
 			}
@@ -109,6 +109,12 @@ class MenuManager {
 			mGameMenu = new SelectOneMenu(bottomPos2, scale2, texturesTUTORIAL); 
 			mCallback = new Callback_TUTORIAL();
 			break;
+			
+		case TABLE_OF_CONTENTS:
+			String[] texturesTOC = {TextureManager.BACK};
+			mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesTOC); 
+			mCallback = new Callback_TABLE_OF_CONTENTS();
+			break;
 		case STATS:
 			String[] textures9 = {TextureManager.QUIT};
 			mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures9); 
@@ -126,8 +132,11 @@ class MenuManager {
 		return mGameMenu.touched(pt);
 	}
 
-	public void onTouched(int val) {
-		mCallback.callback(val);
+	public void touchHandler(float[] pt) {
+		int val = touched(pt);
+		if(val != -1){
+			mCallback.callback(val);
+		}
 	}
 
 	public void draw(MyGLRenderer r){
@@ -144,6 +153,10 @@ class MenuManager {
 		bottomPos2[0] = 0.0f;
 		bottomPos2[1] = -geometry[1]+scale2;
 		bottomPos2[2] = 0.0f;
+	
+		bottomRight[0] = -1*(geometry[0]-scale2);
+		bottomRight[1] = -geometry[1]+scale2;
+		bottomRight[2] = 0.0f;
 	}
 
 	class Callback_MAIN_MENU_OPENING extends Callback {
@@ -226,6 +239,10 @@ class MenuManager {
 			case 3: state.state = GameState.MAIN_MENU_GEAR;
 			updateState();
 			break;
+			case 4:
+				mModel.setState(GameState.TABLE_OF_CONTENTS);
+				updateState();
+				break;
 			case 0: state.state = GameState.MAIN_MENU_OPENING;
 			updateState();
 			break;
@@ -251,6 +268,11 @@ class MenuManager {
 			case 2: state.state = GameState.MAIN_MENU_GEAR;
 			updateState();
 			break;
+			case 3:
+				mModel.setState(GameState.TABLE_OF_CONTENTS);
+				updateState();
+				break;
+
 			case 0: state.state = GameState.MAIN_MENU_OPENING;
 			updateState();
 			break;
@@ -294,9 +316,9 @@ class MenuManager {
 			updateState();
 			break;
 			case 4: mModel.createPuzzle(4);
-			state.saveCurrGame = true;
-			mModel.setState(GameState.GAME_OPENING);
-			mTracker.send(MapBuilder
+				state.saveCurrGame = true;
+				mModel.setState(GameState.GAME_OPENING);
+				mTracker.send(MapBuilder
 				    .createAppView()
 				    .set(Fields.SCREEN_NAME,"longest_puzzle")
 				    .build()
@@ -304,8 +326,9 @@ class MenuManager {
 			updateState();
 			
 			break;
-			case 0: state.state = GameState.MAIN_MENU_LIST;
-			updateState();
+			case 0: 
+				state.state = GameState.MAIN_MENU_LIST;
+				updateState();
 			break;
 			}
 		}
@@ -363,7 +386,7 @@ class MenuManager {
 			//No game to save. No game to resume.
 			mModel.mBoard.showSolution();
 			mModel.mBoard.setState(GameState.GAME_MENU_END);
-			mModel.mBoard.mGameBanner.set(TextureManager.TRY_HARDER);
+			mModel.mBoard.mGameBanner.setText(TextureManager.TRY_HARDER);
 			mModel.mBee.setMood(Mood.HAPPY);
 			state.saveCurrGame = false;
 			state.resumeGameExists = false;
@@ -413,10 +436,6 @@ class MenuManager {
 		@Override
 		public void callback(int val) {
 			switch(val) {
-			/* case 1: mModel.mTutorialBoard.setState();
-	    	break;
-	    case 2: mModel.mTutorialBoard.setState();
-	    	break;*/
 			case 1:
 				state.state = GameState.MAIN_MENU_OPENING;
 				mModel.setState(GameState.MAIN_MENU_OPENING);
@@ -426,6 +445,23 @@ class MenuManager {
 		}
 	}
 
+	class Callback_TABLE_OF_CONTENTS extends Callback {
+
+		@Override
+		public void callback(int val) {
+			switch(val) {
+			case 1:
+				state.state = GameState.MAIN_MENU_OPENING;
+				mModel.setState(GameState.MAIN_MENU_OPENING);
+				updateState();
+				break;
+			}
+		}
+	}
+
+	
+	
+	
 	class Callback_STATS extends Callback { 	
 		@Override
 		public void callback(int val) {
