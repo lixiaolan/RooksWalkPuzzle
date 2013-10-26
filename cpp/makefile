@@ -4,7 +4,7 @@ CC=x86_64-apple-darwin10.8.0-g++ -std=c++11
 CFLAGS = -g -Wall
 #Define the varios groups of .h and .o files used in compilation:
 DEPS = BeeLineLJJ.hpp
-TEST = test.o BeeLineLJJ.o
+TEST = PuzzlePackLJJ.o BeeLineLJJ.o
 
 #Define the rules in the dependancy tree:
 

@@ -7,6 +7,7 @@
 int main(int argc, char *argv[])
 {
   ofstream ofs;
+  ifstream ifs;
   stringstream ss;
   ss << argv[1] << " " << argv[2] << " " << argv[3] << " " << argv[4];
   int a, b, c, d;
@@ -17,13 +18,23 @@ int main(int argc, char *argv[])
 
   BeeLinePuzzle BLP(a, b, c, d);
 
+  cout << "original:" << endl;
+  BLP.printPuzzle();
+
   ofs.open("iotest.txt");
   ofs << BLP;
   ofs.close();
 
-  cout << BLP.uniqueCounter << endl;
-  cout << BLP.printPuzzle();
+  ifs.open("iotest.txt");
   
+  BeeLinePuzzle BLPT;
+  
+  ifs >> BLPT;
+  
+  ifs.close();
+
+  cout << endl << "copied:" << endl;
+  BLPT.printPuzzle();
 
   //  cout << BLP.uniqueCounter << endl;
 

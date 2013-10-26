@@ -17,6 +17,14 @@ bool operator==(pos left, pos right) {
   return ret;
 }
 
+string intTooString(int in) {
+  stringstream ss;
+  ss << in;
+  string out;
+  ss >> out;
+  return out;
+}
+
 BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), width(w), length(l) {
   vector<int> temp;
   vector<bool> bTemp;
@@ -33,20 +41,22 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), widt
     vertical.push_back(bTemp);
     leftUp.push_back(bTemp);
   }
-  
+  cout << "generating board..." << endl;
   makeBoard(l);
   markUnused();
+  bool test;
   do {
+    cout << "Number Unique..." << endl;
     getHints(hintNum);//select the hints to be used;
-    checkUnique();
-    cout << "try" << endl;
+    test = checkUnique();
+    cout << uniqueCounter << endl;
   } while (uniqueCounter > 1);
 
   // cout << printUnique() << endl;
   // cout << "tPosVec.size(): "<<tPosVec.size() << endl;
 }
 
-void BeeLinePuzzle::BeeLinePuzzle(string tag) {
+BeeLinePuzzle::BeeLinePuzzle() {
   
 }
 
@@ -56,12 +66,14 @@ void BeeLinePuzzle::getHints(int num) {
   hintsNum.clear();
   hintsVertical.clear();
   hintsLeftUp.clear();
+  hintsIndex.clear();
+
   for (int i = 1; i < positions.size(); i++) {
     temp.push_back(i);
   }
   random_shuffle(temp.begin(), temp.end());
   for (int i = 0; i < num; i++) {
-    
+    hintsIndex.push_back(temp[i]);
     hintsPos.push_back(positions[temp[i]]);
     hintsNum.push_back(moveArea[positions[temp[i]].r][positions[temp[i]].c]);
 
@@ -542,7 +554,7 @@ bool BeeLinePuzzle::makeBoard(int depth) {
   return false;
 }
 
-void BeeLinePuzzle::checkUnique() {
+bool BeeLinePuzzle::checkUnique() {
   clearBoolMats();
   gameBoard = moveArea;
   tPosVec.clear();
@@ -555,8 +567,7 @@ void BeeLinePuzzle::checkUnique() {
   tPosVec.push_back(hintsPos[0]);
   uniqueCounter = 0;
 
-  countAllSolutions();
-
+  return isUnique();
 }
 
 void BeeLinePuzzle::countAllSolutions() {
@@ -606,6 +617,51 @@ void BeeLinePuzzle::countAllSolutions() {
     tPosVec.pop_back();
     gameBoard[lm[i].r][lm[i].c] = 0;
   }
+}
+
+bool BeeLinePuzzle::isUnique() {
+  bool a = ((*(tPosVec.begin())) == (*(tPosVec.end()-1)));
+  if (a) {
+    if (boardIsFull() ) {
+      bool b = true;
+      for (int i = 0; i < hintsPos.size(); i++) {
+	b &= (gameBoard[hintsPos[i].r][hintsPos[i].c] == hintsNum[i]); 
+      }
+      if (b) {
+	uniqueCounter += 1;
+	if (uniqueCounter > 1) {
+	  return false;
+	}
+      }
+    }
+  }
+    
+  vector<pos> lm = legalMovesTestUnique();
+  // If there are none, return
+  if (lm.size() == 0) return true;   
+  // Loop though all possible legal moves
+  for (int i = 0; i < lm.size(); i++) {
+    // Add the ith legal move to the list
+    tPosVec.push_back(lm[i]);
+    // and put the correct number into the borad.
+    pos last = (*(tPosVec.end()-1) - *(tPosVec.end()-2));
+    pos secLast = *(tPosVec.end()-2);
+    bool test;
+    gameBoard[lm[i].r][lm[i].c] = (last.r == 0) ? abs(last.c) : abs(last.r);
+    markLRUD(*(tPosVec.end()-1), *(tPosVec.end()-2));
+    setDir(last, *(tPosVec.end()-1));
+    // Now recursivly call makeBoard with one less depth.
+    test = isUnique();
+
+    // clear that spot on the board and try the next legal move.
+    unMarkLRUD(*(tPosVec.end()-1), *(tPosVec.end()-2));
+    tPosVec.pop_back();
+    gameBoard[lm[i].r][lm[i].c] = 0;
+    if (!test) {
+      return false;
+    }
+  }
+  return true;
 }
 
 //EXTRA UTILITY FUNCTIONS
@@ -728,24 +784,57 @@ void BeeLinePuzzle::markUnused() {
   }
 }
 
+void BeeLinePuzzle::buildBoard() {
+  vector<int> temp;
+  vector<bool> bTemp;
+  
+  for (int j = 0; j < width; j++) {
+    temp.push_back(0);
+    bTemp.push_back(false);
+  }
+
+  for (int i = 0; i < height; i++) {
+    moveArea.push_back(temp);
+    leftRight.push_back(bTemp);
+    upDown.push_back(bTemp);
+    vertical.push_back(bTemp);
+    leftUp.push_back(bTemp);
+  }
+
+  for (int i = 1; i < positions.size(); i++) {
+    pos diff = positions[i] - positions[i-1];
+    moveArea[positions[i].r][positions[i].c] = abs(diff.r) + abs(diff.c);
+    vertical[positions[i].r][positions[i].c] = (diff.c == 0);
+    leftUp[positions[i].r][positions[i].c] = ((diff.c+diff.r)>0);
+  }
+
+  for (int i = 0; i < hintsIndex.size(); i++) {
+    hintsPos.push_back(positions[hintsIndex[i]]);
+    pos diff = positions[hintsIndex[i]] - positions[hintsIndex[i]-1];
+    hintsVertical.push_back(diff.c == 0);
+    hintsLeftUp.push_back((diff.c+diff.r)>0);
+    hintsNum.push_back( abs(diff.r) + abs(diff.c) );
+  }
+
+  markUnused();
+  //put more in here to process the hints
+}
 //PRINTING BOARDS TO FILE
 
 //A text based print out of the generated game board.
-string BeeLinePuzzle::print() {
-  ostringstream oss;
-  oss << height << '\n'
-      << width << '\n';
+void BeeLinePuzzle::print() {
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
-      oss << moveArea[i][j] << '\n';
+      if (moveArea[i][j] > -1) {
+	cout << moveArea[i][j] << " ";
+      }
+      else {
+	cout << "x ";
+      }
     }
+    cout << endl;
   }
-  oss << positions.size() << '\n';
-  for (int i = 0; i < positions.size(); i++) {
-    oss << positions[i].r << '\n'
-	<< positions[i].c << '\n';
-  }
-  return oss.str();
+  return;
 }
 
 string BeeLinePuzzle::printUnique() {
@@ -764,47 +853,325 @@ string BeeLinePuzzle::printUnique() {
   return oss.str();
 }
 
-string BeeLinePuzzle::printPuzzle() {
-  ostringstream oss;
+void BeeLinePuzzle::printPuzzle() {
+  for (int j = 0; j < width+1; j++) {
+    cout << ".   ";
+  }
+  cout << '\n';
+
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
       if (moveArea[i][j] == -1) {
-	oss << "x" << " ";
+	cout << " ***";
       } else {
 	pos t(i,j);
 	bool b = false;
 	for (int k = 0; k < hintsPos.size(); k++) {	  
 	  if (t == hintsPos[k]) {
-	    oss << hintsNum[k];
+	    cout << " " << hintsNum[k] << "  ";
 	    b = true;
 	  }
 	}
 	if (!b) {
-	  oss << "0";
+	  cout << "    ";
 	} 
       }
     }
-    oss << "\n";
+    cout << '\n';
+    for (int j = 0; j < width; j++) {
+      if (moveArea[i][j] == -1) {
+	cout << ".***";
+      } else {
+	pos t(i,j);
+	bool b = false;
+	for (int k = 0; k < hintsPos.size(); k++) {	  
+	  if (t == hintsPos[k]) {
+	    if (hintsVertical[k]) {
+	      if (hintsLeftUp[k]) {
+		cout << ".  ^";
+	      }
+	      else {
+		cout << ".  v";
+	      }
+	    }
+	    else {
+	     if (hintsLeftUp[k]) {
+		cout << ".  <";
+	      }
+	      else {
+		cout << ".  >";
+	      }
+	    }
+	    b = true;
+	  }
+	}
+	if (!b) {
+	  cout << ".   ";
+	} 
+      }
+    }
+    cout << ".\n";
+  }
+}
+
+void BeeLinePuzzle::printSoln() {
+  for (int j = 0; j < width+1; j++) {
+    cout << ".   ";
+  }
+  cout << '\n';
+
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      if (moveArea[i][j] == -1) {
+	cout << " ***";
+      } else if (moveArea[i][j] == 0){
+	cout << "    ";
+      }
+      else {
+	cout << " " << moveArea[i][j] << "  ";
+      }
+    }
+
+    //CRAP... vertical and leftup are overwritten by check soln :(
+    cout << '\n';
+    for (int j = 0; j < width; j++) {
+      if (moveArea[i][j] == -1) {
+	cout << ".***";
+      } else if (moveArea[i][j] == 0){
+	cout << ".   ";
+      }
+      else {
+	if (vertical[i][j]) {
+	  if (leftUp[i][j]) {
+	    cout << ".  ^";
+	  }
+	  else {
+	    cout << ".  v";
+	  }
+	}
+	else {
+	  if (leftUp[i][j]) {
+	    cout << ".  <";
+	  }
+	  else {
+	    cout << ".  >";
+	  }
+	}
+      }
+    }
+    cout << ".\n";
+  }
+}
+
+void BeeLinePuzzle::plotToFile(ofstream &ofs) {
+  for (int j = 0; j < width+1; j++) {
+    ofs<< ".   ";
+  }
+  ofs<< '\n';
+
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      if (moveArea[i][j] == -1) {
+	ofs<< " ***";
+      } else {
+	pos t(i,j);
+	bool b = false;
+	for (int k = 0; k < hintsPos.size(); k++) {	  
+	  if (t == hintsPos[k]) {
+	    ofs<< " " << hintsNum[k] << "  ";
+	    b = true;
+	  }
+	}
+	if (!b) {
+	  ofs<< "    ";
+	} 
+      }
+    }
+    ofs<< '\n';
+    for (int j = 0; j < width; j++) {
+      if (moveArea[i][j] == -1) {
+	ofs<< ".***";
+      } else {
+	pos t(i,j);
+	bool b = false;
+	for (int k = 0; k < hintsPos.size(); k++) {	  
+	  if (t == hintsPos[k]) {
+	    if (hintsVertical[k]) {
+	      if (hintsLeftUp[k]) {
+		ofs<< ".  ^";
+	      }
+	      else {
+		ofs<< ".  v";
+	      }
+	    }
+	    else {
+	     if (hintsLeftUp[k]) {
+		ofs<< ".  <";
+	      }
+	      else {
+		ofs<< ".  >";
+	      }
+	    }
+	    b = true;
+	  }
+	}
+	if (!b) {
+	  ofs<< ".   ";
+	} 
+      }
+    }
+    ofs<< ".\n";
+  }
+  return;
+}
+
+int BeeLinePuzzle::getLength() {
+  return length-1;
+}
+
+void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter) {
+  
+  xml_node<> *puzzle;
+  xml_node<> *node;
+  xml_node<> *hint;
+  char *name;
+  int myInt;
+  
+  puzzle = doc->allocate_node(node_element, "puzzle");
+  chapter->append_node(puzzle);
+  name = doc->allocate_string(intTooString(height).c_str());
+  node = doc->allocate_node(node_element, "height", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(intTooString(width).c_str());
+  node = doc->allocate_node(node_element, "width", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getBoardXML().c_str());
+  node = doc->allocate_node(node_element, "board", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getPathXML().c_str());
+  node = doc->allocate_node(node_element, "path", name);
+  puzzle->append_node(node);
+  for (int i = 0; i < hintsPos.size(); i++) {
+    hint = doc->allocate_node(node_element, "hint");
+    puzzle->append_node(hint);
+    myInt = height*hintsPos[i].r + hintsPos[i].c;
+    name = doc->allocate_string(intTooString(myInt).c_str());
+    node = doc->allocate_node(node_element, "index", name);
+    hint->append_node(node);
+    // name = doc->allocate_string(intTooString(hintsNum[i]).c_str());
+    // node = doc->allocate_node(node_element, "number", name);
+    // hint->append_node(node);
+    // name = doc->allocate_string(getHintDir(i).c_str());
+    // node = doc->allocate_node(node_element, "direction", name);
+    // hint->append_node(node);
+  }
+}
+
+string BeeLinePuzzle::getHintDir(int i) {
+  if (hintsVertical[i]) {
+    if (hintsLeftUp[i]) {
+      return "up_arrow";
+    }
+    else {
+      return "down_arrow";
+    }
+  }
+  else {
+    if (hintsLeftUp[i]) {
+      return "left_arrow";
+    }
+    else {
+      return "right_arrow";
+    }
+  }
+  return "FAIL!";
+}
+
+string BeeLinePuzzle::getBoardXML() {
+  ostringstream oss;
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      oss << moveArea[i][j];
+      if ((i != (height-1)) || (j != (width-1))) {
+	oss << ",";
+      }
+    }
   }
   return oss.str();
 }
 
-// Overloaded ofstream &<< to print the game board in a standard format
-// which can be ready by any other program.
-ofstream &operator<<(ofstream &ofs, BeeLinePuzzle &RB) {
-  ofs << RB.height << '\n'
-      << RB.width << '\n';
-  for (int i = 0; i < RB.height; i++) {
-    for (int j = 0; j < RB.width; j++) {
-      ofs << RB.moveArea[i][j] << '\n';
+string BeeLinePuzzle::getPathXML() {
+  ostringstream oss;
+  for (int i = 0; i < positions.size(); i++) {
+    oss << positions[i].r << "," << positions[i].c;
+    if ( i != positions.size()-1) {
+      oss << ",";
     }
   }
-  ofs << RB.positions.size() << '\n';
-  for (int i = 0; i < RB.positions.size(); i++) {
-    ofs << RB.positions[i].r << '\n'
-	<< RB.positions[i].c << '\n';
+  return oss.str();
+}
+
+
+
+
+// Overloaded ofstream &<< to print the game board in a standard format
+// which can be ready by any other program.
+ofstream &operator<<(ofstream &ofs, BeeLinePuzzle &BLP) {
+  ofs << BLP.height << '\n'
+      << BLP.width << '\n';
+  ofs << BLP.positions.size() << '\n';
+  for (int i = 0; i < BLP.positions.size(); i++) {
+    ofs << BLP.positions[i].r << '\n'
+	<< BLP.positions[i].c << '\n';
+  }
+  ofs << BLP.hintsIndex.size() << '\n';
+  for (int i = 0; i < BLP.hintsIndex.size(); i++) {
+    ofs << BLP.hintsIndex[i] << '\n';
   }
   return ofs;
+}
+
+ifstream &operator>>(ifstream &ifs, BeeLinePuzzle &BLP) {
+
+  BLP.gameBoard.clear();
+  BLP.positions.clear();
+  BLP.vertical.clear();
+  BLP.leftUp.clear();
+  BLP.hintsPos.clear();
+  BLP.hintsNum.clear();
+  BLP.hintsVertical.clear();
+  BLP.hintsLeftUp.clear();
+  BLP.hintsPos.clear();
+  BLP.hintsNum.clear();
+  BLP.hintsIndex.clear();
+  BLP.hintsVertical.clear();
+  BLP.hintsLeftUp.clear();
+
+  int r, c, t;
+
+  if ( !(ifs >> BLP.height)) {
+    return ifs;
+    cout << "empty!" << endl;
+  }
+  ifs >> BLP.width;
+  ifs >> BLP.length;  
+  
+  for (int i = 0; i < BLP.length; i++) {
+    ifs >> r;
+    ifs >> c;
+    BLP.positions.push_back(pos(r,c));
+  }
+  
+  ifs >> t;
+  
+  for (int i = 0; i < t; i++) {
+    ifs >> r;
+    BLP.hintsIndex.push_back(r);
+  }
+
+  BLP.buildBoard();
+
+  return ifs;
 }
 
 void printBool(vector<vector<bool> > &in) {
@@ -816,3 +1183,4 @@ void printBool(vector<vector<bool> > &in) {
   }
   //return os;
 }
+
