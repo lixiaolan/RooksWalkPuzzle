@@ -23,6 +23,7 @@ public class LevelPackParser extends BaseParser {
 	String NUMBER = "number";
 	String INDEX = "index";
 	String DIRECTION = "direction";
+	String ID = "id";
 	
     public LevelPackParser(){
         
@@ -59,6 +60,7 @@ public class LevelPackParser extends BaseParser {
     		}
     	});
     	
+    	
     	chapter.getChild(HEIGHT).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
     			Log.d(TAG,"height "+body);
@@ -77,6 +79,7 @@ public class LevelPackParser extends BaseParser {
     	chapter.getChild(PUZZLE).setStartElementListener(new StartElementListener(){
     		public void start(Attributes a){
     			puzz.reset();
+    			puzz.setId(a.getValue(ID));
     		}
     	});
     	

@@ -399,17 +399,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	public void drawRectangleTile(String mode, float[] center, float width, float height, String[] textures, String color, float angle, float[] pivot)
 	{
-		float[] rectangleTextureCoordinateData = 
-			{							 // Front face
-				1.0f, 0.0f,                             
-				1.0f, 1.0f,
-				0.0f, 0.0f,
-				1.0f, 1.0f,
-				0.0f, 0.0f,
-				0.0f, 0.0f,   					
-			};
-			
-		
+		float[] rectangleTextureCoordinateData;
 		try{
 			mTextures[0] = TM.library.get(textures[0]);
 			mTextures[1] = TM.library.get(textures[1]);	
@@ -448,16 +438,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glEnableVertexAttribArray(mColorHandle);
 
 		// Pass in the texture coordinate information
-
-		/*		Square coordinates for reference
-		 * 		1.0f, 0.0f,                             
-				1.0f, 1.0f,
-				0.0f, 0.0f,
-				1.0f, 1.0f,
-				0.0f, 1.0f,
-				0.0f, 0.0f,   
-		*/
-		
 		rectangleTextureCoordinateData = selectCropStyle(width, height, mode);
 		mRectangleTextureCoordinates.put(rectangleTextureCoordinateData).position(0);
 		mRectangleTextureCoordinates.position(0);
@@ -563,8 +543,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			}			
 		
 		} else if (mode.equals(FIXEDWIDTH)){
-			float r = .5f*height;
-			
+			float r = .5f*height/width;
 				float[] tempTextureCoordinateData =
 					{	//Somehow 1 is the bottom and 0 is the top?
 						
@@ -574,38 +553,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						.5f,1,
 						0,1,
 						0,1-r
-						/*.5f, 1.0f,                             
-						.5f, 0,
-						0.0f, 1.0f,
-						.5f, 0,
-						0.0f, 0,
-						0.0f, 1.0f,
-						
-						/*
-						//Chops from top
-						.5f, 0.0f,                             
-						.5f, r,
-						0.0f, 0.0f,
-						.5f, r,
-						0.0f, r,
-						0.0f, 0.0f,
-						
-						/*
-						.5f, 0.0f,                             
-						.5f, 1.0f,
-						0.0f, 0.0f,
-						.5f, 1.0f,
-						0.0f, 1.0f,
-						0.0f, 0.0f,  
-						
-						
-						// Front face
-					/*	1.0f, 0.0f,   				//1.0, 0.0                          
-						1.0f, 1.0f,				//1.0, 1.0
-						0.0f, 0.0f,				//0, 0
-						1.0f,  1.0f,				//1, 1
-						0.0f, 1.0f,				//0,1
-						0.0f, 0.0f,   				//0,0*/	
 					};
 				return tempTextureCoordinateData;
 		}

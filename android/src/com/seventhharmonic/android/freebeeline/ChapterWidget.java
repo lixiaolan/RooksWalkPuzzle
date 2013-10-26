@@ -18,25 +18,46 @@ public class ChapterWidget extends WidgetLayout{
 	GridWidgetLayout mGrid;
 	Chapter ch;
 	GameEventListener listener;
+	ImageWidget mImage;
+	ImageWidget finishedFlower;
 	
 	public ChapterWidget(Chapter ch){
 		
 		float height = GlobalApplication.getGeometry().getGeometry()[1];
+		
+		//In the future, forest should be replaced by ch.getImage
+		mImage = new ImageWidget(0,0,.8f, .8f*height, "forest");
+		mImage.setRelativeCenter(0,0);
+		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
+		widgetList.add(mImage);
+		
 		mText = new TextWidget(0, 0,1,.5f,ch.getTitle());
 		mText.setRelativeCenter(0,height-mText.getHeight());
 		setCenter(0,0);
 		setWidth(1);
 		setHeight(height);
-		widgetList.add(mText);
+		//widgetList.add(mText);
+		
+		if(ch.getCompleted()){
+			finishedFlower = new ImageWidget(0,0,.125f, .125f, ch.getPuzzle(0).getImage());
+			finishedFlower.setColor("blue");
+			finishedFlower.setRelativeCenter(1-finishedFlower.getWidth(), -1*(height-finishedFlower.getHeight()));
+			widgetList.add(finishedFlower);
+		}
+		
 		Log.d(TAG,ch.getTitle());
 		Log.d(TAG,Float.toString(ch.getWidth()));
-		mGrid = new GridWidgetLayout(ch.getWidth(), ch.getHeight());
+		mGrid = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .15f);
 		mGrid.setRelativeCenter(0, 0);
 		for(int i =0;i<ch.getNumberOfPuzzles();i++){
 			ImageWidget mImage = new ImageWidget(0,0,.125f, .125f, ch.getPuzzle(i).getImage());
+			mImage.setColor("blue");
+			mImage.setBackground(TextureManager.BOX);
 			mGrid.addWidget(mImage);
 		}
-		widgetList.add(mGrid);		
+		widgetList.add(mGrid);
+		
+		
 	}
 
 	@Override

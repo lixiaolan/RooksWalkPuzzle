@@ -18,6 +18,12 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     
     public ScreenSlideWidgetLayout(float gap) {
     	this.gap = gap;  
+    	//mCPW.setActiveCircle(0);
+    }
+    
+    @Override
+    public boolean isTouched(float[] pt){
+    	return widgetList.get(activeWidget).isTouched(pt);
     }
     
     public int getActiveWidget(){
@@ -33,10 +39,15 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     	widgetList.add(w);
     	computeGeometry();
     	float h = GlobalApplication.getGeometry().getGeometry()[1];
-    	float[] center = {1.0f-.08f, -1*(h-.08f), 0.0f};
+    	/* Assume that each circle is .08. This should probably be moved into 
+    	 * CircleProgressBarWidget.
+    	 */
+    	float xCPW = .08f*widgetList.size()+.04f*((widgetList.size() %2)-1);
+    	float yCPW = -1*(h-.08f);
+    	float[] center = {xCPW, yCPW, 0.0f};
     	mCPW = new CircleProgressBarWidget(widgetList.size(), center, .08f);
-    
-    	}
+    	mCPW.setActiveCircle(0);
+    }
     
     @Override
     public void computeGeometry() {

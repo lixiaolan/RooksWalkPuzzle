@@ -88,7 +88,15 @@ public abstract class Widget {
 	public void swipeHandler(String direction){};
 	
 	public boolean isTouched(float[] pt){
-		return false;
+		System.out.println("Widget Touched");
+		boolean b = ((pt[0] < center[0]+width)&(pt[0] > center[0]-width)&(pt[1] < center[1]+height)&(pt[1] > center[1]-height));
+    	if(b){
+    		pt[0] = center[0];
+    		pt[1] = center[1];
+    	}
+    	System.out.println(b);
+    	return b;
+		
 	}	
 	
 	public void setColor(){} 

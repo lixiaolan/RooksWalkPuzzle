@@ -11,9 +11,11 @@ public class ImageWidget extends Widget{
 
 	TextTile a;
 	String color = "transparent";
+	String text;
 	
 	public ImageWidget(float[] center , float width, float height, String text){
-		a = new TextTile(center, width, height, text);
+		this.text = text;
+		a = new TextTile(center, width, height, text);	
 		setCenter(center);
 		setWidth(width);
 		setHeight(height);
@@ -22,6 +24,7 @@ public class ImageWidget extends Widget{
 	
 	
 	public ImageWidget(float centerX, float centerY , float width, float height, String text){
+		this.text = text;
 		float[] center = {centerX, centerY, 0.0f};
 		a = new TextTile(center, width, height, text);
 		setCenter(center);
@@ -40,6 +43,12 @@ public class ImageWidget extends Widget{
 	public void setColor(String color){
 		this.color = color;
 		a.setColor(color);
+	}
+	
+	public void setBackground(String image){
+		if(image != null){
+			a.setTextures(text, image);
+		} 
 	}
 	
 	@Override

@@ -191,12 +191,12 @@ class BoardTile extends Tile {
     }
     
     public void setHint(){
-	number  = Integer.toString(true_solution);
-	arrow = true_arrow;
-	color = "dullyellow";
-	nativeColor = "dullyellow";
-	clickable = false;
-	isHint = true;
+    	number  = Integer.toString(true_solution);
+    	arrow = true_arrow;
+    	color = "dullyellow";
+    	nativeColor = "dullyellow";
+    	clickable = false;
+    	isHint = true;
     }
     
     public void setTrueSolution(int solution){

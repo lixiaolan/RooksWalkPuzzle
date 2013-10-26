@@ -6,12 +6,14 @@ public class GridWidgetLayout extends WidgetLayout{
 	String TAG = "GridWidgetList";
 	int width;
 	int height;
+	float size = .125f;
 	float[] xcoords;
 	float[] ycoords;
 	
-	public GridWidgetLayout(int width, int height){
+	public GridWidgetLayout(int width, int height, float size){
 		this.width = width;
 		this.height = height;
+		this.size = size;
 		initiateGeometry();
 	}
 	
@@ -42,8 +44,8 @@ public class GridWidgetLayout extends WidgetLayout{
 		// Unlike the rest of the program, we are taking the care here to perform a rotation
 		// Hence index 0 is a the upper left.
 		for(int i =0;i< length; i++){
-			xcoords[i] = -( (i%width) - ((float)width-1.0f)/2 )/4.0f;
-			ycoords[i] = -( (i/height) - ((float)height-1.0f)/2 )/4.0f;
+			xcoords[i] = -( (i%width) - ((float)width-1.0f)/2)/(1/(2*size));
+			ycoords[i] = -( (i/height) - ((float)height-1.0f)/2 )/(1/(size*2));
 		}
 	}
 	

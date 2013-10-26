@@ -70,7 +70,7 @@ public class ViewActivity extends Activity {
 				Log.d(TAG,Integer.toString(p.getWidth()));
 				Log.d(TAG,Integer.toString(p.getAllHints().size()));
 				for(Hint h: p.getAllHints()){
-					Log.d(TAG,h.getDirection());
+					//Log.d(TAG,h.getDirection());
 				}
 			}
 		}

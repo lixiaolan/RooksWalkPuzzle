@@ -71,35 +71,38 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 	
 	public void buildXMLBoard(int[] solution, int[][] path, int height, int width, int[] hints){
+		this.path = path;
 		int tilesLength = height*width;
 		Log.d(TAG,Integer.toString(tilesLength));
 		for (int i = 0; i < tilesLength; i++) {	
-			//This does a hard reset on the board.
-			
+			//This does a hard reset on the board.			
 			tiles[i].number = TextureManager.CLEAR;
 			tiles[i].arrow = TextureManager.CLEAR;
-			tiles[i].setTrueSolution(0);
 			tiles[i].setTrueArrow(TextureManager.CLEAR);
-			//Set the solution in the tile
-			Log.d(TAG, Integer.toString(solution[i]));
 			tiles[i].setTrueSolution(solution[i]);
 		} 
 		
 		int dx;
 		int dy;
-		int length = (path.length)/2;
+		int length = (path.length);
+		
 		for (int i = 0; i < length-1; i++) {
 			dx = path[i+1][0]-path[i][0];
 			dy = path[i+1][1]-path[i][1];
-
+			Log.d("path","path creation");
+			Log.d("path", "length "+Float.toString(length));
+			Log.d("path", "dx "+Float.toString(dx));
+			Log.d("path", "dy "+Float.toString(dy));
 			if (dx > 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 			}
+			
 			if (dx < 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 			}
+			
 			if (dy > 0) {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
@@ -108,6 +111,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 			}
+			Log.d("path", tiles[6*path[i][0] + path[i][1]].getTrueArrow());
 		}
 		
 		if(toggleHints){
@@ -118,7 +122,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				tiles[r].setHint();
 			}
 		}
-		this.path = path;
+		
 	}
 	
 	public void buildEmptyBoard() {
@@ -699,13 +703,20 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		public float[] oldY;
 		int at = -1;
 		int lt = -1;
-
+		ButtonWidget reset;
+		
 		public BoardPlay(BoardTile[] tiles) {
 			originalTiles = tiles;
 			refTime = System.currentTimeMillis();
 			oldX = new float[tiles.length];
 			oldY = new float[tiles.length];
 			mMenu = new Menu();
+			reset = new ButtonWidget(0, -1.0f, .1f, .1f, TextureManager.ERASER);
+			reset.setClickListener(new GameEventListener(){
+				public void event(int i){
+					resetBoard();
+				}
+			});
 			for (int i = 0; i < tiles.length; i++) {
 				tiles[i].rotate = false;
 				tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
@@ -790,6 +801,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			super.draw(tiles, r);
 			mMenu.draw(r);
 			mCheck.draw(r);
+			reset.draw(r);
 		}
 
 
@@ -841,6 +853,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		
 			if(mCheck.touched(pt) == 1){
 				if(checkSolution()) {		
+					if(currPuzzle!=null){
+						Log.d("board", "solved a puzzle and set completed to true");
+						currPuzzle.setCompleted(true);
+					}
 					correctSolutionListener.event(0);
 					mGameBanner.setText(TextureManager.GOOD_JOB);
 					setState(GameState.GAME_MENU_END);
@@ -850,6 +866,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					incorrectSolutionListener.event(0);
 				}
 			}
+			
+			reset.touchHandler(pt);
 		
 		}
 

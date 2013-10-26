@@ -3,7 +3,7 @@ package com.seventhharmonic.android.freebeeline;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.MapBuilder;
-
+import com.seventhharmonic.android.freebeeline.TableOfContents.Contents;
 import android.app.Activity;
 
 class MenuManager {
@@ -90,7 +90,7 @@ class MenuManager {
 			break;
 		case GAME_OPENING:
 			String[] textures5 = {};
-			mGameMenu = new GameMenu(bottomPos2, scale2, textures5, TextureManager.CLEAR, tiltAngle); 
+			mGameMenu = new GameMenu(bottomRight, scale2, textures5, TextureManager.BACK, tiltAngle); 
 			mCallback = new Callback_GAME_OPENING();
 			break;
 		case GAME_MENU_LIST:
@@ -367,7 +367,7 @@ class MenuManager {
 
 		@Override
 		public void callback(int val) {
-			state.state = GameState.GAME_MENU_LIST;
+			mModel.setState(GameState.TABLE_OF_CONTENTS);
 			updateState();
 		}
 
@@ -417,14 +417,15 @@ class MenuManager {
 		@Override
 		public void callback(int val) {
 			switch(val) {
-			case 1: state.state = GameState.MAIN_MENU_OPENING;
-			mModel.setState(GameState.MAIN_MENU_OPENING);
+			case 1: 
+			mModel.setState(GameState.TABLE_OF_CONTENTS);
 			updateState();
 			break;
-			case 2: 
+			/*case 2: 
 				ShareHelper sh = new ShareHelper((Activity)mModel.context, "1","2","3","4","5");
 				sh.share();
 				break;
+			*/
 			}
 
 		}
@@ -451,9 +452,19 @@ class MenuManager {
 		public void callback(int val) {
 			switch(val) {
 			case 1:
-				state.state = GameState.MAIN_MENU_OPENING;
-				mModel.setState(GameState.MAIN_MENU_OPENING);
-				updateState();
+				System.out.println("In Menu");
+				System.out.println(mModel.toc.mContents);
+				if(mModel.toc.mContents.equals(TableOfContents.Contents.LEVELPACKDISPLAY)){
+					/*Comment: TOC already has a reference to Model 
+					 * - it could just do these state changes itself
+					 * That would be less awkward then this shit.
+					*/
+					mModel.setState(GameState.MAIN_MENU_OPENING);
+					updateState();
+				}
+				else {	
+					mModel.toc.setState();
+				}
 				break;
 			}
 		}

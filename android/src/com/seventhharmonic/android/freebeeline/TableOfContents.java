@@ -9,27 +9,34 @@ public class TableOfContents extends GraphicWidget{
 
 	private String TAG = "TOC";
 	
-	enum Contents {
-		LEVELPACKDISPLAY, CHAPTERDISPLAY, PUZZLEDISPLAY
-	}
-	Contents mContents = Contents.LEVELPACKDISPLAY;
+	public enum Contents {
+		LEVELPACKDISPLAY, CHAPTERDISPLAY
+	};
+	
+	Contents mContents;
 	LevelPackProvider mLPP;	
 	LevelPack currLevelPack;
 	Model mModel;
 	
 	public TableOfContents(Model model){
+		
 		mLPP = GlobalApplication.getLevelPackProvider();
-		state = new LevelPackDisplay();
 		mModel = model;
+		mContents = Contents.LEVELPACKDISPLAY;
+		state = new LevelPackDisplay();
 	}
 	
 	public void setState() {
+		System.out.println("In set state");
+		System.out.println(mContents);
 		switch(mContents){
 			case LEVELPACKDISPLAY: 
 				mContents = Contents.CHAPTERDISPLAY;
 				state = new ChapterDisplay();
 			break;
-			default:
+			case CHAPTERDISPLAY:
+				mContents = Contents.LEVELPACKDISPLAY;
+				state = new LevelPackDisplay();
 				break;
 		}
 	}
@@ -52,7 +59,8 @@ public class TableOfContents extends GraphicWidget{
 			m = new ScreenSlideWidgetLayout(2.0f);
 			m.setDrawProgressBar(false);
 			for(int i =0;i<mLPP.getNumberOfLevelPacks();i++){
-				m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
+				m.addWidget(new LevelPackWidget(TextureManager.GOOD_JOB,"forest"));
+				//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
 			}
 		}
 		
@@ -81,7 +89,9 @@ public class TableOfContents extends GraphicWidget{
 		public void touchHandler(float[] pt) {
 			currLevelPack = mLPP.getLevelPack(m.getActiveWidget());
 			Log.d(TAG,"touched LevelPackDisplay");
-			setState();
+			if(m.isTouched(pt)){
+				setState();
+			}
 		}
 		
 	}

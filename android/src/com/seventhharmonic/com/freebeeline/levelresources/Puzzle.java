@@ -3,6 +3,8 @@ package com.seventhharmonic.com.freebeeline.levelresources;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.seventhharmonic.android.freebeeline.TextureManager;
 
 public class Puzzle {
@@ -12,6 +14,24 @@ public class Puzzle {
 	int width;
 	List<Hint> hints = new ArrayList<Hint>();
 	Puzzle nextPuzzle;
+	boolean completed = false;
+	String id;
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 
 	public Puzzle getNextPuzzle() {
 		return nextPuzzle;
@@ -55,16 +75,20 @@ public class Puzzle {
 
 	public int[][] getPath(){
 		int[] p = CSVIntParser(path);
+		Log.d("puzzpath", Integer.toString(p.length));
 		int[][] sol = new int[p.length/2][2]; 
-		for(int i =0;i<p.length/2;i++){
+		for(int i = 0; i<p.length/2; i++){
 			sol[i][0] = p[2*i];
 			sol[i][1] = p[2*i+1];
 		}
+		
 		return sol;
 	}
 
 	
 	public String getImage(){
+		if(completed)
+			return "check";
 		return image;
 	}
 	

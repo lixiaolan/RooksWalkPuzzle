@@ -80,6 +80,7 @@ public class TextureManager {
     
     public static final String VERSION = "alpha-0.2";
     public static final String BOX = "box";
+    public static final String ERASER = "eraser";
     public static final String BORDERE = "border_e";
     public static final String BORDERW = "border_w";
     public static final String BORDERN = "border_n";
@@ -144,7 +145,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.forest, "forest");
 		//Load textures of the box
 		buildTextures(context, R.drawable.box2, BOX);
-		buildTextures(context, R.drawable.bordere, BORDERE);
+		/*buildTextures(context, R.drawable.bordere, BORDERE);
 		buildTextures(context, R.drawable.borderw, BORDERW);
 		buildTextures(context, R.drawable.bordern, BORDERN);
 		buildTextures(context, R.drawable.borders, BORDERS);
@@ -152,7 +153,8 @@ public class TextureManager {
 		buildTextures(context, R.drawable.bordersw, BORDERSW);
 		buildTextures(context, R.drawable.borderne, BORDERNE);
 		buildTextures(context, R.drawable.bordernw, BORDERNW);
-		
+		*/
+		buildTextures(context, R.drawable.eraser, ERASER);
 		//reate Menu Textures and Words needed
 			    
 	    

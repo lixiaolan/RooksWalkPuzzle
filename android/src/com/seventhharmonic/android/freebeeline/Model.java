@@ -73,6 +73,28 @@ class Model {
 	
 	public void createPuzzleFromPuzzle(Puzzle p){
 		mBoard.createPuzzleFromPuzzle(p);	
+		
+		mBoard.setCorrectGameEventListener(new GameEventListener() {	
+			public void event(int i){
+				//state.state = GameState.GAME_M;
+				//mMenuManager.updateState();
+				//No game to save. No game to resume.
+				state.saveCurrGame = false;
+				state.resumeGameExists = false;
+				mBee.setMood(Mood.HAPPY);
+				//TODO: DO THIS DIFFERENT WITH A HARD RESET
+				toc.setState();
+				toc.setState();
+		}
+			});
+		
+		mBoard.setIncorrectGameEventListener(new GameEventListener() {
+			
+			public void event(int i){
+			}
+		});
+
+		
 	}
 	
 	//This is where difficulties are assigned for the different puzzle lengths:

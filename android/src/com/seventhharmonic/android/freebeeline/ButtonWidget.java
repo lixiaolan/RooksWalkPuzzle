@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import android.util.Log;
+
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 
 public class ButtonWidget extends Widget{
@@ -11,6 +13,7 @@ public class ButtonWidget extends Widget{
 	public ButtonWidget(float centerX, float centerY, float width, float height, String text){
 		float[] center = {centerX, centerY, 0.0f};
 		mText = new TextTile(center, width, height, text);
+
 		mBackground  = new TextTile(center, width, height, TextureManager.BOX);
 		mBackground.setMode(MyGLRenderer.STRETCH);
 	}
@@ -28,6 +31,7 @@ public class ButtonWidget extends Widget{
 	@Override
 	public void touchHandler(float[] pt){
 		if(mText.touched(pt)){
+			Log.d("mText", "touched");
 			listener.event(0);
 		}
 	}

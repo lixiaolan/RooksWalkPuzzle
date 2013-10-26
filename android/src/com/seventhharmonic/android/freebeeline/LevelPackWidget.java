@@ -22,14 +22,16 @@ public class LevelPackWidget extends WidgetLayout{
 		mText = new TextWidget(0,0,1,.5f,text);
 		mText.setRelativeCenter(0,height-mText.getHeight());
 		
-		mImage = new ImageWidget(0,0,1, height, image);
+		mImage = new ImageWidget(0,0,.7f, .7f*height, image);
 		mImage.setRelativeCenter(0,0);
 		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
-		setCenter(0,0);
-		setWidth(1);
-		setHeight(height);
+		
 		widgetList.add(mText);
 		widgetList.add(mImage);
+		
+		setCenter(0,0);
+		setWidth(mImage.getWidth());
+		setHeight(mImage.getHeight());
 	}
 
 	@Override

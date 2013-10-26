@@ -10,6 +10,15 @@ public class Chapter {
 	List<Puzzle> puzzles =  new ArrayList<Puzzle>();
 	int height = 0;
 	int width = 0;
+	boolean completed = true;
+	
+	public boolean getCompleted(){
+		for(Puzzle p: puzzles){
+			if(!p.isCompleted())
+				return false;
+		}
+		return true;
+	}
 	
 	public int getNumberOfPuzzles(){
 		return puzzles.size();
