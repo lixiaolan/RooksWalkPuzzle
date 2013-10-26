@@ -1,7 +1,5 @@
 package com.seventhharmonic.android.freebeeline;
 
-
-
 class ScreenSlideWidgetLayout extends WidgetLayout{
 
     int activeWidget = 0;

@@ -54,6 +54,9 @@ RookBoard::RookBoard(int h, int w, int l) : height(h), width(w), length(l) {
   markUnused();
 }
 
+
+//FUNCTIONS FOR GENERATING LEGAL MOVES LISTS
+
 // Generate all legal moves from a given position and board state:
 vector<pos> RookBoard::legalMoves() {
   // Find the last position.
@@ -496,6 +499,9 @@ vector<pos> RookBoard::legalMovesNoPassOverNoPoint() {
   return legalMovesList;
 }
 
+
+//MISC
+
 bool RookBoard::goodDir(pos in, int temp, bool v, bool ul) {
   if (positions.size() == 1)
     return true;
@@ -585,7 +591,10 @@ void RookBoard::reorderLegalMoves(vector<pos> &legalMoves) {
   return;
 }
 
-// //Function to put legal moves in shortest to longest order
+
+//FUNCTIONS FOR DETECTING LEGAL PLAYS
+
+//Function to put legal moves in shortest to longest order
 // void RookBoard::sortLegalMoves(pos initialPos, vector<pos> &legalMoves) {
 //   auto f = [initialPos](pos left, pos right) -> bool {return lengthOfMove(initialPos-left)<lengthOfMove(initialPos-right); };
 //   sort(legalMoves.begin(), legalMoves.end(), f);
@@ -698,23 +707,8 @@ bool RookBoard::goodPlayAnyNum(pos play, int num) {
   else return true;
 }
 
-//A text based print out of the generated game board.
-string RookBoard::print() {
-  ostringstream oss;
-  oss << height << '\n'
-      << width << '\n';
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      oss << moveArea[i][j] << '\n';
-    }
-  }
-  oss << positions.size() << '\n';
-  for (int i = 0; i < positions.size(); i++) {
-    oss << positions[i].r << '\n'
-	<< positions[i].c << '\n';
-  }
-  return oss.str();
-}
+
+//RECURSIVE BOARD MAKERS:
 
 //The recrusive board maker.
 bool RookBoard::makeBoard(int depth) {
@@ -913,6 +907,10 @@ bool RookBoard::makeBoardNoPassOver(int depth) {
   return false;
 }
 
+
+
+//EXTRA UTILITY FUNCTIONS
+
 void RookBoard::markLRUD(pos start, pos end) {
   if (start.r == end.r) {
     for (int i = min(end.c,start.c); i <= max(end.c,start.c); i++) {
@@ -1008,6 +1006,27 @@ void RookBoard::markUnused() {
       }
     }
   }
+}
+
+
+//PRINTING BOARDS TO FILE
+
+//A text based print out of the generated game board.
+string RookBoard::print() {
+  ostringstream oss;
+  oss << height << '\n'
+      << width << '\n';
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      oss << moveArea[i][j] << '\n';
+    }
+  }
+  oss << positions.size() << '\n';
+  for (int i = 0; i < positions.size(); i++) {
+    oss << positions[i].r << '\n'
+	<< positions[i].c << '\n';
+  }
+  return oss.str();
 }
 
 // Overloaded ofstream &<< to print the game board in a standard format
