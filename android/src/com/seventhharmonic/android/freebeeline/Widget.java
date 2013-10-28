@@ -6,6 +6,15 @@ package com.seventhharmonic.android.freebeeline;
  *  stored in a layout. 
  */
 
+
+/*
+ * Every widget has an absolute center and a relative center. The absolute center
+ * is computed in Widget layout and passed in. The relative center is specified by the user
+ * You have to override the setCenter method to pass down the center data to your own squares.
+ * 
+ */
+
+
 public abstract class Widget {
 
 	float width;

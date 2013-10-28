@@ -44,7 +44,7 @@ class Model {
 	public Model(Context c) {
 		mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
 		mediaPlayer.start();
-		initiateMembers(c, new Board());
+		initiateMembers(c, new Board(this));
 		mTracker = GlobalApplication.getGaTracker();
 		
 	}
@@ -75,7 +75,7 @@ class Model {
 		mBoard.createPuzzleFromPuzzle(p);	
 		final long id  = p.getId();
 		
-		mBoard.setCorrectGameEventListener(new GameEventListener() {	
+		/*mBoard.setCorrectGameEventListener(new GameEventListener() {	
 			public void event(int i){
 				//state.state = GameState.GAME_M;
 				//mMenuManager.updateState();
@@ -95,8 +95,7 @@ class Model {
 			public void event(int i){
 			}
 		});
-
-		
+		 */
 	}
 	
 	//This is where difficulties are assigned for the different puzzle lengths:
@@ -132,7 +131,7 @@ class Model {
 			break;
 		}
 
-		mBoard.setCorrectGameEventListener(new GameEventListener() {	
+		/*mBoard.setCorrectGameEventListener(new GameEventListener() {	
 			public void event(int i){
 				state.state = GameState.GAME_MENU_END;
 				mMenuManager.updateState();
@@ -163,7 +162,7 @@ class Model {
 								.build()
 						);
 			}
-		});
+		});*/
 		setState(GameState.GAME_OPENING);
 	}
 
@@ -274,10 +273,13 @@ class Model {
 			break;
 		case GAME_OPENING:
 		case GAME_MENU_LIST:
-		case GAME_MENU_END:
 			mBoard.draw(r);
 			mBee.draw(r);
 			mMenuManager.draw(r);		
+			break;
+		case GAME_MENU_END:
+			mBoard.draw(r);
+			mBee.draw(r);
 			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:

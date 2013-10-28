@@ -62,6 +62,7 @@ public class TableOfContents extends GraphicWidget{
 				m.addWidget(new LevelPackWidget(TextureManager.GOOD_JOB,"forest"));
 				//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
 			}
+			currLevelPack = mLPP.getLevelPack(0);
 		}
 		
 		@Override

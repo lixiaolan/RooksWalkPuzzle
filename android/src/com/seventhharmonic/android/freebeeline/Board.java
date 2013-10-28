@@ -30,31 +30,22 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	ErrorLog mErrorLog;
 	Border mBorder = new Border(boardWidth, boardHeight);
 	Background mCheck;
-	GameEventListener correctSolutionListener;
-	GameEventListener incorrectSolutionListener;
 	public TextWidget mGameBanner;
 	private Background mBoardBg;
 	Puzzle currPuzzle;
+	Model mModel;
 	
 	
-	
-	public Board() {
+	public Board(Model mModel) {
 		buildEmptyBoard();
 		state = new BoardMainMenu(tiles);
 		mGameBanner = new TextWidget(0.0f, 0.0f, .9f, .4f, TextureManager.CLEAR);
 		mBoardBg = new Background("boardbg", 1.0f);
 		mErrorLog = new ErrorLog(this);
-
+		this.mModel = mModel;
 	}
 	
-	public void setIncorrectGameEventListener(GameEventListener r){
-		this.incorrectSolutionListener  = r;
-	}
 	
-	public void setCorrectGameEventListener(GameEventListener r){
-		this.correctSolutionListener  = r;
-	}
-
 	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
 		for(int i=0;i<36;i++){
 			tiles[i].setTrueSolution(solution[i]);
@@ -629,7 +620,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 
 		public BoardMainMenu(BoardTile[] tiles) {
 			centers = new float[2*tiles.length];
-
 			for (int i = 0; i < tiles.length; i++) {
 				double r = Math.random();
 				tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
@@ -718,14 +708,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				}
 			});
 			for (int i = 0; i < tiles.length; i++) {
-				tiles[i].rotate = false;
+				tiles[i].setRotate(false);// = false;
 				tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 				oldX[i] = tiles[i].center[0];
 				oldY[i] = tiles[i].center[1];
 				tiles[i].setColor("transparent");
 				tiles[i].vPointedAt = false;
 				tiles[i].hPointedAt = false;
-				//tiles[i].isHint = false;
 			}
 			mGameBanner.setText(TextureManager.CLEAR);
 			initSize = tiles[0].getSize();
@@ -856,14 +845,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 					if(currPuzzle!=null){
 						Log.d("board", "solved a puzzle and set completed to true");
 						currPuzzle.setCompleted(true);
+						mModel.state.saveCurrGame = false;
+						mModel.state.resumeGameExists = false;
+						mModel.mBee.setMood(Mood.HAPPY);
+						mModel.setState(GameState.GAME_MENU_END);
+						//TODO: DO THIS DIFFERENT WITH A HARD RESET
+						mModel.toc.setState();
+						mModel.toc.setState();
+						GlobalApplication.getDB().setPuzzle(currPuzzle.getId(),"true");
 					}
-					correctSolutionListener.event(0);
 					mGameBanner.setText(TextureManager.GOOD_JOB);
-					setState(GameState.GAME_MENU_END);
-					
 				} else {
 					mGameBanner.setText(TextureManager.TRY_AGAIN);
-					incorrectSolutionListener.event(0);
+					
 				}
 			}
 			
@@ -922,11 +916,32 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				public void event(int i ){
 					Log.d("Dialog","Clicked");
 					mDialog.deactivate();
-					createPuzzleFromPuzzle(currPuzzle.getNextPuzzle());
-					setState(GameState.GAME_OPENING);
+					if(currPuzzle.getNextPuzzle() != null) {
+						Log.d("next puzzle", "Apparently, there is another puzzle!");
+						createPuzzleFromPuzzle(currPuzzle.getNextPuzzle());
+						setState(GameState.GAME_OPENING);
+					} else {
+						//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
+						mModel.toc.setState();
+						mModel.toc.setState();
+						mModel.setState(GameState.TABLE_OF_CONTENTS);
+					}
 				}
 				
 			});
+			
+			mDialog.setBackClickListener(new GameEventListener() {
+				
+				public void event(int i){
+					mDialog.deactivate();
+					//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
+					mModel.toc.setState();
+					mModel.toc.setState();
+					mModel.setState(GameState.TABLE_OF_CONTENTS);
+				}
+				
+			});
+			
 			mDialog.activate();
 			for (int i = 0; i < tiles.length; i++) {
 				flipped[i] = false;
@@ -934,8 +949,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				float Sx = ( (i/6) - 2.5f )/4.0f;
 				float Sy = ( (i%6) - 2.5f )/4.0f;
 				tiles[i].setSize(.12f);
-				float center[] = { Sx, Sy, 0.0f};
-				tiles[i].center = center;
+				tiles[i].setCenter(Sx, Sy);
 				tiles[i].setColor("transparent");
 				refTime[i] = System.currentTimeMillis();
 				tiles[i].setPivot(tiles[i].getCenter());

@@ -14,7 +14,7 @@ public class ButtonWidget extends Widget{
 		float[] center = {centerX, centerY, 0.0f};
 		mText = new TextTile(center, width, height, text);
 
-		mBackground  = new TextTile(center, width, height, TextureManager.BOX);
+		mBackground  = new TextTile(center, width, height, "menu_circle");
 		mBackground.setMode(MyGLRenderer.STRETCH);
 	}
 	

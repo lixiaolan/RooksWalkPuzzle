@@ -16,7 +16,7 @@ public class StoryBoard extends Board{
 	Model mModel;
 	
 	public StoryBoard(Model mModel){
-		super();
+		super(mModel);
 		mStoryBanner = new Banner(.6f);
 		state = new SLIDE0(tiles);
 		this.mModel = mModel; 

@@ -7,6 +7,7 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 
 	
 	TextWidget mText;
+	ButtonWidget mBack;
 	ButtonWidget mNext;
 	ImageWidget mBackground;
 	boolean draw  = false;
@@ -18,10 +19,13 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		
 		mText = new TextWidget(0,0,width, height, text);
 		mText.setRelativeCenter(0,0);
-		mText.setColor("blue");
+		//mText.setColor("blue");
 		
-		mNext = new ButtonWidget(0,0, width/4, height/4, TextureManager.NEXT);
-		mNext.setRelativeCenter(-.7f*width, -.7f*height);
+		mBack = new ButtonWidget(0,0, width/4, width/4, TextureManager.BACK);
+		mBack.setRelativeCenter(.7f*width, -.6f*height);
+		
+		mNext = new ButtonWidget(0,0, width/4, width/4, TextureManager.NEXT);
+		mNext.setRelativeCenter(-.7f*width, -.6f*height);
 		
 		mBackground = new ImageWidget(0,0,width, height, TextureManager.CLEAR);
 		mBackground.setMode(MyGLRenderer.STRETCH);
@@ -31,16 +35,22 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		widgetList.add(mBackground);
 		widgetList.add(mText);
 		widgetList.add(mNext);
+		widgetList.add(mBack);
 		computeGeometry();
 	}
 	
 	@Override
 	public void touchHandler(float[] pt){
 		mNext.touchHandler(pt);
+		mBack.touchHandler(pt);
 	}
 	
 	public void setNextClickListener(GameEventListener listener){
 		mNext.setClickListener(listener);
+	}
+	
+	public void setBackClickListener(GameEventListener listener){
+		mBack.setClickListener(listener);
 	}
 	
 	public void activate(){

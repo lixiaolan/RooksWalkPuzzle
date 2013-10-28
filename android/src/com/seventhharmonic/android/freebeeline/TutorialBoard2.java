@@ -18,7 +18,7 @@ class TutorialBoard2 extends Board {
 	
 	public TutorialBoard2() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
-		super();
+		super(null);
 		float[] center = {.20f,-1.0f, 0.0f };
 		mCPB = new CircleProgressBarWidget(5, center, .05f);
 		mBanner = new Banner(.8f);

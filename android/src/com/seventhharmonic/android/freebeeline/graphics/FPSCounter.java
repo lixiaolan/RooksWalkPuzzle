@@ -1,4 +1,4 @@
-package com.seventhharmonic.android.freebeeline;
+package com.seventhharmonic.android.freebeeline.graphics;
 import android.util.Log;
 
 public class FPSCounter {

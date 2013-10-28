@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.common.RawResourceReader;
 import com.seventhharmonic.android.freebeeline.common.ShaderHelper;
+import com.seventhharmonic.android.freebeeline.graphics.FPSCounter;
 
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {

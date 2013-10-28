@@ -5,13 +5,6 @@ import android.util.Log;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Chapter;
 
-/*
- * Every widget has an absolute center and a relative center. The absolute center
- * is computed in Widget layout and passed in. The relative center is specified by the user
- * You have to override the setCenter method to pass down the center data to your own squares.
- * 
- */
-
 public class ChapterWidget extends WidgetLayout{
 	String TAG = "ChapterWidget";
 	TextWidget mText;	
@@ -24,20 +17,28 @@ public class ChapterWidget extends WidgetLayout{
 	public ChapterWidget(Chapter ch){
 		
 		float height = GlobalApplication.getGeometry().getGeometry()[1];
-		
-		//In the future, forest should be replaced by ch.getImage
+		/*
+		 *In the future, forest should be replaced by ch.getImage.
+		 *This sets the background image. 
+		 */
 		mImage = new ImageWidget(0,0,.8f, .8f*height, "forest");
 		mImage.setRelativeCenter(0,0);
 		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
 		widgetList.add(mImage);
 		
+		/*
+		 * Set the text at the top of the screen.
+		 */
 		mText = new TextWidget(0, 0,1,.5f,ch.getTitle());
 		mText.setRelativeCenter(0,height-mText.getHeight());
 		setCenter(0,0);
 		setWidth(1);
 		setHeight(height);
 		//widgetList.add(mText);
-		
+		/*
+		 * If the chapter is completed, a spinning flower will appear at the lower left.
+		 * TODO: Set Event handler of this flower.
+		 */
 		if(ch.getCompleted()){
 			finishedFlower = new ImageWidget(0,0,.125f, .125f, ch.getPuzzle(0).getImage());
 			finishedFlower.setColor("blue");
@@ -45,15 +46,20 @@ public class ChapterWidget extends WidgetLayout{
 			widgetList.add(finishedFlower);
 		}
 		
-		Log.d(TAG,ch.getTitle());
-		Log.d(TAG,Float.toString(ch.getWidth()));
+		/*
+		 * Create a grid of flowers.
+		 * Look for the first not completed puzzle. Spin that one.
+		 */
 		mGrid = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .15f);
 		mGrid.setRelativeCenter(0, 0);
+		boolean foundCompleted = false;
 		for(int i =0;i<ch.getNumberOfPuzzles();i++){
-			ImageWidget mImage = new ImageWidget(0,0,.125f, .125f, ch.getPuzzle(i).getImage());
-			mImage.setColor("blue");
-			mImage.setBackground(TextureManager.BOX);
-			mGrid.addWidget(mImage);
+			PuzzleWidget mFlower = new PuzzleWidget(0,0,.125f, .125f, ch.getPuzzle(i));
+			if(!foundCompleted && !ch.getPuzzle(i).isCompleted()){
+				mFlower.setRotate(true);
+				foundCompleted = true;
+			}
+			mGrid.addWidget(mFlower);
 		}
 		widgetList.add(mGrid);
 		
