@@ -73,99 +73,9 @@ class Model {
 	
 	public void createPuzzleFromPuzzle(Puzzle p){
 		mBoard.createPuzzleFromPuzzle(p);	
-		final long id  = p.getId();
-		
-		/*mBoard.setCorrectGameEventListener(new GameEventListener() {	
-			public void event(int i){
-				//state.state = GameState.GAME_M;
-				//mMenuManager.updateState();
-				//No game to save. No game to resume.
-				state.saveCurrGame = false;
-				state.resumeGameExists = false;
-				mBee.setMood(Mood.HAPPY);
-				//TODO: DO THIS DIFFERENT WITH A HARD RESET
-				toc.setState();
-				toc.setState();
-				GlobalApplication.getDB().setPuzzle(id,"true");
-		}
-			});
-		
-		mBoard.setIncorrectGameEventListener(new GameEventListener() {
-			
-			public void event(int i){
-			}
-		});
-		 */
+		final long id  = p.getId();		
 	}
 	
-	//This is where difficulties are assigned for the different puzzle lengths:
-	public void createPuzzle(int level) {
-		int modifyOne = (int)(Math.random()*3);
-		if (modifyOne>0) modifyOne = 2;
-
-		int modifyTwo = (int)(Math.random()*5);
-		if (modifyTwo>0 && modifyTwo < 4) {
-			modifyTwo = 2;
-		}
-		state.saveCurrGame = true;
-		switch (level) {
-		case 1:
-			state.gametype = GameType.SHORT;
-			state.difficulty = 6+(2-modifyOne);
-			mBoard.createPuzzleFromJNI(state.difficulty, 1);
-			break;
-		case 2:
-			state.gametype = GameType.MEDIUM;
-			state.difficulty = 8+modifyTwo;
-			mBoard.createPuzzleFromJNI(state.difficulty, 2);
-			break;
-		case 3:
-			state.gametype = GameType.LONGER;
-			state.difficulty = 12 + modifyTwo;
-			mBoard.createPuzzleFromJNI(state.difficulty, 2);
-			break;
-		case 4:
-			state.gametype = GameType.LONGEST;
-			state.difficulty  = 14 + modifyOne;
-			mBoard.createPuzzleFromJNI(state.difficulty, 3);
-			break;
-		}
-
-		/*mBoard.setCorrectGameEventListener(new GameEventListener() {	
-			public void event(int i){
-				state.state = GameState.GAME_MENU_END;
-				mMenuManager.updateState();
-				//No game to save. No game to resume.
-				state.saveCurrGame = false;
-				state.resumeGameExists = false;
-				mDataServer.setGames(state.gametype);
-				mDataServer.setFlowers(state.difficulty);
-				mBee.setMood(Mood.HAPPY);			
-				mTracker.send(MapBuilder
-						.createEvent("game_action",     
-								"board_event",  
-								"game_completed",   
-								null)            
-								.build()
-						);
-		}
-			});
-		
-		mBoard.setIncorrectGameEventListener(new GameEventListener() {
-		
-			public void event(int i){
-				mTracker.send(MapBuilder
-						.createEvent("game_action",     
-								"board_event",  
-								"wrong_solution",   
-								null)            
-								.build()
-						);
-			}
-		});*/
-		setState(GameState.GAME_OPENING);
-	}
-
 	public void createTutorial(){
 		mTutorialBoard = new TutorialBoard2();
 		mTutorialBoard.setGeometry(geometry);
@@ -191,7 +101,6 @@ class Model {
 	public void touched(float[] pt) {
 		switch(state.state){
 		case GAME_OPENING: 
-		case GAME_MENU_LIST:    
 		case GAME_MENU_END:
 			if(mBee.touched(pt) == 1){
 				//vibe.vibrate(500);
@@ -210,7 +119,6 @@ class Model {
 			break;
 		case MAIN_MENU_OPENING:   
 		case MAIN_MENU_LIST:
-		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
 		case MAIN_MENU_GEAR:
 			at = mBoard.touched(pt);
@@ -272,7 +180,6 @@ class Model {
 			mStoryBoard.draw(r);
 			break;
 		case GAME_OPENING:
-		case GAME_MENU_LIST:
 			mBoard.draw(r);
 			mBee.draw(r);
 			mMenuManager.draw(r);		
@@ -283,7 +190,6 @@ class Model {
 			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:
-		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
 		case MAIN_MENU_GEAR:
 			mTitle.draw(r);
@@ -370,10 +276,8 @@ class Model {
 	public void onBack(){
 		switch(state.state){
 		case MAIN_MENU_LIST:
-		case MAIN_MENU_NEW:
 		case MAIN_MENU_OPTIONS:
 		case MAIN_MENU_GEAR:
-		case GAME_MENU_LIST:
 		case STATS:
 		case GAME_OPENING:
 			mMenuManager.callCallback(0);
