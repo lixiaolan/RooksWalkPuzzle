@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Chapter;
+import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 
 public class ChapterWidget extends WidgetLayout{
 	String TAG = "ChapterWidget";
@@ -15,7 +16,6 @@ public class ChapterWidget extends WidgetLayout{
 	ImageWidget finishedFlower;
 	
 	public ChapterWidget(Chapter ch){
-		
 		float height = GlobalApplication.getGeometry().getGeometry()[1];
 		/*
 		 *In the future, forest should be replaced by ch.getImage.
@@ -62,8 +62,6 @@ public class ChapterWidget extends WidgetLayout{
 			mGrid.addWidget(mFlower);
 		}
 		widgetList.add(mGrid);
-		
-		
 	}
 
 	@Override

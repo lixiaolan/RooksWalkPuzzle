@@ -8,39 +8,39 @@ import com.seventhharmonic.android.freebeeline.listeners.*;
 public class TableOfContents extends GraphicWidget{
 
 	private String TAG = "TOC";
-	
+
 	public enum Contents {
 		LEVELPACKDISPLAY, CHAPTERDISPLAY
 	};
-	
+
 	Contents mContents;
 	LevelPackProvider mLPP;	
 	LevelPack currLevelPack;
 	Model mModel;
-	
+
 	public TableOfContents(Model model){
-		
+
 		mLPP = GlobalApplication.getLevelPackProvider();
 		mModel = model;
 		mContents = Contents.LEVELPACKDISPLAY;
 		state = new LevelPackDisplay();
 	}
-	
+
 	public void setState() {
 		System.out.println("In set state");
 		System.out.println(mContents);
 		switch(mContents){
-			case LEVELPACKDISPLAY: 
-				mContents = Contents.CHAPTERDISPLAY;
-				state = new ChapterDisplay();
+		case LEVELPACKDISPLAY: 
+			mContents = Contents.CHAPTERDISPLAY;
+			state = new ChapterDisplay();
 			break;
-			case CHAPTERDISPLAY:
-				mContents = Contents.LEVELPACKDISPLAY;
-				state = new LevelPackDisplay();
-				break;
+		case CHAPTERDISPLAY:
+			mContents = Contents.LEVELPACKDISPLAY;
+			state = new LevelPackDisplay();
+			break;
 		}
 	}
-	
+
 	@Override
 	public void touchHandler(float[] pt) {
 		state.touchHandler(pt);
@@ -64,7 +64,7 @@ public class TableOfContents extends GraphicWidget{
 			}
 			currLevelPack = mLPP.getLevelPack(0);
 		}
-		
+
 		@Override
 		public void enterAnimation() {
 			period = DrawPeriod.DURING;
@@ -73,7 +73,7 @@ public class TableOfContents extends GraphicWidget{
 		@Override
 		public void duringAnimation(){
 		}
-		
+
 		@Override
 		public void draw(MyGLRenderer r){
 			super.draw(r);
@@ -83,7 +83,7 @@ public class TableOfContents extends GraphicWidget{
 		@Override
 		public void swipeHandler(String direction) {
 			m.swipeHandler(direction);
-		
+
 		}
 
 		@Override
@@ -94,30 +94,39 @@ public class TableOfContents extends GraphicWidget{
 				setState();
 			}
 		}
-		
+
 	}
 
 	class ChapterDisplay extends StateWidget{
 		ScreenSlideWidgetLayout m;
-		ChapterWidget currChapterWidget;
-		
+		Widget currChapterWidget;
+
 		public ChapterDisplay(){
 			m = new ScreenSlideWidgetLayout(2.0f);
 			for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
-				final Chapter c = currLevelPack.getChapter(i);
-				ChapterWidget ch  = new ChapterWidget(c);
-				ch.setTouchListener(new GameEventListener() {
-					public void event(int puzz){
-						Puzzle p = c.getPuzzle(puzz);
-						mModel.createPuzzleFromPuzzle(p);
-						mModel.setState(GameState.GAME_OPENING);
-					}
-					
-				});
-				m.addWidget(ch);
+				
+				//If the previous chapter is completed, launch a normal chapter widget
+				if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
+					final Chapter c = currLevelPack.getChapter(i);
+					ChapterWidget ch  = new ChapterWidget(c);
+					ch.setTouchListener(new GameEventListener() {
+						public void event(int puzz){
+							Puzzle p = c.getPuzzle(puzz);
+							mModel.createPuzzleFromPuzzle(p);
+							mModel.setState(GameState.GAME_OPENING);
+						}
+
+					});
+					m.addWidget(ch);
+				}
+
+				//Otherwise lock the user out!
+				else {
+					m.addWidget(new LockedChapterWidget());
+				}
 			}
 		}
-		
+
 		@Override
 		public void enterAnimation() {
 			period = DrawPeriod.DURING;
@@ -126,7 +135,7 @@ public class TableOfContents extends GraphicWidget{
 		@Override
 		public void duringAnimation(){
 		}
-		
+
 		@Override
 		public void draw(MyGLRenderer r){
 			super.draw(r);
@@ -136,7 +145,7 @@ public class TableOfContents extends GraphicWidget{
 		@Override
 		public void swipeHandler(String direction) {
 			m.swipeHandler(direction);
-		
+
 		}
 
 		@Override
@@ -145,5 +154,5 @@ public class TableOfContents extends GraphicWidget{
 			currChapterWidget.touchHandler(pt);
 		}
 	}
-	
+
 }

@@ -12,6 +12,7 @@ public class Chapter {
 	int width = 0;
 	boolean completed = true;
 	
+	
 	public boolean getCompleted(){
 		for(Puzzle p: puzzles){
 			if(!p.isCompleted())
