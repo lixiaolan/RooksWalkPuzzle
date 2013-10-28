@@ -5,7 +5,10 @@ import java.util.List;
 
 import android.util.Log;
 
+import com.seventhharmonic.android.freebeeline.GlobalApplication;
 import com.seventhharmonic.android.freebeeline.TextureManager;
+import com.seventhharmonic.android.freebeeline.db.PuzzleDataSource;
+import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
 
 public class Puzzle {
 	public String board;
@@ -15,17 +18,22 @@ public class Puzzle {
 	List<Hint> hints = new ArrayList<Hint>();
 	Puzzle nextPuzzle;
 	boolean completed = false;
-	String id;
+	long id;
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
 	public boolean isCompleted() {
+		 //SQLPuzzle q = GlobalApplication.getDB().getPuzzle(getId());
+		 //String result = q.getCompleted();
+		 //if(result.equals(true))
+		//	 return true;//p.setCompleted(true);
+
 		return completed;
 	}
 
@@ -120,6 +128,7 @@ public class Puzzle {
 		p.setWidth(width);
 		p.setHeight(height);
 		p.setPath(path);
+		p.setId(id);
 		return p;
 	}
 	

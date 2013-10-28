@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.content.res.Resources;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 
@@ -56,24 +57,7 @@ public class ViewActivity extends Activity {
 		mQuoteView.setTypeface(font);
 		mQuoteView.setText(Html.fromHtml(quotes[sel]));
 		mStore = new Store(this);
-		LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
-		LevelPack mLP = mLPP.getLevelPack(0);
-		Log.d(TAG, mLP.getTitle());
-		Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
-		for(Chapter c: mLP.getAllChapters()){
-			Log.d(TAG, c.getTitle());
-			for(Puzzle p: c.getAllPuzzles()){
-				Log.d(TAG,p.board);
-				Log.d(TAG, p.path);
-				Log.d(TAG, "height width");
-				Log.d(TAG,Integer.toString(p.getHeight()));
-				Log.d(TAG,Integer.toString(p.getWidth()));
-				Log.d(TAG,Integer.toString(p.getAllHints().size()));
-				for(Hint h: p.getAllHints()){
-					//Log.d(TAG,h.getDirection());
-				}
-			}
-		}
+		
 	}
 
 
@@ -88,6 +72,7 @@ public class ViewActivity extends Activity {
 		if(mModel.state.saveCurrGame){
 			mDataServer.saveGame(mModel.mBoard);
 		}
+		GlobalApplication.getDB().close();
 	}
 
 	@Override
@@ -97,6 +82,7 @@ public class ViewActivity extends Activity {
 		// If you de-allocated graphic objects for onPause()
 		// this is a good place to re-allocate them.
 		mGLView.onResume();
+		GlobalApplication.getDB().open();
 		// AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this,R.anim.shrink_dance_button_anim);
 		// set.setTarget((Button)findViewById(R.id.bee_puzzled));
 		// set.end();       
@@ -115,6 +101,24 @@ public class ViewActivity extends Activity {
 			mModel.reset();
 		}
 		EasyTracker.getInstance(this).activityStart(this);
+
+		
+		//TODO: This sucks balls. Do this elsewhere.
+		LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
+		LevelPack mLP = mLPP.getLevelPack(0);
+		Log.d(TAG, mLP.getTitle());
+		Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
+		SQLPuzzle q;
+		for(Chapter c: mLP.getAllChapters()){
+			for(Puzzle p: c.getAllPuzzles()){
+				 q = GlobalApplication.getDB().getPuzzle(p.getId());
+				 String result = q.getCompleted();
+				 System.out.println("db result "+result+" "+p.getId());
+				 if(result.equals("true"))
+					 p.setCompleted(true);
+			}
+		}
+
 		
 	}
 

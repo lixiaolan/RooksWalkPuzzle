@@ -3,6 +3,7 @@ package com.seventhharmonic.android.freebeeline;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Logger.LogLevel;
+import com.seventhharmonic.android.freebeeline.db.*;
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureBridge;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
@@ -24,6 +25,7 @@ public class GlobalApplication extends Application {
   private static LevelPackProvider mLPP;
   private static Geometry geo;
   private static TextureBridge mTextureBridge;
+  private static PuzzleDataSource mDB;
   /*
    * Google Analytics configuration values.
    */
@@ -54,6 +56,8 @@ public class GlobalApplication extends Application {
     geo = new Geometry();
     mTextureBridge = new TextureBridge();
     mLPP = new SAXLevelPackProvider();
+    mDB = new PuzzleDataSource(this);
+    mDB.open();
   }
 
   @Override
@@ -89,6 +93,9 @@ public class GlobalApplication extends Application {
 	  return context;
   }
   
+  public static PuzzleDataSource getDB(){
+	  return mDB;
+  }
   
   public static TextureBridge getTextureBridge(){
 	  return mTextureBridge;

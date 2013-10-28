@@ -73,6 +73,7 @@ class Model {
 	
 	public void createPuzzleFromPuzzle(Puzzle p){
 		mBoard.createPuzzleFromPuzzle(p);	
+		final long id  = p.getId();
 		
 		mBoard.setCorrectGameEventListener(new GameEventListener() {	
 			public void event(int i){
@@ -85,6 +86,7 @@ class Model {
 				//TODO: DO THIS DIFFERENT WITH A HARD RESET
 				toc.setState();
 				toc.setState();
+				GlobalApplication.getDB().setPuzzle(id,"true");
 		}
 			});
 		

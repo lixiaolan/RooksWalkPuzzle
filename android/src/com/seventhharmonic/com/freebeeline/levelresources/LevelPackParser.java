@@ -79,7 +79,7 @@ public class LevelPackParser extends BaseParser {
     	chapter.getChild(PUZZLE).setStartElementListener(new StartElementListener(){
     		public void start(Attributes a){
     			puzz.reset();
-    			puzz.setId(a.getValue(ID));
+    			puzz.setId(Long.parseLong(a.getValue(ID)));
     		}
     	});
     	
