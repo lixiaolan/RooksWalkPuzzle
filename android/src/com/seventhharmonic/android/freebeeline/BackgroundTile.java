@@ -25,7 +25,7 @@ public class BackgroundTile extends Tile{
     
     @Override
     public void draw(MyGLRenderer r) {
-    	r.drawTile(center,size,textures,color,0, pivot);
+    	r.drawTile(center,size,textures,color,0, pivot, false);
     }
     
 }

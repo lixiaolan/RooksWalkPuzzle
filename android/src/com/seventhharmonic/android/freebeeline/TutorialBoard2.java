@@ -1,6 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
 
+
 class TutorialBoard2 extends Board {
 	enum TutorialState {
 		SHOW_PATH, SLIDE0, SLIDE1, SLIDE2, SLIDE3, PlayGame, PlayGameEnd
@@ -11,15 +12,15 @@ class TutorialBoard2 extends Board {
 	Background mBoardBg;
 	TutorialState mTutorialState;
 	TutorialInfo2 mTutorialInfo = new TutorialInfo2();
-	CircleProgressBar mCPB;
+	CircleProgressBarWidget mCPB;
 	Bee mBee;
 	Menu mMenu;
 	
 	public TutorialBoard2() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
-		super();
+		super(null);
 		float[] center = {.20f,-1.0f, 0.0f };
-		mCPB = new CircleProgressBar(5, center, .05f);
+		mCPB = new CircleProgressBarWidget(5, center, .05f);
 		mBanner = new Banner(.8f);
 		mBoardBg = new Background("boardbg", .75f);
 		mBee = new Bee(this);

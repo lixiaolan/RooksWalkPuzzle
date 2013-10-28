@@ -1,8 +1,9 @@
-package com.seventhharmonic.android.freebeeline;
+package com.seventhharmonic.android.freebeeline.util;
+
 
 public class LATools {
 
-    public static float[] getForce(float[] centers, BoardTile[] tiles, int i, float lastTouchTime, float[] lastTouchPos) {
+    /*public static float[] getForce(float[] centers, BoardTile[] tiles, int i, float lastTouchTime, float[] lastTouchPos) {
 	float[] force = {0.0f, 0.0f};
 	float[] temp = new float[2];
 	float[] mid = {centers[2*i],centers[2*i+1],0.0f};
@@ -16,7 +17,9 @@ public class LATools {
 	    force = vSum(force, vSProd(5f/((float)Math.pow(sTemp,1)), temp));
 	return force;
     }
-    
+    */
+	
+	
     public static float[] vDiff(float[] left, float[] right) {
 	float[] ret = new float[2];
 	ret[0] = left[0] - right[0];

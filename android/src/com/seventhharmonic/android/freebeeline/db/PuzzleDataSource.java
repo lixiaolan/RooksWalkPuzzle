@@ -1,7 +1,8 @@
-package com.seventhharmonic.android.freebeeline;
+package com.seventhharmonic.android.freebeeline.db;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,14 +11,14 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 public class PuzzleDataSource {
-
+	
   // Database fields
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
 				    MySQLiteHelper.COLUMN_PUZZLE };
     
-    public CommentsDataSource(Context context) {
+    public PuzzleDataSource(Context context) {
 	dbHelper = new MySQLiteHelper(context);
     }
     
@@ -34,12 +35,13 @@ public class PuzzleDataSource {
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
 				       MySQLiteHelper.COLUMN_ID + " = " + id, 
 				       null, null, null, null);
-	if (cursor == null) {
+	
+	if (!cursor.moveToFirst()) {
 	    	ContentValues values = new ContentValues();
-		values.put(MySQLiteHelper.COLUMN_PUZZLE, "false");
-		values.put(MySQLiteHelper.COLUMN_ID, id); 
-		database.insert(MySQLiteHelper.TABLE_PUZZLES, null, values);
-		cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
+	    	values.put(MySQLiteHelper.COLUMN_PUZZLE, "false");
+	    	values.put(MySQLiteHelper.COLUMN_ID, id); 
+	    	database.insert(MySQLiteHelper.TABLE_PUZZLES, null, values);
+	    	cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
 					MySQLiteHelper.COLUMN_ID + " = " + id, 
 					null, null, null, null);
 	}
@@ -50,23 +52,21 @@ public class PuzzleDataSource {
 	return newSQLPuzzle;
     }
     
-    public void setPuzzle(long id, String solved) {
+    public void setPuzzle(long id, String completed) {
 	ContentValues values = new ContentValues();
-	values.put(MySQLiteHelper.COLUMN_PUZZLE, solved);
+	values.put(MySQLiteHelper.COLUMN_PUZZLE, completed);
 	values.put(MySQLiteHelper.COLUMN_ID, id);
  
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
 				       MySQLiteHelper.COLUMN_ID + " = " + id, 
 				       null, null, null, null);
-	if (cursor == null) {
+	if (!cursor.moveToFirst()) {
 		database.insert(MySQLiteHelper.TABLE_PUZZLES, null, values);
 	}
 
 	
 	database.update(MySQLiteHelper.TABLE_PUZZLES, values, MySQLiteHelper.COLUMN_ID + " = " + id, null);
-	cursor.moveToFirst();
 	
-	cursor.setString(1, solved)
 	cursor.close();
 	return;
     }
@@ -96,9 +96,9 @@ public class PuzzleDataSource {
     }
     
     private SQLPuzzle cursorToSQLPuzzle(Cursor cursor) {
-	SQLPuzzle puz = new SQLPuzzle();
-	puz.setId(cursor.getLong(0));
-	puz.setSQLPuzzle(cursor.getString(1));
-	return puz;
+    	SQLPuzzle puz = new SQLPuzzle();
+    	puz.setId(cursor.getLong(0));
+    	puz.setCompleted(cursor.getString(1));
+    	return puz;
     }
 } 

@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.util.LATools;
+
 public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	public BeeTile bee;
 	private Board mBoard;

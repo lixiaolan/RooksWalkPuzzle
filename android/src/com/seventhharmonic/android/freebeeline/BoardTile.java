@@ -1,4 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
+
+import com.seventhharmonic.android.freebeeline.util.LATools;
 //In the future. Expose this class to state as well.
 
 class BoardTile extends Tile {
@@ -163,6 +165,10 @@ class BoardTile extends Tile {
 	    return false;
     }
     
+    public boolean isHint(){
+    	return !(isBlack() || isClickable());
+    }
+    
     public boolean isPointedAt() {
 	return vPointedAt || hPointedAt;
     }
@@ -185,12 +191,12 @@ class BoardTile extends Tile {
     }
     
     public void setHint(){
-	number  = Integer.toString(true_solution);
-	arrow = true_arrow;
-	color = "dullyellow";
-	nativeColor = "dullyellow";
-	clickable = false;
-	isHint = true;
+    	number  = Integer.toString(true_solution);
+    	arrow = true_arrow;
+    	color = "dullyellow";
+    	nativeColor = "dullyellow";
+    	clickable = false;
+    	isHint = true;
     }
     
     public void setTrueSolution(int solution){
@@ -241,6 +247,12 @@ class BoardTile extends Tile {
 	return true_arrow;
     }
     
+    public void setSolution(){
+    	String sol = Integer.toString(getTrueSolution());
+		setNumber(sol);
+		setArrow(true_arrow);
+    }
+    
     public void setUserInput(int val){
 	if(val == 0 && isClickable()){
 	    number = TextureManager.CLEAR;
@@ -254,9 +266,9 @@ class BoardTile extends Tile {
     }
     
     public void draw(MyGLRenderer r) {
-	flipper.animate();
-	angryGlow.animate();
-	r.drawTile(center, size, textures, color, angle, pivot);    
+    	flipper.animate();
+		angryGlow.animate();
+		r.drawTile(center, size, textures, color, angle, pivot,true);    
     }    
     
     public boolean checkArrows() {

@@ -1,4 +1,4 @@
-precision mediump float;       	// Set the default precision to medium. We don't need as high of a 
+precision lowp float;       	// Set the default precision to medium. We don't need as high of a 
 								// precision in the fragment shader.
 
 uniform sampler2D texture_0;  // The input texture.
@@ -13,11 +13,8 @@ void main()
 
 
 	// Multiply the color by the diffuse illumination level and texture value to get final output color.
-    mediump vec4 color_0 = texture2D(texture_0,v_TexCoordinate);
-    mediump vec4 color_1 = texture2D(texture_1, v_TexCoordinate);
-  	                                    	
+   	lowp vec4 color_0 = texture2D(texture_0,v_TexCoordinate);
+    lowp vec4 color_1 = texture2D(texture_1, v_TexCoordinate);
     gl_FragColor = color_0+color_1+(1.0-(color_0.a+color_1.a))*v_Color;
-    
-	//gl_FragColor = v_Color;
 }                                                                     	
 

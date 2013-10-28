@@ -78,7 +78,20 @@ public class TextureManager {
     public static final String PASSTHROUGHRULE = "Your path can only go through empty squares.";
     public static final String OFFBOARD = "Oh no! Your path went off the board!";
     
-	Map <String, Integer> library = new HashMap<String, Integer>();
+    public static final String VERSION = "alpha-0.2";
+    public static final String BOX = "box";
+    public static final String ERASER = "eraser";
+    public static final String BORDERE = "border_e";
+    public static final String BORDERW = "border_w";
+    public static final String BORDERN = "border_n";
+    public static final String BORDERS = "border_s";
+    public static final String BORDERNE = "border_ne";
+    public static final String BORDERNW = "border_nw";
+    public static final String BORDERSE = "border_se";
+    public static final String BORDERSW = "border_sw";
+    public static final String TABLE_OF_CONTENTS = "Table of Contents";
+
+    Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
 	
@@ -119,7 +132,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.grass5,"grass4");
 		buildTextures(context, R.drawable.grass6,"grass5");
 		//TM.buildTextures(context, R.drawable.papertexture2, "paperbg");
-		buildTextures(context, R.drawable.boardbg, "boardbg");
+		buildTextures(context, R.drawable.board2, "boardbg");
 		buildTextures(context, R.drawable.check2, "check");
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
@@ -129,8 +142,20 @@ public class TextureManager {
 		buildTextures(context, R.drawable.horz_dots, HORZDOTS);
 		buildTextures(context, R.drawable.opencircle, OPENCIRCLE);
 		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
-		
-		//Create Menu Textures and Words needed
+		buildTextures(context, R.drawable.forest, "forest");
+		//Load textures of the box
+		buildTextures(context, R.drawable.box2, BOX);
+		/*buildTextures(context, R.drawable.bordere, BORDERE);
+		buildTextures(context, R.drawable.borderw, BORDERW);
+		buildTextures(context, R.drawable.bordern, BORDERN);
+		buildTextures(context, R.drawable.borders, BORDERS);
+		buildTextures(context, R.drawable.borderse, BORDERSE);
+		buildTextures(context, R.drawable.bordersw, BORDERSW);
+		buildTextures(context, R.drawable.borderne, BORDERNE);
+		buildTextures(context, R.drawable.bordernw, BORDERNW);
+		*/
+		buildTextures(context, R.drawable.eraser, ERASER);
+		//reate Menu Textures and Words needed
 			    
 	    
 	    //The most useful texture ever
@@ -171,6 +196,7 @@ public class TextureManager {
 	    buildTextures(HINTS_OFF, xpos, ypos, HINTS_OFF, fontSize);
 	    buildTextures(LINES_ON, xpos, ypos, LINES_ON, fontSize);
 	    buildTextures(LINES_OFF, xpos, ypos, LINES_OFF, fontSize);
+	    buildTextures(TABLE_OF_CONTENTS, xpos, ypos, TABLE_OF_CONTENTS, fontSize);
 	    
 	    buildTextures(RULE_CHECK_ON, xpos, ypos, RULE_CHECK_ON, fontSize);
 	    buildTextures(RULE_CHECK_OFF, xpos, ypos, RULE_CHECK_OFF, fontSize);
@@ -212,13 +238,14 @@ public class TextureManager {
 	    	buildLongTextures(TutorialInfo2.banners[i],0,fontHeight,"tutorial_banner_"+Integer.toString(i),fontWidth, bannerSize);
 	    }
 		
-		buildLongTextures(TRY_AGAIN, 0, 2*fontHeight, TRY_AGAIN, 2*fontWidth, bannerSize);
-		buildLongTextures(TRY_HARDER, 0, 2*fontHeight, TRY_HARDER, (int)(1.5*fontWidth), bannerSize);
-	    buildLongTextures(GOOD_JOB, 0, 2*fontHeight, GOOD_JOB, 2*fontWidth, bannerSize);
+		buildLongTextures(TRY_AGAIN, 0, fontHeight, TRY_AGAIN, fontWidth, bannerSize);
+		buildLongTextures(TRY_HARDER, 0, fontHeight, TRY_HARDER, (int)(fontWidth), bannerSize);
+	    buildLongTextures(GOOD_JOB, 0, fontHeight, GOOD_JOB, fontWidth, bannerSize);
 	    buildLongTextures(TURNINGRULE, 0, fontHeight, TURNINGRULE, fontWidth, bannerSize);
 	    buildLongTextures(MATCHINGNUMBERRULE, 0, fontHeight, MATCHINGNUMBERRULE, fontWidth, bannerSize);
 	    buildLongTextures(PASSTHROUGHRULE, 0, fontHeight, PASSTHROUGHRULE, fontWidth, bannerSize);
 	    buildLongTextures(OFFBOARD, 0, fontHeight, OFFBOARD, fontWidth, bannerSize);
+	    buildLongTextures(VERSION, 0, fontHeight, VERSION, fontWidth, bannerSize);
 	}
 	
 	public void buildStoryBanners() {
@@ -291,7 +318,7 @@ public class TextureManager {
 		{
 			final BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inScaled = false;	// No pre-scaling
-
+			//options.inPreferredConfig = Bitmap.Config.RGB_565;
 			// Read in the resource
 			final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
 						
@@ -299,8 +326,8 @@ public class TextureManager {
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
 			
 			// Set filtering
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
-			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
+			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
+			GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
 			
 			// Load the bitmap into the bound texture.
 			GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
@@ -392,58 +419,3 @@ public class TextureManager {
 
 
 
-/*public void setState(GameState s, int[] rowSums, int[] columnSums) {
-switch(s) {
-case MAIN_MENU: loadMainMenuTextures();
-				 break;
-case PLAY:  cleanTextures();
-			loadPlayTextures(rowSums,columnSums);
-			break;
-}
-}
-
-private void cleanTextures() {
-Integer[] values = library.values().toArray(new Integer[0]);
-int[] a = new int[values.length];
-for(int i=0; i<values.length;i++){
-	a[i] = values[i].intValue();
-}
-	GLES20.glDeleteTextures(a.length, a,0);	
-	library.clear();
-}
-
-private void loadMainMenuTextures() {
-buildTextures(context, R.drawable.bee,"bee");
-buildTextures(context, R.drawable.flower,"flower");
-buildTextures(context, R.drawable.papertexture2, "paperbg");
-//Create Menu Textures
-}
-
-private void loadPlayTextures(int[] columnSums, int[] rowSums) {
-int[] x_coords = {96,96,96,96,96,96,96,96,96,96};
-int[] y_coords = {xpos, ypos,xpos, ypos,xpos, ypos,xpos, ypos,xpos, ypos};
-buildTextures("0123456789", x_coords, y_coords,64);
-buildTextures(context, R.drawable.up_arrow,"up_arrow");
-buildTextures(context, R.drawable.down_arrow,"down_arrow");
-buildTextures(context, R.drawable.left_arrow,"left_arrow");
-buildTextures(context, R.drawable.right_arrow,"right_arrow");
-buildTextures(context, R.drawable.menu_circle,"menu_circle");
-buildTextures(context, R.drawable.bee,"bee");
-buildTextures(context, R.drawable.flower,"flower");
-buildTextures(context, R.drawable.crayonsquare, "crayonbg");
-buildTextures(context, R.drawable.papertexture2, "paperbg");
-buildTextures(context, R.drawable.boardbg, "boardbg");
-buildTextures(context, R.drawable.blacksquare, "blacksquare");
-library.put("clear", textureFromBitmap(bitmapFromString("",0,0,64)));
-//Create Menu Textures
-for(int i=0;i<6;i++){
-    buildTextures(Integer.toString(i),xpos, ypos,"menu_"+Integer.toString(i+1),64);
-}
-//Create Border Textures
-for(int i=0;i<rowSums.length;i++){
-    buildTextures(Integer.toString(rowSums[i]),64,128,"border_row_"+Integer.toString(rowSums[i]),50);
-}
-for(int i=0;i<columnSums.length;i++){
-	buildTextures(Integer.toString(columnSums[i]),105,64,"border_col_"+Integer.toString(columnSums[i]),50);
-}
-}*/

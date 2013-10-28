@@ -5,9 +5,14 @@ import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.content.Intent;
 import android.content.res.Resources;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
+import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 
 public class ViewActivity extends Activity {
@@ -17,12 +22,13 @@ public class ViewActivity extends Activity {
 	private MyGLRenderer mRenderer;    
 	private TextView mQuoteView;
 	private DataServer mDataServer;
-	
+	private Store mStore;
 	
 	boolean savedGame = false;
 	static final String savefile = "savefile";
 	static final String settingsfile = "settingsfile";
-
+	static final String TAG = "ViewActivity";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -31,12 +37,17 @@ public class ViewActivity extends Activity {
 
 		mModel = new Model(this);
 		mRenderer = new MyGLRenderer(this, mModel);
+		
+		GlobalApplication.getLevelPackProvider().initialize();
 		mDataServer = new DataServer();
 		mDataServer.setContext(this);
+		
 		mModel.setDataServer(mDataServer);
+		
 		mGLView = (GameView)findViewById(R.id.surface_view);
 		((GameView)mGLView).setMyRenderer(mRenderer);
 		((GameView)mGLView).setModel(mModel);
+		
 		mQuoteView = (TextView)findViewById(R.id.QuoteView);
 		Resources res = getResources();
 		String[] quotes = res.getStringArray(R.array.quotes);
@@ -45,7 +56,8 @@ public class ViewActivity extends Activity {
 		Typeface font = Typeface.createFromAsset(getAssets(), "font3.ttf");  
 		mQuoteView.setTypeface(font);
 		mQuoteView.setText(Html.fromHtml(quotes[sel]));
-
+		mStore = new Store(this);
+		
 	}
 
 
@@ -60,6 +72,7 @@ public class ViewActivity extends Activity {
 		if(mModel.state.saveCurrGame){
 			mDataServer.saveGame(mModel.mBoard);
 		}
+		GlobalApplication.getDB().close();
 	}
 
 	@Override
@@ -69,6 +82,7 @@ public class ViewActivity extends Activity {
 		// If you de-allocated graphic objects for onPause()
 		// this is a good place to re-allocate them.
 		mGLView.onResume();
+		GlobalApplication.getDB().open();
 		// AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this,R.anim.shrink_dance_button_anim);
 		// set.setTarget((Button)findViewById(R.id.bee_puzzled));
 		// set.end();       
@@ -86,12 +100,61 @@ public class ViewActivity extends Activity {
 		} else {
 			mModel.reset();
 		}
+		EasyTracker.getInstance(this).activityStart(this);
+
+		
+		//TODO: This sucks balls. Do this elsewhere.
+		LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
+		LevelPack mLP = mLPP.getLevelPack(0);
+		Log.d(TAG, mLP.getTitle());
+		Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
+		SQLPuzzle q;
+		for(Chapter c: mLP.getAllChapters()){
+			for(Puzzle p: c.getAllPuzzles()){
+				 q = GlobalApplication.getDB().getPuzzle(p.getId());
+				 String result = q.getCompleted();
+				 System.out.println("db result "+result+" "+p.getId());
+				 if(result.equals("true"))
+					 p.setCompleted(true);
+			}
+		}
+
+		
 	}
 
+	
+	
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    super.onActivityResult(requestCode, resultCode, data);
+
+	    // Pass on the activity result to the helper for handling
+	    // NOTE: handleActivityResult() will update the state of the helper,
+	    // allowing you to make further calls without having it exception on you
+	    if (mStore.mHelper.handleActivityResult(requestCode, resultCode, data)) {
+	        Log.d(TAG, "onActivityResult handled by IABUtil.");
+	        //handlePurchaseResult(requestCode, resultCode, data);
+	        return;
+	    }
+
+	    // What you would normally do
+	    // ...
+	}
+	
 	public void closeQuoteScreen(View v) {
 		TextView w = (TextView)findViewById(R.id.QuoteView);
 		w.setVisibility(View.INVISIBLE);
 	}
+	
+	public void hintClick(View v) {
+		mStore.onBuyHints(v);
+	}
+	
 	public void onBackPressed() {
 		   mModel.onBack();
 		}

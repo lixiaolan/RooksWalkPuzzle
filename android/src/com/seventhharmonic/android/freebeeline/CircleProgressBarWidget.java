@@ -1,6 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
-public class CircleProgressBar {
+
+public class CircleProgressBarWidget extends Widget {
 
 	CircleTile[] circleTiles;
 	private int activeCircle;
@@ -8,7 +9,7 @@ public class CircleProgressBar {
 	float tilesSize;
 	int length;
 
-	public CircleProgressBar(int length, float[] center, float size) {
+	public CircleProgressBarWidget(int length, float[] center, float size) {
 		this.length = length;
 		tilesSize = size;	
 		tilesCenter = center;
@@ -37,5 +38,17 @@ public class CircleProgressBar {
 				circleTiles[i].draw(r);
 			}
 		}
+
+	@Override
+	public void touchHandler(float[] pt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
+	}
 	}
 
