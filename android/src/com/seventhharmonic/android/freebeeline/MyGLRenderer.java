@@ -66,6 +66,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	private final FloatBuffer mSquareTransparentColor;
 	private final FloatBuffer mSquareDullYellowColor;
 	private final FloatBuffer mSquareRedColor;
+	private final FloatBuffer mSquareOpaqueColor;
+
 
 	/** This will be used to pass in the transformation matrix. */
 	private int mMVPMatrixHandle;
@@ -166,12 +168,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		mSquareRedColor = ByteBuffer.allocateDirect(squareRedColorData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		mSquareRedColor.put(squareRedColorData).position(0);
 
+		mSquareOpaqueColor = ByteBuffer.allocateDirect(Colors.squareOpaque.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
+		mSquareOpaqueColor.put(Colors.squareOpaque).position(0);
+		
 		colorMap.put("white", mSquareWhiteColor);
 		colorMap.put("black", mSquareBlackColor);
 		colorMap.put("blue", mSquareBlueColor);
 		colorMap.put("dullyellow", mSquareDullYellowColor);
 		colorMap.put("transparent",mSquareTransparentColor);
 		colorMap.put("red",mSquareRedColor);
+		colorMap.put("opaque",mSquareOpaqueColor);
 	}
 
 	protected String getVertexShader()

@@ -19,7 +19,7 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		
 		mText = new TextWidget(0,0,width, height, text);
 		mText.setRelativeCenter(0,0);
-		//mText.setColor("blue");
+		mText.setColor("opaque");
 		
 		mBack = new ButtonWidget(0,0, width/4, width/4, TextureManager.BACK);
 		mBack.setRelativeCenter(.7f*width, -.6f*height);
@@ -30,7 +30,7 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		mBackground = new ImageWidget(0,0,width, height, TextureManager.CLEAR);
 		mBackground.setMode(MyGLRenderer.STRETCH);
 		mBackground.setRelativeCenter(0, 0);
-		mBackground.setColor("white");
+		mBackground.setColor("opaque");
 		
 		widgetList.add(mBackground);
 		widgetList.add(mText);

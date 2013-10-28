@@ -38,6 +38,18 @@ public class Colors {
 
 	}; 
     
+    static float r = .7f;
+    public static float [] squareOpaque ={
+		// white
+		1.0f, 1.0f, 1.0f, r,				
+		1.0f, 1.0f, 1.0f, r,
+		1.0f, 1.0f, 1.0f, r,
+		1.0f, 1.0f, 1.0f, r,				
+		1.0f, 1.0f, 1.0f, r,
+		1.0f, 1.0f, 1.0f, r,
+
+	};
+    
     public static float [] squareBlack ={
 		// Black
 		0.0f, 0.0f, 0.0f, 1.0f,				

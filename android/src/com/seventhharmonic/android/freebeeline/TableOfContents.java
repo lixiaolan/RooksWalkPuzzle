@@ -150,7 +150,7 @@ public class TableOfContents extends GraphicWidget{
 
 		@Override
 		public void touchHandler(float[] pt) {	
-			currChapterWidget = (ChapterWidget)m.getWidget(m.getActiveWidget());
+			currChapterWidget = m.getWidget(m.getActiveWidget());
 			currChapterWidget.touchHandler(pt);
 		}
 	}
