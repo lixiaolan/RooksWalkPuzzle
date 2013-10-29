@@ -188,14 +188,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		clearLines();
 	}
 
-	public void createPuzzleFromJNI(int length, int hints){
-		try {
-			readSolutionFromJni(stringFromJNI(6, 6, length) );	
-		} catch (IOException e) {
-			System.err.println("Caught IOException: " + e.getMessage());
-		}
-		buildBoardFromSolution(hints);
-	}
 
 	public void createPuzzleFromPuzzle(Puzzle p){
 		currPuzzle = p;
@@ -210,37 +202,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		buildXMLBoard(solution, path, p.getHeight(), p.getWidth(), hintList);
 	}
 	
-	public native String stringFromJNI(int rows, int cols, int length);
-
-	public void readSolutionFromJni(String puzzleString) throws IOException{
-		Scanner scanner = null;
-		try {	    
-			scanner = new Scanner(puzzleString);
-			int m = scanner.nextInt();
-			int n = scanner.nextInt();
-			solution = new int[m*n];
-			int a  = 0;
-			for(int i = 0; i<m*n; i++){
-				a = scanner.nextInt(); 
-				solution[i] = a;
-			}
-			int l = scanner.nextInt();
-			path = new int[2*l][2];
-			for(int i = 0; i < l; i++){
-				path[i][0] = scanner.nextInt();
-				path[i][1] = scanner.nextInt();
-			}
-
-
-		} finally {
-			scanner.close();	    
-		}
-	}
-
-	static {
-		System.loadLibrary("GeneratePuzzle");
-	}
-
 	public int touched(float[] pt) {
 		lastTouchPos = pt;
 		lastTouchTime = System.currentTimeMillis();
@@ -920,6 +881,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
 						createPuzzleFromPuzzle(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
+						mModel.setState(GameState.GAME_OPENING);
 					} else {
 						//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
 						mModel.toc.setState();

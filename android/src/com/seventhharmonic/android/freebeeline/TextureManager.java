@@ -1,10 +1,13 @@
 package com.seventhharmonic.android.freebeeline;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,6 +18,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 
 public class TextureManager {
@@ -142,18 +146,9 @@ public class TextureManager {
 		buildTextures(context, R.drawable.horz_dots, HORZDOTS);
 		buildTextures(context, R.drawable.opencircle, OPENCIRCLE);
 		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
-		buildTextures(context, R.drawable.forest, "forest");
+		//buildTextures(context, R.drawable.forest, "forest");
 		//Load textures of the box
 		buildTextures(context, R.drawable.box2, BOX);
-		/*buildTextures(context, R.drawable.bordere, BORDERE);
-		buildTextures(context, R.drawable.borderw, BORDERW);
-		buildTextures(context, R.drawable.bordern, BORDERN);
-		buildTextures(context, R.drawable.borders, BORDERS);
-		buildTextures(context, R.drawable.borderse, BORDERSE);
-		buildTextures(context, R.drawable.bordersw, BORDERSW);
-		buildTextures(context, R.drawable.borderne, BORDERNE);
-		buildTextures(context, R.drawable.bordernw, BORDERNW);
-		*/
 		buildTextures(context, R.drawable.eraser, ERASER);
 		//reate Menu Textures and Words needed
 			    
@@ -164,14 +159,30 @@ public class TextureManager {
 	    buildMenuBanners();
 	    buildGameBanners();
 	    buildStoryBanners();
-	   /* buildTextures("Easy: ", 64, 70, SHORTSTATS, 25);
-		buildTextures("Medium: ", 64, 70, MEDIUMSTATS, 25);
-		buildTextures("Long: ", 64, 70, LONGERSTATS, 25);
-		buildTextures("Longest: ", 70, 64, LONGESTSTATS, 25);
-	    */
+	    loadBitmapFromAssets();
 	    }
 
+
+	public void loadBitmapFromAssets() {
+        // load text
+		String BASE = "images";
+        try {
+            // get input stream for text
+        	String[] imageList = context.getAssets().list(BASE);
+        	for(String s: imageList){
+        		InputStream is = context.getAssets().open(BASE+"/"+s);
+        		Bitmap b = BitmapFactory.decodeStream(is); 
+        		library.put(s,textureFromBitmap(b));
+        	}
+        }
+        catch (IOException ex) {
+            Log.d("TextureManager", ex.getMessage());
+
+        }
+	}
 	
+
+
 	public void buildMenuBanners() {
 		buildTextures(context, R.drawable.red_x, "menu_1");
 		for(int i=1;i<6;i++){

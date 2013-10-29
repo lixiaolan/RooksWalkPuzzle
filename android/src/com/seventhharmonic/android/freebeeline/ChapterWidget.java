@@ -21,7 +21,7 @@ public class ChapterWidget extends WidgetLayout{
 		 *In the future, forest should be replaced by ch.getImage.
 		 *This sets the background image. 
 		 */
-		mImage = new ImageWidget(0,0,.8f, .8f*height, "forest");
+		mImage = new ImageWidget(0,0,.8f, .8f*height, "forest.png");
 		mImage.setRelativeCenter(0,0);
 		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
 		widgetList.add(mImage);
