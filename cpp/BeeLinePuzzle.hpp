@@ -1,9 +1,10 @@
-#ifndef BeeLineLJJ
-#define BeeLineLJJ
+#ifndef BEE_LINE_PUZZLE
+#define BEE_LINE_PUZZLE
 
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"
 
+#include "Pos.hpp"
 #include <string.h>
 #include <jni.h>
 #include <iostream>
@@ -23,34 +24,6 @@ using namespace rapidxml;
 using namespace std;
 
 string intTooString(int in);
-
-class pos {
-public:
-  int r;
-  int c;
-  pos() : r(0), c(0) {};
-  pos(int x, int y) : r(x), c(y) {};
-  void print() {
-    cout << "(" << r << "," << c << ")";
-  }
-};
-
-pos operator-(pos left, pos right); 
-
-pos operator+(pos left, pos right);
-
-bool operator==(pos left, pos right);
-
-template <typename T>
-class PosMatrix {
-private:
-  vector< vector <T> > matrix;
-public:
-  T &operator()(pos p) {
-    return matrix[p.r][p.c];
-  }
-  PosMatrix(vector< vector <T> > in): matrix(in) {};
-};
 
 class BeeLinePuzzle {
 private:
