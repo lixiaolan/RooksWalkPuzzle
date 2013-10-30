@@ -6,6 +6,10 @@ public class ErrorLog {
     public boolean pathNotClosed = false;
     public boolean spaceNotFilled = false;
 
+    //Set this to check orthogonality or not:
+    public boolean checkOrthogonality = false;
+
+
     public Board mBoard;
     
     public ErrorLog(Board b) {
@@ -66,7 +70,7 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num) {
+			else if(j == num && checkOrthogonality) {
 			    if (t.getArrow().equals(TextureManager.UPARROW) || t.getArrow().equals(TextureManager.DOWNARROW)) {
 				errorMap.get(i).pointsAtBadDir = true;
 				errorMap.get(index).pointedAtByBadDir = true;
@@ -98,7 +102,7 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num) {
+			else if(j == num && checkOrthogonality) {
 			    if (t.getArrow().equals(TextureManager.UPARROW) || t.getArrow().equals(TextureManager.DOWNARROW)) {
 				errorMap.get(i).pointsAtBadDir = true;
 				errorMap.get(index).pointedAtByBadDir = true;
@@ -130,7 +134,7 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num) {
+			else if(j == num && checkOrthogonality) {
 			    if (t.getArrow().equals(TextureManager.LEFTARROW) || t.getArrow().equals(TextureManager.RIGHTARROW)) {
 				errorMap.get(i).pointsAtBadDir = true;
 				errorMap.get(index).pointedAtByBadDir = true;
@@ -162,7 +166,7 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num) {
+			else if(j == num && checkOrthogonality) {
 			    if (t.getArrow().equals(TextureManager.LEFTARROW) || t.getArrow().equals(TextureManager.RIGHTARROW)) {
 				errorMap.get(i).pointsAtBadDir = true;
 				errorMap.get(index).pointedAtByBadDir = true;

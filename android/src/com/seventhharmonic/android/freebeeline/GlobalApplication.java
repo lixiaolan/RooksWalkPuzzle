@@ -1,8 +1,5 @@
 package com.seventhharmonic.android.freebeeline;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Logger.LogLevel;
 import com.seventhharmonic.android.freebeeline.db.*;
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureBridge;
@@ -18,87 +15,84 @@ import android.content.Context;
  * only needs to be sent to a single Google Analytics property ID.
  */
 public class GlobalApplication extends Application {
+    
+    private static Context context;
+    private static LevelPackProvider mLPP;
+    private static Geometry geo;
+    private static TextureBridge mTextureBridge;
+    private static PuzzleDataSource mDB;
+    private static HintsDataSource hDB;
+    
+    /*
+     * Google Analytics configuration values.
+     */
 
-  private static GoogleAnalytics mGa;
-  private static EasyTracker mTracker;
-  private static Context context;
-  private static LevelPackProvider mLPP;
-  private static Geometry geo;
-  private static TextureBridge mTextureBridge;
-  private static PuzzleDataSource mDB;
-  /*
-   * Google Analytics configuration values.
-   */
-  // Placeholder property ID.
-  private static final String GA_PROPERTY_ID = "UA-44910433-1";
+    // Placeholder property ID.
+    private static final String GA_PROPERTY_ID = "UA-44910433-1";
+    
+    // Dispatch period in seconds.
+    private static final int GA_DISPATCH_PERIOD = 5;
+    
+    // Prevent hits from being sent to reports, i.e. during testing.
+    private static final boolean GA_IS_DRY_RUN = false;
+        
+    // Key used to store a user's tracking preferences in SharedPreferences.
+    private static final String TRACKING_PREF_KEY = "trackingPreference";    
+    
+    /*
+     * Method to handle basic Google Analytics initialization. This call will not
+     * block as all Google Analytics work occurs off the main thread.
+     */
 
-  // Dispatch period in seconds.
-  private static final int GA_DISPATCH_PERIOD = 5;
+    private void initializeGa() {
+	context = getApplicationContext();
+	geo = new Geometry();
+	mTextureBridge = new TextureBridge();
+	mLPP = new SAXLevelPackProvider();
+	mDB = new PuzzleDataSource(this);
+	mDB.open();
+	hDB = new HintsDataSource(this);
+	hDB.open();
+    }
+    
+    @Override
+    public void onCreate() {
+	super.onCreate();
+	initializeGa();
+    }
+    
+    /*
+     * Returns the Google Analytics tracker.
+     */
 
-  // Prevent hits from being sent to reports, i.e. during testing.
-  private static final boolean GA_IS_DRY_RUN = false;
+    
+    /*
+     * Returns the Google Analytics instance.
+     */
 
-  // GA Logger verbosity.
-  private static final LogLevel GA_LOG_VERBOSITY = LogLevel.INFO;
+    
+    public static LevelPackProvider getLevelPackProvider() {
+	return mLPP;
+    }
+    
+    public static Geometry getGeometry() {
+	return geo;
+    }
+    
+    
+    public static Context getContext(){
+	return context;
+    }
+    
+    public static PuzzleDataSource getPuzzleDB(){
+	return mDB;
+    }
 
-  // Key used to store a user's tracking preferences in SharedPreferences.
-  private static final String TRACKING_PREF_KEY = "trackingPreference";
-
-
-  /*
-   * Method to handle basic Google Analytics initialization. This call will not
-   * block as all Google Analytics work occurs off the main thread.
-   */
-  private void initializeGa() {
-    mGa = GoogleAnalytics.getInstance(this);
-    mTracker = EasyTracker.getInstance(this);//mGa.getTracker(GA_PROPERTY_ID);
-    context = getApplicationContext();
-    geo = new Geometry();
-    mTextureBridge = new TextureBridge();
-    mLPP = new SAXLevelPackProvider();
-    mDB = new PuzzleDataSource(this);
-    mDB.open();
-  }
-
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    initializeGa();
-  }
-
-  /*
-   * Returns the Google Analytics tracker.
-   */
-  public static EasyTracker getGaTracker() {
-    return mTracker;
-  }
-
-  /*
-   * Returns the Google Analytics instance.
-   */
-  public static GoogleAnalytics getGaInstance() {
-    return mGa;
-  }
-  
-  public static LevelPackProvider getLevelPackProvider() {
-	    return mLPP;
-	  }
-  
-  public static Geometry getGeometry() {
-	    return geo;
-  }
-
-  
-  public static Context getContext(){
-	  return context;
-  }
-  
-  public static PuzzleDataSource getDB(){
-	  return mDB;
-  }
-  
-  public static TextureBridge getTextureBridge(){
-	  return mTextureBridge;
-  }
-  
+    public static HintsDataSource getHintDB(){
+	return hDB;
+    }
+    
+    public static TextureBridge getTextureBridge(){
+	return mTextureBridge;
+    }    
 }

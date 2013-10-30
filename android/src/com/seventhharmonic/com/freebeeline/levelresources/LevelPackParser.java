@@ -1,6 +1,5 @@
 package com.seventhharmonic.com.freebeeline.levelresources;
 
-import java.util.List;
 import org.xml.sax.*;
 
 import com.seventhharmonic.android.freebeeline.GlobalApplication;
@@ -30,7 +29,6 @@ public class LevelPackParser extends BaseParser {
     }
     
     public LevelPack parse(String file) {
-    	
     	final LevelPack lp = new LevelPack();
     	final Chapter ch = new Chapter();
     	final Puzzle puzz = new Puzzle();
@@ -42,28 +40,28 @@ public class LevelPackParser extends BaseParser {
     	
     	root.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
-    			lp.setTitle(body);
-    			GlobalApplication.getTextureBridge().addTextTexture(body);
+		    lp.setTitle(body);
+		    GlobalApplication.getTextureBridge().addTextTexture(body);
     		}
     		
-    	});
+	    });
     	
     	root.getChild(CHAPTER).setStartElementListener(new StartElementListener(){
     		public void start(Attributes a) {
-    			ch.reset();
-    			Log.d(TAG, "Start Chapter");
-    			ch.setTitle(a.getValue("title"));
-    			GlobalApplication.getTextureBridge().addTextTexture(a.getValue("title"));
-    			Log.d(TAG,"found title");
-    			Log.d(TAG, a.getValue("title"));
-    			
+		    ch.reset();
+		    Log.d(TAG, "Start Chapter");
+		    ch.setTitle(a.getValue("title"));
+		    GlobalApplication.getTextureBridge().addTextTexture(a.getValue("title"));
+		    Log.d(TAG,"found title");
+		    Log.d(TAG, a.getValue("title"));
+		    
     		}
-    	});
+	    });
     	
     	
     	chapter.getChild(HEIGHT).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
-    			Log.d(TAG,"height "+body);
+		    Log.d(TAG,"height "+body);
     			ch.setHeight(Integer.parseInt(body));
     		}
     	});

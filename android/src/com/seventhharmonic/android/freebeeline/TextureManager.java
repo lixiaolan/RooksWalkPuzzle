@@ -23,9 +23,9 @@ import android.util.Log;
 
 public class TextureManager {
     
-	static final int CHAR_PER_LINE = 30;
+    static final int CHAR_PER_LINE = 30;
 	
-	public static final String START = "start";
+    public static final String START = "start";
     public static final String NEW = "new";
     public static final String RESUME = "resume";
     public static final String OPTIONS = "options";

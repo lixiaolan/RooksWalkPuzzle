@@ -8,17 +8,23 @@ import android.util.Log;
 public class MySQLiteHelper extends SQLiteOpenHelper {
     
     public static final String TABLE_PUZZLES = "puzzels";
+    public static final String TABLE_HINTS = "hints";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PUZZLE = "completed";
+    public static final String COLUMN_HINTS = "hintsLeft";
     
     private static final String DATABASE_NAME = "puzzles.db";
     private static final int DATABASE_VERSION = 1;
     
     // Database creation sql statement
-    private static final String DATABASE_CREATE = "create table "
+    private static final String DATABASE_CREATE_PUZZLES = "create table "
 	+ TABLE_PUZZLES + "(" + COLUMN_ID
 	+ " integer primary key, " + COLUMN_PUZZLE
 	+ " text not null);";
+    private static final String DATABASE_CREATE_HINTS = "create table "
+	+ TABLE_HINTS + "(" + COLUMN_ID
+	+ " integer primary key, " + COLUMN_HINTS
+	+ " integer);";
     
     public MySQLiteHelper(Context context) {
 	super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -26,7 +32,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase database) {
-	database.execSQL(DATABASE_CREATE);
+	database.execSQL(DATABASE_CREATE_PUZZLES);
+	database.execSQL(DATABASE_CREATE_HINTS);
     }
     
     @Override

@@ -1,21 +1,4 @@
-#include "BeeLineLJJ.hpp"
-
-pos operator-(pos left, pos right) {
-  left.r = left.r - right.r;
-  left.c = left.c - right.c;
-  return left;
-}
-
-pos operator+(pos left, pos right) {
-  left.r = left.r + right.r;
-  left.c = left.c + right.c;
-  return left;
-}
-
-bool operator==(pos left, pos right) {
-  bool ret = ((left.r==right.r)&&(left.c==right.c));
-  return ret;
-}
+#include "BeeLinePuzzle.hpp"
 
 string intTooString(int in) {
   stringstream ss;
@@ -1029,16 +1012,24 @@ int BeeLinePuzzle::getLength() {
   return length-1;
 }
 
-void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter) {
+void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, int *puzzleIndex) {
   
   xml_node<> *puzzle;
   xml_node<> *node;
   xml_node<> *hint;
+  xml_attribute<> *attr;
   char *name;
   int myInt;
   
   puzzle = doc->allocate_node(node_element, "puzzle");
   chapter->append_node(puzzle);
+
+  name = doc->allocate_string(intTooString(*puzzleIndex).c_str());
+  attr = doc->allocate_attribute("id", name);
+  puzzle->append_attribute(attr);
+
+  *puzzleIndex += 1;
+
   name = doc->allocate_string(intTooString(height).c_str());
   node = doc->allocate_node(node_element, "height", name);
   puzzle->append_node(node);
