@@ -47,7 +47,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	
 	
 	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
-		for(int i=0;i<36;i++){
+		for(int i=0;i<boardWidth*boardHeight;i++){
 			tiles[i].setTrueSolution(solution[i]);
 			tiles[i].setArrow(arrows[i]);
 			tiles[i].setNumber(numbers[i]);
@@ -85,24 +85,24 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			Log.d("path", "dx "+Float.toString(dx));
 			Log.d("path", "dy "+Float.toString(dy));
 			if (dx > 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 			}
 			
 			if (dx < 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 			}
 			
 			if (dy > 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
 			}
 			if (dy < 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 			}
-			Log.d("path", tiles[6*path[i][0] + path[i][1]].getTrueArrow());
+			Log.d("path", tiles[boardHeight*path[i][0] + path[i][1]].getTrueArrow());
 		}
 		
 		if(toggleHints){
@@ -117,7 +117,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 	
 	public void buildEmptyBoard() {
-		tiles = new BoardTile[36];
+		tiles = new BoardTile[boardHeight*boardWidth];
 		float size = .15f;
 		for (int i = 0; i < tiles.length; i++) {
 			double r = Math.random();
@@ -152,19 +152,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			dy = path[i+1][1]-path[i][1];
 
 			if (dx > 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 			}
 			if (dx < 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 			}
 			if (dy > 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
 			}
 			if (dy < 0) {
-				tiles[6*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
+				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
 				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 			}
 		}
@@ -188,7 +188,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 		clearLines();
 	}
 
-
 	public void createPuzzleFromPuzzle(Puzzle p){
 		currPuzzle = p;
 		int[] solution = p.getBoard();
@@ -203,14 +202,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 	
 	public int touched(float[] pt) {
-		lastTouchPos = pt;
-		lastTouchTime = System.currentTimeMillis();
-		for (int i = 0; i < tiles.length; i++) {
-			if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
-				return i;
-			}
+	    lastTouchPos = pt;
+	    lastTouchTime = System.currentTimeMillis();
+	    for (int i = 0; i < tiles.length; i++) {
+		if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
+		    return i;
 		}
-		return -1;   
+	    }
+	    return -1;   
 	}
 
 	public void touchHandler(float[] pt){
@@ -231,7 +230,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 
 	public boolean checkSolution(){
-		for(int i =0; i < 36; i++){
+		for(int i =0; i < boardHeight*boardWidth; i++){
 			if(!( tiles[i].checkArrows() && tiles[i].checkSolutions() ) ){ 
 				return false;
 			}
@@ -255,34 +254,34 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	 * Show a hint on the board. This should be trigered when the bee is clicked.
 	 */
 	public void showHint() {
-		for(int i =0; i< tiles.length; i++){
-			if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
-				System.out.println("Found a potential tile");
-				if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
-					//tiles[i].setSolution();
-					//tiles[i].setTextures();
-					tiles[i].setHint();
-					drawLines();
-					
-					break;
-				}
-			}
+	    for(int i =0; i< tiles.length; i++){
+		if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
+		    System.out.println("Found a potential tile");
+		    if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
+			//tiles[i].setSolution();
+			//tiles[i].setTextures();
+			tiles[i].setHint();
+			drawLines();
+			
+			break;
+		    }
 		}
+	    }
 	}
 	
 	/*
 	 * Show solution at the end of the game. Currently just a utility function.
 	 */
 	public void showSolution(){
-		String sol = "";
-		for(int i =0;i <tiles.length;i++){
-			if(tiles[i].getTrueSolution() == 0)
-				sol  = "clear";
-			else
-				sol = Integer.toString(tiles[i].getTrueSolution());
-			tiles[i].setNumber(sol);
-			tiles[i].setArrow(tiles[i].getTrueArrow());
-		}
+	    String sol = "";
+	    for(int i =0;i <tiles.length;i++){
+		if(tiles[i].getTrueSolution() == 0)
+		    sol  = "clear";
+		else
+		    sol = Integer.toString(tiles[i].getTrueSolution());
+		tiles[i].setNumber(sol);
+		tiles[i].setArrow(tiles[i].getTrueArrow());
+	    }
 	}
 	
 	/*
@@ -513,64 +512,64 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 
 	public boolean checkRuleCollision() {
-		//Now go though each tile and fill in pointed at tiles.
-		float duration = .3f;
-		float delay = 0.0f;
-		boolean satisfied = true;
-		for (int i = 1; i < tiles.length; i++ ) {
-			if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
-				int num = Integer.parseInt(tiles[i].number);
-				if (tiles[i].getArrow() == TextureManager.UPARROW) {
-					for (int j = 1; j < num; j++) {
-						if (i%boardHeight + j < boardHeight) {
-							if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) {
-							}
-							else {
-								tiles[i+j].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
+	    //Now go though each tile and fill in pointed at tiles.
+	    float duration = .3f;
+	    float delay = 0.0f;
+	    boolean satisfied = true;
+	    for (int i = 1; i < tiles.length; i++ ) {
+		if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
+		    int num = Integer.parseInt(tiles[i].number);
+		    if (tiles[i].getArrow() == TextureManager.UPARROW) {
+			for (int j = 1; j < num; j++) {
+			    if (i%boardHeight + j < boardHeight) {
+				if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) {
 				}
-				if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i%boardHeight - j >= 0) {
-							if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) { 
-							}
-							else {
-								tiles[i-j].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
+				else {
+				    tiles[i+j].setAngryGlow(duration, j*delay);
+				    satisfied = false;
 				}
-				if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i/boardHeight + j < boardWidth) { 
-							if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) {
-							}
-							else {
-								tiles[i+j*boardHeight].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
-				}
-				if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i/boardHeight - j >= 0) {
-							if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) {
-							}
-							else {
-								tiles[i-j*boardHeight].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
-				}
+			    }
 			}
+		    }
+		    if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
+			for (int j = 1; j < num; j++) {
+			    if (i%boardHeight - j >= 0) {
+				if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) { 
+				}
+				else {
+				    tiles[i-j].setAngryGlow(duration, j*delay);
+				    satisfied = false;
+				}
+			    }
+			}
+		    }
+		    if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
+			for (int j = 1; j < num; j++) {
+			    if (i/boardHeight + j < boardWidth) { 
+				if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) {
+				}
+				else {
+				    tiles[i+j*boardHeight].setAngryGlow(duration, j*delay);
+				    satisfied = false;
+				}
+			    }
+			}
+		    }
+		    if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
+			for (int j = 1; j < num; j++) {
+			    if (i/boardHeight - j >= 0) {
+				if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) {
+				}
+				else {
+				    tiles[i-j*boardHeight].setAngryGlow(duration, j*delay);
+				    satisfied = false;
+				}
+			    }
+			}
+		    }
 		}
-		return false;
+	    }
+	    return false;
 	}
 
 	class BoardMainMenu extends State<BoardTile> {
@@ -690,14 +689,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			float totalTime = 2000f;
 			// This does a simultaneous snap to position and shrink of tiles.
 			if(time < totalTime/3) {
-				for (int i = 0; i < tiles.length; i++) {
-					float Sx = ( (i/6) - 2.5f )/4.0f;
-					float Sy = ( (i%6) - 2.5f )/4.0f;
-					float newX = Sx + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldX[i]-Sx);
-					float newY = Sy + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldY[i]-Sy);
-					float center[] = {newX, newY, 0.0f};
-					tiles[i].center = center;
-				}			
+			    for (int i = 0; i < tiles.length; i++) {
+				float Sx = ( (i/boardHeight) - boardWidth/2.0f- 0.5f )/4.0f;
+				float Sy = ( (i%boardHeight) - boardWidth/2.0f- 0.5f )/4.0f;
+				float newX = Sx + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldX[i]-Sx);
+				float newY = Sy + ((float)Math.pow(.5,3*time/totalTime*10f))*(oldY[i]-Sy);
+				float center[] = {newX, newY, 0.0f};
+				tiles[i].center = center;
+			    }			
 			}
 			//Tiles shrink to zero then blow up with the
 			//the correct game tiles.
@@ -711,8 +710,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 				if (!swap) {
 					for (int i = 0; i < tiles.length; i++) {
 						tiles[i].setTextures();
-						float Sx = ( (i/6) - 2.5f )/4.0f;
-						float Sy = ( (i%6) - 2.5f )/4.0f;
+						float Sx = ( (i/boardHeight) - boardWidth/2.0f- 0.5f )/4.0f;
+						float Sy = ( (i%boardHeight) - boardWidth/2.0f- 0.5f )/4.0f;
 						float center[] = {Sx, Sy, 0.0f};
 						tiles[i].center = center;
 						if(!tiles[i].isClickable() && !tiles[i].isBlack())
@@ -813,7 +812,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 						//TODO: DO THIS DIFFERENT WITH A HARD RESET
 						mModel.toc.setState();
 						mModel.toc.setState();
-						GlobalApplication.getDB().setPuzzle(currPuzzle.getId(),"true");
+						GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
 					}
 					mGameBanner.setText(TextureManager.GOOD_JOB);
 				} else {
@@ -866,9 +865,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	}
 	//This is the board after completing the game.
 	class BoardGameEnd extends State<BoardTile> {
-		boolean[] rotateTiles = new boolean[36];
-		boolean[] flipped = new boolean[36];
-		long[] refTime = new long[36];
+		boolean[] rotateTiles = new boolean[boardHeight*boardWidth];
+		boolean[] flipped = new boolean[boardHeight*boardWidth];
+		long[] refTime = new long[boardHeight*boardWidth];
 		EndGameDialogWidgetLayout mDialog;
 		
 		public BoardGameEnd(BoardTile[] tiles) {
@@ -908,8 +907,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			for (int i = 0; i < tiles.length; i++) {
 				flipped[i] = false;
 				rotateTiles[i] = false;
-				float Sx = ( (i/6) - 2.5f )/4.0f;
-				float Sy = ( (i%6) - 2.5f )/4.0f;
+				float Sx = ( (i/boardHeight) - boardWidth/2.0f- 0.5f )/4.0f;
+				float Sy = ( (i%boardHeight) - boardWidth/2.0f- 0.5f )/4.0f;
 				tiles[i].setSize(.12f);
 				tiles[i].setCenter(Sx, Sy);
 				tiles[i].setColor("transparent");

@@ -56,8 +56,7 @@ public class ViewActivity extends Activity {
 		Typeface font = Typeface.createFromAsset(getAssets(), "font3.ttf");  
 		mQuoteView.setTypeface(font);
 		mQuoteView.setText(Html.fromHtml(quotes[sel]));
-		mStore = new Store(this);
-		
+		mStore = new Store(this);		
 	}
 
 
@@ -72,7 +71,8 @@ public class ViewActivity extends Activity {
 		if(mModel.state.saveCurrGame){
 			mDataServer.saveGame(mModel.mBoard);
 		}
-		GlobalApplication.getDB().close();
+		GlobalApplication.getPuzzleDB().close();
+		GloablApplication.getHintDB().close();
 	}
 
 	@Override
@@ -82,7 +82,8 @@ public class ViewActivity extends Activity {
 		// If you de-allocated graphic objects for onPause()
 		// this is a good place to re-allocate them.
 		mGLView.onResume();
-		GlobalApplication.getDB().open();
+		GlobalApplication.getPuzzleDB().open();
+		GlobalApplication.getHintDB().open();
 		// AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this,R.anim.shrink_dance_button_anim);
 		// set.setTarget((Button)findViewById(R.id.bee_puzzled));
 		// set.end();       
@@ -111,7 +112,7 @@ public class ViewActivity extends Activity {
 		SQLPuzzle q;
 		for(Chapter c: mLP.getAllChapters()){
 			for(Puzzle p: c.getAllPuzzles()){
-				 q = GlobalApplication.getDB().getPuzzle(p.getId());
+				 q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
 				 String result = q.getCompleted();
 				 System.out.println("db result "+result+" "+p.getId());
 				 if(result.equals("true"))
