@@ -104,7 +104,9 @@ int main(int argc, char *argv[]){
     afterImages.push_back("BookOneChFour");
     afterImages.push_back("BookOneChFive");
 
-    PuzzleBook PB = PuzzleBook(files, bookTitle, chapterTitles, beforeImages, afterImages);
+    int startIndex = 0;
+
+    PuzzleBook PB = PuzzleBook(files, bookTitle, chapterTitles, beforeImages, afterImages, startIndex);
     
     ofs.open("XMLOut.xml");
     PB.printXML(ofs);

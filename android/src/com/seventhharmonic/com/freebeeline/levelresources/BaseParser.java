@@ -19,7 +19,7 @@ public class BaseParser {
     protected InputStream getInputStream() {
         try{	
         	Context c = GlobalApplication.getContext();
-            return c.getAssets().open("testXML.xml");
+            return c.getAssets().open("XMLOut.xml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

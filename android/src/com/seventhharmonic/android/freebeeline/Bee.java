@@ -86,7 +86,7 @@ class BeeWander extends BeeState<BeeTile> {
 	    else {
 		globalRefTime = System.currentTimeMillis();
 		bee.velocity = LATools.vSProd(1/LATools.abs(bee.velocity),bee.velocity);
-		r = ((int)(Math.random()*36));
+		r = ((int)(Math.random()*mBoard.boardHeight*mBoard.boardWidth));
 	    }
 	}
 
@@ -161,7 +161,7 @@ class BeeFixed extends BeeState<BeeTile> {
 				else{
 					mBoard.tiles[r].rotate = true;
 				}
-				r = 6*mBoard.path[index][0] + mBoard.path[index][1];
+				r = mBoard.boardHeight*mBoard.path[index][0] + mBoard.path[index][1];
 				index = ((index-1)%length + length)%length;
 			}
 			break;

@@ -13,8 +13,10 @@ public:
   friend ifstream &operator>>(ifstream&, PuzzleBook&);
   void add(PuzzleChapter);
   void printXML(ofstream&);
-  PuzzleBook(vector<string>,string, vector<string>, vector<string>, vector<string>);
+  PuzzleBook(vector<string>,string, vector<string>, vector<string>, vector<string>, int);
 private:
+  int *puzzleIndex;
+  int pi;
   string bookTitle;
   vector<PuzzleChapter> chapters;
   vector<string> chapterTitles;

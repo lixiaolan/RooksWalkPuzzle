@@ -1,11 +1,5 @@
 package com.seventhharmonic.android.freebeeline;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.MapBuilder;
-import com.seventhharmonic.android.freebeeline.TableOfContents.Contents;
-import android.app.Activity;
-
 class MenuManager {
 	private GlobalState state;
 	public GameMenu mGameMenu;
@@ -17,13 +11,11 @@ class MenuManager {
 	private float[] bottomRight = new float[3];
 	private float scale1;
 	private float scale2;
-	EasyTracker mTracker;
 
 	public MenuManager(GlobalState s, Model m) {
 		state = s;
 		mModel = m;
 		updateState();
-		mTracker = GlobalApplication.getGaTracker();
 
 	}
 	//Each case statement should have a declaration of
@@ -167,21 +159,11 @@ class MenuManager {
 				mModel.createTutorial();
 				mModel.setState(GameState.TUTORIAL);
 				state.state = GameState.TUTORIAL;
-				mTracker.send(MapBuilder
-					    .createAppView()
-					    .set(Fields.SCREEN_NAME,"tutorial_screen")
-					    .build()
-					);
 				updateState();
 				break;
 			case 3:
 				mModel.createStory();
 				mModel.setState(GameState.STORY);
-				mTracker.send(MapBuilder
-					    .createAppView()
-					    .set(Fields.SCREEN_NAME,"story_screen")
-					    .build()
-					);
 				updateState();
 				break;
 			case 4:
@@ -189,11 +171,6 @@ class MenuManager {
 				mModel.createTextures = true;
 				state.state = GameState.STATS;
 				mModel.setState(GameState.STATS);
-				mTracker.send(MapBuilder
-					    .createAppView()
-					    .set(Fields.SCREEN_NAME,"stats_screen")
-					    .build()
-					);
 				updateState();
 				break;
 			case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -212,13 +189,6 @@ class MenuManager {
 				state.saveCurrGame = true;
 				mModel.resumeGame();
 				mModel.setState(GameState.GAME_OPENING);
-				mTracker.send(MapBuilder
-						.createEvent("ui_action",     
-								"button_press",  
-								"resume_button",   
-								null)            
-								.build()
-						);
 				updateState();
 				break;
 			case 2: state.state = GameState.MAIN_MENU_GEAR;

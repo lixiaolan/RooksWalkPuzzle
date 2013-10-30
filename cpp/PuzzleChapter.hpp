@@ -21,7 +21,7 @@ public:
   void swap(int a, int b);
   void plotToFile(ofstream &ofs);
   void printSoln();
-  void buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, string afterImage);
+  void buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, string afterImage, int*);
 private:
   vector<BeeLinePuzzle> puzzles;
 };

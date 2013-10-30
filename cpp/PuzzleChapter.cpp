@@ -64,7 +64,7 @@ void PuzzleChapter::plotToFile(ofstream &ofs) {
   return;
 }
 
-void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, string afterImage) {
+void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, string afterImage, int *puzzleIndex) {
   xml_node<> *chapter;
   xml_node<> *node;
   xml_attribute<> *attr;
@@ -88,7 +88,7 @@ void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string 
   chapter->append_node(node);
 
   for (BeeLinePuzzle puz : puzzles) {
-    puz.buildXML(doc, chapter);
+    puz.buildXML(doc, chapter, puzzleIndex);
   }
 }
 

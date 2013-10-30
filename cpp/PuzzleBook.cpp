@@ -30,7 +30,6 @@ void PuzzleBook::printXML(ofstream& ofs) {
   xml_node<> *levelpack;
   xml_node<> *chapter;
 
-
   xml_node<> *puzzle;
   xml_node<> *hint;
   xml_attribute<> *attr;
@@ -43,7 +42,7 @@ void PuzzleBook::printXML(ofstream& ofs) {
   levelpack->append_node(node);
 
   for (int i = 0; i < chapters.size(); i++) {
-    chapters[i].buildXML(doc, levelpack, chapterTitles[i], beforeImages[i], afterImages[i]);
+    chapters[i].buildXML(doc, levelpack, chapterTitles[i], beforeImages[i], afterImages[i], puzzleIndex);
   }
 
   ofs << *doc;
@@ -67,6 +66,8 @@ void PuzzleBook::loadChapters(vector<string> files) {
   return;
 }
 
-PuzzleBook::PuzzleBook(vector<string> files, string a, vector<string> b, vector<string> c,vector<string> d): bookTitle(a), chapterTitles(b), beforeImages(c), afterImages(d) {
+PuzzleBook::PuzzleBook(vector<string> files, string a, vector<string> b, vector<string> c,vector<string> d, int e): bookTitle(a), chapterTitles(b), beforeImages(c), afterImages(d), pi(e) {
+  puzzleIndex = &pi;
+
   loadChapters(files);
 }

@@ -1,10 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
-
 import java.util.List;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
@@ -37,23 +34,19 @@ class Model {
 	
 	Banner mVersionBanner;
 	Store mStore;
-	EasyTracker mTracker;
 
 	TableOfContents toc;
 	
 	public Model(Context c) {
 		mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
 		mediaPlayer.start();
-		initiateMembers(c, new Board(this));
-		mTracker = GlobalApplication.getGaTracker();
-		
+		initiateMembers(c, new Board(this));		
 	}
 
 	public Model(Context c, Board b){
 		mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
 		mediaPlayer.start();	
 		initiateMembers(c, b);
-		mTracker = GlobalApplication.getGaTracker();
 	}
 
 	public void initiateMembers(Context c, Board b){
@@ -92,6 +85,7 @@ class Model {
 
 	public void toggleLines(boolean toggle) {
 		mBoard.toggleLines(toggle);
+		GlobalApplication.getHintDB().addHints(10);
 	}
 
 	public void toggleRules(boolean toggle) {
@@ -103,16 +97,12 @@ class Model {
 		case GAME_OPENING: 
 		case GAME_MENU_END:
 			if(mBee.touched(pt) == 1){
-				//vibe.vibrate(500);
-				System.out.println("Bee touched");
+			    //vibe.vibrate(500);
+			    if (GlobalApplication.getHintDB().useHint()) {
 				mBoard.showHint();
-				mTracker.send(MapBuilder
-						.createEvent("ui_action",     
-								"button_press",  
-								"bee_buzz",   
-								null)            
-								.build()
-						);
+				System.out.println("Hints Left: " + Long.toString(GlobalApplication.getHintDB().getHints().getNum()) );
+			    }
+				
 			}
 			//Internally close menu.    		
 			mBoard.touchHandler(pt);
@@ -129,13 +119,6 @@ class Model {
 			}
 			if(mBee.touched(pt) == 1){
 				vibe.vibrate(100);
-				mTracker.send(MapBuilder
-						.createEvent("ui_action",     
-								"button_press",  
-								"bee_buzz",   
-								null)            
-								.build()
-						);
 			}
 			break;
 		case TUTORIAL:
@@ -290,20 +273,19 @@ class Model {
 		}
 	}
 
-	public void updateStats(TextureManager TM) {
-		int shortPuzz = mDataServer.getShortGames();
-		int medPuzz = mDataServer.getMediumGames();
-		int longerPuzz = mDataServer.getLongerGames();
-		int longestPuzz = mDataServer.getLongestGames();		
-		int flowersVisited = mDataServer.getFlowersVisited();
-
-		TM.buildLongTextures("Short Games: "+Integer.toString(shortPuzz), 0, 30, TextureManager.SHORTSTATS, 25,  256);
-		TM.buildLongTextures("Medium Games: "+Integer.toString(medPuzz), 0, 30, TextureManager.MEDIUMSTATS, 25, 256);
-		TM.buildLongTextures("Longer Games: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
-		TM.buildLongTextures("Longest Games: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
-		TM.buildLongTextures("Flowers Visited: "+Integer.toString(flowersVisited), 0, 30, TextureManager.FLOWERSVISITED, 25, 256);
-	}
-
+    public void updateStats(TextureManager TM) {
+	int shortPuzz = mDataServer.getShortGames();
+	int medPuzz = mDataServer.getMediumGames();
+	int longerPuzz = mDataServer.getLongerGames();
+	int longestPuzz = mDataServer.getLongestGames();		
+	int flowersVisited = mDataServer.getFlowersVisited();
+	
+	TM.buildLongTextures("Short Games: "+Integer.toString(shortPuzz), 0, 30, TextureManager.SHORTSTATS, 25,  256);
+	TM.buildLongTextures("Medium Games: "+Integer.toString(medPuzz), 0, 30, TextureManager.MEDIUMSTATS, 25, 256);
+	TM.buildLongTextures("Longer Games: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
+	TM.buildLongTextures("Longest Games: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
+	TM.buildLongTextures("Flowers Visited: "+Integer.toString(flowersVisited), 0, 30, TextureManager.FLOWERSVISITED, 25, 256);
+    }   
 }
 
 

@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.content.Intent;
 import android.content.res.Resources;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
 
@@ -72,7 +71,7 @@ public class ViewActivity extends Activity {
 			mDataServer.saveGame(mModel.mBoard);
 		}
 		GlobalApplication.getPuzzleDB().close();
-		GloablApplication.getHintDB().close();
+		GlobalApplication.getHintDB().close();
 	}
 
 	@Override
@@ -94,14 +93,16 @@ public class ViewActivity extends Activity {
 		super.onStart();	
 		mModel.state.resumeGameExists = mDataServer.resumeExists();
 		mModel.state.firstRun = mDataServer.firstRun();
-		
+
+		GlobalApplication.getPuzzleDB().open();
+		GlobalApplication.getHintDB().open();
+
 		if(mModel.state.firstRun){
 			mQuoteView.setVisibility(View.INVISIBLE);
 			mModel.firstRun();
 		} else {
 			mModel.reset();
 		}
-		EasyTracker.getInstance(this).activityStart(this);
 
 		
 		//TODO: This sucks balls. Do this elsewhere.
@@ -112,11 +113,11 @@ public class ViewActivity extends Activity {
 		SQLPuzzle q;
 		for(Chapter c: mLP.getAllChapters()){
 			for(Puzzle p: c.getAllPuzzles()){
-				 q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
-				 String result = q.getCompleted();
-				 System.out.println("db result "+result+" "+p.getId());
-				 if(result.equals("true"))
-					 p.setCompleted(true);
+			    q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
+			    String result = q.getCompleted();
+			    System.out.println("db result "+result+" "+p.getId());
+			    if(result.equals("true"))
+				p.setCompleted(true);
 			}
 		}
 
@@ -127,7 +128,6 @@ public class ViewActivity extends Activity {
 	
 	protected void onStop() {
 		super.onStop();
-		EasyTracker.getInstance(this).activityStop(this);
 	}
 	
 	@Override

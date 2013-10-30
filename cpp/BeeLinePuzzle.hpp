@@ -82,7 +82,7 @@ public:
   int uniqueCounter;
   void plotToFile(ofstream &ofs);
   int getLength();
-  void buildXML(xml_document<> *doc, xml_node<> *chapter);
+  void buildXML(xml_document<> *doc, xml_node<> *chapter, int*);
   string getHintDir(int i);
   string getBoardXML();
   string getPathXML();

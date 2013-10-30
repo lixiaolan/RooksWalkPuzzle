@@ -1,8 +1,5 @@
 package com.seventhharmonic.android.freebeeline;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Logger.LogLevel;
 import com.seventhharmonic.android.freebeeline.db.*;
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureBridge;
@@ -19,8 +16,6 @@ import android.content.Context;
  */
 public class GlobalApplication extends Application {
     
-    private static GoogleAnalytics mGa;
-    private static EasyTracker mTracker;
     private static Context context;
     private static LevelPackProvider mLPP;
     private static Geometry geo;
@@ -40,10 +35,7 @@ public class GlobalApplication extends Application {
     
     // Prevent hits from being sent to reports, i.e. during testing.
     private static final boolean GA_IS_DRY_RUN = false;
-    
-    // GA Logger verbosity.
-    private static final LogLevel GA_LOG_VERBOSITY = LogLevel.INFO;
-    
+        
     // Key used to store a user's tracking preferences in SharedPreferences.
     private static final String TRACKING_PREF_KEY = "trackingPreference";    
     
@@ -53,8 +45,6 @@ public class GlobalApplication extends Application {
      */
 
     private void initializeGa() {
-	mGa = GoogleAnalytics.getInstance(this);
-	mTracker = EasyTracker.getInstance(this);//mGa.getTracker(GA_PROPERTY_ID);
 	context = getApplicationContext();
 	geo = new Geometry();
 	mTextureBridge = new TextureBridge();
@@ -75,17 +65,11 @@ public class GlobalApplication extends Application {
      * Returns the Google Analytics tracker.
      */
 
-    public static EasyTracker getGaTracker() {
-	return mTracker;
-    }
     
     /*
      * Returns the Google Analytics instance.
      */
 
-    public static GoogleAnalytics getGaInstance() {
-	return mGa;
-    }
     
     public static LevelPackProvider getLevelPackProvider() {
 	return mLPP;

@@ -27,7 +27,7 @@ public class HintsDataSource extends BaseDataSource{
 	if (!cursor.moveToFirst()) {
 	    	ContentValues values = new ContentValues();
 		int n = 0;
-	    	values.put(MySQLiteHelper.COLUMN_ID, id); 
+	    values.put(MySQLiteHelper.COLUMN_ID, hintIndex); 
 		values.put(MySQLiteHelper.COLUMN_HINTS, n); 
 	    	
 		database.insert(MySQLiteHelper.TABLE_HINTS, null, values);
