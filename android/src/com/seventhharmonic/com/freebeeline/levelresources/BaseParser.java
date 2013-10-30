@@ -16,10 +16,10 @@ public class BaseParser {
         }
     }
 
-    protected InputStream getInputStream() {
+    protected InputStream getInputStream(String file) {
         try{	
         	Context c = GlobalApplication.getContext();
-            return c.getAssets().open("testXML.xml");
+            return c.getAssets().open(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

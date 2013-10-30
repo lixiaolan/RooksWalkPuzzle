@@ -15,6 +15,7 @@ public class Puzzle {
 	String image = TextureManager.getFlowerTexture();
 	public String path;
 	int width;
+	int height;
 	List<Hint> hints = new ArrayList<Hint>();
 	Puzzle nextPuzzle;
 	boolean completed = false;
@@ -53,7 +54,7 @@ public class Puzzle {
 		this.path = path;
 	}
 
-	int height;
+	
 	public int getHeight() {
 		return height;
 	}

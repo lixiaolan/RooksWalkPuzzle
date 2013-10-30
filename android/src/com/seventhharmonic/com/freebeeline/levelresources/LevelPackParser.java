@@ -29,7 +29,7 @@ public class LevelPackParser extends BaseParser {
         
     }
     
-    public LevelPack parse() {
+    public LevelPack parse(String file) {
     	
     	final LevelPack lp = new LevelPack();
     	final Chapter ch = new Chapter();
@@ -149,7 +149,8 @@ public class LevelPackParser extends BaseParser {
     	
     	
     	try{
-    		Xml.parse(this.getInputStream(), Xml.Encoding.UTF_8, 
+    		
+    		Xml.parse(this.getInputStream(file), Xml.Encoding.UTF_8, 
     				root.getContentHandler());
     	} catch(Exception e) {
     		 throw new RuntimeException(e);

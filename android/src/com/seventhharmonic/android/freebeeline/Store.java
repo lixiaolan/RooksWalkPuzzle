@@ -13,7 +13,6 @@ import com.seventhharmonic.android.freebeeline.util.IabHelper;
 public class Store {
 
 	static final String TAG = "ViewActivity";
-
 	// SKUs for our products: the premium upgrade (non-consumable) and gas (consumable)
 	static final String SKU_HINT = "hint";
 	static final int RC_REQUEST = 10001;
@@ -28,13 +27,11 @@ public class Store {
 
 	void initializeIab() {
 		String base64EncodedPublicKey = "CONSTRUCT_YOUR_KEY_AND_PLACE_IT_HERE";
-
 		// Create the helper, passing it our context and the public key to verify signatures w
 		mHelper = new IabHelper(mContext, base64EncodedPublicKey);
 
 		// enable debug logging (for a production application, you should set this to false).
 		mHelper.enableDebugLogging(true);
-
 		Log.d(TAG, "Starting setup.");
 		mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
 			public void onIabSetupFinished(IabResult result) {
@@ -48,7 +45,6 @@ public class Store {
 
 				// Have we been disposed of in the meantime? If so, quit.
 				if (mHelper == null) return;
-
 				// IAB is fully set up. Now, let's get an inventory of stuff we own.
 				Log.d(TAG, "Setup successful. Querying inventory.");
 				mHelper.queryInventoryAsync(mGotInventoryListener);
