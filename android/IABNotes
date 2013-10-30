@@ -1,0 +1,11 @@
+1. Create a new IABHelper
+2. Run startSetup - this gets passed a OnIabSetupFinishedListener
+3. The OnIabSetupFinishedListener queries the inventory passsing a mGotInventoryListener
+4. The mGotInventoryListener gets an Inventory object and does a bunch of queries to establish what has been bought.
+5. For some reason mGotInventoryListener runs an updateUI()??
+6. Now we have explicit handlers for buying specific things.
+7. Let's go through onBuyGasButtonClicked
+8. The purchase is made through mHelperlaunchPurchaseFlow(context, SKU, requestCode ,mPurchaseFinishedListener, payload)
+9. The listener checks for the current purchase.
+10. I need to follow gas - it is the closest thing to hints.
+11. MHelpher has some function called mHelper.consumeAsync - this consumes the product - in our case hints.

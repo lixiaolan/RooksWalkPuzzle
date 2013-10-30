@@ -18,6 +18,8 @@ public class Store {
 	static final int RC_REQUEST = 10001;
 	// The helper object
 	public IabHelper mHelper;
+	public Inventory mInventory;
+	
 	Activity mContext;
 
 	public Store(Activity c){
@@ -62,30 +64,36 @@ public class Store {
 				complain("Failed to query inventory: " + result);
 				return;
 			}
+			mInventory = inventory;
 			Log.d(TAG, "Query inventory was successful.");
 			Log.d(TAG, "Initial inventory query finished; enabling main UI.");
 		}
 	};
+/************************************************************************/
 
+	/*
+	 * Call this method when you decide to buy hints.
+	 */
 	public void onBuyHints(View arg0) {
-		Log.d(TAG, "Buy gas button clicked.");
+		Log.d(TAG, "Buy hints button clicked.");
 		// launch the gas purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
 		//setWaitScreen(true);
-		Log.d(TAG, "Launching purchase flow for gas.");
+		Log.d(TAG, "Launching purchase flow for hints.");
 		/* TODO: for security, generate your payload here for verification. See the comments on
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
 		mHelper.launchPurchaseFlow(mContext, "android.test.purchased", RC_REQUEST,
-				mPurchaseFinishedListener, payload);
+				mPurchaseHintFinishedListener, payload);
 	}
 
-	   IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+	IabHelper.OnIabPurchaseFinishedListener mPurchaseHintFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
 	        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
 	            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 	            // if we were disposed of in the meantime, quit.
 	            if (mHelper == null) return;
+	            
 	            if (result.isFailure()) {
 	                complain("Error purchasing: " + result);
 	                //setWaitScreen(false);
@@ -96,14 +104,16 @@ public class Store {
 	                //setWaitScreen(false);
 	                return;
 	            }
+	            
 	            Log.d(TAG, "Purchase successful.");
 
 	       }
 	    };
-
+	    
+/************************************************************************/
 	
 	void complain(String message) {
-		Log.e(TAG, "**** TrivialDrive Error: " + message);
+		Log.e(TAG, "**** InApp purchase Error: " + message);
 	}
 
 	boolean verifyDeveloperPayload(Purchase p) {
