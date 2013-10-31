@@ -13,7 +13,7 @@ import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
 
-class Board extends Graphic<BoardTile, State<BoardTile> > {
+class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface{
     String TAG = "board";
     public int hints;
     public int[] solution ;
@@ -34,7 +34,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     private Background mBoardBg;
     Puzzle currPuzzle;
     Model mModel;
-    
+    Bee mBee;
     
     public Board(Model mModel) {
 	buildEmptyBoard();
@@ -43,8 +43,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	mBoardBg = new Background("boardbg", 1.0f);
 	mErrorLog = new ErrorLog(this);
 	this.mModel = mModel;
-    }
-    
+	mBee = new Bee(this);
+    }    
     
     public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
 	for(int i=0;i<boardWidth*boardHeight;i++){
@@ -226,6 +226,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     }
     
     public void setState(GameState s){
+	mBee.setState(s);
 	switch(s) {
 	case MAIN_MENU_OPENING: state = new BoardMainMenu(tiles); break;
 	case GAME_OPENING: state  = new BoardPlay(tiles); break;
@@ -250,11 +251,15 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
     public void toggleHints(boolean toggle){
 	toggleHints = toggle;
     }
-    
+
     public void toggleRules(boolean toggle){
 	toggleError = toggle;
     }
     
+    public int beeTouched(float[] pt) {
+	return mBee.touched(pt);
+    }
+
     /**
      * Show a hint on the board. This should be trigered when the bee is clicked.
      */
@@ -577,6 +582,35 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 	return false;
     }
     
+    //Bee Board Interface Methods:
+
+    public BoardTile getTile(int index) {
+	return tiles[index];
+    }
+
+    public int getBoardHeight() {
+	return boardHeight;
+    }
+
+    public int getBoardWidth() {
+	return boardWidth;
+    }
+
+    public int getPathLength() {
+	return path.length;
+    }
+    
+    public void setTileRotate(int index) {
+	tiles[index].rotate = true;
+    }
+
+    public int getPathToArray(int index) {
+	return boardHeight*path[index][0] + path[index][1];
+    }
+
+
+
+
     class BoardMainMenu extends State<BoardTile> {
 	
 	long refTime;
@@ -812,7 +846,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > {
 			currPuzzle.setCompleted(true);
 			mModel.state.saveCurrGame = false;
 			mModel.state.resumeGameExists = false;
-			mModel.mBee.setMood(Mood.HAPPY);
+			mBee.setMood(Mood.HAPPY);
 			mModel.setState(GameState.GAME_MENU_END);
 			//TODO: DO THIS DIFFERENT WITH A HARD RESET
 			mModel.toc.setState();

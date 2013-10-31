@@ -98,35 +98,35 @@ public class TableOfContents extends GraphicWidget{
 	}
 
 	class ChapterDisplay extends StateWidget{
-		ScreenSlideWidgetLayout m;
-		Widget currChapterWidget;
-
-		public ChapterDisplay(){
-			m = new ScreenSlideWidgetLayout(2.0f);
-			for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
+	    ScreenSlideWidgetLayout m;
+	    Widget currChapterWidget;
+	    
+	    public ChapterDisplay(){
+		m = new ScreenSlideWidgetLayout(2.0f);
+		for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
+		    
+		    //If the previous chapter is completed, launch a normal chapter widget
+		    if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
+			final Chapter c = currLevelPack.getChapter(i);
+			ChapterWidget ch  = new ChapterWidget(c);
+			ch.setTouchListener(new GameEventListener() {
+				public void event(int puzz){
+				    Puzzle p = c.getPuzzle(puzz);
+				    mModel.createPuzzleFromPuzzle(p);
+				    mModel.setState(GameState.GAME_OPENING);
+				}
 				
-				//If the previous chapter is completed, launch a normal chapter widget
-				if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
-					final Chapter c = currLevelPack.getChapter(i);
-					ChapterWidget ch  = new ChapterWidget(c);
-					ch.setTouchListener(new GameEventListener() {
-						public void event(int puzz){
-							Puzzle p = c.getPuzzle(puzz);
-							mModel.createPuzzleFromPuzzle(p);
-							mModel.setState(GameState.GAME_OPENING);
-						}
-
-					});
-					m.addWidget(ch);
-				}
-
-				//Otherwise lock the user out!
-				else {
-					m.addWidget(new LockedChapterWidget());
-				}
-			}
+			    });
+			m.addWidget(ch);
+		    }
+		    
+		    //Otherwise lock the user out!
+		    else {
+			m.addWidget(new LockedChapterWidget());
+		    }
 		}
-
+	    }
+	    
 		@Override
 		public void enterAnimation() {
 			period = DrawPeriod.DURING;

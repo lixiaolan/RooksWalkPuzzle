@@ -4,9 +4,9 @@ import com.seventhharmonic.android.freebeeline.util.LATools;
 
 public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	public BeeTile bee;
-	private Board mBoard;
+	private BeeBoardInterface mBoard;
 
-	public Bee(Board b) {
+	public Bee(BeeBoardInterface b) {
 		float[] center= {0.0f,0.0f,0.0f};
 		tiles = new BeeTile[1];
 		tiles[0] = new BeeTile(center,0.13f);
@@ -17,16 +17,16 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 
 	public void setState(GameState s){
 		switch(s){
-		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
-		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP); break;
+		case MAIN_MENU_OPENING: state = new BeeWander( Mood.ASLEEP); break;
+		case GAME_OPENING: state = new BeeFixed( Mood.ASLEEP); break;
 		default: break; 
 		}
 	}
 
 	public void setState(GameState s, int l){
 		switch(s){
-		case MAIN_MENU_OPENING: state = new BeeWander(mBoard, Mood.ASLEEP); break;
-		case GAME_OPENING: state = new BeeFixed(mBoard, Mood.ASLEEP, l); 
+		case MAIN_MENU_OPENING: state = new BeeWander( Mood.ASLEEP); break;
+		case GAME_OPENING: state = new BeeFixed( Mood.ASLEEP, l); 
 		break;
 		default: break;
 		}
@@ -44,13 +44,11 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 		state.setMood(m);
 	}
 
-}
-
-class BeeWander extends BeeState<BeeTile> {
-	public long globalRefTime;
-	public long relativeRefTime;
-
-	BeeTile bee;
+	class BeeWander extends BeeState<BeeTile> {
+	    public long globalRefTime;
+	    public long relativeRefTime;
+	    
+	    BeeTile bee;
 
 	float interval = 10000f;
 
@@ -58,8 +56,7 @@ class BeeWander extends BeeState<BeeTile> {
 	int r = 0;
 	float[] pivot = {1,0,1};
 
-	public BeeWander(Board b, Mood m) {
-	    setBoard(b);
+	public BeeWander(Mood m) {
 	    setMood(m);
 	}
 
@@ -79,14 +76,14 @@ class BeeWander extends BeeState<BeeTile> {
 	    
 	    float[] force = new float[2];
 	    if(time < interval){
-		force = getForce(mBoard.tiles[r]);
+		force = getForce(mBoard.getTile(r));
 		bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
 		bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
 	    }
 	    else {
 		globalRefTime = System.currentTimeMillis();
 		bee.velocity = LATools.vSProd(1/LATools.abs(bee.velocity),bee.velocity);
-		r = ((int)(Math.random()*mBoard.boardHeight*mBoard.boardWidth));
+		r = ((int)(Math.random()*mBoard.getBoardHeight()*mBoard.getBoardWidth()));
 	    }
 	}
 
@@ -94,7 +91,7 @@ class BeeWander extends BeeState<BeeTile> {
 		float[] force = {0.0f, 0.0f};
 
 		force = LATools.vSProd(-0.7f,LATools.vDiff(bee.center, tile.center)); 
-		force = LATools.vSum(force, LATools.vSProd(-1.2f,bee.velocity));
+		force = LATools.vSum(force, LATools.vSProd(-0.8f,bee.velocity));
 
 		return force;
 	}
@@ -118,14 +115,12 @@ class BeeFixed extends BeeState<BeeTile> {
 
 	float[] fixedPosHidden = {-2.0f, 0.0f, 0.0f};
 
-	public BeeFixed(Board b, Mood m) {
-		setBoard(b);
+	public BeeFixed(Mood m) {
 		setMood(m);
-		length = (mBoard.path.length-2)/2;
+		length = (mBoard.getPathLength()-2)/2;
 	}
 
-	public BeeFixed(Board b, Mood m, int l) {
-		setBoard(b);
+	public BeeFixed(Mood m, int l) {
 		setMood(m);
 		length = l;
 	}   
@@ -137,60 +132,60 @@ class BeeFixed extends BeeState<BeeTile> {
 	}
 
 	public void duringAnimation(BeeTile[] tiles) {
-		bee = (BeeTile)tiles[0];
-		long time = System.currentTimeMillis() - globalRefTime;
-		float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
-		relativeRefTime = System.currentTimeMillis();
-		float[] force = new float[2];
-		switch (mood) {
-		case HAPPY:
-			if(LATools.abs(bee.velocity) > .01f){
-				force = getForce(mBoard.tiles[r]);
-				bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
-				bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
-			}
-			else {
-				if (LATools.abs(bee.velocity) == 0.0f) {
-					bee.velocity[0] = .00001f;
-					index = 0;
-				}
-				bee.velocity = LATools.vSProd(.2f/LATools.abs(bee.velocity),bee.velocity);
-				if (firstFlower == true) {
-					firstFlower = false;
-				}
-				else{
-					mBoard.tiles[r].rotate = true;
-				}
-				r = mBoard.boardHeight*mBoard.path[index][0] + mBoard.path[index][1];
-				index = ((index-1)%length + length)%length;
-			}
-			break;
-
-		case ASLEEP:
-			if(LATools.abs(bee.velocity) > .0001f){
-				force = getForce(fixedPos);
-				bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
-				bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
-			} else {
-				float[] velocity = {0.0f, .00001f};
-				bee.velocity = velocity;
-			}
-			break;
-
-		case HIDDEN:
-			if(LATools.abs(bee.velocity) > .0001f){
-				force = getForce(fixedPosHidden);
-				bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
-				bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
-			}
-			break;
-
-		case DIZZY:
-			force = getForceCentripetal(origin, bee.getCenter2D(), bee.velocity, 1.0f, 0.1f);
-			bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
-			bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
-			break;
+	    bee = (BeeTile)tiles[0];
+	    long time = System.currentTimeMillis() - globalRefTime;
+	    float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
+	    relativeRefTime = System.currentTimeMillis();
+	    float[] force = new float[2];
+	    switch (mood) {
+	    case HAPPY:
+		if(LATools.abs(bee.velocity) > .01f){
+		    force = getForce(mBoard.getTile(r));
+		    bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
+		    bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
 		}
+		else {
+		    if (LATools.abs(bee.velocity) == 0.0f) {
+			bee.velocity[0] = .00001f;
+			index = 0;
+		    }
+		    bee.velocity = LATools.vSProd(.2f/LATools.abs(bee.velocity),bee.velocity);
+		    if (firstFlower == true) {
+			firstFlower = false;
+		    }
+		    else{
+			mBoard.setTileRotate(r);
+		    }
+		    r = mBoard.getPathToArray(index);
+		    index = ((index-1)%length + length)%length;
+		}
+		break;
+		
+	    case ASLEEP:
+		if(LATools.abs(bee.velocity) > .0001f){
+		    force = getForce(fixedPos);
+		    bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
+		    bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
+		} else {
+		    float[] velocity = {0.0f, .00001f};
+		    bee.velocity = velocity;
+		}
+		break;
+		
+	    case HIDDEN:
+		if(LATools.abs(bee.velocity) > .0001f){
+		    force = getForce(fixedPosHidden);
+		    bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
+		    bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
+		}
+		break;
+		
+	    case DIZZY:
+		force = getForceCentripetal(origin, bee.getCenter2D(), bee.velocity, 1.0f, 0.1f);
+		bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
+		bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
+		break;
+	    }
 	}
 
 	public float[] getForceCentripetal(float[] dest, float[] initial, float[] velocity, float acc, float friction) {
@@ -241,4 +236,8 @@ class BeeFixed extends BeeState<BeeTile> {
 	}
 
 }
+
+
+}
+
 

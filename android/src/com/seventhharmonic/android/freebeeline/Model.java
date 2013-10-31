@@ -19,7 +19,6 @@ class Model {
 	public GlobalState state;
 	public TutorialBoard2 mTutorialBoard;
 	public Board mBoard;
-	public Bee mBee;
 	MenuManager mMenuManager;
 	private int at = -1;
 	private Vibrator vibe;
@@ -51,7 +50,6 @@ class Model {
 
 	public void initiateMembers(Context c, Board b){
 		mBoard = b;
-		mBee = new Bee(mBoard);
 		context = c;
 		vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 		state = new GlobalState();
@@ -96,7 +94,7 @@ class Model {
 		switch(state.state){
 		case GAME_OPENING: 
 		case GAME_MENU_END:
-			if(mBee.touched(pt) == 1){
+		    if(mBoard.beeTouched(pt) == 1){
 			    //vibe.vibrate(500);
 			    if (GlobalApplication.getHintDB().useHint()) {
 			    	mBoard.showHint();
@@ -117,7 +115,7 @@ class Model {
 				mBoard.tiles[at].setPivot(pivot);
 				mBoard.tiles[at].setRotate(true);
 			}
-			if(mBee.touched(pt) == 1){
+			if(mBoard.beeTouched(pt) == 1){
 				vibe.vibrate(100);
 			}
 			break;
@@ -164,12 +162,12 @@ class Model {
 			break;
 		case GAME_OPENING:
 			mBoard.draw(r);
-			mBee.draw(r);
+			mBoard.mBee.draw(r);
 			mMenuManager.draw(r);		
 			break;
 		case GAME_MENU_END:
 			mBoard.draw(r);
-			mBee.draw(r);
+			mBoard.mBee.draw(r);
 			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:
@@ -179,12 +177,12 @@ class Model {
 			mVersionBanner.draw(r);
 			mBoard.draw(r);
 			mMenuManager.draw(r);
-			mBee.draw(r);
+			mBoard.mBee.draw(r);
 			break;
 		case TABLE_OF_CONTENTS:
 			toc.draw(r);
 			mMenuManager.draw(r);
-			mBee.draw(r);
+			mBoard.mBee.draw(r);
 			break;
 		case TUTORIAL:
 			mTutorialBoard.draw(r);
@@ -215,7 +213,6 @@ class Model {
 
 	public void setState(GameState s){
 		state.state = s;
-		mBee.setState(s);
 		mBoard.setState(s);
 		mMenuManager.updateState();
 	}
