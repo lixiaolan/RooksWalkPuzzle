@@ -38,6 +38,7 @@ class Model {
 	
 	public Model(Context c) {
 		mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+		mediaPlayer.setLooping(true);
 		mediaPlayer.start();
 		initiateMembers(c, new Board(this));		
 	}

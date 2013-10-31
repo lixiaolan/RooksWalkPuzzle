@@ -585,6 +585,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
     //Bee Board Interface Methods:
 
     public BoardTile getTile(int index) {
+	if (index >= tiles.length) {
+	    return tiles[0];
+	}
 	return tiles[index];
     }
 
@@ -601,7 +604,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
     }
     
     public void setTileRotate(int index) {
-	tiles[index].rotate = true;
+	if (index < tiles.length) {
+	    tiles[index].rotate = true;	    
+	}
     }
 
     public int getPathToArray(int index) {
