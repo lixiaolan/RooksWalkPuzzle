@@ -656,7 +656,11 @@ public class IabHelper {
     void consume(Purchase itemInfo) throws IabException {
         checkNotDisposed();
         checkSetupDone("consume");
-
+        if(itemInfo == null){
+        	logDebug("You sent me a dud");
+        	return;
+        }
+        
         if (!itemInfo.mItemType.equals(ITEM_TYPE_INAPP)) {
             throw new IabException(IABHELPER_INVALID_CONSUMPTION,
                     "Items of type '" + itemInfo.mItemType + "' can't be consumed.");
@@ -861,11 +865,14 @@ public class IabHelper {
                         RESPONSE_INAPP_PURCHASE_DATA_LIST);
             ArrayList<String> signatureList = ownedItems.getStringArrayList(
                         RESPONSE_INAPP_SIGNATURE_LIST);
-
+            //I added this line
+            logDebug("Size of purchaseData "+Integer.toString(purchaseDataList.size()));
             for (int i = 0; i < purchaseDataList.size(); ++i) {
                 String purchaseData = purchaseDataList.get(i);
                 String signature = signatureList.get(i);
                 String sku = ownedSkus.get(i);
+                //I added this
+                logDebug("Data of this purchase: signature: "+signature+" sku: "+sku);
                 if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
                     logDebug("Sku is owned: " + sku);
                     Purchase purchase = new Purchase(itemType, purchaseData, signature);

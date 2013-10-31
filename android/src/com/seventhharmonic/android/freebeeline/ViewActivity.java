@@ -130,6 +130,16 @@ public class ViewActivity extends Activity {
 		super.onStop();
 	}
 	
+	public void onDestroy() {
+        super.onDestroy();
+        // very important:
+        Log.d(TAG, "Destroying helper.");
+        if (mStore.mHelper != null) {
+            mStore.mHelper.dispose();
+            mStore.mHelper = null;
+        }
+    }
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    super.onActivityResult(requestCode, resultCode, data);

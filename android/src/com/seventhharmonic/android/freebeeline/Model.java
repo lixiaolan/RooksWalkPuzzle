@@ -99,8 +99,8 @@ class Model {
 			if(mBee.touched(pt) == 1){
 			    //vibe.vibrate(500);
 			    if (GlobalApplication.getHintDB().useHint()) {
-				mBoard.showHint();
-				System.out.println("Hints Left: " + Long.toString(GlobalApplication.getHintDB().getHints().getNum()) );
+			    	mBoard.showHint();
+			    	System.out.println("Hints Left: " + Long.toString(GlobalApplication.getHintDB().getHints().getNum()) );
 			    }
 				
 			}
