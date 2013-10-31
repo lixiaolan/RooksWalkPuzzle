@@ -704,7 +704,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	    refTime = System.currentTimeMillis();
 	    oldX = new float[tiles.length];
 	    oldY = new float[tiles.length];
-	    mMenu = new Menu();
+	    mMenu = new Menu(boardHeight);
 	    reset = new ButtonWidget(0, -1.0f, .1f, .1f, TextureManager.ERASER);
 	    reset.setClickListener(new GameEventListener(){
 		    public void event(int i){

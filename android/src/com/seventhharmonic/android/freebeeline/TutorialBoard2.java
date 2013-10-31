@@ -27,7 +27,7 @@ class TutorialBoard2 extends Board {
 		mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);
 		state = new ShowPath(tiles,true);
 		mTutorialState = TutorialState.SHOW_PATH;
-		mMenu = new Menu();
+		mMenu = new Menu(5);
 	}
 	
 	public void setGeometry(float[] g){
@@ -407,7 +407,7 @@ class TutorialBoard2 extends Board {
 			float[] center = {-.7f,-1f, 0f};
 			mCheck.setCenter(center);
 			mBanner.set("tutorial_banner_4");
-			mMenu = new Menu();
+			mMenu = new Menu(5);
 		}
 
 		private void prepBoard() {
