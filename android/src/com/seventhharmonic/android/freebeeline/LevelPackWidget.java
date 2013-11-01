@@ -54,6 +54,9 @@ public class LevelPackWidget extends WidgetLayout{
 			w.draw(r);
 	}
 
+	public boolean isTouched(float[] pt){
+		return mImage.isTouched(pt);
+	}
 	
 
 }

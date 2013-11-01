@@ -94,13 +94,20 @@ public class TableOfContents extends GraphicWidget{
 	
 	@Override
 	public void touchHandler(float[] pt) {
-		savedLevelPack = m.activeWidget;
 		currLevelPack = mLPP.getLevelPack(m.getActiveWidget());
-		Log.d(TAG,"touched LevelPackDisplay");
-	    if(m.isTouched(pt)){
-			setState();
-	    }
-	    
+		if(m.getWidget(m.getActiveWidget()).isTouched(pt)){
+			if(savedLevelPack != m.activeWidget){
+				savedLevelPack = m.activeWidget;
+				savedChapter = 0;
+			}
+			Log.d(TAG,"touched LevelPackDisplay");
+			if(m.isTouched(pt)){
+				setState();
+			}
+		}
+		
+		m.touchHandler(pt);
+		
 	}
 	
     }
@@ -161,9 +168,13 @@ public class TableOfContents extends GraphicWidget{
 
 		@Override
 		public void touchHandler(float[] pt) {	
+			m.touchHandler(pt);
+			
 			currChapterWidget = m.getWidget(m.getActiveWidget());
 			savedChapter = m.activeWidget;
 			currChapterWidget.touchHandler(pt);
+			
+			
 			
 		}
 	}

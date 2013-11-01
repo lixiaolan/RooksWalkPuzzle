@@ -807,7 +807,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	
 	public void draw(BoardTile[] tiles, MyGLRenderer r){
 	    mGameBanner.draw(r);
-	    //	    mBoardBg.draw(r);
+	    mBoardBg.draw(r);
 	    super.draw(tiles, r);
 	    mBee.draw(r);
 	    mMenu.draw(r);
