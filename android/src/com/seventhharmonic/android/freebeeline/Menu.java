@@ -40,8 +40,8 @@ class Menu{
 	    tilesCenter[2] = 0.0f;
 	    tiltAngle = (float) Math.PI/2.0f*pt[0];
 	    for (int i = 0; i < menuTiles.length; i++) {
-		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
-		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
+		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/(tileCount-1));
+		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/(tileCount-1));
 		float Sx = tilesCenter[0] + radius*tmpcos;
 		float Sy = tilesCenter[1] + radius*tmpsin;
 		float center[] = { Sx, Sy, 0.0f};
@@ -80,8 +80,8 @@ class Menu{
  
 	if (menuActive) {	    
 	    for (int i = 0; i < menuTiles.length; i++) {     
-		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/5.0f);
-		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/5.0f);
+		float tmpsin = (float)Math.sin(tiltAngle+i*Math.PI/(tileCount-1));
+		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/(tileCount-1));
 		float Sx = tilesCenter[0] + tRadius*tmpcos;
 		float Sy = tilesCenter[1] + tRadius*tmpsin;
 		float center[] = { Sx, Sy, 0.0f};

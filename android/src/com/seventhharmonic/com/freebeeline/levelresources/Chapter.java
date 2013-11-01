@@ -14,10 +14,10 @@ public class Chapter {
 	
 	
 	public boolean getCompleted(){
-		for(Puzzle p: puzzles){
-			if(!p.isCompleted())
-				return false;
-		}
+		// for(Puzzle p: puzzles){
+		// 	if(!p.isCompleted())
+		// 		return false;
+		// }
 		return true;
 	}
 	

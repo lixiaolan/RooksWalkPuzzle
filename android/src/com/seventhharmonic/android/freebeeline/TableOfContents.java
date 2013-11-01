@@ -49,7 +49,6 @@ public class TableOfContents extends GraphicWidget{
     @Override
     public void swipeHandler(String direction) {
 	state.swipeHandler(direction);
-	
     }
     
     class LevelPackDisplay extends StateWidget {

@@ -185,7 +185,7 @@ public class TextureManager {
 
 	public void buildMenuBanners() {
 		buildTextures(context, R.drawable.red_x, "menu_1");
-		for(int i=1;i<6;i++){
+		for(int i=1;i<7;i++){
 		    buildTextures(Integer.toString(i),2*64,2*80,"menu_"+Integer.toString(i+1),2*50);
 		}
 

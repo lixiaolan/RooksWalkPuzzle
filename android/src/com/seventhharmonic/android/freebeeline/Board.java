@@ -18,8 +18,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
     public int hints;
     public int[] solution ;
     public int[][] path;
-    public int boardWidth = 6;
-    public int boardHeight = 6;
+    public int boardWidth = 7;
+    public int boardHeight = 7;
     private boolean toggleHints = true;
     private boolean toggleLines = true;	
     private boolean toggleError = true;
@@ -600,7 +600,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
     }
 
     public int getPathLength() {
-	return path.length;
+	if (path != null) {
+	    return path.length;
+	}
+	return 0;
     }
     
     public void setTileRotate(int index) {
@@ -610,7 +613,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
     }
 
     public int getPathToArray(int index) {
-	return boardHeight*path[index][0] + path[index][1];
+	if (path != null) {
+	    return boardHeight*path[index][0] + path[index][1];
+	}
+	return 0;
     }
 
 
@@ -682,6 +688,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		force = LATools.vSum(force, LATools.vSProd(5f/((float)Math.pow(sTemp,1)), temp));
 	    return force;
 	}
+
+	public void draw(BoardTile[] tiles, MyGLRenderer r){
+	    super.draw(tiles, r);
+	    mBee.draw(r);
+	}
+	
 	
     }
     //This state defines board behavior during game play.
@@ -792,11 +804,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	    mGameBanner.draw(r);
 	    //	    mBoardBg.draw(r);
 	    super.draw(tiles, r);
+	    mBee.draw(r);
 	    mMenu.draw(r);
 	    mCheck.draw(r);
 	    reset.draw(r);
-	}
-	
+	}	
 	
 	@Override
 	    public void touchHandler(float[] pt){
@@ -859,14 +871,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
 		    }
 		    mGameBanner.setText(TextureManager.GOOD_JOB);
-		} else {
+		} 
+		else {
 		    mGameBanner.setText(TextureManager.TRY_AGAIN);
-		    
 		}
 	    }
-	    
 	    reset.touchHandler(pt);
-	    
 	}
 	
 	public void updateErrors(){
@@ -902,7 +912,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    updateErrors();
 		}
 		mMenu.menuActive = false;
-		
 	    }
 	}
 	
@@ -1006,6 +1015,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	    mGameBanner.draw(r);
 	    mBoardBg.draw(r);
 	    super.draw(tiles, r);
+	    mBee.draw(r);
 	    mDialog.draw(r);
 	}
     }        
