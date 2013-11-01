@@ -202,8 +202,7 @@ class Model {
 	Log.d("Model", Float.toString(g[1]));
 	Log.d("Model","global");
 	GlobalApplication.getGeometry().setGeometry(g[0], g[1]);
-	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));
-	
+	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
 	toc = new TableOfContents(this);
     }
     

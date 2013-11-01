@@ -43,7 +43,7 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     	float xCPW = .08f*widgetList.size()+.04f*((widgetList.size() %2)-1);
     	float yCPW = -1*(h-.08f);
     	float[] center = {xCPW, yCPW, 0.0f};
-    	mCPW = new CircleProgressBarWidget(widgetList.size(), center, .08f);
+    	mCPW = new CircleProgressBarWidget(widgetList.size(), center, .05f);
     	mCPW.setActiveCircle(0);
     }
     
@@ -87,6 +87,15 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     	} else {
     		active = false;
     	}
+    }
+    
+    public void setActiveWidget(int newActiveWidget){
+    	activeWidget = newActiveWidget;
+    	mCPW.setActiveCircle(activeWidget);
+    	for(int i=0; i<widgetList.size();i++){
+			float centerX = widgetList.get(i).getCenterX();
+			widgetList.get(i).setCenter(-1*(i-activeWidget)*(2*size+gap), 0);
+		}
     }
     
     

@@ -16,6 +16,10 @@ public class TableOfContents extends GraphicWidget{
     Contents mContents;
     LevelPackProvider mLPP;	
     LevelPack currLevelPack;
+    
+    int savedLevelPack = 0;
+    int savedChapter = 0;
+    
     Model mModel;
     
     public TableOfContents(Model model){
@@ -27,8 +31,9 @@ public class TableOfContents extends GraphicWidget{
     }
 
     public void setState() {
-	System.out.println("In set state");
+	Log.d(TAG, "in set state");
 	System.out.println(mContents);
+	Log.d(TAG, Integer.toString(savedChapter));
 	switch(mContents){
 	case LEVELPACKDISPLAY: 
 	    mContents = Contents.CHAPTERDISPLAY;
@@ -61,7 +66,9 @@ public class TableOfContents extends GraphicWidget{
 		m.addWidget(new LevelPackWidget(TextureManager.GOOD_JOB,"forest.png"));
 		//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
 	    }
-	    currLevelPack = mLPP.getLevelPack(0);
+	    m.setActiveWidget(savedLevelPack);
+	    currLevelPack = mLPP.getLevelPack(savedLevelPack);
+	    
 	}
 	
 	@Override
@@ -87,11 +94,13 @@ public class TableOfContents extends GraphicWidget{
 	
 	@Override
 	public void touchHandler(float[] pt) {
-	    currLevelPack = mLPP.getLevelPack(m.getActiveWidget());
-	    Log.d(TAG,"touched LevelPackDisplay");
+		savedLevelPack = m.activeWidget;
+		currLevelPack = mLPP.getLevelPack(m.getActiveWidget());
+		Log.d(TAG,"touched LevelPackDisplay");
 	    if(m.isTouched(pt)){
 			setState();
 	    }
+	    
 	}
 	
     }
@@ -105,7 +114,7 @@ public class TableOfContents extends GraphicWidget{
 		for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
 		    
 		    //If the previous chapter is completed, launch a normal chapter widget
-		    if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
+		   if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
 			final Chapter c = currLevelPack.getChapter(i);
 			ChapterWidget ch  = new ChapterWidget(c);
 			ch.setTouchListener(new GameEventListener() {
@@ -124,6 +133,9 @@ public class TableOfContents extends GraphicWidget{
 			m.addWidget(new LockedChapterWidget());
 		    }
 		}
+
+	    m.setActiveWidget(savedChapter);
+
 	    }
 	    
 		@Override
@@ -150,7 +162,9 @@ public class TableOfContents extends GraphicWidget{
 		@Override
 		public void touchHandler(float[] pt) {	
 			currChapterWidget = m.getWidget(m.getActiveWidget());
+			savedChapter = m.activeWidget;
 			currChapterWidget.touchHandler(pt);
+			
 		}
 	}
 

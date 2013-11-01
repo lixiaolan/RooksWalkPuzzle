@@ -19,7 +19,6 @@ public class HintsDataSource extends BaseDataSource{
     }
     
     public SQLHint getHints() {
-
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_HINTS, allColumns,
 				       MySQLiteHelper.COLUMN_ID + " = " + hintIndex, 
 				       null, null, null, null);

@@ -49,11 +49,11 @@ class MenuManager {
 		break;
 	    case MAIN_MENU_LIST:
 		if(state.resumeGameExists){
-		    String[] textures2 = {TextureManager.RESUME, TextureManager.MENU, TextureManager.TABLE_OF_CONTENTS};
+		    String[] textures2 = {TextureManager.RESUME, TextureManager.MENU, TextureManager.PLAY};
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 		    mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {
-		    String[] textures2 = {TextureManager.MENU, TextureManager.TABLE_OF_CONTENTS};
+		    String[] textures2 = {TextureManager.MENU, TextureManager.PLAY};
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 		    mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
 		}

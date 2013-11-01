@@ -21,7 +21,7 @@ public class ViewActivity extends Activity {
 	private MyGLRenderer mRenderer;    
 	private TextView mQuoteView;
 	private DataServer mDataServer;
-	private Store mStore;
+	public static Store mStore;
 	
 	boolean savedGame = false;
 	static final String savefile = "savefile";
@@ -130,6 +130,16 @@ public class ViewActivity extends Activity {
 		super.onStop();
 	}
 	
+	public void onDestroy() {
+        super.onDestroy();
+        // very important:
+        Log.d(TAG, "Destroying helper.");
+        if (mStore.mHelper != null) {
+            mStore.mHelper.dispose();
+            mStore.mHelper = null;
+        }
+    }
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    super.onActivityResult(requestCode, resultCode, data);
@@ -152,9 +162,6 @@ public class ViewActivity extends Activity {
 		w.setVisibility(View.INVISIBLE);
 	}
 	
-	public void hintClick(View v) {
-		mStore.onBuyHints(v);
-	}
 	
 	public void onBackPressed() {
 		   mModel.onBack();
