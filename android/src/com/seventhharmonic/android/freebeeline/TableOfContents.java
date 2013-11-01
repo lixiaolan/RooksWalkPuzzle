@@ -7,96 +7,104 @@ import com.seventhharmonic.android.freebeeline.listeners.*;
 
 public class TableOfContents extends GraphicWidget{
 
-	private String TAG = "TOC";
+    private String TAG = "TOC";
+    
+    public enum Contents {
+	LEVELPACKDISPLAY, CHAPTERDISPLAY
+    };
+    
+    Contents mContents;
+    LevelPackProvider mLPP;	
+    LevelPack currLevelPack;
+    
+    int savedLevelPack = 0;
+    int savedChapter = 0;
+    
+    Model mModel;
+    
+    public TableOfContents(Model model){
+	
+	mLPP = GlobalApplication.getLevelPackProvider();
+	mModel = model;
+	mContents = Contents.LEVELPACKDISPLAY;
+	state = new LevelPackDisplay();
+    }
 
-	public enum Contents {
-		LEVELPACKDISPLAY, CHAPTERDISPLAY
-	};
-
-	Contents mContents;
-	LevelPackProvider mLPP;	
-	LevelPack currLevelPack;
-	Model mModel;
-
-	public TableOfContents(Model model){
-
-		mLPP = GlobalApplication.getLevelPackProvider();
-		mModel = model;
-		mContents = Contents.LEVELPACKDISPLAY;
-		state = new LevelPackDisplay();
+    public void setState() {
+	Log.d(TAG, "in set state");
+	System.out.println(mContents);
+	Log.d(TAG, Integer.toString(savedChapter));
+	switch(mContents){
+	case LEVELPACKDISPLAY: 
+	    mContents = Contents.CHAPTERDISPLAY;
+	    state = new ChapterDisplay();
+	    break;
+	case CHAPTERDISPLAY:
+	    mContents = Contents.LEVELPACKDISPLAY;
+	    state = new LevelPackDisplay();
+	    break;
 	}
-
-	public void setState() {
-		System.out.println("In set state");
-		System.out.println(mContents);
-		switch(mContents){
-		case LEVELPACKDISPLAY: 
-			mContents = Contents.CHAPTERDISPLAY;
-			state = new ChapterDisplay();
-			break;
-		case CHAPTERDISPLAY:
-			mContents = Contents.LEVELPACKDISPLAY;
-			state = new LevelPackDisplay();
-			break;
-		}
+    }
+    
+    @Override
+    public void touchHandler(float[] pt) {
+	state.touchHandler(pt);
+    }
+    
+    @Override
+    public void swipeHandler(String direction) {
+	state.swipeHandler(direction);
+    }
+    
+    class LevelPackDisplay extends StateWidget {
+	
+	ScreenSlideWidgetLayout m;
+	public LevelPackDisplay(){
+	    m = new ScreenSlideWidgetLayout(2.0f);
+	    m.setDrawProgressBar(false);
+	    for(int i =0;i<mLPP.getNumberOfLevelPacks();i++){
+		m.addWidget(new LevelPackWidget(TextureManager.GOOD_JOB,"forest.png"));
+		//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
+	    }
+	    m.setActiveWidget(savedLevelPack);
+	    currLevelPack = mLPP.getLevelPack(savedLevelPack);
+	    
 	}
-
+	
 	@Override
-	public void touchHandler(float[] pt) {
-		state.touchHandler(pt);
+	public void enterAnimation() {
+	    period = DrawPeriod.DURING;
 	}
-
+	
+	@Override
+	public void duringAnimation(){
+	}
+	
+	@Override
+	public void draw(MyGLRenderer r){
+	    super.draw(r);
+	    m.draw(r);
+	}
+	
 	@Override
 	public void swipeHandler(String direction) {
-		state.swipeHandler(direction);
-
+	    m.swipeHandler(direction);
+	    
 	}
-
-	class LevelPackDisplay extends StateWidget {
-
-		ScreenSlideWidgetLayout m;
-		public LevelPackDisplay(){
-			m = new ScreenSlideWidgetLayout(2.0f);
-			m.setDrawProgressBar(false);
-			for(int i =0;i<mLPP.getNumberOfLevelPacks();i++){
-				m.addWidget(new LevelPackWidget(TextureManager.GOOD_JOB,"forest.png"));
-				//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
-			}
-			currLevelPack = mLPP.getLevelPack(0);
-		}
-
-		@Override
-		public void enterAnimation() {
-			period = DrawPeriod.DURING;
-		}
-
-		@Override
-		public void duringAnimation(){
-		}
-
-		@Override
-		public void draw(MyGLRenderer r){
-			super.draw(r);
-			m.draw(r);
-		}
-
-		@Override
-		public void swipeHandler(String direction) {
-			m.swipeHandler(direction);
-
-		}
-
-		@Override
-		public void touchHandler(float[] pt) {
-			currLevelPack = mLPP.getLevelPack(m.getActiveWidget());
-			Log.d(TAG,"touched LevelPackDisplay");
-			if(m.isTouched(pt)){
-				setState();
-			}
-		}
-
+	
+	@Override
+	public void touchHandler(float[] pt) {
+		savedLevelPack = m.activeWidget;
+		currLevelPack = mLPP.getLevelPack(m.getActiveWidget());
+		Log.d(TAG,"touched LevelPackDisplay");
+	    if(m.isTouched(pt)){
+			setState();
+	    }
+	    
 	}
-
+	
+    }
+    
 	class ChapterDisplay extends StateWidget{
 	    ScreenSlideWidgetLayout m;
 	    Widget currChapterWidget;
@@ -106,7 +114,7 @@ public class TableOfContents extends GraphicWidget{
 		for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
 		    
 		    //If the previous chapter is completed, launch a normal chapter widget
-		    if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
+		   if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
 			final Chapter c = currLevelPack.getChapter(i);
 			ChapterWidget ch  = new ChapterWidget(c);
 			ch.setTouchListener(new GameEventListener() {
@@ -125,6 +133,9 @@ public class TableOfContents extends GraphicWidget{
 			m.addWidget(new LockedChapterWidget());
 		    }
 		}
+
+	    m.setActiveWidget(savedChapter);
+
 	    }
 	    
 		@Override
@@ -151,7 +162,9 @@ public class TableOfContents extends GraphicWidget{
 		@Override
 		public void touchHandler(float[] pt) {	
 			currChapterWidget = m.getWidget(m.getActiveWidget());
+			savedChapter = m.activeWidget;
 			currChapterWidget.touchHandler(pt);
+			
 		}
 	}
 

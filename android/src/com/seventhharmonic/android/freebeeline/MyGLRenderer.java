@@ -29,6 +29,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	private Model mModel;
 	private FPSCounter mFPSCounter = new FPSCounter();	
 	//Don't know what it does
+	int oldTexture1 = -1;
+	int oldTexture2 = -1;
+	
 	public static final String CROPTOP = "croptop";
 	public static final String CROPBOTTOM = "cropbottom";
 	public static final String FIXEDWIDTH = "fixedwidth";
@@ -304,7 +307,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private void drawModel() {
-		//mFPSCounter.logFrame();
+		mFPSCounter.logFrame();
 		if(mModel.createTextures){
 			mModel.updateStats(TM);
 			mModel.createTextures = false;
@@ -338,7 +341,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		mTextures[1] = TM.library.get(textures[1]);	
 		mColor = colorMap.get(color);
 
-		/*if(!(mTextures[0] == oldTexture1) || !textures[0].equals(TextureManager.CLEAR)){
+		if(!(mTextures[0] == oldTexture1) || !textures[0].equals(TextureManager.CLEAR)){
     		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+0);
     		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0]);
     	    GLES20.glUniform1i(mTextureHandle.get(0), 0);
@@ -349,13 +352,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[1]);
     	    GLES20.glUniform1i(mTextureHandle.get(1), 1);
     	    oldTexture2 = mTextures[1];
-    	}*/
+    	}
 		//Apply MTextures. Need this to make transparent colors stay transparent
-		for(int i=0;i<2; i++){
+		/*for(int i=0;i<2; i++){
 			GLES20.glActiveTexture(GLES20.GL_TEXTURE0+i);        
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[i]);
 			GLES20.glUniform1i(mTextureHandle.get(i), i);
-		}
+		}*/
 
 
 		// Determine position and size

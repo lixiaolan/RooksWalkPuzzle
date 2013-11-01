@@ -26,6 +26,7 @@ public class TextureManager {
     static final int CHAR_PER_LINE = 30;
 	
     public static final String START = "start";
+    public static final String PLAY = "play";
     public static final String NEW = "new";
     public static final String RESUME = "resume";
     public static final String OPTIONS = "options";
@@ -169,7 +170,7 @@ public class TextureManager {
 		int xpos = 128;
 		int ypos = 140;
 		int fontSize = 100;
-	    for(int i =0;i<10;i++){
+	    for(int i =0;i<51;i++){
 	    	buildTextures(Integer.toString(i), xpos, ypos, "hints"+Integer.toString(i), fontSize);
 	    }
 	}
@@ -200,7 +201,7 @@ public class TextureManager {
 
 	public void buildMenuBanners() {
 		buildTextures(context, R.drawable.red_x, "menu_1");
-		for(int i=1;i<6;i++){
+		for(int i=1;i<7;i++){
 		    buildTextures(Integer.toString(i),2*64,2*80,"menu_"+Integer.toString(i+1),2*50);
 		}
 
@@ -210,6 +211,7 @@ public class TextureManager {
 		int ypos = 140;
 	    buildTextures(MENU, xpos, ypos, MENU, fontSize);
 		buildTextures(START, xpos, ypos, START, fontSize);
+		buildTextures(PLAY, xpos, ypos, PLAY, fontSize);
 	    buildTextures(NEW, xpos, ypos, NEW, fontSize);
 	    buildTextures(RESUME, xpos, ypos, RESUME, fontSize);
 	    buildTextures(OPTIONS, xpos, ypos, OPTIONS, fontSize);

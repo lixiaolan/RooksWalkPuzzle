@@ -38,6 +38,7 @@ class Model {
 	
 	public Model(Context c) {
 		mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+		mediaPlayer.setLooping(true);
 		mediaPlayer.start();
 		initiateMembers(c, new Board(this));		
 	}
@@ -102,16 +103,16 @@ class Model {
 		case MAIN_MENU_LIST:
 		case MAIN_MENU_OPTIONS:
 		case MAIN_MENU_GEAR:
-			at = mBoard.touched(pt);
-			if(at != -1) {
-				float[] pivot = {0,0,1};
-				mBoard.tiles[at].setPivot(pivot);
-				mBoard.tiles[at].setRotate(true);
-			}
-			if(mBoard.beeTouched(pt) == 1){
-				vibe.vibrate(100);
-			}
-			break;
+		    at = mBoard.touched(pt);
+		    if(at != -1) {
+			float[] pivot = {0,0,1};
+			mBoard.tiles[at].setPivot(pivot);
+			mBoard.tiles[at].setRotate(true);
+		    }
+		    if(mBoard.beeTouched(pt) == 1){
+			vibe.vibrate(100);
+		    }
+		    break;
 		case TUTORIAL:
 			//Game Menu
 			mTutorialBoard.touchHandler(pt);
@@ -155,12 +156,11 @@ class Model {
 			break;
 		case GAME_OPENING:
 			mBoard.draw(r);
-			mBoard.mBee.draw(r);
+			
 			mMenuManager.draw(r);		
 			break;
 		case GAME_MENU_END:
 			mBoard.draw(r);
-			mBoard.mBee.draw(r);
 			break;
 		case MAIN_MENU_OPENING:
 		case MAIN_MENU_LIST:

@@ -150,7 +150,7 @@ public class Store {
 			//Consume this purchase immediately!!! Can change this in the future.
 			mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
 			GlobalApplication.getHintDB().open();
-			GlobalApplication.getHintDB().addHints(5);
+			GlobalApplication.getHintDB().addHints(50);
 			hintWidget.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
 			GlobalApplication.getHintDB().close();	
 			Log.d(TAG,"In Store, how many hints did I get? hints: "+Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
