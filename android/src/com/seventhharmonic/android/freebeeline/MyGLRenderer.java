@@ -58,6 +58,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	/** Store our model data in a float buffer. */
 	private final FloatBuffer mSquarePositions;
+	private final FloatBuffer mTrianglePositions;
 	private final FloatBuffer mSquareTextureCoordinates;
 	private final FloatBuffer mRectangleTextureCoordinates;
 
@@ -136,7 +137,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 				0.0f, 1.0f,
 				0.0f, 0.0f,   					
 			};
+
+		final float triHeight = ((float)Math.sqrt(3.0f))/2.0f;
+		
+		final float[] trianglePositionData =
+		    {
+			0.0f, 0.0f, 0.0f,
+			0.5f, triHeight, 0.0f,
+			-0.5f, triHeight, 0.0f,
+		    };
+
 		// Initialize the buffers.
+		mTrianglePositions = ByteBuffer.allocateDirect(trianglePositionData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		mSquarePositions = ByteBuffer.allocateDirect(squarePositionData.length * mBytesPerFloat).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		mSquarePositions.put(squarePositionData).position(0);		
 
@@ -321,6 +333,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	}
 
+    public void drawTriangle() {
+	//Use this in the future to draw triangles for a loading pi chart or something like that :)
+    }
+
 	public void drawTile(float[] center, float size, String[] textures, String color, float angle, float[] pivot, boolean blend) {
 		if(this.blend != blend){
 			this.blend = blend;
@@ -426,7 +442,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[i]);
 			GLES20.glUniform1i(mTextureHandle.get(i), i);
 		}
-
 
 		// Determine position and size
 		Matrix.setIdentityM(mModelMatrix, 0);

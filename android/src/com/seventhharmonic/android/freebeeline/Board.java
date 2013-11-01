@@ -413,9 +413,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 
 	public void stopFlips() {
-		for (int i = 0; i < tiles.length; i++) {
-			tiles[i].stopFlipper();
-		}
+    	for (int i = 0; i < tiles.length; i++) {
+    			tiles[i].stopFlipper();
+    	}
 	}
 
 	public void markPointedAt() {
