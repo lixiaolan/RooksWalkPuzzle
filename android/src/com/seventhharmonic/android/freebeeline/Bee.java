@@ -73,7 +73,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	
 	public void duringAnimation(BeeTile[] tiles) {
 	    long time = System.currentTimeMillis() - globalRefTime;
-	    float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
+	    float dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, 33.3f);
 	    relativeRefTime = System.currentTimeMillis();
 	    
 	    float[] force = new float[2];
@@ -135,7 +135,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	public void duringAnimation(BeeTile[] tiles) {
 	    bee = (BeeTile)tiles[0];
 	    long time = System.currentTimeMillis() - globalRefTime;
-	    float dt = ((float)(System.currentTimeMillis() - relativeRefTime))/1000f;
+	    float dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, 33.3f);
 	    relativeRefTime = System.currentTimeMillis();
 	    float[] force = new float[2];
 	    switch (mood) {

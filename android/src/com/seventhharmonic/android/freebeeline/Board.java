@@ -619,9 +619,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	return 0;
     }
 
-
-
-
     class BoardMainMenu extends State<BoardTile> {
 	
 	long refTime;
@@ -654,7 +651,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		centers[2*i] = -.75f + r*((float)Math.sin(t));
 		centers[2*i+1] = r*((float)Math.cos(t));
 	    }
-	    
 	}
 	
 	public void enterAnimation(BoardTile[] tiles) {
@@ -664,7 +660,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	
 	public void duringAnimation(BoardTile[] tiles) {
 	    long time = System.currentTimeMillis()-refTime;
-	    float dt =((float)time)/1000.0f;
+	    float dt = Math.min(((float)time)/1000.0f, 33.3f);
 	    refTime = System.currentTimeMillis();
 	    float[] force = new float[2];
 	    for(int i=0;i<tiles.length;i++){
