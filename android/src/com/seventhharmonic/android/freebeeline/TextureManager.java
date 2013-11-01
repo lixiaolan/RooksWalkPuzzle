@@ -77,6 +77,8 @@ public class TextureManager {
     public static final String OPENCIRCLE = "opencircle";
     public static final String CLOSEDCIRCLE = "closedcircle";
     public static final String MENU = "menu";
+    public static final String LWEDGE = "lwedge";
+    public static final String RWEDGE = "rwedge";
     
     public static final String TURNINGRULE = " Oops! The path should turn at each step.";
     public static final String MATCHINGNUMBERRULE = "Watch out there! You can't point in the direction of a square with the same number.";
@@ -148,6 +150,8 @@ public class TextureManager {
 		buildTextures(context, R.drawable.horz_dots, HORZDOTS);
 		buildTextures(context, R.drawable.opencircle, OPENCIRCLE);
 		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
+		buildTextures(context, R.drawable.lwedge, LWEDGE);
+		buildTextures(context, R.drawable.rwedge, RWEDGE);
 		//buildTextures(context, R.drawable.forest, "forest");
 		//Load textures of the box
 		buildTextures(context, R.drawable.box2, BOX);

@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import android.util.Log;
+
 /*
  * Every widget has an absolute center and a relative center. The absolute center
  * is computed in Widget layout and passed in. The relative center is specified by the user
@@ -59,6 +61,7 @@ public class ImageWidget extends Widget{
 	
 	@Override
 	public boolean isTouched(float[] pt){
+		Log.d("ImageWidget", Boolean.toString(a.touched(pt)));
 		return a.touched(pt);
 	}
 	

@@ -1,7 +1,9 @@
 package com.seventhharmonic.android.freebeeline;
 
-class ScreenSlideWidgetLayout extends WidgetLayout{
+import android.util.Log;
 
+class ScreenSlideWidgetLayout extends WidgetLayout{
+	String TAG = "SSW";
     int activeWidget = 0;
     int length;
     long refTime = 0;
@@ -12,10 +14,13 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     float size;
     CircleProgressBarWidget mCPW;
     boolean displayProgressBar = true;
-    
+    ImageWidget leftArrow;
+    ImageWidget rightArrow;
     
     public ScreenSlideWidgetLayout(float gap) {
-    	this.gap = gap;  
+    	this.gap = gap;
+    	leftArrow = new ImageWidget(.7f, -1.0f, .15f, .15f, TextureManager.LWEDGE);
+    	rightArrow = new ImageWidget(-.7f, -1.0f, .15f, .15f, TextureManager.RWEDGE);
     	//mCPW.setActiveCircle(0);
     }
     
@@ -23,6 +28,7 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     public boolean isTouched(float[] pt){
     	return widgetList.get(activeWidget).isTouched(pt);
     }
+    
     
     public int getActiveWidget(){
     	return activeWidget;
@@ -65,7 +71,20 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     		initialize();
     	}
     }
-        
+    
+    @Override
+    public void touchHandler(float[] pt){
+    	Log.d(TAG, "Got touched");
+    	if(leftArrow.isTouched(pt)){	
+    		swipeHandler("right_arrow");
+    	}
+    	
+    	if(rightArrow.isTouched(pt)){
+    		swipeHandler("left_arrow");
+    	}
+    	
+    }
+    
     private void initialize(){
     	if(currDirection.equals("right_arrow") && activeWidget !=0){
     		activeWidget = activeWidget -1;
@@ -108,6 +127,8 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
     	}
     	if(displayProgressBar){
     		mCPW.draw(r);
+    		leftArrow.draw(r);
+    		rightArrow.draw(r);
     	}
     	}
 }
