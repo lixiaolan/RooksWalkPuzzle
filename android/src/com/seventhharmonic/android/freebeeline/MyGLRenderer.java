@@ -304,7 +304,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	}
 
 	private void drawModel() {
-		mFPSCounter.logFrame();
+		//mFPSCounter.logFrame();
 		if(mModel.createTextures){
 			mModel.updateStats(TM);
 			mModel.createTextures = false;

@@ -94,7 +94,8 @@ public class TextureManager {
     public static final String BORDERSE = "border_se";
     public static final String BORDERSW = "border_sw";
     public static final String TABLE_OF_CONTENTS = "Table of Contents";
-
+    public static final String BOARD5 = "board5";
+    
     Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
 	Context context;
@@ -150,6 +151,7 @@ public class TextureManager {
 		//Load textures of the box
 		buildTextures(context, R.drawable.box2, BOX);
 		buildTextures(context, R.drawable.eraser, ERASER);
+		buildTextures(context, R.drawable.board3, BOARD5);
 		//reate Menu Textures and Words needed
 			    
 	    
@@ -159,9 +161,22 @@ public class TextureManager {
 	    buildMenuBanners();
 	    buildGameBanners();
 	    buildStoryBanners();
+	    buildHintTextures();
 	    loadBitmapFromAssets();
 	    }
 
+	public void buildHintTextures(){
+		int xpos = 128;
+		int ypos = 140;
+		int fontSize = 100;
+	    for(int i =0;i<10;i++){
+	    	buildTextures(Integer.toString(i), xpos, ypos, "hints"+Integer.toString(i), fontSize);
+	    }
+	}
+	
+	public static String buildHint(long i){
+		return "hints"+Long.toString(i);
+	}
 
 	public void loadBitmapFromAssets() {
         // load text

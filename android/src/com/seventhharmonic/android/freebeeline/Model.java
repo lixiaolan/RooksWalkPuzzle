@@ -94,14 +94,7 @@ class Model {
 		switch(state.state){
 		case GAME_OPENING: 
 		case GAME_MENU_END:
-		    if(mBoard.beeTouched(pt) == 1){
-			    //vibe.vibrate(500);
-			    if (GlobalApplication.getHintDB().useHint()) {
-			    	mBoard.showHint();
-			    	System.out.println("Hints Left: " + Long.toString(GlobalApplication.getHintDB().getHints().getNum()) );
-			    }
-				
-			}
+		   
 			//Internally close menu.    		
 			mBoard.touchHandler(pt);
 			break;

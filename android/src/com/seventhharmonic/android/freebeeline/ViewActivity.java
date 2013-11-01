@@ -21,7 +21,7 @@ public class ViewActivity extends Activity {
 	private MyGLRenderer mRenderer;    
 	private TextView mQuoteView;
 	private DataServer mDataServer;
-	private Store mStore;
+	public static Store mStore;
 	
 	boolean savedGame = false;
 	static final String savefile = "savefile";
@@ -162,8 +162,8 @@ public class ViewActivity extends Activity {
 		w.setVisibility(View.INVISIBLE);
 	}
 	
-	public void hintClick(View v) {
-		mStore.onBuyHints(v);
+	public static void hintClick(View v) {
+		//mStore.onBuyHints();
 	}
 	
 	public void onBackPressed() {

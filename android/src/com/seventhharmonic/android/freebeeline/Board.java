@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import android.util.Log;
 
+import com.seventhharmonic.android.freebeeline.db.HintsDataSource;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
@@ -693,19 +694,38 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	int at = -1;
 	int lt = -1;
 	ButtonWidget reset;
+	TextWidget mHints;
+	HintsDataSource DB;
 	
 	public BoardPlay(BoardTile[] tiles) {
-	    originalTiles = tiles;
+	    DB = GlobalApplication.getHintDB();
+		originalTiles = tiles;
 	    refTime = System.currentTimeMillis();
 	    oldX = new float[tiles.length];
 	    oldY = new float[tiles.length];
 	    mMenu = new Menu();
+	    if(boardWidth == 6){
+	    	mBoardBg = new Background("boardbg", 1.0f);
+	    } else if(boardWidth == 5){
+	    	mBoardBg = new Background(TextureManager.BOARD5, 5.0f/6.0f);
+	    }
+	    
 	    reset = new ButtonWidget(0, -1.0f, .1f, .1f, TextureManager.ERASER);
 	    reset.setClickListener(new GameEventListener(){
 		    public void event(int i){
 			resetBoard();
 		    }
 		});
+	    
+	    mHints = new TextWidget(.5f, -1.0f, .1f, .1f, TextureManager.CLEAR);
+	    mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
+	    
+	    mGameBanner.setText(TextureManager.CLEAR);
+	    initSize = tiles[0].getSize();
+	    mCheck  = new Background("check",.11f);
+	    float[] center = {-.7f,-1f, 0f};
+	    mCheck.setCenter(center);
+	    
 	    for (int i = 0; i < tiles.length; i++) {
 		tiles[i].setRotate(false);// = false;
 		tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
@@ -715,11 +735,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		tiles[i].vPointedAt = false;
 		tiles[i].hPointedAt = false;
 	    }
-	    mGameBanner.setText(TextureManager.CLEAR);
-	    initSize = tiles[0].getSize();
-	    mCheck  = new Background("check",.11f);
-	    float[] center = {-.7f,-1f, 0f};
-	    mCheck.setCenter(center);
 	    
 	}
 	
@@ -778,6 +793,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 	
 	public void duringAnimation(BoardTile[] tiles) {
+		//Eventually change this so that you are not accessing DB on each call!
 	    for (int i = 0; i < tiles.length; i++) {
 		((BoardTile)tiles[i]).setTextures();
 	    }
@@ -785,11 +801,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	
 	public void draw(BoardTile[] tiles, MyGLRenderer r){
 	    mGameBanner.draw(r);
-	    //	    mBoardBg.draw(r);
+	    mBoardBg.draw(r);
 	    super.draw(tiles, r);
 	    mMenu.draw(r);
 	    mCheck.draw(r);
 	    reset.draw(r);
+	    mHints.draw(r);
 	}
 	
 	
@@ -859,6 +876,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    
 		}
 	    }
+	    
+	    if(beeTouched(pt) == 1){
+		    //vibe.vibrate(500);
+		    if (GlobalApplication.getHintDB().useHint()) {
+		    	showHint();
+		    	mHints.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
+		    	System.out.println("Hints Left: " + Long.toString(GlobalApplication.getHintDB().getHints().getNum()) );
+		    } else {
+		    	ViewActivity.mStore.onBuyHints(mHints);
+		    	
+		    }
+			
+		}
 	    
 	    reset.touchHandler(pt);
 	    

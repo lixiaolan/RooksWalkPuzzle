@@ -29,7 +29,7 @@ public class Store {
 	public int PURCHASE_FAILED = -1;
 
 	int hintsAdded = 0;
-	
+	TextWidget hintWidget;
 	
 	Activity mContext;
 
@@ -109,7 +109,7 @@ public class Store {
 	/*
 	 * Call this method when you decide to buy hints.
 	 */
-	public void onBuyHints(View arg0) {
+	public void onBuyHints(TextWidget mHints) {
 		Log.d(TAG, "Buy hints button clicked.");
 		// launch the gas purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
@@ -119,11 +119,10 @@ public class Store {
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
+		hintWidget = mHints;
+		
 		mHelper.launchPurchaseFlow(mContext, "android.test.purchased", RC_REQUEST,
 				mPurchaseHintFinishedListener, payload);
-		GlobalApplication.getHintDB().addHints(hintsAdded);
-		hintsAdded = 0;
-		Log.d(TAG,"hints: "+Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
 	}
 
 
@@ -132,9 +131,7 @@ public class Store {
 		public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
 			hintsAdded = 0;
 			Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
-			//Consume this purchase immediately!!! Can change this in the future.
 			try{
-				mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);
 			// if we were disposed of in the meantime, quit.
 				if (mHelper == null){
 					return ;
@@ -150,9 +147,18 @@ public class Store {
 					//setWaitScreen(false);
 					return;
 				} 
-				hintsAdded  = 5;
+			//Consume this purchase immediately!!! Can change this in the future.
+			mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
+			GlobalApplication.getHintDB().open();
+			GlobalApplication.getHintDB().addHints(5);
+			hintWidget.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
+			GlobalApplication.getHintDB().close();	
+			Log.d(TAG,"In Store, how many hints did I get? hints: "+Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
+	    	Log.d("Board",Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
+			
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.
+				Log.e(TAG, e.getMessage());
 			}
 		}
 	};
@@ -161,13 +167,8 @@ public class Store {
 	IabHelper.OnConsumeFinishedListener mConsumeHintsFinishedListener = new IabHelper.OnConsumeFinishedListener() {
 		public void onConsumeFinished(Purchase purchase, IabResult result) {
 			Log.d(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
-
 			// if we were disposed of in the meantime, quit.
 			if (mHelper == null) return;
-
-			// We know this is the "gas" sku because it's the only one we consume,
-			// so we don't check which sku was consumed. If you have more than one
-			// sku, you probably should check...
 			if (result.isSuccess()) {
 				// successfully consumed, so we apply the effects of the item in our
 				// game world's logic, which in our case means filling the gas tank a bit
