@@ -191,7 +191,6 @@ class Model {
 	    break;
 	default: break;
 	}
-	
     }
     
     public void setGeometry(float[] g) {
