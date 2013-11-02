@@ -14,8 +14,8 @@ public class HintsDataSource extends BaseDataSource{
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID, MySQLiteHelper.COLUMN_HINTS};
     private final long hintIndex = 0;
     
-    public HintsDataSource(Context context) {
-	super(context);
+    public HintsDataSource(Context context, MySQLiteHelper MSQLH) {
+	super(context, MSQLH);
     }
     
     public SQLHint getHints() {

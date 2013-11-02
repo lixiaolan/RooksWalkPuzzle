@@ -3,7 +3,6 @@ package com.seventhharmonic.android.freebeeline.db;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,8 +14,8 @@ public class PuzzleDataSource extends BaseDataSource{
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
 				    MySQLiteHelper.COLUMN_PUZZLE };
     
-    public PuzzleDataSource(Context context) {
-	super(context);
+    public PuzzleDataSource(Context context, MySQLiteHelper MSQLH) {
+	super(context, MSQLH);
     }
     
     public SQLPuzzle getPuzzle(long id) {
