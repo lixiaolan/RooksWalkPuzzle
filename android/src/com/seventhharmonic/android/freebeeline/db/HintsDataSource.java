@@ -24,15 +24,15 @@ public class HintsDataSource extends BaseDataSource{
 				       null, null, null, null);
 	
 	if (!cursor.moveToFirst()) {
-	    	ContentValues values = new ContentValues();
-		int n = 0;
+	    ContentValues values = new ContentValues();
+	    int n = 0;
 	    values.put(MySQLiteHelper.COLUMN_ID, hintIndex); 
-		values.put(MySQLiteHelper.COLUMN_HINTS, n); 
-	    	
-		database.insert(MySQLiteHelper.TABLE_HINTS, null, values);
-	    	cursor = database.query(MySQLiteHelper.TABLE_HINTS, allColumns,
-					MySQLiteHelper.COLUMN_ID + " = " + hintIndex, 
-					null, null, null, null);
+	    values.put(MySQLiteHelper.COLUMN_HINTS, n); 
+	    
+	    database.insert(MySQLiteHelper.TABLE_HINTS, null, values);
+	    cursor = database.query(MySQLiteHelper.TABLE_HINTS, allColumns,
+				    MySQLiteHelper.COLUMN_ID + " = " + hintIndex, 
+				    null, null, null, null);
 	}
 
 	cursor.moveToFirst();
@@ -46,7 +46,7 @@ public class HintsDataSource extends BaseDataSource{
 	values.put(MySQLiteHelper.COLUMN_HINTS, num);
 	values.put(MySQLiteHelper.COLUMN_ID, hintIndex);
  
-	Cursor cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
+	Cursor cursor = database.query(MySQLiteHelper.TABLE_HINTS, allColumns,
 				       MySQLiteHelper.COLUMN_ID + " = " + hintIndex, 
 				       null, null, null, null);
 	if (!cursor.moveToFirst()) {

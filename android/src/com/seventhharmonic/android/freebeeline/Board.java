@@ -8,6 +8,7 @@ import java.io.IOException;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.db.HintsDataSource;
+import com.seventhharmonic.android.freebeeline.db.PurchasedDataSource;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
@@ -35,15 +36,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	Puzzle currPuzzle;
 	Model mModel;
 	Bee mBee;
+	private PurchasedDataSource PDS;
 
 	public Board(Model mModel) {
-		buildEmptyBoard();
-		state = new BoardMainMenu(tiles);
-		mGameBanner = new TextWidget(0.0f, 0.0f, .9f, .4f, TextureManager.CLEAR);
-		mBoardBg = new Background("boardbg", 1.0f);
-		mErrorLog = new ErrorLog(this);
-		this.mModel = mModel;
-		mBee = new Bee(this);
+	    buildEmptyBoard();
+	    state = new BoardMainMenu(tiles);
+	    mGameBanner = new TextWidget(0.0f, 0.0f, .9f, .4f, TextureManager.CLEAR);
+	    mBoardBg = new Background("boardbg", 1.0f);
+	    mErrorLog = new ErrorLog(this);
+	    this.mModel = mModel;
+	    mBee = new Bee(this);
 	}    
 
 	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
@@ -207,14 +209,15 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 
 	public int touched(float[] pt) {
+	    
 		lastTouchPos = pt;
 		lastTouchTime = System.currentTimeMillis();
 		for (int i = 0; i < tiles.length; i++) {
-			if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
-				return i;
-			}
+		    if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
+			return i;
+		    }
 		}
-		return -1;   
+		return -1;
 	}
 
 	public void touchHandler(float[] pt){
