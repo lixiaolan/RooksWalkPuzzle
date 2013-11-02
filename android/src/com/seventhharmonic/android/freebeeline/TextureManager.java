@@ -79,6 +79,9 @@ public class TextureManager {
     public static final String MENU = "menu";
     public static final String LWEDGE = "lwedge";
     public static final String RWEDGE = "rwedge";
+    public static final String FIVEHINTS = "5 Hints";
+    public static final String TWENTYHINTS = "20 Hints";
+    public static final String UNLIMITEDHINTS = "Unlimited Hints";
     
     public static final String TURNINGRULE = " Oops! The path should turn at each step.";
     public static final String MATCHINGNUMBERRULE = "Watch out there! You can't point in the direction of a square with the same number.";
@@ -213,7 +216,13 @@ public class TextureManager {
 		int fontSize = 50; 
 		int xpos = 128;
 		int ypos = 140;
-	    buildTextures(MENU, xpos, ypos, MENU, fontSize);
+	
+	    buildTextures(FIVEHINTS, xpos, ypos, FIVEHINTS, fontSize);
+	    buildTextures(TWENTYHINTS, xpos, ypos, TWENTYHINTS, fontSize);
+	    buildTextures(UNLIMITEDHINTS, xpos, ypos, UNLIMITEDHINTS, fontSize);
+		
+		
+		buildTextures(MENU, xpos, ypos, MENU, fontSize);
 		buildTextures(START, xpos, ypos, START, fontSize);
 		buildTextures(PLAY, xpos, ypos, PLAY, fontSize);
 	    buildTextures(NEW, xpos, ypos, NEW, fontSize);

@@ -61,7 +61,7 @@ public class ImageWidget extends Widget{
 	
 	@Override
 	public boolean isTouched(float[] pt){
-		Log.d("ImageWidget", Boolean.toString(a.touched(pt)));
+		Log.d("ImageWidget", text+" "+Boolean.toString(a.touched(pt)));
 		return a.touched(pt);
 	}
 	

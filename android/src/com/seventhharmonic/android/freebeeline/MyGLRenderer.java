@@ -355,6 +355,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 		mTextures[0] = TM.library.get(textures[0]);
 		mTextures[1] = TM.library.get(textures[1]);	
+		
 		mColor = colorMap.get(color);
 
 		/*if(!(mTextures[0] == oldTexture1) || !textures[0].equals(TextureManager.CLEAR)){

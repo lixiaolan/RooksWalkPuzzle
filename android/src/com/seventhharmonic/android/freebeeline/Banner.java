@@ -41,6 +41,12 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 		return tiles[0].getSize();
 	}
 	
+	/**
+	 * The is a center setter.
+	 * 
+	 * @param a The x coordinate.
+	 * @param b The y coordinate.
+	 */
 	public void setCenter(float a, float b){
 		tiles[0].center[0] = a;
 		tiles[0].center[1] = b;
