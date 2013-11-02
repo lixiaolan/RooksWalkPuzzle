@@ -26,18 +26,27 @@
         android:layout_alignParentTop="true"
         android:layout_weight="0.12" />
 
-    <TextView
-        android:id="@+id/QuoteView"
+    <LinearLayout
+        android:id="@+id/loadingScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center|center_vertical"
         android:background="@color/white"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:clickable="true"
-        android:onClick="closeQuoteScreen"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textSize="20sp"/>
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/QuoteView"
+            android:layout_width="match_parent"
+            android:layout_height="301dp"
+            android:layout_gravity="center|center_vertical"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:onClick="closeQuoteScreen"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -740,11 +740,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 			/*
 			 * The hints text widget next to the bee.
+			 * Note: If we can't open the DB we will crash out the program!! That is not a bad thing.
 			 */
 			mHints = new TextWidget(.5f, -1.0f, .1f, .1f, TextureManager.CLEAR);
-			//if(mStore.)
-			mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
-
+			if(mStore.hasUnlimitedHints()){
+				mHints.setText(TextureManager.HIVE);
+			} else {
+				mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
+			}
 			/*
 			 * The dialog box that appears when you run out of hints.
 			 */
@@ -919,9 +922,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 			if(beeTouched(pt) == 1){
 				//vibe.vibrate(500);		
-				if (GlobalApplication.getHintDB().useHint()) {
+				if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
 					showHint();
-					mHints.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
+					setHintsText();
 				} else {
 					mHintDialog.activate();
 				}
@@ -934,6 +937,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			}
 		}
 
+		
+		public void setHintsText(){
+			if(mStore.hasUnlimitedHints()){
+				mHints.setText(TextureManager.HIVE);
+			} else {
+				mHints.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
+			}
+		}
 
 		public void updateErrors(){
 			for(int i =0;i<tiles.length;i++){

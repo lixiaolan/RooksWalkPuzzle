@@ -5,8 +5,10 @@ import android.graphics.Typeface;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -21,6 +23,7 @@ public class ViewActivity extends Activity {
 	private MyGLRenderer mRenderer;    
 	private TextView mQuoteView;
 	private DataServer mDataServer;
+	private static LinearLayout loadingScreen;
 	public static Store mStore;
 	
 	boolean savedGame = false;
@@ -56,6 +59,9 @@ public class ViewActivity extends Activity {
 	    mQuoteView.setTypeface(font);
 	    mQuoteView.setText(Html.fromHtml(quotes[sel]));
 	    mStore = new Store(this);		
+	    
+	    loadingScreen = (LinearLayout)findViewById(R.id.loadingScreen);
+	    //texturesLoadedEventHandler();
 	}
     
     
@@ -105,7 +111,7 @@ public class ViewActivity extends Activity {
 			mQuoteView.setVisibility(View.INVISIBLE);
 			mModel.firstRun();
 		} else {
-			mModel.reset();
+		//	mModel.reset();
 		}
 
 		
@@ -162,9 +168,10 @@ public class ViewActivity extends Activity {
 	}
 	
 	public void closeQuoteScreen(View v) {
-		TextView w = (TextView)findViewById(R.id.QuoteView);
-		w.setVisibility(View.INVISIBLE);
+		loadingScreen.setVisibility(View.INVISIBLE);
 	}
+	
+	
 	
 	
 	public void onBackPressed() {

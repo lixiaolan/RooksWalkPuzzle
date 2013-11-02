@@ -41,7 +41,6 @@ public class LevelPackParser extends BaseParser {
     	root.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
 		    lp.setTitle(body);
-		    GlobalApplication.getTextureBridge().addTextTexture(body);
     		}
     		
 	    });
@@ -51,7 +50,6 @@ public class LevelPackParser extends BaseParser {
 		    ch.reset();
 		    Log.d(TAG, "Start Chapter");
 		    ch.setTitle(a.getValue("title"));
-		    GlobalApplication.getTextureBridge().addTextTexture(a.getValue("title"));
 		    Log.d(TAG,"found title");
 		    Log.d(TAG, a.getValue("title"));
 		    
