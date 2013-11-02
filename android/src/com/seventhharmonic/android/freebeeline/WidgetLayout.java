@@ -30,6 +30,12 @@ public abstract class WidgetLayout extends Widget{
 		}
 	}
 	
+	@Override
+	public void setCenter(float x, float y){
+		super.setCenter(x, y);
+		computeGeometry();
+	}
+	
 	public void addWidget(Widget w){
 		widgetList.add(w);
 		computeGeometry();

@@ -39,7 +39,6 @@ public class Store {
 	}
 
 	void initializeIab() {
-		
 		String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAocHERvmpvt+dCcMh2R8GnAS8scYLWLnPDC7KFw4qadzDw5iv7rPcgAzvGcwkPjN/nUHamJ/eHRvYhMJiekFGtOn/zFKTLOUU+JmTUHrQuvE7cQ8P30fej7GB4htm1h6FfOjJ9ZQRgyR78LMa9cMQnSY3BSxY3qhAPP4vmlj0ruTIPN7Selepc8ybP0RQtpyGSDfHAZ6v2B8Wnh23lqBg87JWyyvqD4bsIJeMr79WT7BD20dt3IsGKZ72I9XAH86S4CKb4TvaDqmWRU2qXmYq9QrqvJGNBdAwg3Wf4nAZfnVpeliF4y6ryq/lKvPCOcAsajREczSQGdNaLyYbRRAhHwIDAQAB";
 
 		// Create the helper, passing it our context and the public key to verify signatures w
@@ -107,9 +106,9 @@ public class Store {
 	};
 	/************************************************************************/
 	/*
-	 * Call this method when you decide to buy hints.
+	 * Call this method when you decide to buy 5 hints.
 	 */
-	public void onBuyHints(TextWidget mHints) {
+	public void onBuyFiveHints(TextWidget mHints) {
 		Log.d(TAG, "Buy hints button clicked.");
 		// launch the gas purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
@@ -120,16 +119,12 @@ public class Store {
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
 		hintWidget = mHints;
-		
 		mHelper.launchPurchaseFlow(mContext, "android.test.purchased", RC_REQUEST,
-				mPurchaseHintFinishedListener, payload);
+				mPurchaseFiveHintsFinishedListener, payload);
 	}
 
-
-
-	IabHelper.OnIabPurchaseFinishedListener mPurchaseHintFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+	IabHelper.OnIabPurchaseFinishedListener mPurchaseFiveHintsFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
 		public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-			hintsAdded = 0;
 			Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
 			try{
 			// if we were disposed of in the meantime, quit.
@@ -147,8 +142,11 @@ public class Store {
 					//setWaitScreen(false);
 					return;
 				} 
+
 			//Consume this purchase immediately!!! Can change this in the future.
 			mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
+			
+			//Fill DB
 			GlobalApplication.getHintDB().open();
 			GlobalApplication.getHintDB().addHints(50);
 			hintWidget.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
@@ -162,7 +160,6 @@ public class Store {
 			}
 		}
 	};
-
 
 	IabHelper.OnConsumeFinishedListener mConsumeHintsFinishedListener = new IabHelper.OnConsumeFinishedListener() {
 		public void onConsumeFinished(Purchase purchase, IabResult result) {
@@ -182,6 +179,68 @@ public class Store {
 
 	/************************************************************************/
 
+	/************************************************************************/
+	/*
+	 * Call this method when you decide to buy hints.
+	 */
+	public void onBuyUnlimitedHints(TextWidget mHints) {
+		Log.d(TAG, "Buy hints button clicked.");
+		// launch the gas purchase UI flow.
+		// We will be notified of completion via mPurchaseFinishedListener
+		//setWaitScreen(true);
+		Log.d(TAG, "Launching purchase flow for hints.");
+		/* TODO: for security, generate your payload here for verification. See the comments on
+		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
+		 *        an empty string, but on a production app you should carefully generate this. */
+		String payload = "";
+		hintWidget = mHints;
+		
+		mHelper.launchPurchaseFlow(mContext, "android.test.purchased", RC_REQUEST,
+				mPurchaseUnlimitedHintFinishedListener, payload);
+	}
+
+	IabHelper.OnIabPurchaseFinishedListener mPurchaseUnlimitedHintFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+		public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+			Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+			try{
+			// if we were disposed of in the meantime, quit.
+				if (mHelper == null){
+					return ;
+				}
+
+				if (result.isFailure()) {
+					complain("Error purchasing: " + result);
+					//setWaitScreen(false);
+					return;
+				}
+			if (!verifyDeveloperPayload(purchase)) {
+					complain("Error purchasing. Authenticity verification failed.");
+					//setWaitScreen(false);
+					return;
+				} 
+
+			//Consume this purchase immediately!!! Can change this in the future.
+			mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
+			
+			//Fill DB
+			GlobalApplication.getHintDB().open();
+			GlobalApplication.getHintDB().addHints(50);
+			hintWidget.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
+			GlobalApplication.getHintDB().close();	
+			Log.d(TAG,"In Store, how many hints did I get? hints: "+Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
+	    	Log.d("Board",Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
+			
+			}catch(Exception e){
+				//Should actually throw an exception here! This is a mess.
+				Log.e(TAG, e.getMessage());
+			}
+		}
+	};
+
+
+	/************************************************************************/
+	
+	
 	void complain(String message) {
 		Log.e(TAG, "**** InApp purchase Error: " + message);
 	}

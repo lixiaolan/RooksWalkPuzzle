@@ -35,17 +35,23 @@ public class GridWidgetLayout extends WidgetLayout{
 		}
 	}
 
+	/**
+	 * Unlike the rest of the program, we are taking the care here to perform a rotation
+	 * Hence index 0 is a the upper left. 
+	 */
 	public void initiateGeometry(){
 		xcoords = new float[width*height];
 		ycoords = new float[width*height];
 		int length = width*height;
 		Log.d(TAG, "Width height ");
 		Log.d(TAG, Integer.toString(width));
-		// Unlike the rest of the program, we are taking the care here to perform a rotation
-		// Hence index 0 is a the upper left.
 		for(int i =0;i< length; i++){
 			xcoords[i] = -( (i%width) - ((float)width-1.0f)/2)/(1/(2*size));
-			ycoords[i] = -( (i/height) - ((float)height-1.0f)/2 )/(1/(size*2));
+			//Special case for height of 1. Not sure how to handle this better.
+			if(height == 1)
+				ycoords[i] = -( - ((float)height-1.0f)/2 )/(1/(size*2));
+			else
+				ycoords[i] = -( (i/height) - ((float)height-1.0f)/2 )/(1/(size*2));
 		}
 	}
 	
