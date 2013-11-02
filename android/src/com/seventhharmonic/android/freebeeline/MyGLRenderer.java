@@ -325,9 +325,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			mModel.createTextures = false;
 		}
 		
-		if(GlobalApplication.getTextureBridge().hasTexture){
-			GlobalApplication.getTextureBridge().createTextures(TM);
-		}
 		
 		mModel.draw(this);
 

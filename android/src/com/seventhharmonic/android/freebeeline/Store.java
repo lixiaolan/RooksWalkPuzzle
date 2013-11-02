@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.test.*;
 
+import com.seventhharmonic.android.freebeeline.db.PurchasedDataSource;
+import com.seventhharmonic.android.freebeeline.db.PuzzleDataSource;
 import com.seventhharmonic.android.freebeeline.util.IabException;
 import com.seventhharmonic.android.freebeeline.util.Inventory;
 import com.seventhharmonic.android.freebeeline.util.Purchase;
@@ -25,7 +27,9 @@ public class Store {
 	// The helper object
 	public IabHelper mHelper;
 	public Inventory mInventory = null;
-
+	PurchasedDataSource PDS;
+	
+	
 	public int PURCHASE_OK = 0;
 	public int PURCHASE_FAILED = -1;
 
@@ -36,6 +40,7 @@ public class Store {
 
 	public Store(Activity c){
 		this.mContext = c;
+		PDS = GlobalApplication.getPurchasedDB();
 		initializeIab();
 	}
 
@@ -108,10 +113,10 @@ public class Store {
 			// Have we been disposed of in the meantime? If so, quit.
 			mInventory = inventory;
 			//Test code to see if inventory is communicating with the server.
-				
+			/*	
 			Log.d(TAG, "What can I purchase?");
 			SkuDetails p = inventory.getSkuDetails("test1");
-			Log.d(TAG,p.getSku());
+			Log.d(TAG, p.getSku());
 			Log.d(TAG, p.getTitle());
 			Log.d(TAG, p.getType());
 			Log.d(TAG, p.getDescription());
@@ -123,7 +128,7 @@ public class Store {
 			Log.d(TAG, p.getType());
 			Log.d(TAG, p.getDescription());
 			Log.d(TAG, p.getPrice());
-
+			 */
 			
 			if (mHelper == null) return;
 			// Is it a failure? - FIX HOW SECURITY IS BEING DONE - on static purchases, the signature could be null
@@ -216,10 +221,12 @@ public class Store {
 	 * Code run when you decide to buy infinity hints.
 	 */
 	
+	String sku = "test1";
+	
 	public boolean hasUnlimitedHints(){
-		String sku = "android.test.purchased";
+		
 		if(mInventory == null){
-			return false;
+			return PDS.getPurchased(sku);
 		}
 		
 		//TODO: Compare to how mainActivity is doing this more safely. You should really verify the purchase here. 
@@ -242,7 +249,7 @@ public class Store {
 		String payload = "";
 		hintWidget = mHints;
 		
-		mHelper.launchPurchaseFlow(mContext, "android.test.purchased", RC_REQUEST,
+		mHelper.launchPurchaseFlow(mContext, sku, RC_REQUEST,
 				mPurchaseUnlimitedHintFinishedListener, payload);
 	}
 
@@ -283,7 +290,6 @@ public class Store {
 			}
 		}
 	};
-
 
 	/************************************************************************/
 	

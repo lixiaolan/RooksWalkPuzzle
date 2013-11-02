@@ -171,10 +171,7 @@ public class ViewActivity extends Activity {
 		loadingScreen.setVisibility(View.INVISIBLE);
 	}
 	
-	public static void texturesLoadedEventHandler(){
-	while(!TextureManager.texturesLoaded){}
 	
-	}
 	
 	
 	public void onBackPressed() {
