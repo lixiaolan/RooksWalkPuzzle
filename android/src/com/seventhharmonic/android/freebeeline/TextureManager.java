@@ -24,7 +24,7 @@ import android.util.Log;
 public class TextureManager {
     
     static final int CHAR_PER_LINE = 30;
-	
+	public static boolean texturesLoaded = false;
     public static final String START = "start";
     public static final String PLAY = "play";
     public static final String NEW = "new";
@@ -82,6 +82,8 @@ public class TextureManager {
     public static final String FIVEHINTS = "5 Hints";
     public static final String TWENTYHINTS = "20 Hints";
     public static final String UNLIMITEDHINTS = "Unlimited Hints";
+    public static final String HIVE = "hive";
+    
     
     public static final String TURNINGRULE = " Oops! The path should turn at each step.";
     public static final String MATCHINGNUMBERRULE = "Watch out there! You can't point in the direction of a square with the same number.";
@@ -160,6 +162,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.box2, BOX);
 		buildTextures(context, R.drawable.eraser, ERASER);
 		buildTextures(context, R.drawable.board3, BOARD5);
+		buildTextures(context, R.drawable.hive, HIVE);
 		//reate Menu Textures and Words needed
 			    
 	    
@@ -171,6 +174,8 @@ public class TextureManager {
 	    buildStoryBanners();
 	    buildHintTextures();
 	    loadBitmapFromAssets();
+	    texturesLoaded = true;
+	    //ViewActivity.texturesLoadedEventHandler();
 	    }
 
 	public void buildHintTextures(){

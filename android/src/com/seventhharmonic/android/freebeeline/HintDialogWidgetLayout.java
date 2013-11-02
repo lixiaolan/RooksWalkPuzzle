@@ -53,7 +53,6 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		float size  = width/5;
 		
 		GridWidgetLayout mGrid = new GridWidgetLayout(3, 1, width/4);
-		mGrid.setCenter(0,0);
 		
 		fiveHints = new ImageWidget(0, 0, size, size, TextureManager.FIVEHINTS);
 		fiveHints.setBackground(TextureManager.BOX);
@@ -67,6 +66,8 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		unlimitedHints.setBackground(TextureManager.BOX);
 		mGrid.addWidget(unlimitedHints);
 		
+		mGrid.setRelativeCenter(0, .1f);
+		
 		
 		widgetList.add(mBackground);
 		widgetList.add(mText);
@@ -77,7 +78,11 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 	//	widgetList.add(unlimitedHints);		
 		computeGeometry();
 	}
-	
+	/*
+	 * Pass in mHints. The appropriate listeners in store will set this dialog.
+	 * (non-Javadoc)
+	 * @see com.seventhharmonic.android.freebeeline.Widget#touchHandler(float[])
+	 */
 	@Override
 	public void touchHandler(float[] pt){
 		Log.d("HintDialog", "Got Touched in Dialog");

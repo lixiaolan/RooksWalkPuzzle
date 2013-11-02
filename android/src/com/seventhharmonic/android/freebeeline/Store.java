@@ -14,6 +14,7 @@ import com.seventhharmonic.android.freebeeline.util.Inventory;
 import com.seventhharmonic.android.freebeeline.util.Purchase;
 import com.seventhharmonic.android.freebeeline.util.IabResult;
 import com.seventhharmonic.android.freebeeline.util.IabHelper;
+import com.seventhharmonic.android.freebeeline.util.SkuDetails;
 
 public class Store {
 
@@ -23,7 +24,7 @@ public class Store {
 	static final int RC_REQUEST = 10001;
 	// The helper object
 	public IabHelper mHelper;
-	public Inventory mInventory;
+	public Inventory mInventory = null;
 
 	public int PURCHASE_OK = 0;
 	public int PURCHASE_FAILED = -1;
@@ -38,6 +39,23 @@ public class Store {
 		initializeIab();
 	}
 
+	
+	private void consumeStaticResponse(String sku){
+		
+		//The point of this next piece of code is to fix fuckups.
+		ArrayList<String> moreSkus = new ArrayList<String>();
+		moreSkus.add(sku);
+		try{
+			mInventory = mHelper.queryInventory(false, moreSkus);
+			Log.d(TAG, "Got inventory");
+		} catch(IabException e){
+			Log.d(TAG, "EXCEPTED "+e.getMessage());
+		}
+		mHelper.consumeAsync(mInventory.getPurchase("android.test.purchased"),mConsumeHintsFinishedListener);
+		/**/
+
+	}
+	
 	void initializeIab() {
 		String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAocHERvmpvt+dCcMh2R8GnAS8scYLWLnPDC7KFw4qadzDw5iv7rPcgAzvGcwkPjN/nUHamJ/eHRvYhMJiekFGtOn/zFKTLOUU+JmTUHrQuvE7cQ8P30fej7GB4htm1h6FfOjJ9ZQRgyR78LMa9cMQnSY3BSxY3qhAPP4vmlj0ruTIPN7Selepc8ybP0RQtpyGSDfHAZ6v2B8Wnh23lqBg87JWyyvqD4bsIJeMr79WT7BD20dt3IsGKZ72I9XAH86S4CKb4TvaDqmWRU2qXmYq9QrqvJGNBdAwg3Wf4nAZfnVpeliF4y6ryq/lKvPCOcAsajREczSQGdNaLyYbRRAhHwIDAQAB";
 
@@ -61,24 +79,20 @@ public class Store {
 				if (mHelper == null) return;
 				// IAB is fully set up. Now, let's get an inventory of stuff we own.
 				Log.d(TAG, "Setup successful. Querying inventory.");
-				/*
-				//The point of this next piece of code is to fix fuckups.
-				ArrayList<String> moreSkus = new ArrayList<String>();
-				moreSkus.add("android.test.purchase");
-				try{
-					mInventory = mHelper.queryInventory(false, moreSkus);
-					Log.d(TAG, "Got inventory");
-				} catch(IabException e){
-					Log.d(TAG, "EXCEPTED "+e.getMessage());
-				}
-				mHelper.consumeAsync(mInventory.getPurchase("android.test.purchased"),mConsumeHintsFinishedListener);
-				/**/
+				
+				//consumeStaticResponse("android.test.purchased");
+					
 				
 				/*
 				 * Have completely commented out Security. There should be a newer version of the code
 				 * which does the necessary verification of the security.
 				 */
-				mHelper.queryInventoryAsync(mGotInventoryListener);
+				//mHelper.queryInventoryAsync(mGotInventoryListener);
+				List<String> moreSkus = new ArrayList<String>();
+				moreSkus.add("test1");
+				moreSkus.add("hints5");
+				mHelper.queryInventoryAsync(true, moreSkus, mGotInventoryListener);
+				
 			}
 		});
 		
@@ -93,7 +107,24 @@ public class Store {
 			}
 			// Have we been disposed of in the meantime? If so, quit.
 			mInventory = inventory;
+			//Test code to see if inventory is communicating with the server.
+				
+			Log.d(TAG, "What can I purchase?");
+			SkuDetails p = inventory.getSkuDetails("test1");
+			Log.d(TAG,p.getSku());
+			Log.d(TAG, p.getTitle());
+			Log.d(TAG, p.getType());
+			Log.d(TAG, p.getDescription());
+			Log.d(TAG, p.getPrice());
 
+			p = inventory.getSkuDetails("hints5");
+			Log.d(TAG,p.getSku());
+			Log.d(TAG, p.getTitle());
+			Log.d(TAG, p.getType());
+			Log.d(TAG, p.getDescription());
+			Log.d(TAG, p.getPrice());
+
+			
 			if (mHelper == null) return;
 			// Is it a failure? - FIX HOW SECURITY IS BEING DONE - on static purchases, the signature could be null
 			if (result.isFailure()) {
@@ -102,11 +133,12 @@ public class Store {
 			}
 			Log.d(TAG, "Query inventory was successful.");
 			Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+		
 		}
 	};
 	/************************************************************************/
 	/*
-	 * Call this method when you decide to buy 5 hints.
+	 * Code run when you decide to buy 5 hints.
 	 */
 	public void onBuyFiveHints(TextWidget mHints) {
 		Log.d(TAG, "Buy hints button clicked.");
@@ -148,7 +180,7 @@ public class Store {
 			
 			//Fill DB
 			GlobalApplication.getHintDB().open();
-			GlobalApplication.getHintDB().addHints(50);
+			GlobalApplication.getHintDB().addHints(5);
 			hintWidget.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
 			GlobalApplication.getHintDB().close();	
 			Log.d(TAG,"In Store, how many hints did I get? hints: "+Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
@@ -181,14 +213,29 @@ public class Store {
 
 	/************************************************************************/
 	/*
-	 * Call this method when you decide to buy hints.
+	 * Code run when you decide to buy infinity hints.
 	 */
+	
+	public boolean hasUnlimitedHints(){
+		String sku = "android.test.purchased";
+		if(mInventory == null){
+			return false;
+		}
+		
+		//TODO: Compare to how mainActivity is doing this more safely. You should really verify the purchase here. 
+		if(mInventory.hasPurchase(sku)){
+			return true;
+		} else {
+			return false;
+		}
+		}
+	
 	public void onBuyUnlimitedHints(TextWidget mHints) {
-		Log.d(TAG, "Buy hints button clicked.");
-		// launch the gas purchase UI flow.
+		Log.d(TAG, "Buy unlimited hints button clicked.");
+		// launch the  purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
 		//setWaitScreen(true);
-		Log.d(TAG, "Launching purchase flow for hints.");
+		Log.d(TAG, "Launching purchase flow for unlimited hints.");
 		/* TODO: for security, generate your payload here for verification. See the comments on
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
@@ -219,16 +266,16 @@ public class Store {
 					return;
 				} 
 
-			//Consume this purchase immediately!!! Can change this in the future.
-			mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
+			//Note that we should NOT CONSUME since you get unlimited hints.
+			//Need to update the inventory object.
+			mHelper.queryInventoryAsync(mGotInventoryListener);
 			
-			//Fill DB
-			GlobalApplication.getHintDB().open();
-			GlobalApplication.getHintDB().addHints(50);
-			hintWidget.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
-			GlobalApplication.getHintDB().close();	
-			Log.d(TAG,"In Store, how many hints did I get? hints: "+Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
-	    	Log.d("Board",Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
+			//TODO: Need code here to open the DB and set the fact that we have bought unlimited hints.
+			
+			//Update the board test widget.
+			hintWidget.setText(TextureManager.HIVE);
+		
+			
 			
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.

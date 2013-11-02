@@ -17,15 +17,15 @@ public class BaseDataSource {
     protected MySQLiteHelper dbHelper;
     
     public BaseDataSource(Context context) {
-	dbHelper = new MySQLiteHelper(context);
+    	dbHelper = new MySQLiteHelper(context);
     }
     
     public void open() throws SQLException {
-	database = dbHelper.getWritableDatabase();
+    	database = dbHelper.getWritableDatabase();
     }
     
     public void close() {
-	dbHelper.close();
+    	dbHelper.close();
     }
    
 } 

@@ -25,9 +25,21 @@ public class GridWidgetLayout extends WidgetLayout{
 		}
 		return -1;
 	}
-		
+	
+	@Override
+	public void setCenter(float x, float y){
+		super.setCenter(x, y);
+		computeGeometry();
+	}
+	
+	public void addWidget(Widget w){
+		widgetList.add(w);
+		computeGeometry();
+	}
+	
 	@Override
 	protected void computeGeometry() {
+		//Log.d("Grid", "Coords "+ Float.toString(getCenterX())+" "+Float.toString(getCenterY()));
 		for(int i =0; i< Math.min(widgetList.size(), width*height); i++){
 			Widget w = widgetList.get(i);
 			w.setRelativeCenter(xcoords[i], ycoords[i]);
