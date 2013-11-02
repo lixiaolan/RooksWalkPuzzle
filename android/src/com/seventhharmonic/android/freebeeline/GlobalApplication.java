@@ -20,8 +20,10 @@ public class GlobalApplication extends Application {
     private static LevelPackProvider mLPP;
     private static Geometry geo;
     private static TextureBridge mTextureBridge;
+
     private static PuzzleDataSource mDB;
     private static HintsDataSource hDB;
+    private static PurchasedDataSource PDS;
     
     /*
      * Google Analytics configuration values.
@@ -53,6 +55,9 @@ public class GlobalApplication extends Application {
 	mDB.open();
 	hDB = new HintsDataSource(this);
 	hDB.open();
+
+	PDS = new PurchasedDataSource(this);
+	PDS.open();
     }
     
     @Override
@@ -91,6 +96,11 @@ public class GlobalApplication extends Application {
     public static HintsDataSource getHintDB(){
 	return hDB;
     }
+
+    public static PurchasedDataSource getPurchasedDB(){
+	return PDS;
+    }
+
     
     public static TextureBridge getTextureBridge(){
 	return mTextureBridge;

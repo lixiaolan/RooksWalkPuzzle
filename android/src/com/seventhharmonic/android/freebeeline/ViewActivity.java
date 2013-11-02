@@ -78,6 +78,8 @@ public class ViewActivity extends Activity {
 	}
 	GlobalApplication.getPuzzleDB().close();
 	GlobalApplication.getHintDB().close();
+	GlobalApplication.getPurchasedDB().close();
+
     }
     
 	@Override
@@ -89,6 +91,7 @@ public class ViewActivity extends Activity {
 	    mGLView.onResume();
 	    GlobalApplication.getPuzzleDB().open();
 	    GlobalApplication.getHintDB().open();
+	    GlobalApplication.getPurchasedDB().open();
 	    // AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this,R.anim.shrink_dance_button_anim);
 	    // set.setTarget((Button)findViewById(R.id.bee_puzzled));
 	    // set.end();       
@@ -102,6 +105,7 @@ public class ViewActivity extends Activity {
 
 		GlobalApplication.getPuzzleDB().open();
 		GlobalApplication.getHintDB().open();
+		GlobalApplication.getPurchasedDB().open();
 
 		if(mModel.state.firstRun){
 			mQuoteView.setVisibility(View.INVISIBLE);
@@ -175,9 +179,7 @@ public class ViewActivity extends Activity {
 	
 	public void onBackPressed() {
 		   mModel.onBack();
-		}
-	
-	
+		}	
 }    
 
 
