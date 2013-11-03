@@ -19,8 +19,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	public int hints;
 	public int[] solution ;
 	public int[][] path;
-	public int boardWidth = 7;
-	public int boardHeight = 7;
+	public int boardWidth = 6;
+	public int boardHeight = 6;
 	private boolean toggleHints = true;
 	private boolean toggleLines = true;	
 	private boolean toggleError = true;
@@ -709,12 +709,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		int at = -1;
 		int lt = -1;
 		ButtonWidget reset;
+		ButtonWidget tutorial;
 		HintsDataSource DB;
 		TextWidget mHints;
 		HintDialogWidgetLayout mHintDialog;
 		Store mStore;
 		
 		
+		//TODO: Get rid of tiles as inputs to these functions.
 		public BoardPlay(BoardTile[] tiles) {
 			DB = GlobalApplication.getHintDB();
 			mStore = ViewActivity.mStore;
@@ -738,6 +740,15 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				}
 			});
 
+			tutorial = new ButtonWidget(-.7f, 1.0f, .1f, .1f, TextureManager.QUESTIONMARK);
+			tutorial.setClickListener(new GameEventListener(){
+				public void event(int i){
+					mModel.createTutorial();
+					mModel.setState(GameState.TUTORIAL);
+				}
+			});
+
+			
 			/*
 			 * The hints text widget next to the bee.
 			 * Note: If we can't open the DB we will crash out the program!! That is not a bad thing.
@@ -849,6 +860,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			reset.draw(r);
 			mHintDialog.draw(r);
 			mCheck.draw(r);
+			tutorial.draw(r);
 		}	
 
 		@Override
@@ -931,6 +943,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			}
 			
 			reset.touchHandler(pt);
+			tutorial.touchHandler(pt);
 			if(mHintDialog.isActive()){
 				mHintDialog.touchHandler(pt);
 			}

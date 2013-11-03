@@ -43,7 +43,7 @@ class MenuManager {
 		break;
 		
 	    case MAIN_MENU_GEAR:
-		String[] texturesGear = {TextureManager.OPTIONS, TextureManager.TUTORIAL,  TextureManager.STORY, TextureManager.STATS};
+		String[] texturesGear = {TextureManager.OPTIONS, TextureManager.TUTORIAL,  TextureManager.STORY};
 		mGameMenu = new GameMenu(pos1,scale1, texturesGear, TextureManager.BACK); 
 		mCallback = new Callback_MAIN_MENU_GEAR();
 		break;
@@ -87,7 +87,7 @@ class MenuManager {
 	    case TUTORIAL:
 		String[] texturesTUTORIAL = {TextureManager.QUIT};
 		//String[] textures8 = {TextureManager.NEXT, TextureManager.PREVIOUS};
-		mGameMenu = new SelectOneMenu(bottomPos2, scale2, texturesTUTORIAL); 
+		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesTUTORIAL); 
 		mCallback = new Callback_TUTORIAL();
 		break;
 		
@@ -95,11 +95,6 @@ class MenuManager {
 		String[] texturesTOC = {TextureManager.BACK};
 		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesTOC); 
 		mCallback = new Callback_TABLE_OF_CONTENTS();
-		break;
-	    case STATS:
-		String[] textures9 = {TextureManager.QUIT};
-		mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures9); 
-		mCallback = new Callback_STATS();
 		break;
 	    case STORY:
 		String[] textures10 = {TextureManager.QUIT};
@@ -164,13 +159,6 @@ class MenuManager {
 	    case 3:
 		mModel.createStory();
 		mModel.setState(GameState.STORY);
-		updateState();
-		break;
-	    case 4:
-		//mModel.updateStats();
-		mModel.createTextures = true;
-		state.state = GameState.STATS;
-		mModel.setState(GameState.STATS);
 		updateState();
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -301,7 +289,7 @@ class MenuManager {
 	    switch(val) {
 	    case 1:
 		state.state = GameState.MAIN_MENU_OPENING;
-		mModel.setState(GameState.MAIN_MENU_OPENING);
+		mModel.setState(GameState.GAME_OPENING);
 		updateState();
 		break;
 	    }
@@ -327,20 +315,6 @@ class MenuManager {
 		else {	
 		    mModel.toc.setState();
 		}
-		break;
-	    }
-	}
-    }
-    
-    class Callback_STATS extends Callback { 	
-	@Override
-	public void callback(int val) {
-	    
-	    switch(val) {
-	    case 1:
-		state.state = GameState.MAIN_MENU_OPENING;
-		mModel.setState(GameState.MAIN_MENU_OPENING);
-		updateState();
 		break;
 	    }
 	}

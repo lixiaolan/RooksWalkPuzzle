@@ -103,6 +103,7 @@ public class TextureManager {
     public static final String BORDERSW = "border_sw";
     public static final String TABLE_OF_CONTENTS = "Table of Contents";
     public static final String BOARD5 = "board5";
+    public static final String QUESTIONMARK = "?";
     
     Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -226,7 +227,7 @@ public class TextureManager {
 	    buildTextures(TWENTYHINTS, xpos, ypos, TWENTYHINTS, fontSize);
 	    buildTextures(UNLIMITEDHINTS, xpos, ypos, UNLIMITEDHINTS, fontSize);
 		
-		
+	    buildTextures(QUESTIONMARK, xpos, ypos, QUESTIONMARK, fontSize);
 		buildTextures(MENU, xpos, ypos, MENU, fontSize);
 		buildTextures(START, xpos, ypos, START, fontSize);
 		buildTextures(PLAY, xpos, ypos, PLAY, fontSize);
