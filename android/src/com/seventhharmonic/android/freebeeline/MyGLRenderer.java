@@ -385,11 +385,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		// float angle = 0.030f * ((int) time);
 		Matrix.rotateM(mModelMatrix, 0, angle, pivot[0], pivot[1], pivot[2]);
 
-		/*// Pass in the position information
-		mSquarePositions.position(0);		
-		GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
-		GLES20.glEnableVertexAttribArray(mPositionHandle);        
-		 */
 		// Pass in the position information
 		mSquarePositions.position(0);		
 		GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
@@ -424,7 +419,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	public void drawRectangleTile(String mode, float[] center, float width, float height, String[] textures, String color, float angle, float[] pivot)
 	{
-		float[] rectangleTextureCoordinateData;
 		try{
 			mTextures[0] = TM.library.get(textures[0]);
 			mTextures[1] = TM.library.get(textures[1]);	
@@ -462,8 +456,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glEnableVertexAttribArray(mColorHandle);
 
 		// Pass in the texture coordinate information
-		rectangleTextureCoordinateData = selectCropStyle(width, height, mode);
-		mRectangleTextureCoordinates.put(rectangleTextureCoordinateData).position(0);
+		//rectangleTextureCoordinateData = selectCropStyle(width, height, mode);
+		selectCropStyle(width, height, mode);
+		mRectangleTextureCoordinates.put(tempTextureCoordinateData).position(0);
 		mRectangleTextureCoordinates.position(0);
 		GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mRectangleTextureCoordinates);
 		GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
@@ -485,12 +480,28 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	}
 
 
+	float[] tempTextureCoordinateData = {							 // Front face
+			1.0f, 0.0f,                             
+			1.0f, 1.0f,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			0.0f, 1.0f,
+			0.0f, 0.0f,   				
+		};
+	
 
 	public float[] selectCropStyle(float width, float height, String mode){
 		if(mode.equals(CROPTOP)){
 			if(width > height){
 				float r = height/width;
-				float[] tempTextureCoordinateData =
+				tempTextureCoordinateData[0] = 1.0f; tempTextureCoordinateData[1] = 0.0f;
+				tempTextureCoordinateData[2] = 1.0f; tempTextureCoordinateData[3] = r;
+				tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 0.0f;
+				tempTextureCoordinateData[6] = 1.0f; tempTextureCoordinateData[7] = r;
+				tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = r;
+				tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 0.0f;
+				
+				/*float[] tempTextureCoordinateData =
 					{							 // Front face
 						1.0f, 0.0f,                             
 						1.0f, r,
@@ -499,9 +510,17 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						0.0f, r,
 						0.0f, 0.0f,   					
 					};
+				*/
 				return tempTextureCoordinateData;
 			} else if(width < height) {
 				float r = width/height;
+				tempTextureCoordinateData[0] = r; tempTextureCoordinateData[1] = 0.0f;
+				tempTextureCoordinateData[2] = r; tempTextureCoordinateData[3] = 1.0f;
+				tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 0.0f;
+				tempTextureCoordinateData[6] = r; tempTextureCoordinateData[7] = 1.0f;
+				tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+				tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 0.0f;
+				/*
 				float[] tempTextureCoordinateData =
 					{							 // Front face
 						r, 0.0f,                             
@@ -510,9 +529,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						r, 1.0f,
 						0.0f, 1.0f,
 						0.0f, 0.0f,   					
-					};
+					};*/
+				
 				return tempTextureCoordinateData;
 			} else{
+				//Square case
+				tempTextureCoordinateData[0] = 1.0f; tempTextureCoordinateData[1] = 0.0f;
+				tempTextureCoordinateData[2] = 1.0f; tempTextureCoordinateData[3] = 1.0f;
+				tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 0.0f;
+				tempTextureCoordinateData[6] = 1.0f; tempTextureCoordinateData[7] = 1.0f;
+				tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+				tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 0.0f;
+				
+				/*
 				float[] tempTextureCoordinateData =
 					{							 // Front face
 						1.0f, 0.0f,                             
@@ -521,7 +550,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						1.0f, 1.0f,
 						0.0f, 1.0f,
 						0.0f, 0.0f,  					
-					};
+					};*/
+				
 				return tempTextureCoordinateData;
 			}
 			
@@ -529,7 +559,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 			if(width > height){
 				float r = height/width;
-				float[] tempTextureCoordinateData =
+				
+				tempTextureCoordinateData[0] = 1.0f; tempTextureCoordinateData[1] = r;
+				tempTextureCoordinateData[2] = 1.0f; tempTextureCoordinateData[3] = 1.0f;
+				tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = r;
+				tempTextureCoordinateData[6] = 1.0f; tempTextureCoordinateData[7] = 1.0f;
+				tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+				tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = r;
+				
+				
+				/*float[] tempTextureCoordinateData =
 					{							 // Front face
 						1.0f, r,                             
 						1.0f, 1.0f,
@@ -537,12 +576,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						1.0f,  1.0f,
 						0.0f, 1.0f,
 						0.0f, r,   					
-					};
+					};*/
 				return tempTextureCoordinateData;
 				
 			} else if(height > width) {
 				float r = width/height;
-				float[] tempTextureCoordinateData =
+				tempTextureCoordinateData[0] = r; tempTextureCoordinateData[1] = 0.0f;
+				tempTextureCoordinateData[2] = r; tempTextureCoordinateData[3] = 1.0f;
+				tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 0.0f;
+				tempTextureCoordinateData[6] = r; tempTextureCoordinateData[7] = 1.0f;
+				tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+				tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 0.0f;
+				
+				/*float[] tempTextureCoordinateData =
 					{							 // Front face
 						r, 0.0f,                             
 						r, 1.0f,
@@ -550,11 +596,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						r, 1.0f,
 						0.0f, 1.0f,
 						0.0f, 0.0f,   					
-					};
+					};*/
 				return tempTextureCoordinateData;
 			
 			} else{
-				float[] tempTextureCoordinateData =
+				//Square case!
+				
+				tempTextureCoordinateData[0] = 1.0f; tempTextureCoordinateData[1] = 0.0f;
+				tempTextureCoordinateData[2] = 1.0f; tempTextureCoordinateData[3] = 1.0f;
+				tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 0.0f;
+				tempTextureCoordinateData[6] = 1.0f; tempTextureCoordinateData[7] = 1.0f;
+				tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+				tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 0.0f;
+				
+				/*float[] tempTextureCoordinateData =
 					{							 // Front face
 						1.0f, 0.0f,                             
 						1.0f, 1.0f,
@@ -562,13 +617,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						1.0f, 1.0f,
 						0.0f, 1.0f,
 						0.0f, 0.0f,  					
-					};
+					};*/
 				return tempTextureCoordinateData;
 			}			
 		
 		} else if (mode.equals(FIXEDWIDTH)){
 			float r = .5f*height/width;
-				float[] tempTextureCoordinateData =
+			tempTextureCoordinateData[0] = .5f; tempTextureCoordinateData[1] = 1-r;
+			tempTextureCoordinateData[2] = .5f; tempTextureCoordinateData[3] = 1;
+			tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 1-r;
+			tempTextureCoordinateData[6] = .5f; tempTextureCoordinateData[7] = 1;
+			tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+			tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 1-r;
+			
+			/*	float[] tempTextureCoordinateData =
 					{	//Somehow 1 is the bottom and 0 is the top?
 						
 						.5f,1-r,
@@ -577,11 +639,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 						.5f,1,
 						0,1,
 						0,1-r
-					};
+					};*/
 				return tempTextureCoordinateData;
 		}
 
-		float[] tempTextureCoordinateData =
+		// Square case again!
+		tempTextureCoordinateData[0] = 1.0f; tempTextureCoordinateData[1] = 0.0f;
+		tempTextureCoordinateData[2] = 1.0f; tempTextureCoordinateData[3] = 1.0f;
+		tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 0.0f;
+		tempTextureCoordinateData[6] = 1.0f; tempTextureCoordinateData[7] = 1.0f;
+		tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+		tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 0.0f;
+		
+		/*float[] tempTextureCoordinateData =
 			{							 // Front face
 				1.0f, 0.0f,                             
 				1.0f, 1.0f,
@@ -589,7 +659,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 				1.0f,  1.0f,
 				0.0f, 1.0f,
 				0.0f, 0.0f
-			};
+			};*/
 		
 		return tempTextureCoordinateData; 
 	}

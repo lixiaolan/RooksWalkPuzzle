@@ -20,6 +20,7 @@ public class Puzzle {
 	Puzzle nextPuzzle;
 	boolean completed = false;
 	long id;
+	Chapter ch;
 	
 	public long getId() {
 		return id;
@@ -34,7 +35,6 @@ public class Puzzle {
 		 //String result = q.getCompleted();
 		 //if(result.equals(true))
 		//	 return true;//p.setCompleted(true);
-
 		return completed;
 	}
 
@@ -42,6 +42,14 @@ public class Puzzle {
 		this.completed = completed;
 	}
 
+	public void setChapter(Chapter ch){
+		this.ch  = ch;
+	}
+	
+	public Chapter getChapter(){
+		return ch;
+	}
+	
 	public Puzzle getNextPuzzle() {
 		return nextPuzzle;
 	}
@@ -130,6 +138,7 @@ public class Puzzle {
 		p.setHeight(height);
 		p.setPath(path);
 		p.setId(id);
+		p.setChapter(ch);
 		return p;
 	}
 	

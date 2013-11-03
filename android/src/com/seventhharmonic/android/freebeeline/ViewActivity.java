@@ -115,7 +115,7 @@ public class ViewActivity extends Activity {
 		}
 
 		
-		//TODO: This sucks balls. Do this elsewhere.
+		//TODO: Loading puzzles with their completion value. This sucks balls. Do this elsewhere.
 		LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
 		LevelPack mLP = mLPP.getLevelPack(0);
 		Log.d(TAG, mLP.getTitle());
@@ -125,7 +125,7 @@ public class ViewActivity extends Activity {
 			for(Puzzle p: c.getAllPuzzles()){
 			    q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
 			    String result = q.getCompleted();
-			    System.out.println("db result "+result+" "+p.getId());
+			    Log.d(TAG,"db result "+result+" "+p.getId());
 			    if(result.equals("true"))
 				p.setCompleted(true);
 			}

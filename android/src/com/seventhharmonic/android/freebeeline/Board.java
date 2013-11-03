@@ -912,7 +912,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 						mModel.toc.setState();
 						GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
 					}
-					mGameBanner.setText(TextureManager.GOOD_JOB);
 				} 
 				else {
 					mGameBanner.setText(TextureManager.TRY_AGAIN);
@@ -991,7 +990,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		EndGameDialogWidgetLayout mDialog;
 
 		public BoardGameEnd(BoardTile[] tiles) {
-			mDialog = new EndGameDialogWidgetLayout(.8f, TextureManager.GOOD_JOB);
+			mDialog = new EndGameDialogWidgetLayout(.8f, currPuzzle.getChapter().getNumberPuzzlesIncomplete());
 			mDialog.setNextClickListener(new GameEventListener(){
 				public void event(int i ){
 					Log.d("Dialog","Clicked");
@@ -1079,7 +1078,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			mGameBanner.draw(r);
 			mBoardBg.draw(r);
 			super.draw(tiles, r);
 			mBee.draw(r);

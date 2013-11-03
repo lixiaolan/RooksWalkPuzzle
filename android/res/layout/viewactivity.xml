@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/QuoteView"
             android:layout_width="match_parent"
-            android:layout_height="301dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center|center_vertical"
             android:background="@color/white"
             android:clickable="true"

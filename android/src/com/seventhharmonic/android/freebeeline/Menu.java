@@ -44,8 +44,7 @@ class Menu{
 		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/(tileCount-1));
 		float Sx = tilesCenter[0] + radius*tmpcos;
 		float Sy = tilesCenter[1] + radius*tmpsin;
-		float center[] = { Sx, Sy, 0.0f};
-		menuTiles[i].center = center;
+		menuTiles[i].setCenter(Sx, Sy);
 	    }   
 	}
     }
@@ -84,8 +83,7 @@ class Menu{
 		float tmpcos = (float)Math.cos(tiltAngle+i*Math.PI/(tileCount-1));
 		float Sx = tilesCenter[0] + tRadius*tmpcos;
 		float Sy = tilesCenter[1] + tRadius*tmpsin;
-		float center[] = { Sx, Sy, 0.0f};
-		menuTiles[i].center = center;
+		menuTiles[i].setCenter(Sx, Sy);
 	    }   
 	}
     }

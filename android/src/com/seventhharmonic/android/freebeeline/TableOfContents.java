@@ -63,7 +63,7 @@ public class TableOfContents extends GraphicWidget{
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    m.setDrawProgressBar(false);
 	    for(int i =0;i<mLPP.getNumberOfLevelPacks();i++){
-		m.addWidget(new LevelPackWidget(TextureManager.GOOD_JOB,"forest.png"));
+		m.addWidget(new LevelPackWidget(TextureManager.CLEAR,"forest.png"));
 		//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
 	    }
 	    m.setActiveWidget(savedLevelPack);
