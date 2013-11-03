@@ -16,8 +16,8 @@ public class PurchasedDataSource extends BaseDataSource{
         
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID, MySQLiteHelper.COLUMN_SKU ,MySQLiteHelper.COLUMN_PURCHASED};
     
-    public PurchasedDataSource(Context context) {
-	super(context);
+    public PurchasedDataSource(Context context, MySQLiteHelper MSQLH) {
+	super(context, MSQLH);
     }
     
     public SQLPurchased getPurchased() {

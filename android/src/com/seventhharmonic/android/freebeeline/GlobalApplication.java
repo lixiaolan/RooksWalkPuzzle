@@ -24,7 +24,8 @@ public class GlobalApplication extends Application {
     private static PuzzleDataSource mDB;
     private static HintsDataSource hDB;
     private static PurchasedDataSource PDS;
-    
+    private static MySQLiteHelper MSQLH;
+
     /*
      * Google Analytics configuration values.
      */
@@ -51,12 +52,14 @@ public class GlobalApplication extends Application {
 	geo = new Geometry();
 	mTextureBridge = new TextureBridge();
 	mLPP = new SAXLevelPackProvider();
-	mDB = new PuzzleDataSource(this);
-	mDB.open();
-	hDB = new HintsDataSource(this);
-	hDB.open();
+	
+	MSQLH = new MySQLiteHelper(this);
 
-	PDS = new PurchasedDataSource(this);
+	mDB = new PuzzleDataSource(this, MSQLH);
+	mDB.open();
+	hDB = new HintsDataSource(this, MSQLH);
+	hDB.open();
+	PDS = new PurchasedDataSource(this, MSQLH);
 	PDS.open();
     }
     

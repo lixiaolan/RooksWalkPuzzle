@@ -16,8 +16,8 @@ public class BaseDataSource {
     protected SQLiteDatabase database;
     protected MySQLiteHelper dbHelper;
     
-    public BaseDataSource(Context context) {
-    	dbHelper = new MySQLiteHelper(context);
+    public BaseDataSource(Context context, MySQLiteHelper MSQLH) {
+	dbHelper = MSQLH;
     }
     
     public void open() throws SQLException {
