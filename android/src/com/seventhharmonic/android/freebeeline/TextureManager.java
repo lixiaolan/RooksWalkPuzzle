@@ -59,7 +59,7 @@ public class TextureManager {
     public static final String PREVIOUS = "previous";
     public static final String SHOW_SOLUTION = "solution";
     public static final String FOOT = "+";
-    public static final String GOOD_JOB = "Good job!";
+    public static final String GOOD_JOB = "Good job! You helped Beatrice collect all the flowers in this puzzle!";
     public static final String TRY_AGAIN = "Keep trying...";
     public static final String TRY_HARDER = "Try a bit harder next time!";
     public static final String STORY = "story";
@@ -83,7 +83,7 @@ public class TextureManager {
     public static final String TWENTYHINTS = "20 Hints";
     public static final String UNLIMITEDHINTS = "Unlimited Hints";
     public static final String HIVE = "hive";
-    
+    public static final String PUZZLESLEFT = "Puzzles left in Chapter: ";
     
     public static final String TURNINGRULE = " Oops! The path should turn at each step.";
     public static final String MATCHINGNUMBERRULE = "Watch out there! You can't point in the direction of a square with the same number.";
@@ -103,6 +103,7 @@ public class TextureManager {
     public static final String BORDERSW = "border_sw";
     public static final String TABLE_OF_CONTENTS = "Table of Contents";
     public static final String BOARD5 = "board5";
+    public static final String QUESTIONMARK = "?";
     
     Map <String, Integer> library = new HashMap<String, Integer>();
 	Typeface tf;
@@ -226,7 +227,7 @@ public class TextureManager {
 	    buildTextures(TWENTYHINTS, xpos, ypos, TWENTYHINTS, fontSize);
 	    buildTextures(UNLIMITEDHINTS, xpos, ypos, UNLIMITEDHINTS, fontSize);
 		
-		
+	    buildTextures(QUESTIONMARK, xpos, ypos, QUESTIONMARK, fontSize);
 		buildTextures(MENU, xpos, ypos, MENU, fontSize);
 		buildTextures(START, xpos, ypos, START, fontSize);
 		buildTextures(PLAY, xpos, ypos, PLAY, fontSize);
@@ -292,6 +293,11 @@ public class TextureManager {
 	    buildLongTextures(PASSTHROUGHRULE, 0, fontHeight, PASSTHROUGHRULE, fontWidth, bannerSize);
 	    buildLongTextures(OFFBOARD, 0, fontHeight, OFFBOARD, fontWidth, bannerSize);
 	    buildLongTextures(VERSION, 0, fontHeight, VERSION, fontWidth, bannerSize);
+	    buildLongTextures(PUZZLESLEFT, 0, fontHeight, PUZZLESLEFT, fontWidth, bannerSize);
+	    for(int i = 0;i< 17;i++){
+	    	buildLongTextures(PUZZLESLEFT+Integer.toString(i), 0, fontHeight, PUZZLESLEFT+Integer.toString(i), fontWidth, bannerSize);
+	    }
+	    
 	}
 	
 	public void buildStoryBanners() {

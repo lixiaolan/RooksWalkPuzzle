@@ -130,7 +130,9 @@ public class LevelPackParser extends BaseParser {
     	
     	chapter.getChild(PUZZLE).setEndElementListener( new EndElementListener() {
     		public void end(){
+    			puzz.setChapter(ch);
     			ch.addPuzzle(puzz.copy());
+
     		}
     	});
     	

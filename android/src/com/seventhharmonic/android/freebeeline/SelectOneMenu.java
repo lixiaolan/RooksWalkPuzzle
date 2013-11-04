@@ -30,8 +30,7 @@ class SelectOneMenu extends GameMenu{
 	    for (int i = 0; i < menuTiles.length; i++) {     
 		float Sx = tilesCenter[0];
 		float Sy = tilesCenter[1];
-		float center[] = { Sx, Sy, 0.0f};
-		menuTiles[i].center = center;	
+		menuTiles[i].setCenter(Sx, Sy);	
 	}
     }
     

@@ -37,5 +37,10 @@ public class BeeTile extends Tile{
 	velocity[0] = in[0];
 	velocity[1] = in[1];
     }
+    
+    public void setVelocity(float x, float y) {
+    	velocity[0] = x;
+    	velocity[1] = y;
+        }
 }
 

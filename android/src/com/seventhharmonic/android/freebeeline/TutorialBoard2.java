@@ -49,13 +49,14 @@ class TutorialBoard2 extends Board {
 	    state = new SLIDE3();
 	    mTutorialState = TutorialState.SLIDE3;
 	    break;
-	case SLIDE3:
+	/*case SLIDE3:
 	    state = new PlayGame();
 	    mTutorialState = TutorialState.PlayGame;
 	    break;
 	case PlayGame:
 	    state = new PlayGameEnd();
 	    mTutorialState = TutorialState.PlayGameEnd;
+	*/
 	default:
 	    break;
 	}
@@ -392,6 +393,7 @@ class TutorialBoard2 extends Board {
 	}
     }
     
+    /*
     class PlayGame extends State<BoardTile> {
 	long refTime;
 	private Background mCheck;
@@ -537,5 +539,5 @@ class TutorialBoard2 extends Board {
 	    mBanner.draw(r);
 	    mBee.draw(r);
 	}
-    }        
+    } */       
 }

@@ -3,6 +3,8 @@ package com.seventhharmonic.com.freebeeline.levelresources;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 import com.seventhharmonic.android.freebeeline.TextureManager;
 
 public class Chapter {
@@ -23,6 +25,17 @@ public class Chapter {
 	
 	public int getNumberOfPuzzles(){
 		return puzzles.size();
+	}
+	
+	public int getNumberPuzzlesIncomplete() {
+		int a  = 0;
+		Log.d("Chapter","Puzzle id's in this chapter");
+		for(Puzzle p: puzzles){
+			Log.d("Chapter", Long.toString(p.id));
+			if(!p.isCompleted())
+				a++;
+		}
+		return a;
 	}
 	
 	public int getHeight() {
@@ -73,6 +86,9 @@ public class Chapter {
 	
 	public Chapter copy(){
 		Chapter ch  = new Chapter(puzzles, title);
+		for(Puzzle p:puzzles){
+			p.setChapter(ch);
+		}
 		ch.setHeight(height);
 		ch.setWidth(width);
 		return ch;

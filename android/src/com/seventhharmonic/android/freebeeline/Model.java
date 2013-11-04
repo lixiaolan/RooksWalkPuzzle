@@ -27,7 +27,6 @@ class Model {
     private float[] geometry = new float[3];
     private StoryBoard mStoryBoard;
     private DataServer mDataServer;
-    private StatsScreen mStatsScreen;
     public boolean createTextures = false;
     public MediaPlayer mediaPlayer;    
     
@@ -58,7 +57,6 @@ class Model {
 	mTitle = new Background("title", .50f);
 	float[] titleCenter = {.5f, 0.8f, 0.0f};
 	mTitle.setCenter(titleCenter);
-	mStatsScreen = new StatsScreen(state);
 	mVersionBanner= new Banner(TextureManager.VERSION, .5f);
 	mVersionBanner.setCenter(.5f, -1.1f);
     }
@@ -178,10 +176,6 @@ class Model {
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
 	    break;
-	case STATS:
-	    mStatsScreen.draw(r);
-	    mMenuManager.draw(r);
-	    break;
 	default: break;
 	}
     }
@@ -189,7 +183,6 @@ class Model {
     public void setGeometry(float[] g) {
 	geometry = g;
 	mMenuManager.setGeometry(g);
-	mStatsScreen.setGeometry(g);
 	mBoard.setGeometry(g);
 	Log.d("Model","g");
 	Log.d("Model", Float.toString(g[1]));
@@ -258,19 +251,7 @@ class Model {
 	}
     }
     
-    public void updateStats(TextureManager TM) {
-	int shortPuzz = mDataServer.getShortGames();
-	int medPuzz = mDataServer.getMediumGames();
-	int longerPuzz = mDataServer.getLongerGames();
-	int longestPuzz = mDataServer.getLongestGames();		
-	int flowersVisited = mDataServer.getFlowersVisited();
-	
-	TM.buildLongTextures("Short Games: "+Integer.toString(shortPuzz), 0, 30, TextureManager.SHORTSTATS, 25,  256);
-	TM.buildLongTextures("Medium Games: "+Integer.toString(medPuzz), 0, 30, TextureManager.MEDIUMSTATS, 25, 256);
-	TM.buildLongTextures("Longer Games: "+Integer.toString(longerPuzz), 0, 30, TextureManager.LONGERSTATS, 25, 256);
-	TM.buildLongTextures("Longest Games: "+Integer.toString(longestPuzz), 0, 30, TextureManager.LONGESTSTATS, 25, 256);
-	TM.buildLongTextures("Flowers Visited: "+Integer.toString(flowersVisited), 0, 30, TextureManager.FLOWERSVISITED, 25, 256);
-    }   
+  
 }
 
 

@@ -19,8 +19,13 @@ public abstract class Widget {
 
 	float width;
 	float height;
-	float[] center;
-	float[] relativeCenter;
+	float[] center = new float[3];
+	float[] relativeCenter  = new float[3];
+	
+	public Widget(){
+		center[2] = 0;
+		relativeCenter[2] = 0; 
+	}
 	
 	public float getWidth() {
 		return width;
@@ -55,7 +60,6 @@ public abstract class Widget {
 	}
 
 	public void setCenter(float center0, float center1) {
-		center = new float[3];
 		this.center[0] = center0;
 		this.center[1] = center1;
 		this.center[2] = 0.0f;
@@ -83,7 +87,6 @@ public abstract class Widget {
 	}
 
 	protected void setRelativeCenter(float center0, float center1) {
-		relativeCenter = new float[3];
 		this.relativeCenter[0] = center0;
 		this.relativeCenter[1] = center1;
 		this.relativeCenter[2] = 0.0f;

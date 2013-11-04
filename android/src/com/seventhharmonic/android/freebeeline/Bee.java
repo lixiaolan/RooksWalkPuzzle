@@ -59,24 +59,23 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	float[] pivot = {1,0,1};
 	
 	public BeeWander(Mood m) {
-	    setMood(m);
+		bee = (BeeTile)tiles[0];
+		setMood(m);
 	}
 	
 	public void enterAnimation(BeeTile[] tiles){
-	    bee = (BeeTile)tiles[0];
 	    globalRefTime = 0;
 	    relativeRefTime = System.currentTimeMillis();
-	    float[] vel = {.01f, .01f};
-	    bee.setVelocity2D(vel);
+	    bee.setVelocity(.01f, .01f);
 	    period = DrawPeriod.DURING;
 	}    
-	
+
+    float[] force = new float[2];
 	public void duringAnimation(BeeTile[] tiles) {
 	    long time = System.currentTimeMillis() - globalRefTime;
 	    float dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, .0333f);
 	    relativeRefTime = System.currentTimeMillis();
 	    
-	    float[] force = new float[2];
 	    if(time < interval){
 		force = getForce(mBoard.getTile(r));
 		bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
@@ -132,12 +131,14 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	    period = DrawPeriod.DURING;
 	}
 	
+	//Force vector needed in during animation. Don't allocate it unless necessary.
+	float[] force = new float[2];
+	
 	public void duringAnimation(BeeTile[] tiles) {
 	    bee = (BeeTile)tiles[0];
 	    long time = System.currentTimeMillis() - globalRefTime;
 	    float dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, 0.0333f);
 	    relativeRefTime = System.currentTimeMillis();
-	    float[] force = new float[2];
 	    switch (mood) {
 	    case HAPPY:
 		if(LATools.abs(bee.velocity) > .01f){
@@ -168,8 +169,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 		    bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
 		    bee.velocity = LATools.vSum(bee.velocity, LATools.vSProd(dt, force));
 		} else {
-		    float[] velocity = {0.0f, .00001f};
-		    bee.velocity = velocity;
+		    bee.setVelocity(0.0f, 0.0001f);
 		}
 		break;
 		
