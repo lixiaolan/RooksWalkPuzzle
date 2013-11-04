@@ -11,8 +11,7 @@ public class Chapter {
 	int height = 0;
 	int width = 0;
 	boolean completed = true;
-	
-	
+		
 	public boolean getCompleted(){
 		//TODO: Put this code back!
 		// for(Puzzle p: puzzles){

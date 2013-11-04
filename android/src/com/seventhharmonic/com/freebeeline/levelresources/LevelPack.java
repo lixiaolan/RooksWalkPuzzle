@@ -15,7 +15,6 @@ public class LevelPack {
 	
 	public LevelPack(){
 	}
-
 	
 	public String getTitle() {
 		return title;
@@ -42,9 +41,7 @@ public class LevelPack {
 	public List<Chapter> getAllChapters(){
 		return chapters;
 	}
-	
-	
-	
+
 	public Chapter getChapter(int i){
 		return chapters.get(i);
 	}
@@ -55,8 +52,5 @@ public class LevelPack {
 	
 	public String getCurrTitleImage() {
 		return TextureManager.getFlowerTexture();
-	}
-	
-	
-	
+	}	
 }
