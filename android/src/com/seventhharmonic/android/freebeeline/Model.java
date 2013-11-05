@@ -29,6 +29,7 @@ class Model {
     private DataServer mDataServer;
     public boolean createTextures = false;
     public MediaPlayer mediaPlayer;    
+    public FlowerMenu mFlowerMenu = new FlowerMenu(this);
     
     Banner mVersionBanner;
     Store mStore;
@@ -96,16 +97,19 @@ class Model {
 	    //Internally close menu.    		
 	    mBoard.touchHandler(pt);
 	    break;
-	case MAIN_MENU_OPENING:   
+	case MAIN_MENU_OPENING:  
+	case FLOWER_MENU:
+		mFlowerMenu.touchHandler(pt);
+		break;
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-	    at = mBoard.touched(pt);
+/*	TODO:Delete this code    at = mBoard.touched(pt);
 	    if(at != -1) {
 		float[] pivot = {0,0,1};
 		mBoard.tiles[at].setPivot(pivot);
 		mBoard.tiles[at].setRotate(true);
-	    }
+	    }*/
 	    if(mBoard.beeTouched(pt) == 1){
 		vibe.vibrate(100);
 	    }
@@ -130,6 +134,10 @@ class Model {
     
     public void swiped(float[] pt, String direction) {
 	switch(state.state){
+	case MAIN_MENU_OPENING:
+	case FLOWER_MENU:
+		mFlowerMenu.swipeHandler(direction);
+		break;	
 	case TABLE_OF_CONTENTS:
 	    toc.swipeHandler(direction);
 	    break;
@@ -152,8 +160,7 @@ class Model {
 	    mStoryBoard.draw(r);
 	    break;
 	case GAME_OPENING:
-	    mBoard.draw(r);
-	    
+	    mBoard.draw(r);   
 	    mMenuManager.draw(r);		
 	    break;
 	case GAME_MENU_END:
@@ -163,10 +170,13 @@ class Model {
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-	    mTitle.draw(r);
+		mFlowerMenu.draw(r);
+		mTitle.draw(r);
 	    mVersionBanner.draw(r);
-	    mBoard.draw(r);
 	    mMenuManager.draw(r);
+	    break;
+	case FLOWER_MENU:	
+		mFlowerMenu.draw(r);
 	    break;
 	case TABLE_OF_CONTENTS:
 	    toc.draw(r);

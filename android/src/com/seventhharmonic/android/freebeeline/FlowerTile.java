@@ -7,7 +7,6 @@ class FlowerTile extends Tile {
     public FlowerTile(float inCenter0, float inCenter1 ,float inSize) {
 	super(inCenter0, inCenter1, inSize);
 	color = "transparent";
-
 	velocity[0] = 0.0f;
 	velocity[1] = 0.0f;
     }

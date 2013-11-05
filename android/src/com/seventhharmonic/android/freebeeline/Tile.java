@@ -5,7 +5,7 @@ abstract class Tile {
  
     public float[] center;
     public float size;
-    float angle;
+    float angle = 0.0f;;
     String[] textures = {"clear","clear"};
     String color = "transparent";
     float[] pivot = {0,0,1};
@@ -17,7 +17,6 @@ abstract class Tile {
     	center[1] = inCenter[1];
     	center[2] = inCenter[2];
     	size = inSize;
-    	angle = 0.0f;
     }
 
     public Tile(float x, float y,  float inSize){
@@ -26,7 +25,6 @@ abstract class Tile {
     	center[1] = y;
     	center[2] = 0.0f;
     	size = inSize;
-    	angle = 0.0f;
     }
     
     public boolean touched(float[] pt) {

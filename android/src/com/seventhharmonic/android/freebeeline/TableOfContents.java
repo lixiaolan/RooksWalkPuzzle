@@ -34,16 +34,16 @@ public class TableOfContents extends GraphicWidget{
 	Log.d(TAG, "in set state");
 	System.out.println(mContents);
 	Log.d(TAG, Integer.toString(savedChapter));
-	switch(mContents){
-	case LEVELPACKDISPLAY: 
+	//switch(mContents){
+	//case LEVELPACKDISPLAY: 
 	    mContents = Contents.CHAPTERDISPLAY;
 	    state = new ChapterDisplay();
-	    break;
-	case CHAPTERDISPLAY:
-	    mContents = Contents.LEVELPACKDISPLAY;
-	    state = new LevelPackDisplay();
-	    break;
-	}
+	//    break;
+	//case CHAPTERDISPLAY:
+	//    mContents = Contents.LEVELPACKDISPLAY;
+	//    state = new LevelPackDisplay();
+	//    break;
+	//}
     }
     
     @Override

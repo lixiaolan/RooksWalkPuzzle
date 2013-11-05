@@ -23,6 +23,18 @@ public class CircleProgressBarWidget extends Widget {
 		}
 	}
 
+	public void setLength(int l){
+		this.length = l;
+		circleTiles = new CircleTile[length];
+		for(int i = 0;i< length;i++){
+			float[] centerp = new float[3];
+			centerp[0] = tilesCenter[0]-2*tilesSize*((float)i);
+			centerp[1] = tilesCenter[1];
+			centerp[2] = 0.0f;
+			circleTiles[i] = new CircleTile(centerp, tilesSize);	
+		}
+	}
+	
 	public void setActiveCircle(int a){
 		for(int i = 0;i<length;i++ ){
 			if(i == a) {

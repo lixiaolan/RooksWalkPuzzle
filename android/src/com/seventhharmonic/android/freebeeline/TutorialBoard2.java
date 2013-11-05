@@ -22,7 +22,7 @@ class TutorialBoard2 extends Board {
 	float[] center = {.20f,-1.0f, 0.0f };
 	mCPB = new CircleProgressBarWidget(5, center, .05f);
 	mBanner = new Banner(.8f);
-	mBoardBg = new Background("boardbg", .75f);
+	mBoardBg = new Background("boardbg", 1.0f);
 	mBee = new Bee(this);
 	mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);
 	state = new ShowPath(tiles,true);

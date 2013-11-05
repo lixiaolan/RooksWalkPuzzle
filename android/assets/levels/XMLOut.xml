@@ -1,6 +1,6 @@
-<levelpack>
+<levelpack style="default">
 	<title>Beatrice the bee</title>
-	<chapter title="Chapter One: A lone bee encounters a dreary, lifeless world." before_image="Locked" after_image="BookOneChOne">
+	<chapter title="Chapter One: A lone bee encounters a dreary, lifeless world." before_image="Locked" after_image="BookOneChOne" >
 		<width>4</width>
 		<height>4</height>
 		<puzzle id="0">

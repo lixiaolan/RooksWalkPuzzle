@@ -19,6 +19,23 @@ public class LATools {
     }
     */
 	
+/***********************************************************************/
+	public static void vDiff(float[] left, float[] right, float[] ans) {
+		ans[0] = left[0] - right[0];
+		ans[1] = left[1] - right[1];
+		}
+	    
+	    public static void vSum(float[] left, float[] right, float[] ans) {
+		for (int i = 0; i < Math.min(left.length,right.length); i++)
+		    ans[i] = left[i] + right[i];
+	    }
+	    
+	    public static void vSProd(float scalar, float[] vec, float[] ans) {
+		for (int i = 0; i < vec.length; i++)
+		    ans[i] = vec[i]*scalar;
+	    }
+	    
+/***********************************************************************/	
 	
     public static float[] vDiff(float[] left, float[] right) {
 	float[] ret = new float[2];

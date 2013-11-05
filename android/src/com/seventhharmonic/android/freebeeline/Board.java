@@ -26,10 +26,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	private boolean toggleError = true;
 	protected float flowerSize = .15f;
 	protected float tileSize = .11f;    
-	private long lastTouchTime;
-	private float[] lastTouchPos = new float[2];
 	ErrorLog mErrorLog;
-	Border mBorder = new Border(boardWidth, boardHeight);
 	Background mCheck;
 	public TextWidget mGameBanner;
 	private Background mBoardBg;
@@ -40,7 +37,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 	public Board(Model mModel) {
 	    buildEmptyBoard();
-	    state = new BoardMainMenu(tiles);
+	    state = null;//new BoardMainMenu(tiles);
 	    mGameBanner = new TextWidget(0.0f, 0.0f, .9f, .4f, TextureManager.CLEAR);
 	    mBoardBg = new Background("boardbg", 1.0f);
 	    mErrorLog = new ErrorLog(this);
@@ -210,8 +207,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 	public int touched(float[] pt) {
 	    
-		lastTouchPos = pt;
-		lastTouchTime = System.currentTimeMillis();
 		for (int i = 0; i < tiles.length; i++) {
 		    if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
 			return i;
@@ -231,7 +226,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	public void setState(GameState s){
 		mBee.setState(s);
 		switch(s) {
-		case MAIN_MENU_OPENING: state = new BoardMainMenu(tiles); break;
 		case GAME_OPENING: state  = new BoardPlay(tiles); break;
 		case GAME_MENU_END: state = new BoardGameEnd(tiles); break;
 		default: break;
@@ -624,79 +618,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 
 
-	class BoardMainMenu extends State<BoardTile> {
-
-		long refTime;
-
-		float[] centers;
-
-		public BoardMainMenu(BoardTile[] tiles) {
-			centers = new float[2*tiles.length];
-			for (int i = 0; i < tiles.length; i++) {
-				double r = Math.random();
-				tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
-				r = Math.random();
-				tiles[i].velocity[1] = (float)(-1*r+(1-r)*1);
-
-			}
-			float[] pivot = {0.0f,0.0f,1.0f};
-			//Set textures	
-			for (int i = 0;i<tiles.length;i++){
-				tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
-				tiles[i].setColor("transparent");
-				tiles[i].setSize(flowerSize);
-				tiles[i].setAngle(0f);
-				tiles[i].setPivot(pivot);
-			}
-
-			for (int i = 0; i<tiles.length; i++ ) {
-				float ii = (float)i;
-				float r = (ii + 10*(1-1/(ii+1)))/25;
-				float t = ii/1.5f; 
-				centers[2*i] = -.75f + r*((float)Math.sin(t));
-				centers[2*i+1] = r*((float)Math.cos(t));
-			}
-		}
-
-		public void enterAnimation(BoardTile[] tiles) {
-			period = DrawPeriod.DURING;
-			refTime = System.currentTimeMillis();
-		}
-
-		public void duringAnimation(BoardTile[] tiles) {
-			long time = System.currentTimeMillis()-refTime;
-			float dt = Math.min(((float)time)/1000.0f, 33.3f);
-			refTime = System.currentTimeMillis();
-			float[] force = new float[2];
-			for(int i=0;i<tiles.length;i++){
-				force = getForce(tiles, i);
-				tiles[i].setCenter2D(LATools.vSum(tiles[i].getCenter2D(), LATools.vSProd(dt, tiles[i].velocity)));
-				tiles[i].velocity = LATools.vSum(tiles[i].velocity, LATools.vSProd(dt, force));
-			}
-		}
-
-		public float[] getForce(BoardTile[] tiles, int i) {
-			float[] force = {0.0f, 0.0f};
-			float[] temp = new float[2];
-			float[] mid = {centers[2*i],centers[2*i+1],0.0f};
-			force = LATools.vSProd(-2.0f,LATools.vDiff(tiles[i].center, mid)); 
-			force = LATools.vSum(force, LATools.vSProd(-1.2f,tiles[i].velocity));
-			//Compute wave of forces due to touch
-			float time = 2*(System.currentTimeMillis()-lastTouchTime)/1000f;
-			temp = LATools.vDiff(tiles[i].center, lastTouchPos);
-			float sTemp = LATools.abs(temp);
-			if (sTemp<time && sTemp > time - .2f && sTemp > .00001f)
-				force = LATools.vSum(force, LATools.vSProd(5f/((float)Math.pow(sTemp,1)), temp));
-			return force;
-		}
-
-		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			super.draw(tiles, r);
-			mBee.draw(r);
-		}
-
-
-	}
 	//This state defines board behavior during game play.
 	class BoardPlay extends State<BoardTile> {
 
@@ -1096,7 +1017,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mBoardBg.draw(r);
 			super.draw(tiles, r);
 			mBee.draw(r);
-			mDialog.draw(r);
+			//mDialog.draw(r);
 		}
 	}        
 }

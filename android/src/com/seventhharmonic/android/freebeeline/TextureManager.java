@@ -31,10 +31,6 @@ public class TextureManager {
     public static final String RESUME = "resume";
     public static final String OPTIONS = "options";
     public static final String BACK = "back";
-    public static final String SHORT = "short";
-    public static final String MEDIUM = "medium";
-    public static final String LONGER = "longer";
-    public static final String LONGEST = "longest";
     public static final String HINTS_ON = "hints on";
     public static final String HINTS_OFF = "hints off";
     public static final String LINES_ON = "lines on";
@@ -62,6 +58,7 @@ public class TextureManager {
     public static final String GOOD_JOB = "Good job! You helped Beatrice collect all the flowers in this puzzle!";
     public static final String TRY_AGAIN = "Keep trying...";
     public static final String TRY_HARDER = "Try a bit harder next time!";
+    public static final String LP1 = "Level Pack 1";
     public static final String STORY = "story";
     public static final String STATS = "Stats";
     public static final String FLOWERSVISITED = "flowersvisited";
@@ -93,14 +90,6 @@ public class TextureManager {
     public static final String VERSION = "alpha-0.2";
     public static final String BOX = "box";
     public static final String ERASER = "eraser";
-    public static final String BORDERE = "border_e";
-    public static final String BORDERW = "border_w";
-    public static final String BORDERN = "border_n";
-    public static final String BORDERS = "border_s";
-    public static final String BORDERNE = "border_ne";
-    public static final String BORDERNW = "border_nw";
-    public static final String BORDERSE = "border_se";
-    public static final String BORDERSW = "border_sw";
     public static final String TABLE_OF_CONTENTS = "Table of Contents";
     public static final String BOARD5 = "board5";
     public static final String QUESTIONMARK = "?";
@@ -235,15 +224,12 @@ public class TextureManager {
 	    buildTextures(RESUME, xpos, ypos, RESUME, fontSize);
 	    buildTextures(OPTIONS, xpos, ypos, OPTIONS, fontSize);
 	    buildTextures(BACK, xpos, ypos, BACK, fontSize);
-	    buildTextures(SHORT, xpos, ypos, SHORT, fontSize);
-	    buildTextures(MEDIUM, xpos, ypos, MEDIUM, fontSize);
-	    buildTextures(LONGER, xpos, ypos, LONGER, fontSize);
-	    buildTextures(LONGEST, xpos, ypos, LONGEST, fontSize);
 	    buildTextures(HINTS_ON, xpos, ypos, HINTS_ON, fontSize);
 	    buildTextures(HINTS_OFF, xpos, ypos, HINTS_OFF, fontSize);
 	    buildTextures(LINES_ON, xpos, ypos, LINES_ON, fontSize);
 	    buildTextures(LINES_OFF, xpos, ypos, LINES_OFF, fontSize);
 	    buildTextures(TABLE_OF_CONTENTS, xpos, ypos, TABLE_OF_CONTENTS, fontSize);
+	    buildTextures(LP1, xpos, ypos, LP1, fontSize);
 	    
 	    buildTextures(RULE_CHECK_ON, xpos, ypos, RULE_CHECK_ON, fontSize);
 	    buildTextures(RULE_CHECK_OFF, xpos, ypos, RULE_CHECK_OFF, fontSize);
@@ -256,10 +242,6 @@ public class TextureManager {
 	    buildTextures(TUTORIAL, xpos, ypos, TUTORIAL, fontSize);
 	    buildTextures(NEXT, xpos, ypos, NEXT, fontSize);
 	    buildTextures(PREVIOUS, xpos, ypos, PREVIOUS, fontSize);
-	    buildTextures(SHOW_SOLUTION, xpos, ypos, SHOW_SOLUTION, fontSize);
-	    buildTextures(STATS, xpos, ypos, STATS, fontSize);
-	    buildLongTextures(TOTALGAMES, 0, 30, TOTALGAMES, 30, 256);
-
 	}
 	
 	public void buildGameBanners() {
@@ -368,11 +350,11 @@ public class TextureManager {
 		
 		if (textureHandle[0] != 0)
 		{
-			final BitmapFactory.Options options = new BitmapFactory.Options();
+			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inScaled = false;	// No pre-scaling
 			//options.inPreferredConfig = Bitmap.Config.RGB_565;
 			// Read in the resource
-			final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
+			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
 						
 			// Bind to the texture in OpenGL
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
@@ -385,7 +367,9 @@ public class TextureManager {
 			GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
 			// Recycle the bitmap, since its data has been loaded into OpenGL.
-			bitmap.recycle();						
+			bitmap.recycle();		
+			bitmap = null;
+			System.gc();
 		}
 		
 		if (textureHandle[0] == 0)
@@ -405,6 +389,8 @@ public class TextureManager {
 		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, bmp,0); 
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
 		bmp.recycle();
+		bmp = null;
+		System.gc();
 		return texture[0];
 	}
 	

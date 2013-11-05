@@ -16,6 +16,11 @@ public class LevelPack {
 	public LevelPack(){
 	}
 	
+	public String getStyle(){
+		//TODO: Make this read the style from the XML!!!!
+		return "default";
+	}
+	
 	public String getTitle() {
 		return title;
 	}

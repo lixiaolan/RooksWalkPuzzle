@@ -14,7 +14,7 @@ public class LevelPackWidget extends WidgetLayout{
     ImageWidget mImage;
     String TAG = "LevelPackWidget";
 
-    public LevelPackWidget(String text, String image, LevelPackProvider LPP){
+    public LevelPackWidget(String text, String image){
 
 	float height = Math.abs(GlobalApplication.getGeometry().getGeometry()[1]);
 	
