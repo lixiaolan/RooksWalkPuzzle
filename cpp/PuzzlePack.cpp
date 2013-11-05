@@ -74,14 +74,17 @@ int main(int argc, char *argv[]){
   }
 
   else if (str == "printXML") {
+
     vector<string> files;
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterOne.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterTwo.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterThree.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterFour.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterFive.txt");
+    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterOne.txt");
+    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterTwo.txt");
+    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterThree.txt");
+    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterFour.txt");
+    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterFive.txt");
 
     string bookTitle = "Beatrice the bee";
+
+    string bookStyle = "default";
     
     vector<string> chapterTitles;
     chapterTitles.push_back("Chapter One: A lone bee encounters a dreary, lifeless world.");
@@ -106,7 +109,7 @@ int main(int argc, char *argv[]){
 
     int startIndex = 0;
 
-    PuzzleBook PB = PuzzleBook(files, bookTitle, chapterTitles, beforeImages, afterImages, startIndex);
+    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, beforeImages, afterImages, startIndex);
     
     ofs.open("XMLOut.xml");
     PB.printXML(ofs);
