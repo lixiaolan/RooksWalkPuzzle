@@ -39,6 +39,7 @@ public class Chapter {
 		// 	if(!p.isCompleted())
 		// 		return false;
 		// }
+		completed = true;
 		return true;
 	}
 	
@@ -110,6 +111,8 @@ public class Chapter {
 		}
 		ch.setHeight(height);
 		ch.setWidth(width);
+		ch.setAfterImage(afterImage);
+		ch.setBeforeImage(beforeImage);
 		return ch;
 	}
 
@@ -124,8 +127,8 @@ public class Chapter {
 	
 	public String getImage() {
 		if(completed)
-			return getBeforeImage();
-		return getAfterImage();
+			return getAfterImage();
+		return getBeforeImage();
 	}
 	
 	

@@ -433,10 +433,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			mTextures[0] = TM.library.get(textures[0]);
 			mTextures[1] = TM.library.get(textures[1]);	
 		} catch (NullPointerException e){
-			Log.e(TAG, "Didn't find a texture or color", e);
-			Log.e(TAG, textures[0]);
-			Log.e(TAG, textures[1]);
-			Log.e(TAG, color);
+			//Log.e(TAG, "Didn't find a texture or color", e);
+			if(textures[0] == null){
+				Log.d(TAG, "found a null thing");
+			}
+			//Log.d(TAG, textures[0]);
+			//Log.d(TAG, textures[1]);
+			//Log.d(TAG, color);
 		}
 		mColor = colorMap.get(color);
 		//Apply MTextures. Need this to make transparent colors stay transparent
@@ -638,13 +641,21 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		} else if (mode.equals(FIXEDWIDTH)){
 			
 			float r = .5f*height/width;
-			tempTextureCoordinateData[0] = .5f; tempTextureCoordinateData[1] = 1-r;
+			
+			/*tempTextureCoordinateData[0] = .5f; tempTextureCoordinateData[1] = 1-r;
 			tempTextureCoordinateData[2] = .5f; tempTextureCoordinateData[3] = 1;
 			tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 1-r;
 			tempTextureCoordinateData[6] = .5f; tempTextureCoordinateData[7] = 1;
 			tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
 			tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 1-r;
+			*/
 			
+			tempTextureCoordinateData[0] = 1.0f; tempTextureCoordinateData[1] = 1-r;
+			tempTextureCoordinateData[2] = 1.0f; tempTextureCoordinateData[3] = 1;
+			tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 1-r;
+			tempTextureCoordinateData[6] = 1.0f; tempTextureCoordinateData[7] = 1;
+			tempTextureCoordinateData[8] = 0.0f; tempTextureCoordinateData[9] = 1.0f;
+			tempTextureCoordinateData[10] = 0.0f; tempTextureCoordinateData[11] = 1-r;
 			/*	float[] tempTextureCoordinateData =
 					{	//Somehow 1 is the bottom and 0 is the top?
 						

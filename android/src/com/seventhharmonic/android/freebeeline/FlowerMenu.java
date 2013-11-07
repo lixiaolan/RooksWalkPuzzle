@@ -77,7 +77,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     public void setGlobalState(GameState s) {
 	switch(s) {
 	case FLOWER_MENU:
-	    setState(1);
+	    setState(0);
 	    break;
 	default:
 	    setState(-1);
@@ -157,7 +157,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    m.setDrawProgressBar(true);
 	    for(int i =0;i<LPP.getNumberOfLevelPacks();i++){
-		m.addWidget(new LevelPackWidget(TextureManager.CLEAR,"forest.png"));
+		m.addWidget(new LevelPackWidget(TextureManager.CLEAR,"book1chapter0"));
 		
 		//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
 	    }
