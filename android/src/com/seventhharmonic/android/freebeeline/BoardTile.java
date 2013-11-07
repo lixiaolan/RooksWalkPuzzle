@@ -22,7 +22,7 @@ class BoardTile extends Tile {
     private Flipper flipper;
     private AngryGlow angryGlow;
     public boolean isHint = false;
-    
+    public boolean alpha = true;
     
     //Define an inner class to take care of flip animations
     class Flipper {
@@ -81,6 +81,7 @@ class BoardTile extends Tile {
 		}
 	    }
 	}
+
 	
 	public void stop() {
 	    if (active == true) {
@@ -163,6 +164,10 @@ class BoardTile extends Tile {
 	    return true;
 	else
 	    return false;
+    }
+
+    public void setAlpha(boolean alpha){
+    	this.alpha = alpha;
     }
     
     public boolean isHint(){
@@ -268,7 +273,7 @@ class BoardTile extends Tile {
     public void draw(MyGLRenderer r) {
     	flipper.animate();
 		angryGlow.animate();
-		r.drawTile(center, size, textures, color, angle, pivot,true);    
+		r.drawSheetTile(center, size, textures, color, angle, pivot, alpha);    
     }    
     
     public boolean checkArrows() {

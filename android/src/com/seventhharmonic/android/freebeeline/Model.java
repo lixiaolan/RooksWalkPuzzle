@@ -63,7 +63,7 @@ class Model {
     }
     
     public void createPuzzleFromPuzzle(Puzzle p){
-	mBoard.createPuzzleFromPuzzle(p);	
+	mBoard.createPuzzleFromPuzzle(p);
 	final long id  = p.getId();		
     }
     
@@ -93,13 +93,18 @@ class Model {
     public void touched(float[] pt) {
 	switch(state.state){
 	case GAME_OPENING: 
+		mMenuManager.touchHandler(pt);
 	case GAME_MENU_END:
 	    //Internally close menu.    		
 	    mBoard.touchHandler(pt);
+	    
 	    break;
 	case MAIN_MENU_OPENING:  
 	    mMenuManager.touchHandler(pt);
+	    //TODO: This may not exist yet but still be touched. We should be careful about this.
+	    if(mFlowerMenu != null){
 	    mFlowerMenu.touchHandler(pt);
+	    }
 	    break;
 	case FLOWER_MENU:
 	    mFlowerMenu.touchHandler(pt);

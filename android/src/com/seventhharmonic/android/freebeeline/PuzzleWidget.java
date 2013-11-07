@@ -11,7 +11,7 @@ public class PuzzleWidget extends Widget{
     
     public PuzzleWidget(float centerX, float centerY , float width, float height, Puzzle p){
 	float[] center = {centerX, centerY, 0.0f}; 
-	mFlower = new TextTile(center, width, height, p.getImage());
+	mFlower = new TextTile(center, width, height, p.getFlower());
 	mFlower.setPivot(new float[] {0.0f, 0.0f, 1.0f});
 	
 	mBox = new TextTile(center, width, height, TextureManager.BOX);

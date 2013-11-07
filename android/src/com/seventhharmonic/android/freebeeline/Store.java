@@ -227,7 +227,7 @@ public class Store {
 	 * Code run when you decide to buy infinity hints.
 	 */
 
-	String sku = "test1";
+	String sku = "android.test.purchased";
 
 	public boolean hasUnlimitedHints(){
 

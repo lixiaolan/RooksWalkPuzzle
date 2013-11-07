@@ -15,7 +15,6 @@ public class BaseParser {
             throw new RuntimeException(e);
         }
     }
-
     protected InputStream getInputStream(String file) {
         try{	
         	Context c = GlobalApplication.getContext();

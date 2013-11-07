@@ -17,16 +17,16 @@ public class ChapterWidget extends WidgetLayout{
 	
 	public ChapterWidget(Chapter ch){
 		float height = GlobalApplication.getGeometry().getGeometry()[1];
-		/*
+		/*TODO:
 		 *In the future, forest should be replaced by ch.getImage.
 		 *This sets the background image. 
 		 */
-		mImage = new ImageWidget(0,0,.8f, .8f*height, "forest.png");
+		mImage = new ImageWidget(0,0,.8f, .8f*height, ch.getImage());
 		mImage.setRelativeCenter(0,0);
 		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
 		widgetList.add(mImage);
 		
-		/*
+		/*TODO: Place some kind of text here.
 		 * Set the text at the top of the screen.
 		 */
 		mText = new TextWidget(0, 0,1,.5f,ch.getTitle());
@@ -34,13 +34,14 @@ public class ChapterWidget extends WidgetLayout{
 		setCenter(0,0);
 		setWidth(1);
 		setHeight(height);
+		
 		//widgetList.add(mText);
 		/*
 		 * If the chapter is completed, a spinning flower will appear at the lower left.
 		 * TODO: Set Event handler of this flower.
 		 */
 		if(ch.getCompleted()){
-			finishedFlower = new ImageWidget(0,0,.125f, .125f, ch.getPuzzle(0).getImage());
+			finishedFlower = new ImageWidget(0,0,.125f, .125f, ch.getPuzzle(0).getFlower());
 			finishedFlower.setColor("blue");
 			finishedFlower.setRelativeCenter(1-finishedFlower.getWidth(), -1*(height-finishedFlower.getHeight()));
 			widgetList.add(finishedFlower);
