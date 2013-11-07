@@ -101,7 +101,13 @@ class MenuManager {
 		mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures10); 
 		mCallback = new Callback_STORY();
 		break;
+	    case FLOWER_MENU:
+		String[] texturesFM = {TextureManager.BACK};
+		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesFM); 
+		mCallback = new Callback_FLOWER_MENU();
+		break;
 	    }
+
 	}
     
     public int touched(float[] pt) {
@@ -183,7 +189,7 @@ class MenuManager {
 		updateState();
 		break;
 	    case 3:
-		mModel.setState(GameState.TABLE_OF_CONTENTS);
+		mModel.setState(GameState.FLOWER_MENU);
 		updateState();
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -210,7 +216,7 @@ class MenuManager {
 		updateState();
 		break;
 	    case 2:
-		mModel.setState(GameState.TABLE_OF_CONTENTS);
+		mModel.setState(GameState.FLOWER_MENU);
 		updateState();
 		break;
 		
@@ -220,8 +226,7 @@ class MenuManager {
 	    }
 	}
     }
-    
-    
+        
     class Callback_MAIN_MENU_OPTIONS extends Callback {
 	
 	@Override
@@ -288,13 +293,26 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 	    case 1:
-		state.state = GameState.MAIN_MENU_OPENING;
 		mModel.setState(GameState.GAME_OPENING);
 		updateState();
 		break;
 	    }
 	}
     }
+
+    class Callback_FLOWER_MENU extends Callback {
+	
+	@Override
+	public void callback(int val) {
+	    switch(val) {
+	    case 1:
+		mModel.setState(GameState.MAIN_MENU_OPENING);
+		updateState();
+		break;
+	    }
+	}
+    }
+
     
     class Callback_TABLE_OF_CONTENTS extends Callback {
 	
@@ -304,17 +322,20 @@ class MenuManager {
 	    case 1:
 		System.out.println("In Menu");
 		System.out.println(mModel.toc.mContents);
-		if(mModel.toc.mContents.equals(TableOfContents.Contents.LEVELPACKDISPLAY)){
-		    /*Comment: TOC already has a reference to Model 
-		     * - it could just do these state changes itself
-		     * That would be less awkward then this shit.
-		     */
-		    mModel.setState(GameState.MAIN_MENU_OPENING);
-		    updateState();
-		}
-		else {	
-		    mModel.toc.setState();
-		}
+		mModel.setState(GameState.FLOWER_MENU);
+		updateState();
+		
+		// if(mModel.toc.mContents.equals(TableOfContents.Contents.LEVELPACKDISPLAY)){
+		//     /*Comment: TOC already has a reference to Model 
+		//      * - it could just do these state changes itself
+		//      * That would be less awkward then this shit.
+		//      */
+		//     mModel.setState(GameState.MAIN_MENU_OPENING);
+		//     updateState();
+		// }
+		// else {	
+		//     mModel.toc.setState();
+		// }
 		break;
 	    }
 	}

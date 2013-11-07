@@ -29,7 +29,7 @@ class Model {
     private DataServer mDataServer;
     public boolean createTextures = false;
     public MediaPlayer mediaPlayer;    
-    public FlowerMenu mFlowerMenu = new FlowerMenu(this);
+    public FlowerMenu mFlowerMenu;
     
     Banner mVersionBanner;
     Store mStore;
@@ -93,14 +93,23 @@ class Model {
     public void touched(float[] pt) {
 	switch(state.state){
 	case GAME_OPENING: 
+		mMenuManager.touchHandler(pt);
 	case GAME_MENU_END:
 	    //Internally close menu.    		
 	    mBoard.touchHandler(pt);
+	    
 	    break;
 	case MAIN_MENU_OPENING:  
+	    mMenuManager.touchHandler(pt);
+	    //TODO: This may not exist yet but still be touched. We should be careful about this.
+	    if(mFlowerMenu != null){
+	    mFlowerMenu.touchHandler(pt);
+	    }
+	    break;
 	case FLOWER_MENU:
-		mFlowerMenu.touchHandler(pt);
-		break;
+	    mFlowerMenu.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
+	    break;
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
@@ -113,31 +122,37 @@ class Model {
 	    if(mBoard.beeTouched(pt) == 1){
 		vibe.vibrate(100);
 	    }
+	    //The order of these is important:
+	    mFlowerMenu.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
 	    break;
 	case TUTORIAL:
 	    //Game Menu
 	    mTutorialBoard.touchHandler(pt);
 	    break;
 	case STATS:
+	    mMenuManager.touchHandler(pt);
 	    break;
 	case STORY:
 	    mStoryBoard.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
 	    break;
 	case TABLE_OF_CONTENTS:
 	    toc.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
 	    break;
-	    
 	default: break;
 	}
-	mMenuManager.touchHandler(pt);
+
     }
     
     public void swiped(float[] pt, String direction) {
 	switch(state.state){
 	case MAIN_MENU_OPENING:
+	    break;
 	case FLOWER_MENU:
-		mFlowerMenu.swipeHandler(direction);
-		break;	
+	    mFlowerMenu.swipeHandler(direction);
+	    break;	
 	case TABLE_OF_CONTENTS:
 	    toc.swipeHandler(direction);
 	    break;
@@ -170,13 +185,14 @@ class Model {
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-		mFlowerMenu.draw(r);
-		mTitle.draw(r);
+	    mFlowerMenu.draw(r);
+	    mTitle.draw(r);
 	    mVersionBanner.draw(r);
 	    mMenuManager.draw(r);
 	    break;
 	case FLOWER_MENU:	
-		mFlowerMenu.draw(r);
+	    mFlowerMenu.draw(r);
+	    mMenuManager.draw(r);
 	    break;
 	case TABLE_OF_CONTENTS:
 	    toc.draw(r);
@@ -199,14 +215,16 @@ class Model {
 	Log.d("Model","global");
 	GlobalApplication.getGeometry().setGeometry(g[0], g[1]);
 	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
+	//TODO: This is a bit of hack to make sure these classes are not initialized too early.
+	mFlowerMenu = new FlowerMenu(this);
 	toc = new TableOfContents(this);
     }
     
     public void setState(GameState s){
-	
 	mBoard.setState(s);
-	mMenuManager.updateState();
 	state.state = s;
+	mMenuManager.updateState();
+	mFlowerMenu.setGlobalState(s);
     }
     
     public void setDataServer(DataServer d){

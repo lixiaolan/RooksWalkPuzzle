@@ -13,7 +13,26 @@ public class Chapter {
 	int height = 0;
 	int width = 0;
 	boolean completed = true;
-		
+	String beforeImage;
+	String afterImage;
+	
+
+	protected String getBeforeImage() {
+		return beforeImage;
+	}
+
+	protected void setBeforeImage(String beforeImage) {
+		this.beforeImage = beforeImage;
+	}
+	
+	protected String getAfterImage() {
+		return afterImage;
+	}
+
+	protected void setAfterImage(String afterImage) {
+		this.afterImage = afterImage;
+	}
+
 	public boolean getCompleted(){
 		//TODO: Put this code back!
 		// for(Puzzle p: puzzles){
@@ -104,7 +123,9 @@ public class Chapter {
 	}
 	
 	public String getImage() {
-		return TextureManager.getFlowerTexture();
+		if(completed)
+			return getBeforeImage();
+		return getAfterImage();
 	}
 	
 	

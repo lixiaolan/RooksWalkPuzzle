@@ -638,7 +638,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		} else if (mode.equals(FIXEDWIDTH)){
 			
 			float r = .5f*height/width;
-			//Log.d(TAG, Float.toString(r));
 			tempTextureCoordinateData[0] = .5f; tempTextureCoordinateData[1] = 1-r;
 			tempTextureCoordinateData[2] = .5f; tempTextureCoordinateData[3] = 1;
 			tempTextureCoordinateData[4] = 0.0f; tempTextureCoordinateData[5] = 1-r;

@@ -14,7 +14,6 @@ import java.util.Random;
 
 import com.seventhharmonic.android.freebeeline.graphics.TextureObject;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -31,7 +30,6 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.os.Environment;
 import android.util.Log;
-
 
 public class TextureManager {
 	static final String TAG = "TextureManager";
@@ -180,7 +178,7 @@ public class TextureManager {
 			for(String s: imageList){
 				InputStream is = context.getAssets().open(BASE+"/"+s);
 				Bitmap b = BitmapFactory.decodeStream(is); 
-				library.put(s,textureFromBitmap(b));
+				library.put(s.substring(0, s.length()-4),textureFromBitmap(b));
 			}
 		}
 		catch (IOException ex) {

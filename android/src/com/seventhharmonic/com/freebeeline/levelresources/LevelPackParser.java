@@ -52,9 +52,11 @@ public class LevelPackParser extends BaseParser {
 		    ch.setTitle(a.getValue("title"));
 		    Log.d(TAG,"found title");
 		    Log.d(TAG, a.getValue("title"));
-		    
+		    ch.setBeforeImage(a.getValue("before_image"));
+		    ch.setAfterImage(a.getValue("after_image"));
+
     		}
-	    });
+    	});
     	
     	
     	chapter.getChild(HEIGHT).setEndTextElementListener(new EndTextElementListener(){
@@ -76,6 +78,8 @@ public class LevelPackParser extends BaseParser {
     		public void start(Attributes a){
     			puzz.reset();
     			puzz.setId(Long.parseLong(a.getValue(ID)));
+    			puzz.setBeforeFlower(a.getValue("before_flower"));
+    			puzz.setAfterFlower(a.getValue("after_flower"));
     		}
     	});
     	

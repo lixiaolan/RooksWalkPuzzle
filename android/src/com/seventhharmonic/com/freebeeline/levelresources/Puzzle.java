@@ -12,7 +12,6 @@ import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
 
 public class Puzzle {
 	public String board;
-	String image = TextureManager.getFlowerTexture();
 	public String path;
 	int width;
 	int height;
@@ -21,6 +20,33 @@ public class Puzzle {
 	boolean completed = false;
 	long id;
 	Chapter ch;
+	String beforeFlower;
+	String afterFlower;
+	
+
+	protected String getBeforeFlower() {
+		return beforeFlower;
+	}
+
+	public void setBeforeFlower(String beforeFlower) {
+		this.beforeFlower = beforeFlower;
+	}
+
+	private String getAfterFlower() {
+		return afterFlower;
+	}
+
+	protected void setAfterFlower(String afterFlower) {
+		this.afterFlower = afterFlower;
+	}
+
+	
+	public String getFlower(){
+		if(completed){
+			return getAfterFlower();
+		}
+		return getBeforeFlower();
+	}
 	
 	public long getId() {
 		return id;
@@ -102,7 +128,7 @@ public class Puzzle {
 		return sol;
 	}
 
-	
+/*	
 	public String getImage(){
 		if(completed)
 			return "check";
@@ -112,6 +138,7 @@ public class Puzzle {
 	public void setImage(String image){
 		this.image = image;
 	}
+*/	
 	
 	public void reset(){
 		hints = new ArrayList<Hint>();
@@ -132,13 +159,14 @@ public class Puzzle {
 	public Puzzle copy(){
 		Puzzle p = new Puzzle();
 		p.setBoard(board);
-		p.setImage(image);
 		p.hints = hints;
 		p.setWidth(width);
 		p.setHeight(height);
 		p.setPath(path);
 		p.setId(id);
 		p.setChapter(ch);
+		p.setBeforeFlower(beforeFlower);
+		p.setAfterFlower(afterFlower);
 		return p;
 	}
 	
