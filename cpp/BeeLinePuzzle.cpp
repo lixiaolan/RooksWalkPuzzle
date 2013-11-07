@@ -1012,7 +1012,7 @@ int BeeLinePuzzle::getLength() {
   return length-1;
 }
 
-void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, int *puzzleIndex) {
+void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower ,int *puzzleIndex) {
   
   xml_node<> *puzzle;
   xml_node<> *node;
@@ -1029,6 +1029,14 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, int *puzz
   puzzle->append_attribute(attr);
 
   *puzzleIndex += 1;
+
+  name = doc->allocate_string(beforeFlower.c_str());
+  attr = doc->allocate_attribute("before_flower", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(afterFlower.c_str());
+  attr = doc->allocate_attribute("after_flower", name);
+  puzzle->append_attribute(attr);
 
   name = doc->allocate_string(intTooString(height).c_str());
   node = doc->allocate_node(node_element, "height", name);

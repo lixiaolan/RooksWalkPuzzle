@@ -94,22 +94,37 @@ int main(int argc, char *argv[]){
     chapterTitles.push_back("Chapter Five: Wherein our magnanimous bee ponders the confines of her mortal shell");
     
     vector<string> beforeImages;
-    beforeImages.push_back("Locked");
-    beforeImages.push_back("Locked");
-    beforeImages.push_back("Locked");
-    beforeImages.push_back("Locked");
-    beforeImages.push_back("Locked");
+    beforeImages.push_back("locked");
+    beforeImages.push_back("locked");
+    beforeImages.push_back("locked");
+    beforeImages.push_back("locked");
+    beforeImages.push_back("locked");
 
     vector<string> afterImages;
-    afterImages.push_back("BookOneChOne");
-    afterImages.push_back("BookOneChTwo");
-    afterImages.push_back("BookOneChThree");
-    afterImages.push_back("BookOneChFour");
-    afterImages.push_back("BookOneChFive");
+    afterImages.push_back("book1chapter1");
+    afterImages.push_back("book1chapter2");
+    afterImages.push_back("book1chapter3");
+    afterImages.push_back("book1chapter4");
+    afterImages.push_back("book1chapter5");
+
+    vector<string> beforeFlower;
+    beforeFlower.push_back("flower1");
+    beforeFlower.push_back("flower2");
+    beforeFlower.push_back("flower3");
+    beforeFlower.push_back("flower4");
+    beforeFlower.push_back("flower5");
+
+    vector<string> afterFlower;
+    afterFlower.push_back("flower1color");
+    afterFlower.push_back("flower2color");
+    afterFlower.push_back("flower3color");
+    afterFlower.push_back("flower4color");
+    afterFlower.push_back("flower5color");
+
 
     int startIndex = 0;
 
-    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, beforeImages, afterImages, startIndex);
+    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, beforeImages, afterImages, beforeFlower, afterFlower, startIndex);
     
     ofs.open("XMLOut.xml");
     PB.printXML(ofs);
