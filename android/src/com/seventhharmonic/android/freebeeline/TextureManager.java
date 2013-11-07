@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -20,11 +19,10 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
 
-
 public class TextureManager {
     
     static final int CHAR_PER_LINE = 30;
-	public static boolean texturesLoaded = false;
+    public static boolean texturesLoaded = false;
     public static final String START = "start";
     public static final String PLAY = "play";
     public static final String NEW = "new";

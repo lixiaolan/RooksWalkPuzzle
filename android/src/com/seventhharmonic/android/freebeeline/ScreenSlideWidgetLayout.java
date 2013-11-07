@@ -158,6 +158,10 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 	 */
 	public void setActiveWidget(int newActiveWidget){
 		activeWidget = newActiveWidget;
+		if (mCPW == null) {
+		    System.out.println("mCPW is null");
+		}
+
 		mCPW.setActiveCircle(activeWidget);
 		for(int i=0; i<widgetList.size();i++){
 			float centerX = widgetList.get(i).getCenterX();
