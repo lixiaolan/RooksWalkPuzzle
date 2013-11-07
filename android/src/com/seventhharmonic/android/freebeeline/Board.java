@@ -37,7 +37,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 	public Board(Model mModel) {
 	    buildEmptyBoard();
-	    state = null;//new BoardMainMenu(tiles);
+	    state = null;//new BoardPlay(tiles);
 	    mGameBanner = new TextWidget(0.0f, 0.0f, .9f, .4f, TextureManager.CLEAR);
 	    mBoardBg = new Background("boardbg", 1.0f);
 	    mErrorLog = new ErrorLog(this);
@@ -758,6 +758,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 						tiles[i].setHint();
 					else
 						tiles[i].nativeColor = "transparent";
+					tiles[i].setAlpha(true);
 				}
 
 				if (toggleLines) {
@@ -969,6 +970,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				tiles[i].setColor("transparent");
 				refTime[i] = System.currentTimeMillis();
 				tiles[i].setPivot(tiles[i].getCenter());
+				tiles[i].setAlpha(true);
 			}
 			if (toggleLines) {
 				drawLines();

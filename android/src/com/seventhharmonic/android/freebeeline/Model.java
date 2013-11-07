@@ -63,7 +63,7 @@ class Model {
     }
     
     public void createPuzzleFromPuzzle(Puzzle p){
-	mBoard.createPuzzleFromPuzzle(p);	
+	mBoard.createPuzzleFromPuzzle(p);
 	final long id  = p.getId();		
     }
     
@@ -203,9 +203,10 @@ class Model {
     }
     
     public void setState(GameState s){
-	state.state = s;
+	
 	mBoard.setState(s);
 	mMenuManager.updateState();
+	state.state = s;
     }
     
     public void setDataServer(DataServer d){
