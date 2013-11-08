@@ -94,7 +94,9 @@ public class TextureManager {
 	public static final String TABLE_OF_CONTENTS = "Table of Contents";
 	public static final String BOARD5 = "board5";
 	public static final String QUESTIONMARK = "?";
-
+	public static final String IMAGEBORDER = "imageborder";
+	
+	
 	Map <String, Integer> library = new HashMap<String, Integer>();
 	Map <String, TextureObject> sheetLibrary = new HashMap<String, TextureObject>();
 	Typeface tf;
@@ -109,10 +111,11 @@ public class TextureManager {
 
 	public void buildTextures() {
 
+			
 		buildTextures(context, R.drawable.menu_circle_light_grey2, MENUCIRCLE);
-
+		buildTextures(context, R.drawable.borderimage,IMAGEBORDER);
 		buildTextures(context, R.drawable.flower1,"flower0");
-		buildTextures(context, R.drawable.flower2,"flower1");
+		/*buildTextures(context, R.drawable.flower2,"flower1");
 		buildTextures(context, R.drawable.flower3,"flower2");
 		buildTextures(context, R.drawable.flower4,"flower3");
 		buildTextures(context, R.drawable.flower5,"flower4");
@@ -120,9 +123,10 @@ public class TextureManager {
 		buildTextures(context, R.drawable.flower7,"flower6");
 		buildTextures(context, R.drawable.flower8,"flower7");
 		buildTextures(context, R.drawable.flower9,"flower8");
-		 
+		 */
 		buildTextures(context, R.drawable.board2, "boardbg");
 		buildTextures(context, R.drawable.check2, "check");
+		buildTextures(context, R.drawable.check2, "locked");
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
 		buildTextures(context, R.drawable.hand, HAND);
@@ -178,6 +182,7 @@ public class TextureManager {
 			for(String s: imageList){
 				InputStream is = context.getAssets().open(BASE+"/"+s);
 				Bitmap b = BitmapFactory.decodeStream(is); 
+				//Remove the .png
 				library.put(s.substring(0, s.length()-4),textureFromBitmap(b));
 			}
 		}
@@ -219,11 +224,10 @@ public class TextureManager {
 
 		buildTextures(RULE_CHECK_ON, xpos, ypos, RULE_CHECK_ON, fontSize);
 		buildTextures(RULE_CHECK_OFF, xpos, ypos, RULE_CHECK_OFF, fontSize);
-		buildTextures(CLEAR_BOARD, xpos, ypos, CLEAR_BOARD, fontSize);
-		buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
-		buildTextures(YES, xpos, ypos, YES, fontSize);
+//		buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
+//		buildTextures(YES, xpos, ypos, YES, fontSize);
 		buildTextures(STORY, xpos, ypos, STORY, fontSize);
-		buildTextures(NO, xpos, ypos, NO, fontSize);
+//		buildTextures(NO, xpos, ypos, NO, fontSize);
 		//buildTextures(SHARE, xpos, ypos, R.drawable.share, fontSize);
 		buildTextures(TUTORIAL, xpos, ypos, TUTORIAL, fontSize);
 		buildTextures(NEXT, xpos, ypos, NEXT, fontSize);
@@ -255,11 +259,10 @@ public class TextureManager {
 
 		buildLongTextures(TRY_AGAIN, 0, fontHeight, TRY_AGAIN, fontWidth, bannerSize);
 		buildLongTextures(GOOD_JOB, 0, fontHeight, GOOD_JOB, fontWidth, bannerSize);
-		buildLongTextures(TURNINGRULE, 0, fontHeight, TURNINGRULE, fontWidth, bannerSize);
 		buildLongTextures(MATCHINGNUMBERRULE, 0, fontHeight, MATCHINGNUMBERRULE, fontWidth, bannerSize);
 		buildLongTextures(PASSTHROUGHRULE, 0, fontHeight, PASSTHROUGHRULE, fontWidth, bannerSize);
 		buildLongTextures(OFFBOARD, 0, fontHeight, OFFBOARD, fontWidth, bannerSize);
-		buildLongTextures(VERSION, 0, fontHeight, VERSION, fontWidth, bannerSize);
+		buildLongTextures(VERSION, 0, fontHeight, VERSION, fontWidth, 128);
 		buildLongTextures(PUZZLESLEFT, 0, fontHeight, PUZZLESLEFT, fontWidth, bannerSize);
 		for(int i = 0;i< 17;i++){
 			buildLongTextures(PUZZLESLEFT+Integer.toString(i), 0, fontHeight, PUZZLESLEFT+Integer.toString(i), fontWidth, 128);

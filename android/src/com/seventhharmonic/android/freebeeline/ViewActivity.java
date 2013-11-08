@@ -118,8 +118,8 @@ public class ViewActivity extends Activity {
 		//TODO: Loading puzzles with their completion value. This sucks balls. Do this elsewhere.
 		LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
 		LevelPack mLP = mLPP.getLevelPack(0);
-		Log.d(TAG, mLP.getTitle());
-		Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
+	//	Log.d(TAG, mLP.getTitle());
+	//	Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
 		SQLPuzzle q;
 		for(Chapter c: mLP.getAllChapters()){
 			for(Puzzle p: c.getAllPuzzles()){

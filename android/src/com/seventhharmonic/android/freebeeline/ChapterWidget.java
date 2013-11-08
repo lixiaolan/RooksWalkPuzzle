@@ -16,13 +16,15 @@ public class ChapterWidget extends WidgetLayout{
 	ImageWidget finishedFlower;
 	
 	public ChapterWidget(Chapter ch){
+		this.ch = ch;
 		float height = GlobalApplication.getGeometry().getGeometry()[1];
 		/*TODO:
 		 *In the future, forest should be replaced by ch.getImage.
 		 *This sets the background image. 
 		 */
-		mImage = new ImageWidget(0,0,.8f, .8f*height, ch.getImage());
+		mImage = new ImageWidget(0,0,.9f, .9f*height, ch.getImage());
 		mImage.setRelativeCenter(0,0);
+		mImage.setBackground(TextureManager.IMAGEBORDER);
 		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
 		widgetList.add(mImage);
 		
@@ -93,8 +95,18 @@ public class ChapterWidget extends WidgetLayout{
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		for(Widget w: widgetList)
+		if(ch.getCompleted()){
+			mImage.draw(r);
+		}
+		else {
+			finishedFlower.draw(r);
+			mGrid.draw(r);
+		}
+			
+		
+		/*for(Widget w: widgetList)
 			w.draw(r);
+		*/
 	}
 
 	

@@ -45,8 +45,8 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 	 */
 	public ScreenSlideWidgetLayout(float gap) {
 		this.gap = gap;
-		leftArrow = new ImageWidget(.7f, -1.0f, .15f, .15f, TextureManager.LWEDGE);
-		rightArrow = new ImageWidget(-.7f, -1.0f, .15f, .15f, TextureManager.RWEDGE);
+		leftArrow = new ImageWidget(.7f, -1.0f, .10f, .10f, TextureManager.LWEDGE);
+		rightArrow = new ImageWidget(-.7f, -1.0f, .10f, .10f, TextureManager.RWEDGE);
 	}
 
 	@Override
@@ -93,6 +93,8 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 		float[] center = {xCPW, yCPW, 0.0f};
 		mCPW = new CircleProgressBarWidget(widgetList.size(), center, .05f);
 		mCPW.setActiveCircle(0);
+		leftArrow.setCenter(xCPW+.1f, yCPW);
+		rightArrow.setCenter(xCPW-.05f*widgetList.size()+.1f, yCPW);
 	}
 
 	@Override
