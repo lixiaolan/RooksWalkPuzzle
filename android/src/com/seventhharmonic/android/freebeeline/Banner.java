@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 
 class BannerPlay extends State<BackgroundTile> {
 
@@ -53,7 +55,7 @@ public class Banner extends Graphic<BackgroundTile, State<BackgroundTile>> {
 	}
 	
 	public void set(String string) {
-		tiles[0].setTextures(TextureManager.CLEAR, string);
+		tiles[0].setTextures(string, TextureManager.CLEAR);
 	}
 
 	public void setColor(String c){

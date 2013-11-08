@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 
 
 class TutorialBoard2 extends Board {
@@ -7,8 +9,7 @@ class TutorialBoard2 extends Board {
 	SHOW_PATH, SLIDE0, SLIDE1, SLIDE2, SLIDE3, PlayGame, PlayGameEnd
     }
     
-    Banner mBanner; 
-    Banner mBottomBanner;
+    TextBox mBanner; 
     Background mBoardBg;
     TutorialState mTutorialState;
     TutorialInfo2 mTutorialInfo = new TutorialInfo2();
@@ -20,8 +21,8 @@ class TutorialBoard2 extends Board {
 	//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 	super(null);
 	float[] center = {.20f,-1.0f, 0.0f };
-	mCPB = new CircleProgressBarWidget(5, center, .05f);
-	mBanner = new Banner(.8f);
+	mCPB = new CircleProgressBarWidget(4, center, .05f);
+	mBanner = new TextBox(0,0,.8f,"");
 	mBoardBg = new Background("boardbg", 1.0f);
 	mBee = new Bee(this);
 	mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);
@@ -32,7 +33,7 @@ class TutorialBoard2 extends Board {
     
     public void setGeometry(float[] g){
 	super.setGeometry(g);
-	mBanner.setCenter(0, g[1] - mBanner.getSize() -.1f);
+	mBanner.setCenter(0, g[1] - .8f -.1f);
     }
     
     public void setStateForward()	{
@@ -115,7 +116,7 @@ class TutorialBoard2 extends Board {
 		tiles[i].setTextures();
 		tiles[i].setSize(tileSize);
 	    }
-	    mBanner.set("tutorial_banner_0");
+	    mBanner.setText(mTutorialInfo.banners[0]);
 	    mBee.setMood(Mood.HAPPY);			
 	    drawLines();
 	}
@@ -202,7 +203,7 @@ class TutorialBoard2 extends Board {
 	
 	@Override
 	    public void enterAnimation(BoardTile[] tiles) {
-	    mBanner.set("tutorial_banner_1");
+	    mBanner.setText(mTutorialInfo.banners[1]);
 	    state.period = DrawPeriod.DURING; 
 	}
 	
@@ -288,7 +289,7 @@ class TutorialBoard2 extends Board {
 	
 	@Override
 	    public void enterAnimation(BoardTile[] tiles) {
-	    mBanner.set("tutorial_banner_2");
+	    mBanner.setText(mTutorialInfo.banners[2]);
 	    state.period = DrawPeriod.DURING; 
 	}
 	
@@ -338,7 +339,7 @@ class TutorialBoard2 extends Board {
 	    mCheck.setCenter(-.68f, .11f);
 	    mCheck.setColor("transparent");
 	    mCheck.set("check");
-	    mBanner.set("tutorial_banner_3");
+	    mBanner.setText(mTutorialInfo.banners[3]);
 	    mCPB.setActiveCircle(3);
 	}
 	

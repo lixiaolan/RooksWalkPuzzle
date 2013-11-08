@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
 public class PuzzleWidget extends Widget{

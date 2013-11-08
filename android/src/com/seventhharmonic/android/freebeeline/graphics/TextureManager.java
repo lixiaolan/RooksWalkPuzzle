@@ -1,4 +1,4 @@
-package com.seventhharmonic.android.freebeeline;
+package com.seventhharmonic.android.freebeeline.graphics;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,7 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import com.seventhharmonic.android.freebeeline.graphics.TextureObject;
+import com.seventhharmonic.android.freebeeline.R;
+import com.seventhharmonic.android.freebeeline.StoryBoardInfo;
+import com.seventhharmonic.android.freebeeline.TutorialInfo2;
+import com.seventhharmonic.android.freebeeline.R.drawable;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +33,13 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.os.Environment;
 import android.util.Log;
+
+/*NOTES: 
+ * - A tile of size 1 has each side length 2.
+ * - Width/height in onSurfaceChanged are the phone's width and height
+ * - 
+ * 
+ */
 
 public class TextureManager {
 	static final String TAG = "TextureManager";
@@ -88,6 +98,8 @@ public class TextureManager {
 	public static final String PASSTHROUGHRULE = "Your path can only go through empty squares.";
 	public static final String OFFBOARD = "Oh no! Your path went off the board!";
 
+	public static final String HINTPROMPT = "You are out of hints! Select the amount you would like to purchase below.";
+	
 	public static final String VERSION = "alpha-0.2";
 	public static final String BOX = "box";
 	public static final String ERASER = "eraser";
@@ -96,9 +108,9 @@ public class TextureManager {
 	public static final String QUESTIONMARK = "?";
 	public static final String IMAGEBORDER = "imageborder";
 	
-	
-	Map <String, Integer> library = new HashMap<String, Integer>();
-	Map <String, TextureObject> sheetLibrary = new HashMap<String, TextureObject>();
+	TextCreator tC = new TextCreator();
+	public Map <String, Integer> library = new HashMap<String, Integer>();
+	public Map <String, TextureObject> sheetLibrary = new HashMap<String, TextureObject>();
 	Typeface tf;
 	Context context;
 
@@ -115,15 +127,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.menu_circle_light_grey2, MENUCIRCLE);
 		buildTextures(context, R.drawable.borderimage,IMAGEBORDER);
 		buildTextures(context, R.drawable.flower1,"flower0");
-		/*buildTextures(context, R.drawable.flower2,"flower1");
-		buildTextures(context, R.drawable.flower3,"flower2");
-		buildTextures(context, R.drawable.flower4,"flower3");
-		buildTextures(context, R.drawable.flower5,"flower4");
-		buildTextures(context, R.drawable.flower6,"flower5");
-		buildTextures(context, R.drawable.flower7,"flower6");
-		buildTextures(context, R.drawable.flower8,"flower7");
-		buildTextures(context, R.drawable.flower9,"flower8");
-		 */
+
 		buildTextures(context, R.drawable.board2, "boardbg");
 		buildTextures(context, R.drawable.check2, "check");
 		buildTextures(context, R.drawable.check2, "locked");
@@ -141,27 +145,13 @@ public class TextureManager {
 		buildTextures(context, R.drawable.hive, HIVE);
 		buildTextures("", 128, 140, CLEAR, 50);
 
+		
+		
 		buildMenuBanners();
-		buildGameBanners();
-		buildStoryBanners();
-		buildHintTextures();
 		loadBitmapFromAssets();
-		texturesLoaded = true;
 		buildSheet();
-		/*context.sendBroadcast(new Intent(
-				Intent.ACTION_MEDIA_MOUNTED,
-				            Uri.parse("file://" + Environment.getExternalStorageDirectory())));*/
-		//ViewActivity.texturesLoadedEventHandler();
 	}
 
-	public void buildHintTextures(){
-		int xpos = 50;
-		int ypos = 50;
-		int fontSize = 50;
-		for(int i =0;i<20;i++){
-			buildLongTextures(Integer.toString(i), xpos, ypos, "hints"+Integer.toString(i), fontSize, 128);
-		}
-	}
 
 
 	/**Returns the string "hintsi" given a long i. Useful abstraction wherever hint textures need to be accessed.
@@ -170,7 +160,7 @@ public class TextureManager {
 	 * @return
 	 */
 	public static String buildHint(long i){
-		return "hints"+Long.toString(i);
+		return "hints:"+Long.toString(i);
 	}
 	
 	public void loadBitmapFromAssets() {
@@ -234,61 +224,6 @@ public class TextureManager {
 		buildTextures(PREVIOUS, xpos, ypos, PREVIOUS, fontSize);
 	}
 
-	public void buildGameBanners() {
-		/*
-		 * Idea:Tutorial Banners should always be between -.8 and .8.
-		 * This is not enforced here - it is just something to be careful about.
-		 * Ideally this will be put in a more general geometry class.
-		 * Shoot for 30 characters per line. Ideally never more then three lines.
-		 * 
-		 * Size of banners should be .8 * screenWidth rounded up to the nearest power of 2
-		 * Need the dpi info for scaling
-		 * 
-		 */
-		//float dpi = context.getResources().getDisplayMetrics().density;
-		int screenWidth = context.getResources().getDisplayMetrics().widthPixels;	
-		int bannerSize = closestPower((int)((.8*screenWidth)));
-		// Assume that banner size is .8 here
-		//.6 is the ratio of text width to height
-		int fontWidth =  (int)(10*bannerSize/(6*CHAR_PER_LINE));
-		int fontHeight = fontWidth;
-
-		for(int i =0;i< TutorialInfo2.banners.length;i++){
-			buildLongTextures(TutorialInfo2.banners[i],0,fontHeight,"tutorial_banner_"+Integer.toString(i),fontWidth, bannerSize);
-		}
-
-		buildLongTextures(TRY_AGAIN, 0, fontHeight, TRY_AGAIN, fontWidth, bannerSize);
-		buildLongTextures(GOOD_JOB, 0, fontHeight, GOOD_JOB, fontWidth, bannerSize);
-		buildLongTextures(MATCHINGNUMBERRULE, 0, fontHeight, MATCHINGNUMBERRULE, fontWidth, bannerSize);
-		buildLongTextures(PASSTHROUGHRULE, 0, fontHeight, PASSTHROUGHRULE, fontWidth, bannerSize);
-		buildLongTextures(OFFBOARD, 0, fontHeight, OFFBOARD, fontWidth, bannerSize);
-		buildLongTextures(VERSION, 0, fontHeight, VERSION, fontWidth, 128);
-		buildLongTextures(PUZZLESLEFT, 0, fontHeight, PUZZLESLEFT, fontWidth, bannerSize);
-		for(int i = 0;i< 17;i++){
-			buildLongTextures(PUZZLESLEFT+Integer.toString(i), 0, fontHeight, PUZZLESLEFT+Integer.toString(i), fontWidth, 128);
-		}
-
-	}
-
-	public void buildStoryBanners() {
-
-		/*
-		 * Story banners are a bit of a different story.
-		 * 
-		 */
-		//float dpi = context.getResources().getDisplayMetrics().density;
-		int screenWidth = context.getResources().getDisplayMetrics().widthPixels;	
-		int bannerSize = closestPower((int)((.6*screenWidth)));
-		// Assume that banner size is .6 here
-		//.6 is the ratio of text width to height
-		//20 characters per line
-		int fontWidth =  (int)(10*bannerSize/(6*20));
-		int middle = bannerSize/2;
-		for(int i =0;i< StoryBoardInfo.banners.length;i++){
-			buildLongTextures(StoryBoardInfo.banners[i],0,middle,"story_banner_"+Integer.toString(i), fontWidth, bannerSize);
-		}
-
-	}
 
 	public int closestPower(int a){
 		if(a<=256){
@@ -322,10 +257,10 @@ public class TextureManager {
 		String name;
 		for (int i = 0; i < 30; i++) {
 			name = br.readLine();
-			Log.d(TAG, name);
+			//Log.d(TAG, name);
 			// Split the lines using comma as delimiter
 			String[] coordStrings = br.readLine().split(",");
-			Log.d(TAG, coordStrings[0]+" "+coordStrings[1]);
+			//Log.d(TAG, coordStrings[0]+" "+coordStrings[1]);
 			float[] coords = new float[4];
 			for(int j =0;j<4;j++){
 				coords[j] = Float.parseFloat(coordStrings[j]);
@@ -385,10 +320,10 @@ public class TextureManager {
 		library.put(key, textureFromBitmap(bitmapFromShortString(a,x,y, font)));
 	}
 
-	public void buildLongTextures(String a, int x, int y, String key , int font, int size){
+/*	public void buildLongTextures(String a, int x, int y, String key , int font, int size){
 		library.put(key, textureFromBitmap(bitmapFromLongString(a,x,y, font, size)));
 	}
-
+*/
 	public void buildTextures(final Context context, final int resourceId, String key){
 		final int[] textureHandle = new int[1];
 
@@ -451,7 +386,7 @@ public class TextureManager {
 	    }
 	}
 	
-	public int textureFromBitmap(Bitmap bmp){
+	public static int textureFromBitmap(Bitmap bmp){
 		int[] texture = new int[1];
 		GLES20.glGenTextures(1, texture, 0);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
@@ -485,44 +420,6 @@ public class TextureManager {
 		return bitmap;
 	}
 
-	Bitmap bitmapFromLongString(String text, int x, int y, int fontSize, int size) {
-		//int size = 128; //Must be a power of two
-		Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-		// get a canvas to paint over the bitmap
-		Canvas canvas = new Canvas(bitmap);
-		//bitmap.eraseColor(Color.TRANSPARENT);
-
-		// Draw the text
-		Paint textPaint = new Paint();
-		textPaint.setTextSize(fontSize);
-		textPaint.setTextAlign(Paint.Align.LEFT);
-		textPaint.setStyle(Style.FILL);
-		textPaint.setStrokeWidth(4);
-		textPaint.setAntiAlias(true);
-		textPaint.setARGB(0xFF, 0x00, 0x00, 0x00);
-		textPaint.setSubpixelText(true);
-		textPaint.setTypeface(tf);
-		// draw the text centered
-		canvas.drawColor(Color.TRANSPARENT);
-		int index = 0;
-		int oldIndex = 0;
-		Rect bounds = new Rect();
-		while(text.length() != 0) {
-			index = textPaint.breakText(text, true, (float)size, null)-1;
-			oldIndex = index;
-			while(text.charAt(index) != ' ' && index > 0 && index != text.length()-1){
-				index--;
-			} 
-			if(index <= 0)
-				index=oldIndex;
-
-			canvas.drawText(text.substring(0, index+1), x, y, textPaint);
-			textPaint.getTextBounds(text, 0, text.length(), bounds);
-			y += fontSize*1.50;//bounds.height()*1.05;
-			text = text.substring(index+1);
-		}
-		return bitmap;
-	}
 }
 
 

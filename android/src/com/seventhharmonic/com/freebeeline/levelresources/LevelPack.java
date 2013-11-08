@@ -3,7 +3,7 @@ package com.seventhharmonic.com.freebeeline.levelresources;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.seventhharmonic.android.freebeeline.TextureManager;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class LevelPack {
 	List<Chapter> chapters = new ArrayList<Chapter>();

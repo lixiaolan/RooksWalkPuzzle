@@ -21,6 +21,8 @@ import android.util.Log;
 import com.seventhharmonic.android.freebeeline.common.RawResourceReader;
 import com.seventhharmonic.android.freebeeline.common.ShaderHelper;
 import com.seventhharmonic.android.freebeeline.graphics.FPSCounter;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
@@ -31,7 +33,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	//Don't know what it does
 	int oldTexture1 = -1;
 	int oldTexture2 = -1;
-	
 	public static final String CROPTOP = "croptop";
 	public static final String CROPBOTTOM = "cropbottom";
 	public static final String FIXEDWIDTH = "fixedwidth";
@@ -99,6 +100,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	/** This is a handle to our square shading program. */
 	private int mProgramHandle;
 	public TextureManager TM;
+	public TextCreator TC;
 	/** Used only in "touched" */
 	//These are used in our custom projection.
 	private float screenHeight;
@@ -228,9 +230,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		//Handle for the program.
 		mProgramHandle = ShaderHelper.createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle, new String[] {"a_Position",  "a_Color", "a_TexCoordinate"});
 
-		//buildTextures();
 		TM = new TextureManager(mActivityContext);
-		TM.buildTextures();		        
+		TM.buildTextures();		
+		
+		TC = new TextCreator();
+		//Create all the necessary text fonts here
+		TC.load("font3.ttf", 14, 2, 2);
+		
 		// Set our per-vertex lighting program.
 		GLES20.glUseProgram(mProgramHandle);
 		// Set program handles for square drawing.
@@ -352,7 +358,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	
 	public void drawTile(float[] center, float size, String[] textures, String color, float angle, float[] pivot)
 	{
-		activized = false;
 
 		try{
 		mTextures[0] = TM.library.get(textures[0]);
@@ -362,19 +367,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		}
 		mColor = colorMap.get(color);
 
-		/*if(!(mTextures[0] == oldTexture1) || !textures[0].equals(TextureManager.CLEAR)){
-    		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+0);
-    		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0]);
-    	    GLES20.glUniform1i(mTextureHandle.get(0), 0);
-    	    oldTexture1 = mTextures[0];
-    	}
-    	if(!(mTextures[1] == oldTexture2) || !textures[1].equals(TextureManager.CLEAR)){
-    		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+1);
-    		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[1]);
-    	    GLES20.glUniform1i(mTextureHandle.get(1), 1);
-    	    oldTexture2 = mTextures[1];
-    	}
-    	*/
 		//Apply MTextures. Need this to make transparent colors stay transparent
 		for(int i=0;i<2; i++){
 			GLES20.glActiveTexture(GLES20.GL_TEXTURE0+i);        
@@ -388,8 +380,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
 		Matrix.scaleM(mModelMatrix, 0, size, size, size);
 
-		// long time = SystemClock.uptimeMillis() % 12000L;
-		// float angle = 0.030f * ((int) time);
 		Matrix.rotateM(mModelMatrix, 0, angle, pivot[0], pivot[1], pivot[2]);
 
 		// Pass in the position information
@@ -426,7 +416,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
 	}
 
-
 	public void drawRectangleTile(String mode, float[] center, float width, float height, String[] textures, String color, float angle, float[] pivot)
 	{
 		try{
@@ -454,8 +443,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
 		Matrix.scaleM(mModelMatrix,0, width, height, 1.0f);
 
-		// long time = SystemClock.uptimeMillis() % 12000L;
-		// float angle = 0.030f * ((int) time);
 		Matrix.rotateM(mModelMatrix, 0, angle, pivot[0], pivot[1], pivot[2]);
 
 		// Pass in the position information
@@ -496,7 +483,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
 	}
 
-
 	float[] tempTextureCoordinateData = {							 // Front face
 			1.0f, 0.0f,                             
 			1.0f, 1.0f,
@@ -506,7 +492,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			0.0f, 0.0f,   				
 		};
 	
-
 	public float[] selectCropStyle(float width, float height, String mode){
 		if(mode.equals(CROPTOP)){
 			if(width > height){
@@ -703,8 +688,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		drawSheetTile(center, size, textures, color, angle, pivot);
 	}
 
-	boolean activized = false;
-	
 	public void drawSheetTile(float[] center, float size, String[] textures, String color, float angle, float[] pivot)
 	{
 
@@ -712,11 +695,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		mTextures[1] = TM.getSheet(textures[1]);	
 		
 		mColor = colorMap.get(color);
-
-		//if(!activized){
-		
-		//activized = true;
- 		//}
 
 
 		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+2);
@@ -733,8 +711,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		Matrix.translateM(mModelMatrix, 0, center[0], center[1], center[2]);
 		Matrix.scaleM(mModelMatrix, 0, size, size, size);
 
-		// long time = SystemClock.uptimeMillis() % 12000L;
-		// float angle = 0.030f * ((int) time);
 		Matrix.rotateM(mModelMatrix, 0, angle, pivot[0], pivot[1], pivot[2]);
 
 		// Pass in the position information
@@ -759,12 +735,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glVertexAttribPointer(mTextureCoordinateHandle2, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mRectangleTextureCoordinates2);
 		GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle2);
 
-		
-		/*
-		mSquareTextureCoordinates.position(0);
-		GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mSquareTextureCoordinates);
-		GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
-		 */
 		// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
 		// (which currently contains model * view).
 		Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, mModelMatrix, 0);   
@@ -781,9 +751,63 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
 	}
 
+	public void drawTextBox(float[] center, float width, String text){
+		TC.draw(this, text, center[0], center[1], width, 2.0f/screenWidth, 2*cameraDistance/screenHeight);
+	}
 
+	boolean togg = true;
+	public void drawTextChar(float x, float y, float width, float height, float[] coords){
+		mColor = colorMap.get("transparent");
+		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+0);
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TC.getTextureId());
+		GLES20.glUniform1i(mTextureHandle.get(0), 0);
+   		
+   		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+1);
+   		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TC.getTextureId());
+   		GLES20.glUniform1i(mTextureHandle.get(1), 1);
 
+		
+		Matrix.setIdentityM(mModelMatrix, 0);
+		Matrix.translateM(mModelMatrix, 0, x, y, 0);
+		Matrix.scaleM(mModelMatrix,0, width, height, 1.0f);
 
+		// Pass in the position information
+		mSquarePositions.position(0);		
+		GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,0, mSquarePositions);        
+		GLES20.glEnableVertexAttribArray(mPositionHandle);        
+
+		// Pass in the color information
+		mColor.position(0);
+		GLES20.glVertexAttribPointer(mColorHandle, mColorDataSize, GLES20.GL_FLOAT, false, 0, mColor);        
+		GLES20.glEnableVertexAttribArray(mColorHandle);
+
+		// Pass in the texture coordinate information
+		//rectangleTextureCoordinateData = selectCropStyle(width, height, mode);
+		mRectangleTextureCoordinates.put(coords).position(0);
+		mRectangleTextureCoordinates.position(0);
+		GLES20.glVertexAttribPointer(mTextureCoordinateHandle1, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mRectangleTextureCoordinates);
+		GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle1);
+
+		GLES20.glVertexAttribPointer(mTextureCoordinateHandle2, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false, 0, mRectangleTextureCoordinates);
+		GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle2);
+
+		
+		// This multiplies the view matrix by the model matrix, and stores the result in the MVP matrix
+		// (which currently contains model * view).
+		Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, mModelMatrix, 0);   
+
+		// Pass in the modelview matrix.
+		GLES20.glUniformMatrix4fv(mMVMatrixHandle, 1, false, mMVPMatrix, 0);                
+
+		// This multiplies the modelview matrix by the projection matrix, and stores the result in the MVP matrix
+		// (which now contains model * view * projection).
+		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mMVPMatrix, 0);
+
+		// Pass in the combined matrix.
+		GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+
+	}
 
 
 

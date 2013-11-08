@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 class MenuManager {
 	private GlobalState state;
 	public GameMenu mGameMenu;

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.db.HintsDataSource;
 import com.seventhharmonic.android.freebeeline.db.PurchasedDataSource;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
@@ -28,7 +29,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	protected float tileSize = .11f;    
 	ErrorLog mErrorLog;
 	Background mCheck;
-	public TextWidget mGameBanner;
+	TextBox mGameBanner;
 	private Background mBoardBg;
 	Puzzle currPuzzle;
 	Model mModel;
@@ -38,7 +39,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	public Board(Model mModel) {
 	    buildEmptyBoard();
 	    state = null;//new BoardPlay(tiles);
-	    mGameBanner = new TextWidget(0.0f, 0.0f, .9f, .4f, TextureManager.CLEAR);
+	    mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
 	    mBoardBg = new Background("boardbg", 1.0f);
 	    mErrorLog = new ErrorLog(this);
 	    this.mModel = mModel;
@@ -296,8 +297,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	 */
 	public void setGeometry(float[] g) {
 		super.setGeometry(g);
-		float top = mGameBanner.getHeight();
-		mGameBanner.setCenter(0, g[1]-top);
+		//Place the banner halfway between the board and the top of the screen.
+		mGameBanner.setCenter(0, (g[1]+1)/2);
 	}
 
 	public void animatePlay(int at) {
@@ -634,7 +635,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		ButtonWidget reset;
 		ButtonWidget tutorial;
 		HintsDataSource DB;
-		TextWidget mHints;
+		TextBox mHints;
 		HintDialogWidgetLayout mHintDialog;
 		Store mStore;
 		
@@ -676,7 +677,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			 * The hints text widget next to the bee.
 			 * Note: If we can't open the DB we will crash out the program!! That is not a bad thing.
 			 */
-			mHints = new TextWidget(.5f, -1.0f, .1f, .1f, TextureManager.CLEAR);
+			mHints = new TextBox(.5f, -0.9f, .12f, "");
 			if(mStore.hasUnlimitedHints()){
 				mHints.setText(TextureManager.HIVE);
 			} else {
@@ -685,9 +686,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			/*
 			 * The dialog box that appears when you run out of hints.
 			 */
-			mHintDialog = new HintDialogWidgetLayout(.8f, TextureManager.GOOD_JOB, mHints);
+			mHintDialog = new HintDialogWidgetLayout(.8f, TextureManager.HINTPROMPT, mHints);
 
-			mGameBanner.setText(TextureManager.CLEAR);
+			mGameBanner.setText("");
 			initSize = tiles[0].getSize();
 			mCheck  = new Background("check",.11f);
 			float[] center = {-.7f,-1f, 0f};
@@ -798,7 +799,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					//If this tile should be red, make sure it stays that way. Reset the banner
 					if(toggleError){
 						turnErrorRed(at);
-						mGameBanner.setText(TextureManager.CLEAR);
+						mGameBanner.setText("");
 					}
 				}
 				at = touched(pt);
@@ -1016,10 +1017,15 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			mBoardBg.draw(r);
-			super.draw(tiles, r);
+			//mBoardBg.draw(r);
+			//super.draw(tiles, r);
+			for(int i =0;i<tiles.length;i++){
+				if(tiles[i].getTrueSolution() != -1){
+					tiles[i].draw(r);
+				}
+			}
 			mBee.draw(r);
-			//mDialog.draw(r);
+			mDialog.draw(r);
 		}
 	}        
 }

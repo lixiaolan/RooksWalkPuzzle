@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 /*
  * Every widget has an absolute center and a relative center. The absolute center
  * is computed in Widget layout and passed in. The relative center is specified by the user

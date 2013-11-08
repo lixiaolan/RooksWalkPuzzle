@@ -38,7 +38,7 @@ public class Colors {
 
 	}; 
     
-    static float r = .7f;
+    static float r = .8f;
     public static float [] squareOpaque ={
 		// white
 		1.0f, 1.0f, 1.0f, r,				

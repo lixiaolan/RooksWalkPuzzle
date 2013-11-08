@@ -1,6 +1,6 @@
 package com.seventhharmonic.com.freebeeline.levelresources;
 
-import com.seventhharmonic.android.freebeeline.TextureManager;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class TestLevelPackProvider implements LevelPackProvider{
 

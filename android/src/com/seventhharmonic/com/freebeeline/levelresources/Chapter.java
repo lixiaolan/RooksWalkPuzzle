@@ -5,7 +5,7 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.seventhharmonic.android.freebeeline.TextureManager;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class Chapter {
 	String title;

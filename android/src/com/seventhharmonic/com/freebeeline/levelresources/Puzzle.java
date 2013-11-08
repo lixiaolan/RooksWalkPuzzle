@@ -6,9 +6,9 @@ import java.util.List;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.GlobalApplication;
-import com.seventhharmonic.android.freebeeline.TextureManager;
 import com.seventhharmonic.android.freebeeline.db.PuzzleDataSource;
 import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class Puzzle {
 	public String board;

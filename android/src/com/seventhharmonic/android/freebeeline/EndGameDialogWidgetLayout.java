@@ -3,13 +3,14 @@ package com.seventhharmonic.android.freebeeline;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 
 public class EndGameDialogWidgetLayout extends WidgetLayout{
 
 	
-	TextWidget mText;
-	TextWidget mPuzzText;
+	TextBox mText;
+	TextBox mPuzzText;
 	ButtonWidget mBack;
 	ButtonWidget mNext;
 	ImageWidget mBackground;
@@ -21,16 +22,14 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		setHeight(width/Geometry.PHI);
 		setCenter(0,0);
 		
-		mText = new TextWidget(0,0,width, height, text);
+		mText = new TextBox(0,getHeight()*.9f,width, text);
 		mText.setRelativeCenter(0,0);
-		mText.setColor("opaque");
 		
 		//TODO: This solution sucks. Have a more general function to draw text at a certain position.
 		String a = Integer.toString(puzzLeft);		
 		Log.d("EndGame", a);
-		mPuzzText = new TextWidget(0,0,width, 2*height/6, TextureManager.PUZZLESLEFT+a);
+		mPuzzText = new TextBox(0,getHeight()*.85f,width, TextureManager.PUZZLESLEFT+a);
 		mPuzzText.setRelativeCenter(0,0);
-		mPuzzText.setColor("transparent");
 		
 		mBack = new ButtonWidget(0,0, width/4, width/4, TextureManager.BACK);
 		mBack.setRelativeCenter(.7f*width, -.6f*height);

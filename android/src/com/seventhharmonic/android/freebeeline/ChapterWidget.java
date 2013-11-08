@@ -2,6 +2,7 @@ package com.seventhharmonic.android.freebeeline;
 
 import android.util.Log;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Chapter;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;

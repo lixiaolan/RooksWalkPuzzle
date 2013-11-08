@@ -2,6 +2,7 @@ package com.seventhharmonic.android.freebeeline;
 
 import java.util.List;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
@@ -31,9 +32,10 @@ class Model {
     public MediaPlayer mediaPlayer;    
     public FlowerMenu mFlowerMenu;
     
-    Banner mVersionBanner;
-    Store mStore;
     
+    TextBox mVersionBanner;
+    Store mStore;
+    //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
     TableOfContents toc;
     
     public Model(Context c) {
@@ -58,8 +60,8 @@ class Model {
 	mTitle = new Background("title", .50f);
 	float[] titleCenter = {.5f, 0.8f, 0.0f};
 	mTitle.setCenter(titleCenter);
-	mVersionBanner= new Banner(TextureManager.VERSION, .5f);
-	mVersionBanner.setCenter(.5f, -1.1f);
+	mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
+	mVersionBanner.setCenter(0.0f, 0.0f);
     }
     
     public void createPuzzleFromPuzzle(Puzzle p){

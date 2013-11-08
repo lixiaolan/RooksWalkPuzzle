@@ -3,18 +3,19 @@ package com.seventhharmonic.android.freebeeline;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 
 public class HintDialogWidgetLayout extends WidgetLayout{
 
 	
-	TextWidget mText;
+	TextBox mText;
 	ButtonWidget mBack;
 	ImageWidget fiveHints;
 	ImageWidget twentyHints;
 	ImageWidget unlimitedHints;
 	ImageWidget mBackground;
-	TextWidget mHints;
+	TextBox mHints;
 	
 	boolean draw  = false;
 	
@@ -23,7 +24,7 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 	 * @param text
 	 * @param mHints The hints dialogue in Board that needs to be updated.
 	 */
-	public HintDialogWidgetLayout(float width, String text, TextWidget mHints){
+	public HintDialogWidgetLayout(float width, String text, TextBox mHints){
 		setWidth(width);
 		setHeight(width/Geometry.PHI);
 		setCenter(0,0);
@@ -34,12 +35,10 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		mBackground.setRelativeCenter(0, 0);
 		mBackground.setColor("opaque");
 		
-		mText = new TextWidget(0,0,width, height, text);
-		mText.setRelativeCenter(0,0);
-		mText.setColor("opaque");
-		
-		
-		mBack = new ButtonWidget(0,0, width/4, width/4, TextureManager.BACK);
+		mText = new TextBox(0,0,width, text);
+		mText.setRelativeCenter(0,.9f*height);
+				
+		mBack = new ButtonWidget(0,0, width/5, width/5, TextureManager.BACK);
 		mBack.setRelativeCenter(-.7f*width, -.6f*height);
 		mBack.setClickListener(new GameEventListener(){
 			public void event(int i){

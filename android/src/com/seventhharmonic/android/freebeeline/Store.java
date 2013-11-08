@@ -12,6 +12,7 @@ import android.test.*;
 
 import com.seventhharmonic.android.freebeeline.db.PurchasedDataSource;
 import com.seventhharmonic.android.freebeeline.db.PuzzleDataSource;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.util.IabException;
 import com.seventhharmonic.android.freebeeline.util.Inventory;
 import com.seventhharmonic.android.freebeeline.util.Purchase;
@@ -40,7 +41,7 @@ public class Store {
 	public int PURCHASE_FAILED = -1;
 
 	int hintsAdded = 0;
-	TextWidget hintWidget;
+	TextBox hintWidget;
 
 	Activity mContext;
 
@@ -151,7 +152,7 @@ public class Store {
 	/*
 	 * Code run when you decide to buy 5 hints.
 	 */
-	public void onBuyFiveHints(TextWidget mHints) {
+	public void onBuyFiveHints(TextBox mHints) {
 		Log.d(TAG, "Buy hints button clicked.");
 		// launch the gas purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
@@ -245,7 +246,7 @@ public class Store {
 	}
 
 
-	public void onBuyUnlimitedHints(TextWidget mHints) {
+	public void onBuyUnlimitedHints(TextBox mHints) {
 		Log.d(TAG, "Buy unlimited hints button clicked.");
 		// launch the  purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
