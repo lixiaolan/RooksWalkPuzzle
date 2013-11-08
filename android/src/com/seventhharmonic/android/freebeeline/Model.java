@@ -14,7 +14,7 @@ import android.util.Log;
 import android.app.Activity;
 
 
-class Model {
+class Model implements ModelFlowerMenuInterface{
 
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
@@ -110,6 +110,7 @@ class Model {
 	    mFlowerMenu.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
+
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
@@ -137,10 +138,6 @@ class Model {
 	    mStoryBoard.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
-	case TABLE_OF_CONTENTS:
-	    toc.touchHandler(pt);
-	    mMenuManager.touchHandler(pt);
-	    break;
 	default: break;
 	}
 
@@ -153,13 +150,9 @@ class Model {
 	case FLOWER_MENU:
 	    mFlowerMenu.swipeHandler(direction);
 	    break;	
-	case TABLE_OF_CONTENTS:
-	    toc.swipeHandler(direction);
-	    break;
 	case GAME_OPENING:
 	    mBoard.swipeHandler(direction);
 	    break;
-	    
 	case TUTORIAL:
 	    mTutorialBoard.swipeHandler(direction); 
 	    break;
@@ -194,10 +187,6 @@ class Model {
 	    mFlowerMenu.draw(r);
 	    mMenuManager.draw(r);
 	    break;
-	case TABLE_OF_CONTENTS:
-	    toc.draw(r);
-	    mMenuManager.draw(r);
-	    break;
 	case TUTORIAL:
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
@@ -224,9 +213,13 @@ class Model {
 	mBoard.setState(s);
 	state.state = s;
 	mMenuManager.updateState();
-	mFlowerMenu.setGlobalState(s);
     }
     
+    public void enterLevelPack() {
+	setState(GameState.FLOWER_MENU);
+	mFlowerMenu.enterLevelPack();
+    }
+
     public void setDataServer(DataServer d){
 	mDataServer = d;
     }
@@ -279,7 +272,21 @@ class Model {
 	    break;
 	}
     }
-    
+
+
+   //INTERFACE CLASSES FOR FLOWERMENU: 
+    @Override
+    public void setModelToMainMenuOpening() {
+	setState(GameState.MAIN_MENU_OPENING);
+	System.out.println("GETTING HERE?A?A?A?A......NOPE!");
+    }
+
+    @Override
+    public void setModelToGamePlayOpening(Puzzle p) {
+	createPuzzleFromPuzzle(p);
+	setState(GameState.GAME_OPENING);
+    }
+     
   
 }
 

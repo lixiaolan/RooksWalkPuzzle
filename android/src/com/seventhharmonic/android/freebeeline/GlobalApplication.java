@@ -29,7 +29,7 @@ public class GlobalApplication extends Application {
     /*
      * Google Analytics configuration values.
      */
-
+    
     // Placeholder property ID.
     private static final String GA_PROPERTY_ID = "UA-44910433-1";
     
@@ -38,7 +38,7 @@ public class GlobalApplication extends Application {
     
     // Prevent hits from being sent to reports, i.e. during testing.
     private static final boolean GA_IS_DRY_RUN = false;
-        
+    
     // Key used to store a user's tracking preferences in SharedPreferences.
     private static final String TRACKING_PREF_KEY = "trackingPreference";    
     
@@ -46,7 +46,7 @@ public class GlobalApplication extends Application {
      * Method to handle basic Google Analytics initialization. This call will not
      * block as all Google Analytics work occurs off the main thread.
      */
-
+    
     private void initializeGa() {
 	context = getApplicationContext();
 	geo = new Geometry();
@@ -54,7 +54,7 @@ public class GlobalApplication extends Application {
 	mLPP = new SAXLevelPackProvider();
 	
 	MSQLH = new MySQLiteHelper(this);
-
+	
 	mDB = new PuzzleDataSource(this, MSQLH);
 	mDB.open();
 	hDB = new HintsDataSource(this, MSQLH);
