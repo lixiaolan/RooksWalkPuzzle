@@ -14,7 +14,7 @@ import android.util.Log;
 import android.app.Activity;
 
 
-class Model implements ModelFlowerMenuInterface{
+class Model {
 
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
@@ -33,8 +33,6 @@ class Model implements ModelFlowerMenuInterface{
     
     Banner mVersionBanner;
     Store mStore;
-    
-    TableOfContents toc;
     
     public Model(Context c) {
 	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
@@ -206,7 +204,6 @@ class Model implements ModelFlowerMenuInterface{
 	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
 	//TODO: This is a bit of hack to make sure these classes are not initialized too early.
 	mFlowerMenu = new FlowerMenu(this);
-	toc = new TableOfContents(this);
     }
     
     public void setState(GameState s){
@@ -274,20 +271,16 @@ class Model implements ModelFlowerMenuInterface{
     }
 
 
-   //INTERFACE CLASSES FOR FLOWERMENU: 
-    @Override
+   //INTERFACE CLASSES FOR FLOWERMENU:   
     public void setModelToMainMenuOpening() {
 	setState(GameState.MAIN_MENU_OPENING);
 	System.out.println("GETTING HERE?A?A?A?A......NOPE!");
     }
 
-    @Override
     public void setModelToGamePlayOpening(Puzzle p) {
 	createPuzzleFromPuzzle(p);
 	setState(GameState.GAME_OPENING);
-    }
-     
-  
+    }  
 }
 
 

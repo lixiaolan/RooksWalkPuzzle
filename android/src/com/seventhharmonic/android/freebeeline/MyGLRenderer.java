@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -22,18 +21,17 @@ import com.seventhharmonic.android.freebeeline.common.RawResourceReader;
 import com.seventhharmonic.android.freebeeline.common.ShaderHelper;
 import com.seventhharmonic.android.freebeeline.graphics.FPSCounter;
 
-
 public class MyGLRenderer implements GLSurfaceView.Renderer {
-	String TAG = "MyGLRenderer";
-	//This is the model
-	private Model mModel;
-	private FPSCounter mFPSCounter = new FPSCounter();	
-	//Don't know what it does
-	int oldTexture1 = -1;
-	int oldTexture2 = -1;
-	
-	public static final String CROPTOP = "croptop";
-	public static final String CROPBOTTOM = "cropbottom";
+    String TAG = "MyGLRenderer";
+    //This is the model
+    private Model mModel;
+    private FPSCounter mFPSCounter = new FPSCounter();	
+    //Don't know what it does
+    int oldTexture1 = -1;
+    int oldTexture2 = -1;
+    
+    public static final String CROPTOP = "croptop";
+    public static final String CROPBOTTOM = "cropbottom";
 	public static final String FIXEDWIDTH = "fixedwidth";
 	public static final String STRETCH = "stretch";
 	private final Context mActivityContext;
@@ -354,14 +352,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	{
 		activized = false;
 
-		try{
+		// try{
 		mTextures[0] = TM.library.get(textures[0]);
 		mTextures[1] = TM.library.get(textures[1]);	
-		} catch(Exception e){
-			Log.d(TAG, "Exception: "+e.getMessage()+textures[1]);
-		}
+		// } catch(Exception e){
+		//     //System.out.println("CAUGHT TEXTURE ISSUE");
+		//     Log.d(TAG, "Exception: "+e.getMessage()+textures[1]);
+		// }
 		mColor = colorMap.get(color);
-
+		
 		/*if(!(mTextures[0] == oldTexture1) || !textures[0].equals(TextureManager.CLEAR)){
     		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+0);
     		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextures[0]);
@@ -434,12 +433,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			mTextures[1] = TM.library.get(textures[1]);	
 		} catch (NullPointerException e){
 			//Log.e(TAG, "Didn't find a texture or color", e);
-			if(textures[0] == null){
-				Log.d(TAG, "found a null thing");
-			}
-			//Log.d(TAG, textures[0]);
-			//Log.d(TAG, textures[1]);
-			//Log.d(TAG, color);
+		    System.out.println("CAUGHT TEXTURE ISSUE");
+		    if(textures[0] == null){
+			Log.d(TAG, "found a null thing");
+		    }
+		    //Log.d(TAG, textures[0]);
+		    //Log.d(TAG, textures[1]);
+		    //Log.d(TAG, color);
 		}
 		mColor = colorMap.get(color);
 		//Apply MTextures. Need this to make transparent colors stay transparent
@@ -719,14 +719,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
  		//}
 
 
-		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+2);
+		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+0);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TM.library.get("sheet"));
-		GLES20.glUniform1i(mTextureHandle.get(0), 2);
+		GLES20.glUniform1i(mTextureHandle.get(0), 0);
 
    		
-   		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+3);
+   		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+1);
    		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TM.library.get("sheet"));
-   		GLES20.glUniform1i(mTextureHandle.get(1), 3);
+   		GLES20.glUniform1i(mTextureHandle.get(1), 1);
 
    		// Determine position and size
 		Matrix.setIdentityM(mModelMatrix, 0);

@@ -255,10 +255,9 @@ class MenuManager {
 	
 	@Override
 	public void callback(int val) {
-	    mModel.setState(GameState.TABLE_OF_CONTENTS);
-	    updateState();
+	    mModel.enterLevelPack();
+	    updateState();   
 	}
-	
     }
     
     

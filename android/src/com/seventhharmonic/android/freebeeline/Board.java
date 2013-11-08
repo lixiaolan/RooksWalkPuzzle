@@ -843,9 +843,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 						mModel.state.resumeGameExists = false;
 						mBee.setMood(Mood.HAPPY);
 						mModel.setState(GameState.GAME_MENU_END);
+
 						//TODO: DO THIS DIFFERENT WITH A HARD RESET
-						mModel.toc.setState();
-						mModel.toc.setState();
+						// mModel.toc.setState();
+						// mModel.toc.setState();
+
 						GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
 					}
 				} 
@@ -934,14 +936,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mDialog.deactivate();
 					if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
-						createPuzzleFromPuzzle(currPuzzle.getNextPuzzle());
+
+						mModel.setModelToGamePlayOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
-						mModel.setState(GameState.GAME_OPENING);
+
 					} else {
 						//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
-						mModel.toc.setState();
-						mModel.toc.setState();
-						mModel.setState(GameState.TABLE_OF_CONTENTS);
+						mModel.enterLevelPack();
 					}
 				}
 
@@ -952,9 +953,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				public void event(int i){
 					mDialog.deactivate();
 					//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
-					mModel.toc.setState();
-					mModel.toc.setState();
-					mModel.setState(GameState.TABLE_OF_CONTENTS);
+					mModel.enterLevelPack();
 				}
 
 			});

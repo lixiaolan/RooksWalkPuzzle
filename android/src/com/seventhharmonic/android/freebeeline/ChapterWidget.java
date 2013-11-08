@@ -101,12 +101,10 @@ public class ChapterWidget extends WidgetLayout{
 		else {
 			finishedFlower.draw(r);
 			mGrid.draw(r);
-		}
-			
+		}			
 		
-		/*for(Widget w: widgetList)
+		for(Widget w: widgetList)
 			w.draw(r);
-		*/
 	}
 
 	

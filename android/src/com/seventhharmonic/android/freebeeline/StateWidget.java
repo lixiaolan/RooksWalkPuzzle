@@ -18,6 +18,9 @@ public abstract class StateWidget {
     public abstract void enterAnimation();
     public abstract void duringAnimation();
     
+    public void reset() {
+	return;
+    }
     
     public void draw(MyGLRenderer r){
     	switch(period) {

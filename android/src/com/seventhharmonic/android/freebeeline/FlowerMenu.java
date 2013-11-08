@@ -8,6 +8,8 @@ import com.seventhharmonic.com.freebeeline.levelresources.*;
 import com.seventhharmonic.android.freebeeline.listeners.*;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPackProvider;
+import java.util.HashMap;
+import java.util.Map;
 
 class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     
@@ -27,7 +29,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     
     // "slider" used for placing a screen slide widget on top of stat system.
     // This is a bit of a hack... fair warning.
-    private StateWidget flowerState;
+    //private StateWidget flowerState;
 
     //The bee that lives in the flowers
     private Bee mBee;
@@ -50,12 +52,13 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     private int savedLevelPack = 0;
     private int savedChapter = 0;
 
-
     private LevelPackProvider mLPP;	        
+    private Model mModel;
 
-    private ModelFlowerMenuInterface mModel;
+    private Map <String, StateWidget> str2physics = new HashMap<String, StateWidget>();
 
-    public FlowerMenu(ModelFlowerMenuInterface model) {
+    public FlowerMenu(Model model) {
+
 	mModel = model;
 
 	float[] center = {.20f,-1.0f, 0.0f };
@@ -79,34 +82,23 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    tiles[i] = new FlowerTile(Sx,Sy, flowerSize);
 	}
 	
+
+	//These need to go here:
+	str2physics.put("main_menu", new FlowerMainMenu());
+	str2physics.put("default", new LevelPack1());
+
 	//The state for MAIN_MENU:
 	mFlowerState = FlowerState.MAIN_MENU;
 	state = new MainMenu();		
 
 	LPP = GlobalApplication.getLevelPackProvider();
+
     }
     
     public void setGeometry(float[] g){
 	super.setGeometry(g);
     }
     
-    /* 
-     * This class reads the physics style and pack title from the Level
-     * Pack Provider class. Then it updates its state accordingly.
-     */    
-    
-    public void setGlobalState(GameState s) {
-	switch(s) {
-	case FLOWER_MENU:
-	    setState(0);
-	    break;
-	default:
-	    setState(-1);
-	    break;
-	}
-    }
-
-
     //Update the state according to the internal state system
     private void updateState() {
 	switch(mFlowerState) {
@@ -154,26 +146,6 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     }
 
     public void setState(int index) {
-	// // Log.d(TAG, "index"+Integer.toString(index));
-	// // Log.d(TAG, "LPP.getNumberOfLevelPacks()"+Integer.toString(LPP.getNumberOfLevelPacks()));
-	
-	// currLevelPackIndex = index;
-	// if(index == -1){
-	//     state = new FlowerMainMenu();
-	//     mFlowerState = FlowerState.MAIN_MENU;
-	//     return;
-	// }
-	
-	// currLevelPack = LPP.getLevelPack(index);
-
-	// //TODO: This sucks. The problem is that LPCount may not exist yet!
-	// // mCPB.setLength(LPP.getNumberOfLevelPacks());
-	// // mCPB.setActiveCircle(index);
-
-	// if(currLevelPack.getStyle() == "default"){
-	//     state = new LevelPack1();
-	//     mFlowerState = FlowerState.DEFAULT;
-	// }
     }
     
     /* 
@@ -183,47 +155,21 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 
     public void swipeHandler(String direction) {
 	state.swipeHandler(direction);
-	
-	// LPP.getNumberOfLevelPacks() = LPP.getNumberOfLevelPacks();
-	// if(direction.equals("left_arrow")){
-	//     int i = currLevelPackIndex+1;
-	//     if (i > LPP.getNumberOfLevelPacks()-1) {
-	//     }
-	//     else {
-	// 	setState(Math.min(currLevelPackIndex+1, LPP.getNumberOfLevelPacks()-1));
-	//     }
-	// } else if(direction.equals("right_arrow")){
-	//     int i = currLevelPackIndex-1;
-	//     if (i < 0) {
-	//     }
-	//     else{
-	// 	setState(Math.max(currLevelPackIndex-1, 0));
-	//     }
-	// }
-	// slider.swipeHandler(direction);
     }
     
     public void touchHandler(float[] pt) {
 	state.touchHandler(pt);
-
-	// /*TODO: This needs to get changed to potentiall trigger Model. Not sure whether to do it here or
-	//  * in the states.  
-	//  */
-	// if (mFlowerState == FlowerState.MAIN_MENU) {
-
-	//     state.touchHandler(pt);
-	// }
-	// if (mFlowerState == FlowerState.DEFAULT) {
-
-	//     slider.touchHandler(pt);
-	//     state.touchHandler(pt);
-	// }
     }
+
+    //This maps the proper physics to the proper string.
         
     //TODO: Add the flower drawing to this class:
     class MainMenu extends StateWidget {
-
+	StateWidget flowerState;
+	
 	public MainMenu(){
+	    str2physics.get("main_menu").reset();
+	    flowerState = str2physics.get("main_menu");
 	}
 	
 	@Override
@@ -238,30 +184,36 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	@Override
 	public void draw(MyGLRenderer r){
 	    super.draw(r);
+	    flowerState.draw(r);
 	}
 	
 	@Override
 	public void swipeHandler(String direction) {
+	    flowerState.swipeHandler(direction);
 	    return;
 	}
 	
 	@Override
 	public void touchHandler(float[] pt) {
+	    flowerState.touchHandler(pt);
 	    return;
 	}
     }    
 
     class LevelPackDisplay extends StateWidget {
 	ScreenSlideWidgetLayout m;
+	StateWidget flowerState;
 	public LevelPackDisplay(){
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    m.setDrawProgressBar(true);
 	    for(int i =0;i<LPP.getNumberOfLevelPacks();i++){
-		m.addWidget(new LevelPackWidget(TextureManager.CLEAR,"book1chapter0"));
+		m.addWidget(new LevelPackWidget(TextureManager.CLEAR, "book1chapter0"));
 		//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
 	    }
 	    m.setActiveWidget(savedLevelPack);
-	    currLevelPack = LPP.getLevelPack(savedLevelPack);	    
+	    currLevelPack = LPP.getLevelPack(savedLevelPack);
+	    str2physics.get(currLevelPack.getStyle()).reset();
+	    flowerState = str2physics.get(currLevelPack.getStyle());
 	}
 	
 	@Override
@@ -276,12 +228,17 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	@Override
 	public void draw(MyGLRenderer r){
 	    super.draw(r);
+	    flowerState.draw(r);
 	    m.draw(r);
+    
 	}
 	
 	@Override
 	public void swipeHandler(String direction) {
+	    flowerState.swipeHandler(direction);
 	    m.swipeHandler(direction);
+	    str2physics.get(currLevelPack.getStyle()).reset();
+	    flowerState = str2physics.get(currLevelPack.getStyle());
 	}
 	
 	@Override
@@ -299,7 +256,8 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		    updateState();
 		}	
 	    }
-	    m.touchHandler(pt);	    
+	    m.touchHandler(pt);
+	    flowerState.touchHandler(pt);	    
 	}
     }
 
@@ -344,9 +302,9 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	
 	@Override
 	public void draw(MyGLRenderer r){
-			super.draw(r);
-			m.draw(r);
-		}
+	    super.draw(r);
+	    m.draw(r);
+	}
 	
 	@Override
 	public void swipeHandler(String direction) {
@@ -363,7 +321,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	}
     }
 
-    //TODO: Not being used yet
+    //Used for physics of flowers.
     class FlowerMainMenu extends StateWidget {
 	long refTime;
 	float[] centers;
@@ -390,6 +348,12 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		centers[2*i+1] = r*((float)Math.cos(t));
 	    }
 	}
+
+	@Override
+	public void reset() {
+	    refTime = System.currentTimeMillis();
+	}
+
 	@Override
 	public void enterAnimation() {
 	    period = DrawPeriod.DURING;
@@ -454,13 +418,17 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     }
     
     class LevelPack1 extends StateWidget {
+	long createdTime;
 	long refTime;
 	float[] centers;
+	float[] fixedCenters;
 	
 	public LevelPack1() {
 	    //mBee.setMood(Mood.HAPPY);
 	    //Initialize tiles to have a random velocity.
 	    centers = new float[2*tiles.length];
+	    fixedCenters = new float[2*tiles.length];
+
 	    for (int i = 0; i < tiles.length; i++) {
 		double r = Math.random();
 		tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
@@ -469,17 +437,30 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		tiles[i].setTextures(TextureManager.CLEAR, TextureManager.getFlowerTexture());
 		tiles[i].setSize(flowerSize);
 	    }
-	    
+
 	    //Initiate the centers array.
+	    createdTime = System.currentTimeMillis();
+	    refTime = System.currentTimeMillis();
+	    float GlobalTime = ((float)(createdTime - refTime))/1000.0f;
+	    System.out.println("HSDF:LKJSDLKFJLS:DFJK:LSDFJ" + Float.toString(GlobalTime));
 	    for (int i = 0; i<tiles.length; i++ ) {
 		float ii = (float)i;
 		float r = (ii + 10*(1-1/(ii+1)))/25;
 		float t = ii/1.0f; 
-		centers[2*i] =  r*((float)Math.sin(t));
-		centers[2*i+1] = r*((float)Math.cos(t));
+		fixedCenters[2*i] =  r*((float)Math.sin(t));
+		fixedCenters[2*i+1] = r*((float)Math.cos(t));
+		centers[2*i]   = ((float)Math.cos(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.sin(GlobalTime))*fixedCenters[2*i + 1];
+		centers[2*i+1]   = -((float)Math.sin(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.cos(GlobalTime))*fixedCenters[2*i + 1];	
 	    }
 	}
 	
+	@Override
+	public void reset() {
+	    refTime = System.currentTimeMillis();
+	}
+
 	@Override
 	public void enterAnimation() {
 	    period = DrawPeriod.DURING;
@@ -492,6 +473,14 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    long time = System.currentTimeMillis()-refTime;
 	    float dt = Math.min(((float)time)/1000.0f, 33.3f);
 	    refTime = System.currentTimeMillis();
+	    float GlobalTime = ((float)(createdTime - refTime))/1000.0f;
+
+	    for (int i = 0; i<tiles.length; i++ ) {
+		centers[2*i]   = ((float)Math.cos(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.sin(GlobalTime))*fixedCenters[2*i + 1];
+		centers[2*i+1]   = -((float)Math.sin(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.cos(GlobalTime))*fixedCenters[2*i + 1];	
+	    }
 	    for(int i=0;i<tiles.length;i++){
 		getForce(tiles, i);
 		LATools.vSProd(dt, tiles[i].velocity, temp);
