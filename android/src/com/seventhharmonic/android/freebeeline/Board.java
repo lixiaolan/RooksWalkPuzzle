@@ -2,8 +2,6 @@ package com.seventhharmonic.android.freebeeline;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
-import java.io.IOException;
 
 import android.util.Log;
 
@@ -11,7 +9,6 @@ import com.seventhharmonic.android.freebeeline.db.HintsDataSource;
 import com.seventhharmonic.android.freebeeline.db.PurchasedDataSource;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
-import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
@@ -22,25 +19,25 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	public int[][] path;
 	public int boardWidth = 6;
 	public int boardHeight = 6;
+	
 	private boolean toggleHints = true;
 	private boolean toggleLines = true;	
 	private boolean toggleError = true;
 	protected float flowerSize = .15f;
 	protected float tileSize = .11f;    
-	ErrorLog mErrorLog;
-	Background mCheck;
-	TextBox mGameBanner;
-	private Background mBoardBg;
-	Puzzle currPuzzle;
+	private ErrorLog mErrorLog;
+	private TextBox mGameBanner;
+	private ImageWidget mBoardBg;
+	private Puzzle currPuzzle;
 	Model mModel;
-	Bee mBee;
+	private Bee mBee;
 	private PurchasedDataSource PDS;
 
 	public Board(Model mModel) {
 	    buildEmptyBoard();
 	    state = null;//new BoardPlay(tiles);
 	    mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
-	    mBoardBg = new Background("boardbg", 1.0f);
+	    mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
 	    mErrorLog = new ErrorLog(this);
 	    this.mModel = mModel;
 	    mBee = new Bee(this);
@@ -638,8 +635,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		TextBox mHints;
 		HintDialogWidgetLayout mHintDialog;
 		Store mStore;
-		
-		
+		GridWidgetLayout buttonGrid;
+		ButtonWidget mCheck;
+
 		//TODO: Get rid of tiles as inputs to these functions.
 		public BoardPlay(BoardTile[] tiles) {
 			DB = GlobalApplication.getHintDB();
@@ -652,19 +650,22 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mMenu = new Menu(boardHeight);
 
 			if(boardWidth == 6){
-				mBoardBg = new Background("boardbg", 1.0f);
+				mBoardBg = new ImageWidget(0,0, 1.0f,1.0f,"boardbg");
 			} else if(boardWidth == 5){
-				mBoardBg = new Background(TextureManager.BOARD5, 5.0f/6.0f);
+				float mBoardBgScale = 5.0f/6.0f;
+				mBoardBg = new ImageWidget(0,0,mBoardBgScale,mBoardBgScale,TextureManager.BOARD5);
 			}
 
-			reset = new ButtonWidget(0, -1.0f, .1f, .1f, TextureManager.ERASER);
+			reset = new ButtonWidget(0, -1.0f, .11f, .11f, TextureManager.ERASER);
+			reset.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			reset.setClickListener(new GameEventListener(){
 				public void event(int i){
 					resetBoard();
 				}
 			});
 
-			tutorial = new ButtonWidget(-.7f, 1.0f, .1f, .1f, TextureManager.QUESTIONMARK);
+			tutorial = new ButtonWidget(-.7f, 1.0f, .11f, .11f, TextureManager.QUESTIONMARK);
+			tutorial.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			tutorial.setClickListener(new GameEventListener(){
 				public void event(int i){
 					mModel.createTutorial();
@@ -677,23 +678,32 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			 * The hints text widget next to the bee.
 			 * Note: If we can't open the DB we will crash out the program!! That is not a bad thing.
 			 */
-			mHints = new TextBox(.5f, -0.9f, .12f, "");
+			mHints = new TextBox(0, 0, .12f, "");
 			if(mStore.hasUnlimitedHints()){
 				mHints.setText(TextureManager.HIVE);
 			} else {
 				mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
 			}
+			
+			mCheck  = new ButtonWidget(0, 0, .11f, .11f, TextureManager.CHECK);
+			mCheck.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
+			
+			//Grid Widget to store all these wonderful buttons.
+			buttonGrid = new GridWidgetLayout(4,1, .18f);
+			buttonGrid.setCenter(0, mBoardBg.getCenterY()-mBoardBg.getHeight()-.1f);
+			//buttonGrid.setCenter(.33f, (-1-geometry[1])/2+.1f);
+			buttonGrid.addWidget(mHints);
+			buttonGrid.addWidget(mCheck);
+			buttonGrid.addWidget(reset);
+			buttonGrid.addWidget(tutorial);
+			
 			/*
 			 * The dialog box that appears when you run out of hints.
 			 */
 			mHintDialog = new HintDialogWidgetLayout(.8f, TextureManager.HINTPROMPT, mHints);
-
-			mGameBanner.setText("");
+			mGameBanner.setText(currPuzzle.getText());
 			initSize = tiles[0].getSize();
-			mCheck  = new Background("check",.11f);
-			float[] center = {-.7f,-1f, 0f};
-			mCheck.setCenter(center);
-
+			
 			for (int i = 0; i < tiles.length; i++) {
 				tiles[i].setRotate(false);// = false;
 				tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
@@ -776,16 +786,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			mHints.draw(r);
+			//mHints.draw(r);
 			mGameBanner.draw(r);
 			mBoardBg.draw(r);
 			super.draw(tiles, r);
 			mBee.draw(r);
 			mMenu.draw(r);
-			reset.draw(r);
+			//reset.draw(r);
 			mHintDialog.draw(r);
-			mCheck.draw(r);
-			tutorial.draw(r);
+			//mCheck.draw(r);
+			//tutorial.draw(r);
+			buttonGrid.draw(r);
 		}	
 
 		@Override
@@ -835,7 +846,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				return;
 			}
 
-			if(mCheck.touched(pt) == 1){
+			if(mCheck.isTouched(pt)){
 				if(checkSolution()) {		
 					if(currPuzzle!=null){
 						Log.d("board", "solved a puzzle and set completed to true");
@@ -844,9 +855,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 						mModel.state.resumeGameExists = false;
 						mBee.setMood(Mood.HAPPY);
 						mModel.setState(GameState.GAME_MENU_END);
+
 						//TODO: DO THIS DIFFERENT WITH A HARD RESET
-						mModel.toc.setState();
-						mModel.toc.setState();
+						// mModel.toc.setState();
+						// mModel.toc.setState();
+
 						GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
 					}
 				} 
@@ -886,7 +899,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		public void updateErrors(){
 			for(int i =0;i<tiles.length;i++){
 				String error = mErrorLog.getError(i); 
-				if(error.equals(TextureManager.CLEAR)){
+				if(error.equals("")){
 					tiles[i].setColor(tiles[i].nativeColor);
 					if(i == at){
 						tiles[i].setColor("blue");
@@ -897,7 +910,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		public void turnErrorRed(int at){
 			String error = mErrorLog.getError(at); 
-			if(!error.equals(TextureManager.CLEAR)){
+			if(!error.equals("")){
 				tiles[at].setColor("red");
 			} 
 		}
@@ -929,20 +942,20 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		public BoardGameEnd(BoardTile[] tiles) {
 			mDialog = new EndGameDialogWidgetLayout(.8f, currPuzzle.getChapter().getNumberPuzzlesIncomplete());
+			//mDialog.setCenter(0,(-1-geometry[1])/2);
 			mDialog.setNextClickListener(new GameEventListener(){
 				public void event(int i ){
 					Log.d("Dialog","Clicked");
 					mDialog.deactivate();
 					if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
-						createPuzzleFromPuzzle(currPuzzle.getNextPuzzle());
+
+						mModel.setModelToGamePlayOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
-						mModel.setState(GameState.GAME_OPENING);
+
 					} else {
 						//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
-						mModel.toc.setState();
-						mModel.toc.setState();
-						mModel.setState(GameState.TABLE_OF_CONTENTS);
+						mModel.enterLevelPack();
 					}
 				}
 
@@ -953,13 +966,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				public void event(int i){
 					mDialog.deactivate();
 					//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
-					mModel.toc.setState();
-					mModel.toc.setState();
-					mModel.setState(GameState.TABLE_OF_CONTENTS);
+					mModel.enterLevelPack();
 				}
 
 			});
 
+			
 			mDialog.activate();
 			for (int i = 0; i < tiles.length; i++) {
 				flipped[i] = false;

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -16,6 +15,7 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.common.RawResourceReader;
@@ -23,7 +23,6 @@ import com.seventhharmonic.android.freebeeline.common.ShaderHelper;
 import com.seventhharmonic.android.freebeeline.graphics.FPSCounter;
 import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
-
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 	String TAG = "MyGLRenderer";
@@ -233,10 +232,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		TM = new TextureManager(mActivityContext);
 		TM.buildTextures();		
 		
-		TC = new TextCreator();
 		//Create all the necessary text fonts here
-		TC.load("font3.ttf", 14, 2, 2);
+		TC = new TextCreator();
+		TC.load("font3.ttf", 50, 2, 2);
 		
+		Log.d(TAG, Float.toString(cameraDistance));
 		// Set our per-vertex lighting program.
 		GLES20.glUseProgram(mProgramHandle);
 		// Set program handles for square drawing.
@@ -266,7 +266,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onSurfaceChanged(GL10 unused, int width, int height) {
-		//TM.buildTextures();
 		float magicNumber = 1.0f;
 
 		// Set the OpenGL viewport to the same size as the surface.
@@ -276,6 +275,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		// while the width will vary as per aspect ratio.
 		screenWidth = (float) width;
 		screenHeight = (float) height;
+		Log.d(TAG, "width"+" "+Float.toString(width));
 		final float ratio = screenWidth/screenHeight;
 		final float left = -ratio;
 		final float right = ratio;
@@ -305,9 +305,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		// NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
 		// view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 		Matrix.setLookAtM(mVMatrix, 0, eyeX, eyeY, -cameraDistance, lookX, lookY, lookZ, upX, upY, upZ);		
-
-		mModel.setGeometry(getGeometry());
+		
 		GlobalApplication.getGeometry().setGeometry(getGeometry()[0], getGeometry()[1]);
+		mModel.setGeometry(GlobalApplication.getGeometry());
 		
 	}
 
@@ -363,10 +363,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		mTextures[0] = TM.library.get(textures[0]);
 		mTextures[1] = TM.library.get(textures[1]);	
 		} catch(Exception e){
-			Log.d(TAG, "Exception: "+e.getMessage()+textures[1]);
+		     //System.out.println("CAUGHT TEXTURE ISSUE");
+		     Log.d(TAG, "Exception: "+e.getMessage()+textures[1]);
 		}
 		mColor = colorMap.get(color);
-
 		//Apply MTextures. Need this to make transparent colors stay transparent
 		for(int i=0;i<2; i++){
 			GLES20.glActiveTexture(GLES20.GL_TEXTURE0+i);        
@@ -413,6 +413,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 		// Pass in the combined matrix.
 		GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+//		//GLES20.glDrawArrays(GLES20.GL_LINES, 0, 6);
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
 	}
 
@@ -423,12 +424,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			mTextures[1] = TM.library.get(textures[1]);	
 		} catch (NullPointerException e){
 			//Log.e(TAG, "Didn't find a texture or color", e);
-			if(textures[0] == null){
-				Log.d(TAG, "found a null thing");
-			}
-			//Log.d(TAG, textures[0]);
-			//Log.d(TAG, textures[1]);
-			//Log.d(TAG, color);
+		    System.out.println("CAUGHT TEXTURE ISSUE");
+		    if(textures[0] == null){
+			Log.d(TAG, "found a null thing");
+		    }
+		    //Log.d(TAG, textures[0]);
+		    //Log.d(TAG, textures[1]);
+		    //Log.d(TAG, color);
 		}
 		mColor = colorMap.get(color);
 		//Apply MTextures. Need this to make transparent colors stay transparent
@@ -697,14 +699,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		mColor = colorMap.get(color);
 
 
-		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+2);
+		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+0);
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TM.library.get("sheet"));
-		GLES20.glUniform1i(mTextureHandle.get(0), 2);
+		GLES20.glUniform1i(mTextureHandle.get(0), 0);
 
    		
-   		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+3);
+   		GLES20.glActiveTexture(GLES20.GL_TEXTURE0+1);
    		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TM.library.get("sheet"));
-   		GLES20.glUniform1i(mTextureHandle.get(1), 3);
+   		GLES20.glUniform1i(mTextureHandle.get(1), 1);
 
    		// Determine position and size
 		Matrix.setIdentityM(mModelMatrix, 0);
@@ -751,8 +753,22 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
 	}
 
-	public void drawTextBox(float[] center, float width, String text){
-		TC.draw(this, text, center[0], center[1], width, 2.0f/screenWidth, 2*cameraDistance/screenHeight);
+	/**
+	 * @param center
+	 * @param width
+	 * @param fontSize Should be in b's.
+	 * @param text
+	 */
+	public void drawTextBox(float[] center, float width, float fontSize, String text){
+		//Original font size - big.
+		float font = TC.fontSize;
+		DisplayMetrics DM = GlobalApplication.getContext().getResources().getDisplayMetrics();
+		float dpi = DM.xdpi/DM.DENSITY_DEFAULT;
+		//Scaling on X and y. In theory the DPI should make things more uniform?
+		float fontInPixels = TC.bToPixels(TC.bfToB(fontSize));
+		float scaleX = 1/screenWidth*fontInPixels/font;
+		float scaleY = 1*cameraDistance/screenHeight*fontInPixels/font;
+		TC.draw(this, text, center[0], center[1], width, scaleX, scaleY);
 	}
 
 	boolean togg = true;

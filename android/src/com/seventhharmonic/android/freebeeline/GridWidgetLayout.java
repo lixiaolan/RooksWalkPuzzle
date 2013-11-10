@@ -10,6 +10,8 @@ public class GridWidgetLayout extends WidgetLayout{
 	float[] xcoords;
 	float[] ycoords;
 	
+	
+	
 	public GridWidgetLayout(int width, int height, float size){
 		this.width = width;
 		this.height = height;

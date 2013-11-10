@@ -5,53 +5,76 @@ import android.util.Log;
 import com.seventhharmonic.android.freebeeline.State.DrawPeriod;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.util.LATools;
+import com.seventhharmonic.com.freebeeline.levelresources.*;
+import com.seventhharmonic.android.freebeeline.listeners.*;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPackProvider;
+import java.util.HashMap;
+import java.util.Map;
 
 class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     
+    //This is the internal state system this class will use:
+    //MAIN_MENU: Opening game menu
+    //BOOK_SELECT: Selecting a puzzle book (uses two overlayed widgits);
+    //CHAPTER_SELECT: The state that used to be handled by Table of Contents.
+
+    //The enum and its member
     enum FlowerState {
-	MAIN_MENU, DEFAULT
+	MAIN_MENU, BOOK_SELECT, CHAPTER_SELECT 
     }
-    
-    // used for placing a screen slide widget on top of stat system.
-    // This is a bit of a hack... fair warning.
-    
-    private StateWidget localState; 
-    private String TAG = "FlowerMenu";    
     private FlowerState mFlowerState;
-    //private CircleProgressBarWidget mCPB;
+
+    //Tag used for logs
+    private String TAG = "FlowerMenu";
+    
+    // "slider" used for placing a screen slide widget on top of stat system.
+    // This is a bit of a hack... fair warning.
+    //private StateWidget flowerState;
+
+    //The bee that lives in the flowers
     private Bee mBee;
-    //private ImageWidget mBanner;
+
     private LevelPack currLevelPack;
     private int currLevelPackIndex;
+
     private LevelPackProvider LPP;
+
     protected float flowerSize = .15f;
-    private static int lpCount; 
     private static final int flowerCount = 25; 
+    private FlowerTile[] tiles = new FlowerTile[flowerCount];
+
     private long lastTouchTime;
     private float[] lastTouchPos = new float[2];
-    private FlowerTile[] tiles = new FlowerTile[flowerCount];
-    private Model mModel;
+
+
     
-    //do I really need these?
+    //do I really need these? Yes, I do!
     private int savedLevelPack = 0;
     private int savedChapter = 0;
-    
-    
+
+    private LevelPackProvider mLPP;	        
+    private Model mModel;
+
+    private Map <String, StateWidget> str2physics = new HashMap<String, StateWidget>();
+
     public FlowerMenu(Model model) {
+
 	mModel = model;
+
 	float[] center = {.20f,-1.0f, 0.0f };
 	//mBee = new Bee(this);
 	//	mCPB = new CircleProgressBarWidget(lpCount, center, .05f);
 	//mBee.setState(GameState.MAIN_MENU_OPENING, TutorialInfo2.length);
-	mFlowerState = FlowerState.MAIN_MENU;
+
 	currLevelPackIndex = -1;
 	
 	//mBanner = new ImageWidget(0,0,.4f,.4f,TextureManager.LP1);
 	//mBanner.setColor("white");
-	//	mBanner.setBackground(TextureManager.BOX);
+	//mBanner.setBackground(TextureManager.BOX);
 	
+
+	//Initiliaze the flowers randomly on the screen.
 	for(int i =0;i<tiles.length;i++){
 	    double r = Math.random();
 	    float Sx = (float)(-1.5*r+(1-r)*1.5);
@@ -60,110 +83,213 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    tiles[i] = new FlowerTile(Sx,Sy, flowerSize);
 	}
 	
-	state = new MainMenu();
+
+	//These need to go here:
+	str2physics.put("main_menu", new FlowerMainMenu());
+	str2physics.put("default", new LevelPack1());
+
+	//The state for MAIN_MENU:
+	mFlowerState = FlowerState.MAIN_MENU;
+	state = new MainMenu();		
+
 	LPP = GlobalApplication.getLevelPackProvider();
-	localState = new LevelPackDisplay();		
-	lpCount = LPP.getNumberOfLevelPacks();
+
     }
     
     public void setGeometry(float[] g){
 	super.setGeometry(g);
     }
     
-    /* 
-     * This class reads the physics style and pack title from the Level
-     * Pack Provider class. Then it updates its state accordingly.
-     */    
-    
-    public void setGlobalState(GameState s) {
-	switch(s) {
-	case FLOWER_MENU:
-	    setState(0);
+    //Update the state according to the internal state system
+    private void updateState() {
+	switch(mFlowerState) {
+	case MAIN_MENU:
+	    state = new MainMenu();			 
+	    break;
+	case BOOK_SELECT:
+	    state = new LevelPackDisplay();
+	    break;
+	case CHAPTER_SELECT:
+	    state = new ChapterDisplay();
 	    break;
 	default:
-	    setState(-1);
 	    break;
 	}
+    }
+    
+    //A method which backs up the state of this class
+    //This method also can set the state of Model and is
+    //the only method that can do this.
+    public void backState() {
+	System.out.println("In backState");
+	switch(mFlowerState) {
+	case MAIN_MENU:
+	    break;
+	case BOOK_SELECT:
+	    System.out.println("In backState: BOOK_SELECT");
+	    mFlowerState = FlowerState.MAIN_MENU;
+	    
+	    mModel.setModelToMainMenuOpening();
+	    break;
+	case CHAPTER_SELECT:
+	    mFlowerState = FlowerState.BOOK_SELECT;
+	    break;
+	default:
+	    break;
+	}
+	updateState();
+    }
+
+    public void enterLevelPack() {
+	System.out.println("enterLevelPack");
+	mFlowerState = FlowerState.BOOK_SELECT;
+	updateState();
     }
 
     public void setState(int index) {
-	Log.d(TAG, "index"+Integer.toString(index));
-	Log.d(TAG, "lpCount"+Integer.toString(lpCount));
-	
-	currLevelPackIndex = index;
-	if(index == -1){
-	    state = new MainMenu();
-	    mFlowerState = FlowerState.MAIN_MENU;
-	    return;
-	}
-	
-	currLevelPack = LPP.getLevelPack(index);
-	//TODO: This sucks. The problem is that LPCount may not exist yet!
-	// mCPB.setLength(lpCount);
-	// mCPB.setActiveCircle(index);
-	if(currLevelPack.getStyle() == "default"){
-	    state = new LevelPack1();
-	    mFlowerState = FlowerState.DEFAULT;
-	}
     }
     
-    /* (non-Javadoc) Swipe Handler for this class.
+    /* 
+     *(non-Javadoc) Swipe Handler for this class.
      * @see com.seventhharmonic.android.freebeeline.GraphicWidget#swipeHandler(java.lang.String)
      */ 
 
     public void swipeHandler(String direction) {
-	lpCount = LPP.getNumberOfLevelPacks();
-	if(direction.equals("left_arrow")){
-	    int i = currLevelPackIndex+1;
-	    if (i > lpCount-1) {
-	    }
-	    else {
-		setState(Math.min(currLevelPackIndex+1, lpCount-1));
-	    }
-	} else if(direction.equals("right_arrow")){
-	    int i = currLevelPackIndex-1;
-	    if (i < 0) {
-	    }
-	    else{
-		setState(Math.max(currLevelPackIndex-1, 0));
-	    }
-	}
-	localState.swipeHandler(direction);
+	state.swipeHandler(direction);
     }
     
     public void touchHandler(float[] pt) {
-	/*TODO: This needs to get changed to potentiall trigger Model. Not sure whether to do it here or
-	 * in the states.  
-	 */
-	if (mFlowerState == FlowerState.MAIN_MENU) {
-
-	    state.touchHandler(pt);
-	}
-	if (mFlowerState == FlowerState.DEFAULT) {
-
-	    localState.touchHandler(pt);
-	    state.touchHandler(pt);
-	}
+	state.touchHandler(pt);
     }
-    
-    public LevelPack getCLP() {
-	return currLevelPack;
-    }
+
+    //This maps the proper physics to the proper string.
+        
+    //TODO: Add the flower drawing to this class:
+    class MainMenu extends StateWidget {
+	StateWidget flowerState;
+	
+	public MainMenu(){
+	    str2physics.get("main_menu").reset();
+	    flowerState = str2physics.get("main_menu");
+	}
+	
+	@Override
+	public void enterAnimation() {
+	    period = DrawPeriod.DURING;
+	}
+	
+	@Override
+	public void duringAnimation(){
+	}
+	
+	@Override
+	public void draw(MyGLRenderer r){
+	    super.draw(r);
+	    flowerState.draw(r);
+	}
+	
+	@Override
+	public void swipeHandler(String direction) {
+	    flowerState.swipeHandler(direction);
+	    return;
+	}
+	
+	@Override
+	public void touchHandler(float[] pt) {
+	    flowerState.touchHandler(pt);
+	    return;
+	}
+    }    
 
     class LevelPackDisplay extends StateWidget {
-	
 	ScreenSlideWidgetLayout m;
+	StateWidget flowerState;
 	public LevelPackDisplay(){
-	    
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    m.setDrawProgressBar(true);
 	    for(int i =0;i<LPP.getNumberOfLevelPacks();i++){
-		m.addWidget(new LevelPackWidget(TextureManager.CLEAR,"book1chapter0"));
-		
+		m.addWidget(new LevelPackWidget(TextureManager.CLEAR, "book1chapter0"));
 		//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
 	    }
 	    m.setActiveWidget(savedLevelPack);
-	    currLevelPack = LPP.getLevelPack(savedLevelPack);	    
+	    currLevelPack = LPP.getLevelPack(savedLevelPack);
+	    str2physics.get(currLevelPack.getStyle()).reset();
+	    flowerState = str2physics.get(currLevelPack.getStyle());
+	}
+	
+	@Override
+	public void enterAnimation() {
+	    period = DrawPeriod.DURING;
+	}
+	
+	@Override
+	public void duringAnimation(){
+	}
+	
+	@Override
+	public void draw(MyGLRenderer r){
+	    super.draw(r);
+	    flowerState.draw(r);
+	    m.draw(r);
+    
+	}
+	
+	@Override
+	public void swipeHandler(String direction) {
+	    flowerState.swipeHandler(direction);
+	    m.swipeHandler(direction);
+	    str2physics.get(currLevelPack.getStyle()).reset();
+	    flowerState = str2physics.get(currLevelPack.getStyle());
+	}
+	
+	@Override
+	public void touchHandler(float[] pt) {
+	    currLevelPack = LPP.getLevelPack(m.getActiveWidget());
+	    if(m.getWidget(m.getActiveWidget()).isTouched(pt)){
+		if(savedLevelPack != m.activeWidget){
+		    savedLevelPack = m.activeWidget;
+		    savedChapter = 0;
+		}
+		Log.d(TAG,"touched LevelPackDisplay");
+		if(m.isTouched(pt)){
+		    mFlowerState = FlowerState.CHAPTER_SELECT;
+		    currLevelPack = currLevelPack;
+		    updateState();
+		}	
+	    }
+	    m.touchHandler(pt);
+	    flowerState.touchHandler(pt);	    
+	}
+    }
+
+    class ChapterDisplay extends StateWidget{
+	ScreenSlideWidgetLayout m;
+	Widget currChapterWidget;
+	
+	public ChapterDisplay(){
+	    m = new ScreenSlideWidgetLayout(2.0f);
+
+	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
+		
+		//If the previous chapter is completed, launch a normal chapter widget
+		if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
+		    final Chapter c = currLevelPack.getChapter(i);
+		    ChapterWidget ch  = new ChapterWidget(c);
+		    ch.setTouchListener(new GameEventListener() {
+			    public void event(int puzz){
+				Puzzle p = c.getPuzzle(puzz);
+				mModel.setModelToGamePlayOpening(p);
+			    }
+			});
+		    m.addWidget(ch);
+		}
+		
+		//Otherwise lock the user out!
+		else {
+		    m.addWidget(new LockedChapterWidget());
+		}
+	    }
+	    m.setActiveWidget(savedChapter);
 	}
 	
 	@Override
@@ -188,42 +314,20 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	}
 	
 	@Override
-	public void touchHandler(float[] pt) {
-	    currLevelPack = LPP.getLevelPack(m.getActiveWidget());
-	    if(m.getWidget(m.getActiveWidget()).isTouched(pt)){
-		if(savedLevelPack != m.activeWidget){
-		    mModel.toc.savedLevelPack = m.activeWidget;
-		    mModel.toc.savedChapter = 0;
-		}
-		Log.d(TAG,"touched LevelPackDisplay");
-		if(m.isTouched(pt)){
-		    setState();
-		    Log.d(TAG,"Got here");
-		    mModel.toc.currLevelPack = currLevelPack;
-		    //mModel.toc.savedChapter = 0;
-		    mModel.toc.setState();
-		    mModel.setState(GameState.TABLE_OF_CONTENTS);
-		}
-		
-	    }
-
-
+	public void touchHandler(float[] pt) {	
 	    m.touchHandler(pt);
-	    
+	    currChapterWidget = m.getWidget(m.getActiveWidget());
+	    savedChapter = m.activeWidget;
+	    currChapterWidget.touchHandler(pt);
 	}
-	
     }
-    
-    /**
-     * MainMenu state for FlowerMenu.
-     * @author jain
-     *
-     */
-    class MainMenu extends StateWidget {
+
+    //Used for physics of flowers.
+    class FlowerMainMenu extends StateWidget {
 	long refTime;
 	float[] centers;
 	
-	public MainMenu() {
+	public FlowerMainMenu() {
 	    //mBee.setMood(Mood.HAPPY);
 	    //Initialize tiles to have a random velocity.
 	    centers = new float[2*tiles.length];
@@ -245,6 +349,12 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		centers[2*i+1] = r*((float)Math.cos(t));
 	    }
 	}
+
+	@Override
+	public void reset() {
+	    refTime = System.currentTimeMillis();
+	}
+
 	@Override
 	public void enterAnimation() {
 	    period = DrawPeriod.DURING;
@@ -309,13 +419,17 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     }
     
     class LevelPack1 extends StateWidget {
+	long createdTime;
 	long refTime;
 	float[] centers;
+	float[] fixedCenters;
 	
 	public LevelPack1() {
 	    //mBee.setMood(Mood.HAPPY);
 	    //Initialize tiles to have a random velocity.
 	    centers = new float[2*tiles.length];
+	    fixedCenters = new float[2*tiles.length];
+
 	    for (int i = 0; i < tiles.length; i++) {
 		double r = Math.random();
 		tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
@@ -324,17 +438,30 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		tiles[i].setTextures(TextureManager.CLEAR, TextureManager.getFlowerTexture());
 		tiles[i].setSize(flowerSize);
 	    }
-	    
+
 	    //Initiate the centers array.
+	    createdTime = System.currentTimeMillis();
+	    refTime = System.currentTimeMillis();
+	    float GlobalTime = ((float)(createdTime - refTime))/1000.0f;
+	    System.out.println("HSDF:LKJSDLKFJLS:DFJK:LSDFJ" + Float.toString(GlobalTime));
 	    for (int i = 0; i<tiles.length; i++ ) {
 		float ii = (float)i;
 		float r = (ii + 10*(1-1/(ii+1)))/25;
 		float t = ii/1.0f; 
-		centers[2*i] =  r*((float)Math.sin(t));
-		centers[2*i+1] = r*((float)Math.cos(t));
+		fixedCenters[2*i] =  r*((float)Math.sin(t));
+		fixedCenters[2*i+1] = r*((float)Math.cos(t));
+		centers[2*i]   = ((float)Math.cos(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.sin(GlobalTime))*fixedCenters[2*i + 1];
+		centers[2*i+1]   = -((float)Math.sin(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.cos(GlobalTime))*fixedCenters[2*i + 1];	
 	    }
 	}
 	
+	@Override
+	public void reset() {
+	    refTime = System.currentTimeMillis();
+	}
+
 	@Override
 	public void enterAnimation() {
 	    period = DrawPeriod.DURING;
@@ -347,6 +474,14 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    long time = System.currentTimeMillis()-refTime;
 	    float dt = Math.min(((float)time)/1000.0f, 33.3f);
 	    refTime = System.currentTimeMillis();
+	    float GlobalTime = ((float)(createdTime - refTime))/1000.0f;
+
+	    for (int i = 0; i<tiles.length; i++ ) {
+		centers[2*i]   = ((float)Math.cos(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.sin(GlobalTime))*fixedCenters[2*i + 1];
+		centers[2*i+1]   = -((float)Math.sin(GlobalTime))*fixedCenters[2*i] 
+		    + ((float)Math.cos(GlobalTime))*fixedCenters[2*i + 1];	
+	    }
 	    for(int i=0;i<tiles.length;i++){
 		getForce(tiles, i);
 		LATools.vSProd(dt, tiles[i].velocity, temp);
@@ -385,7 +520,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		tiles[i].draw(r);
 	    }
 	    //mBanner.draw(r);
-	    localState.draw(r);	    
+	    //slider.draw(r);	    
 	}
 	
 	@Override
@@ -399,7 +534,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    lastTouchTime = System.currentTimeMillis();
 	}	
     }
-    
+
     @Override
     public BoardTile getTile(int i) {
 	// TODO Auto-generated method stub

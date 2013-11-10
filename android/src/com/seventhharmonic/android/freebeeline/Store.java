@@ -52,8 +52,10 @@ public class Store {
 	}
 
 
+	/**Pass it a standard android static response and it will consume it. This is for testing purposes only!
+	 * @param sku
+	 */
 	private void consumeStaticResponse(String sku){
-
 		//The point of this next piece of code is to fix fuckups.
 		ArrayList<String> moreSkus = new ArrayList<String>();
 		moreSkus.add(sku);
@@ -65,7 +67,6 @@ public class Store {
 		}
 		mHelper.consumeAsync(mInventory.getPurchase("android.test.purchased"),mConsumeHintsFinishedListener);
 		/**/
-
 	}
 
 	void initializeIab() {
@@ -104,10 +105,10 @@ public class Store {
 				moreSkus.add("test1");
 				moreSkus.add("hints5");
 				mHelper.queryInventoryAsync(true, moreSkus, mGotInventoryListener);
-
+				
 			}
 		});
-
+		//consumeStaticResponse("android.test.purchased");
 	}
 
 	IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
@@ -228,15 +229,15 @@ public class Store {
 	 * Code run when you decide to buy infinity hints.
 	 */
 
-	String sku = "android.test.purchased";
+	String sku = "test5";
 
 	public boolean hasUnlimitedHints(){
-
+		
 		if(mInventory == null){
 			return PDS.getPurchased(sku);
 		}
-
-		//TODO: Compare to how mainActivity is doing this more safely. You should really verify the purchase here. 
+		
+		//TODO: Compare to how mainActivity in trivialDrive is doing this more safely. You should really verify the purchase here. 
 		if(mInventory.hasPurchase(sku)){
 			return true;
 		} else {

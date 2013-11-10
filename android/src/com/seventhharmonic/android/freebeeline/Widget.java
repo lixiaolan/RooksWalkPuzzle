@@ -111,6 +111,8 @@ public abstract class Widget {
 		
 	}	
 	
-	public void setColor(){} 
+	public void setBorder(boolean border){}
+	
+	public void setColor(String color){} 
 	
 }

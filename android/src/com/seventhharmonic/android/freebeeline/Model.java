@@ -2,6 +2,7 @@ package com.seventhharmonic.android.freebeeline;
 
 import java.util.List;
 
+import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
@@ -24,8 +25,8 @@ class Model {
     private int at = -1;
     private Vibrator vibe;
     public Context context;
-    private Background mTitle;
-    private float[] geometry = new float[3];
+    private ImageWidget mTitle;
+    private Geometry geometry;
     private StoryBoard mStoryBoard;
     private DataServer mDataServer;
     public boolean createTextures = false;
@@ -36,7 +37,6 @@ class Model {
     TextBox mVersionBanner;
     Store mStore;
     //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
-    TableOfContents toc;
     
     public Model(Context c) {
 	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
@@ -57,9 +57,7 @@ class Model {
 	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
-	mTitle = new Background("title", .50f);
-	float[] titleCenter = {.5f, 0.8f, 0.0f};
-	mTitle.setCenter(titleCenter);
+	mTitle = new ImageWidget(.5f,.8f,.5f,.5f,"title");
 	mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
 	mVersionBanner.setCenter(0.0f, 0.0f);
     }
@@ -71,7 +69,7 @@ class Model {
     
     public void createTutorial(){
 	mTutorialBoard = new TutorialBoard2();
-	mTutorialBoard.setGeometry(geometry);
+	mTutorialBoard.setGeometry(geometry.getGeometry());
 	
     }
     
@@ -112,6 +110,7 @@ class Model {
 	    mFlowerMenu.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
+
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
@@ -139,10 +138,6 @@ class Model {
 	    mStoryBoard.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
-	case TABLE_OF_CONTENTS:
-	    toc.touchHandler(pt);
-	    mMenuManager.touchHandler(pt);
-	    break;
 	default: break;
 	}
 
@@ -155,13 +150,9 @@ class Model {
 	case FLOWER_MENU:
 	    mFlowerMenu.swipeHandler(direction);
 	    break;	
-	case TABLE_OF_CONTENTS:
-	    toc.swipeHandler(direction);
-	    break;
 	case GAME_OPENING:
 	    mBoard.swipeHandler(direction);
 	    break;
-	    
 	case TUTORIAL:
 	    mTutorialBoard.swipeHandler(direction); 
 	    break;
@@ -196,10 +187,6 @@ class Model {
 	    mFlowerMenu.draw(r);
 	    mMenuManager.draw(r);
 	    break;
-	case TABLE_OF_CONTENTS:
-	    toc.draw(r);
-	    mMenuManager.draw(r);
-	    break;
 	case TUTORIAL:
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
@@ -208,27 +195,30 @@ class Model {
 	}
     }
     
-    public void setGeometry(float[] g) {
-	geometry = g;
+    public void setGeometry(Geometry g) {
+    //TODO: Should probably get the geometry statically anyways???
+    geometry = g;
 	mMenuManager.setGeometry(g);
-	mBoard.setGeometry(g);
-	Log.d("Model","g");
-	Log.d("Model", Float.toString(g[1]));
-	Log.d("Model","global");
-	GlobalApplication.getGeometry().setGeometry(g[0], g[1]);
-	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
+	mBoard.setGeometry(g.getGeometry());
+	//Log.d("Model","g");
+	//Log.d("Model", Float.toString(g[1]));
+	//Log.d("Model","global");
+	//	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
 	//TODO: This is a bit of hack to make sure these classes are not initialized too early.
 	mFlowerMenu = new FlowerMenu(this);
-	toc = new TableOfContents(this);
     }
     
     public void setState(GameState s){
-	mBoard.setState(s);
-	state.state = s;
-	mMenuManager.updateState();
-	mFlowerMenu.setGlobalState(s);
+    	mBoard.setState(s);
+    	state.state = s;
+    	mMenuManager.updateState();
     }
     
+    public void enterLevelPack() {
+	setState(GameState.FLOWER_MENU);
+	mFlowerMenu.enterLevelPack();
+    }
+
     public void setDataServer(DataServer d){
 	mDataServer = d;
     }
@@ -281,8 +271,18 @@ class Model {
 	    break;
 	}
     }
-    
-  
+
+
+   //INTERFACE CLASSES FOR FLOWERMENU:   
+    public void setModelToMainMenuOpening() {
+	setState(GameState.MAIN_MENU_OPENING);
+	System.out.println("GETTING HERE?A?A?A?A......NOPE!");
+    }
+
+    public void setModelToGamePlayOpening(Puzzle p) {
+	createPuzzleFromPuzzle(p);
+	setState(GameState.GAME_OPENING);
+    }  
 }
 
 

@@ -92,7 +92,7 @@ public class TextureManager {
 	public static final String UNLIMITEDHINTS = "Unlimited Hints";
 	public static final String HIVE = "hive";
 	public static final String PUZZLESLEFT = "Puzzles left in Chapter: ";
-
+	public static final String CHECK = "check";
 	public static final String TURNINGRULE = " Oops! The path should turn at each step.";
 	public static final String MATCHINGNUMBERRULE = "Watch out there! You can't point in the direction of a square with the same number.";
 	public static final String PASSTHROUGHRULE = "Your path can only go through empty squares.";
@@ -160,7 +160,7 @@ public class TextureManager {
 	 * @return
 	 */
 	public static String buildHint(long i){
-		return "hints:"+Long.toString(i);
+		return "hints:^"+Long.toString(i);
 	}
 	
 	public void loadBitmapFromAssets() {

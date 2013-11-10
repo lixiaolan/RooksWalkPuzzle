@@ -22,7 +22,18 @@ public class Puzzle {
 	Chapter ch;
 	String beforeFlower;
 	String afterFlower;
-	
+	String text;
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		if(text == null)
+			this.text="";
+		else
+			this.text = text;
+	}
 
 	protected String getBeforeFlower() {
 		return beforeFlower;
@@ -167,6 +178,7 @@ public class Puzzle {
 		p.setChapter(ch);
 		p.setBeforeFlower(beforeFlower);
 		p.setAfterFlower(afterFlower);
+		p.setText(text);
 		return p;
 	}
 	

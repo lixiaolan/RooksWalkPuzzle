@@ -33,10 +33,11 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		mBackground = new ImageWidget(0,0,width, height, TextureManager.CLEAR);
 		mBackground.setMode(MyGLRenderer.STRETCH);
 		mBackground.setRelativeCenter(0, 0);
+		mBackground.setBorder(true);
 		mBackground.setColor("opaque");
 		
-		mText = new TextBox(0,0,width, text);
-		mText.setRelativeCenter(0,.9f*height);
+		mText = new TextBox(0,0,.95f*width, text);
+		mText.setRelativeCenter(.05f,.9f*height);
 				
 		mBack = new ButtonWidget(0,0, width/5, width/5, TextureManager.BACK);
 		mBack.setRelativeCenter(-.7f*width, -.6f*height);
@@ -54,18 +55,18 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		GridWidgetLayout mGrid = new GridWidgetLayout(3, 1, width/4);
 		
 		fiveHints = new ImageWidget(0, 0, size, size, TextureManager.FIVEHINTS);
-		fiveHints.setBackground(TextureManager.BOX);
+		fiveHints.setBorder(true);
 		mGrid.addWidget(fiveHints);
 		
 		twentyHints = new ImageWidget(0, 0, size, size, TextureManager.TWENTYHINTS);
-		twentyHints.setBackground(TextureManager.BOX);
+		twentyHints.setBorder(true);
 		mGrid.addWidget(twentyHints);
 		
 		unlimitedHints = new ImageWidget(0, 0, size, size, TextureManager.UNLIMITEDHINTS);
-		unlimitedHints.setBackground(TextureManager.BOX);
+		unlimitedHints.setBorder(true);
 		mGrid.addWidget(unlimitedHints);
 		
-		mGrid.setRelativeCenter(0, .1f);
+		mGrid.setRelativeCenter(width/3f, -height+1.1f*size);
 		
 		
 		widgetList.add(mBackground);

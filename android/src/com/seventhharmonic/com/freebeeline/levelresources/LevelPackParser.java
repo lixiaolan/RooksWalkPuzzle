@@ -80,6 +80,7 @@ public class LevelPackParser extends BaseParser {
     			puzz.setId(Long.parseLong(a.getValue(ID)));
     			puzz.setBeforeFlower(a.getValue("before_flower"));
     			puzz.setAfterFlower(a.getValue("after_flower"));
+    			puzz.setText(a.getValue("text"));
     		}
     	});
     	

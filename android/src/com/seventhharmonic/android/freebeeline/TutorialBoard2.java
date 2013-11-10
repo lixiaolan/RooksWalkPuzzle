@@ -10,7 +10,7 @@ class TutorialBoard2 extends Board {
     }
     
     TextBox mBanner; 
-    Background mBoardBg;
+    ImageWidget mBoardBg;
     TutorialState mTutorialState;
     TutorialInfo2 mTutorialInfo = new TutorialInfo2();
     CircleProgressBarWidget mCPB;
@@ -21,9 +21,9 @@ class TutorialBoard2 extends Board {
 	//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 	super(null);
 	float[] center = {.20f,-1.0f, 0.0f };
-	mCPB = new CircleProgressBarWidget(4, center, .05f);
+	//mCPB = new CircleProgressBarWidget(4, center, .05f);
 	mBanner = new TextBox(0,0,.8f,"");
-	mBoardBg = new Background("boardbg", 1.0f);
+	mBoardBg = new ImageWidget(0,0,1,1,"boardbg");
 	mBee = new Bee(this);
 	mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);
 	state = new ShowPath(tiles,true);
@@ -151,7 +151,7 @@ class TutorialBoard2 extends Board {
     
     class SLIDE1  extends State<BoardTile>{
 	
-	Banner hand;
+	ImageWidget hand;
 	long refTime;
 	float[] pt0 = {.22f,-.33f};
 	float[] pt1 = {.22f, -.05f};
@@ -167,9 +167,7 @@ class TutorialBoard2 extends Board {
 	
 	public SLIDE1(){
 	    mBee.setMood(Mood.HIDDEN);
-	    hand = new Banner(.5f);
-	    hand.set(TextureManager.HAND);
-	    hand.setCenter(.23f, .12f);
+	    hand = new ImageWidget(.23f,.12f,.5f,.5f,TextureManager.HAND);
 	    refTime = System.currentTimeMillis();
 	    prepBoard();
 	    mCPB.setActiveCircle(1);
@@ -260,7 +258,7 @@ class TutorialBoard2 extends Board {
     class SLIDE2 extends State<BoardTile>{
 	long refTime;
 	
-	private Banner mCheck;
+	private ImageWidget mCheck;
 	private boolean lines  = true;
 	
 	
@@ -271,11 +269,8 @@ class TutorialBoard2 extends Board {
 	    
 	    prepBoard();
 	    
-	    mCheck  = new Banner(.22f);
-	    mCheck.setCenter(-.68f, .11f);
-	    mCheck.setColor("transparent");
-	    mCheck.set("check");
-	    mCPB.setActiveCircle(2);
+	    mCheck  = new ImageWidget(-.68f, .11f, .22f, .22f, TextureManager.CHECK);
+	   // CPB.setActiveCircle(2);
 	}
 	
 	private void prepBoard(){
@@ -297,7 +292,7 @@ class TutorialBoard2 extends Board {
 	    public void duringAnimation(BoardTile[] tiles) {
 	    float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
 	    if(time < 2) {
-		mCheck.set("check");
+		mCheck.setImage("check");
 		tiles[9].setNumber("2");
 		tiles[9].setArrow("down_arrow");
 		tiles[9].setTextures();
@@ -305,7 +300,7 @@ class TutorialBoard2 extends Board {
 		tiles[9].setNumber("2");
 		tiles[9].setArrow("left_arrow");
 		tiles[9].setTextures();
-		mCheck.set("menu_1");
+		mCheck.setImage("menu_1");
 		if(lines){
 		    drawLines();
 		    lines = false;
@@ -327,7 +322,7 @@ class TutorialBoard2 extends Board {
     
     class SLIDE3 extends State<BoardTile> {
 	long refTime;
-	private Banner mCheck;
+	private ImageWidget mCheck;
 	boolean lines = true;
 	public SLIDE3(){
 	    mBee.setMood(Mood.HIDDEN);
@@ -335,10 +330,7 @@ class TutorialBoard2 extends Board {
 	    
 	    prepBoard();
 	    
-	    mCheck  = new Banner(.22f);
-	    mCheck.setCenter(-.68f, .11f);
-	    mCheck.setColor("transparent");
-	    mCheck.set("check");
+	    mCheck  = new ImageWidget(-.68f, .11f, .22f, .22f, TextureManager.CHECK);
 	    mBanner.setText(mTutorialInfo.banners[3]);
 	    mCPB.setActiveCircle(3);
 	}
@@ -366,7 +358,7 @@ class TutorialBoard2 extends Board {
 	    public void duringAnimation(BoardTile[] tiles) {
 	    float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
 	    if(time < 2) {
-		mCheck.set("menu_1");
+		mCheck.setImage("menu_1");
 		tiles[9].setNumber("2");
 		tiles[9].setArrow("left_arrow");
 		tiles[9].setTextures();
@@ -374,7 +366,7 @@ class TutorialBoard2 extends Board {
 		tiles[9].setNumber("3");
 		tiles[9].setArrow("left_arrow");
 		tiles[9].setTextures();
-		mCheck.set("check");
+		mCheck.setImage(TextureManager.CHECK);
 		if(lines){
 		    drawLines();
 		    lines = false;

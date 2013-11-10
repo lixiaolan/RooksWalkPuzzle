@@ -18,26 +18,21 @@ public class SAXLevelPackProvider implements LevelPackProvider{
 	List<LevelPack> levelPacks = new ArrayList<LevelPack>();
 	LevelPackParser mLevelPackParser = new LevelPackParser();
 	
-	
-	
 	public SAXLevelPackProvider(){
 	}
-	
-	
-	
+
 	public void initialize() {
-		Context context = GlobalApplication.getContext();
-		try{
-			String[] levelPackList = context.getAssets().list(BASE);
-			for(String s: levelPackList){
-				levelPacks.add(mLevelPackParser.parse(BASE+"/"+s));
-				
-			}
-		} catch(IOException e){
-			 throw new RuntimeException(e);
+	    Context context = GlobalApplication.getContext();
+	    try{
+		String[] levelPackList = context.getAssets().list(BASE);
+		for(String s: levelPackList){
+		    levelPacks.add(mLevelPackParser.parse(BASE+"/"+s));	    
 		}
-		Log.d(TAG,"Level Pack parsed");
-		//GlobalApplication.getTextureBridge().startTextureCreation();
+	    } catch(IOException e){
+		throw new RuntimeException(e);
+	    }
+	    Log.d(TAG,"Level Pack parsed");
+	    //GlobalApplication.getTextureBridge().startTextureCreation();
 	}
 	
 	@Override

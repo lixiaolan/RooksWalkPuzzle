@@ -9,7 +9,7 @@ import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 public class LockedChapterWidget extends WidgetLayout{
 	String TAG = "LockedChapterWidget";
 	ImageWidget mImage;
-	TextWidget mText;
+	//TextWidget mText;
 	public LockedChapterWidget(){
 		
 		/*

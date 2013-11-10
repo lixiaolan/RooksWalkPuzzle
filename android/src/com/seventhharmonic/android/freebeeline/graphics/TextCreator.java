@@ -31,6 +31,8 @@ public class TextCreator {
 	public final static int FONT_SIZE_MIN = 6;         // Minumum Font Size (Pixels)
 	public final static int FONT_SIZE_MAX = 180;       // Maximum Font Size (Pixels)
 
+	public float fontSize = 0;
+	
 	int fontPadX=0, fontPadY=0;                            // Font Padding (Pixels; On Each Side, ie. Doubled on Both X+Y Axis)
 
 	float fontHeight = 0;                                  // Font Height (Actual; Pixels)
@@ -74,7 +76,7 @@ public class TextCreator {
 		// setup requested values
 		fontPadX = padX;                                // Set Requested X Axis Padding
 		fontPadY = padY;                                // Set Requested Y Axis Padding
-
+		fontSize = size;
 		// load the font and setup paint instance for drawing
 		Typeface tf = Typeface.createFromAsset( GlobalApplication.getContext().getAssets(), file );  // Create the Typeface from Font File
 		Paint paint = new Paint();                      // Create Android Paint Instance
@@ -223,19 +225,86 @@ public class TextCreator {
 				c = CHAR_UNKNOWN;                         // Set to Unknown Character Index
 			/*Notes:
 			 * Recall that a tile is 2*width across. 
-			 * width-letterX+x is the correct translation to align the text at the top of a tile
-			 * TODO: Set it up so we don't truncate words. Need a DFA
+			 * width-letterX+x is the correct translation to align the text at the top of a TextBox
+			 * TODO: Set it up so we don't truncate words at the end of line. Need a DFA
 			*/
-			if(letterX > 2*width){
+			
+			//
+			if(text.charAt(i)=='^'){
 				letterX = 0;
-				letterY -= 2.2*chrHeight;
+				letterY -= 2.1*chrHeight;
+			} 
+			else if(text.charAt(i)==' '){
+				int j = 1;					//index to track relative position to i
+				float tempWidth = 0	;		//track 
+				while(text.charAt(i+j) != ' ' && i+j<text.length()-1){
+					tempWidth += chrWidth;	//Eventually track individual character widths rather than some kind of global max
+					//If we ever exceed the width of a line, jump to the next line and keep going. 
+					if(tempWidth+letterX > 2*width){
+						letterX = 0;
+						letterY -= 2.1*chrHeight;
+						break;
+					} 		
+					j = Math.min(j+1, text.length()-i-1);
+				}
+				//Now draw our character, and let's move on our merry way.
+				r.drawTextChar(width-letterX+x, y+letterY, chrWidth, chrHeight, charRgn[c].getCoords());
+				letterX += 2.5*(charWidths[c] + spaceX ) * scaleX;    // Advance X Position by Scaled Character Width
 			}
+			
+			else {
+			/*if(letterX > 2*width){
+				letterX = 0;
+				letterY -= 2.1*chrHeight;
+			}*/
 			r.drawTextChar(width-letterX+x, y+letterY, chrWidth, chrHeight, charRgn[c].getCoords());
 			letterX += 2.5*(charWidths[c] + spaceX ) * scaleX;    // Advance X Position by Scaled Character Width
-		
+			}
 		}
 	}
 
+	
+	/**The board unit is know as a b. A bf is .04 B's. 
+	 * That means a square on the board (.22 across) will consist of 5 to 6 such characters.
+	 * @param b
+	 * @return
+	 */
+	public float bfToB(float bf){
+		//Extra multiple of 2 due to fucked-upness in how we draw.
+		return bf*.08f;
+	}
+	
+	/**Convert bf units to pixels. 
+	 * @param bf
+	 * @return
+	 */
+	public float bToPixels(float b){
+		float width = GlobalApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+		return b*width/2;
+	}
+	
+	public static float pxToB(float px){
+		float width = GlobalApplication.getContext().getResources().getDisplayMetrics().widthPixels;
+		return px*2/width;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
 	

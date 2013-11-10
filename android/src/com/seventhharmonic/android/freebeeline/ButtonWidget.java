@@ -4,18 +4,42 @@ import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 
-public class ButtonWidget extends Widget{
+public class ButtonWidget extends ImageWidget{
 
-	TextTile mText;
-	TextTile mBackground;
+	public enum ButtonStyle{
+		NONE, SQUARE, CIRCLE
+	}
+	
+	//ImageTile mText;
+	ImageTile mBackground;
 	GameEventListener listener;
+	ButtonStyle style =ButtonStyle.CIRCLE;
 	
 	public ButtonWidget(float centerX, float centerY, float width, float height, String text){
-		float[] center = {centerX, centerY, 0.0f};
-		mText = new TextTile(center, width, height, text);
+		super(centerX, centerY, width, height, text);
+		/*float[] center = {centerX, centerY, 0.0f};
+		mText = new ImageTile(center, width, height, text);
 
-		mBackground  = new TextTile(center, width, height, "menu_circle");
+		
+		*/
+		mBackground  = new ImageTile(center, width, height, "menu_circle");
 		mBackground.setMode(MyGLRenderer.STRETCH);
+	}
+		
+	public void setBorder(boolean border){
+		this.border = border;
+		if(border == false){
+			style = ButtonStyle.NONE;
+		}
+	}
+	
+	public void setBorderStyle(ButtonStyle style){
+		this.style = style;
+		if(style==ButtonStyle.SQUARE){
+			super.setBorder(true);
+		} else if(style==ButtonStyle.CIRCLE){
+			super.setBorder(false);
+		}
 	}
 	
 	public void setClickListener(GameEventListener l){
@@ -24,13 +48,14 @@ public class ButtonWidget extends Widget{
 	
 	@Override
 	public void setCenter(float centerX, float centerY){
-		mText.setCenter(centerX, centerY);
+		//mText.setCenter(centerX, centerY);
+		super.setCenter(centerX,centerY);
 		mBackground.setCenter(centerX, centerY);
 	}
 	
 	@Override
 	public void touchHandler(float[] pt){
-		if(mText.touched(pt)){
+		if(super.isTouched(pt) & listener != null){
 			Log.d("mText", "touched");
 			listener.event(0);
 		}
@@ -38,8 +63,9 @@ public class ButtonWidget extends Widget{
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		mBackground.draw(r);
-		mText.draw(r);
+		if(style == ButtonStyle.CIRCLE){
+			mBackground.draw(r);
+		} 
+		super.draw(r);
 	}
-	
 }

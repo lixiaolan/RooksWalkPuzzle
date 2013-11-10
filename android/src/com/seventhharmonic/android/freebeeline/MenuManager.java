@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 class MenuManager {
@@ -7,7 +8,6 @@ class MenuManager {
 	public GameMenu mGameMenu;
 	public Model mModel;
 	private Callback mCallback;
-	private float[] geometry = new float[3];
 	private float[] bottomPos1 = new float[3];
 	private float[] bottomPos2 = new float[3];
 	private float[] bottomRight = new float[3];
@@ -33,7 +33,7 @@ class MenuManager {
 	public void updateState() {
 	    float[] pos1 = {-.75f, 0f, 0f};
 	    scale1 = .25f;
-	    scale2  = .2f;
+	    scale2  = .15f;
 	    
 	    float tiltAngle = -1.0f*(float)Math.PI/2;
 
@@ -93,11 +93,6 @@ class MenuManager {
 		mCallback = new Callback_TUTORIAL();
 		break;
 		
-	    case TABLE_OF_CONTENTS:
-		String[] texturesTOC = {TextureManager.BACK};
-		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesTOC); 
-		mCallback = new Callback_TABLE_OF_CONTENTS();
-		break;
 	    case STORY:
 		String[] textures10 = {TextureManager.QUIT};
 		mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures10); 
@@ -127,9 +122,8 @@ class MenuManager {
 	mGameMenu.draw(r);
     }
     
-    public void setGeometry(float[] g) {
-	geometry = g;
-	
+    public void setGeometry(Geometry g) {
+	float[] geometry = g.getGeometry();
 	bottomPos1[0] = 0.0f;
 	bottomPos1[1] = -geometry[1]+scale1;
 	bottomPos1[2] = 0.0f;
@@ -191,7 +185,7 @@ class MenuManager {
 		updateState();
 		break;
 	    case 3:
-		mModel.setState(GameState.FLOWER_MENU);
+		mModel.enterLevelPack();
 		updateState();
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -218,7 +212,7 @@ class MenuManager {
 		updateState();
 		break;
 	    case 2:
-		mModel.setState(GameState.FLOWER_MENU);
+		mModel.enterLevelPack();
 		updateState();
 		break;
 		
@@ -262,10 +256,9 @@ class MenuManager {
 	
 	@Override
 	public void callback(int val) {
-	    mModel.setState(GameState.TABLE_OF_CONTENTS);
-	    updateState();
+	    mModel.enterLevelPack();
+	    updateState();   
 	}
-	
     }
     
     
@@ -308,40 +301,40 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 	    case 1:
-		mModel.setState(GameState.MAIN_MENU_OPENING);
-		updateState();
+		System.out.println("CALLED BACKSTATE");
+		mModel.mFlowerMenu.backState();
 		break;
 	    }
 	}
     }
 
     
-    class Callback_TABLE_OF_CONTENTS extends Callback {
+    // class Callback_TABLE_OF_CONTENTS extends Callback {
 	
-	@Override
-	public void callback(int val) {
-	    switch(val) {
-	    case 1:
-		System.out.println("In Menu");
-		System.out.println(mModel.toc.mContents);
-		mModel.setState(GameState.FLOWER_MENU);
-		updateState();
+    // 	@Override
+    // 	public void callback(int val) {
+    // 	    switch(val) {
+    // 	    case 1:
+    // 		System.out.println("In Menu");
+    // 		System.out.println(mModel.toc.mContents);
+    // 		mModel.setState(GameState.FLOWER_MENU);
+    // 		updateState();
 		
-		// if(mModel.toc.mContents.equals(TableOfContents.Contents.LEVELPACKDISPLAY)){
-		//     /*Comment: TOC already has a reference to Model 
-		//      * - it could just do these state changes itself
-		//      * That would be less awkward then this shit.
-		//      */
-		//     mModel.setState(GameState.MAIN_MENU_OPENING);
-		//     updateState();
-		// }
-		// else {	
-		//     mModel.toc.setState();
-		// }
-		break;
-	    }
-	}
-    }
+    // 		// if(mModel.toc.mContents.equals(TableOfContents.Contents.LEVELPACKDISPLAY)){
+    // 		//     /*Comment: TOC already has a reference to Model 
+    // 		//      * - it could just do these state changes itself
+    // 		//      * That would be less awkward then this shit.
+    // 		//      */
+    // 		//     mModel.setState(GameState.MAIN_MENU_OPENING);
+    // 		//     updateState();
+    // 		// }
+    // 		// else {	
+    // 		//     mModel.toc.setState();
+    // 		// }
+    // 		break;
+    // 	    }
+    // 	}
+    // }
     
     class Callback_STORY extends Callback { 	
 	@Override

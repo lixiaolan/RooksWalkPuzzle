@@ -12,12 +12,30 @@ import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 public class TextBox extends Widget{
 
 	String text;
-	TextTile[] chars; 
+	//Font size in b's. See Text Creator for more on this unit.
+	//1bf  = .05b. Ie
+	int fontSize = 1;
 	
+	public int getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	/**
+	 * Constructor for a textBox. The x, y coordinates where you want the center of the first row of the text box.
+	 * The width specifies where to jump to the next line.
+	 * 
+	 * @param centerX
+	 * @param centerY
+	 * @param width
+	 * @param text
+	 */
 	public TextBox(float centerX, float centerY , float width, String text){
 		float[] center = {centerX, centerY, 0.0f};
 		this.text = text;
-		chars = new TextTile[text.length()];
 		setCenter(center);
 		setWidth(width);
 	}
@@ -35,7 +53,7 @@ public class TextBox extends Widget{
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		r.drawTextBox(center,width,text);
+		r.drawTextBox(center,width,fontSize,text);
 	}
 
 }
