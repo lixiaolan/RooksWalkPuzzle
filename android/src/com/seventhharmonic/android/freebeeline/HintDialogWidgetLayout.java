@@ -3,18 +3,19 @@ package com.seventhharmonic.android.freebeeline;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 
 public class HintDialogWidgetLayout extends WidgetLayout{
 
 	
-	TextWidget mText;
+	TextBox mText;
 	ButtonWidget mBack;
 	ImageWidget fiveHints;
 	ImageWidget twentyHints;
 	ImageWidget unlimitedHints;
 	ImageWidget mBackground;
-	TextWidget mHints;
+	TextBox mHints;
 	
 	boolean draw  = false;
 	
@@ -23,7 +24,7 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 	 * @param text
 	 * @param mHints The hints dialogue in Board that needs to be updated.
 	 */
-	public HintDialogWidgetLayout(float width, String text, TextWidget mHints){
+	public HintDialogWidgetLayout(float width, String text, TextBox mHints){
 		setWidth(width);
 		setHeight(width/Geometry.PHI);
 		setCenter(0,0);
@@ -32,14 +33,13 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		mBackground = new ImageWidget(0,0,width, height, TextureManager.CLEAR);
 		mBackground.setMode(MyGLRenderer.STRETCH);
 		mBackground.setRelativeCenter(0, 0);
+		mBackground.setBorder(true);
 		mBackground.setColor("opaque");
 		
-		mText = new TextWidget(0,0,width, height, text);
-		mText.setRelativeCenter(0,0);
-		mText.setColor("opaque");
-		
-		
-		mBack = new ButtonWidget(0,0, width/4, width/4, TextureManager.BACK);
+		mText = new TextBox(0,0,.95f*width, text);
+		mText.setRelativeCenter(.05f,.9f*height);
+				
+		mBack = new ButtonWidget(0,0, width/5, width/5, TextureManager.BACK);
 		mBack.setRelativeCenter(-.7f*width, -.6f*height);
 		mBack.setClickListener(new GameEventListener(){
 			public void event(int i){
@@ -55,18 +55,18 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		GridWidgetLayout mGrid = new GridWidgetLayout(3, 1, width/4);
 		
 		fiveHints = new ImageWidget(0, 0, size, size, TextureManager.FIVEHINTS);
-		fiveHints.setBackground(TextureManager.BOX);
+		fiveHints.setBorder(true);
 		mGrid.addWidget(fiveHints);
 		
 		twentyHints = new ImageWidget(0, 0, size, size, TextureManager.TWENTYHINTS);
-		twentyHints.setBackground(TextureManager.BOX);
+		twentyHints.setBorder(true);
 		mGrid.addWidget(twentyHints);
 		
 		unlimitedHints = new ImageWidget(0, 0, size, size, TextureManager.UNLIMITEDHINTS);
-		unlimitedHints.setBackground(TextureManager.BOX);
+		unlimitedHints.setBorder(true);
 		mGrid.addWidget(unlimitedHints);
 		
-		mGrid.setRelativeCenter(0, .1f);
+		mGrid.setRelativeCenter(width/3f, -height+1.1f*size);
 		
 		
 		widgetList.add(mBackground);

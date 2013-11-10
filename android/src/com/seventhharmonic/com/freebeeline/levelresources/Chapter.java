@@ -5,7 +5,7 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.seventhharmonic.android.freebeeline.TextureManager;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class Chapter {
 	String title;
@@ -35,10 +35,12 @@ public class Chapter {
 
 	public boolean getCompleted(){
 		//TODO: Put this code back!
-		// for(Puzzle p: puzzles){
-		// 	if(!p.isCompleted())
-		// 		return false;
-		// }
+		 for(Puzzle p: puzzles){
+		 	if(!p.isCompleted()){
+		 		completed  = false;
+		 		return false;
+		 	}
+		 }
 		completed = true;
 		return true;
 	}
@@ -126,9 +128,7 @@ public class Chapter {
 	}
 	
 	public String getImage() {
-		if(completed)
 			return getAfterImage();
-		return getBeforeImage();
 	}
 	
 	

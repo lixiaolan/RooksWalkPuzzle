@@ -1,6 +1,7 @@
 
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 
 public class StoryBoard extends Board{
@@ -12,12 +13,12 @@ public class StoryBoard extends Board{
 	StoryState mStoryState = StoryState.SLIDE_0;
 
 	Bee mBee = new Bee(this);
-	Banner mStoryBanner;
+	TextBox mStoryBanner;
 	Model mModel;
 	
 	public StoryBoard(Model mModel){
 		super(mModel);
-		mStoryBanner = new Banner(.6f);
+		//mStoryBanner = new Banner(.6f);
 		state = new SLIDE0(tiles);
 		this.mModel = mModel; 
 		//state = new SLIDE2(tiles);
@@ -61,7 +62,7 @@ public class StoryBoard extends Board{
 		public SLIDE0(BoardTile[] tiles){
 			this.tiles = tiles;
 			refTime = System.currentTimeMillis();
-			mStoryBanner.set("story_banner_0");
+			mStoryBanner.setText("story_banner_0");
 			centers = new float[2*tiles.length];
 		    
 		    for (int i = 0; i < tiles.length; i++) {
@@ -127,7 +128,7 @@ public class StoryBoard extends Board{
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
 			state.period = DrawPeriod.DURING; 
-			mStoryBanner.set("story_banner_1");
+			mStoryBanner.setText("story_banner_1");
 		}
 
 		@Override
@@ -154,7 +155,7 @@ public class StoryBoard extends Board{
 					@Override
 				public void enterAnimation(BoardTile[] tiles) {
 					state.period = DrawPeriod.DURING; 
-					mStoryBanner.set("story_banner_2");
+					mStoryBanner.setText("story_banner_2");
 				}
 
 				@Override
@@ -173,10 +174,10 @@ public class StoryBoard extends Board{
 		//Beatrice was a happy bee
 		
 				BoardTile[] tiles;
-				Background mTitleBanner;
+				ImageWidget mTitleBanner;
 				public SLIDE3(BoardTile[] tiles){
 					this.tiles = tiles;
-					mTitleBanner = new Background("title", 1.0f);
+					mTitleBanner = new ImageWidget(0,0,1,1,"title");
 				}
 					@Override
 				public void enterAnimation(BoardTile[] tiles) {
@@ -212,7 +213,7 @@ public class StoryBoard extends Board{
 			this.tiles = tiles;
 			refTime = System.currentTimeMillis();
 			periodTime = refTime;
-			mStoryBanner.set("story_banner_2");
+			mStoryBanner.setText("story_banner_2");
 			tails = new float[36*2];
 			beginTime = refTime;
 		}
@@ -324,7 +325,7 @@ public class StoryBoard extends Board{
 		
 		public WIND2(BoardTile[] tiles){
 			this.tiles = tiles;
-			mStoryBanner.set("story_banner_3");
+			mStoryBanner.setText("story_banner_3");
 			mBee.setState(GameState.GAME_OPENING, tiles.length);
 			mBee.setMood(Mood.DIZZY);
 		}

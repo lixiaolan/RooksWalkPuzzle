@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.seventhharmonic.android.freebeeline.TextureManager;
 
 public class TextureBridge {
 	String TAG = "TextureBridge"
@@ -17,7 +16,7 @@ public class TextureBridge {
 		Log.d(TAG, "Making Text textures");
 		for(String t: textTextures){
 			Log.d(TAG, t);			
-			TM.buildLongTextures(t, 0, 30, t, 25,  256);
+	//		TM.buildLongTextures(t, 0, 30, t, 25,  256);
 		}
 		textTextures.clear();
 		hasTexture = false;

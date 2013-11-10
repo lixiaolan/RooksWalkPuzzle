@@ -6,9 +6,9 @@ import java.util.List;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.GlobalApplication;
-import com.seventhharmonic.android.freebeeline.TextureManager;
 import com.seventhharmonic.android.freebeeline.db.PuzzleDataSource;
 import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class Puzzle {
 	public String board;
@@ -22,7 +22,18 @@ public class Puzzle {
 	Chapter ch;
 	String beforeFlower;
 	String afterFlower;
-	
+	String text;
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		if(text == null)
+			this.text="";
+		else
+			this.text = text;
+	}
 
 	protected String getBeforeFlower() {
 		return beforeFlower;
@@ -167,6 +178,7 @@ public class Puzzle {
 		p.setChapter(ch);
 		p.setBeforeFlower(beforeFlower);
 		p.setAfterFlower(afterFlower);
+		p.setText(text);
 		return p;
 	}
 	

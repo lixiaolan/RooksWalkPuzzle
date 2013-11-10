@@ -3,7 +3,6 @@ package com.seventhharmonic.android.freebeeline.physics;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.*;
-import com.seventhharmonic.android.freebeeline.State.DrawPeriod;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
 import com.seventhharmonic.android.freebeeline.listeners.*;

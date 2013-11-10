@@ -6,6 +6,7 @@ import com.seventhharmonic.android.freebeeline.*;
 import com.seventhharmonic.android.freebeeline.StateWidget.DrawPeriod;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.*;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPackProvider;
@@ -42,7 +43,7 @@ class LevelPack1 extends StateWidget {
 
 	    //Initiate the centers array.
 	    refTime = System.currentTimeMillis();
-	    float tt = ((float)(refTime - startTime))/100.0f;
+	    float tt = ((float)(refTime - startTime))/1000.0f;
 	    for (int i = 0; i<tiles.length; i++ ) {
 		float ii = (float)i;
 		float r = (ii + 10*(1-1/(ii+1)))/25;
@@ -73,7 +74,7 @@ class LevelPack1 extends StateWidget {
 	    long time = System.currentTimeMillis()-refTime;
 	    float dt = Math.min(((float)time)/1000.0f, 33.3f);
 	    refTime = System.currentTimeMillis();
-	    float t = ((float)(refTime - startTime))/100.0f;
+	    float t = ((float)(refTime - startTime))/1000.0f;
 	    for (int i = 0; i<tiles.length; i++ ) {
 		centers[2*i]   = ((float)Math.cos(t))*fixedCenters[2*i] 
 		    + ((float)Math.sin(t))*fixedCenters[2*i + 1];

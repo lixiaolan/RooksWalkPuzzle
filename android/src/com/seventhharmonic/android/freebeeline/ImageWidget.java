@@ -1,5 +1,8 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 import android.util.Log;
 
 /*
@@ -11,28 +14,55 @@ import android.util.Log;
 
 public class ImageWidget extends Widget{
 
-	TextTile a;
+	ImageTile a;
 	String color = "transparent";
 	String text;
-	
-	public ImageWidget(float[] center , float width, float height, String text){
-		this.text = text;
-		a = new TextTile(center, width, height, text);	
-		setCenter(center);
-		setWidth(width);
-		setHeight(height);
-	}
-	
-	
-	
+	Boolean border = false;
+	ImageTile[] borderTiles;
+
 	public ImageWidget(float centerX, float centerY , float width, float height, String text){
 		this.text = text;
 		float[] center = {centerX, centerY, 0.0f};
-		a = new TextTile(center, width, height, text);
+		a = new ImageTile(center, width, height, text);
 		setCenter(center);
 		setWidth(width);
 		setHeight(height);
 	}
+
+	private void createBorderTiles(){
+		borderTiles = new ImageTile[4];
+		float s = TextCreator.pxToB(2);
+		//top
+		borderTiles[0] = new ImageTile(center[0],center[1]+height+s,width+s,s,TextureManager.CLEAR);
+		borderTiles[0].setColor("black");
+		//bottom
+		borderTiles[1] = new ImageTile(center[0],center[1]-height-s,width+s,s,TextureManager.CLEAR);
+		borderTiles[1].setColor("black");
+		//left
+		borderTiles[2] = new ImageTile(center[0]+width+s,center[1],s,s+height,TextureManager.CLEAR);
+		borderTiles[2].setColor("black");
+		//top
+		borderTiles[3] = new ImageTile(center[0]-width-s,center[1],s,s+height,TextureManager.CLEAR);
+		borderTiles[3].setColor("black");
+
+	}
+	
+
+	private void recenterBorderTiles(){
+		if(borderTiles != null){
+			float s = TextCreator.pxToB(2);
+			//top
+			borderTiles[0].setCenter(center[0],center[1]+height+s);
+			//bottom
+			borderTiles[1].setCenter(center[0],center[1]-height-s);
+			//left
+			borderTiles[2].setCenter(center[0]+width+s,center[1]);
+			//top
+			borderTiles[3].setCenter(center[0]-width-s,center[1]);
+
+		}
+	}
+
 	
 	public void setImage(String image){
 		a.setTextures(image, TextureManager.CLEAR);
@@ -52,11 +82,28 @@ public class ImageWidget extends Widget{
 			a.setTextures(text, image);
 		} 
 	}
+
+	@Override
+	public void setBorder(boolean border){
+		this.border = border;
+		if(borderTiles == null && border == true){
+			createBorderTiles();
+		}
+	}
 	
 	@Override
 	public void setCenter(float x, float y){
 		super.setCenter(x,y);
 		a.setCenter(x, y);
+		recenterBorderTiles();
+	}
+
+	public void setPivot(float[] pivot){
+		a.setPivot(pivot);
+	}
+	
+	public void setAngle(float angle){
+		a.setAngle(angle);
 	}
 	
 	@Override
@@ -68,6 +115,11 @@ public class ImageWidget extends Widget{
 	@Override
 	public void draw(MyGLRenderer r) {
 		a.draw(r);
+		if(border){
+			for(int i =0;i<borderTiles.length;i++){
+				borderTiles[i].draw(r);
+			}
+		}
 	}
 
 }

@@ -1,11 +1,13 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 class MenuManager {
 	private GlobalState state;
 	public GameMenu mGameMenu;
 	public Model mModel;
 	private Callback mCallback;
-	private float[] geometry = new float[3];
 	private float[] bottomPos1 = new float[3];
 	private float[] bottomPos2 = new float[3];
 	private float[] bottomRight = new float[3];
@@ -31,7 +33,7 @@ class MenuManager {
 	public void updateState() {
 	    float[] pos1 = {-.75f, 0f, 0f};
 	    scale1 = .25f;
-	    scale2  = .2f;
+	    scale2  = .15f;
 	    
 	    float tiltAngle = -1.0f*(float)Math.PI/2;
 
@@ -83,16 +85,22 @@ class MenuManager {
 		String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
 		mGameMenu = new SelectTwoMenu(bottomPos2, scale2, textures7); 
 		mCallback = new Callback_GAME_MENU_END();
-		break;
+		break;    
 	    case TUTORIAL:
-		String[] texturesTUTORIAL = {TextureManager.QUIT};
+		String[] texturesTUTORIAL = {TextureManager.BACK};
 		//String[] textures8 = {TextureManager.NEXT, TextureManager.PREVIOUS};
 		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesTUTORIAL); 
 		mCallback = new Callback_TUTORIAL();
 		break;
 		
+	    case TUTORIAL_MAIN_MENU:
+		String[] texturesTUTORIAL_MAIN_MENU = {TextureManager.BACK};
+		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesTUTORIAL_MAIN_MENU); 
+		mCallback = new Callback_TUTORIAL_MAIN_MENU();
+		break;	
+	    
 	    case STORY:
-		String[] textures10 = {TextureManager.QUIT};
+		String[] textures10 = {TextureManager.BACK};
 		mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures10); 
 		mCallback = new Callback_STORY();
 		break;
@@ -120,9 +128,8 @@ class MenuManager {
 	mGameMenu.draw(r);
     }
     
-    public void setGeometry(float[] g) {
-	geometry = g;
-	
+    public void setGeometry(Geometry g) {
+	float[] geometry = g.getGeometry();
 	bottomPos1[0] = 0.0f;
 	bottomPos1[1] = -geometry[1]+scale1;
 	bottomPos1[2] = 0.0f;
@@ -153,8 +160,7 @@ class MenuManager {
 		break;
 	    case 2: 
 		mModel.createTutorial();
-		mModel.setState(GameState.TUTORIAL);
-		state.state = GameState.TUTORIAL;
+		mModel.setState(GameState.TUTORIAL_MAIN_MENU);
 		updateState();
 		break;
 	    case 3:
@@ -184,7 +190,7 @@ class MenuManager {
 		updateState();
 		break;
 	    case 3:
-		mModel.enterLevelPack();
+		mModel.setModelToLevelPack();
 		updateState();
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -211,7 +217,7 @@ class MenuManager {
 		updateState();
 		break;
 	    case 2:
-		mModel.enterLevelPack();
+		mModel.setModelToLevelPack();
 		updateState();
 		break;
 		
@@ -255,7 +261,7 @@ class MenuManager {
 	
 	@Override
 	public void callback(int val) {
-	    mModel.enterLevelPack();
+	    mModel.setModelToChapterSelect();
 	    updateState();   
 	}
     }
@@ -287,13 +293,27 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 	    case 1:
-		mModel.setState(GameState.GAME_OPENING);
-		updateState();
-		break;
+	    	mModel.setState(GameState.GAME_OPENING);
+	    	updateState();
+	    	break;
 	    }
 	}
     }
 
+    class Callback_TUTORIAL_MAIN_MENU extends Callback {
+    	
+    	@Override
+    	public void callback(int val) {
+    	    switch(val) {
+    	    case 1:
+    	    	mModel.setState(GameState.MAIN_MENU_OPENING);
+    	    	updateState();
+    	    	break;
+    	    }
+    	}
+        }
+
+    
     class Callback_FLOWER_MENU extends Callback {
 	
 	@Override

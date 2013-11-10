@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 public class BeeTile extends Tile{
     public boolean touched_flag;
     public float[] velocity = new float[2];

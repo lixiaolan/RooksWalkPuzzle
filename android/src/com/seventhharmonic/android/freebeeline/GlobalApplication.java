@@ -69,6 +69,8 @@ public class GlobalApplication extends Application {
 	initializeGa();
     }
     
+ 
+    
     /*
      * Returns the Google Analytics tracker.
      */

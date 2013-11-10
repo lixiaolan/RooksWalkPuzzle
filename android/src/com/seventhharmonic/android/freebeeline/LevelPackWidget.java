@@ -10,7 +10,7 @@ import android.util.Log;
  */
 
 public class LevelPackWidget extends WidgetLayout{
-    TextWidget mText;
+    //TextWidget mText;
     ImageWidget mImage;
     String TAG = "LevelPackWidget";
 
@@ -19,14 +19,14 @@ public class LevelPackWidget extends WidgetLayout{
 	float height = Math.abs(GlobalApplication.getGeometry().getGeometry()[1]);
 	
 	Log.d(TAG, Float.toString(height));
-	mText = new TextWidget(0,0,1,.5f,text);
-	mText.setRelativeCenter(0,height-mText.getHeight());
+	//mText = new TextWidget(0,0,1,.5f,text);
+	//mText.setRelativeCenter(0,height-mText.getHeight());
 	
 	mImage = new ImageWidget(0,0,.3f, .3f*height, image);
 	mImage.setRelativeCenter(0,0);
 	mImage.setMode(MyGLRenderer.FIXEDWIDTH);
 	
-	widgetList.add(mText);
+	//widgetList.add(mText);
 	widgetList.add(mImage);
 	
 	setCenter(0,0);

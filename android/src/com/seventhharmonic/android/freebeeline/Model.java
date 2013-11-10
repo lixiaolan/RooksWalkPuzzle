@@ -2,6 +2,8 @@ package com.seventhharmonic.android.freebeeline;
 
 import java.util.List;
 
+import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
@@ -23,16 +25,18 @@ class Model {
     private int at = -1;
     private Vibrator vibe;
     public Context context;
-    private Background mTitle;
-    private float[] geometry = new float[3];
+    private ImageWidget mTitle;
+    private Geometry geometry;
     private StoryBoard mStoryBoard;
     private DataServer mDataServer;
     public boolean createTextures = false;
     public MediaPlayer mediaPlayer;    
     public FlowerMenu mFlowerMenu;
+    private boolean initializeToggle = false;
     
-    Banner mVersionBanner;
+    TextBox mVersionBanner;
     Store mStore;
+    //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
     
     public Model(Context c) {
 	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
@@ -53,11 +57,9 @@ class Model {
 	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
-	mTitle = new Background("title", .50f);
-	float[] titleCenter = {.5f, 0.8f, 0.0f};
-	mTitle.setCenter(titleCenter);
-	mVersionBanner= new Banner(TextureManager.VERSION, .5f);
-	mVersionBanner.setCenter(.5f, -1.1f);
+	mTitle = new ImageWidget(.5f,.8f,.5f,.5f,"title");
+	mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
+	mVersionBanner.setCenter(0.0f, 0.0f);
     }
     
     public void createPuzzleFromPuzzle(Puzzle p){
@@ -67,7 +69,7 @@ class Model {
     
     public void createTutorial(){
 	mTutorialBoard = new TutorialBoard2();
-	mTutorialBoard.setGeometry(geometry);
+	mTutorialBoard.setGeometry(geometry.getGeometry());
 	
     }
     
@@ -125,9 +127,10 @@ class Model {
 	    mFlowerMenu.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
+	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
-	    //Game Menu
 	    mTutorialBoard.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
 	    break;
 	case STATS:
 	    mMenuManager.touchHandler(pt);
@@ -151,6 +154,7 @@ class Model {
 	case GAME_OPENING:
 	    mBoard.swipeHandler(direction);
 	    break;
+	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
 	    mTutorialBoard.swipeHandler(direction); 
 	    break;
@@ -185,6 +189,7 @@ class Model {
 	    mFlowerMenu.draw(r);
 	    mMenuManager.draw(r);
 	    break;
+	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
@@ -193,29 +198,32 @@ class Model {
 	}
     }
     
-    public void setGeometry(float[] g) {
-	geometry = g;
+    public void setGeometry(Geometry g) {
+    //TODO: Should probably get the geometry statically anyways???
+    geometry = g;
 	mMenuManager.setGeometry(g);
-	mBoard.setGeometry(g);
-	Log.d("Model","g");
-	Log.d("Model", Float.toString(g[1]));
-	Log.d("Model","global");
-	GlobalApplication.getGeometry().setGeometry(g[0], g[1]);
-	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
-	//TODO: This is a bit of hack to make sure these classes are not initialized too early.
-	mFlowerMenu = new FlowerMenu(this);
+	mBoard.setGeometry(g.getGeometry());
+	//Log.d("Model","g");
+	//Log.d("Model", Float.toString(g[1]));
+	//Log.d("Model","global");
+	//	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
+	/*TODO: This is a bit of hack to make sure these classes are not initialized too early.
+	*the initialize Toggle is to fix the fact that this function is called from the Renderer.
+	*Can the renderer initialize before the DB????
+	*/
+	if(!initializeToggle){
+		mFlowerMenu = new FlowerMenu(this);
+		initializeToggle = true;
+	}
     }
     
     public void setState(GameState s){
-	mBoard.setState(s);
-	state.state = s;
-	mMenuManager.updateState();
+    	mBoard.setState(s);
+    	state.state = s;
+    	mMenuManager.updateState();
     }
     
-    public void enterLevelPack() {
-	setState(GameState.FLOWER_MENU);
-	mFlowerMenu.enterLevelPack();
-    }
+   
 
     public void setDataServer(DataServer d){
 	mDataServer = d;
@@ -277,10 +285,27 @@ class Model {
 	System.out.println("GETTING HERE?A?A?A?A......NOPE!");
     }
 
-    public void setModelToGamePlayOpening(Puzzle p) {
+    public void setModelToGameOpening(Puzzle p) {
 	createPuzzleFromPuzzle(p);
 	setState(GameState.GAME_OPENING);
     }  
+
+    public void setModelToChapterEnd(){
+    	mFlowerMenu.enterChapterEnd();
+    	setState(GameState.FLOWER_MENU);
+    }
+
+    public void setModelToLevelPack() {
+    	setState(GameState.FLOWER_MENU);
+    	mFlowerMenu.enterLevelPack();
+        }
+    
+    public void setModelToChapterSelect() {
+    	setState(GameState.FLOWER_MENU);
+    	mFlowerMenu.enterChapterSelect();
+    }	
+    
+    
 }
 
 

@@ -3,6 +3,7 @@ package com.seventhharmonic.android.freebeeline;
 import android.util.Log;
 
 import com.seventhharmonic.com.freebeeline.levelresources.*;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.*;
 
 public class TableOfContents extends GraphicWidget {

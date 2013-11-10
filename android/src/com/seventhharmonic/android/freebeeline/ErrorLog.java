@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 public class ErrorLog {
 
     public ErrorMap errorMap;
@@ -23,7 +25,7 @@ public class ErrorLog {
     }
 
     public String getError(int index) {
-	if (!errorMap.containsKey(index)) return TextureManager.CLEAR;
+	if (!errorMap.containsKey(index)) return "";
 
 	ErrorBundle e = errorMap.get(index);
 	

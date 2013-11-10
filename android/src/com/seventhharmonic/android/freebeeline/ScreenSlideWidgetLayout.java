@@ -1,24 +1,11 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+
 import android.util.Log;
 
 /**
- * @author jain
- *
- */
-/**
- * @author jain
- *
- */
-/**
- * @author jain
- *
- */
-/**
- * @author jain
- *
- */
-/**
+ **
  * @author jain
  *
  */
@@ -45,8 +32,8 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 	 */
 	public ScreenSlideWidgetLayout(float gap) {
 		this.gap = gap;
-		leftArrow = new ImageWidget(.7f, -1.0f, .10f, .10f, TextureManager.LWEDGE);
-		rightArrow = new ImageWidget(-.7f, -1.0f, .10f, .10f, TextureManager.RWEDGE);
+		leftArrow = new ImageWidget(0, 0, .10f, .10f, TextureManager.LWEDGE);
+		rightArrow = new ImageWidget(0, 0, .10f, .10f, TextureManager.RWEDGE);
 	}
 
 	@Override
@@ -85,18 +72,23 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 		widgetList.add(w);
 		computeGeometry();
 		float h = GlobalApplication.getGeometry().getGeometry()[1];
-		/* Assume that each circle is .08. This should probably be moved into 
-		 * CircleProgressBarWidget.
-		 */
-		float xCPW = .08f*widgetList.size()+.04f*((widgetList.size() %2)-1);
+		//The coordinates here are the center of the CPW
+		float xCPW = 0;
 		float yCPW = -1*(h-.08f);
-		float[] center = {xCPW, yCPW, 0.0f};
-		mCPW = new CircleProgressBarWidget(widgetList.size(), center, .05f);
+		float circleSize = .05f;
+		mCPW = new CircleProgressBarWidget(widgetList.size(), xCPW, yCPW, circleSize);
 		mCPW.setActiveCircle(0);
-		leftArrow.setCenter(xCPW+.1f, yCPW);
-		rightArrow.setCenter(xCPW-.05f*widgetList.size()+.1f, yCPW);
+		//Adjust the arrows accordingly.
+		rightArrow.setCenter(xCPW-widgetList.size()/2*(2.5f*circleSize)-circleSize, yCPW);
+		leftArrow.setCenter(xCPW+widgetList.size()/2*(2.5f*circleSize)+circleSize, yCPW);
+		
+		
 	}
-
+	/*
+	 * Sets the geometry of all the widgets in the screen slide widget. NOT the CPW. That is done by hand.
+	 * (non-Javadoc)
+	 * @see com.seventhharmonic.android.freebeeline.WidgetLayout#computeGeometry()
+	 */
 	@Override
 	public void computeGeometry() {
 		for(int i =0;i< widgetList.size();i++){
@@ -118,7 +110,6 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 
 	@Override
 	public void touchHandler(float[] pt){
-		Log.d(TAG, "Got touched");
 		if(displayArrows){
 			if(leftArrow.isTouched(pt)){	
 				swipeHandler("right_arrow");
@@ -128,6 +119,7 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 				swipeHandler("left_arrow");
 			}
 		}
+		mCPW.isTouched(pt);
 	}
 
 	private void initialize(){

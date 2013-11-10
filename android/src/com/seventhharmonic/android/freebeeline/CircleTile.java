@@ -1,25 +1,23 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
-class CircleTile extends Tile{
+
+class CircleTile extends ImageWidget{
 
     
     
-    public CircleTile(float[] inCenter,float inSize) {
-    	super(inCenter, inSize);
-    	setTextures(TextureManager.CLEAR, TextureManager.OPENCIRCLE);
+    public CircleTile(float inSize) {
+    	super(0,0, inSize, inSize,TextureManager.OPENCIRCLE);
+    	//setTextures(TextureManager.CLEAR, TextureManager.OPENCIRCLE);
 	}
     
     public void setFull(){
-    	setTextures(TextureManager.CLEAR, TextureManager.CLOSEDCIRCLE);
+    	setImage(TextureManager.CLOSEDCIRCLE);
     }
     
     public void setEmpty() {
-    	setTextures(TextureManager.CLEAR, TextureManager.OPENCIRCLE);
+    	setImage(TextureManager.OPENCIRCLE);
     }
-    
-        
-    public void draw(MyGLRenderer r) {
-    	r.drawTile(center, size, textures, color, angle, pivot);
-    }
+ 
 }
