@@ -1,6 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
-class FlowerTile extends Tile {
+public class FlowerTile extends Tile {
         
     public float[] velocity = new float[2];
     
