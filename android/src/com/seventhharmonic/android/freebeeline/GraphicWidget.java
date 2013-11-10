@@ -1,6 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
-public abstract class GraphicWidget {
+public abstract class GraphicWidget extends Widget{
     
     StateWidget state;
     float[] geometry;

@@ -6,6 +6,7 @@ import com.seventhharmonic.android.freebeeline.*;
 import com.seventhharmonic.android.freebeeline.StateWidget.DrawPeriod;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
+import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.*;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 import com.seventhharmonic.com.freebeeline.levelresources.LevelPackProvider;

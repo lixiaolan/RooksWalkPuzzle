@@ -7,7 +7,7 @@ package com.seventhharmonic.android.freebeeline;
  *  be exposed to global state changes. It might make sense to only allow entry and during animations. This needs to be
  *  thought about. Actually I think this might be forced upon us... Think more about this.
  */
-public abstract class StateWidget {
+public abstract class StateWidget extends Widget{
     
     public enum DrawPeriod {
     	ENTER, DURING

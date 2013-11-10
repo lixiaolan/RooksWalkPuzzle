@@ -36,7 +36,7 @@ public class ViewActivity extends Activity {
 	    
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.viewactivity);
-	    
+	    Log.d(TAG, "Run View Activity");
 	    mModel = new Model(this);
 	    mRenderer = new MyGLRenderer(this, mModel);
 	    
@@ -88,13 +88,11 @@ public class ViewActivity extends Activity {
 	    // The following call resumes a paused rendering thread.
 	    // If you de-allocated graphic objects for onPause()
 	    // this is a good place to re-allocate them.
-	    mGLView.onResume();
 	    GlobalApplication.getPuzzleDB().open();
 	    GlobalApplication.getHintDB().open();
 	    GlobalApplication.getPurchasedDB().open();
-	    // AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this,R.anim.shrink_dance_button_anim);
-	    // set.setTarget((Button)findViewById(R.id.bee_puzzled));
-	    // set.end();       
+
+	    mGLView.onResume();
 	}
     
     @Override

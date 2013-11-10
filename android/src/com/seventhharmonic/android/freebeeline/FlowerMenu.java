@@ -130,11 +130,20 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     }
 
     public void enterLevelPack() {
-	System.out.println("enterLevelPack");
 	mFlowerState = FlowerState.BOOK_SELECT;
 	updateState();
     }
 
+    public void enterChapterSelect() {
+    	mFlowerState = FlowerState.CHAPTER_SELECT;
+    	updateState();
+    }
+
+    public void enterChapterEnd(){
+    	if(mFlowerState == FlowerState.CHAPTER_SELECT)
+    		((ChapterDisplay)state).chapterEnd();
+    }
+    
     public void setState(int index) {
     }
     
@@ -144,16 +153,14 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
      */ 
 
     public void swipeHandler(String direction) {
-	state.swipeHandler(direction);
+ 
+    	state.swipeHandler(direction);
     }
     
     public void touchHandler(float[] pt) {
 	state.touchHandler(pt);
     }
 
-    //This maps the proper physics to the proper string.
-        
-    //TODO: Add the flower drawing to this class:
     class MainMenu extends StateWidget {
 	
 	public MainMenu(){
@@ -259,24 +266,17 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    
 	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
 		
-		//If the previous chapter is completed, launch a normal chapter widget
-		if(i==0 || currLevelPack.getChapter(i-1).getCompleted()){
 		    final Chapter c = currLevelPack.getChapter(i);
 		    ChapterWidget ch  = new ChapterWidget(c);
 		    ch.setTouchListener(new GameEventListener() {
 			    public void event(int puzz){
 				Puzzle p = c.getPuzzle(puzz);
-				mModel.setModelToGamePlayOpening(p);
+				mModel.setModelToGameOpening(p);
 			    }
 			});
 		    m.addWidget(ch);
-		}
-		//Otherwise lock the user out!
-		else {
-		    m.addWidget(new LockedChapterWidget());
-		}
 	    }
-	    m.setActiveWidget(savedChapter);
+		    m.setActiveWidget(savedChapter);
 	}
 	
 	@Override
@@ -296,8 +296,16 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	
 	@Override
 	public void swipeHandler(String direction) {
-	    m.swipeHandler(direction);
-	    
+		/* TODO: Can do this by inheriting from ScreenSlideWidget and having that call a method
+		 * which sets a flag in a chapter widget.
+		*/
+		//Ensures that current widget we are swiping away from goes back to the finished state.
+		((ChapterWidget)m.getWidget(m.getActiveWidget())).setFinishedState();
+		m.swipeHandler(direction);
+	}
+
+	public void chapterEnd(){
+		((ChapterWidget)currChapterWidget).setState(true);
 	}
 	
 	@Override
@@ -306,9 +314,13 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    currChapterWidget = m.getWidget(m.getActiveWidget());
 	    savedChapter = m.activeWidget;
 	    currChapterWidget.touchHandler(pt);
+	    
 	}
+
     }
 
+    
+    
     @Override
     public BoardTile getTile(int i) {
 	// TODO Auto-generated method stub

@@ -32,7 +32,7 @@ class Model {
     public boolean createTextures = false;
     public MediaPlayer mediaPlayer;    
     public FlowerMenu mFlowerMenu;
-    
+    private boolean initializeToggle = false;
     
     TextBox mVersionBanner;
     Store mStore;
@@ -127,9 +127,10 @@ class Model {
 	    mFlowerMenu.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
+	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
-	    //Game Menu
 	    mTutorialBoard.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
 	    break;
 	case STATS:
 	    mMenuManager.touchHandler(pt);
@@ -153,6 +154,7 @@ class Model {
 	case GAME_OPENING:
 	    mBoard.swipeHandler(direction);
 	    break;
+	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
 	    mTutorialBoard.swipeHandler(direction); 
 	    break;
@@ -187,6 +189,7 @@ class Model {
 	    mFlowerMenu.draw(r);
 	    mMenuManager.draw(r);
 	    break;
+	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
@@ -204,8 +207,14 @@ class Model {
 	//Log.d("Model", Float.toString(g[1]));
 	//Log.d("Model","global");
 	//	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
-	//TODO: This is a bit of hack to make sure these classes are not initialized too early.
-	mFlowerMenu = new FlowerMenu(this);
+	/*TODO: This is a bit of hack to make sure these classes are not initialized too early.
+	*the initialize Toggle is to fix the fact that this function is called from the Renderer.
+	*Can the renderer initialize before the DB????
+	*/
+	if(!initializeToggle){
+		mFlowerMenu = new FlowerMenu(this);
+		initializeToggle = true;
+	}
     }
     
     public void setState(GameState s){
@@ -214,10 +223,7 @@ class Model {
     	mMenuManager.updateState();
     }
     
-    public void enterLevelPack() {
-	setState(GameState.FLOWER_MENU);
-	mFlowerMenu.enterLevelPack();
-    }
+   
 
     public void setDataServer(DataServer d){
 	mDataServer = d;
@@ -279,10 +285,27 @@ class Model {
 	System.out.println("GETTING HERE?A?A?A?A......NOPE!");
     }
 
-    public void setModelToGamePlayOpening(Puzzle p) {
+    public void setModelToGameOpening(Puzzle p) {
 	createPuzzleFromPuzzle(p);
 	setState(GameState.GAME_OPENING);
     }  
+
+    public void setModelToChapterEnd(){
+    	mFlowerMenu.enterChapterEnd();
+    	setState(GameState.FLOWER_MENU);
+    }
+
+    public void setModelToLevelPack() {
+    	setState(GameState.FLOWER_MENU);
+    	mFlowerMenu.enterLevelPack();
+        }
+    
+    public void setModelToChapterSelect() {
+    	setState(GameState.FLOWER_MENU);
+    	mFlowerMenu.enterChapterSelect();
+    }	
+    
+    
 }
 
 

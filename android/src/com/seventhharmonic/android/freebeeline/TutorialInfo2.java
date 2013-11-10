@@ -10,7 +10,7 @@ public class TutorialInfo2 {
    public static String[] banners = {"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.",
     							"Touch a square to enter a number. Swipe to enter an arrow.",
     							"There are two easy rules. Rule 1: Every segment of your path must change direction.",
-    							"Rule 2: A number can't point to a square with the same number.",
+    							"There is one easy rule:^ A number can't point to a square with the same number.",
     							"Your turn to solve a puzzle. The yellow tiles are hints. Press the check when done.",
     							"Good Job! You helped Beatrice visit these flowers! Now press quit and try a new puzzle! You can always return to the tutorial for a review. "
     							};

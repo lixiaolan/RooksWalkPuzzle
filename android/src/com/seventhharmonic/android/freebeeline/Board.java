@@ -949,24 +949,25 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mDialog.deactivate();
 					if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
-
-						mModel.setModelToGamePlayOpening(currPuzzle.getNextPuzzle());
+						mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
 
 					} else {
-						//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
-						mModel.enterLevelPack();
+						mModel.setModelToChapterEnd();
 					}
 				}
 
 			});
 
 			mDialog.setBackClickListener(new GameEventListener() {
-
 				public void event(int i){
 					mDialog.deactivate();
-					//TODO: PLEASE DONT DO IT THIS WAY. TOC should allow an explicit change of state
-					mModel.enterLevelPack();
+					if(currPuzzle.getNextPuzzle() == null){
+						mModel.setModelToChapterEnd();
+					}
+					else{
+						mModel.setModelToChapterSelect();
+					}
 				}
 
 			});
