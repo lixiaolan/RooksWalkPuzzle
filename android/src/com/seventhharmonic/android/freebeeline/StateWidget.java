@@ -9,11 +9,11 @@ package com.seventhharmonic.android.freebeeline;
  */
 public abstract class StateWidget {
     
-    enum DrawPeriod {
+    public enum DrawPeriod {
     	ENTER, DURING
     }
     
-    DrawPeriod period = DrawPeriod.ENTER;
+    public DrawPeriod period = DrawPeriod.ENTER;
     
     public abstract void enterAnimation();
     public abstract void duringAnimation();
