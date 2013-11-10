@@ -76,11 +76,13 @@ int main(int argc, char *argv[]){
   else if (str == "printXML") {
 
     vector<string> files;
-    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterOne.txt");
-    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterTwo.txt");
-    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterThree.txt");
-    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterFour.txt");
-    files.push_back("OldPuzzleBooks/BookOne/BookOneChapterFive.txt");
+    files.push_back("PuzzleBooks/BookOne/BookOneChapterOne.txt");
+    files.push_back("PuzzleBooks/BookOne/BookOneChapterTwo.txt");
+    files.push_back("PuzzleBooks/BookOne/BookOneChapterThree.txt");
+    files.push_back("PuzzleBooks/BookOne/BookOneChapterFour.txt");
+    files.push_back("PuzzleBooks/BookOne/BookOneChapterFive.txt");
+    files.push_back("PuzzleBooks/BookOne/BookOneChapterSix.txt");
+    files.push_back("PuzzleBooks/BookOne/BookOneChapterSeven.txt");
 
     string bookTitle = "Beatrice the bee";
 
@@ -92,8 +94,12 @@ int main(int argc, char *argv[]){
     chapterTitles.push_back("Chapter Three: A time during which Beatrice questions the meaning of right and wrong and ultimately comes to no really conclusion");
     chapterTitles.push_back("Chapter Four: Beatrice continues her struggle to bring life and color to the landscape with moderate success");
     chapterTitles.push_back("Chapter Five: Wherein our magnanimous bee ponders the confines of her mortal shell");
+    chapterTitles.push_back("Chapter Six: ");
+    chapterTitles.push_back("Chapter Seven: ");
     
     vector<string> beforeImages;
+    beforeImages.push_back("locked");
+    beforeImages.push_back("locked");
     beforeImages.push_back("locked");
     beforeImages.push_back("locked");
     beforeImages.push_back("locked");
@@ -106,6 +112,10 @@ int main(int argc, char *argv[]){
     afterImages.push_back("book1chapter3");
     afterImages.push_back("book1chapter4");
     afterImages.push_back("book1chapter5");
+    afterImages.push_back("book1chapter6");
+    afterImages.push_back("book1chapter7");
+
+
 
     vector<string> beforeFlower;
     beforeFlower.push_back("flower1");
@@ -113,6 +123,9 @@ int main(int argc, char *argv[]){
     beforeFlower.push_back("flower3");
     beforeFlower.push_back("flower4");
     beforeFlower.push_back("flower5");
+    beforeFlower.push_back("flower6");
+    beforeFlower.push_back("flower7");
+
 
     vector<string> afterFlower;
     afterFlower.push_back("flower1color");
@@ -120,7 +133,8 @@ int main(int argc, char *argv[]){
     afterFlower.push_back("flower3color");
     afterFlower.push_back("flower4color");
     afterFlower.push_back("flower5color");
-
+    afterFlower.push_back("flower6color");
+    afterFlower.push_back("flower7color");
 
     int startIndex = 0;
 
