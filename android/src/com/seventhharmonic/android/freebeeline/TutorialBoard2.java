@@ -6,7 +6,7 @@ import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 class TutorialBoard2 extends Board {
 	enum TutorialState {
-		SHOW_PATH, SLIDE0, SLIDE1, SLIDE2, SLIDE3, PlayGame, PlayGameEnd
+		SHOW_PATH, SLIDE1, SLIDE3
 	}
 
 	TextBox mBanner; 
@@ -72,15 +72,11 @@ class TutorialBoard2 extends Board {
 	}
 
 	public void swipeHandler(String direction) {
-		if(mTutorialState == TutorialState.PlayGame){
-			state.swipeHandler(direction);
-		} else {
 			if(direction.equals("left_arrow")){
 				setStateForward();
 			} else if(direction.equals("right_arrow")){
 				setStateBackward();
 			}
-		}
 	}
 
 	public void touchHandler(float[] pt) {
@@ -239,70 +235,6 @@ class TutorialBoard2 extends Board {
 
 	}
 
-	class SLIDE2 extends State<BoardTile>{
-		long refTime;
-
-		private ImageWidget mCheck;
-		private boolean lines  = true;
-
-
-
-		public SLIDE2(){
-			mBee.setMood(Mood.HIDDEN);
-			refTime = System.currentTimeMillis();
-
-			prepBoard();
-
-			mCheck  = new ImageWidget(-.68f, .11f, .22f, .22f, TextureManager.CHECK);
-			// CPB.setActiveCircle(2);
-		}
-
-		private void prepBoard(){
-			tiles[27].setNumber("3");
-			tiles[27].setArrow("right_arrow");
-			tiles[27].setTextures();
-			tiles[27].setColor("transparent");
-			tiles[9].setColor("blue");
-			drawLines();
-		}
-
-		@Override
-		public void enterAnimation(BoardTile[] tiles) {
-			mBanner.setText(mTutorialInfo.banners[2]);
-			state.period = DrawPeriod.DURING; 
-		}
-
-		@Override
-		public void duringAnimation(BoardTile[] tiles) {
-			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
-			if(time < 2) {
-				mCheck.setImage("check");
-				tiles[9].setNumber("2");
-				tiles[9].setArrow("down_arrow");
-				tiles[9].setTextures();
-			} else if(time < 4){
-				tiles[9].setNumber("2");
-				tiles[9].setArrow("left_arrow");
-				tiles[9].setTextures();
-				mCheck.setImage("menu_1");
-				if(lines){
-					drawLines();
-					lines = false;
-				}
-			} else {
-				lines = true;
-				refTime = System.currentTimeMillis();
-			}
-		}
-
-		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			mBoardBg.draw(r);
-			super.draw(tiles, r);
-			mBanner.draw(r);
-			mCheck.draw(r);
-			mCPB.draw(r);
-		}
-	}
 
 	class SLIDE3 extends State<BoardTile> {
 		long refTime;
