@@ -56,6 +56,6 @@ public class LevelPack {
 	}
 	
 	public String getCurrTitleImage() {
-		return TextureManager.getFlowerTexture();
+		return "levelPack1Banner";
 	}	
 }

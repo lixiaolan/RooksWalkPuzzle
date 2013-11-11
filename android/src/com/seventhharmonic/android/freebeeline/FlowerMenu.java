@@ -202,8 +202,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    m.setDrawProgressBar(true);
 	    for(int i =0;i<LPP.getNumberOfLevelPacks();i++){
-		m.addWidget(new LevelPackWidget(TextureManager.CLEAR, "book1chapter0"));
-		//m.addWidget(new LevelPackWidget(mLPP.getLevelPack(i).getTitle(),"forest"));
+	    	m.addWidget(new LevelPackWidget(TextureManager.CLEAR, LPP.getLevelPack(i).getCurrTitleImage()));
 	    }
 	    m.setActiveWidget(savedLevelPack);
 	    currLevelPack = LPP.getLevelPack(savedLevelPack);
@@ -226,7 +225,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    super.draw(r);
 	    physics.draw(r);
 	    m.draw(r);
-    
+
 	}
 	
 	@Override

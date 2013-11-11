@@ -22,9 +22,12 @@ public class LevelPackWidget extends WidgetLayout{
 	//mText = new TextWidget(0,0,1,.5f,text);
 	//mText.setRelativeCenter(0,height-mText.getHeight());
 	
-	mImage = new ImageWidget(0,0,.3f, .3f*height, image);
+	mImage = new ImageWidget(0,0,.8f, .4f, image);
 	mImage.setRelativeCenter(0,0);
-	mImage.setMode(MyGLRenderer.FIXEDWIDTH);
+	mImage.setBorder(true);
+	mImage.setColor("white");
+	mImage.setMode(MyGLRenderer.CROPTOP);
+	
 	
 	//widgetList.add(mText);
 	widgetList.add(mImage);
