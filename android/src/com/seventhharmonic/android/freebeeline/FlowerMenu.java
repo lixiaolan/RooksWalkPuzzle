@@ -166,6 +166,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	public MainMenu(){
 	    physics.resetPhysics();
 	    physics.setPhysics("main_menu");
+	    
 	}
 	
 	@Override

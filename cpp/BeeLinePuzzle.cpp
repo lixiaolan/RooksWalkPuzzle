@@ -1020,12 +1020,18 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string be
   xml_attribute<> *attr;
   char *name;
   int myInt;
+  string str("");
   
   puzzle = doc->allocate_node(node_element, "puzzle");
   chapter->append_node(puzzle);
 
   name = doc->allocate_string(intTooString(*puzzleIndex).c_str());
   attr = doc->allocate_attribute("id", name);
+  puzzle->append_attribute(attr);
+
+  //This should actually do something usefull later :)
+  name = doc->allocate_string(str.c_str());
+  attr = doc->allocate_attribute("text", name);
   puzzle->append_attribute(attr);
 
   *puzzleIndex += 1;

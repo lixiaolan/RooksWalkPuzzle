@@ -81,9 +81,9 @@ void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string 
   name = doc->allocate_string(afterImage.c_str());
   attr = doc->allocate_attribute("after_image", name);
   chapter->append_attribute(attr);
-  node = doc->allocate_node(node_element, "width", "4");
+  node = doc->allocate_node(node_element, "width", "3");
   chapter->append_node(node);
-  node = doc->allocate_node(node_element, "height", "4");
+  node = doc->allocate_node(node_element, "height", "3");
   chapter->append_node(node);
 
   for (BeeLinePuzzle puz : puzzles) {
