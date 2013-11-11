@@ -22,7 +22,7 @@ public class LevelPackWidget extends WidgetLayout{
 	//mText = new TextWidget(0,0,1,.5f,text);
 	//mText.setRelativeCenter(0,height-mText.getHeight());
 	
-	mImage = new ImageWidget(0,0,.8f, .4f, image);
+	mImage = new ImageWidget(0,0,.8f, .6f, image);
 	mImage.setRelativeCenter(0,0);
 	mImage.setBorder(true);
 	mImage.setColor("white");

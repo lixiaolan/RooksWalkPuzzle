@@ -790,7 +790,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mGameBanner.draw(r);
 			mBoardBg.draw(r);
 			super.draw(tiles, r);
-			mBee.draw(r);
+			//mBee.draw(r);
 			mMenu.draw(r);
 			//reset.draw(r);
 			mHintDialog.draw(r);
@@ -949,6 +949,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mDialog.deactivate();
 					if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
+						//TODO: Created a hack here to ensure we recreate the current chapter widget
 						mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
 

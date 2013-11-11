@@ -13,10 +13,9 @@ import com.seventhharmonic.com.freebeeline.levelresources.LevelPackProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-class LevelPack1 extends StateWidget {
-	long time;	
-	float dt;
-	float t;
+//TODO: FIX THE GARBAGE COLLECTION ISSUES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+class Boarder extends StateWidget {
+
     private long startTime;
     private long refTime;
     private float[] centers;
@@ -26,9 +25,7 @@ class LevelPack1 extends StateWidget {
     private float[] lastTouchPos = new float[2];
 
 
-	public LevelPack1(FlowerTile[] in) {
-		
-		
+	public Boarder(FlowerTile[] in) {
 	    startTime = System.currentTimeMillis();
 
 	    tiles = in;
@@ -38,26 +35,33 @@ class LevelPack1 extends StateWidget {
 	    fixedCenters = new float[2*tiles.length];
 
 	    for (int i = 0; i < tiles.length; i++) {
-	    	double r = Math.random();
-	    	tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
-	    	r = Math.random();
-	    	tiles[i].velocity[1] = (float)(-1*r+(1-r)*1);
-	    	tiles[i].setTextures(TextureManager.CLEAR, TextureManager.getFlowerTexture());
+		double r = Math.random();
+		tiles[i].velocity[0] = (float)(-1*r+(1-r)*1);
+		r = Math.random();
+		tiles[i].velocity[1] = (float)(-1*r+(1-r)*1);
+		tiles[i].setTextures(TextureManager.CLEAR, TextureManager.getFlowerTexture());
 	    }
 
 	    //Initiate the centers array.
 	    refTime = System.currentTimeMillis();
 	    float tt = ((float)(refTime - startTime))/2000.0f;
+	    float geo[] = GlobalApplication.getGeometry().getGeometry();
+	    
 	    for (int i = 0; i<tiles.length; i++ ) {
-		float ii = (float)i;
-		float r = (ii + 10*(1-1/(ii+1)))/25;
-		t = ii/1.0f; 
-		fixedCenters[2*i] =  r*((float)Math.sin(t));
-		fixedCenters[2*i+1] = r*((float)Math.cos(t));
-		centers[2*i]   = ((float)Math.cos(tt))*fixedCenters[2*i] 
-		    + ((float)Math.sin(tt))*fixedCenters[2*i + 1];
-		centers[2*i+1]   = -((float)Math.sin(tt))*fixedCenters[2*i] 
-		    + ((float)Math.cos(tt))*fixedCenters[2*i + 1];	
+	    	float ii = (float)i;
+	    	float rx = geo[0];
+	    	float ry = geo[1];
+	    	
+	    	float t = ii/tiles.length*2*3.14159265f; 
+//		    fixedCenters[2*i] =  rx*((float)Math.sin(t));
+//	    	fixedCenters[2*i+1] = ry*((float)Math.cos(t));
+	    	centers[2*i] =  rx*((float)Math.sin(t));
+	    	centers[2*i+1] = ry*((float)Math.cos(t));
+	    	
+//	    	centers[2*i]   = ((float)Math.cos(tt))*fixedCenters[2*i] 
+//	    			+ ((float)Math.sin(tt))*fixedCenters[2*i + 1];
+//	    	centers[2*i+1]   = -((float)Math.sin(tt))*fixedCenters[2*i] 
+//	    			+ ((float)Math.cos(tt))*fixedCenters[2*i + 1];	
 	    }
 	}
 	
@@ -73,27 +77,33 @@ class LevelPack1 extends StateWidget {
 	}
 	
 	float[] force = new float[2];
-	
-	
 	@Override
 	public void duringAnimation() {
-	    time = System.currentTimeMillis()-refTime;
-	    dt = Math.min(((float)time)/1000.0f, 33.3f);
-	    refTime = System.currentTimeMillis();
-	    t = ((float)(refTime - startTime))/2000.0f;
-	    for (int i = 0; i<tiles.length; i++ ) {
-		centers[2*i]   = ((float)Math.cos(t))*fixedCenters[2*i] 
-		    + ((float)Math.sin(t))*fixedCenters[2*i + 1];
-		centers[2*i+1]   = -((float)Math.sin(t))*fixedCenters[2*i] 
-		    + ((float)Math.cos(t))*fixedCenters[2*i + 1];	
-	    }
+		
+		float geo[] = GlobalApplication.getGeometry().getGeometry();
+		float rx = geo[0];
+		float ry = geo[1];
 	    
+	    long time = System.currentTimeMillis()-refTime;
+	    float dt = Math.min(((float)time)/1000.0f, 33.3f);
+	    refTime = System.currentTimeMillis();
+	    for (int i = 0; i<tiles.length; i++ ) {
+	    	float t = ((float)(refTime - startTime))/2000.0f+(float)i/tiles.length*2*3.14159265f; 
+	    	centers[2*i] =  rx*((float)Math.sin(t));
+	    	centers[2*i+1] = ry*((float)Math.cos(t));
+	    	
+	    	
+	    	//centers[2*i]   = ((float)Math.cos(t))*fixedCenters[2*i] 
+		    //+ ((float)Math.sin(t))*fixedCenters[2*i + 1];
+		//centers[2*i+1]   = -((float)Math.sin(t))*fixedCenters[2*i] 
+		    //+ ((float)Math.cos(t))*fixedCenters[2*i + 1];	
+	    }
 	    for(int i=0;i<tiles.length;i++){
-	    	getForce(tiles, i);
-	    	LATools.vSProd(dt, tiles[i].velocity, temp);
-	    	LATools.vSum(tiles[i].getCenter(), temp ,tiles[i].getCenter());
-	    	LATools.vSProd(dt, force, temp);
-	    	LATools.vSum(tiles[i].velocity, temp,tiles[i].velocity);
+		getForce(tiles, i);
+		LATools.vSProd(dt, tiles[i].velocity, temp);
+		LATools.vSum(tiles[i].getCenter(), temp ,tiles[i].getCenter());
+		LATools.vSProd(dt, force, temp);
+		LATools.vSum(tiles[i].velocity, temp,tiles[i].velocity);
 	    }
 	    
 	}

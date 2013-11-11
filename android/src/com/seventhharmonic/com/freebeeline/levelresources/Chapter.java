@@ -35,12 +35,13 @@ public class Chapter {
 
 	public boolean getCompleted(){
 		//TODO: Put this code back!
-		 for(Puzzle p: puzzles){
-		 	if(!p.isCompleted()){
-		 		completed  = false;
-		 		return false;
-		 	}
-		 }
+		//for(Puzzle p: puzzles){
+		// 	if(!p.isCompleted()){
+		// 		completed  = false;
+		// 		return false;
+		// 	}
+		 //}
+		
 		completed = true;
 		return true;
 	}

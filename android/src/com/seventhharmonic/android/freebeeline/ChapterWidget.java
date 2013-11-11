@@ -23,6 +23,7 @@ public class ChapterWidget extends GraphicWidget {
 	GameEventListener listener;
 	ImageWidget mImage;
 	ImageWidget mImageBorder;
+	ImageWidget mImageTop;
 	ButtonWidget finishedFlower;
 	List<Widget> widgetList = new ArrayList<Widget>();
 	Geometry geometry;
@@ -61,6 +62,13 @@ public class ChapterWidget extends GraphicWidget {
 		mText.setRelativeCenter(-.3f,height-.5f);
 		widgetList.add(mText);
 
+		//mImageTop = new ImageWidget(0,0,.8f, .395f, "levelPack1Banner");
+		//mImageTop.setRelativeCenter(0,.95f);
+		//mImageTop.setBorder(true);
+		//mImageTop.setColor("white");
+		//mImageTop.setMode(MyGLRenderer.CROPTOP);
+		//widgetList.add(mImageTop);
+		
 		/*
 		 * If the chapter is completed, a spinning flower will appear at the lower left.
 		 */
@@ -68,7 +76,8 @@ public class ChapterWidget extends GraphicWidget {
 			finishedFlower = new ButtonWidget(0,0,.15f, .15f, ch.getPuzzle(0).getFlower());
 			finishedFlower.setRelativeCenter(1-finishedFlower.getWidth(), -1*(height-finishedFlower.getHeight()));
 			//TODO: Rename button style
-			finishedFlower.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
+			finishedFlower.setBorder(false);
+			//finishedFlower.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			finishedFlower.setClickListener(new GameEventListener(){
 			public void event(int i){
 				setState();
@@ -84,16 +93,16 @@ public class ChapterWidget extends GraphicWidget {
 		 * mGrid2 should draw opaque squares. Without this, we end up 
 		 * having some serious framerate issues.
 		 */
-		mGrid = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .15f);
+		mGrid = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .22f);
 		mGrid.setRelativeCenter(0, 0);
-		mGrid2 = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .15f);
+		mGrid2 = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .22f);
 		mGrid2.setRelativeCenter(0, 0);
 		
 		boolean foundCompleted = false;
 		for(int i =0;i<ch.getNumberOfPuzzles();i++){
 			PuzzleWidget mFlower = new PuzzleWidget(0,0,.15f, .15f, ch.getPuzzle(i));
 			ImageWidget overlay = new ImageWidget(0,0,.15f, .15f,TextureManager.CLEAR);
-
+			//overlay.setBorder(true);
 			if(!foundCompleted && !ch.getPuzzle(i).isCompleted()){
 				mFlower.setRotate(true);
 				foundCompleted = true;
@@ -107,7 +116,8 @@ public class ChapterWidget extends GraphicWidget {
 		widgetList.add(mGrid);
 		widgetList.add(mGrid2);
 	
-		if(ch.getCompleted()){
+		if(
+				ch.getCompleted()){
 			state = new Finished_State(false);
 			mChapterState = ChapterState.FINISHED;
 		} else {
@@ -142,6 +152,11 @@ public class ChapterWidget extends GraphicWidget {
 		}
 	}
 	
+	public void setFinishedChapter() {
+		state = new Finished_State(true);
+		mChapterState = ChapterState.FINISHED;
+	}
+	
 	@Override
 	public void touchHandler(float[] pt){
 		if (ch.getCompleted()) {
@@ -158,7 +173,7 @@ public class ChapterWidget extends GraphicWidget {
 	}
 
 	class Puzzle_State extends StateWidget{
-
+		
 		@Override
 		public void enterAnimation() {
 			period = DrawPeriod.DURING;
@@ -305,8 +320,12 @@ public class ChapterWidget extends GraphicWidget {
 	@Override
 	public void draw(MyGLRenderer r) {
 		mImageBorder.draw(r);
+		mImage.draw(r);
+		//mImageTop.draw(r);
+
 		state.draw(r);
-		mText.draw(r);
+
+		//mText.draw(r);
 		if (ch.getCompleted()) {
 			finishedFlower.draw(r);
 		}

@@ -89,6 +89,16 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	super.setGeometry(g);
     }
     
+    
+    
+    //Update Flowers to have the approprieate colors!
+    private void updateFlowers() {
+    	for(int i =0;i<tiles.length;i++){
+    	    tiles[i].setTextures(TextureManager.CLEAR, TextureManager.getFlowerTexture());
+    	}	
+    }
+    
+    
     //Update the state according to the internal state system
     private void updateState() {
 	switch(mFlowerState) {
@@ -277,6 +287,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		    m.addWidget(ch);
 	    }
 		    m.setActiveWidget(savedChapter);
+		    currChapterWidget = m.getWidget(m.getActiveWidget());
 	}
 	
 	@Override
@@ -290,7 +301,8 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	
 	@Override
 	public void draw(MyGLRenderer r){
-	    super.draw(r);
+		//physics.draw(r);
+		super.draw(r);
 	    m.draw(r);
 	}
 	
@@ -305,7 +317,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	}
 
 	public void chapterEnd(){
-		((ChapterWidget)currChapterWidget).setState(true);
+		((ChapterWidget)currChapterWidget).setFinishedChapter();
 	}
 	
 	@Override

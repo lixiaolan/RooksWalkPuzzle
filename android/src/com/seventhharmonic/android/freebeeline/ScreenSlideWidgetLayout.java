@@ -100,7 +100,7 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 
 	@Override
 	public void swipeHandler(String direction){
-		System.out.println("got swiped");
+		System.out.println("got swiped "+Integer.toString(activeWidget));
 		if(direction.equals("right_arrow") || direction.equals("left_arrow")){
 			refTime = System.currentTimeMillis();
 			currDirection = direction;
@@ -165,12 +165,12 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 
 
 	public void draw(MyGLRenderer r) {
-		for(int i = 0 ;i < widgetList.size(); i++){
+		/*for(int i = 0 ;i < widgetList.size(); i++){
 			if(active){
 				animate();
 			} 
 			widgetList.get(i).draw(r);
-		}
+		}*/
 		if(displayProgressBar){
 			mCPW.draw(r);
 
@@ -180,7 +180,8 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 			leftArrow.draw(r);
 			rightArrow.draw(r);
 		}
-
+		widgetList.get(activeWidget).setCenter(0,0);
+		widgetList.get(activeWidget).draw(r);
 	}
 }
 

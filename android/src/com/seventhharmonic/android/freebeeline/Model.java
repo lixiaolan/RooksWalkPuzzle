@@ -287,10 +287,13 @@ class Model {
 
     public void setModelToGameOpening(Puzzle p) {
 	createPuzzleFromPuzzle(p);
+	//Resets the chapter display information.
+	mFlowerMenu.enterChapterSelect();
 	setState(GameState.GAME_OPENING);
     }  
 
     public void setModelToChapterEnd(){
+    	mFlowerMenu.enterChapterSelect();
     	mFlowerMenu.enterChapterEnd();
     	setState(GameState.FLOWER_MENU);
     }
