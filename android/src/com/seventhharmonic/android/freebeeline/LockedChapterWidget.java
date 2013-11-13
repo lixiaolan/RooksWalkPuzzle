@@ -53,6 +53,12 @@ public class LockedChapterWidget extends WidgetLayout{
 			w.draw(r);
 	}
 
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

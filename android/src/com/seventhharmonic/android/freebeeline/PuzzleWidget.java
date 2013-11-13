@@ -24,7 +24,6 @@ public class PuzzleWidget extends Widget{
 
     }
     
-    @Override
     public void setColor(String color){
     	mFlower.setColor(color);
     }
@@ -66,5 +65,17 @@ public class PuzzleWidget extends Widget{
     
     public boolean isTouched(float[] pt){
     	return mFlower.isTouched(pt);
-    }    
+    }
+
+	@Override
+	public void touchHandler(float[] pt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
+	}    
 }

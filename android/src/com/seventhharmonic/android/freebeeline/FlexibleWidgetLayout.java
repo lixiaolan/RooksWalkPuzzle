@@ -16,5 +16,17 @@ public class FlexibleWidgetLayout extends WidgetLayout{
 			w.draw(r);
 		}
 	}
+
+	@Override
+	public void touchHandler(float[] pt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

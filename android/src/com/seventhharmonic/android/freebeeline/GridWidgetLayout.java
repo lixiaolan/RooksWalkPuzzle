@@ -76,5 +76,17 @@ public class GridWidgetLayout extends WidgetLayout{
 			widgetList.get(i).draw(r);
 		}
 	}
+
+	@Override
+	public void touchHandler(float[] pt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

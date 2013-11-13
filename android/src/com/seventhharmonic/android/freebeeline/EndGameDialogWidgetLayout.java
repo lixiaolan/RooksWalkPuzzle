@@ -33,10 +33,10 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		//mPuzzText.setRelativeCenter(0,height*.7f);
 		
 		mBack = new ButtonWidget(0,0, .15f, .15f, TextureManager.BACK);
-		mBack.setRelativeCenter(.7f*width, -.6f*height);
+		mBack.setRelativeCenter(.7f*width, 0);
 		
 		mNext = new ButtonWidget(0,0, .15f, .15f, TextureManager.NEXT);
-		mNext.setRelativeCenter(-.7f*width, -.6f*height);
+		mNext.setRelativeCenter(-.7f*width, 0);
 		
 		mBackground = new ImageWidget(0,0,width, height, TextureManager.CLEAR);
 		mBackground.setMode(MyGLRenderer.STRETCH);
@@ -44,8 +44,8 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		mBackground.setBorder(true);
 		mBackground.setColor("opaque");
 		
-		widgetList.add(mBackground);
-		widgetList.add(mText);
+		//widgetList.add(mBackground);
+		//widgetList.add(mText);
 		//widgetList.add(mPuzzText);
 		widgetList.add(mNext);
 		widgetList.add(mBack);
@@ -82,6 +82,13 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 			w.draw(r);
 		}	
 		}
+	}
+
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

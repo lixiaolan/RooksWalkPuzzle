@@ -56,4 +56,16 @@ public class TextBox extends Widget{
 		r.drawTextBox(center,width,fontSize,text);
 	}
 
+	@Override
+	public void touchHandler(float[] pt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

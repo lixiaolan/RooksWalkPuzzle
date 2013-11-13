@@ -13,8 +13,6 @@ public class Chapter {
 	int height = 0;
 	int width = 0;
 	boolean completed = true;
-	String beforeImage;
-	String afterImage;
 
 	List<String> beforeImageList = new ArrayList<String>();
 	List<String> afterImageList = new ArrayList<String>();
@@ -37,44 +35,24 @@ public class Chapter {
 
 
 	protected String getBeforeImage() {
-		return beforeImage;
+		return beforeImageList.get(0);
 	}
 
-	protected void setBeforeImage(String beforeImage) {
-	    this.beforeImage = beforeImage;
-	    setBeforeCompletionImageList(beforeImage);
-	}
 	
 	protected String getAfterImage() {
-	    return afterImage;
-	}
-
-	protected void setAfterImage(String afterImage) {
-	    this.afterImage = afterImage;
-	    setAfterCompletionImageList(afterImage);
+	    return afterImageList.get(0);
 	}
 
 
-
-	protected List<String> getBeforeCompletionImageList() {
+	public List<String> getBeforeCompletionImageList() {
 	    return beforeImageList;
 	}
 
-	protected void setBeforeCompletionImageList(String beforeImage) {
-	    beforeImageList.put(beforeImage);
-	    beforeImageList.put(beforeImage);
-	    beforeImageList.put(beforeImage);
-	}
 	
-	protected List<String> getAfterCompletionImageList() {
+	public List<String> getAfterCompletionImageList() {
 	    return afterImageList;
 	}
 
-	protected void setAfterCompletionImageList(String afterImage) {
-	    afterImageList.put(afterImage);
-	    afterImageList.put(afterImage);
-	    afterImageList.put(afterImage);
-	}
 
 
 
@@ -150,6 +128,8 @@ public class Chapter {
 	
 	public void reset(){
 		puzzles = new ArrayList<Puzzle>();
+		afterImageList = new ArrayList<String>();
+		beforeImageList = new ArrayList<String>();
 	}
 	
 	public Chapter copy(){
@@ -159,9 +139,9 @@ public class Chapter {
 		}
 		ch.setHeight(height);
 		ch.setWidth(width);
-		ch.setAfterImage(afterImage);
-		ch.setBeforeImage(beforeImage);
-		ch.flowerCoords = flowerCoords;		
+		ch.flowerCoords = flowerCoords;	
+		ch.afterImageList = afterImageList;
+		ch.beforeImageList = beforeImageList;
 		return ch;
 	}
 

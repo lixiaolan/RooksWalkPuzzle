@@ -21,8 +21,8 @@ public class ChapterWidget extends GraphicWidget {
 	GridWidgetLayout mGrid2;
 	Chapter ch;
 	GameEventListener listener;
-	ImageWidget mImage;
-	ImageWidget mImageBorder;
+	//ImageWidget mImage;
+	//ImageWidget mImageBorder;
 	ImageWidget mImageTop;
 	//ButtonWidget finishedFlower;
 	List<Widget> widgetList = new ArrayList<Widget>();
@@ -41,17 +41,13 @@ public class ChapterWidget extends GraphicWidget {
 		
 		this.ch = ch;
 		
-		mImage = new ImageWidget(0,0,.9f, .9f*height, ch.getImage());
+		/*mImage = new ImageWidget(0,0,.9f, .9f*height, ch.getImage());
 		mImage.setRelativeCenter(0,.05f);
 		mImage.setBorder(true);
 		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
 		widgetList.add(mImage);
-		
-		mImageBorder = new ImageWidget(0,0,.9f, .9f*height, TextureManager.CLEAR);
-		mImageBorder.setRelativeCenter(0,.05f);
-		mImageBorder.setBorder(true);
-		mImageBorder.setMode(MyGLRenderer.FIXEDWIDTH);
-		widgetList.add(mImageBorder);
+		*/
+		//widgetList.add(mImageBorder);
 		
 		/*TODO: Place some kind of text here. - OR NOT>>>>>>
 		 * Set the text at the top of the screen.
@@ -335,7 +331,7 @@ public class ChapterWidget extends GraphicWidget {
 		public void draw(MyGLRenderer r){
 			super.draw(r);
 			if(imageToggle){
-				mImage.draw(r);
+				//mImage.draw(r);
 				if (chEnd){
 					mBanner.draw(r);		
 				}
@@ -367,8 +363,8 @@ public class ChapterWidget extends GraphicWidget {
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		mImageBorder.draw(r);
-		mImage.draw(r);
+		//mImageBorder.draw(r);
+		//mImage.draw(r);
 		//mImageTop.draw(r);
 
 		state.draw(r);

@@ -324,6 +324,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		*/
 		m.swipeHandler(direction);
 		mGIF.setTargetFrame(m.getActiveWidget());
+		Log.d(TAG, Integer.toString(m.getActiveWidget()));
 	}
 /*
 	public void chapterEnd(){

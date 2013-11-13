@@ -59,5 +59,17 @@ public class LevelPackWidget extends WidgetLayout{
 
     public boolean isTouched(float[] pt){
 	return mImage.isTouched(pt);
-    }    
+    }
+
+	@Override
+	public void touchHandler(float[] pt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
+	}    
 }

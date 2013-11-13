@@ -23,7 +23,8 @@ public class LevelPackParser extends BaseParser {
 	String INDEX = "index";
 	String DIRECTION = "direction";
 	String ID = "id";
-	
+	String AFTERIMAGE = "afterImage";
+	String IMAGE = "image";
     public LevelPackParser(){
         
     }
@@ -37,6 +38,7 @@ public class LevelPackParser extends BaseParser {
     	Element chapter = root.getChild(CHAPTER);
     	Element puzzle = chapter.getChild(PUZZLE);
     	Element hizzle = puzzle.getChild(HINT);
+    	Element afterImage = chapter.getChild(AFTERIMAGE);
     	
     	root.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
@@ -52,13 +54,18 @@ public class LevelPackParser extends BaseParser {
 		    ch.setTitle(a.getValue("title"));
 		    Log.d(TAG,"found title");
 		    Log.d(TAG, a.getValue("title"));
-		    ch.setBeforeImage(a.getValue("before_image"));
-		    ch.setAfterImage(a.getValue("after_image"));
 		    ch.setFlowerCoords(Float.parseFloat(a.getValue("xcoords")),Float.parseFloat(a.getValue("ycoords"))); 
-
+		    ch.beforeImageList.add(a.getValue("beforeImage"));
     		}
     	});
     	
+    	
+    	afterImage.getChild(IMAGE).setStartElementListener(new StartElementListener(){
+    		public void start(Attributes a){
+    			ch.afterImageList.add(a.getValue("image"));
+    			Log.d(TAG, a.getValue("image"));
+    		}
+    	});
     	
     	chapter.getChild(HEIGHT).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){

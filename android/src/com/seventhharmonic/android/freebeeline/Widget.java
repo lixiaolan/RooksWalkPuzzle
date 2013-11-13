@@ -11,7 +11,6 @@ package com.seventhharmonic.android.freebeeline;
  * Every widget has an absolute center and a relative center. The absolute center
  * is computed in Widget layout and passed in. The relative center is specified by the user
  * You have to override the setCenter method to pass down the center data to your own squares.
- * 
  */
 
 
@@ -92,13 +91,6 @@ public abstract class Widget {
 		this.relativeCenter[2] = 0.0f;
 	}
 	
-		
-	public abstract void draw(MyGLRenderer r);
-		
-	public void touchHandler(float[] pt){};
-	
-	public void swipeHandler(String direction){};
-	
 	public boolean isTouched(float[] pt){
 		System.out.println("Widget Touched");
 		boolean b = ((pt[0] < center[0]+width)&(pt[0] > center[0]-width)&(pt[1] < center[1]+height)&(pt[1] > center[1]-height));
@@ -111,8 +103,10 @@ public abstract class Widget {
 		
 	}	
 	
-	public void setBorder(boolean border){}
+	public abstract void draw(MyGLRenderer r);
 	
-	public void setColor(String color){} 
+	public abstract void touchHandler(float[] pt);
+	
+	public abstract void swipeHandler(String direction);
 	
 }

@@ -83,7 +83,6 @@ public class ImageWidget extends Widget{
 		} 
 	}
 
-	@Override
 	public void setBorder(boolean border){
 		this.border = border;
 		if(borderTiles == null && border == true){
@@ -130,6 +129,18 @@ public class ImageWidget extends Widget{
 				borderTiles[i].draw(r);
 			}
 		}
+	}
+
+	@Override
+	public void touchHandler(float[] pt) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void swipeHandler(String direction) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
