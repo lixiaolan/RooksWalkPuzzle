@@ -71,7 +71,7 @@ void PuzzleBook::loadChapters(vector<string> files) {
   return;
 }
 
-PuzzleBook::PuzzleBook(vector<string> files, string a, string aa ,vector<string> b, vector<string> c,vector<string> d, vector<string> cc,vector<string> dd, int e): bookTitle(a), bookStyle(aa), chapterTitles(b), beforeImages(c), afterImages(d), beforeFlower(cc), afterFlower(dd), pi(e) {
+PuzzleBook::PuzzleBook(vector<string> files, string a, string aa ,vector<string> b, vector<string> c,vector< vector <string> > d, vector<string> cc,vector<string> dd, int e): bookTitle(a), bookStyle(aa), chapterTitles(b), beforeImages(c), afterImages(d), beforeFlower(cc), afterFlower(dd), pi(e) {
   puzzleIndex = &pi;
   loadChapters(files);
 }

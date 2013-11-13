@@ -106,16 +106,38 @@ int main(int argc, char *argv[]){
     beforeImages.push_back("locked");
     beforeImages.push_back("locked");
 
-    vector<string> afterImages;
-    afterImages.push_back("book1chapter1");
-    afterImages.push_back("book1chapter2");
-    afterImages.push_back("book1chapter3");
-    afterImages.push_back("book1chapter4");
-    afterImages.push_back("book1chapter5");
-    afterImages.push_back("book1chapter6");
-    afterImages.push_back("book1chapter7");
-
-
+    vector<string> temp;
+    vector< vector<string> > afterImages;    
+    temp.clear();
+    temp.push_back("book1chapter1");
+    temp.push_back("book1chapter1_1");
+    temp.push_back("book1chapter1_2");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter2");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter3");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter4");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter5");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter6");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter7");
+    afterImages.push_back(temp);
+    
 
     vector<string> beforeFlower;
     beforeFlower.push_back("flower1");
