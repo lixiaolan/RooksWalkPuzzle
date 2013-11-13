@@ -106,6 +106,16 @@ public class ImageWidget extends Widget{
 		a.setAngle(angle);
 	}
 	
+	public void setWidth(float width){
+		a.setWidth(width);
+		this.width = width;
+	}
+	
+	public void setHeight(float height){
+		a.setHeight(height);
+		this.height = height;
+	}
+	
 	@Override
 	public boolean isTouched(float[] pt){
 		Log.d("ImageWidget", text+" "+Boolean.toString(a.touched(pt)));

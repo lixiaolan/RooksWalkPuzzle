@@ -54,6 +54,7 @@ public class LevelPackParser extends BaseParser {
 		    Log.d(TAG, a.getValue("title"));
 		    ch.setBeforeImage(a.getValue("before_image"));
 		    ch.setAfterImage(a.getValue("after_image"));
+		    ch.setFlowerCoords(Float.parseFloat(a.getValue("xcoords")),Float.parseFloat(a.getValue("ycoords"))); 
 
     		}
     	});

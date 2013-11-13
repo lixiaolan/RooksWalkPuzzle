@@ -941,7 +941,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		EndGameDialogWidgetLayout mDialog;
 
 		public BoardGameEnd(BoardTile[] tiles) {
-			mDialog = new EndGameDialogWidgetLayout(.8f, currPuzzle.getChapter().getNumberPuzzlesIncomplete());
+			mGameBanner.setText(TextureManager.GOOD_JOB+"^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+			/*mDialog = new EndGameDialogWidgetLayout(.8f, currPuzzle.getChapter().getNumberPuzzlesIncomplete());
 			//mDialog.setCenter(0,(-1-geometry[1])/2);
 			mDialog.setNextClickListener(new GameEventListener(){
 				public void event(int i ){
@@ -975,6 +976,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 			
 			mDialog.activate();
+			*/
 			for (int i = 0; i < tiles.length; i++) {
 				flipped[i] = false;
 				rotateTiles[i] = false;
@@ -1039,7 +1041,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				}
 			}
 			mBee.draw(r);
-			mDialog.draw(r);
+//			//mDialog.draw(r);
 		}
 	}        
 }

@@ -45,5 +45,8 @@ public abstract class WidgetLayout extends Widget{
 		return widgetList.get(i);
 	}
 	
+	public List<Widget> getWidgetList(){
+		return widgetList;
+	}
 
 }

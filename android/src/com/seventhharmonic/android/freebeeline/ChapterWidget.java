@@ -24,7 +24,7 @@ public class ChapterWidget extends GraphicWidget {
 	ImageWidget mImage;
 	ImageWidget mImageBorder;
 	ImageWidget mImageTop;
-	ButtonWidget finishedFlower;
+	//ButtonWidget finishedFlower;
 	List<Widget> widgetList = new ArrayList<Widget>();
 	Geometry geometry;
 	StateWidget state;
@@ -38,7 +38,6 @@ public class ChapterWidget extends GraphicWidget {
 		setCenter(0,0);
 		setWidth(1);
 		setHeight(height);
-		//widgetList = ;
 		
 		this.ch = ch;
 		
@@ -68,25 +67,30 @@ public class ChapterWidget extends GraphicWidget {
 		//mImageTop.setColor("white");
 		//mImageTop.setMode(MyGLRenderer.CROPTOP);
 		//widgetList.add(mImageTop);
-		
+/*		
 		/*
 		 * If the chapter is completed, a spinning flower will appear at the lower left.
-		 */
+		 
 		//if(ch.getCompleted()){
-			finishedFlower = new ButtonWidget(0,0,.15f, .15f, ch.getPuzzle(0).getFlower());
+			//float x = ch.getFlowerCoords()[0];
+			//float y =ch.getFlowerCoords()[1]; 
+			//Log.d(TAG, "coords"+Float.toString(x)+" "+Float.toString(y));
+			finishedFlower = new ButtonWidget(0,0,.25f, .25f, ch.getPuzzle(0).getFlower());
 			finishedFlower.setRelativeCenter(1-finishedFlower.getWidth(), -1*(height-finishedFlower.getHeight()));
+			//finishedFlower.setRelativeCenter(x, y );
 			//TODO: Rename button style
 			finishedFlower.setBorder(false);
+			//finishedFlower.setRotate(true);
 			//finishedFlower.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			finishedFlower.setClickListener(new GameEventListener(){
-			public void event(int i){
+				public void event(int i){
 				setState();
 			}
 				
 			});	
 			widgetList.add(finishedFlower);
 		//}
-		
+*/		
 		/*
 		 * Create a grid of flowers.
 		 * Look for the first not completed puzzle. Spin that one.
@@ -102,13 +106,14 @@ public class ChapterWidget extends GraphicWidget {
 		for(int i =0;i<ch.getNumberOfPuzzles();i++){
 			PuzzleWidget mFlower = new PuzzleWidget(0,0,.15f, .15f, ch.getPuzzle(i));
 			ImageWidget overlay = new ImageWidget(0,0,.15f, .15f,TextureManager.CLEAR);
-			//overlay.setBorder(true);
+			mFlower.setColor("white");
+			overlay.setBorder(true);
 			if(!foundCompleted && !ch.getPuzzle(i).isCompleted()){
-				mFlower.setRotate(true);
+				mFlower.setPulse(true);
 				foundCompleted = true;
 			}else if(!ch.getPuzzle(i).isCompleted() && foundCompleted){
 				overlay.setColor("opaque");
-			}
+			} 
 			mGrid.addWidget(mFlower);
 
 			mGrid2.addWidget(overlay);
@@ -116,14 +121,8 @@ public class ChapterWidget extends GraphicWidget {
 		widgetList.add(mGrid);
 		widgetList.add(mGrid2);
 	
-		if(
-				ch.getCompleted()){
-			state = new Finished_State(false);
-			mChapterState = ChapterState.FINISHED;
-		} else {
-			state = new Puzzle_State();
-			mChapterState = ChapterState.PUZZLE;
-		}
+		state = new Puzzle_State();
+		mChapterState = ChapterState.PUZZLE;
 	}
 
 	@Override
@@ -145,7 +144,7 @@ public class ChapterWidget extends GraphicWidget {
 		}
 	}
 
-	public void setFinishedState(){
+	/*public void setFinishedState(){
 		if((mChapterState == ChapterState.PUZZLE || (mChapterState == ChapterState.FINISHED && chEnd)) && ch.getCompleted()){
 			state = new Finished_State(false);
 			mChapterState = ChapterState.FINISHED;
@@ -156,15 +155,10 @@ public class ChapterWidget extends GraphicWidget {
 		state = new Finished_State(true);
 		mChapterState = ChapterState.FINISHED;
 	}
+	*/
 	
 	@Override
 	public void touchHandler(float[] pt){
-		if (ch.getCompleted()) {
-			if(finishedFlower.isTouched(pt)){
-				finishedFlower.touchHandler(pt);
-				return;
-			}
-		}
 		state.touchHandler(pt);
 	}
 		
@@ -173,12 +167,62 @@ public class ChapterWidget extends GraphicWidget {
 	}
 
 	class Puzzle_State extends StateWidget{
+
+		List<Widget> list;
+		float[] initialPositionX;
+		float[] initialPositionY;
+		float[] finalPosition;
+		long refTime;		
+
+		public Puzzle_State(){
+			mGrid.computeGeometry();
+			mGrid2.computeGeometry();
+			list = mGrid.widgetList;
+			finalPosition = new float[]{1-.15f, -1*GlobalApplication.getGeometry().getGeometry()[1]+.15f};
+			refTime = System.currentTimeMillis();
+			initialPositionX = new float[list.size()];
+			initialPositionY = new float[list.size()];
+			for(int i =0;i< list.size();i++){
+				initialPositionX[i] = list.get(i).getCenterX();
+				initialPositionY[i] = list.get(i).getCenterY();
+			}
+		}
+		
 		
 		@Override
 		public void enterAnimation() {
-			period = DrawPeriod.DURING;
+			long time = (System.currentTimeMillis() - refTime);
+			if(time < 500){
+				for(int i =0;i< list.size(); i++){
+					computeAnimation(i, 500-time, 500);
+				}
+			} else{
+				mGrid.computeGeometry();
+				period = DrawPeriod.DURING;
+			}
+			
 		}
 
+		public void computeAnimation(int i, long time, long totalDuration){
+			float expDec = 10.0f;	
+			float t = delay(i, time, totalDuration);
+			float x = initialPositionX[i] + (1-(float)Math.exp(-t/totalDuration*expDec ) )*(finalPosition[0] - initialPositionX[i]);
+			float y = initialPositionY[i] + (1-(float)Math.exp(-t/totalDuration*expDec ) )*(finalPosition[1] - initialPositionY[i]);
+			
+			list.get(i).setCenter(x+mGrid.getCenterX(), y+mGrid.getCenterY());
+		}
+		
+		public float delay(int i, long time, long totalDuration) {
+			float div = 2.0f;
+			if ( ((float)i)/((float)list.size())*((float)totalDuration)/div > time  ){
+				return 0.0f;
+			}
+			else {
+				return time - ((float)i)/((float)list.size())*((float)totalDuration)/div; 
+			}
+		}
+
+		
 		@Override
 		public void duringAnimation() {
 		}
@@ -200,7 +244,11 @@ public class ChapterWidget extends GraphicWidget {
 		
 		public void draw(MyGLRenderer r){
 			super.draw(r);
-			mGrid.draw(r); mGrid2.draw(r);
+			for(Widget p: list){
+				p.draw(r);
+			}
+			if(period == DrawPeriod.DURING)
+				mGrid2.draw(r);
 		}
 		
 	}
@@ -326,9 +374,11 @@ public class ChapterWidget extends GraphicWidget {
 		state.draw(r);
 
 		//mText.draw(r);
+		/*
 		if (ch.getCompleted()) {
 			finishedFlower.draw(r);
 		}
+		*/
 	}
 
 }

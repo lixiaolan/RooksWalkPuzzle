@@ -14,6 +14,8 @@ public class ButtonWidget extends ImageWidget{
 	ImageTile mBackground;
 	GameEventListener listener;
 	ButtonStyle style =ButtonStyle.CIRCLE;
+	private boolean rotateToggle;
+	private int currAngle;
 	
 	public ButtonWidget(float centerX, float centerY, float width, float height, String text){
 		super(centerX, centerY, width, height, text);
@@ -32,6 +34,14 @@ public class ButtonWidget extends ImageWidget{
 			style = ButtonStyle.NONE;
 		}
 	}
+	
+	public void setRotate(boolean t){
+		rotateToggle = t;
+		if(t == false){
+		    currAngle = 0;
+		    a.setAngle(currAngle);
+		}
+	    }
 	
 	public void setBorderStyle(ButtonStyle style){
 		this.style = style;
@@ -66,6 +76,11 @@ public class ButtonWidget extends ImageWidget{
 		if(style == ButtonStyle.CIRCLE){
 			mBackground.draw(r);
 		} 
+		
+		if(rotateToggle){
+		    currAngle += 1 % 360;
+		   a.setAngle(currAngle);
+		}
 		super.draw(r);
 	}
 }

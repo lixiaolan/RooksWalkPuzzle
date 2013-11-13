@@ -133,7 +133,7 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 		mCPW.setActiveCircle(activeWidget);
 	}
 
-	private void animate(){
+	protected void animate(){
 		float t = (float)(System.currentTimeMillis() -refTime)/500.0f;
 		if(t < 1) {
 			for(int i=0;i<widgetList.size();i++){
@@ -165,12 +165,12 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 
 
 	public void draw(MyGLRenderer r) {
-		/*for(int i = 0 ;i < widgetList.size(); i++){
+		for(int i = 0 ;i < widgetList.size(); i++){
 			if(active){
 				animate();
 			} 
 			widgetList.get(i).draw(r);
-		}*/
+		}
 		if(displayProgressBar){
 			mCPW.draw(r);
 
@@ -180,8 +180,8 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 			leftArrow.draw(r);
 			rightArrow.draw(r);
 		}
-		widgetList.get(activeWidget).setCenter(0,0);
-		widgetList.get(activeWidget).draw(r);
+		//widgetList.get(activeWidget).setCenter(0,0);
+		//widgetList.get(activeWidget).draw(r);
 	}
 }
 

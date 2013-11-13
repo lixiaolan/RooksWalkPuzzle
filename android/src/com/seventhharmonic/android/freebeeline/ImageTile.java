@@ -17,6 +17,14 @@ class ImageTile extends Tile{
     	this.h = h;
     }
     
+    
+    public void setWidth(float width){
+    	w = width;
+    }
+    public void setHeight(float height){
+    	h = height;
+    }
+    
     public ImageTile(float x, float y, float w, float h, String text) {
     	super(new float[]{x,y,0}, 1);
     	setTextures(text, TextureManager.CLEAR);

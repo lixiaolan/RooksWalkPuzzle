@@ -148,12 +148,12 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     	mFlowerState = FlowerState.CHAPTER_SELECT;
     	updateState();
     }
-
+/*
     public void enterChapterEnd(){
     	if(mFlowerState == FlowerState.CHAPTER_SELECT)
     		((ChapterDisplay)state).chapterEnd();
     }
-    
+  */  
     public void setState(int index) {
     }
     
@@ -270,12 +270,20 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     class ChapterDisplay extends StateWidget{
 	ScreenSlideWidgetLayout m;
 	Widget currChapterWidget;
+	ButtonWidget gridToggle;
 	
 	public ChapterDisplay(){
+		gridToggle = new ButtonWidget(-.85f,-1,.15f, .15f, TextureManager.CLOSEDCIRCLE );
+		//1-.15f,GlobalApplication.getGeometry().getGeometry()[1]+.15f
+		gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
+		gridToggle.setClickListener(new GameEventListener(){ 
+			public void event(int i){
+				for(Widget w: m.getWidgetList())
+					((ChapterWidget)w).setState();
+			}
+		});
 	    m = new ScreenSlideWidgetLayout(2.0f);
-	    
 	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
-		
 		    final Chapter c = currLevelPack.getChapter(i);
 		    ChapterWidget ch  = new ChapterWidget(c);
 		    ch.setTouchListener(new GameEventListener() {
@@ -304,6 +312,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		//physics.draw(r);
 		super.draw(r);
 	    m.draw(r);
+	    gridToggle.draw(r);
 	}
 	
 	@Override
@@ -311,22 +320,20 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		/* TODO: Can do this by inheriting from ScreenSlideWidget and having that call a method
 		 * which sets a flag in a chapter widget.
 		*/
-		//Ensures that current widget we are swiping away from goes back to the finished state.
-		((ChapterWidget)m.getWidget(m.getActiveWidget())).setFinishedState();
 		m.swipeHandler(direction);
 	}
-
+/*
 	public void chapterEnd(){
 		((ChapterWidget)currChapterWidget).setFinishedChapter();
 	}
-	
+*/	
 	@Override
 	public void touchHandler(float[] pt) {	
 	    m.touchHandler(pt);
 	    currChapterWidget = m.getWidget(m.getActiveWidget());
 	    savedChapter = m.activeWidget;
 	    currChapterWidget.touchHandler(pt);
-	    
+	    gridToggle.touchHandler(pt);
 	}
 
     }

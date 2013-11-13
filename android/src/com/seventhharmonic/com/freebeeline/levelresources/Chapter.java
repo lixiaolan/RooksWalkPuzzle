@@ -15,7 +15,21 @@ public class Chapter {
 	boolean completed = true;
 	String beforeImage;
 	String afterImage;
+	float[] flowerCoords;
 	
+	public void setFlowerCoords(float x, float y){
+		//TODO: Get a more correct ratio for the height here!
+		flowerCoords = new float[2];
+		Log.d("Chapter", Float.toString(x)+" "+Float.toString(y));
+		float h = 1.57f;
+		flowerCoords[0] = -1f/512f*x+1f-.125f; 
+		flowerCoords[1] = 2f*h/((512f*1.57f)*2)*y-h+.25f; 
+		Log.d("Chapter", "chapter "+Float.toString(flowerCoords[0])+" "+Float.toString(flowerCoords[1]));
+	}
+	
+	public float[] getFlowerCoords(){
+		return flowerCoords;
+	}
 
 	protected String getBeforeImage() {
 		return beforeImage;
@@ -116,6 +130,7 @@ public class Chapter {
 		ch.setWidth(width);
 		ch.setAfterImage(afterImage);
 		ch.setBeforeImage(beforeImage);
+		ch.flowerCoords = flowerCoords;		
 		return ch;
 	}
 
