@@ -64,8 +64,9 @@ void PuzzleChapter::plotToFile(ofstream &ofs) {
   return;
 }
 
-void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, string afterImage,string beforeFlower, string afterFlower, int *puzzleIndex) {
+void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, vector<string> afterImage,string beforeFlower, string afterFlower, int *puzzleIndex) {
   xml_node<> *chapter;
+  xml_node<> *afterIm;
   xml_node<> *node;
   xml_attribute<> *attr;
   char *name;
@@ -78,9 +79,18 @@ void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string 
   name = doc->allocate_string(beforeImage.c_str());
   attr = doc->allocate_attribute("before_image", name);
   chapter->append_attribute(attr);
-  name = doc->allocate_string(afterImage.c_str());
-  attr = doc->allocate_attribute("after_image", name);
-  chapter->append_attribute(attr);
+
+  afterIm = doc->allocate_node(node_element, "afterImage");
+  chapter->append_node(afterIm);
+
+  for (string s : afterImage) {
+    node = doc->allocate_node(node_element, "image");
+    name = doc->allocate_string(s.c_str());
+    attr = doc->allocate_attribute("image", name);
+    node->append_attribute(attr);
+    afterIm->append_node(node);
+  }
+
   node = doc->allocate_node(node_element, "width", "3");
   chapter->append_node(node);
   node = doc->allocate_node(node_element, "height", "3");

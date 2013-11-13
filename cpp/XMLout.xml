@@ -1,5 +1,10 @@
 <levelpack title="Beatrice the bee" bookStyle="default">
-	<chapter title="Chapter One: A lone bee encounters a dreary, lifeless world." before_image="locked" after_image="book1chapter1">
+	<chapter title="Chapter One: A lone bee encounters a dreary, lifeless world." before_image="locked">
+		<afterImage>
+			<image image="book1chapter1"/>
+			<image image="book1chapter1_1"/>
+			<image image="book1chapter1_2"/>
+		</afterImage>
 		<width>3</width>
 		<height>3</height>
 		<puzzle id="0" text="" before_flower="flower1" after_flower="flower1color">
@@ -117,7 +122,10 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Two: Wherein our heroic bee sets forth to better her surroundings but is met with great adversary." before_image="locked" after_image="book1chapter2">
+	<chapter title="Chapter Two: Wherein our heroic bee sets forth to better her surroundings but is met with great adversary." before_image="locked">
+		<afterImage>
+			<image image="book1chapter2"/>
+		</afterImage>
 		<width>3</width>
 		<height>3</height>
 		<puzzle id="9" text="" before_flower="flower2" after_flower="flower2color">
@@ -235,7 +243,10 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Three: A time during which Beatrice questions the meaning of right and wrong and ultimately comes to no really conclusion" before_image="locked" after_image="book1chapter3">
+	<chapter title="Chapter Three: A time during which Beatrice questions the meaning of right and wrong and ultimately comes to no really conclusion" before_image="locked">
+		<afterImage>
+			<image image="book1chapter3"/>
+		</afterImage>
 		<width>3</width>
 		<height>3</height>
 		<puzzle id="18" text="" before_flower="flower3" after_flower="flower3color">
@@ -356,7 +367,10 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Four: Beatrice continues her struggle to bring life and color to the landscape with moderate success" before_image="locked" after_image="book1chapter4">
+	<chapter title="Chapter Four: Beatrice continues her struggle to bring life and color to the landscape with moderate success" before_image="locked">
+		<afterImage>
+			<image image="book1chapter4"/>
+		</afterImage>
 		<width>3</width>
 		<height>3</height>
 		<puzzle id="27" text="" before_flower="flower4" after_flower="flower4color">
@@ -462,7 +476,10 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Five: Wherein our magnanimous bee ponders the confines of her mortal shell" before_image="locked" after_image="book1chapter5">
+	<chapter title="Chapter Five: Wherein our magnanimous bee ponders the confines of her mortal shell" before_image="locked">
+		<afterImage>
+			<image image="book1chapter5"/>
+		</afterImage>
 		<width>3</width>
 		<height>3</height>
 		<puzzle id="36" text="" before_flower="flower5" after_flower="flower5color">
@@ -595,7 +612,10 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Six: " before_image="locked" after_image="book1chapter6">
+	<chapter title="Chapter Six: " before_image="locked">
+		<afterImage>
+			<image image="book1chapter6"/>
+		</afterImage>
 		<width>3</width>
 		<height>3</height>
 		<puzzle id="45" text="" before_flower="flower6" after_flower="flower6color">
@@ -746,7 +766,10 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Seven: " before_image="locked" after_image="book1chapter7">
+	<chapter title="Chapter Seven: " before_image="locked">
+		<afterImage>
+			<image image="book1chapter7"/>
+		</afterImage>
 		<width>3</width>
 		<height>3</height>
 		<puzzle id="54" text="" before_flower="flower7" after_flower="flower7color">
