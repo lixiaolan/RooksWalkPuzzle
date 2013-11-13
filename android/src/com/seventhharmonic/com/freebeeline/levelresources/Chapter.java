@@ -15,6 +15,10 @@ public class Chapter {
 	boolean completed = true;
 	String beforeImage;
 	String afterImage;
+
+	List<String> beforeImageList = new ArrayList<String>();
+	List<String> afterImageList = new ArrayList<String>();
+
 	float[] flowerCoords;
 	
 	public void setFlowerCoords(float x, float y){
@@ -31,21 +35,48 @@ public class Chapter {
 		return flowerCoords;
 	}
 
+
 	protected String getBeforeImage() {
 		return beforeImage;
 	}
 
 	protected void setBeforeImage(String beforeImage) {
-		this.beforeImage = beforeImage;
+	    this.beforeImage = beforeImage;
+	    setBeforeCompletionImageList(beforeImage);
 	}
 	
 	protected String getAfterImage() {
-		return afterImage;
+	    return afterImage;
 	}
 
 	protected void setAfterImage(String afterImage) {
-		this.afterImage = afterImage;
+	    this.afterImage = afterImage;
+	    setAfterCompletionImageList(afterImage);
 	}
+
+
+
+	protected List<String> getBeforeCompletionImageList() {
+	    return beforeImageList;
+	}
+
+	protected void setBeforeCompletionImageList(String beforeImage) {
+	    beforeImageList.put(beforeImage);
+	    beforeImageList.put(beforeImage);
+	    beforeImageList.put(beforeImage);
+	}
+	
+	protected List<String> getAfterCompletionImageList() {
+	    return afterImageList;
+	}
+
+	protected void setAfterCompletionImageList(String afterImage) {
+	    afterImageList.put(afterImage);
+	    afterImageList.put(afterImage);
+	    afterImageList.put(afterImage);
+	}
+
+
 
 	public boolean getCompleted(){
 		//TODO: Put this code back!

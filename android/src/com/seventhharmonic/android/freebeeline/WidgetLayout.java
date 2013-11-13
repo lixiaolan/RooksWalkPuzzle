@@ -18,16 +18,16 @@ public abstract class WidgetLayout extends Widget{
 	 */
 	
 	public WidgetLayout(){
-		widgetList = new ArrayList<Widget>();
-		setCenter(0,0);
-		setRelativeCenter(0,0);
+	    widgetList = new ArrayList<Widget>();
+	    setCenter(0,0);
+	    setRelativeCenter(0,0);
 	}
 	
 	protected void computeGeometry() {
-		for(int i =0;i< widgetList.size();i++){
-			Widget w = widgetList.get(i);
-			w.setCenter(getCenterX()+w.getRelativeCenterX(), getCenterY()+w.getRelativeCenterY());
-		}
+	    for(int i =0;i< widgetList.size();i++){
+		Widget w = widgetList.get(i);
+		w.setCenter(getCenterX()+w.getRelativeCenterX(), getCenterY()+w.getRelativeCenterY());
+	    }
 	}
 	
 	@Override

@@ -88,17 +88,14 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     public void setGeometry(float[] g){
 	super.setGeometry(g);
     }
-    
-    
-    
+
     //Update Flowers to have the approprieate colors!
     private void updateFlowers() {
     	for(int i =0;i<tiles.length;i++){
     	    tiles[i].setTextures(TextureManager.CLEAR, TextureManager.getFlowerTexture());
     	}	
     }
-    
-    
+        
     //Update the state according to the internal state system
     private void updateState() {
 	switch(mFlowerState) {
@@ -271,31 +268,34 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	ScreenSlideWidgetLayout m;
 	Widget currChapterWidget;
 	ButtonWidget gridToggle;
+	AnimatedGIFWidget mGIF;
+
 	
 	public ChapterDisplay(){
-		gridToggle = new ButtonWidget(-.85f,-1,.15f, .15f, TextureManager.CLOSEDCIRCLE );
-		//1-.15f,GlobalApplication.getGeometry().getGeometry()[1]+.15f
-		gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
-		gridToggle.setClickListener(new GameEventListener(){ 
-			public void event(int i){
-				for(Widget w: m.getWidgetList())
-					((ChapterWidget)w).setState();
-			}
+	    gridToggle = new ButtonWidget(-.85f,-1,.15f, .15f, TextureManager.CLOSEDCIRCLE );
+	    //1-.15f,GlobalApplication.getGeometry().getGeometry()[1]+.15f
+	    gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
+	    gridToggle.setClickListener(new GameEventListener(){ 
+		    public void event(int i){
+			for(Widget w: m.getWidgetList())
+			    ((ChapterWidget)w).setState();
+		    }
 		});
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
-		    final Chapter c = currLevelPack.getChapter(i);
-		    ChapterWidget ch  = new ChapterWidget(c);
-		    ch.setTouchListener(new GameEventListener() {
-			    public void event(int puzz){
-				Puzzle p = c.getPuzzle(puzz);
-				mModel.setModelToGameOpening(p);
-			    }
-			});
-		    m.addWidget(ch);
+		final Chapter c = currLevelPack.getChapter(i);
+		ChapterWidget ch  = new ChapterWidget(c);
+		ch.setTouchListener(new GameEventListener() {
+			public void event(int puzz){
+			    Puzzle p = c.getPuzzle(puzz);
+			    mModel.setModelToGameOpening(p);
+			}
+		    });
+		m.addWidget(ch);
 	    }
-		    m.setActiveWidget(savedChapter);
-		    currChapterWidget = m.getWidget(m.getActiveWidget());
+	    m.setActiveWidget(savedChapter);
+	    currChapterWidget = m.getWidget(m.getActiveWidget());
+	    mGIF = new AnimatedGIFWidget(currLevelPack);
 	}
 	
 	@Override
@@ -310,7 +310,9 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	@Override
 	public void draw(MyGLRenderer r){
 		//physics.draw(r);
-		super.draw(r);
+	    mGIF.draw(r);
+
+	    super.draw(r);
 	    m.draw(r);
 	    gridToggle.draw(r);
 	}
@@ -321,6 +323,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		 * which sets a flag in a chapter widget.
 		*/
 		m.swipeHandler(direction);
+		mGIF.setTargetFrame(m.getActiveWidget());
 	}
 /*
 	public void chapterEnd(){

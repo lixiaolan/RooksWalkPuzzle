@@ -28,15 +28,13 @@ public class LevelPack {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-	int currChapter = 0;
 		
 	public int getCurrChapter() {
-		return currChapter;
-	}
-
-	public void setCurrChapter(int currChapter) {
-		this.currChapter = currChapter;
+	    for (int i = 0; i < chapters.size(); i++) {
+		if (!chapters.get(i).getCompleted())
+		    return i;
+	    }
+	    return 0;
 	}
 
 	public void addChapter(Chapter c){
