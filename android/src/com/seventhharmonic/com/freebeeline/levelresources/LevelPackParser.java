@@ -54,8 +54,7 @@ public class LevelPackParser extends BaseParser {
 		    ch.setTitle(a.getValue("title"));
 		    Log.d(TAG,"found title");
 		    Log.d(TAG, a.getValue("title"));
-		    ch.setFlowerCoords(Float.parseFloat(a.getValue("xcoords")),Float.parseFloat(a.getValue("ycoords"))); 
-		    ch.beforeImageList.add(a.getValue("beforeImage"));
+		    ch.beforeImageList.add(a.getValue("before_image"));
     		}
     	});
     	
@@ -145,7 +144,6 @@ public class LevelPackParser extends BaseParser {
     		public void end(){
     			puzz.setChapter(ch);
     			ch.addPuzzle(puzz.copy());
-
     		}
     	});
     	

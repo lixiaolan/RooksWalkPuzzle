@@ -22,7 +22,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 
     //The enum and its member
     enum FlowerState {
-	MAIN_MENU, BOOK_SELECT, CHAPTER_SELECT 
+	MAIN_MENU, BOOK_SELECT, CHAPTER_SELECT, CHAPTER_END
     }
     private FlowerState mFlowerState;
 
@@ -66,7 +66,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 
 	currLevelPackIndex = -1;	
 
-	//Initiliaze the flowers randomly on the screen.
+	//Initialize the flowers randomly on the screen.
 	for(int i =0;i<tiles.length;i++){
 	    double r = Math.random();
 	    float Sx = (float)(-1.5*r+(1-r)*1.5);
@@ -86,7 +86,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     }
     
     public void setGeometry(float[] g){
-	super.setGeometry(g);
+    	super.setGeometry(g);
     }
 
     //Update Flowers to have the approprieate colors!
@@ -107,6 +107,9 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    break;
 	case CHAPTER_SELECT:
 	    state = new ChapterDisplay();
+	    break;
+	case CHAPTER_END:
+	    state = new ChapterEnd();
 	    break;
 	default:
 	    break;
@@ -145,12 +148,15 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     	mFlowerState = FlowerState.CHAPTER_SELECT;
     	updateState();
     }
-/*
+
+    /**If the chapter has ended. This triggers a series of wonderful events at the state level.
+     * 
+     */
     public void enterChapterEnd(){
-    	if(mFlowerState == FlowerState.CHAPTER_SELECT)
-    		((ChapterDisplay)state).chapterEnd();
+    	mFlowerState = FlowerState.CHAPTER_END;
+    	updateState();
     }
-  */  
+  
     public void setState(int index) {
     }
     
@@ -265,22 +271,25 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     }
 
     class ChapterDisplay extends StateWidget{
-	ScreenSlideWidgetLayout m;
-	Widget currChapterWidget;
-	ButtonWidget gridToggle;
-	AnimatedGIFWidget mGIF;
+	ScreenSlideWidgetLayout m;	//Widget to hold all the chapters
+	Widget currChapterWidget;	//The current chapter that the screenslide widget is on.
+	ButtonWidget gridToggle;	//Toggles the showing of puzzles
+	AnimatedGIFWidget mGIF;		//Displays the backgrounds and handles their animation
 
 	
 	public ChapterDisplay(){
-	    gridToggle = new ButtonWidget(-.85f,-1,.15f, .15f, TextureManager.CLOSEDCIRCLE );
-	    //1-.15f,GlobalApplication.getGeometry().getGeometry()[1]+.15f
+		//Set up the grid toggle
+		gridToggle = new ButtonWidget(1f-.15f,-1*GlobalApplication.getGeometry().getGeometry()[1]+.15f,.15f, .15f, TextureManager.CLOSEDCIRCLE );
 	    gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
+	    //Yes - we do toggle all the grids on ALL the puzzles.
 	    gridToggle.setClickListener(new GameEventListener(){ 
 		    public void event(int i){
 			for(Widget w: m.getWidgetList())
 			    ((ChapterWidget)w).setState();
 		    }
 		});
+	    
+	    //Now populate the widget that holds onto all the chapters.
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
 		final Chapter c = currLevelPack.getChapter(i);
@@ -293,9 +302,22 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		    });
 		m.addWidget(ch);
 	    }
-	    m.setActiveWidget(savedChapter);
-	    currChapterWidget = m.getWidget(m.getActiveWidget());
+	    
+	    //Widget that shows our backgrounds.
 	    mGIF = new AnimatedGIFWidget(currLevelPack);
+	    
+	    //Say that a user was staring at chapter 4 - then we should move the slider ahead to that
+	    //if the saved chapter was 0, then we jump to the most current chapter.
+	    if(savedChapter != 0){
+	    	m.setActiveWidget(savedChapter);
+	    	mGIF.setKeyFrame(savedChapter);
+	    } else {
+	    	m.setActiveWidget(currLevelPack.getCurrChapter());
+	    	mGIF.setKeyFrame(currLevelPack.getCurrChapter());
+	    }
+	    
+	    //Set the current chapter appropriately.
+	    currChapterWidget = m.getWidget(m.getActiveWidget());
 	}
 	
 	@Override
@@ -311,7 +333,6 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	public void draw(MyGLRenderer r){
 		//physics.draw(r);
 	    mGIF.draw(r);
-
 	    super.draw(r);
 	    m.draw(r);
 	    gridToggle.draw(r);
@@ -326,11 +347,13 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		mGIF.setTargetFrame(m.getActiveWidget());
 		Log.d(TAG, Integer.toString(m.getActiveWidget()));
 	}
-/*
-	public void chapterEnd(){
-		((ChapterWidget)currChapterWidget).setFinishedChapter();
-	}
-*/	
+
+	/** This carries out a series of wonderful events when the chapter is ended.
+	 *  1. Display a congratulations.
+	 *  2. Play an animation on the GIF
+	 *  3. On Click, move the chapter widget forward.
+	 */
+	
 	@Override
 	public void touchHandler(float[] pt) {	
 	    m.touchHandler(pt);
@@ -342,6 +365,52 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 
     }
 
+    class ChapterEnd extends StateWidget{
+    	AnimatedGIFWidget mGIF;		//Displays the backgrounds and handles their animation
+    	TextBox mText;
+    	float h = GlobalApplication.getGeometry().getGeometry()[1];
+    	
+    	public ChapterEnd(){
+    		mGIF = new AnimatedGIFWidget(currLevelPack);
+    		mGIF.setKeyFrame(savedChapter);
+    		mGIF.setTargetFrame(savedChapter+1);
+    		String text = "Congratulations!^ You helped Beatrice finish Chapter "+Integer.toString(savedChapter+1)+" .^^ Click to move onto the next chapter.";
+    		mText = new TextBox(0, h -.2f,.9f, text);
+    		mText.setFontSize(1.5f);
+    	}
+
+		@Override
+		public void enterAnimation() {
+			if(mGIF.animationFinished()) {
+				mGIF.setKeyFrame(savedChapter);
+				mGIF.setTargetFrame(savedChapter+1);
+			}
+		}
+
+		@Override
+		public void duringAnimation() {}
+
+		@Override
+		public void swipeHandler(String direction) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void touchHandler(float[] pt) {
+			savedChapter = savedChapter+1;
+			mFlowerState  = FlowerState.CHAPTER_SELECT;
+			updateState();
+		}
+		
+		@Override
+		public void draw(MyGLRenderer r){
+			super.draw(r);
+			mGIF.draw(r);			
+			mText.draw(r);
+		}
+    	
+    }
     
     
     @Override

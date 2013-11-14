@@ -3,6 +3,7 @@ package com.seventhharmonic.android.freebeeline;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator.TextJustification;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 
@@ -11,9 +12,9 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 	
 	TextBox mText;
 	ButtonWidget mBack;
-	ImageWidget fiveHints;
-	ImageWidget twentyHints;
-	ImageWidget unlimitedHints;
+	TextBox fiveHints;
+	TextBox twentyHints;
+	TextBox unlimitedHints;
 	ImageWidget mBackground;
 	TextBox mHints;
 	
@@ -24,23 +25,24 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 	 * @param text
 	 * @param mHints The hints dialogue in Board that needs to be updated.
 	 */
-	public HintDialogWidgetLayout(float width, String text, TextBox mHints){
-		setWidth(width);
+	public HintDialogWidgetLayout(TextBox mHints){
+		setWidth(.95f);
 		setHeight(width/Geometry.PHI);
 		setCenter(0,0);
 		this.mHints = mHints;
-		
+		String text = TextureManager.HINTPROMPT;
 		mBackground = new ImageWidget(0,0,width, height, TextureManager.CLEAR);
 		mBackground.setMode(MyGLRenderer.STRETCH);
 		mBackground.setRelativeCenter(0, 0);
 		mBackground.setBorder(true);
-		mBackground.setColor("opaque");
+		mBackground.setColor("white");
 		
-		mText = new TextBox(0,0,.95f*width, text);
+		mText = new TextBox(0,0, .95f*width, text);
 		mText.setRelativeCenter(.05f,.9f*height);
+		//mText.setJ(TextJustification.CENTER);
 				
-		mBack = new ButtonWidget(0,0, width/5, width/5, TextureManager.BACK);
-		mBack.setRelativeCenter(-.7f*width, -.6f*height);
+		mBack = new ButtonWidget(0,0, .15f, .15f, TextureManager.BACK);
+		mBack.setRelativeCenter(-width+.15f, -height+.15f);
 		mBack.setClickListener(new GameEventListener(){
 			public void event(int i){
 				deactivate();
@@ -50,32 +52,30 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		/*
 		 * Layout the 3 buttons in a nice grid.
 		 */
-		float size  = width/5;
-		
+		float size  = 1.5f*width/5;
+		float fontSize = 1.2f;	
 		GridWidgetLayout mGrid = new GridWidgetLayout(3, 1, width/4);
 		
-		fiveHints = new ImageWidget(0, 0, size, size, TextureManager.FIVEHINTS);
-		fiveHints.setBorder(true);
+		fiveHints = new TextBox(0, 0, size, "5 Hints^ $0.99");
+		//fiveHints.setBorder(true);
 		mGrid.addWidget(fiveHints);
 		
-		twentyHints = new ImageWidget(0, 0, size, size, TextureManager.TWENTYHINTS);
-		twentyHints.setBorder(true);
+		twentyHints = new TextBox(0, 0, size, "20 Hints^ $1.99");
+		//twentyHints.setBorder(true);
 		mGrid.addWidget(twentyHints);
 		
-		unlimitedHints = new ImageWidget(0, 0, size, size, TextureManager.UNLIMITEDHINTS);
-		unlimitedHints.setBorder(true);
+		
+		unlimitedHints = new TextBox(0, 0, size, "Infinite Hints^ $4.99");
+		//unlimitedHints.setBorder(true);
 		mGrid.addWidget(unlimitedHints);
 		
-		mGrid.setRelativeCenter(width/3f, -height+1.1f*size);
+		mGrid.setRelativeCenter(0, 0);
 		
 		
 		widgetList.add(mBackground);
 		widgetList.add(mText);
 		widgetList.add(mBack);
 		widgetList.add(mGrid);
-	//	widgetList.add(fiveHints);
-	//	widgetList.add(twentyHints);
-	//	widgetList.add(unlimitedHints);		
 		computeGeometry();
 	}
 	/*
@@ -87,7 +87,7 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 	public void touchHandler(float[] pt){
 		Log.d("HintDialog", "Got Touched in Dialog");
 		Log.d("HintDialog", Float.toString(pt[0])+" "+Float.toString(pt[1]));
-		if(fiveHints.a.touched(pt)){
+		if(fiveHints.isTouched(pt)){
 			Log.d("HintDialog", "You want to buy 5 hints");
 			ViewActivity.mStore.onBuyFiveHints(mHints);
 			deactivate();

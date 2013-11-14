@@ -9,23 +9,15 @@ import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 public class EndGameDialogWidgetLayout extends WidgetLayout{
 
 	
-	TextBox mText;
-	TextBox mPuzzText;
 	ButtonWidget mBack;
 	ButtonWidget mNext;
-	ImageWidget mBackground;
 	boolean draw  = false;
 	
-	public EndGameDialogWidgetLayout(float width, int puzzLeft){
+	public EndGameDialogWidgetLayout(float width){
 		String text = TextureManager.GOOD_JOB;
 		setWidth(width);
 		setHeight(width/Geometry.PHI);
 		setCenter(0,0);
-		String a = Integer.toString(puzzLeft);		
-		Log.d("EndGame", a);
-		
-		mText = new TextBox(0,0,.90f*width, text+"^"+TextureManager.PUZZLESLEFT+a);
-		mText.setRelativeCenter(.05f*width,height*.9f);
 		
 		//String a = Integer.toString(puzzLeft);		
 		//Log.d("EndGame", a);
@@ -37,16 +29,6 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 		
 		mNext = new ButtonWidget(0,0, .15f, .15f, TextureManager.NEXT);
 		mNext.setRelativeCenter(-.7f*width, 0);
-		
-		mBackground = new ImageWidget(0,0,width, height, TextureManager.CLEAR);
-		mBackground.setMode(MyGLRenderer.STRETCH);
-		mBackground.setRelativeCenter(0, 0);
-		mBackground.setBorder(true);
-		mBackground.setColor("opaque");
-		
-		//widgetList.add(mBackground);
-		//widgetList.add(mText);
-		//widgetList.add(mPuzzText);
 		widgetList.add(mNext);
 		widgetList.add(mBack);
 		computeGeometry();

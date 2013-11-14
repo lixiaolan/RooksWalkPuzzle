@@ -7,6 +7,7 @@ import java.util.List;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator.TextJustification;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Chapter;
@@ -21,10 +22,7 @@ public class ChapterWidget extends GraphicWidget {
 	GridWidgetLayout mGrid2;
 	Chapter ch;
 	GameEventListener listener;
-	//ImageWidget mImage;
-	//ImageWidget mImageBorder;
 	ImageWidget mImageTop;
-	//ButtonWidget finishedFlower;
 	List<Widget> widgetList = new ArrayList<Widget>();
 	Geometry geometry;
 	StateWidget state;
@@ -40,53 +38,16 @@ public class ChapterWidget extends GraphicWidget {
 		setHeight(height);
 		
 		this.ch = ch;
-		
-		/*mImage = new ImageWidget(0,0,.9f, .9f*height, ch.getImage());
-		mImage.setRelativeCenter(0,.05f);
-		mImage.setBorder(true);
-		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
-		widgetList.add(mImage);
-		*/
-		//widgetList.add(mImageBorder);
-		
 		/*TODO: Place some kind of text here. - OR NOT>>>>>>
 		 * Set the text at the top of the screen.
 		 */
-		mText = new TextBox(0f, 0f, 1f, "Frame 1");
+		mText = new TextBox(0f, 0f, 1f, ch.getTitle());
+		Log.d(TAG, ch.getTitle());
 		mText.setFontSize(2);
-		mText.setRelativeCenter(-.3f,height-.5f);
+		mText.setRelativeCenter(0,height-.2f);
+		mText.setJ(TextJustification.CENTER);
 		widgetList.add(mText);
 
-		//mImageTop = new ImageWidget(0,0,.8f, .395f, "levelPack1Banner");
-		//mImageTop.setRelativeCenter(0,.95f);
-		//mImageTop.setBorder(true);
-		//mImageTop.setColor("white");
-		//mImageTop.setMode(MyGLRenderer.CROPTOP);
-		//widgetList.add(mImageTop);
-/*		
-		/*
-		 * If the chapter is completed, a spinning flower will appear at the lower left.
-		 
-		//if(ch.getCompleted()){
-			//float x = ch.getFlowerCoords()[0];
-			//float y =ch.getFlowerCoords()[1]; 
-			//Log.d(TAG, "coords"+Float.toString(x)+" "+Float.toString(y));
-			finishedFlower = new ButtonWidget(0,0,.25f, .25f, ch.getPuzzle(0).getFlower());
-			finishedFlower.setRelativeCenter(1-finishedFlower.getWidth(), -1*(height-finishedFlower.getHeight()));
-			//finishedFlower.setRelativeCenter(x, y );
-			//TODO: Rename button style
-			finishedFlower.setBorder(false);
-			//finishedFlower.setRotate(true);
-			//finishedFlower.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
-			finishedFlower.setClickListener(new GameEventListener(){
-				public void event(int i){
-				setState();
-			}
-				
-			});	
-			widgetList.add(finishedFlower);
-		//}
-*/		
 		/*
 		 * Create a grid of flowers.
 		 * Look for the first not completed puzzle. Spin that one.
@@ -363,18 +324,9 @@ public class ChapterWidget extends GraphicWidget {
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		//mImageBorder.draw(r);
-		//mImage.draw(r);
-		//mImageTop.draw(r);
-
 		state.draw(r);
 
-		//mText.draw(r);
-		/*
-		if (ch.getCompleted()) {
-			finishedFlower.draw(r);
-		}
-		*/
-	}
+		mText.draw(r);
+	}	
 
 }
