@@ -17,8 +17,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	public int hints;
 	public int[] solution ;
 	public int[][] path;
-	public int boardWidth = 4;
-	public int boardHeight = 4;
+	public int boardWidth = 6;
+	public int boardHeight = 6;
 	
 	private boolean toggleHints = true;
 	private boolean toggleLines = true;	
