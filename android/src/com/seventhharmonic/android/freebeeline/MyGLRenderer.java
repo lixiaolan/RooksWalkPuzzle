@@ -100,7 +100,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	/** This is a handle to our square shading program. */
 	private int mProgramHandle;
 	public TextureManager TM;
-	public TextCreator TC;
+	public static TextCreator TC;
 	/** Used only in "touched" */
 	//These are used in our custom projection.
 	private float screenHeight;
@@ -773,9 +773,25 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			TC.draw(this, text, center[0], center[1], width, scaleX, scaleY);
 		else if(j == TextJustification.CENTER){
 			TC.drawCenter(this, text,  center[0], center[1] , width, scaleX, scaleY);
+		} else if(j==TextJustification.CENTERBOX){
+			int lines = TC.getNumberOfLines(text, scaleX, scaleY);
+			float height = TC.getHeight(text, scaleX, scaleY);
+			TC.drawCenter(this, text,  center[0], center[1]+height/2f , width, scaleX, scaleY);
 		}
+			
 	}
 
+	public float getTextHeight(float fontSize, String text){
+		float font = TC.fontSize;
+		// Scaling on X and y. In theory the DPI should make things more uniform?
+		// Maybe this should be moved into fontSize?
+		float fontInPixels = TC.bToPixels(TC.bfToB(fontSize));
+		float scaleX = 1/screenWidth*fontInPixels/font;
+		float scaleY = 1*cameraDistance/screenHeight*fontInPixels/font;
+		
+		return TC.getHeight(text, scaleX, scaleY);
+	}
+	
 	boolean togg = true;
 	public void drawTextChar(float x, float y, float width, float height, float[] coords){
 		mColor = colorMap.get("transparent");

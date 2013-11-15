@@ -107,6 +107,8 @@ public class TextureManager {
 	public static final String BOARD5 = "board5";
 	public static final String QUESTIONMARK = "?";
 	public static final String IMAGEBORDER = "imageborder";
+	public static final String SHOW = "show";
+	public static final String HIDE = "hide";
 	
 	TextCreator tC = new TextCreator();
 	public Map <String, Integer> library = new HashMap<String, Integer>();
@@ -124,24 +126,18 @@ public class TextureManager {
 
 			
 		buildTextures(context, R.drawable.menu_circle_light_grey2, MENUCIRCLE);
-		buildTextures(context, R.drawable.borderimage,IMAGEBORDER);
 		buildTextures(context, R.drawable.flower1,"flower0");
-
 		buildTextures(context, R.drawable.board2, "boardbg");
 		buildTextures(context, R.drawable.check2, "check");
-		buildTextures(context, R.drawable.check2, "locked");
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
 		buildTextures(context, R.drawable.hand, HAND);
-		buildTextures(context, R.drawable.gear, GEAR);
 		buildTextures(context, R.drawable.opencircle, OPENCIRCLE);
 		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
 		buildTextures(context, R.drawable.lwedge, LWEDGE);
 		buildTextures(context, R.drawable.rwedge, RWEDGE);
-		buildTextures(context, R.drawable.box2, BOX);
 		buildTextures(context, R.drawable.eraser, ERASER);
 		buildTextures(context, R.drawable.board3, BOARD5);
-		buildTextures(context, R.drawable.hive, HIVE);
 		buildTextures("", 128, 140, CLEAR, 50);
 
 		
@@ -156,15 +152,18 @@ public class TextureManager {
 	 * @param i
 	 * @return
 	 */
+	
+	
+	
 	public static String buildHint(long i){
 		return "hints:^"+Long.toString(i);
 	}
 	
 	public void loadBitmapFromAssets() {
 		// load text
-		String BASE = "images";
+		String BASE = "images/basics";
 		try {
-			// get input stream for text
+			// get input stream for flower pictures
 			String[] imageList = context.getAssets().list(BASE);
 			for(String s: imageList){
 				InputStream is = context.getAssets().open(BASE+"/"+s);
@@ -172,14 +171,44 @@ public class TextureManager {
 				//Remove the .png
 				library.put(s.substring(0, s.length()-4),textureFromBitmap(b));
 			}
+			
+			//Now the larger images
+			BASE = "images/murals"; 
+			Bitmap b = null;
+			imageList = context.getAssets().list(BASE);
+			for(String s: imageList){
+				InputStream is = context.getAssets().open(BASE+"/"+s);
+				if(b == null){
+					b =  BitmapFactory.decodeStream(is);
+				}
+				b = loadLargeBitmaps(is, b, false);
+				//Remove the .png
+				library.put(s.substring(0, s.length()-4),textureFromBitmap2(b));
+			}
+			b.recycle();
+			
 		}
 		catch (IOException ex) {
+			Log.d("TAG", "Broke texture manager on large textures");
 			Log.d("TextureManager", ex.getMessage());
-
 		}
 	}
 
-	public void buildMenuBanners() {
+	 private static BitmapFactory.Options options = new BitmapFactory.Options();
+	 private static Bitmap loadLargeBitmaps(InputStream is, Bitmap reuseBitmap, boolean useRGB565) {
+        options.inPreferredConfig = useRGB565 ? Bitmap.Config.RGB_565 : Bitmap.Config.ARGB_8888;
+        options.inMutable = true;
+        options.inSampleSize = 1;
+        options.inBitmap = reuseBitmap;
+        Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
+
+        if (options.inBitmap != bitmap && options.inBitmap != null) {
+            // the bitmap wasn't re-used and a new bitmap was returned.
+        }
+        return bitmap;
+}
+	
+	private void buildMenuBanners() {
 		buildTextures(context, R.drawable.red_x, "menu_1");
 		for(int i=1;i<7;i++){
 			buildTextures(Integer.toString(i),2*64,2*80,"menu_"+Integer.toString(i+1),2*50);
@@ -190,11 +219,7 @@ public class TextureManager {
 		int xpos = 128;
 		int ypos = 140;
 
-		buildTextures(FIVEHINTS, xpos, ypos, FIVEHINTS, fontSize);
-		buildTextures(TWENTYHINTS, xpos, ypos, TWENTYHINTS, fontSize);
-		buildTextures(UNLIMITEDHINTS, xpos, ypos, UNLIMITEDHINTS, fontSize);
-
-		buildTextures(QUESTIONMARK, xpos, ypos, QUESTIONMARK, fontSize);
+		buildTextures(QUESTIONMARK, xpos, ypos, QUESTIONMARK, 2*fontSize);
 		buildTextures(MENU, xpos, ypos, MENU, fontSize);
 		buildTextures(START, xpos, ypos, START, fontSize);
 		buildTextures(PLAY, xpos, ypos, PLAY, fontSize);
@@ -202,23 +227,15 @@ public class TextureManager {
 		buildTextures(RESUME, xpos, ypos, RESUME, fontSize);
 		buildTextures(OPTIONS, xpos, ypos, OPTIONS, fontSize);
 		buildTextures(BACK, xpos, ypos, BACK, fontSize);
-		buildTextures(HINTS_ON, xpos, ypos, HINTS_ON, fontSize);
-		buildTextures(HINTS_OFF, xpos, ypos, HINTS_OFF, fontSize);
 		buildTextures(LINES_ON, xpos, ypos, LINES_ON, fontSize);
 		buildTextures(LINES_OFF, xpos, ypos, LINES_OFF, fontSize);
-		buildTextures(TABLE_OF_CONTENTS, xpos, ypos, TABLE_OF_CONTENTS, fontSize);
-		buildTextures(LP1, xpos, ypos, LP1, fontSize);
-
 		buildTextures(RULE_CHECK_ON, xpos, ypos, RULE_CHECK_ON, fontSize);
 		buildTextures(RULE_CHECK_OFF, xpos, ypos, RULE_CHECK_OFF, fontSize);
-//		buildTextures(QUIT, xpos, ypos, QUIT, fontSize);
-//		buildTextures(YES, xpos, ypos, YES, fontSize);
 		buildTextures(STORY, xpos, ypos, STORY, fontSize);
-//		buildTextures(NO, xpos, ypos, NO, fontSize);
-		//buildTextures(SHARE, xpos, ypos, R.drawable.share, fontSize);
 		buildTextures(TUTORIAL, xpos, ypos, TUTORIAL, fontSize);
 		buildTextures(NEXT, xpos, ypos, NEXT, fontSize);
-		buildTextures(PREVIOUS, xpos, ypos, PREVIOUS, fontSize);
+		buildTextures(HIDE, xpos, ypos, HIDE, fontSize);
+		buildTextures(SHOW, xpos, ypos, SHOW, fontSize);
 	}
 
 	public int closestPower(int a){
@@ -260,7 +277,7 @@ public class TextureManager {
 			float[] coords = new float[4];
 			for(int j =0;j<4;j++){
 				coords[j] = Float.parseFloat(coordStrings[j]);
-				Log.d(TAG, name+" curr float "+Float.toString(coords[j]));
+				//Log.d(TAG, name+" curr float "+Float.toString(coords[j]));
 			}
 			TextureObject t = new TextureObject(name, coords);
 			sheetLibrary.put(name, t);
@@ -314,7 +331,7 @@ public class TextureManager {
 	public void buildTextures(String a, int x, int y, String key , int font){
 		library.put(key, textureFromBitmap(bitmapFromShortString(a,x,y, font)));
 	}
-
+	
 	public void buildTextures(final Context context, final int resourceId, String key){
 		final int[] textureHandle = new int[1];
 
@@ -389,6 +406,19 @@ public class TextureManager {
 		return texture[0];
 	}
 
+	public static int textureFromBitmap2(Bitmap bmp){
+		int[] texture = new int[1];
+		GLES20.glGenTextures(1, texture, 0);
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,GLES20.GL_LINEAR);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_LINEAR);
+		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, bmp,0); 
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+		//SaveImage(bmp);
+		//bmp.recycle();
+		return texture[0];
+	}
+	
 	Bitmap bitmapFromShortString(String text, int x, int y, int font){
 		Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
 		// get a canvas to paint over the bitmap

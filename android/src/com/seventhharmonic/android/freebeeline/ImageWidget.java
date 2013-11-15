@@ -18,6 +18,8 @@ public class ImageWidget extends Widget{
 	String color = "transparent";
 	String text;
 	Boolean border = false;
+	
+
 	ImageTile[] borderTiles;
 
 	public ImageWidget(float centerX, float centerY , float width, float height, String text){
@@ -83,11 +85,20 @@ public class ImageWidget extends Widget{
 		} 
 	}
 
+	
 	public void setBorder(boolean border){
 		this.border = border;
+		//Create the booder tiles if they do not yet exist.
 		if(borderTiles == null && border == true){
 			createBorderTiles();
+		//If they do exist, we should probably refresh their position.
+		} else if(border == true){
+			recenterBorderTiles();
 		}
+	}
+	
+	public Boolean getBorder() {
+		return border;
 	}
 	
 	@Override

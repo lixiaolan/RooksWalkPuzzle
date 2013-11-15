@@ -279,8 +279,8 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	
 	public ChapterDisplay(){
 		//Set up the grid toggle
-		gridToggle = new ButtonWidget(1f-.15f,-1*GlobalApplication.getGeometry().getGeometry()[1]+.15f,.15f, .15f, TextureManager.CLOSEDCIRCLE );
-	    gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
+		gridToggle = new TextToggleButtonWidget(1f-.15f,-1*GlobalApplication.getGeometry().getGeometry()[1]+.15f, .15f, .15f, "hide", "show" );
+	    gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.CIRCLE);
 	    //Yes - we do toggle all the grids on ALL the puzzles.
 	    gridToggle.setClickListener(new GameEventListener(){ 
 		    public void event(int i){
@@ -372,11 +372,15 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     	
     	public ChapterEnd(){
     		mGIF = new AnimatedGIFWidget(currLevelPack);
+    		mGIF.setSpeedMultiplier(500);
     		mGIF.setKeyFrame(savedChapter);
     		mGIF.setTargetFrame(savedChapter+1);
-    		String text = "Congratulations!^ You helped Beatrice finish Chapter "+Integer.toString(savedChapter+1)+" .^^ Click to move onto the next chapter.";
+    		String text = "          Congratulations! ^You helped Beatrice finish Chapter "+Integer.toString(savedChapter+1)+" .^^ Click to move onto the next chapter.";
+    		//TODO: This sucks. There must be a more flexible way to figure out the gometry.
     		mText = new TextBox(0, h -.2f,.9f, text);
-    		mText.setFontSize(1.5f);
+    		mText.setFontSize(1.1f);
+    		mText.setBorder(true, 0, h-.4f, .9f,.3f);
+    		mText.setColor("opaque");
     	}
 
 		@Override
@@ -411,8 +415,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 		}
     	
     }
-    
-    
+        
     @Override
     public BoardTile getTile(int i) {
 	// TODO Auto-generated method stub

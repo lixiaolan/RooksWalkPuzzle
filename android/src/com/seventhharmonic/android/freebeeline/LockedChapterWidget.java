@@ -8,7 +8,7 @@ import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 
 public class LockedChapterWidget extends WidgetLayout{
 	String TAG = "LockedChapterWidget";
-	ImageWidget mImage;
+	TextBox mText;
 	//TextWidget mText;
 	public LockedChapterWidget(){
 		
@@ -23,10 +23,8 @@ public class LockedChapterWidget extends WidgetLayout{
 		 *
 		 */
 		
-		mImage = new ImageWidget(0,0,.5f, .5f, "check");
-		mImage.setRelativeCenter(0,0);
-		mImage.setMode(MyGLRenderer.STRETCH);
-		widgetList.add(mImage);
+	
+		//widgetList.add(mImage);
 	}
 
 	@Override

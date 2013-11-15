@@ -801,6 +801,26 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		@Override
 		public void touchHandler(float[] pt){
+			if(mHints.isTouched(pt)){
+//				if(beeTouched(pt) == 1){
+					if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
+						showHint();
+						setHintsText();
+					} else {
+						mHintDialog.activate();
+					}
+					return;
+			}
+			
+				reset.touchHandler(pt);
+				tutorial.touchHandler(pt);
+				
+				if(mHintDialog.isActive()){
+					mHintDialog.touchHandler(pt);
+					return;
+				}
+
+			
 			int val = mMenu.touched(pt);
 			if(val == -1){
 				//This case corresponds to the menu being closed
@@ -867,22 +887,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mGameBanner.setText(TextureManager.TRY_AGAIN);
 				}
 				return;
-			}
-			if(mHints.isTouched(pt)){
-//			if(beeTouched(pt) == 1){
-				if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
-					showHint();
-					setHintsText();
-				} else {
-					mHintDialog.activate();
-				}
-				return;
-			}
-			
-			reset.touchHandler(pt);
-			tutorial.touchHandler(pt);
-			if(mHintDialog.isActive()){
-				mHintDialog.touchHandler(pt);
 			}
 		}
 
@@ -1034,7 +1038,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
 			//mBoardBg.draw(r);
 			//super.draw(tiles, r);
-			for(int i =0;i<tiles.length;i++){
+			for(int i =0; i<tiles.length; i++){
 				if(tiles[i].getTrueSolution() != -1){
 					tiles[i].draw(r);
 				}

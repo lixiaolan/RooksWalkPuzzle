@@ -1,5 +1,5 @@
 <levelpack title="Beatrice the bee" bookStyle="default">
-	<chapter title="Chapter One" before_image="clear" xcoords="298" ycoords="62">
+	<chapter title="Chapter One" before_image="questionmark" xcoords="298" ycoords="62">
 		<afterImage>
 		    <image image="book1chapter1"/>
 		    <image image="book1chapter1_1"/>
@@ -54,7 +54,7 @@
 				<index>8</index>
 			</hint>
 		</puzzle>
-		<puzzle id="4" before_flower="flower1" after_flower="flower1color" text="TIP: You can clear the board by clicking on the eraser.">
+		<puzzle id="4" before_flower="flower1" after_flower="flower1color" text="TIP: You can questionmark the board by clicking on the eraser.">
 
 			<height>5</height>
 			<width>5</width>
@@ -125,7 +125,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Two" before_image="clear" after_image="book1chapter2" xcoords="221" ycoords="691">
+	<chapter title="Chapter Two" before_image="questionmark" after_image="book1chapter2" xcoords="221" ycoords="691">
 		<afterImage>
 		    <image image="book1chapter2"/>
 		    <image image="book1chapter2"/>
@@ -249,7 +249,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Three" before_image="clear" after_image="book1chapter3"  xcoords="83"   ycoords="625">
+	<chapter title="Chapter Three" before_image="questionmark" after_image="book1chapter3"  xcoords="83"   ycoords="625">
 		<afterImage>
 		    <image image="book1chapter3"/>
 		    <image image="book1chapter3"/>
@@ -375,7 +375,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Four" before_image="clear" after_image="book1chapter4" xcoords="697" ycoords="407">
+	<chapter title="Chapter Four" before_image="questionmark" after_image="book1chapter4" xcoords="697" ycoords="407">
 		<afterImage>
 		    <image image="book1chapter4"/>
 		    <image image="book1chapter4"/>
@@ -486,7 +486,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Five" before_image="clear" after_image="book1chapter5" xcoords="368" ycoords="993">
+	<chapter title="Chapter Five" before_image="questionmark" after_image="book1chapter5" xcoords="368" ycoords="993">
 		<afterImage>
 		    <image image="book1chapter5"/>
 		    <image image="book1chapter5"/>
@@ -624,7 +624,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Six" before_image="clear" after_image="book1chapter6" xcoords="362" ycoords="324">
+	<chapter title="Chapter Six" before_image="questionmark" after_image="book1chapter6" xcoords="362" ycoords="324">
 		<afterImage>
 		    <image image="book1chapter6"/>
 		    <image image="book1chapter6"/>
@@ -780,7 +780,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Seven" before_image="clear" after_image="book1chapter7" xcoords="549" ycoords="689">
+	<chapter title="Chapter Seven" before_image="questionmark" after_image="book1chapter7" xcoords="549" ycoords="689">
 		<afterImage>
 		    <image image="book1chapter7"/>
 		    <image image="book1chapter7"/>

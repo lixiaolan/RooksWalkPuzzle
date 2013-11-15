@@ -16,7 +16,7 @@ import com.seventhharmonic.android.freebeeline.MyGLRenderer;
 public class TextCreator {
 	
 	public enum TextJustification{
-		CENTER, LEFT
+		CENTER, LEFT, CENTERBOX
 	}
 	
 	private static final String TAG = "TEXTCREATOR";
@@ -238,9 +238,10 @@ public class TextCreator {
 				letterX = 0;
 				letterY -= 2.1*chrHeight;
 			} 
+			
 			else if(text.charAt(i)==' '){
 				int j = 1;					//index to track relative position to i
-				float tempWidth = 0	;		//track 
+				float tempWidth = chrWidth;		//track 
 				while(text.charAt(i+j) != ' ' && i+j<text.length()-1){
 					tempWidth += chrWidth;	
 					//If we ever exceed the width of a line, jump to the next line and keep going. 
@@ -286,7 +287,32 @@ public class TextCreator {
 		return len;                                     // Return Total Length
 	}
 		
-		
+	/**Currently only accurate for strings with explicit caret breaks.
+	 * @param text
+	 * @param scaleX
+	 * @param scaleY
+	 * @return
+	 */
+	public int getNumberOfLines(String text, float scaleX, float scaleY) {
+		int len = 1;                               // Working Length
+		int strLen = text.length();                     // Get String Length (Characters)
+		for ( int i = 0; i < strLen; i++ )  {           // For Each Character in String (Except Last
+			int c = (int)text.charAt( i ) - CHAR_START;  // Calculate Character Index (Offset by First Char in Font)
+			if(c=='^'){
+				len+=1;
+			}
+		}
+		return len;                                     // Return Total Length
+	}
+	
+	
+	/**Only accurate for strings with explicit line breaks.
+	 * @return
+	 */
+	public float getHeight(String text, float scaleX, float scaleY){
+		return ((float)getNumberOfLines(text, scaleX, scaleY))*2.1f*scaleY*charHeight;
+	}
+	
 	/**The board unit is know as a b. A bf is .04 B's. 
 	 * That means a square on the board (.22 across) will consist of 5 to 6 such characters.
 	 * @param b

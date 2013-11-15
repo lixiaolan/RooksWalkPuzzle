@@ -8,11 +8,7 @@ import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 import android.util.Log;
 
-/**
- **
- * @author jain-a-tron
- *
- */
+
 class AnimatedGIFWidget extends Widget{
 
     //This is the frame the widget is animating towards
@@ -74,6 +70,10 @@ class AnimatedGIFWidget extends Widget{
 	refTime = System.currentTimeMillis();
     }
 
+    public void setSpeedMultiplier(long speed){
+    	this.speed = speed;
+    }
+    
     @Override
     public void swipeHandler(String direction){
 	return;
