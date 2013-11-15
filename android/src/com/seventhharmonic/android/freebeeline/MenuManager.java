@@ -81,11 +81,11 @@ class MenuManager {
 		mGameMenu = new GameMenu(bottomRight, scale2, textures5, TextureManager.BACK, tiltAngle); 
 		mCallback = new Callback_GAME_OPENING();
 		break;
-	    case GAME_MENU_END:
+/*	    case GAME_MENU_END:
 		String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
 		mGameMenu = new SelectTwoMenu(bottomPos2, scale2, textures7); 
 		mCallback = new Callback_GAME_MENU_END();
-		break;    
+		break;    */
 	    case TUTORIAL:
 		String[] texturesTUTORIAL = {TextureManager.BACK};
 		//String[] textures8 = {TextureManager.NEXT, TextureManager.PREVIOUS};

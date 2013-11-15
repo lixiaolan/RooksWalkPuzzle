@@ -14,20 +14,13 @@ public class EndGameDialogWidgetLayout extends WidgetLayout{
 	boolean draw  = false;
 	
 	public EndGameDialogWidgetLayout(float width){
-		String text = TextureManager.GOOD_JOB;
 		setWidth(width);
 		setHeight(width/Geometry.PHI);
 		setCenter(0,0);
-		
-		//String a = Integer.toString(puzzLeft);		
-		//Log.d("EndGame", a);
-		//mPuzzText = new TextBox(0,0,width, TextureManager.PUZZLESLEFT+a);
-		//mPuzzText.setRelativeCenter(0,height*.7f);
-		
-		mBack = new ButtonWidget(0,0, .15f, .15f, TextureManager.BACK);
+		mBack = new ButtonWidget(0,0, .20f, .20f, TextureManager.BACK);
 		mBack.setRelativeCenter(.7f*width, 0);
 		
-		mNext = new ButtonWidget(0,0, .15f, .15f, TextureManager.NEXT);
+		mNext = new ButtonWidget(0,0, .20f, .20f, TextureManager.NEXT);
 		mNext.setRelativeCenter(-.7f*width, 0);
 		widgetList.add(mNext);
 		widgetList.add(mBack);

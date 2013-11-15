@@ -1,11 +1,13 @@
 package com.seventhharmonic.android.freebeeline;
 
 public interface BeeBoardInterface {
-    BoardTile getTile(int i);
-    int getBoardHeight();
-    int getBoardWidth();
-    int getPathLength();
-    void setTileRotate(int i);
-    int getPathToArray(int i);
+    
+    public BoardTile getTile(int index);
+    public int getBoardHeight();
+    public int getBoardWidth();
+    public int getPathLength();
+    public void setTileRotate(int index);
+    public int getPathToArray(int index);
+
 }
 

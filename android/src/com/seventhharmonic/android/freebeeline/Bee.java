@@ -2,19 +2,21 @@ package com.seventhharmonic.android.freebeeline;
 
 import com.seventhharmonic.android.freebeeline.util.LATools;
 
-public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
+public class Bee extends Graphic<BeeTile, BeeState<BeeTile> > {
     public BeeTile bee;
     private BeeBoardInterface mBoard;
-    
+
     public Bee(BeeBoardInterface b) {
 	float[] center= {0.0f,0.0f,0.0f};
+
 	tiles = new BeeTile[1];
 	tiles[0] = new BeeTile(center,0.13f);
 	bee = tiles[0];
+
 	mBoard = b;
 	setState(GameState.MAIN_MENU_OPENING); 
     }
-    
+
     public void setState(GameState s){
 	switch(s){
 	    
@@ -75,7 +77,7 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	    long time = System.currentTimeMillis() - globalRefTime;
 	    float dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, .0333f);
 	    relativeRefTime = System.currentTimeMillis();
-	    
+   
 	    if(time < interval){
 		force = getForce(mBoard.getTile(r));
 		bee.setCenter2D(LATools.vSum(bee.getCenter2D(), LATools.vSProd(dt, bee.velocity)));
@@ -87,20 +89,19 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 		r = ((int)(Math.random()*mBoard.getBoardHeight()*mBoard.getBoardWidth()));
 	    }
 	}
-	
+
 	public float[] getForce(BoardTile tile) {
 	    float[] force = {0.0f, 0.0f};
-	    
+
 	    force = LATools.vSProd(-0.7f,LATools.vDiff(bee.center, tile.center)); 
 	    force = LATools.vSum(force, LATools.vSProd(-0.8f,bee.velocity));
-	    
+
 	    return force;
-	}
-	
+	}	
     }
     
     class BeeFixed extends BeeState<BeeTile> {
-	
+
 	public long globalRefTime = 0;    
 	public long relativeRefTime = 0;
 	public BeeTile bee;
@@ -110,30 +111,30 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile>> {
 	int index = 0;
 	int r = 0;
 	int length;
-	
+
 	float[] pivot = {1,0,1};
 	float[] fixedPos = {0.75f,-1.0f,0.0f};
 	float[] fixedPosHidden = {-2.0f, 0.0f, 0.0f};
-	
+
 	public BeeFixed(Mood m) {
 	    setMood(m);
 	    length = mBoard.getPathLength()-1;
 	}
-	
+
 	public BeeFixed(Mood m, int l) {
 	    setMood(m);
 	    length = l;
-	}   
-	
+	}
+
 	public void enterAnimation(BeeTile[] tiles){
 	    globalRefTime = System.currentTimeMillis();
 	    relativeRefTime = System.currentTimeMillis();
 	    period = DrawPeriod.DURING;
 	}
-	
+
 	//Force vector needed in during animation. Don't allocate it unless necessary.
 	float[] force = new float[2];
-	
+
 	public void duringAnimation(BeeTile[] tiles) {
 	    bee = (BeeTile)tiles[0];
 	    long time = System.currentTimeMillis() - globalRefTime;

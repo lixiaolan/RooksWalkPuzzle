@@ -59,7 +59,7 @@ public class TextureManager {
 	public static final String RULE_CHECK_OFF = "help off";
 
 	public static final String CLEAR_BOARD = "reset";
-	public static final String QUIT = "quit";
+	//public static final String QUIT = "quit";
 	public static final String YES = "yes";
 	public static final String NO = "no";
 	public static final String SHARE = "share";
