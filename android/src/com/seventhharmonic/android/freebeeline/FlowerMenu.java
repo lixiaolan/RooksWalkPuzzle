@@ -13,7 +13,7 @@ import com.seventhharmonic.com.freebeeline.levelresources.LevelPackProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
+class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     
     //This is the internal state system this class will use:
     //MAIN_MENU: Opening game menu
@@ -34,7 +34,8 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     //private StateWidget flowerState;
 
     //The bee that lives in the flowers
-    private Bee mBee;
+    private NewBee mBee;
+    private FlowerMenuBeeController mBeeController;
 
     private LevelPack currLevelPack;
     private int currLevelPackIndex;
@@ -60,9 +61,13 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	mModel = model;
 
 	float[] center = {.20f,-1.0f, 0.0f };
-	//mBee = new Bee(this);
-	//	mCPB = new CircleProgressBarWidget(lpCount, center, .05f);
-	//mBee.setState(GameState.MAIN_MENU_OPENING, TutorialInfo2.length);
+	
+	//Note that the bee gets constructed inside of the controller...
+	//That feels a bit strange
+
+	mBeeController = new FlowerMenuBeeController(this);
+	mBee = new NewBee(mBeeController);
+	mBeeController.setBee(mBee);
 
 	currLevelPackIndex = -1;	
 
@@ -151,6 +156,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
     		((ChapterDisplay)state).chapterEnd();
     }
   */  
+
     public void setState(int index) {
     }
     
@@ -189,6 +195,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	public void draw(MyGLRenderer r){
 	    super.draw(r);
 	    physics.draw(r);
+	    mBee.draw(r);
 	}
 	
 	@Override
@@ -233,7 +240,7 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 	    super.draw(r);
 	    physics.draw(r);
 	    m.draw(r);
-
+	    mBee.draw(r);
 	}
 	
 	@Override
@@ -342,47 +349,23 @@ class FlowerMenu extends GraphicWidget implements BeeBoardInterface {
 
     }
 
-    
-    
     @Override
-    public BoardTile getTile(int i) {
-	// TODO Auto-generated method stub
-	return null;
+    public FlowerTile getTile(int i){
+	return (i < 0 || i >= flowerCount) ? tiles[0] : tiles[i]; 
     }
-    
+
     @Override
-    public int getBoardHeight() {
-	// TODO Auto-generated method stub
-	return 0;
+    public int getFlowerCount() {
+	return flowerCount;
     }
-    
-    @Override
-    public int getBoardWidth() {
-	// TODO Auto-generated method stub
-	return 0;
-    }
-    
-    @Override
-    public int getPathLength() {
-	// TODO Auto-generated method stub
-	return 0;
-    }
-    
     @Override
     public void setTileRotate(int i) {
-	// TODO Auto-generated method stub
-	
+	return;
     }
-    
-    @Override
-    public int getPathToArray(int i) {
-	// TODO Auto-generated method stub
-	return 0;
-    }
-    
+
+
     @Override
     public void setState() {
-	// TODO Auto-generated method stub
-	
-    }    
+	return;
+    }
 }
