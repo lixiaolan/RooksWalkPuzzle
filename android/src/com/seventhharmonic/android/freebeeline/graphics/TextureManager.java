@@ -120,7 +120,6 @@ public class TextureManager {
 		this.context = context; 
 	}
 
-
 	public void buildTextures() {
 
 			
@@ -151,8 +150,6 @@ public class TextureManager {
 		loadBitmapFromAssets();
 		buildSheet();
 	}
-
-
 
 	/**Returns the string "hintsi" given a long i. Useful abstraction wherever hint textures need to be accessed.
 	 * Used by Store and Board for example.
@@ -224,7 +221,6 @@ public class TextureManager {
 		buildTextures(PREVIOUS, xpos, ypos, PREVIOUS, fontSize);
 	}
 
-
 	public int closestPower(int a){
 		if(a<=256){
 			return 256;
@@ -288,7 +284,6 @@ public class TextureManager {
 		}
 	}
 	
-
 	final float[] squareTextureCoordinateData =
 		{							 // Front face
 			1.0f, 0.0f,                             
@@ -320,10 +315,6 @@ public class TextureManager {
 		library.put(key, textureFromBitmap(bitmapFromShortString(a,x,y, font)));
 	}
 
-/*	public void buildLongTextures(String a, int x, int y, String key , int font, int size){
-		library.put(key, textureFromBitmap(bitmapFromLongString(a,x,y, font, size)));
-	}
-*/
 	public void buildTextures(final Context context, final int resourceId, String key){
 		final int[] textureHandle = new int[1];
 
@@ -364,7 +355,6 @@ public class TextureManager {
 		library.put(key,textureHandle[0]);
 	}
 
-	
 	private void SaveImage(Bitmap finalBitmap) {
 	    String root = Environment.getExternalStorageDirectory().toString();
 	    File myDir = new File(root + "/beeline");    

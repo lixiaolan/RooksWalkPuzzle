@@ -293,8 +293,7 @@ class Model {
     }  
 
     public void setModelToChapterEnd(){
-    	mFlowerMenu.enterChapterSelect();
-//    	mFlowerMenu.enterChapterEnd();
+    	mFlowerMenu.enterChapterEnd();
     	setState(GameState.FLOWER_MENU);
     }
 

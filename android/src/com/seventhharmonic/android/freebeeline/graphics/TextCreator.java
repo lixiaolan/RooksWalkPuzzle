@@ -12,11 +12,12 @@ import android.util.Log;
 import com.seventhharmonic.android.freebeeline.GlobalApplication;
 import com.seventhharmonic.android.freebeeline.MyGLRenderer;
 
-/**
- * @author jain
- * Modified from Texample2/GLText.
- */
+
 public class TextCreator {
+	
+	public enum TextJustification{
+		CENTER, LEFT
+	}
 	
 	private static final String TAG = "TEXTCREATOR";
 
@@ -50,8 +51,8 @@ public class TextCreator {
 	int cellWidth, cellHeight;                         // Character Cell Width/Height
 	int rowCnt, colCnt;                                // Number of Rows/Columns
 
-	float scaleX = 1.0f;
-	float scaleY = 1.0f;                              // Font Scale (X,Y Axis)
+	//float scaleX = 1.0f;
+	//	float scaleY = 1.0f;                              // Font Scale (X,Y Axis)
 	float spaceX= 0.0f;                                      // Additional (X,Y Axis) Spacing (Unscaled)
 	
 	private int mColorHandle;						   // Shader color handle	
@@ -185,7 +186,6 @@ public class TextCreator {
 		return textureId;                                    // Return Success
 	}
 	
-
 	public static int textureFromBitmap(Bitmap bmp){
 		int[] texture = new int[1];
 		GLES20.glGenTextures(1, texture, 0);
@@ -203,11 +203,16 @@ public class TextCreator {
 		return textureId;
 	}
 	
-	//--Draw Text--//
-	// D: draw text at the specified x,y position
-	// A: text - the string to draw
-	//    x, y - the x, y - bottom left of the character
-	// R: [none]
+	
+	/**
+	 * @param r
+	 * @param text
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param scaleX
+	 * @param scaleY
+	 */
 	public void draw(MyGLRenderer r, String text, float x, float y, float width, float scaleX, float scaleY)  {
 		float chrHeight = cellHeight * scaleY;          // Calculate Scaled Character Height
 		float chrWidth = cellWidth * scaleX;            // Calculate Scaled Character Width
@@ -228,7 +233,6 @@ public class TextCreator {
 			 * width-letterX+x is the correct translation to align the text at the top of a TextBox
 			 * TODO: Set it up so we don't truncate words at the end of line. Need a DFA
 			*/
-			
 			//
 			if(text.charAt(i)=='^'){
 				letterX = 0;
@@ -238,9 +242,9 @@ public class TextCreator {
 				int j = 1;					//index to track relative position to i
 				float tempWidth = 0	;		//track 
 				while(text.charAt(i+j) != ' ' && i+j<text.length()-1){
-					tempWidth += chrWidth;	//Eventually track individual character widths rather than some kind of global max
+					tempWidth += chrWidth;	
 					//If we ever exceed the width of a line, jump to the next line and keep going. 
-					if(tempWidth+letterX > 2*width){
+					if(tempWidth +letterX> 2*width){
 						letterX = 0;
 						letterY -= 2.1*chrHeight;
 						break;
@@ -248,22 +252,41 @@ public class TextCreator {
 					j = Math.min(j+1, text.length()-i-1);
 				}
 				//Now draw our character, and let's move on our merry way.
-				r.drawTextChar(width-letterX+x, y+letterY, chrWidth, chrHeight, charRgn[c].getCoords());
-				letterX += 2.5*(charWidths[c] + spaceX ) * scaleX;    // Advance X Position by Scaled Character Width
+				r.drawTextChar(width-letterX+x-chrWidth, y+letterY, chrWidth, chrHeight, charRgn[c].getCoords());
+				letterX += 2*(charWidths[c] + spaceX ) * scaleX;    // Advance X Position by Scaled Character Width
 			}
 			
 			else {
-			/*if(letterX > 2*width){
-				letterX = 0;
-				letterY -= 2.1*chrHeight;
-			}*/
-			r.drawTextChar(width-letterX+x, y+letterY, chrWidth, chrHeight, charRgn[c].getCoords());
-			letterX += 2.5*(charWidths[c] + spaceX ) * scaleX;    // Advance X Position by Scaled Character Width
+				r.drawTextChar(width-letterX+x-chrWidth, y+letterY, chrWidth, chrHeight, charRgn[c].getCoords());
+				letterX += 2*(charWidths[c] + spaceX ) * scaleX;    // Advance X Position by Scaled Character Width
 			}
 		}
 	}
 
+	public void drawCenter(MyGLRenderer r, String text, float x, float y, float width, float scaleX, float scaleY){
+		String[] lines = text.split("\\^");
+		
+		for(int i =0;i<lines.length;i++){
+			//Log.d(TAG, "lines "+lines[i]);
+			float len = getLength(lines[i], scaleX, scaleY);
+			draw(r, lines[i], x, y, len, scaleX, scaleY);
+			y-=2.1f*charHeight*scaleY;
+		}
+		
+	}
 	
+	public float getLength(String text, float scaleX, float scaleY) {
+		float len = 0.0f;                               // Working Length
+		int strLen = text.length();                     // Get String Length (Characters)
+		for ( int i = 0; i < strLen; i++ )  {           // For Each Character in String (Except Last
+			int c = (int)text.charAt( i ) - CHAR_START;  // Calculate Character Index (Offset by First Char in Font)
+			len += ( charWidths[c] * scaleX );           // Add Scaled Character Width to Total Length
+		}
+		len += ( strLen > 1 ? ( ( strLen - 1 ) * spaceX ) * scaleX : 0 );  // Add Space Length
+		return len;                                     // Return Total Length
+	}
+		
+		
 	/**The board unit is know as a b. A bf is .04 B's. 
 	 * That means a square on the board (.22 across) will consist of 5 to 6 such characters.
 	 * @param b
@@ -288,6 +311,9 @@ public class TextCreator {
 		return px*2/width;
 	}
 	
+	public float getCharHeight(){
+		return charHeight; 
+	}
 	
 	
 	

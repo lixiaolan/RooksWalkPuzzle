@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
+
 public class LevelPack {
 	List<Chapter> chapters = new ArrayList<Chapter>();
 	String title;
@@ -28,7 +29,10 @@ public class LevelPack {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-		
+	
+	/**Returns the first chapter with an unfinished puzzle.
+	 * @return
+	 */
 	public int getCurrChapter() {
 	    for (int i = 0; i < chapters.size(); i++) {
 		if (!chapters.get(i).getCompleted())
@@ -39,6 +43,10 @@ public class LevelPack {
 
 	public void addChapter(Chapter c){
 		chapters.add(c);
+		if(chapters.size() > 1)
+			chapters.get(chapters.size()-2).setNextChapter(c);
+		if(chapters.size() > 2)
+			c.setPrevChapter(chapters.get(chapters.size()-2));
 	}
 	
 	public List<Chapter> getAllChapters(){

@@ -24,8 +24,8 @@ public abstract class StateWidget extends Widget{
     
     public void draw(MyGLRenderer r){
     	switch(period) {
-    	case ENTER: enterAnimation(); break;
-    	case DURING: duringAnimation(); break;
+    		case ENTER: enterAnimation(); break;
+    		case DURING: duringAnimation(); break;
     	}
     }    
   

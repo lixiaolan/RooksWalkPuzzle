@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator.TextJustification;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 /*TODO:
@@ -14,13 +16,19 @@ public class TextBox extends Widget{
 	String text;
 	//Font size in b's. See Text Creator for more on this unit.
 	//1bf  = .05b. Ie
-	int fontSize = 1;
+	float fontSize = 1;
+	TextJustification j = TextJustification.LEFT;
 	
-	public int getFontSize() {
+	
+	public void setJ(TextJustification j) {
+		this.j = j;
+	}
+
+	public float getFontSize() {
 		return fontSize;
 	}
 
-	public void setFontSize(int fontSize) {
+	public void setFontSize(float fontSize) {
 		this.fontSize = fontSize;
 	}
 
@@ -38,6 +46,7 @@ public class TextBox extends Widget{
 		this.text = text;
 		setCenter(center);
 		setWidth(width);
+		setHeight(width);
 	}
 	
 	public void setText(String text){
@@ -53,7 +62,7 @@ public class TextBox extends Widget{
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		r.drawTextBox(center,width,fontSize,text);
+		r.drawTextBox(center,width,fontSize,text, j);
 	}
 
 	@Override

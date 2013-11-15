@@ -17,11 +17,11 @@ class AnimatedGIFWidget extends Widget{
 
     //This is the frame the widget is animating towards
     int targetFrame;
+    
     //This is the frame that the widget is currently showing
     int currFrame;
 
     String TAG = "GIF";
-    int activeWidget = 0;
     int length;
     long time;	
     long refTime = 0;
@@ -51,6 +51,7 @@ class AnimatedGIFWidget extends Widget{
 	    }
 	    else {
 		for (String s : ch.getBeforeCompletionImageList()) {
+			Log.d(TAG,s);
 		    frameList.add(s);
 		    i++;
 		}
@@ -69,6 +70,8 @@ class AnimatedGIFWidget extends Widget{
 	else {
 	    targetFrame = keyFrames.get(i);
 	}
+	//Log.d(TAG,"setTargetFrame currFrame "+Integer.toString(currFrame)+" "+"targetFrame "+Integer.toString(targetFrame));
+	refTime = System.currentTimeMillis();
     }
 
     @Override
@@ -93,22 +96,34 @@ class AnimatedGIFWidget extends Widget{
 		currFrame--;
 		setFrame(currFrame);
 		refTime = System.currentTimeMillis();
+	    } else if(currFrame == targetFrame){
+	    	refTime = System.currentTimeMillis();
 	    }
 	}
     }
     
+    public boolean animationFinished(){
+    	time = System.currentTimeMillis() - refTime;
+    	if(time > speed && currFrame == targetFrame)
+    		return true;
+    	return false;
+    }
+    
     protected void setFrame(int i) {
-	mImage.setImage(frameList.get(i));
+    	mImage.setImage(frameList.get(i));
     }
 
-    //Do we need this?
+    //Set the whole widget to a certain frame.
     public void setKeyFrame(int i){
-	mImage.setImage(frameList.get(keyFrames.get(i)));
+    	mImage.setImage(frameList.get(keyFrames.get(i)));
+    	currFrame = keyFrames.get(i);
+    	targetFrame = keyFrames.get(i);
+    	//Log.d(TAG,"setkeyFrame currFrame "+Integer.toString(currFrame)+" "+"targetFrame "+Integer.toString(targetFrame));
     }    
     
     public void draw(MyGLRenderer r) {
-	animate();
-	mImage.draw(r);
+    	animate();
+    	mImage.draw(r);
 	}
 }
 

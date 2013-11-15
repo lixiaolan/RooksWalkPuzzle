@@ -22,6 +22,7 @@ import com.seventhharmonic.android.freebeeline.common.RawResourceReader;
 import com.seventhharmonic.android.freebeeline.common.ShaderHelper;
 import com.seventhharmonic.android.freebeeline.graphics.FPSCounter;
 import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator.TextJustification;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
@@ -426,7 +427,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 			//Log.e(TAG, "Didn't find a texture or color", e);
 		    System.out.println("CAUGHT TEXTURE ISSUE");
 		    if(textures[0] == null){
-			Log.d(TAG, "found a null thing");
+		    	Log.d(TAG, "found a null thing "+textures[0]+" "+textures[1]);
 		    }
 		    //Log.d(TAG, textures[0]);
 		    //Log.d(TAG, textures[1]);
@@ -759,16 +760,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 	 * @param fontSize Should be in b's.
 	 * @param text
 	 */
-	public void drawTextBox(float[] center, float width, float fontSize, String text){
+	public void drawTextBox(float[] center, float width, float fontSize, String text, TextJustification j){
 		//Original font size - big.
 		float font = TC.fontSize;
-		DisplayMetrics DM = GlobalApplication.getContext().getResources().getDisplayMetrics();
-		float dpi = DM.xdpi/DM.DENSITY_DEFAULT;
-		//Scaling on X and y. In theory the DPI should make things more uniform?
+		// Scaling on X and y. In theory the DPI should make things more uniform?
+		// Maybe this should be moved into fontSize?
 		float fontInPixels = TC.bToPixels(TC.bfToB(fontSize));
 		float scaleX = 1/screenWidth*fontInPixels/font;
 		float scaleY = 1*cameraDistance/screenHeight*fontInPixels/font;
-		TC.draw(this, text, center[0], center[1], width, scaleX, scaleY);
+		
+		if(j == TextJustification.LEFT)
+			TC.draw(this, text, center[0], center[1], width, scaleX, scaleY);
+		else if(j == TextJustification.CENTER){
+			TC.drawCenter(this, text,  center[0], center[1] , width, scaleX, scaleY);
+		}
 	}
 
 	boolean togg = true;

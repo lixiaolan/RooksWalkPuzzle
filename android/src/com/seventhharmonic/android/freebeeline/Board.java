@@ -713,7 +713,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			/*
 			 * The dialog box that appears when you run out of hints.
 			 */
-			mHintDialog = new HintDialogWidgetLayout(.8f, TextureManager.HINTPROMPT, mHints);
+			mHintDialog = new HintDialogWidgetLayout(mHints);
 			mGameBanner.setText(currPuzzle.getText());
 			initSize = tiles[0].getSize();
 			
@@ -881,9 +881,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				}
 				return;
 			}
-
-			if(beeTouched(pt) == 1){
-				//vibe.vibrate(500);		
+			if(mHints.isTouched(pt)){
+//			if(beeTouched(pt) == 1){
 				if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
 					showHint();
 					setHintsText();
@@ -954,40 +953,39 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		EndGameDialogWidgetLayout mDialog;
 
 		public BoardGameEnd(BoardTile[] tiles) {
-
-		    mGameBanner.setText(TextureManager.GOOD_JOB+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
-		    mDialog = new EndGameDialogWidgetLayout(.8f, currPuzzle.getChapter().getNumberPuzzlesIncomplete());
-		    mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
-		    mDialog.setNextClickListener(new GameEventListener(){
-			    public void event(int i ){
-				Log.d("Dialog","Clicked");
-				mDialog.deactivate();
-				if(currPuzzle.getNextPuzzle() != null) {
-				    Log.d("next puzzle", "Apparently, there is another puzzle!");
-				    //TODO: Created a hack here to ensure we recreate the current chapter widget
-				    mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
-				    setState(GameState.GAME_OPENING);
-				    
-				} else {
-				    mModel.setModelToChapterEnd();
+			mGameBanner.setText(TextureManager.GOOD_JOB+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+			mDialog = new EndGameDialogWidgetLayout(.8f);
+			mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
+			mDialog.setNextClickListener(new GameEventListener(){
+				public void event(int i ){
+				    Log.d("Dialog","Clicked");
+				    mDialog.deactivate();
+				    if(currPuzzle.getNextPuzzle() != null) {
+					Log.d("next puzzle", "Apparently, there is another puzzle!");
+					//TODO: Created a hack here to ensure we recreate the current chapter widget
+					mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
+					setState(GameState.GAME_OPENING);
+					
+				    } else {
+					mModel.setModelToChapterEnd();
+				    }
 				}
-			    }
-			    
-			});
+				
+			    });
 		    
-		    mDialog.setBackClickListener(new GameEventListener() {
-			    public void event(int i){
-				mDialog.deactivate();
-				if(currPuzzle.getNextPuzzle() == null){
-				    mModel.setModelToChapterEnd();
+			mDialog.setBackClickListener(new GameEventListener() {
+				public void event(int i){
+				    mDialog.deactivate();
+				    if(currPuzzle.getNextPuzzle() == null){
+					mModel.setModelToChapterEnd();
+				    }
+				    else{
+					mModel.setModelToChapterSelect();
+				    }
 				}
-				else{
-				    mModel.setModelToChapterSelect();
-				}
-			    }
-			    
-			});
-		    
+				
+			    });
+			
 		    
 		    mDialog.activate();
 		    

@@ -8,33 +8,50 @@ import android.util.Log;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class Chapter {
+	String TAG = "Chapter";
 	String title;
 	List<Puzzle> puzzles =  new ArrayList<Puzzle>();
 	int height = 0;
 	int width = 0;
-	boolean completed = true;
 
 	List<String> beforeImageList = new ArrayList<String>();
 	List<String> afterImageList = new ArrayList<String>();
 
-	float[] flowerCoords;
+	Chapter prevChapter;
+	Chapter nextChapter;
+
 	
-	public void setFlowerCoords(float x, float y){
-		//TODO: Get a more correct ratio for the height here!
-		flowerCoords = new float[2];
-		Log.d("Chapter", Float.toString(x)+" "+Float.toString(y));
-		float h = 1.57f;
-		flowerCoords[0] = -1f/512f*x+1f-.125f; 
-		flowerCoords[1] = 2f*h/((512f*1.57f)*2)*y-h+.25f; 
-		Log.d("Chapter", "chapter "+Float.toString(flowerCoords[0])+" "+Float.toString(flowerCoords[1]));
-	}
-	
-	public float[] getFlowerCoords(){
-		return flowerCoords;
+	public Chapter getPrevChapter() {
+		return prevChapter;
 	}
 
 
+	public void setPrevChapter(Chapter prevChapter) {
+		this.prevChapter = prevChapter;
+	}
+
+
+	public Chapter getNextChapter() {
+		return nextChapter;
+	}
+
+
+	public void setNextChapter(Chapter nextChapter) {
+		this.nextChapter = nextChapter;
+	}
+
+	
 	protected String getBeforeImage() {
+		//If there is no previous chapter, then we are the first chapter.
+		if(prevChapter == null){
+			return afterImageList.get(0);
+		} 
+		//If there is a previous chapter AND it is completed return our image
+		else if(prevChapter.getCompleted()){
+			return afterImageList.get(0);
+		} 
+		//Other wise we are locked out :(
+		Log.d(TAG, beforeImageList.get(0));
 		return beforeImageList.get(0);
 	}
 
@@ -43,9 +60,19 @@ public class Chapter {
 	    return afterImageList.get(0);
 	}
 
+	//Temp list for use in getBreforeCompletionImageList
+	List<String> images = new ArrayList<String>();
 
+	/** This returns a list of images that will display before completion of the chapter as the "placeholder" animation.
+	 * In the current iteration, this is guaranteed to return a list of size 1. It will be a "locked" image (blank) if the 
+	 * previous chapter is not finished, otherwise it will be the first "after-image" ie the keyframe associated to this chapter.
+	 * @return
+	 */
 	public List<String> getBeforeCompletionImageList() {
-	    return beforeImageList;
+		images.clear();
+		images.add(getBeforeImage());
+		//return beforeImageList;
+		return images;
 	}
 
 	
@@ -53,19 +80,14 @@ public class Chapter {
 	    return afterImageList;
 	}
 
-
-
-
 	public boolean getCompleted(){
 		//TODO: Put this code back!
-		//for(Puzzle p: puzzles){
-		// 	if(!p.isCompleted()){
-		// 		completed  = false;
-		// 		return false;
-		// 	}
-		 //}
+		for(Puzzle p: puzzles){
+		 	if(!p.isCompleted()){
+		 		return false;
+		 	}
+		 }
 		
-		completed = true;
 		return true;
 	}
 	
@@ -139,9 +161,9 @@ public class Chapter {
 		}
 		ch.setHeight(height);
 		ch.setWidth(width);
-		ch.flowerCoords = flowerCoords;	
 		ch.afterImageList = afterImageList;
 		ch.beforeImageList = beforeImageList;
+		ch.images = images;
 		return ch;
 	}
 
