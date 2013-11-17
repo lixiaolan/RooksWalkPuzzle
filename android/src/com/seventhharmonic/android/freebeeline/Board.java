@@ -35,7 +35,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	private NewBee mBee;
 	private BoardBeeController mBeeController;
 	private PurchasedDataSource PDS;
-	private BoardLineManager mBoardLineManager;
+	protected BoardLineManager mBoardLineManager;
 	
 	
 	public Board(Model mModel) {

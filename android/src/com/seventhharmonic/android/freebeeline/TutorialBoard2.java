@@ -31,6 +31,7 @@ class TutorialBoard2 extends Board {
 		state = new ShowPath(tiles,true);
 		mTutorialState = TutorialState.SHOW_PATH;
 		mMenu = new Menu(5);
+		mBoardLineManager = new BoardLineManager(this);
 	}
 
 	public void setGeometry(float[] g){
@@ -100,7 +101,7 @@ class TutorialBoard2 extends Board {
 			}
 			mBanner.setText(mTutorialInfo.banners[0]);
 			mBee.setMood(Mood.HAPPY);			
-			//drawLines();
+			mBoardLineManager.drawLines();
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {
@@ -177,7 +178,7 @@ class TutorialBoard2 extends Board {
 			tiles[13].setNumber(TextureManager.CLEAR);
 			tiles[13].setArrow(TextureManager.CLEAR);
 
-			//drawLines();
+			mBoardLineManager.drawLines();
 
 		}
 
@@ -263,7 +264,7 @@ class TutorialBoard2 extends Board {
 			tiles[27].setNumber(TextureManager.CLEAR);
 			tiles[27].setArrow(TextureManager.CLEAR);
 			tiles[27].setTextures();
-			//drawLines();
+			mBoardLineManager.drawLines();
 
 		}
 
