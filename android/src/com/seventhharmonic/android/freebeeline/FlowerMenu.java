@@ -3,6 +3,7 @@ package com.seventhharmonic.android.freebeeline;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.State.DrawPeriod;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.android.freebeeline.util.LATools;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
@@ -382,9 +383,10 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     		mGIF.setKeyFrame(savedChapter);
     		mGIF.setTargetFrame(savedChapter+1);
     		String text = "          Congratulations! ^You helped Beatrice finish Chapter "+Integer.toString(savedChapter+1)+" .^ Click to move onto the next chapter.";
-    		//TODO: This sucks. There must be a more flexible way to figure out the gometry.
+    	
     		mText = new TextBox(0, h -.2f,.9f, text);
-    		mText.setFontSize(1.1f);
+    		mText.setFontSize(TextCreator.font1);
+    		//TODO: This sucks. There must be a more flexible way to figure out the gometry.
     		mText.setBorder(true, 0, h-.4f, .9f,.3f);
     		mText.setColor("opaque");
     	}

@@ -14,7 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="questionmark.svg"
+   inkscape:export-filename="/home/jain/Repositories/RooksWalkPuzzle/android/assets/images/questionmark.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -55,15 +58,15 @@
     <text
        xml:space="preserve"
        style="font-size:27.67074585px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Dingbats;-inkscape-font-specification:Dingbats"
-       x="74.976288"
-       y="261.49423"
+       x="155.41586"
+       y="562.7702"
        id="text2985"
        sodipodi:linespacing="125%"
        transform="matrix(1.0010699,0.18039096,-0.17434438,0.96751471,0,0)"><tspan
          sodipodi:role="line"
          id="tspan2987"
-         x="74.976288"
-         y="261.49423"
+         x="155.41586"
+         y="562.7702"
          style="font-size:1383.53723145px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:MyScriptFont;-inkscape-font-specification:MyScriptFont Medium">?</tspan></text>
   </g>
 </svg>
