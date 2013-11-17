@@ -91,7 +91,7 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    LATools.vSum(bee.velocity, temp2, bee.velocity);
 	    LATools.vDiff(bee.getCenter(),target, temp);
 	    if(LATools.abs(bee.velocity) < speedTol && LATools.abs(temp) < positionTol){
-	    	mBeeInterface.targetReached();
+	    	//mBeeInterface.targetReached();
 	    }
 	}
 	
@@ -130,8 +130,8 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	}    
 
 	float[] force = new float[2];
-    float[] temp = new float[2];
-    float[] temp2 = new float[2];
+	float[] temp = new float[2];
+	float[] temp2 = new float[2];
 	
     public void duringAnimation(BeeTile[] tiles) {
 
@@ -148,7 +148,7 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    LATools.vSum(bee.velocity, temp2, bee.velocity);
 	    LATools.vDiff(bee.getCenter(),target, temp);
 	    if(LATools.abs(bee.velocity) < speedTol && LATools.abs(temp) < positionTol){
-	    	mBeeInterface.targetReached();
+	    	//mBeeInterface.targetReached();
 	    }
 	}
 	

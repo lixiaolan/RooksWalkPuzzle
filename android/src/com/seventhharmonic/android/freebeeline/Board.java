@@ -14,38 +14,38 @@ import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
-class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface{
-	String TAG = "board";
-	public int hints;
-	public int[] solution ;
-	public int[][] path;
-	public int boardWidth = 6;
-	public int boardHeight = 6;
+class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface {
+    String TAG = "board";
+    public int hints;
+    public int[] solution ;
+    public int[][] path;
+    public int boardWidth = 6;
+    public int boardHeight = 6;
+    
+    private boolean toggleHints = true;
+    private boolean toggleLines = true;	
+    private boolean toggleError = true;
+    protected float flowerSize = .15f;
+    protected float tileSize = .11f;    
+    private ErrorLog mErrorLog;
+    private TextBox mGameBanner;
+    private ImageWidget mBoardBg;
+    private Puzzle currPuzzle;
+    Model mModel;
+    private NewBee mBee;
+    private BoardBeeController mBeeController;
+    
+    private PurchasedDataSource PDS;
+    
+    public Board(Model mModel) {
+	buildEmptyBoard();
+	state = null;//new BoardPlay(tiles);
+	mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
+	mGameBanner.setFontSize(TextCreator.font1);
+	mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
+	mErrorLog = new ErrorLog(this);
+	this.mModel = mModel;
 	
-	private boolean toggleHints = true;
-	private boolean toggleLines = true;	
-	private boolean toggleError = true;
-	protected float flowerSize = .15f;
-	protected float tileSize = .11f;    
-	private ErrorLog mErrorLog;
-	private TextBox mGameBanner;
-	private ImageWidget mBoardBg;
-	private Puzzle currPuzzle;
-        Model mModel;
-	private NewBee mBee;
-	private BoardBeeController mBeeController;
-
-	private PurchasedDataSource PDS;
-
-	public Board(Model mModel) {
-	    buildEmptyBoard();
-	    state = null;//new BoardPlay(tiles);
-	    mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
-	    mGameBanner.setFontSize(TextCreator.font1);
-	    mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
-	    mErrorLog = new ErrorLog(this);
-	    this.mModel = mModel;
-
 	    mBeeController = new BoardBeeController(this);
 	    mBee = new NewBee(mBeeController);
 	    mBeeController.setBee(mBee);
@@ -959,120 +959,122 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 	//This is the board after completing the game.
 	class BoardGameEnd extends State<BoardTile> {
-		boolean[] rotateTiles = new boolean[boardHeight*boardWidth];
-		boolean[] flipped = new boolean[boardHeight*boardWidth];
-		long[] refTime = new long[boardHeight*boardWidth];
-		EndGameDialogWidgetLayout mDialog;
-
-		public BoardGameEnd(BoardTile[] tiles) {
-			mGameBanner.setText("Puzzle Completed!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
-			mGameBanner.setFontSize(2);
-			mGameBanner.setJ(TextJustification.CENTER);
-			mDialog = new EndGameDialogWidgetLayout(.8f);
-			mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
-			mDialog.setNextClickListener(new GameEventListener(){
-				public void event(int i ){
-				    Log.d("Dialog","Clicked");
-				    mDialog.deactivate();
-				    if(currPuzzle.getNextPuzzle() != null) {
-					Log.d("next puzzle", "Apparently, there is another puzzle!");
-					//TODO: Created a hack here to ensure we recreate the current chapter widget
-					mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
-					setState(GameState.GAME_OPENING);
-					
-				    } else {
-					mModel.setModelToChapterEnd();
-				    }
-				}
+	    boolean[] rotateTiles = new boolean[boardHeight*boardWidth];
+	    boolean[] flipped = new boolean[boardHeight*boardWidth];
+	    long[] refTime = new long[boardHeight*boardWidth];
+	    EndGameDialogWidgetLayout mDialog;
+	    
+	    public BoardGameEnd(BoardTile[] tiles) {
+		mGameBanner.setText("Puzzle Completed!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+		mGameBanner.setFontSize(2);
+		mGameBanner.setJ(TextJustification.CENTER);
+		mDialog = new EndGameDialogWidgetLayout(.8f);
+		mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
+		mDialog.setNextClickListener(new GameEventListener(){
+			public void event(int i ){
+			    Log.d("Dialog","Clicked");
+			    mDialog.deactivate();
+			    if(currPuzzle.getNextPuzzle() != null) {
+				Log.d("next puzzle", "Apparently, there is another puzzle!");
+				//TODO: Created a hack here to ensure we recreate the current chapter widget
+				mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
+				setState(GameState.GAME_OPENING);
 				
-			    });
-		    
-			mDialog.setBackClickListener(new GameEventListener() {
-				public void event(int i){
-				    mDialog.deactivate();
-				    if(currPuzzle.getNextPuzzle() == null){
-					mModel.setModelToChapterEnd();
-				    }
-				    else{
-					mModel.setModelToChapterSelect();
-				    }
-				}
-				
-			    });
+			    } else {
+				mModel.setModelToChapterEnd();
+			    }
+			}
 			
-		    
-		    mDialog.activate();
-		    
-		    for (int i = 0; i < tiles.length; i++) {
-			flipped[i] = false;
-			rotateTiles[i] = false;
-			float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-			float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-			tiles[i].setSize(.12f);
-			tiles[i].setCenter(Sx, Sy);
-			tiles[i].setColor("transparent");
-			refTime[i] = System.currentTimeMillis();
-			tiles[i].setPivot(tiles[i].getCenter());
-			tiles[i].setAlpha(true);
-		    }
-		    if (toggleLines) {
-			drawLines();
-		    }
-		}
+		    });
 		
-
-		//The new animation:
-		public void enterAnimation(BoardTile[] tiles) {
-			//	    long time = System.currentTimeMillis()-refTime[0];
-
-			for (int i = 0; i < tiles.length ; i++) {
-				if (tiles[i].true_solution >0) {
-					float[] pivot = {1.0f,1.0f,0.0f};
-					String[] s = new String[2];
-					s[0] = TextureManager.CLEAR;
-					s[1] = tiles[i].flowerTexture;
-
-					tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-				}
-				else {
-					tiles[i].setTextures();
-				}
+		mDialog.setBackClickListener(new GameEventListener() {
+			public void event(int i){
+			    mDialog.deactivate();
+			    if(currPuzzle.getNextPuzzle() == null){
+				mModel.setModelToChapterEnd();
+			    }
+			    else{
+				mModel.setModelToChapterSelect();
+			    }
 			}
-			period = DrawPeriod.DURING;
+			
+		    });
+		
+		
+		mDialog.activate();
+		
+		for (int i = 0; i < tiles.length; i++) {
+		    flipped[i] = false;
+		    rotateTiles[i] = false;
+		    float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+		    float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+		    tiles[i].setSize(.12f);
+		    tiles[i].setCenter(Sx, Sy);
+		    tiles[i].setColor("transparent");
+		    refTime[i] = System.currentTimeMillis();
+		    tiles[i].setPivot(tiles[i].getCenter());
+		    tiles[i].setAlpha(true);
 		}
-
-		public void duringAnimation(BoardTile[] tiles) {
-			for(int i=0;i<tiles.length;i++){
-				if(tiles[i] != null){
-				if(tiles[i].rotate && !rotateTiles[i] ){
-					refTime[i] = System.currentTimeMillis();
-					rotateTiles[i] = true;
-					float[] pivot = {1.0f,1.0f,0.0f};
-					String[] s = new String[2];
-					s[0] = tiles[i].arrow;
-					s[1] = tiles[i].number;
-					tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-					//tiles[i].rotate = false;
-				}
-				}
+		if (toggleLines) {
+		    drawLines();
+		}
+	    }
+	    
+	    
+	    //The new animation:
+	    public void enterAnimation(BoardTile[] tiles) {
+		//	    long time = System.currentTimeMillis()-refTime[0];
+		
+		for (int i = 0; i < tiles.length ; i++) {
+		    if (tiles[i].true_solution >0) {
+			float[] pivot = {1.0f,1.0f,0.0f};
+			String[] s = new String[2];
+			s[0] = TextureManager.CLEAR;
+			s[1] = tiles[i].flowerTexture;
+			
+			tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+		    }
+		    else {
+			tiles[i].setTextures();
+		    }
+		}
+		period = DrawPeriod.DURING;
+	    }
+	    
+	    public void duringAnimation(BoardTile[] tiles) {
+		for(int i=0;i<tiles.length;i++){
+		    if(tiles[i] != null){
+			if(tiles[i].rotate && !rotateTiles[i] ){
+			    refTime[i] = System.currentTimeMillis();
+			    rotateTiles[i] = true;
+			    float[] pivot = {1.0f,1.0f,0.0f};
+			    String[] s = new String[2];
+			    s[0] = tiles[i].arrow;
+			    s[1] = tiles[i].number;
+			    tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+			    //tiles[i].rotate = false;
 			}
+		    }
 		}
-
-		public void touchHandler(float[] pt){
-			mDialog.touchHandler(pt);
+	    }
+	    
+	    public void touchHandler(float[] pt){
+		mDialog.touchHandler(pt);
+	    }
+	    
+	    public void draw(BoardTile[] tiles, MyGLRenderer r){
+		//mBoardBg.draw(r);
+		super.draw(tiles, r);
+		for(int i =0;i<tiles.length;i++){
+		    if(tiles[i].getTrueSolution() != -1){
+			//if(tiles[i].getTrueSolution() != -1 && tiles[i] !=null){
+			tiles[i].draw(r);
+			
+		    }
 		}
-
-		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			//mBoardBg.draw(r);
-			super.draw(tiles, r);
-			for(int i =0;i<tiles.length;i++){
-				if(tiles[i].getTrueSolution() != -1 && tiles[i] !=null){
-					tiles[i].draw(r);
-				}
-			}
-			mBee.draw(r);
-			mDialog.draw(r);
-			mGameBanner.draw(r);
-		}
+		// mBee.draw(r);
+		// mDialog.draw(r);
+		// mGameBanner.draw(r);
+	    }
 	}        
 }

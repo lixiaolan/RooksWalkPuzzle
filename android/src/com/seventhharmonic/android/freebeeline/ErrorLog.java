@@ -3,30 +3,30 @@ package com.seventhharmonic.android.freebeeline;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class ErrorLog {
-
+    
     public ErrorMap errorMap;
     public boolean pathNotClosed = false;
     public boolean spaceNotFilled = false;
-
+    
     //Set this to check orthogonality or not:
     public boolean checkOrthogonality = false;
-
-
+    
+    
     public Board mBoard;
     
     public ErrorLog(Board b) {
 	mBoard = b;
 	setLog();
     }
-
+    
     public void setLog() {
 	errorMap = new ErrorMap();
 	logErrors();
     }
-
+    
     public String getError(int index) {
 	if (!errorMap.containsKey(index)) return "";
-
+	
 	ErrorBundle e = errorMap.get(index);
 	
 	if (e.pointsAtSame || e.pointedAtBySame) {
@@ -38,7 +38,7 @@ public class ErrorLog {
 	else if (e.pointsAtBadDir || e.pointedAtByBadDir) {
 	    return TextureManager.TURNINGRULE;
 	} else if (e.pointsOffBoard){
-		return TextureManager.OFFBOARD;
+	    return TextureManager.OFFBOARD;
 	}
 	else {
 	    return TextureManager.CLEAR;
@@ -62,8 +62,8 @@ public class ErrorLog {
 			    errorMap.get(i).pointsAtSame = true;
 			    errorMap.get(index).pointedAtBySame = true;
 			}
-
-			 //Check for pass through rule
+			
+			//Check for pass through rule
 			if ( j < num ) {
 			    if (t.isBlack() || !t.isBlank()) {
 				errorMap.get(i).pointsPast = true;
@@ -94,8 +94,8 @@ public class ErrorLog {
 			    errorMap.get(i).pointsAtSame = true;
 			    errorMap.get(index).pointedAtBySame = true;
 			}
-
-			 //Check for pass through rule
+			
+			//Check for pass through rule
 			if ( j < num ) {
 			    if (t.isBlack() || !t.isBlank()) {
 				errorMap.get(i).pointsPast = true;
@@ -116,7 +116,7 @@ public class ErrorLog {
 			errorMap.get(i).pointsOffBoard = true;
 		    }
 		}
-
+		
 		if (mBoard.tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
 		    for (int j = 1; i/mBoard.boardHeight + j < mBoard.boardWidth ; j++) {
 			index = i+j*mBoard.boardHeight;
@@ -148,7 +148,7 @@ public class ErrorLog {
 			errorMap.get(i).pointsOffBoard = true;
 		    }	
 		}
-
+		
 		if (mBoard.tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
 		    for (int j = 1; i/mBoard.boardHeight - j >= 0; j++) {
 			index = i-j*mBoard.boardHeight;
@@ -183,6 +183,5 @@ public class ErrorLog {
 	    }
 	}
     }
-
 }
 

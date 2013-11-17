@@ -273,8 +273,8 @@ class BoardTile extends Tile {
     
     public void draw(MyGLRenderer r) {
     	flipper.animate();
-		angryGlow.animate();
-		r.drawSheetTile(center, size, textures, color, angle, pivot, alpha);    
+	angryGlow.animate();
+	r.drawSheetTile(center, size, textures, color, angle, pivot, alpha);    
     }    
     
     public boolean checkArrows() {
