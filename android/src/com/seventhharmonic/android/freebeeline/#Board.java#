@@ -50,6 +50,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	    mBeeController = new BoardBeeController(this);
 	    mBee = new NewBee(mBeeController);
 	    mBeeController.setBee(mBee);
+
 	    mBee.setModeFast();
 	    mBoardLineManager = new BoardLineManager(this);
 	    
