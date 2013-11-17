@@ -232,7 +232,8 @@ public class Store {
 	String sku = "test5";
 
 	public boolean hasUnlimitedHints(){
-		
+		return false;
+		/*
 		if(mInventory == null){
 			return PDS.getPurchased(sku);
 		}
@@ -243,7 +244,7 @@ public class Store {
 		} else {
 			return false;
 		}
-
+		*/
 	}
 
 

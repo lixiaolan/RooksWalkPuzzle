@@ -7,7 +7,9 @@ import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.db.HintsDataSource;
 import com.seventhharmonic.android.freebeeline.db.PurchasedDataSource;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator.TextJustification;
 import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
@@ -39,6 +41,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	    buildEmptyBoard();
 	    state = null;//new BoardPlay(tiles);
 	    mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
+	    mGameBanner.setFontSize(TextCreator.font1);
 	    mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
 	    mErrorLog = new ErrorLog(this);
 	    this.mModel = mModel;
@@ -662,8 +665,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			refTime = System.currentTimeMillis();
 			oldX = new float[tiles.length];
 			oldY = new float[tiles.length];
+			
 			mMenu = new Menu(boardHeight);
-
+			
+			mGameBanner.setJ(TextJustification.LEFT);
+			mGameBanner.setFontSize(TextCreator.font1);
+			
 			if(boardWidth == 6){
 				mBoardBg = new ImageWidget(0,0, 1.0f,1.0f,"boardbg");
 			} else if(boardWidth == 5){
@@ -708,10 +715,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			buttonGrid.setCenter(0, mBoardBg.getCenterY()-mBoardBg.getHeight()-.1f);
 			//buttonGrid.setCenter(.33f, (-1-geometry[1])/2+.1f);
 			buttonGrid.addWidget(mHints);
-			buttonGrid.addWidget(mCheck);
 			buttonGrid.addWidget(reset);
 			buttonGrid.addWidget(tutorial);
-			
+			buttonGrid.addWidget(mCheck);
 			/*
 			 * The dialog box that appears when you run out of hints.
 			 */
@@ -959,7 +965,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		EndGameDialogWidgetLayout mDialog;
 
 		public BoardGameEnd(BoardTile[] tiles) {
-			mGameBanner.setText(TextureManager.GOOD_JOB+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+			mGameBanner.setText("Puzzle Completed!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+			mGameBanner.setFontSize(2);
+			mGameBanner.setJ(TextJustification.CENTER);
 			mDialog = new EndGameDialogWidgetLayout(.8f);
 			mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
 			mDialog.setNextClickListener(new GameEventListener(){
@@ -1035,7 +1043,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		public void duringAnimation(BoardTile[] tiles) {
 			for(int i=0;i<tiles.length;i++){
-				if(tiles[i].rotate && !rotateTiles[i] && tiles[i]!=null){
+				if(tiles[i] != null){
+				if(tiles[i].rotate && !rotateTiles[i] ){
 					refTime[i] = System.currentTimeMillis();
 					rotateTiles[i] = true;
 					float[] pivot = {1.0f,1.0f,0.0f};
@@ -1044,6 +1053,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					s[1] = tiles[i].number;
 					tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
 					//tiles[i].rotate = false;
+				}
 				}
 			}
 		}
@@ -1061,7 +1071,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				}
 			}
 			mBee.draw(r);
-			//mDialog.draw(r);
+			mDialog.draw(r);
 			mGameBanner.draw(r);
 		}
 	}        

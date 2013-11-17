@@ -45,7 +45,7 @@ public class LevelPack {
 		chapters.add(c);
 		if(chapters.size() > 1)
 			chapters.get(chapters.size()-2).setNextChapter(c);
-		if(chapters.size() > 2)
+		if(chapters.size() >= 2)
 			c.setPrevChapter(chapters.get(chapters.size()-2));
 	}
 	

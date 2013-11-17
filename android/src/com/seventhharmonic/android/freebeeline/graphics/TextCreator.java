@@ -22,6 +22,8 @@ public class TextCreator {
 	private static final String TAG = "TEXTCREATOR";
 
 	
+	public static float font1 = 1.2f;
+	
 	public final static int CHAR_START = 32;           // First Character (ASCII Code)
 	public final static int CHAR_END = 126;            // Last Character (ASCII Code)
 	public final static int CHAR_CNT = ( ( ( CHAR_END - CHAR_START ) + 1 ) + 1 );  // Character Count (Including Character to use for Unknown)

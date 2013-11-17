@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.android.freebeeline.graphics.TextCreator;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 
@@ -22,7 +23,8 @@ class TutorialBoard2 extends Board {
 		super(null);
 		float[] center = {.20f,-1.0f, 0.0f };
 		mCPB = new CircleProgressBarWidget(3, center[0], center[1], .05f);
-		mBanner = new TextBox(0,0,.8f,"");
+		mBanner = new TextBox(0,0,.9f,"");
+		mBanner.setFontSize(TextCreator.font1);
 		mBoardBg = new ImageWidget(0,0,1,1,"boardbg");
 		mBee = new Bee(this);
 		mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);

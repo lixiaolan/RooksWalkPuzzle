@@ -5,17 +5,23 @@
 		    <image image="book1chapter1_1"/>
 		    <image image="book1chapter1_2"/>
 		 </afterImage>
-		<width>3</width>
-		<height>3</height>
-		<puzzle id="0" before_flower="flower1" after_flower="flower1color" text="If you get stuck during the puzzle, you can click on the ? to access the tutorial. Click on the checkmark when done." >
-
+		<width>2</width>
+		<height>2</height>
+		<puzzle id="0" before_flower="flower1" after_flower="flower1color" text="Close the path. Touch a square to enter a number, then swipe to give a direction. Click on the checkmark when done." >
 			<height>5</height>
 			<width>5</width>
-			<board>-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,0,1,-1,-1,1,0,2,-1</board>
-			<path>3,3,3,1,4,1,4,3,3,3</path>
+			<board>-1,-1,4,0,2,-1,-1,0,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,0,-1,-1,2,0,4</board>
+			<path>0,2,0,4,4,4,4,2,0,2</path>
 			<hint>
-				<index>21</index>
+				<index>24</index>
 			</hint>
+			<hint>
+				<index>2</index>
+			</hint>
+		    <hint>
+				<index>4</index>
+			</hint>
+			
 		</puzzle>
 		<puzzle id="1" before_flower="flower1" after_flower="flower1color" text="Nice work. Time for another puzzle!">
 
@@ -29,8 +35,11 @@
 			<hint>
 				<index>2</index>
 			</hint>
+			<hint>
+				<index>7</index>
+			</hint>
 		</puzzle>
-		<puzzle id="2" before_flower="flower1" after_flower="flower1color" text="TIP: Beatrice loves you. If you touch her, she'll give you a hint.">
+		<puzzle id="2" before_flower="flower1" after_flower="flower1color" text="TIP: Beatrice loves you. If you touch her, she'll give you a hint. Touch the questionmark if you forget the rules.">
 			<height>5</height>
 			<width>5</width>
 			<board>4,0,0,3,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,1,2,0,4,-1</board>
@@ -42,35 +51,30 @@
 				<index>20</index>
 			</hint>
 		</puzzle>
-		<puzzle id="3" before_flower="flower1" after_flower="flower1color" text="TIP: Don't worry about exiting the puzzle, Beatrice will remember your  progress.">
+		<puzzle id="15" before_flower="flower1" after_flower="flower1color" text="This puzzle is harder then it looks. But if you finish, Beatrice has a surprise for you.">
 			<height>5</height>
 			<width>5</width>
-			<board>-1,-1,-1,-1,-1,2,0,0,3,1,0,-1,-1,-1,0,4,0,0,0,2,-1,-1,-1,-1,-1</board>
-			<path>1,0,1,3,1,4,3,4,3,0,1,0</path>
+			<board>2,1,0,0,3,0,-1,-1,-1,1,1,-1,-1,-1,0,3,0,0,1,2,-1,-1,-1,-1,-1</board>
+			<path>3,4,3,3,3,0,2,0,0,0,0,1,0,4,1,4,3,4</path>
 			<hint>
-				<index>15</index>
+				<index>18</index>
 			</hint>
-			<hint>
-				<index>8</index>
-			</hint>
-		</puzzle>
-		<puzzle id="4" before_flower="flower1" after_flower="flower1color" text="TIP: You can questionmark the board by clicking on the eraser.">
-
-			<height>5</height>
-			<width>5</width>
-			<board>3,0,0,0,4,0,-1,-1,-1,1,0,-1,-1,-1,0,1,-1,-1,-1,0,4,0,0,0,3</board>
-			<path>4,0,3,0,0,0,0,4,1,4,4,4,4,0</path>
 			<hint>
 				<index>4</index>
 			</hint>
-			<hint>
-				<index>24</index>
-			</hint>
-			<hint>
-				<index>15</index>
-			</hint>
 		</puzzle>
-		<puzzle id="5" before_flower="flower1" after_flower="flower1color" >
+	</chapter>
+	<chapter title="Chapter Two" before_image="questionmark" after_image="book1chapter2" xcoords="221" ycoords="691">
+		<afterImage>
+		    <image image="book1chapter2"/>
+		    <image image="book1chapter2"/>
+		    <image image="book1chapter2"/>
+		 </afterImage>
+	    
+	    <width>2</width>
+		<height>2</height>
+
+		<puzzle id="5" before_flower="flower2" after_flower="flower2color" text="">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,-1,-1,-1,-1,-1,3,0,2,-1,3,0,0,1,-1,0,0,-1,-1,-1,2,1,-1,-1</board>
@@ -85,34 +89,8 @@
 				<index>7</index>
 			</hint>
 		</puzzle>
-		<puzzle id="6" before_flower="flower1" after_flower="flower1color" >
-			<height>5</height>
-			<width>5</width>
-			<board>-1,-1,-1,-1,-1,3,1,0,2,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,1,2,0,3,-1</board>
-			<path>1,3,4,3,4,1,4,0,1,0,1,1,1,3</path>
-			<hint>
-				<index>5</index>
-			</hint>
-			<hint>
-				<index>21</index>
-			</hint>
-			<hint>
-				<index>8</index>
-			</hint>
-		</puzzle>
-		<puzzle id="7" text="" before_flower="flower1" after_flower="flower1color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,3,0,0,1,-1,0,-1,-1,2,-1,2,-1,-1,0,-1,1,0,0,3,-1,-1,-1,-1,-1</board>
-			<path>2,1,3,1,3,4,1,4,0,4,0,1,2,1</path>
-			<hint>
-				<index>11</index>
-			</hint>
-			<hint>
-				<index>9</index>
-			</hint>
-		</puzzle>
-		<puzzle id="8" text="" before_flower="flower1" after_flower="flower1color">
+		
+		<puzzle id="8" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,2,1,-1,-1,-1,0,0,-1,-1,-1,1,0,-1,-1,-1,3,0,0,1,-1,-1,4,0,2</board>
@@ -124,16 +102,8 @@
 				<index>22</index>
 			</hint>
 		</puzzle>
-	</chapter>
-	<chapter title="Chapter Two" before_image="questionmark" after_image="book1chapter2" xcoords="221" ycoords="691">
-		<afterImage>
-		    <image image="book1chapter2"/>
-		    <image image="book1chapter2"/>
-		    <image image="book1chapter2"/>
-		 </afterImage>
-	    
-	    <width>3</width>
-		<height>3</height>
+				
+		
 		<puzzle id="9" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
@@ -145,109 +115,19 @@
 			<hint>
 				<index>23</index>
 			</hint>
+		
 		</puzzle>
-		<puzzle id="10" text="" before_flower="flower2" after_flower="flower2color">
+
+		<puzzle id="26" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
-			<board>-1,4,1,-1,-1,-1,0,0,-1,-1,-1,0,0,-1,-1,-1,0,3,0,2,-1,3,0,0,1</board>
-			<path>0,1,0,2,3,2,3,4,4,4,4,1,0,1</path>
+			<board>-1,2,0,1,-1,1,0,0,3,-1,2,0,1,-1,-1,-1,3,2,0,1,-1,1,0,0,3</board>
+			<path>4,1,4,4,3,4,3,2,2,2,2,0,1,0,1,3,0,3,0,1,3,1,4,1</path>
 			<hint>
-				<index>21</index>
+				<index>16</index>
 			</hint>
 		</puzzle>
-		<puzzle id="11" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>3,1,-1,-1,-1,0,0,-1,3,1,0,0,-1,0,0,4,0,0,0,2,-1,4,0,2,-1</board>
-			<path>1,3,1,4,3,4,3,0,0,0,0,1,4,1,4,3,1,3</path>
-			<hint>
-				<index>8</index>
-			</hint>
-			<hint>
-				<index>1</index>
-			</hint>
-			<hint>
-				<index>0</index>
-			</hint>
-		</puzzle>
-		<puzzle id="12" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,-1,4,0,2,-1,-1,0,-1,0,1,0,0,3,0,4,0,0,0,3,-1,-1,1,2,-1</board>
-			<path>3,0,2,0,2,3,4,3,4,2,0,2,0,4,3,4,3,0</path>
-			<hint>
-				<index>2</index>
-			</hint>
-			<hint>
-				<index>15</index>
-			</hint>
-			<hint>
-				<index>23</index>
-			</hint>
-		</puzzle>
-		<puzzle id="13" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>3,0,0,1,4,0,-1,-1,-1,0,2,0,0,3,0,-1,-1,-1,0,0,-1,-1,-1,2,1</board>
-			<path>2,0,2,3,4,3,4,4,0,4,0,3,0,0,2,0</path>
-			<hint>
-				<index>4</index>
-			</hint>
-			<hint>
-				<index>3</index>
-			</hint>
-			<hint>
-				<index>0</index>
-			</hint>
-		</puzzle>
-		<puzzle id="14" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,2,1,-1,-1,-1,0,0,-1,-1,-1,3,0,0,2,2,0,3,-1,0,1,0,0,0,4</board>
-			<path>2,1,0,1,0,2,3,2,3,0,4,0,4,4,2,4,2,1</path>
-			<hint>
-				<index>11</index>
-			</hint>
-			<hint>
-				<index>20</index>
-			</hint>
-			<hint>
-				<index>1</index>
-			</hint>
-		</puzzle>
-		<puzzle id="15" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>2,1,0,0,3,0,-1,-1,-1,1,1,-1,-1,-1,0,3,0,0,1,2,-1,-1,-1,-1,-1</board>
-			<path>3,4,3,3,3,0,2,0,0,0,0,1,0,4,1,4,3,4</path>
-			<hint>
-				<index>18</index>
-			</hint>
-			<hint>
-				<index>4</index>
-			</hint>
-		</puzzle>
-		<puzzle id="16" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,-1,2,0,3,1,3,0,-1,0,0,0,0,-1,0,2,0,0,0,4,-1,1,4,-1,-1</board>
-			<path>1,1,1,0,3,0,3,4,0,4,0,2,4,2,4,1,1,1</path>
-			<hint>
-				<index>19</index>
-			</hint>
-			<hint>
-				<index>4</index>
-			</hint>
-		</puzzle>
-		<puzzle id="17" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,-1,-1,1,2,2,0,3,0,0,1,0,0,0,4,-1,-1,0,0,-1,-1,-1,1,4,-1</board>
-			<path>0,4,0,3,4,3,4,2,1,2,1,0,2,0,2,4,0,4</path>
-			<hint>
-				<index>3</index>
-			</hint>
-		</puzzle>
+		
 	</chapter>
 	<chapter title="Chapter Three" before_image="questionmark" after_image="book1chapter3"  xcoords="83"   ycoords="625">
 		<afterImage>

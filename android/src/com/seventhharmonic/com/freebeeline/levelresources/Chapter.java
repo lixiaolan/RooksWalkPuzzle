@@ -44,14 +44,16 @@ public class Chapter {
 	protected String getBeforeImage() {
 		//If there is no previous chapter, then we are the first chapter.
 		if(prevChapter == null){
+			Log.d(TAG, title+" prev chapter is null"+beforeImageList.get(0));
 			return afterImageList.get(0);
 		} 
 		//If there is a previous chapter AND it is completed return our image
 		else if(prevChapter.getCompleted()){
+			Log.d(TAG, title+" previous chapter is completed"+beforeImageList.get(0));
 			return afterImageList.get(0);
 		} 
 		//Other wise we are locked out :(
-		Log.d(TAG, beforeImageList.get(0));
+		Log.d(TAG, title+" locked out"+beforeImageList.get(0));
 		return beforeImageList.get(0);
 	}
 
