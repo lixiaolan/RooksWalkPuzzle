@@ -201,8 +201,8 @@ public class ChapterWidget extends GraphicWidget {
 		
 		public void draw(MyGLRenderer r){
 			super.draw(r);
-			for(Widget p: list){
-				p.draw(r);
+			for(int i =0;i<list.size();i++){
+				list.get(i).draw(r);
 			}
 			if(period == DrawPeriod.DURING)
 				mGrid2.draw(r);

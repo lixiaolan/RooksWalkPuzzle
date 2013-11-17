@@ -100,7 +100,7 @@ class TutorialBoard2 extends Board {
 			}
 			mBanner.setText(mTutorialInfo.banners[0]);
 			mBee.setMood(Mood.HAPPY);			
-			drawLines();
+			//drawLines();
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {
@@ -177,7 +177,7 @@ class TutorialBoard2 extends Board {
 			tiles[13].setNumber(TextureManager.CLEAR);
 			tiles[13].setArrow(TextureManager.CLEAR);
 
-			drawLines();
+			//drawLines();
 
 		}
 
@@ -213,7 +213,7 @@ class TutorialBoard2 extends Board {
 				tiles[27].setArrow(TextureManager.RIGHTARROW);
 				tiles[27].setTextures();
 				if(lines) {
-					drawLines();
+					//drawLines();
 					lines = false;
 				}
 			} else {
@@ -221,7 +221,7 @@ class TutorialBoard2 extends Board {
 				tiles[27].setNumber(TextureManager.CLEAR);
 				tiles[27].setArrow(TextureManager.CLEAR);
 				tiles[27].setTextures();
-				drawLines();
+				//drawLines();
 				refTime = System.currentTimeMillis();
 			}
 		}
@@ -263,7 +263,7 @@ class TutorialBoard2 extends Board {
 			tiles[27].setNumber(TextureManager.CLEAR);
 			tiles[27].setArrow(TextureManager.CLEAR);
 			tiles[27].setTextures();
-			drawLines();
+			//drawLines();
 
 		}
 
@@ -286,7 +286,7 @@ class TutorialBoard2 extends Board {
 				tiles[9].setTextures();
 				mCheck.setImage(TextureManager.CHECK);
 				if(lines){
-					drawLines();
+					//drawLines();
 					lines = false;
 				}
 			} else {

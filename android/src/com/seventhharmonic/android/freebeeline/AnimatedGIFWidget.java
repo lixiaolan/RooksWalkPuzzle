@@ -36,20 +36,18 @@ class AnimatedGIFWidget extends Widget{
 
 	List<Chapter> chapterList;
 	chapterList = LP.getAllChapters();
-	int i = 0;
-	for (Chapter ch : chapterList) {
-	    keyFrames.add(i);
+	for (int i =0;i<chapterList.size();i++) {
+		Chapter ch  = chapterList.get(i);
+		keyFrames.add(i);
 	    if (ch.getCompleted()) {
 		for (String s : ch.getAfterCompletionImageList()) {
 		    frameList.add(s);
-		    i++;
 		}
 	    }
 	    else {
 		for (String s : ch.getBeforeCompletionImageList()) {
 			Log.d(TAG,s);
 		    frameList.add(s);
-		    i++;
 		}
 	    }
 	}

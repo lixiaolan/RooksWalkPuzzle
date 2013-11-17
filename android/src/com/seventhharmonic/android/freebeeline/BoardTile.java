@@ -6,7 +6,6 @@ import com.seventhharmonic.android.freebeeline.util.LATools;
 
 class BoardTile extends Tile {
     
-    
     public float[] velocity = new float[2];
     public int true_solution;
     public String true_arrow;
@@ -24,6 +23,7 @@ class BoardTile extends Tile {
     private AngryGlow angryGlow;
     public boolean isHint = false;
     public boolean alpha = true;
+    public EndDirectionType mEndDirectionType = EndDirectionType.NONE;
     
     //Define an inner class to take care of flip animations
     class Flipper {
@@ -214,7 +214,7 @@ class BoardTile extends Tile {
     }
     
     public void setTextures(){
-	if (!isPointedAt()) {
+	if (!isPointedAt() && mEndDirectionType == EndDirectionType.NONE) {
 	    if(!isBlack()) {
 		textures[0]  = arrow;
 		textures[1]  = number;
@@ -222,6 +222,14 @@ class BoardTile extends Tile {
 		textures[0] = TextureManager.CLEAR;
 		textures[1] = grassTexture;
 	    }
+	} else if(mEndDirectionType != EndDirectionType.NONE && !isBlank()){
+		if(!isBlack()) {
+			textures[0]  = arrow;
+			textures[1]  = number;
+		    } else {
+			textures[0] = TextureManager.CLEAR;
+			textures[1] = grassTexture;
+		    }
 	}
     }
     

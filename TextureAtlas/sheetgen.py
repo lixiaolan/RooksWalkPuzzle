@@ -38,6 +38,17 @@ for i in range(0,4):
     y1+=256
     y2+=256
 
+#Dots
+dots = ["leftdot","updot", "rightdot","downdot"]
+x1 = 128
+x2 = 128+256
+for i in range(0,4):
+    print dots[i]
+    print "%f,%f,%f,%f"%(x1/2048.,x2/2048.,y1/2048.,y2/2048.)
+    y1+=256
+    y2+=256
+
+
 
 #Numbers
 x1 = 128+256
