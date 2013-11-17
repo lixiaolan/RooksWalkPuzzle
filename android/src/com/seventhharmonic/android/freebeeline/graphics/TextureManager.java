@@ -109,6 +109,11 @@ public class TextureManager {
 	public static final String IMAGEBORDER = "imageborder";
 	public static final String SHOW = "show";
 	public static final String HIDE = "hide";
+	public static final String UPDOT = "updot";
+	public static final String DOWNDOT = "downdot";
+	public static final String LEFTDOT = "leftdot";
+	public static final String RIGHTDOT = "rightdot";
+	
 	
 	TextCreator tC = new TextCreator();
 	public Map <String, Integer> library = new HashMap<String, Integer>();
@@ -268,7 +273,8 @@ public class TextureManager {
 		try{
 		BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("sheetdata")));
 		String name;
-		for (int i = 0; i < 30; i++) {
+		//TODO: More flexible for loop here. Maybe a while loop?
+		for (int i = 0; i < 34; i++) {
 			name = br.readLine();
 			//Log.d(TAG, name);
 			// Split the lines using comma as delimiter

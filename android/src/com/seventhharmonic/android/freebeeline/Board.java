@@ -14,42 +14,44 @@ import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
-class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface {
-    String TAG = "board";
-    public int hints;
-    public int[] solution ;
-    public int[][] path;
-    public int boardWidth = 6;
-    public int boardHeight = 6;
-    
-    private boolean toggleHints = true;
-    private boolean toggleLines = true;	
-    private boolean toggleError = true;
-    protected float flowerSize = .15f;
-    protected float tileSize = .11f;    
-    private ErrorLog mErrorLog;
-    private TextBox mGameBanner;
-    private ImageWidget mBoardBg;
-    private Puzzle currPuzzle;
-    Model mModel;
-    private NewBee mBee;
-    private BoardBeeController mBeeController;
-    
-    private PurchasedDataSource PDS;
-    
-    public Board(Model mModel) {
-	buildEmptyBoard();
-	state = null;//new BoardPlay(tiles);
-	mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
-	mGameBanner.setFontSize(TextCreator.font1);
-	mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
-	mErrorLog = new ErrorLog(this);
-	this.mModel = mModel;
+class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface{
+	String TAG = "board";
+	public int hints;
+	public int[] solution ;
+	public int[][] path;
+	public int boardWidth = 6;
+	public int boardHeight = 6;
 	
+	private boolean toggleHints = true;
+	private boolean toggleLines = true;	
+	private boolean toggleError = true;
+	protected float flowerSize = .15f;
+	protected float tileSize = .11f;    
+	private ErrorLog mErrorLog;
+	private TextBox mGameBanner;
+	private ImageWidget mBoardBg;
+	private Puzzle currPuzzle;
+        Model mModel;
+	private NewBee mBee;
+	private BoardBeeController mBeeController;
+	private PurchasedDataSource PDS;
+	private BoardLineManager mBoardLineManager;
+	
+	
+	public Board(Model mModel) {
+	    buildEmptyBoard();
+	    state = null;//new BoardPlay(tiles);
+	    mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
+	    mGameBanner.setFontSize(TextCreator.font1);
+	    mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
+	    mErrorLog = new ErrorLog(this);
+	    this.mModel = mModel;
+
 	    mBeeController = new BoardBeeController(this);
 	    mBee = new NewBee(mBeeController);
 	    mBeeController.setBee(mBee);
 	    mBee.setModeFast();
+	    mBoardLineManager = new BoardLineManager(this);
 	    
 	}    
 
@@ -191,9 +193,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			if(tiles[i].isClickable()){
 				tiles[i].setNumber(TextureManager.CLEAR);
 				tiles[i].setArrow(TextureManager.CLEAR);
+				tiles[i].setColor("transparent");
 			}
 		}
-		clearLines();
+		if(toggleLines){
+		mBoardLineManager.drawLines();
+		}
 	}
 
 	public void createPuzzleFromPuzzle(Puzzle p){
@@ -203,6 +208,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		System.out.println("boardWidth: " + Integer.toString(boardWidth));
 		currPuzzle = p;
 		buildEmptyBoard();
+		mBoardLineManager.boardHeight = boardHeight;
+		mBoardLineManager.boardWidth = boardWidth;
+		mBoardLineManager.tiles = tiles;
 		int[] solution = p.getBoard();
 		int[][] path = p.getPath();
 
@@ -273,7 +281,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 
 	/**
-	 * Show a hint on the board. This should be trigered when the bee is clicked.
+	 * Show a hint on the board. This should be triggered when the bee is clicked.
 	 */
 	public void showHint() {
 		for(int i =0; i< tiles.length; i++){
@@ -283,7 +291,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					//tiles[i].setSolution();
 					//tiles[i].setTextures();
 					tiles[i].setHint();
-					drawLines();
+					mBoardLineManager.drawLines();
 
 					break;
 				}
@@ -311,292 +319,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	 */
 	public void setGeometry(float[] g) {
 		super.setGeometry(g);
+		mBoardLineManager.setGeometry(g);
+		
 		//Place the banner halfway between the board and the top of the screen.
 		mGameBanner.setCenter(0, (g[1]+1)/2);
 	}
 
-	public void animatePlay(int at) {
-		//Now go though each tile and fill in pointed at tiles.
-		float duration = .3f;
-		float delay = .15f;
-		clearLines();
-		stopFlips();
-		drawLines();
-		if (tiles[at].hasNumber() && tiles[at].hasArrow()) {
-			int num = Integer.parseInt(tiles[at].getNumber());
-			if (tiles[at].getArrow().equals(TextureManager.UPARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at%boardHeight + j < boardHeight) {
-						if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
-							String[] s1 = new String[2];
-							s1[0] = TextureManager.VERTDOTS;
-							s1[1] = tiles[at+j].textures[1];
-							float[] pivot = {1.0f,0.0f,0.0f};
-							tiles[at+j].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-							tiles[at+j].setFlipper(geometry[1], pivot, duration, j*delay ,s1);
-						}
+/////////////////////////////////////////////////////////////////////////////	
 
-					}
-				}
-			}
-			if (tiles[at].getArrow().equals(TextureManager.DOWNARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at%boardHeight - j >= 0) {
-						if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
-							String[] s2 = new String[2];
-							s2[0] = TextureManager.VERTDOTS;
-							s2[1] = tiles[at-j].textures[1];
-							float[] pivot = {1.0f,0.0f,0.0f};
-							tiles[at-j].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-							tiles[at-j].setFlipper(geometry[1], pivot, duration, j*delay ,s2);
-						}
-
-					}
-				}
-			}
-			if (tiles[at].getArrow().equals(TextureManager.LEFTARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at/boardHeight + j < boardWidth) { 
-						if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
-							String[] s3 = new String[2];
-							s3[1] = TextureManager.HORZDOTS;
-							s3[0] = tiles[at+j*boardHeight].textures[0];
-							float[] pivot = {0.0f,1.0f,0.0f};
-							tiles[at+j*boardHeight].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-							tiles[at+j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s3);
-						}
-
-					}
-				}
-			}
-			if (tiles[at].getArrow().equals(TextureManager.RIGHTARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at/boardHeight - j >= 0) {
-						if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
-							String[] s4 = new String[2];
-							s4[1] = TextureManager.HORZDOTS;
-							s4[0] = tiles[at-j*boardHeight].textures[0];
-							float[] pivot = {0.0f,1.0f,0.0f};
-							tiles[at-j*boardHeight].setTextures(TextureManager.CLEAR, TextureManager.CLEAR);
-							tiles[at-j*boardHeight].setFlipper(geometry[1], pivot, duration, j*delay ,s4);
-						}
-					}
-				}
-			}
-		}
-	}
-	// Class to draw the dotted lines on the board.  Called after every input
-	public void drawLines() {
-		//First remove the lines on tiles which are no longer pointed at.
-		markPointedAt();
-		for (int i = 0; i < tiles.length; i++ ) {
-			if (!tiles[i].hasNumber() && !tiles[i].hasArrow() && !tiles[i].isBlack()) {
-
-				if (!tiles[i].vPointedAt) {
-					tiles[i].setTextures(TextureManager.CLEAR, tiles[i].textures[1]);
-				}
-				else {
-					tiles[i].setTextures(TextureManager.VERTDOTS, tiles[i].textures[1]);
-				}
-				if (!tiles[i].hPointedAt) {
-					tiles[i].setTextures(tiles[i].textures[0], TextureManager.CLEAR);
-				}
-				else {
-					tiles[i].setTextures(tiles[i].textures[0], TextureManager.HORZDOTS);
-				}
-			}
-		}	
-	}
-
-	public void clearLines() {
-		//First remove the lines on tiles which are no longer pointed at.
-		markPointedAt();
-		for (int i = 0; i < tiles.length; i++ ) {
-			if (!tiles[i].hasNumber() && !tiles[i].hasArrow() && !tiles[i].isBlack()) {
-				if (!tiles[i].vPointedAt) {
-					tiles[i].setTextures(TextureManager.CLEAR, tiles[i].textures[1]);
-				}
-				if (!tiles[i].hPointedAt) {
-					tiles[i].setTextures(tiles[i].textures[0], TextureManager.CLEAR);
-				}
-			}
-		}	
-	}
-
-	public void stopFlips() {
-		for (int i = 0; i < tiles.length; i++) {
-			tiles[i].stopFlipper();
-		}
-	}
-
-	public void markPointedAt() {
-		//Marks all tiles pointed at either V or H
-		for (int i = 0; i < tiles.length; i++) {
-			tiles[i].vPointedAt = false;
-			tiles[i].hPointedAt = false;
-		}
-		for (int i = 0; i < tiles.length; i++ ) {
-			if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
-				int num = Integer.parseInt(tiles[i].number);
-				if (tiles[i].getArrow().equals(TextureManager.UPARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i%boardHeight + j < boardHeight) {
-							if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) 
-								tiles[i+j].vPointedAt = true;
-						}
-					}
-				}
-				if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i%boardHeight - j >= 0) {
-							if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) 
-								tiles[i-j].vPointedAt = true;
-						}
-					}
-				}
-				if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i/boardHeight + j < boardWidth) {
-							if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) 
-								tiles[i+j*boardHeight].hPointedAt = true;
-						}
-					}
-				}
-				if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i/boardHeight - j >= 0) {
-							if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) 
-								tiles[i-j*boardHeight].hPointedAt = true;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	public boolean checkRuleCollision(int at) {
-		//Now go though each tile and fill in pointed at tiles.
-		float duration = .3f;
-		float delay = 0.0f;
-		boolean satisfied = true;
-		if (tiles[at].hasNumber() && tiles[at].hasArrow()) {
-			int num = Integer.parseInt(tiles[at].number);
-			if (tiles[at].getArrow().equals(TextureManager.UPARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at%boardHeight + j < boardHeight) {
-						if (!tiles[at+j].isBlack() && tiles[at+j].isBlank()) {
-						}
-						else {
-							tiles[at+j].setAngryGlow(duration, j*delay);
-							satisfied = false;
-						}
-					}
-				}
-			}
-			if (tiles[at].getArrow().equals(TextureManager.DOWNARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at%boardHeight - j >= 0) {
-						if (!tiles[at-j].isBlack() && tiles[at-j].isBlank()) { 
-						}
-						else {
-							tiles[at-j].setAngryGlow(duration, j*delay);
-							satisfied = false;
-						}
-					}
-				}
-			}
-			if (tiles[at].getArrow().equals(TextureManager.LEFTARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at/boardHeight + j < boardWidth) { 
-						if (!tiles[at+j*boardHeight].isBlack() && tiles[at+j*boardHeight].isBlank()) {
-						}
-						else {
-							tiles[at+j*boardHeight].setAngryGlow(duration, j*delay);
-							satisfied = false;
-						}
-					}
-				}
-			}
-			if (tiles[at].getArrow().equals(TextureManager.RIGHTARROW)) {
-				for (int j = 1; j < num; j++) {
-					if (at/boardHeight - j >= 0) {
-						if (!tiles[at-j*boardHeight].isBlack() && tiles[at-j*boardHeight].isBlank()) {
-						}
-						else {
-							tiles[at-j*boardHeight].setAngryGlow(duration, j*delay);
-							satisfied = false;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public boolean checkRuleCollision() {
-		//Now go though each tile and fill in pointed at tiles.
-		float duration = .3f;
-		float delay = 0.0f;
-		boolean satisfied = true;
-		for (int i = 1; i < tiles.length; i++ ) {
-			if (tiles[i].hasNumber() && tiles[i].hasArrow()) {
-				int num = Integer.parseInt(tiles[i].number);
-				if (tiles[i].getArrow() == TextureManager.UPARROW) {
-					for (int j = 1; j < num; j++) {
-						if (i%boardHeight + j < boardHeight) {
-							if (!tiles[i+j].isBlack() && tiles[i+j].isBlank()) {
-							}
-							else {
-								tiles[i+j].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
-				}
-				if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i%boardHeight - j >= 0) {
-							if (!tiles[i-j].isBlack() && tiles[i-j].isBlank()) { 
-							}
-							else {
-								tiles[i-j].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
-				}
-				if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i/boardHeight + j < boardWidth) { 
-							if (!tiles[i+j*boardHeight].isBlack() && tiles[i+j*boardHeight].isBlank()) {
-							}
-							else {
-								tiles[i+j*boardHeight].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
-				}
-				if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {
-					for (int j = 1; j < num; j++) {
-						if (i/boardHeight - j >= 0) {
-							if (!tiles[i-j*boardHeight].isBlack() && tiles[i-j*boardHeight].isBlank()) {
-							}
-							else {
-								tiles[i-j*boardHeight].setAngryGlow(duration, j*delay);
-								satisfied = false;
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
+////////////////////////////////////////////////////////////////////////////////
 	//Bee Board Interface Methods:
 
-	//TODO: Could potentially access something null!!!!!!
 	public BoardTile getTile(int index) {
 		if (index >= tiles.length) {
 			return tiles[0];
@@ -618,7 +351,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 		return 0;
 	}
-
+	
 	public void setTileRotate(int index) {
 		if (index < tiles.length) {
 			tiles[index].rotate = true;	    
@@ -631,7 +364,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 		return 0;
 	}
-
+////////////////////////////////////////////////////////////////////////////////
 
 
 	//This state defines board behavior during game play.
@@ -794,7 +527,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				}
 
 				if (toggleLines) {
-					drawLines();
+					mBoardLineManager.drawLines();
 				}
 				period = DrawPeriod.DURING;
 			}
@@ -874,7 +607,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					//Set the user input since we get values
 					tiles[at].setUserInput(val);
 					if (toggleLines) {
-						animatePlay(at);
+						mBoardLineManager.animatePlay(at);
 					}
 					if(toggleError){
 						mErrorLog.setLog();
@@ -907,7 +640,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				else {
 					mGameBanner.setText(TextureManager.TRY_AGAIN);
 				}
-				return;
+					return;
 			}
 		}
 
@@ -944,7 +677,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			if (at != -1 && tiles[at].isClickable()) {
 				tiles[at].setArrow(direction);
 				if (toggleLines) {
-					animatePlay(at); 
+					mBoardLineManager.animatePlay(at); 
 				}
 				if(toggleError){
 					mErrorLog.setLog();
@@ -959,122 +692,120 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 	//This is the board after completing the game.
 	class BoardGameEnd extends State<BoardTile> {
-	    boolean[] rotateTiles = new boolean[boardHeight*boardWidth];
-	    boolean[] flipped = new boolean[boardHeight*boardWidth];
-	    long[] refTime = new long[boardHeight*boardWidth];
-	    EndGameDialogWidgetLayout mDialog;
-	    
-	    public BoardGameEnd(BoardTile[] tiles) {
-		mGameBanner.setText("Puzzle Completed!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
-		mGameBanner.setFontSize(2);
-		mGameBanner.setJ(TextJustification.CENTER);
-		mDialog = new EndGameDialogWidgetLayout(.8f);
-		mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
-		mDialog.setNextClickListener(new GameEventListener(){
-			public void event(int i ){
-			    Log.d("Dialog","Clicked");
-			    mDialog.deactivate();
-			    if(currPuzzle.getNextPuzzle() != null) {
-				Log.d("next puzzle", "Apparently, there is another puzzle!");
-				//TODO: Created a hack here to ensure we recreate the current chapter widget
-				mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
-				setState(GameState.GAME_OPENING);
+		boolean[] rotateTiles = new boolean[boardHeight*boardWidth];
+		boolean[] flipped = new boolean[boardHeight*boardWidth];
+		long[] refTime = new long[boardHeight*boardWidth];
+		EndGameDialogWidgetLayout mDialog;
+
+		public BoardGameEnd(BoardTile[] tiles) {
+			mGameBanner.setText("Puzzle Completed!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+			mGameBanner.setFontSize(2);
+			mGameBanner.setJ(TextJustification.CENTER);
+			mDialog = new EndGameDialogWidgetLayout(.8f);
+			mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
+			mDialog.setNextClickListener(new GameEventListener(){
+				public void event(int i ){
+				    Log.d("Dialog","Clicked");
+				    mDialog.deactivate();
+				    if(currPuzzle.getNextPuzzle() != null) {
+					Log.d("next puzzle", "Apparently, there is another puzzle!");
+					
+					//TODO: Created a hack here to ensure we recreate the current chapter widget
+					mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
+					setState(GameState.GAME_OPENING);
+					
+				    } else {
+					mModel.setModelToChapterEnd();
+				    }
+				}
 				
-			    } else {
-				mModel.setModelToChapterEnd();
-			    }
+			    });
+		    
+			mDialog.setBackClickListener(new GameEventListener() {
+				public void event(int i){
+				    mDialog.deactivate();
+				    if(currPuzzle.getNextPuzzle() == null){
+					mModel.setModelToChapterEnd();
+				    }
+				    else{
+					mModel.setModelToChapterSelect();
+				    }
+				}
+				
+			    });
+			
+		    
+		    mDialog.activate();
+		    
+		    for (int i = 0; i < tiles.length; i++) {
+		    	flipped[i] = false;
+		    	rotateTiles[i] = false;
+		    	float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+		    	float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+		    	tiles[i].setSize(.12f);
+		    	tiles[i].setCenter(Sx, Sy);
+		    	tiles[i].setColor("transparent");
+		    	refTime[i] = System.currentTimeMillis();
+		    	tiles[i].setAlpha(true);
+		    }
+		    if (toggleLines) {
+		    	mBoardLineManager.drawLines();
+		    }
+		}
+		
+
+		//The new animation:
+		public void enterAnimation(BoardTile[] tiles) {
+			//	    long time = System.currentTimeMillis()-refTime[0];
+
+			for (int i = 0; i < tiles.length ; i++) {
+				if (tiles[i].true_solution >0) {
+					float[] pivot = {1.0f,1.0f,0.0f};
+					String[] s = new String[2];
+					s[0] = TextureManager.CLEAR;
+					s[1] = tiles[i].flowerTexture;
+					tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+				}
+				else {
+					tiles[i].setTextures();
+				}
 			}
-			
-		    });
-		
-		mDialog.setBackClickListener(new GameEventListener() {
-			public void event(int i){
-			    mDialog.deactivate();
-			    if(currPuzzle.getNextPuzzle() == null){
-				mModel.setModelToChapterEnd();
-			    }
-			    else{
-				mModel.setModelToChapterSelect();
-			    }
+			period = DrawPeriod.DURING;
+		}
+
+		public void duringAnimation(BoardTile[] tiles) {
+			for(int i=0;i<tiles.length;i++){
+				if(tiles[i] != null){
+				if(tiles[i].rotate && !rotateTiles[i] ){
+					refTime[i] = System.currentTimeMillis();
+					rotateTiles[i] = true;
+					float[] pivot = {1.0f,1.0f,0.0f};
+					String[] s = new String[2];
+					s[0] = tiles[i].arrow;
+					s[1] = tiles[i].number;
+					tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
+					//tiles[i].rotate = false;
+				}
+				}
 			}
-			
-		    });
-		
-		
-		mDialog.activate();
-		
-		for (int i = 0; i < tiles.length; i++) {
-		    flipped[i] = false;
-		    rotateTiles[i] = false;
-		    float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-		    float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-		    tiles[i].setSize(.12f);
-		    tiles[i].setCenter(Sx, Sy);
-		    tiles[i].setColor("transparent");
-		    refTime[i] = System.currentTimeMillis();
-		    tiles[i].setPivot(tiles[i].getCenter());
-		    tiles[i].setAlpha(true);
 		}
-		if (toggleLines) {
-		    drawLines();
+
+		public void touchHandler(float[] pt){
+			mDialog.touchHandler(pt);
 		}
-	    }
-	    
-	    
-	    //The new animation:
-	    public void enterAnimation(BoardTile[] tiles) {
-		//	    long time = System.currentTimeMillis()-refTime[0];
-		
-		for (int i = 0; i < tiles.length ; i++) {
-		    if (tiles[i].true_solution >0) {
-			float[] pivot = {1.0f,1.0f,0.0f};
-			String[] s = new String[2];
-			s[0] = TextureManager.CLEAR;
-			s[1] = tiles[i].flowerTexture;
-			
-			tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-		    }
-		    else {
-			tiles[i].setTextures();
-		    }
-		}
-		period = DrawPeriod.DURING;
-	    }
-	    
-	    public void duringAnimation(BoardTile[] tiles) {
-		for(int i=0;i<tiles.length;i++){
-		    if(tiles[i] != null){
-			if(tiles[i].rotate && !rotateTiles[i] ){
-			    refTime[i] = System.currentTimeMillis();
-			    rotateTiles[i] = true;
-			    float[] pivot = {1.0f,1.0f,0.0f};
-			    String[] s = new String[2];
-			    s[0] = tiles[i].arrow;
-			    s[1] = tiles[i].number;
-			    tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-			    //tiles[i].rotate = false;
+
+		public void draw(BoardTile[] tiles, MyGLRenderer r){
+			super.draw(tiles, r);
+			for(int i =0;i<tiles.length;i++){
+				if(tiles[i].getTrueSolution() != -1 && tiles[i] !=null){
+					tiles[i].draw(r);
+				}
 			}
-		    }
+			mBee.draw(r);
+			mDialog.draw(r);
+			mGameBanner.draw(r);
 		}
-	    }
-	    
-	    public void touchHandler(float[] pt){
-		mDialog.touchHandler(pt);
-	    }
-	    
-	    public void draw(BoardTile[] tiles, MyGLRenderer r){
-		//mBoardBg.draw(r);
-		super.draw(tiles, r);
-		for(int i =0;i<tiles.length;i++){
-		    if(tiles[i].getTrueSolution() != -1){
-			//if(tiles[i].getTrueSolution() != -1 && tiles[i] !=null){
-			tiles[i].draw(r);
-			
-		    }
-		}
-		// mBee.draw(r);
-		// mDialog.draw(r);
-		// mGameBanner.draw(r);
-	    }
 	}        
+
+
 }
