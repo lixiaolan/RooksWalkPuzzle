@@ -14,7 +14,7 @@ import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 import com.seventhharmonic.com.freebeeline.levelresources.Hint;
 import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
-class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface{
+class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface {
 	String TAG = "board";
 	public int hints;
 	public int[] solution ;

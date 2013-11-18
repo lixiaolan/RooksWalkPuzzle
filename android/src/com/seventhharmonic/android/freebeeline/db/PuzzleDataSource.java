@@ -12,7 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
 public class PuzzleDataSource extends BaseDataSource{
         
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-				    MySQLiteHelper.COLUMN_PUZZLE };
+				    MySQLiteHelper.COLUMN_PUZZLE,
+				    MySQLiteHelper.COLUMN_MOVES_USED};
     
     public PuzzleDataSource(Context context, MySQLiteHelper MSQLH) {
 	super(context, MSQLH);
