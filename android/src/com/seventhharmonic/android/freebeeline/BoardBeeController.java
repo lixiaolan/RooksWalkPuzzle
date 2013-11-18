@@ -66,6 +66,7 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 	public FollowPuzzlePathController() {
 	    r = mBoardInterface.getPathToArray(index);
 	    length = mBoardInterface.getPathLength()-1;
+	    System.out.println("Length: " + Integer.toString(length) );
 	}
 
 	@Override
