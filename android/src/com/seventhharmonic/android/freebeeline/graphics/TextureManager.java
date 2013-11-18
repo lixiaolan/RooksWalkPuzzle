@@ -97,7 +97,7 @@ public class TextureManager {
 	public static final String MATCHINGNUMBERRULE = "Watch out there! You can't point in the direction of a square with the same number.";
 	public static final String PASSTHROUGHRULE = "Your path can only go through empty squares.";
 	public static final String OFFBOARD = "Oh no! Your path went off the board!";
-
+	public static final String MULTIPOINTRULE = "Uh Oh, multiple numbers are pointing towards the same square";
 	public static final String HINTPROMPT = "You are out of hints! Select the amount you would like to purchase below.";
 	
 	public static final String VERSION = "alpha-0.2";
