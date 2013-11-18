@@ -138,16 +138,18 @@ class TutorialBoard2 extends Board {
 		long refTime;
 		float[] pt0 = {.22f,-.33f};
 		float[] pt1 = {.22f, -.05f};
-		float[] pt2 = {-.20f,0f};
-		float[] pt3 = {.35f,-.22f};
-		float[] pt4 = {-.35f, -.22f};
+		float[] pt2 = {-.25f,-.05f};
+		float[] pt3 = {.35f,-.19f};
+		float[] pt4 = {-.35f, -.19f};
 		int time1 = 1;
 		int time2 = 2;
 		int time3 = 3;
-		int time4 = 4;
-		int time5 = 5;
+		int time3halves = 4;
+		int time4 = 5;
+		int time5 = 6;
 		boolean lines = true;
-
+		boolean handToggle = true;
+		
 		public SLIDE1(){
 			mBee.setMood(Mood.HIDDEN);
 			hand = new ImageWidget(.23f,.12f,.5f,.5f,TextureManager.HAND);
@@ -201,15 +203,25 @@ class TutorialBoard2 extends Board {
 			} else if(time < time3){
 				//Move to correct bubble
 				hand.setCenter(pt2[0]*(time-2)+(1-(time-2))*pt1[0], pt2[1]*(time-2)+(1-(time-2))*pt1[1]);
-			} else if (time < time4) {
+			} else if (time < time3halves){
+				//Wait at this bubble
+				hand.setWidth(.5f*(time-time3)+(1-(time-time3))*.4f);
+				hand.setHeight(.5f*(time-time3)+(1-(time-time3))*.4f);
+			}
+			else if (time < time4) {
 				mMenu.menuActive = false;
 				tiles[27].setNumber("3");
 				tiles[27].setTextures();
+				handToggle = false;
 				//Move back down
-				hand.setCenter(pt3[0]*(time-3)+(1-(time-3))*pt2[0], pt3[1]*(time-3)+(1-(time-3))*pt2[1]);
+				hand.setCenter(pt3[0], pt3[1]);
+				hand.setWidth(.5f);
+				hand.setHeight(.5f);
+				//hand.setCenter(pt3[0]*(time-time3halves)+(1-(time-time3halves))*pt2[0], pt3[1]*(time-time3halves)+(1-(time-time3halves))*pt2[1]);
 			} else if(time < time5){
 				//Swipe across
-				hand.setCenter(pt4[0]*(time-4)+(1-(time-4))*pt3[0], pt4[1]*(time-4)+(1-(time-4))*pt3[1]);
+				handToggle = true;
+				hand.setCenter(pt4[0]*(time-time4)+(1-(time-time4))*pt3[0], pt4[1]*(time-time4)+(1-(time-time4))*pt3[1]);
 			} else if(time < 7){
 				tiles[27].setArrow(TextureManager.RIGHTARROW);
 				tiles[27].setTextures();
@@ -232,7 +244,8 @@ class TutorialBoard2 extends Board {
 			super.draw(tiles, r);
 			mBanner.draw(r);
 			mMenu.draw(r);
-			hand.draw(r);
+			if(handToggle)
+				hand.draw(r);
 			mCPB.draw(r);
 		}
 

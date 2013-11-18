@@ -67,8 +67,8 @@
 	<chapter title="Chapter Two" before_image="questionmark" after_image="book1chapter2" xcoords="221" ycoords="691">
 		<afterImage>
 		    <image image="book1chapter2"/>
-		    <image image="book1chapter2"/>
-		    <image image="book1chapter2"/>
+		    <image image="book1chapter2_1"/>
+		    <image image="book1chapter2_2"/>
 		 </afterImage>
 	    
 	    <width>2</width>
@@ -132,8 +132,8 @@
 	<chapter title="Chapter Three" before_image="questionmark" after_image="book1chapter3"  xcoords="83"   ycoords="625">
 		<afterImage>
 		    <image image="book1chapter3"/>
-		    <image image="book1chapter3"/>
-		    <image image="book1chapter3"/>
+		    <image image="book1chapter3_1"/>
+		    <image image="book1chapter3_2"/>
 		 </afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -258,8 +258,8 @@
 	<chapter title="Chapter Four" before_image="questionmark" after_image="book1chapter4" xcoords="697" ycoords="407">
 		<afterImage>
 		    <image image="book1chapter4"/>
-		    <image image="book1chapter4"/>
-		    <image image="book1chapter4"/>
+		    <image image="book1chapter4_1"/>
+		    <image image="book1chapter4_2"/>
 		 </afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -369,8 +369,8 @@
 	<chapter title="Chapter Five" before_image="questionmark" after_image="book1chapter5" xcoords="368" ycoords="993">
 		<afterImage>
 		    <image image="book1chapter5"/>
-		    <image image="book1chapter5"/>
-		    <image image="book1chapter5"/>
+		    <image image="book1chapter5_1"/>
+		    <image image="book1chapter5_2"/>
 		 </afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -507,8 +507,8 @@
 	<chapter title="Chapter Six" before_image="questionmark" after_image="book1chapter6" xcoords="362" ycoords="324">
 		<afterImage>
 		    <image image="book1chapter6"/>
-		    <image image="book1chapter6"/>
-		    <image image="book1chapter6"/>
+		    <image image="book1chapter6_1"/>
+		    <image image="book1chapter6_2"/>
 		 </afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -663,8 +663,8 @@
 	<chapter title="Chapter Seven" before_image="questionmark" after_image="book1chapter7" xcoords="549" ycoords="689">
 		<afterImage>
 		    <image image="book1chapter7"/>
-		    <image image="book1chapter7"/>
-		    <image image="book1chapter7"/>
+		    <image image="book1chapter7_1"/>
+		    <image image="book1chapter7_2"/>
 		 </afterImage>
 		<width>3</width>
 		<height>3</height>

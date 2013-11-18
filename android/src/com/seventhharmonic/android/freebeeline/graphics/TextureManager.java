@@ -132,7 +132,7 @@ public class TextureManager {
 			
 		buildTextures(context, R.drawable.menu_circle_light_grey2, MENUCIRCLE);
 		buildTextures(context, R.drawable.flower1,"flower0");
-		buildTextures(context, R.drawable.board2, "boardbg");
+		buildTextures(context, R.drawable.board6, "boardbg");
 		buildTextures(context, R.drawable.check2, "check");
 		buildTextures(context, R.drawable.share, SHARE);
 		buildTextures(context, R.drawable.title_compact, "title");
@@ -141,9 +141,9 @@ public class TextureManager {
 		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
 		buildTextures(context, R.drawable.lwedge, LWEDGE);
 		buildTextures(context, R.drawable.rwedge, RWEDGE);
-		buildTextures(context, R.drawable.eraser, ERASER);
-		buildTextures(context, R.drawable.board3, BOARD5);
-		buildTextures(context, R.drawable.hive, GOLDSTAR);
+		buildTextures(context, R.drawable.revert, ERASER);
+		buildTextures(context, R.drawable.board5, BOARD5);
+		buildTextures(context, R.drawable.star, GOLDSTAR);
 		buildTextures("", 128, 140, CLEAR, 50);
 
 		

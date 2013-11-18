@@ -25,7 +25,7 @@ public class PuzzleWidget extends Widget{
 		
 		if(!p.getAward().equals(TextureManager.CLEAR)){
 			hasAward = true;
-			mAward = new ImageWidget(0,0,.05f,.05f, p.getAward());
+			mAward = new ImageWidget(0,0,.1f,.1f, p.getAward());
 		}
 		
     }

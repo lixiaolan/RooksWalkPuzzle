@@ -133,6 +133,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 	public void buildEmptyBoard() {
 		tiles = new BoardTile[boardHeight*boardWidth];
+		//Boardtiles start bigger as flowers and then shrink down.
 		float size = .15f;
 		for (int i = 0; i < tiles.length; i++) {
 			double r = Math.random();
@@ -418,7 +419,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			if(boardWidth == 6){
 				mBoardBg = new ImageWidget(0,0, 1.0f,1.0f,"boardbg");
 			} else if(boardWidth == 5){
-				float mBoardBgScale = 5.0f/6.0f;
+				float mBoardBgScale = 1.0f;
 				mBoardBg = new ImageWidget(0,0,mBoardBgScale,mBoardBgScale,TextureManager.BOARD5);
 			}
 
