@@ -9,10 +9,11 @@ public class PuzzleWidget extends Widget{
     
     private static final String TAG = "PuzzleWidget";
 	ImageWidget mFlower;
+	ImageWidget mAward;
     boolean rotateToggle = false;
     int currAngle = 0;
     boolean pulseToggle = false;
-    
+    boolean hasAward = false;
     
     public PuzzleWidget(float centerX, float centerY , float width, float height, Puzzle p){
     	float[] center = {centerX, centerY, 0.0f}; 
@@ -21,7 +22,12 @@ public class PuzzleWidget extends Widget{
     	this.height = height;
     	mFlower = new ImageWidget(0,0, width, height, p.getFlower());
 		mFlower.setPivot(new float[] {0.0f, 0.0f, 1.0f});
-
+		
+		if(!p.getAward().equals(TextureManager.CLEAR)){
+			hasAward = true;
+			mAward = new ImageWidget(0,0,.05f,.05f, p.getAward());
+		}
+		
     }
     
     public void setColor(String color){
@@ -56,11 +62,17 @@ public class PuzzleWidget extends Widget{
     	}
     	
     	mFlower.draw(r);	
+    	if(hasAward){
+    		mAward.draw(r);
+    	}
     }
     
     public void setCenter(float x, float y){
-	super.setCenter(x,y);
-	mFlower.setCenter(x, y);
+    	super.setCenter(x,y);
+    	mFlower.setCenter(x, y);
+    	if(hasAward){
+    		mAward.setCenter(x-width+mAward.getWidth(), y-height+mAward.getHeight() );
+    	}
     }
     
     public boolean isTouched(float[] pt){

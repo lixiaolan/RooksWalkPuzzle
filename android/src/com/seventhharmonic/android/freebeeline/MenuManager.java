@@ -38,6 +38,7 @@ class MenuManager {
 	    float tiltAngle = -1.0f*(float)Math.PI/2;
 
 	    switch (state.state) {
+	    
 	    case MAIN_MENU_OPENING:
 		String[] textures1  = {};
 		mGameMenu = new GameMenu(pos1, scale1, textures1, TextureManager.START);
@@ -86,6 +87,7 @@ class MenuManager {
 		mGameMenu = new SelectTwoMenu(bottomPos2, scale2, textures7); 
 		mCallback = new Callback_GAME_MENU_END();
 		break;    */
+	    
 	    case TUTORIAL:
 		String[] texturesTUTORIAL = {TextureManager.BACK};
 		//String[] textures8 = {TextureManager.NEXT, TextureManager.PREVIOUS};
@@ -267,25 +269,6 @@ class MenuManager {
     }
     
     
-    class Callback_GAME_MENU_END extends Callback{
-	
-	@Override
-	public void callback(int val) {
-	    switch(val) {
-	    case 1: 
-		mModel.setState(GameState.TABLE_OF_CONTENTS);
-		updateState();
-		break;
-		/*case 2: 
-		  ShareHelper sh = new ShareHelper((Activity)mModel.context, "1","2","3","4","5");
-		  sh.share();
-		  break;
-		*/
-	    }
-	    
-	}
-	
-    }
     
     class Callback_TUTORIAL extends Callback {
 	

@@ -22,7 +22,6 @@ public class Bee extends Graphic<BeeTile, BeeState<BeeTile> > {
 	    
 	case MAIN_MENU_OPENING: state = new BeeWander( Mood.ASLEEP); break;
 	    //this puts the bee asleep when one enters the table of contence or starts a game:
-	case TABLE_OF_CONTENTS: 
 	case GAME_OPENING: state = new BeeFixed( Mood.ASLEEP); break;
 	default: break; 
 	}

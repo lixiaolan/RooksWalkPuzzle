@@ -113,7 +113,7 @@ public class TextureManager {
 	public static final String DOWNDOT = "downdot";
 	public static final String LEFTDOT = "leftdot";
 	public static final String RIGHTDOT = "rightdot";
-	
+	public static final String GOLDSTAR = "goldstar";
 	
 	TextCreator tC = new TextCreator();
 	public Map <String, Integer> library = new HashMap<String, Integer>();
@@ -143,6 +143,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.rwedge, RWEDGE);
 		buildTextures(context, R.drawable.eraser, ERASER);
 		buildTextures(context, R.drawable.board3, BOARD5);
+		buildTextures(context, R.drawable.hive, GOLDSTAR);
 		buildTextures("", 128, 140, CLEAR, 50);
 
 		

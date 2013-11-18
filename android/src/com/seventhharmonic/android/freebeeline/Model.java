@@ -39,22 +39,22 @@ class Model {
     //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
     
     public Model(Context c) {
-	//mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-	//mediaPlayer.setLooping(true);
-	//mediaPlayer.start();
+	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+	mediaPlayer.setLooping(true);
+	mediaPlayer.start();
 	initiateMembers(c, new Board(this));		
     }
     
     public Model(Context c, Board b){
-	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-	mediaPlayer.start();	
-	initiateMembers(c, b);
+    	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+    	mediaPlayer.start();	
+    	initiateMembers(c, b);
     }
     
     public void initiateMembers(Context c, Board b){
-	mBoard = b;
-	context = c;
-	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
+    	mBoard = b;
+    	context = c;
+    	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
 	mTitle = new ImageWidget(.5f,.8f,.5f,.5f,"title");
@@ -130,9 +130,6 @@ class Model {
 	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
 	    mTutorialBoard.touchHandler(pt);
-	    mMenuManager.touchHandler(pt);
-	    break;
-	case STATS:
 	    mMenuManager.touchHandler(pt);
 	    break;
 	case STORY:
@@ -226,7 +223,7 @@ class Model {
    
 
     public void setDataServer(DataServer d){
-	mDataServer = d;
+    	mDataServer = d;
     }
     
     public void setStore(Store s){
@@ -252,9 +249,9 @@ class Model {
     }
     
     public void firstRun() {
-	setState(GameState.STORY);
-	createStory();
-	mMenuManager.updateState();
+    	setState(GameState.STORY);
+    	createStory();
+    	mMenuManager.updateState();
     }
     
     public void clearBoard() {
@@ -266,7 +263,6 @@ class Model {
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-	case STATS:
 	case GAME_OPENING:
 	    mMenuManager.callCallback(0);
 	    break;

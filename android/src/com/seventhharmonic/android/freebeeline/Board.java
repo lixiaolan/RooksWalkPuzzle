@@ -36,6 +36,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	private BoardBeeController mBeeController;
 	private PurchasedDataSource PDS;
 	protected BoardLineManager mBoardLineManager;
+	//Number of moves in a puzzle.
+	int moves = 0;
+	//Par number of moves
+	int par  = 0;
 
 
 	public Board(Model mModel) {
@@ -384,6 +388,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		ButtonWidget tutorial;
 		HintsDataSource DB;
 		TextBox mHints;
+		TextBox mMoves;
 		HintDialogWidgetLayout mHintDialog;
 		Store mStore;
 		GridWidgetLayout buttonGrid;
@@ -391,6 +396,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		//TODO: Get rid of tiles as inputs to these functions.
 		public BoardPlay(BoardTile[] tiles) {
+			
+			par = (int)(2*(path.length-currPuzzle.getNumberOfHints()));
+			moves = 0;
+			
 			DB = GlobalApplication.getHintDB();
 			mStore = ViewActivity.mStore;
 
@@ -444,17 +453,24 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			//mCheck  = new ButtonWidget(0, 0, .11f, .11f, TextureManager.CHECK);
 			//mCheck.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 
+			//Text Box with number of moves 
+			mMoves = new TextBox(.33f, mBoardBg.getCenterY()-mBoardBg.getHeight()-.3f, .22f, "moves:^ 0");
+			updateMoves();
+			mMoves.setJ(TextJustification.CENTER);
+			
+			
 			//Grid Widget to store all these wonderful buttons.
-			buttonGrid = new GridWidgetLayout(3,1, .18f);
+		
+			buttonGrid = new GridWidgetLayout(4,1, .18f);
 			buttonGrid.setCenter(0, mBoardBg.getCenterY()-mBoardBg.getHeight()-.1f);
-			//buttonGrid.setCenter(.33f, (-1-geometry[1])/2+.1f);
 			buttonGrid.addWidget(mHints);
+			buttonGrid.addWidget(mMoves);
 			buttonGrid.addWidget(reset);
 			buttonGrid.addWidget(tutorial);
-			//buttonGrid.addWidget(mCheck);
-			/*
-			 * The dialog box that appears when you run out of hints.
-			 */
+
+			
+			 // The dialog box that appears when you run out of hints.
+			 
 			mHintDialog = new HintDialogWidgetLayout(mHints);
 			mGameBanner.setText(currPuzzle.getText());
 			initSize = tiles[0].getSize();
@@ -468,6 +484,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				tiles[i].vPointedAt = false;
 				tiles[i].hPointedAt = false;
 			}	    
+			
+			
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {
@@ -548,6 +566,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mMenu.draw(r);
 			mHintDialog.draw(r);
 			buttonGrid.draw(r);
+			mMoves.draw(r);
 		}	
 
 		@Override
@@ -600,6 +619,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				if (at != -1) {
 					//Set the user input since we get values
 					tiles[at].setUserInput(val);
+					moves+=1;
+					updateMoves();
 					if (toggleLines) {
 						mBoardLineManager.animatePlay(at);
 					}
@@ -615,21 +636,29 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			checkIfPuzzleSolved();
 		}
 
+		public void updateMoves(){
+			mMoves.setText("moves:^"+Integer.toString(moves));
+		}
+		
 		public void checkIfPuzzleSolved() {
 		    if(checkSolution()) {	
 		    	if(currPuzzle!=null){
 			    Log.d("board", "solved a puzzle and set completed to true");
 			    currPuzzle.setCompleted(true);
+			    if(moves <= par){
+			    	currPuzzle.setAward(TextureManager.GOLDSTAR);
+			    }
 			    mModel.state.saveCurrGame = false;
 			    mModel.state.resumeGameExists = false;
 			    mBeeController.setMood(Mood.HAPPY);
 			    mModel.setState(GameState.GAME_MENU_END);
 			    GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
+			    
 			}
 		    }
 		}
 
-public void setHintsText(){
+		public void setHintsText(){
 			if(mStore.hasUnlimitedHints()){
 				mHints.setText(TextureManager.HIVE);
 			} else {
@@ -660,6 +689,8 @@ public void setHintsText(){
 			if (at != -1 && tiles[at].isClickable()) {
 				tiles[at].setArrow(direction);
 				tiles[at].setTextures();
+				moves += 1;
+				updateMoves();
 				if (toggleLines) {
 					mBoardLineManager.animatePlay(at); 
 				}
@@ -683,7 +714,11 @@ public void setHintsText(){
 		EndGameDialogWidgetLayout mDialog;
 
 		public BoardGameEnd(BoardTile[] tiles) {
-			mGameBanner.setText("Puzzle Completed!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+			if(moves <= par){
+				mGameBanner.setText("Perfect Puzzle Solution!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+			} else {
+				mGameBanner.setText("Puzzle Completed");
+			}
 			mGameBanner.setFontSize(2);
 			mGameBanner.setJ(TextJustification.CENTER);
 			mDialog = new EndGameDialogWidgetLayout(.8f);

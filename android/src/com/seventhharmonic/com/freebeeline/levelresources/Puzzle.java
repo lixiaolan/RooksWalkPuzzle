@@ -23,6 +23,7 @@ public class Puzzle {
 	String beforeFlower;
 	String afterFlower;
 	String text;
+	String award = TextureManager.CLEAR;
 
 	public String getText() {
 		return text;
@@ -167,6 +168,10 @@ public class Puzzle {
 		return hints;
 	}
 	
+	public int getNumberOfHints(){
+		return hints.size();
+	}
+	
 	public Puzzle copy(){
 		Puzzle p = new Puzzle();
 		p.setBoard(board);
@@ -189,6 +194,14 @@ public class Puzzle {
 			solution[i] = Integer.parseInt(ba[i]);
 		}
 		return solution;
+	}
+	
+	public void setAward(String award){
+		this.award = award;
+	}
+	
+	public String getAward(){
+		return award;	
 	}
 	
 }
