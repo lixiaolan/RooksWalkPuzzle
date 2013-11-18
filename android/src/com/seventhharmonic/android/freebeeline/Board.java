@@ -392,15 +392,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		HintsDataSource DB;
 		TextBox mHints;
 		TextBox mMoves;
+		TextBox mPar;
 		HintDialogWidgetLayout mHintDialog;
 		Store mStore;
 		GridWidgetLayout buttonGrid;
+		GridWidgetLayout textGrid;
 		//ButtonWidget mCheck;
 
 		//TODO: Get rid of tiles as inputs to these functions.
 		public BoardPlay(BoardTile[] tiles) {
 			
-			par = (int)(2*(path.length-currPuzzle.getNumberOfHints()));
+			par = currPuzzle.getPar();
 			moves = 0;
 			
 			DB = GlobalApplication.getHintDB();
@@ -453,21 +455,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
 			}
 
-			//mCheck  = new ButtonWidget(0, 0, .11f, .11f, TextureManager.CHECK);
-			//mCheck.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
-
-			//Text Box with number of moves 
-			mMoves = new TextBox(.33f, mBoardBg.getCenterY()-mBoardBg.getHeight()-.3f, .22f, "moves:^ 0");
+			mMoves = new TextBox(0, 0, .22f, "moves:^ 0");
 			updateMoves();
 			mMoves.setJ(TextJustification.CENTER);
 			
+			mPar = new TextBox(0,0,.22f, "par:^ "+Integer.toString(par));
+			mPar.setJ(TextJustification.CENTER);
 			
 			//Grid Widget to store all these wonderful buttons.
-		
-			buttonGrid = new GridWidgetLayout(4,1, .18f);
+			buttonGrid = new GridWidgetLayout(3,2, .18f);
 			buttonGrid.setCenter(0, mBoardBg.getCenterY()-mBoardBg.getHeight()-.1f);
 			buttonGrid.addWidget(mHints);
 			buttonGrid.addWidget(mMoves);
+			buttonGrid.addWidget(mPar);
 			buttonGrid.addWidget(reset);
 			buttonGrid.addWidget(tutorial);
 
@@ -646,17 +646,14 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		public void checkIfPuzzleSolved() {
 		    if(checkSolution()) {	
 		    	if(currPuzzle!=null){
-			    Log.d("board", "solved a puzzle and set completed to true");
-			    currPuzzle.setCompleted(true);
-			    if(moves <= par){
-			    	currPuzzle.setAward(TextureManager.GOLDSTAR);
-			    }
-			    mModel.state.saveCurrGame = false;
-			    mModel.state.resumeGameExists = false;
-			    mBeeController.setMood(Mood.HAPPY);
-			    mModel.setState(GameState.GAME_MENU_END);
-			    GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
-			    
+		    		Log.d("board", "solved a puzzle and set completed to true");
+		    		currPuzzle.setCompleted(true);
+		    		currPuzzle.setMoves(moves);
+		    		mBeeController.setMood(Mood.HAPPY);
+		    		mModel.setState(GameState.GAME_MENU_END);
+			    /*			    mModel.state.saveCurrGame = false;
+			    				mModel.state.resumeGameExists = false;
+				*/
 			}
 		    }
 		}
@@ -715,15 +712,23 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		boolean[] flipped = new boolean[boardHeight*boardWidth];
 		long[] refTime = new long[boardHeight*boardWidth];
 		EndGameDialogWidgetLayout mDialog;
-
+		ImageWidget mFlower;
+		
 		public BoardGameEnd(BoardTile[] tiles) {
+			//Top game banner
+			mFlower = new ImageWidget(0,mBoardBg.getCenterY()+mBoardBg.getHeight(),.15f,.15f,currPuzzle.getFlower());
+		
+			//Note: this is game moves! If this number is less then the puzzle moves, the puzzle will not change the number of moves.
 			if(moves <= par){
-				mGameBanner.setText("Perfect Puzzle Solution!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+				mGameBanner.setText("Perfect Puzle!");	
 			} else {
 				mGameBanner.setText("Puzzle Completed");
 			}
+			
 			mGameBanner.setFontSize(2);
 			mGameBanner.setJ(TextJustification.CENTER);
+			
+			//Buttons at the bottom.
 			mDialog = new EndGameDialogWidgetLayout(.8f);
 			mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
 			mDialog.setNextClickListener(new GameEventListener(){
@@ -732,7 +737,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mDialog.deactivate();
 					if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
-
+						
 						//TODO: Created a hack here to ensure we recreate the current chapter widget
 						mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
@@ -760,6 +765,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 			mDialog.activate();
 
+			//Initiate tiles
 			for (int i = 0; i < tiles.length; i++) {
 				flipped[i] = false;
 				rotateTiles[i] = false;
@@ -771,15 +777,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				refTime[i] = System.currentTimeMillis();
 				tiles[i].setAlpha(true);
 			}
-			if (toggleLines) {
-				mBoardLineManager.drawLines();
-			}
+			
+			//We should redraw the lines to be on the safe side
+			mBoardLineManager.drawLines();
+			
 		}
 
-		//The new animation:
 		public void enterAnimation(BoardTile[] tiles) {
-			//	    long time = System.currentTimeMillis()-refTime[0];
-
 			for (int i = 0; i < tiles.length ; i++) {
 				if (tiles[i].true_solution >0) {
 					float[] pivot = {1.0f,1.0f,0.0f};
@@ -806,7 +810,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 						s[0] = tiles[i].arrow;
 						s[1] = tiles[i].number;
 						tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-						//tiles[i].rotate = false;
 					}
 				}
 			}
@@ -826,8 +829,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mBee.draw(r);
 			mDialog.draw(r);
 			mGameBanner.draw(r);
+			mFlower.draw(r);
 		}
 	}        
 
 
 }
+
+////+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));

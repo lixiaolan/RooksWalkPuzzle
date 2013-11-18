@@ -18,11 +18,9 @@ public class StoryBoard extends Board{
 	
 	public StoryBoard(Model mModel){
 		super(mModel);
-		//mStoryBanner = new Banner(.6f);
+		mStoryBanner = new TextBox(0,0,.6f,TextureManager.CLEAR);
 		state = new SLIDE0(tiles);
-		this.mModel = mModel; 
-		//state = new SLIDE2(tiles);
-		
+		this.mModel = mModel; 		
 	}
 	
 	public void setState() {
@@ -43,9 +41,18 @@ public class StoryBoard extends Board{
 			}
 	}
 
+	public void swipeHandler(String direction){
+		if(mStoryState == StoryState.SLIDE_3){
+			mModel.reset();
+			return;
+		}
+		setState();
+	}
+	
 	public void touchHandler(float[] pt) {
 		if(mStoryState == StoryState.SLIDE_3){
 			mModel.reset();
+			return;
 		}
 		setState();
 	}
@@ -62,7 +69,7 @@ public class StoryBoard extends Board{
 		public SLIDE0(BoardTile[] tiles){
 			this.tiles = tiles;
 			refTime = System.currentTimeMillis();
-			mStoryBanner.setText("story_banner_0");
+			mStoryBanner.setText(StoryBoardInfo.banners[0]);
 			centers = new float[2*tiles.length];
 		    
 		    for (int i = 0; i < tiles.length; i++) {
@@ -128,7 +135,7 @@ public class StoryBoard extends Board{
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
 			state.period = DrawPeriod.DURING; 
-			mStoryBanner.setText("story_banner_1");
+			mStoryBanner.setText(StoryBoardInfo.banners[1]);
 		}
 
 		@Override
@@ -155,7 +162,7 @@ public class StoryBoard extends Board{
 					@Override
 				public void enterAnimation(BoardTile[] tiles) {
 					state.period = DrawPeriod.DURING; 
-					mStoryBanner.setText("story_banner_2");
+					mStoryBanner.setText(StoryBoardInfo.banners[2]);
 				}
 
 				@Override

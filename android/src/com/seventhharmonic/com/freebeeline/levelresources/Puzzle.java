@@ -13,6 +13,8 @@ import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 public class Puzzle {
 	public String board;
 	public String path;
+	
+	int pathLength;
 	int width;
 	int height;
 	List<Hint> hints = new ArrayList<Hint>();
@@ -23,8 +25,9 @@ public class Puzzle {
 	String beforeFlower;
 	String afterFlower;
 	String text;
-	String award = TextureManager.CLEAR;
-
+	int moves;
+	int par;
+	
 	public String getText() {
 		return text;
 	}
@@ -45,13 +48,23 @@ public class Puzzle {
 	}
 
 	private String getAfterFlower() {
-		return afterFlower;
+		Log.d("Puzzle", "moves + "+Integer.toString(moves)+" "+Integer.toString(getPar()));
+		if(moves <= getPar()){
+			return afterFlower;
+		}
+		
+		return beforeFlower;
 	}
 
 	protected void setAfterFlower(String afterFlower) {
 		this.afterFlower = afterFlower;
 	}
 
+	public int getPar(){
+		//TODO: move par into XML?
+		par = CSVIntParser(path).length-2*getNumberOfHints()-2;
+		return par;
+	}
 	
 	public String getFlower(){
 		if(completed){
@@ -78,8 +91,22 @@ public class Puzzle {
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	    GlobalApplication.getPuzzleDB().setPuzzle(this.getId(),"true");
+
 	}
 
+	public int getMoves(){
+		return moves;
+	}
+	
+	public void setMoves(int moves){
+		if(moves < this.moves && this.moves > 0){
+			this.moves = moves;
+		} else if(this.moves == 0){
+			this.moves = moves;
+		}
+	}
+	
 	public void setChapter(Chapter ch){
 		this.ch  = ch;
 	}
@@ -136,7 +163,6 @@ public class Puzzle {
 			sol[i][0] = p[2*i];
 			sol[i][1] = p[2*i+1];
 		}
-		
 		return sol;
 	}
 
@@ -196,12 +222,6 @@ public class Puzzle {
 		return solution;
 	}
 	
-	public void setAward(String award){
-		this.award = award;
-	}
 	
-	public String getAward(){
-		return award;	
-	}
 	
 }

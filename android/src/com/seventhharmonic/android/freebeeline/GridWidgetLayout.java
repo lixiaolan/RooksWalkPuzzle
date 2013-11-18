@@ -65,7 +65,7 @@ public class GridWidgetLayout extends WidgetLayout{
 			if(height == 1)
 				ycoords[i] = -( - ((float)height-1.0f)/2 )/(1/(size*2));
 			else
-				ycoords[i] = -( (i/height) - ((float)height-1.0f)/2 )/(1/(size*2));
+				ycoords[i] = -( (i/width) - ((float)height-1.0f)/2 )/(1/(size*2));
 		}
 	}
 	

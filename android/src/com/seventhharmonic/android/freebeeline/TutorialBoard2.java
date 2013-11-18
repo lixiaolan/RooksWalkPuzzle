@@ -22,7 +22,7 @@ class TutorialBoard2 extends Board {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 		super(null);
 		float[] center = {.20f,-1.0f, 0.0f };
-		mCPB = new CircleProgressBarWidget(3, center[0], center[1], .05f);
+		mCPB = new CircleProgressBarWidget(3, 0, -1, .05f);
 		mBanner = new TextBox(0,0,.9f,"");
 		mBanner.setFontSize(TextCreator.font1);
 		mBoardBg = new ImageWidget(0,0,1,1,"boardbg");
@@ -93,7 +93,10 @@ class TutorialBoard2 extends Board {
 			mCPB.setActiveCircle(0);
 			restoreBoard(TutorialInfo2.solutionNumbers, TutorialInfo2.initialNumbers, TutorialInfo2.initialArrows, TutorialInfo2.solutionArrows, path, null);
 			showSolution();
-
+			
+			//This gets changed on slide 3, so we have to reset it.
+			tiles[10].setTrueSolution(-1);
+			
 			for (int i = 0; i < tiles.length; i++) {
 				tiles[i].rotate = false;
 				tiles[i].setTextures();
@@ -180,6 +183,10 @@ class TutorialBoard2 extends Board {
 			tiles[13].setNumber(TextureManager.CLEAR);
 			tiles[13].setArrow(TextureManager.CLEAR);
 
+			//Reset tile 10
+			tiles[10].setTrueSolution(-1);
+			tiles[10].setTextures();
+			
 			mBoardLineManager.drawLines();
 
 		}
@@ -198,13 +205,17 @@ class TutorialBoard2 extends Board {
 				hand.setCenter(pt1[0]*(time)+(1-(time))*pt0[0], pt1[1]*(time)+(1-(time))*pt0[1]);
 			} else if(time < time2){
 				//Activate Menu
+				hand.setWidth(.5f*(time-time1)+(1-(time-time1))*.4f);
+				hand.setHeight(.5f*(time-time1)+(1-(time-time1))*.4f);
 				if(!mMenu.menuActive)
 					mMenu.activate(pt1);
 			} else if(time < time3){
 				//Move to correct bubble
+				hand.setWidth(.5f);
+				hand.setHeight(.5f);
 				hand.setCenter(pt2[0]*(time-2)+(1-(time-2))*pt1[0], pt2[1]*(time-2)+(1-(time-2))*pt1[1]);
 			} else if (time < time3halves){
-				//Wait at this bubble
+				//Wait at this bubble. Shrink the hand.
 				hand.setWidth(.5f*(time-time3)+(1-(time-time3))*.4f);
 				hand.setHeight(.5f*(time-time3)+(1-(time-time3))*.4f);
 			}
@@ -217,7 +228,6 @@ class TutorialBoard2 extends Board {
 				hand.setCenter(pt3[0], pt3[1]);
 				hand.setWidth(.5f);
 				hand.setHeight(.5f);
-				//hand.setCenter(pt3[0]*(time-time3halves)+(1-(time-time3halves))*pt2[0], pt3[1]*(time-time3halves)+(1-(time-time3halves))*pt2[1]);
 			} else if(time < time5){
 				//Swipe across
 				handToggle = true;
@@ -225,18 +235,18 @@ class TutorialBoard2 extends Board {
 			} else if(time < 7){
 				tiles[27].setArrow(TextureManager.RIGHTARROW);
 				tiles[27].setTextures();
-				if(lines) {
-					//drawLines();
-					lines = false;
+					if(lines) {
+						mBoardLineManager.drawLines();
+						lines = false;
+					}
+				} else {
+					lines = true;
+					tiles[27].setNumber(TextureManager.CLEAR);
+					tiles[27].setArrow(TextureManager.CLEAR);
+					tiles[27].setTextures();
+					refTime = System.currentTimeMillis();
+					mBoardLineManager.clearLines();
 				}
-			} else {
-				lines = true;
-				tiles[27].setNumber(TextureManager.CLEAR);
-				tiles[27].setArrow(TextureManager.CLEAR);
-				tiles[27].setTextures();
-				//drawLines();
-				refTime = System.currentTimeMillis();
-			}
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
@@ -259,24 +269,29 @@ class TutorialBoard2 extends Board {
 		public SLIDE3(){
 			mBee.setMood(Mood.HIDDEN);
 			refTime = System.currentTimeMillis();
-
 			prepBoard();
-
-			mCheck  = new ImageWidget(-.68f, .11f, .22f, .22f, TextureManager.CHECK);
+			mCheck  = new ImageWidget(-.68f, .22f, .22f, .22f, TextureManager.CHECK);
 			mBanner.setText(mTutorialInfo.banners[3]);
 			mCPB.setActiveCircle(2);
 		}
 
 		private void prepBoard() {
-			//restoreBoard(TutorialInfo2.solutionNumbersSlide3, TutorialInfo2.initialNumbersSlide3, TutorialInfo2.initialArrowsSlide3, TutorialInfo2.solutionArrowsSlide3, path, null);
-			//showSolution();
 			tiles[7].setNumber("2");
 			tiles[7].setArrow(TextureManager.UPARROW);
 			tiles[7].setTextures();
-
+			
+			tiles[9].setNumber("1");
+			tiles[9].setArrow(TextureManager.UPARROW);
+			tiles[9].setTextures();
+			//Kill the 3
 			tiles[27].setNumber(TextureManager.CLEAR);
 			tiles[27].setArrow(TextureManager.CLEAR);
 			tiles[27].setTextures();
+			
+			tiles[10].setTrueSolution(0);
+			tiles[10].setNumber(TextureManager.CLEAR);
+			tiles[10].setArrow(TextureManager.CLEAR);
+			tiles[10].setTextures();
 			mBoardLineManager.drawLines();
 
 		}
@@ -291,13 +306,13 @@ class TutorialBoard2 extends Board {
 			float time = ((float)(System.currentTimeMillis()-refTime))/1000.0f; 
 			if(time < 2) {
 				mCheck.setImage("menu_1");
-				tiles[9].setNumber("2");
-				tiles[9].setArrow("left_arrow");
-				tiles[9].setTextures();
+				tiles[10].setNumber("2");
+				tiles[10].setArrow("left_arrow");
+				tiles[10].setTextures();
 			} else if(time < 4){
-				tiles[9].setNumber("3");
-				tiles[9].setArrow("left_arrow");
-				tiles[9].setTextures();
+				tiles[10].setNumber("3");
+				tiles[10].setArrow("left_arrow");
+				tiles[10].setTextures();
 				mCheck.setImage(TextureManager.CHECK);
 				if(lines){
 					//drawLines();
