@@ -24,6 +24,12 @@ class BoardTile extends Tile {
     public boolean isHint = false;
     public boolean alpha = true;
     public EndDirectionType mEndDirectionType = EndDirectionType.NONE;
+
+    //This is used to store the number of squares which point to this tile.
+    //It is calculated in Boards "markPointedAt" and used in the errorLog 
+    //class to detect errors.
+    public int pointedToCount; 
+
     
     //Define an inner class to take care of flip animations
     class Flipper {

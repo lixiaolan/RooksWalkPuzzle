@@ -36,8 +36,12 @@ public class ErrorLog {
 	}
 	else if (e.pointsAtBadDir || e.pointedAtByBadDir) {
 	    return TextureManager.TURNINGRULE;
-	} else if (e.pointsOffBoard){
+	} 
+	else if (e.pointsOffBoard){
 	    return TextureManager.OFFBOARD;
+	}
+	else if (e.pointsAtMultiPointedTo || e.multiPointedTo) {
+	    return TextureManager.MULTIPOINTRULE;
 	}
 	else {
 	    return TextureManager.CLEAR;
@@ -82,6 +86,15 @@ public class ErrorLog {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
 			    }
+			    if (t.pointedToCount > 1) {
+				errorMap.get(i).pointsAtMultiPointedTo = true;
+				errorMap.get(index).multiPointedTo = true;
+			    }
+			    if (t.isPointedAt()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
+			    }
+			    
 			}
 		    }
 		    //Checking if we point off the board
@@ -117,6 +130,14 @@ public class ErrorLog {
 				}
 			    }
 			    if (t.isBlack()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
+			    }
+			    if (t.pointedToCount > 1) {
+				errorMap.get(i).pointsAtMultiPointedTo = true;
+				errorMap.get(index).multiPointedTo = true;
+			    }
+			    if (t.isPointedAt()) {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
 			    }
@@ -158,6 +179,14 @@ public class ErrorLog {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
 			    }
+			    if (t.pointedToCount > 1) {
+				errorMap.get(i).pointsAtMultiPointedTo = true;
+				errorMap.get(index).multiPointedTo = true;
+			    }
+			    if (t.isPointedAt()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
+			    }
 
 			}
 		    }
@@ -194,6 +223,14 @@ public class ErrorLog {
 				}
 			    }
 			    if (t.isBlack()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
+			    }
+			    if (t.pointedToCount > 1) {
+				errorMap.get(i).pointsAtMultiPointedTo = true;
+				errorMap.get(index).multiPointedTo = true;
+			    }
+			    if (t.isPointedAt()) {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
 			    }

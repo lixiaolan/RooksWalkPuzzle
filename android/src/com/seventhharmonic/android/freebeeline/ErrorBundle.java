@@ -9,5 +9,7 @@ public class ErrorBundle {
     public boolean pointsAtBadDir; //(right angle rule broken!)
     public boolean pointedAtByBadDir;
     public boolean pointsOffBoard;
+    public boolean pointsAtMultiPointedTo; //
+    public boolean multiPointedTo;
     
 }
