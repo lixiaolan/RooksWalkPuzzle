@@ -25,13 +25,15 @@ public class PuzzleDataSource extends BaseDataSource{
 				       null, null, null, null);
 	
 	if (!cursor.moveToFirst()) {
-	    	ContentValues values = new ContentValues();
-	    	values.put(MySQLiteHelper.COLUMN_PUZZLE, "false");
-	    	values.put(MySQLiteHelper.COLUMN_ID, id); 
-	    	database.insert(MySQLiteHelper.TABLE_PUZZLES, null, values);
-	    	cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
-					MySQLiteHelper.COLUMN_ID + " = " + id, 
-					null, null, null, null);
+	    long zero = 0;
+	    ContentValues values = new ContentValues();
+	    values.put(MySQLiteHelper.COLUMN_PUZZLE, "false");
+	    values.put(MySQLiteHelper.COLUMN_ID, id); 
+	    values.put(MySQLiteHelper.COLUMN_MOVES_USED, zero);
+	    database.insert(MySQLiteHelper.TABLE_PUZZLES, null, values);
+	    cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
+				    MySQLiteHelper.COLUMN_ID + " = " + id, 
+				    null, null, null, null);
 	}
 
 	cursor.moveToFirst();
@@ -42,16 +44,40 @@ public class PuzzleDataSource extends BaseDataSource{
     
     public void setPuzzle(long id, String completed) {
 	ContentValues values = new ContentValues();
+	long zero = 0;
 	values.put(MySQLiteHelper.COLUMN_PUZZLE, completed);
 	values.put(MySQLiteHelper.COLUMN_ID, id);
+ 	values.put(MySQLiteHelper.COLUMN_MOVES_USED, zero);
+
+	Cursor cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
+				       MySQLiteHelper.COLUMN_ID + " = " + id, 
+				       null, null, null, null);
+
+	if (!cursor.moveToFirst()) {
+	    database.insert(MySQLiteHelper.TABLE_PUZZLES, null, values);
+	}
+	
+	database.update(MySQLiteHelper.TABLE_PUZZLES, values, MySQLiteHelper.COLUMN_ID + " = " + id, null);
+	
+	cursor.close();
+	return;
+    }
+    //overloaded so that old code is not broken.
+    public void setPuzzle(long id, String completed, long movesUsed) {
+
+	ContentValues values = new ContentValues();
+	values.put(MySQLiteHelper.COLUMN_PUZZLE, completed);
+	values.put(MySQLiteHelper.COLUMN_ID, id);
+	values.put(MySQLiteHelper.COLUMN_MOVES_USED, movesUsed);
+	
  
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
 				       MySQLiteHelper.COLUMN_ID + " = " + id, 
 				       null, null, null, null);
+
 	if (!cursor.moveToFirst()) {
 		database.insert(MySQLiteHelper.TABLE_PUZZLES, null, values);
 	}
-
 	
 	database.update(MySQLiteHelper.TABLE_PUZZLES, values, MySQLiteHelper.COLUMN_ID + " = " + id, null);
 	
@@ -87,6 +113,7 @@ public class PuzzleDataSource extends BaseDataSource{
     	SQLPuzzle puz = new SQLPuzzle();
     	puz.setId(cursor.getLong(0));
     	puz.setCompleted(cursor.getString(1));
+	puz.setMovesUsed(cursor.getLong(2));
     	return puz;
     }
 } 

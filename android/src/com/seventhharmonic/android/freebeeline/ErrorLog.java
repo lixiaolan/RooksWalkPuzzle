@@ -11,7 +11,6 @@ public class ErrorLog {
     //Set this to check orthogonality or not:
     public boolean checkOrthogonality = false;
     
-    
     public Board mBoard;
     
     public ErrorLog(Board b) {
@@ -72,10 +71,16 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num && checkOrthogonality) {
-			    if (t.getArrow().equals(TextureManager.UPARROW) || t.getArrow().equals(TextureManager.DOWNARROW)) {
-				errorMap.get(i).pointsAtBadDir = true;
-				errorMap.get(index).pointedAtByBadDir = true;
+			else if(j == num) {
+			    if (checkOrthogonality) {
+				if (t.getArrow().equals(TextureManager.UPARROW) || t.getArrow().equals(TextureManager.DOWNARROW)) {
+				    errorMap.get(i).pointsAtBadDir = true;
+				    errorMap.get(index).pointedAtByBadDir = true;
+				}
+			    }
+			    if (t.isBlack()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
 			    }
 			}
 		    }
@@ -104,10 +109,16 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num && checkOrthogonality) {
-			    if (t.getArrow().equals(TextureManager.UPARROW) || t.getArrow().equals(TextureManager.DOWNARROW)) {
-				errorMap.get(i).pointsAtBadDir = true;
-				errorMap.get(index).pointedAtByBadDir = true;
+			else if(j == num) {
+			    if (checkOrthogonality) {
+				if (t.getArrow().equals(TextureManager.UPARROW) || t.getArrow().equals(TextureManager.DOWNARROW)) {
+				    errorMap.get(i).pointsAtBadDir = true;
+				    errorMap.get(index).pointedAtByBadDir = true;
+				}
+			    }
+			    if (t.isBlack()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
 			    }
 			}
 		    }
@@ -136,11 +147,18 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num && checkOrthogonality) {
-			    if (t.getArrow().equals(TextureManager.LEFTARROW) || t.getArrow().equals(TextureManager.RIGHTARROW)) {
-				errorMap.get(i).pointsAtBadDir = true;
-				errorMap.get(index).pointedAtByBadDir = true;
+			else if(j == num) {
+			    if (checkOrthogonality) {
+				if (t.getArrow().equals(TextureManager.LEFTARROW) || t.getArrow().equals(TextureManager.RIGHTARROW)) {
+				    errorMap.get(i).pointsAtBadDir = true;
+				    errorMap.get(index).pointedAtByBadDir = true;
+				}
 			    }
+			    if (t.isBlack()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
+			    }
+
 			}
 		    }
 		    //Checking if we point off the board
@@ -168,11 +186,18 @@ public class ErrorLog {
 			}
 			
 			//Checking orthogonality explicitly
-			else if(j == num && checkOrthogonality) {
-			    if (t.getArrow().equals(TextureManager.LEFTARROW) || t.getArrow().equals(TextureManager.RIGHTARROW)) {
-				errorMap.get(i).pointsAtBadDir = true;
-				errorMap.get(index).pointedAtByBadDir = true;
+			else if(j == num) {
+			    if (checkOrthogonality) {
+				if (t.getArrow().equals(TextureManager.LEFTARROW) || t.getArrow().equals(TextureManager.RIGHTARROW)) {
+				    errorMap.get(i).pointsAtBadDir = true;
+				    errorMap.get(index).pointedAtByBadDir = true;
+				}
 			    }
+			    if (t.isBlack()) {
+				errorMap.get(i).pointsPast = true;
+				errorMap.get(index).pointedPast = true;
+			    }
+
 			}
 		    }
 		    //Checking if we point off the board

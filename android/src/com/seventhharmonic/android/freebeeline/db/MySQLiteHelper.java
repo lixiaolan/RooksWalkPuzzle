@@ -16,6 +16,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PUZZLE = "completed";
+    public static final String COLUMN_MOVES_USED = "movesUsed";
+
     public static final String COLUMN_HINTS = "hintsLeft";
     public static final String COLUMN_PURCHASED = "bought";
     public static final String COLUMN_SKU = "sku";
@@ -26,7 +28,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE_PUZZLES = "create table "
 	+ TABLE_PUZZLES + "(" + COLUMN_ID
 	+ " integer primary key, " + COLUMN_PUZZLE
-	+ " text not null);";
+	+ " text not null, " + COLUMN_MOVES_USED 
+	+ " integer);";
+
     private static final String DATABASE_CREATE_HINTS = "create table "
 	+ TABLE_HINTS + "(" + COLUMN_ID
 	+ " integer primary key, " + COLUMN_HINTS
