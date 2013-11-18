@@ -10,7 +10,6 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 
     public BoardBeeController(BeeBoardInterface b) {
 	mBoardInterface = b;
-	setControllerUnit(new StayStillController());
     }
     
     public void setMood(Mood m) {
@@ -24,6 +23,7 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 
     public void setBee(NewBee inBee) {
 	bee = inBee;
+	setControllerUnit(new StayStillController());
     }
 
     public int touched(float[] pt) {
@@ -45,6 +45,10 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 
 	private float[] fixedPos = {0.8f,-1.0f,0.0f};
 	
+	public StayStillController() {
+	    bee.setMood(Mood.FAST);
+	}
+	
 	@Override
 	public void control() {
 	    bee.setTarget(fixedPos);
@@ -52,6 +56,7 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 	
 	@Override
 	public void targetReached() {
+	    bee.setMood(Mood.ASLEEP);
 	    //input method to make the bee face the right way!
 	}
 	
@@ -66,7 +71,7 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 	public FollowPuzzlePathController() {
 	    r = mBoardInterface.getPathToArray(index);
 	    length = mBoardInterface.getPathLength()-1;
-	    System.out.println("Length: " + Integer.toString(length) );
+	    bee.setMood(Mood.FAST);
 	}
 
 	@Override
