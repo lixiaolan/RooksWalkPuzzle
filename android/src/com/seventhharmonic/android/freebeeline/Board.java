@@ -43,20 +43,22 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 
 	public Board(Model mModel) {
-		buildEmptyBoard();
-		state = null;//new BoardPlay(tiles);
-		mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
-		mGameBanner.setFontSize(TextCreator.font1);
-		mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
-		mErrorLog = new ErrorLog(this);
-		this.mModel = mModel;
 
-		mBeeController = new BoardBeeController(this);
-		mBee = new NewBee(mBeeController);
-		mBeeController.setBee(mBee);
-		mBee.setModeFast();
-		mBoardLineManager = new BoardLineManager(this);
+	    buildEmptyBoard();
+	    state = null;//new BoardPlay(tiles);
+	    mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
+	    mGameBanner.setFontSize(TextCreator.font1);
+	    mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
+	    mErrorLog = new ErrorLog(this);
+	    this.mModel = mModel;
 
+	    mBeeController = new BoardBeeController(this);
+	    mBee = new NewBee(mBeeController);
+	    mBeeController.setBee(mBee);
+
+	    mBee.setModeFast();
+	    mBoardLineManager = new BoardLineManager(this);
+	    
 	}    
 
 	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){

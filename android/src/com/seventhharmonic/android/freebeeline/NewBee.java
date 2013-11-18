@@ -30,6 +30,15 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	state = new BeeLazy();
     }
 
+    public void setMood(Mood m) {
+	switch(m) {
+	case LAZY: state = new BeeLazy(); break;
+	case FAST: state = new BeeFast(); break;
+	case ASLEEP: state = new BeeAsleep(); break;
+	default: break;
+	}
+    }
+
     public void setModeFast() {
 	state = new BeeFast();
     }
@@ -53,11 +62,11 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	private long globalRefTime;
         private long relativeRefTime;
 	private float dt;
-
+	
 	//Used to measure target aquired.
 	private float speedTol = .01f;
 	private float positionTol = .1f;
-
+	
 	//Used in the movement of the bee;
 	private float attraction = 1.5f;
 	private float friction = 0.8f;
@@ -71,18 +80,18 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    bee.setVelocity(.0f, .0f);
 	    period = DrawPeriod.DURING;
 	}    
-
-	float[] force = new float[2];
-    float[] temp = new float[2];
-    float[] temp2 = new float[2];
 	
-    public void duringAnimation(BeeTile[] tiles) {
-
+	float[] force = new float[2];
+	float[] temp = new float[2];
+	float[] temp2 = new float[2];
+	
+	public void duringAnimation(BeeTile[] tiles) {
+	    
 	    mBeeInterface.control();
-
+	    
 	    dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, .0333f);
 	    relativeRefTime = System.currentTimeMillis();
-   
+	    
 	    getForce();
 	    LATools.vSProd(dt, bee.velocity, temp2);
 	    LATools.vSum(bee.getCenter(), temp2, temp);
@@ -91,55 +100,56 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    LATools.vSum(bee.velocity, temp2, bee.velocity);
 	    LATools.vDiff(bee.getCenter(),target, temp);
 	    if(LATools.abs(bee.velocity) < speedTol && LATools.abs(temp) < positionTol){
-	    	//mBeeInterface.targetReached();
+	    	mBeeInterface.targetReached();
 	    }
 	}
 	
 	public void getForce() {
 	    
-		LATools.vDiff(bee.center, target, temp);
+	    LATools.vDiff(bee.center, target, temp);
 	    LATools.vSProd(-attraction,temp, force);
 	    LATools.vSProd(-friction, bee.velocity, temp2);
-	    LATools.vSum(force, temp2, force);
+	    LATools.vSum(force, temp2, force);	    
+
 	}	
     }
-
+    
     class BeeFast extends NewBeeState<BeeTile> {
 	//Used to animate
 	private long globalRefTime;
         private long relativeRefTime;
 	private float dt;
-
+	
 	//Used to measure target aquired.
-	private float speedTol = .01f;
+	private float speedTol = .1f;
 	private float positionTol = .1f;
-
+	
 	//Used in the movement of the bee;
 	private float attraction = 2.5f;
 	private float friction = 2.6f;
 	
 	public BeeFast() {
 	}
-
-
+	
+	
 	public void enterAnimation(BeeTile[] tiles){
 	    globalRefTime = 0;
 	    relativeRefTime = System.currentTimeMillis();
 	    bee.setVelocity(.0f, .0f);
 	    period = DrawPeriod.DURING;
 	}    
-
+	
 	float[] force = new float[2];
 	float[] temp = new float[2];
 	float[] temp2 = new float[2];
 	
-    public void duringAnimation(BeeTile[] tiles) {
-
+	public void duringAnimation(BeeTile[] tiles) {
+	    
 	    mBeeInterface.control();
-
+	    
 	    dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, .0333f);
 	    relativeRefTime = System.currentTimeMillis();
-   
+	    
 	    getForce();
 	    LATools.vSProd(dt, bee.velocity, temp2);
 	    LATools.vSum(bee.getCenter(), temp2, temp);
@@ -148,17 +158,40 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    LATools.vSum(bee.velocity, temp2, bee.velocity);
 	    LATools.vDiff(bee.getCenter(),target, temp);
 	    if(LATools.abs(bee.velocity) < speedTol && LATools.abs(temp) < positionTol){
-	    	//mBeeInterface.targetReached();
+	    	mBeeInterface.targetReached();
 	    }
 	}
 	
 	public void getForce() {
-	    
-		LATools.vDiff(bee.center, target, temp);
-	    LATools.vSProd(-attraction,temp, force);
-	    LATools.vSProd(-friction, bee.velocity, temp2);
+
+	    LATools.vDiff(bee.center, target, temp);
+
+	    if (LATools.abs(temp) < positionTol*3 ) {
+		LATools.vSProd(-attraction,temp, force);
+		LATools.vSProd(-friction, bee.velocity, temp2);
+	    }
+	    else {
+		LATools.vSProd(1/LATools.abs(temp), temp, temp2);
+		LATools.vSProd(-attraction, temp2, force);
+		LATools.vSProd(-friction, bee.velocity, temp2);
+	    }
 	    LATools.vSum(force, temp2, force);
+
 	}	
 	
+    }
+
+    class BeeAsleep extends NewBeeState<BeeTile> {
+		
+	public BeeAsleep() {
+	    bee.setVelocity(0.0f,.01f);
+        }
+	
+	public void enterAnimation(BeeTile[] tiles){
+	    period = DrawPeriod.DURING;
+	}
+	
+	public void duringAnimation(BeeTile[] tiles) {
+	}	
     }
 }
