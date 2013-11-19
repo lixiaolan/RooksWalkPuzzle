@@ -167,7 +167,7 @@ class MenuManager {
 	    	mModel.setModelToStory();
 		updateState();
 		break;
-	    case 0: state.state = GameState.MAIN_MENU_OPENING;
+	    case 0: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
 		break;
 		

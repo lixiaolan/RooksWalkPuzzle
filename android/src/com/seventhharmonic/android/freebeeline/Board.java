@@ -62,11 +62,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}    
 
 	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
+		Log.d("Board", "Restored");
 		for(int i=0;i<boardWidth*boardHeight;i++){
+			Log.d("Board","Restored "+Integer.toString(i));
 			tiles[i].setTrueSolution(solution[i]);
 			tiles[i].setArrow(arrows[i]);
 			tiles[i].setNumber(numbers[i]);
 			tiles[i].setTrueArrow(trueArrows[i]);
+			tiles[i].vPointedAt = false;
+			tiles[i].hPointedAt = false;
+			tiles[i].mEndDirectionType = EndDirectionType.NONE;
+			tiles[i].setColor("transparent");
 			if(clickable!=null)
 				if(!clickable[i] && tiles[i].getTrueSolution()!=-1)
 					tiles[i].setHint();
@@ -333,7 +339,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 
 	/////////////////////////////////////////////////////////////////////////////	
-
 	////////////////////////////////////////////////////////////////////////////////
 	//Bee Board Interface Methods:
 
@@ -372,8 +377,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		return 0;
 	}
 	////////////////////////////////////////////////////////////////////////////////
-
-
 	//This state defines board behavior during game play.
 	class BoardPlay extends State<BoardTile> {
 
@@ -562,8 +565,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			mGameBanner.draw(r);
 			mBoardBg.draw(r);
+			mGameBanner.draw(r);
 			super.draw(tiles, r);
 			mBee.draw(r);
 			mMenu.draw(r);

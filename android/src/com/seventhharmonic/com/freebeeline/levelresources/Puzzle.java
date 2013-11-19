@@ -64,10 +64,11 @@ public class Puzzle {
 		//TODO: move par into XML?
 		par = CSVIntParser(path).length-2*getNumberOfHints()-2;
 		return par;
+	
 	}
 	
 	public String getFlower(){
-		if(completed){
+		if(isCompleted()){
 			return getAfterFlower();
 		}
 		return getBeforeFlower();
@@ -87,6 +88,7 @@ public class Puzzle {
 		 //if(result.equals(true))
 		//	 return true;//p.setCompleted(true);
 		return completed;
+		//return true;
 	}
 
 	public void setCompleted(boolean completed) {

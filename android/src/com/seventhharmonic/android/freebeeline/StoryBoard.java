@@ -130,12 +130,11 @@ public class StoryBoard extends Board{
 		
 		public SLIDE1(BoardTile[] tiles){
 			this.tiles = tiles;
-			
+			mStoryBanner.setText(StoryBoardInfo.banners[1]);
 		}
 			@Override
 		public void enterAnimation(BoardTile[] tiles) {
 			state.period = DrawPeriod.DURING; 
-			mStoryBanner.setText(StoryBoardInfo.banners[1]);
 		}
 
 		@Override
@@ -157,12 +156,11 @@ public class StoryBoard extends Board{
 				
 				public SLIDE2(BoardTile[] tiles){
 					this.tiles = tiles;
-					
+					mStoryBanner.setText(StoryBoardInfo.banners[2]);
 				}
 					@Override
 				public void enterAnimation(BoardTile[] tiles) {
 					state.period = DrawPeriod.DURING; 
-					mStoryBanner.setText(StoryBoardInfo.banners[2]);
 				}
 
 				@Override

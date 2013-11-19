@@ -105,12 +105,13 @@ public class ViewActivity extends Activity {
 		GlobalApplication.getHintDB().open();
 		GlobalApplication.getPurchasedDB().open();
 
+		/*
 		if(mModel.state.firstRun){
 			mQuoteView.setVisibility(View.INVISIBLE);
 			mModel.firstRun();
 		} else {
-		//	mModel.reset();
-		}
+			//mModel.reset();
+		}*/
 
 		
 		//TODO: Loading puzzles with their completion value. This sucks balls. Do this elsewhere.

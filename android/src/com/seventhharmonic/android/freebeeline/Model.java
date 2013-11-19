@@ -249,15 +249,13 @@ class Model {
 	mMenuManager.updateState();
     }
     
-    public void firstRun() {
-    	setState(GameState.STORY);
-    	createStory();
+    /*public void firstRun() {
+    	//createStory();
+    	//setState(GameState.STORY);
     	mMenuManager.updateState();
-    }
+    }*/
     
-    public void clearBoard() {
-	mBoard.resetBoard();
-    }    
+   
     
     public void onBack(){
 	switch(state.state){
