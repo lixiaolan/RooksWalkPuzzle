@@ -63,22 +63,27 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
     }
 
     public class FollowPuzzlePathController extends ControllerUnitBase {
-
+	
 	private int index = 0;
 	private int r;
 	private int length;
 	
+	private BoardTile t;
+	private float[] f;
+
 	public FollowPuzzlePathController() {
 	    r = mBoardInterface.getPathToArray(index);
 	    length = mBoardInterface.getPathLength()-1;
 	    bee.setMood(Mood.FAST);
 	}
-
+	
 	@Override
 	public void control() {
-	    bee.setTarget(mBoardInterface.getTile(r).getCenter());
+	    t = mBoardInterface.getTile(r);
+	    f = t.getCenter();
+	    bee.setTarget(f);
 	}
-
+	
 	@Override
 	public void targetReached() {
 	    r = mBoardInterface.getPathToArray(index);
