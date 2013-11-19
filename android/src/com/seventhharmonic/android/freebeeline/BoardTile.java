@@ -128,6 +128,7 @@ class BoardTile extends Tile {
 		    color = "red";
 		}
 		else {
+		    //clearNumberAndArrow();
 		    color = nativeColor;
 		    active = false;
 		}
@@ -162,15 +163,17 @@ class BoardTile extends Tile {
 	this.true_arrow = arrow;
     }
     
+    public boolean isChangeable() {
+	return !(isHint() || isBlack());
+    }
+
     public boolean isClickable() {
-	return clickable;
+	
+	return (isChangeable() && !isPointedAt());
     }
     
     public boolean isBlack() {
-	if(true_solution == -1)
-	    return true;
-	else
-	    return false;
+	return (true_solution == -1) ? true : false;
     }
 
     public void setAlpha(boolean alpha){
@@ -178,7 +181,7 @@ class BoardTile extends Tile {
     }
     
     public boolean isHint(){
-    	return !(isBlack() || isClickable());
+    	return isHint;
     }
     
     public boolean isPointedAt() {
@@ -251,6 +254,11 @@ class BoardTile extends Tile {
 	return arrow;
     }
     
+    public void clearNumberAndArrow() {
+	setNumber(TextureManager.CLEAR);
+	setArrow(TextureManager.CLEAR);
+    }
+
     public void setNumber(String number){
 	this.number = number;
     }

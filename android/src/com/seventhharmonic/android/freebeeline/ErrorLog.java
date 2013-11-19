@@ -22,6 +22,33 @@ public class ErrorLog {
 	errorMap = new ErrorMap();
 	logErrors();
     }
+
+    public boolean hasError() {
+	setLog();
+	ErrorBundle e;
+	for (int i = 0; i < mBoard.tiles.length; i++ ) {
+	    if (errorMap.containsKey(i)) {
+		e = errorMap.get(i);
+		if (e.hasError()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasError(int index) {
+	setLog();
+	ErrorBundle e;
+	if (errorMap.containsKey(index)) {
+	    e = errorMap.get(index);
+	    if (e.hasError()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     
     public String getError(int index) {
 	if (!errorMap.containsKey(index)) return "";

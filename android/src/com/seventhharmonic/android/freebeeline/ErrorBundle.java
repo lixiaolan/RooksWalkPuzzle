@@ -11,5 +11,8 @@ public class ErrorBundle {
     public boolean pointsOffBoard;
     public boolean pointsAtMultiPointedTo; //
     public boolean multiPointedTo;
-    
+
+    public boolean hasError() {
+	return ( pointsPast || pointedPast || pointsAtSame || pointedAtBySame || pointsAtBadDir || pointedAtByBadDir || pointsOffBoard || pointsAtMultiPointedTo || multiPointedTo );
+    }
 }

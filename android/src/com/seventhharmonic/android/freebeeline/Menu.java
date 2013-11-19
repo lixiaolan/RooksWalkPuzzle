@@ -52,13 +52,30 @@ class Menu{
     public int touched(float[] pt) {
     	//Deactivate menu!!
     	if(!menuActive) {
-    		return -1;
+	    return -1;
     	}
     	menuActive=false;
     	for (int i = 0; i < menuTiles.length; i++) {
-    		if (menuTiles[i].touched(pt)) {	    	
-    			return i;
-    		}
+	    if (menuTiles[i].touched(pt)) {	    	
+		return i;
+	    }
+    	}
+    	return -1;
+    }
+    //Same as touched but does not do any work on the menu
+    public int testTouch(float[] pt) {
+    	//Deactivate menu!!
+    	
+	if(!menuActive) {
+	    System.out.println("THE MENU IS NNNNNNNOOOOOOOOTTTTTTTTTT ACTIVE!");
+	    return -1;
+    	}
+	System.out.println("THE MENU IS ACTIVE!");
+    	for (int i = 0; i < menuTiles.length; i++) {
+
+	    if (menuTiles[i].touched(pt)) {	    	
+		return i;
+	    }
     	}
     	return -1;
     }

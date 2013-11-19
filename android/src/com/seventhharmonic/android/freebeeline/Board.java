@@ -41,7 +41,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	//Par number of moves
 	int par  = 0;
 
-
 	public Board(Model mModel) {
 
 	    buildEmptyBoard();
@@ -196,16 +195,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 
 	public void resetBoard() {
-		for(int i=0;i<tiles.length;i++){
-			if(tiles[i].isClickable()){
-				tiles[i].setNumber(TextureManager.CLEAR);
-				tiles[i].setArrow(TextureManager.CLEAR);
-				tiles[i].setColor("transparent");
-			}
+	    mErrorLog.setLog();
+	    for(int i=0;i<tiles.length;i++){
+		if(tiles[i].isChangeable()){
+		    tiles[i].setNumber(TextureManager.CLEAR);
+		    tiles[i].setArrow(TextureManager.CLEAR);
+		    tiles[i].setColor("transparent");
 		}
-		if(toggleLines){
-			mBoardLineManager.drawLines();
-		}
+	    }
+	    if(toggleLines){
+		mBoardLineManager.drawLines();
+	    }
 	}
 
 	public void createPuzzleFromPuzzle(Puzzle p){
@@ -230,13 +230,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 
 	public int touched(float[] pt) {
-
-		for (int i = 0; i < tiles.length; i++) {
-			if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
-				return i;
-			}
+	    
+	    for (int i = 0; i < tiles.length; i++) {
+		if( tiles[i].touched(pt) && tiles[i].isClickable() && !tiles[i].isBlack()) {
+		    return i;
 		}
-		return -1;
+	    }
+	    return -1;
 	}
 
 	public void touchHandler(float[] pt){
@@ -387,6 +387,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		public float[] oldY;
 		int at = -1;
 		int lt = -1;
+		//These are used as temporary place holders in the touched function
+		int val;
+		int temp;
+		
 		ButtonWidget reset;
 		ButtonWidget tutorial;
 		HintsDataSource DB;
@@ -513,48 +517,48 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				}
 			}
 			else if( time < totalTime && time > 2*totalTime/3) {
-				float[] pivot = {1,0,0};
-				if (!swap) {
-					for (int i = 0; i < tiles.length; i++) {
-						tiles[i].setTextures();
-						float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-						float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-						float center[] = {Sx, Sy, 0.0f};
-						tiles[i].center = center;
-						if(!tiles[i].isClickable() && !tiles[i].isBlack())
-							tiles[i].setHint();
-						else 
-							tiles[i].nativeColor = "transparent";
-					}
-				}
+			    float[] pivot = {1,0,0};
+			    if (!swap) {
 				for (int i = 0; i < tiles.length; i++) {
-					tiles[i].setSize(finalSize*(3*time/totalTime-2));
+				    tiles[i].setTextures();
+				    float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+				    float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+				    float center[] = {Sx, Sy, 0.0f};
+				    tiles[i].center = center;
+				    if(!tiles[i].isChangeable() && !tiles[i].isBlack())
+					tiles[i].setHint();
+				    else 
+					tiles[i].nativeColor = "transparent";
 				}
+			    }
+			    for (int i = 0; i < tiles.length; i++) {
+				tiles[i].setSize(finalSize*(3*time/totalTime-2));
+			    }
 			}
-
+			
 			else {
-				for(int i = 0;i<tiles.length;i++){
-					tiles[i].setTextures();
-					tiles[i].setAngle(0);
-					tiles[i].setSize(finalSize);
-					float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-					float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
-					tiles[i].setCenter(Sx, Sy);
-					tiles[i].setTextures();
-					if(!tiles[i].isClickable() && !tiles[i].isBlack())
-						tiles[i].setHint();
-					else
-						tiles[i].nativeColor = "transparent";
-					tiles[i].setAlpha(true);
-				}
-
-				if (toggleLines) {
-					mBoardLineManager.drawLines();
-				}
-				period = DrawPeriod.DURING;
+			    for(int i = 0;i<tiles.length;i++){
+				tiles[i].setTextures();
+				tiles[i].setAngle(0);
+				tiles[i].setSize(finalSize);
+				float Sx = ( (i/boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+				float Sy = ( (i%boardHeight) - boardWidth/2.0f + 0.5f )/4.0f;
+				tiles[i].setCenter(Sx, Sy);
+				tiles[i].setTextures();
+				if(!tiles[i].isChangeable() && !tiles[i].isBlack())
+				    tiles[i].setHint();
+				else
+				    tiles[i].nativeColor = "transparent";
+				tiles[i].setAlpha(true);
+			    }
+			    
+			    if (toggleLines) {
+				mBoardLineManager.drawLines();
+			    }
+			    period = DrawPeriod.DURING;
 			}
 		}
-
+		
 		public void duringAnimation(BoardTile[] tiles) {
 			for (int i = 0; i < tiles.length; i++) {
 				((BoardTile)tiles[i]).setTextures();
@@ -574,69 +578,99 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		@Override
 		public void touchHandler(float[] pt){
-			if(mHints.isTouched(pt)){
-					if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
-						showHint();
-						setHintsText();
-					} else {
-						mHintDialog.activate();
-					}
-			}
-			
-				reset.touchHandler(pt);
-				tutorial.touchHandler(pt);
-				if(mHintDialog.isActive()){
-					mHintDialog.touchHandler(pt);
-					return;
-				}
-			
-			int val = mMenu.touched(pt);
-			if(val == -1){
-				//This case corresponds to the menu being closed
-				if (at != -1) {
-					//If a tile was active close it. 
-					tiles[at].setColor("transparent");
-					//If this tile should be red, make sure it stays that way. Reset the banner
-					if(toggleError){
-						turnErrorRed(at);
-						mGameBanner.setText("");
-					}
-				}
-
-				at = touched(pt);
-				if(at != -1 ) {
-					//Open the menu at the tile that was touched. Display a banner if there is an error
-					if(toggleError){
-						turnErrorRed(at);
-						if(lt == at){
-							mGameBanner.setText(mErrorLog.getError(at));
-						}
-					}
-					if(tiles[at].isBlack() == false) {
-						tiles[at].setColor("blue");
-						if(tiles[at].isClickable())
-							mMenu.activate(pt);
-					}
-				}
+		    if(mHints.isTouched(pt)){
+			if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
+			    showHint();
+			    setHintsText();
 			} else {
-				if (at != -1) {
-					//Set the user input since we get values
-					tiles[at].setUserInput(val);
-					moves+=1;
-					updateMoves();
-					if (toggleLines) {
-						mBoardLineManager.animatePlay(at);
-					}
-					if(toggleError){
-						mErrorLog.setLog();
-						updateErrors();
-						turnErrorRed(at);
-						mGameBanner.setText(mErrorLog.getError(at));
-						lt = at;
-					}
-				}
+			    mHintDialog.activate();
 			}
-			checkIfPuzzleSolved();
+		    }
+		    
+		    reset.touchHandler(pt);
+		    tutorial.touchHandler(pt);
+
+		    if(mHintDialog.isActive()){
+			mHintDialog.touchHandler(pt);
+			return;
+		    }
+		    
+		    // this checks that the errors have been resolved before one moves on.  Comment this out
+		    // to turn off this feature.
+		    
+		    if (mErrorLog.hasError()) {
+		    	float[] f = new float[2];
+		    	f[0] = pt[0];
+		    	f[1] = pt[1];
+		    	temp = touched(f);
+		    	val = mMenu.testTouch(pt);
+		    	if (temp == -1 && val == -1) {
+
+		    	    mGameBanner.setText(TextureManager.PLEASEFIXERROR);
+		    	    return;
+
+		    	}
+		    	else if (!mErrorLog.hasError(temp) && (val == -1) ){
+		    	    mGameBanner.setText(TextureManager.PLEASEFIXERROR);
+		    	    return;
+		    	}
+		    }
+
+
+		    //onto the main logic of the game
+		    val = mMenu.touched(pt);
+		    if(val == -1){
+			//This case corresponds to the menu being closed
+			if (at != -1) {
+			    //If a tile was active close it. 
+			    tiles[at].setColor("transparent");
+			    
+			    //If this tile should be red, make sure it stays that way. Reset the banner
+			    if(toggleError){
+				turnErrorRed(at);
+				mGameBanner.setText("");
+			    }
+			}
+			
+			at = touched(pt);
+			if(at != -1 ) {
+			    //Open the menu at the tile that was touched. Display a banner if there is an error
+			    if(toggleError){
+				turnErrorRed(at);
+				if(lt == at){
+				    mGameBanner.setText(mErrorLog.getError(at));
+				}
+			    }
+			    if(tiles[at].isBlack() == false) {
+				tiles[at].setColor("blue");
+				if(tiles[at].isClickable()) {
+				    mMenu.activate(pt);
+				}
+			    }
+			}
+			
+		    } else {
+			if (at != -1) {
+			    //Set the user input since we get values
+			    tiles[at].setUserInput(val);
+			    moves+=1;
+			    updateMoves();
+
+			    if (toggleLines) {
+				//if (!mErrorLog.getError(at).equals(""))
+				mBoardLineManager.animatePlay(at);
+			    }
+
+			    if(toggleError){
+				mErrorLog.setLog();
+				updateErrors();
+				turnErrorRed(at);
+				mGameBanner.setText(mErrorLog.getError(at));
+				lt = at;
+			    }
+			}
+		    }
+		    checkIfPuzzleSolved();
 		}
 
 		public void updateMoves(){
@@ -670,21 +704,22 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void updateErrors(){
-			for(int i =0;i<tiles.length;i++){
-				String error = mErrorLog.getError(i); 
-				if(error.equals("")){
-					tiles[i].setColor(tiles[i].nativeColor);
-					if(i == at){
-						tiles[i].setColor("blue");
-					}
-				}
+		    for(int i =0;i<tiles.length;i++){
+			String error = mErrorLog.getError(i); 
+			if(error.equals("")){
+			    tiles[i].setColor(tiles[i].nativeColor);
+			    if(i == at){
+				tiles[i].setColor("blue");
+			    }
 			}
+		    }
 		}
 
 		public void turnErrorRed(int at){
 			String error = mErrorLog.getError(at); 
 			if(!error.equals("")){
-				tiles[at].setColor("red");
+			    //tiles[at].setAngryGlow(1,0);
+			    tiles[at].setColor("red");
 			} 
 		}
 
