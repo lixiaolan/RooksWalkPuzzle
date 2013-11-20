@@ -29,10 +29,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 
     //Tag used for logs
     private String TAG = "FlowerMenu";
-    
-    // "slider" used for placing a screen slide widget on top of stat system.
-    // This is a bit of a hack... fair warning.
-    //private StateWidget flowerState;
+  
 
     //The bee that lives in the flowers
     private NewBee mBee;
@@ -298,16 +295,24 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    
 	    //Now populate the widget that holds onto all the chapters.
 	    m = new ScreenSlideWidgetLayout(2.0f);
+	    boolean unlocked = ViewActivity.mStore.hasLevelPack(currLevelPack);
+	    int limit = ViewActivity.mStore.getLevelPackChapterLimit(currLevelPack);
+	    Log.d(TAG, "Limit: "+Integer.toString(limit)+" unlocked: "+Boolean.toString(unlocked));
 	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
-		final Chapter c = currLevelPack.getChapter(i);
-		ChapterWidget ch  = new ChapterWidget(c);
-		ch.setTouchListener(new GameEventListener() {
-			public void event(int puzz){
-			    Puzzle p = c.getPuzzle(puzz);
-			    mModel.setModelToGameOpening(p);
-			}
-		    });
-		m.addWidget(ch);
+	    	final Chapter c = currLevelPack.getChapter(i);
+	    	if(i < limit || unlocked){
+	    		ChapterWidget ch  = new ChapterWidget(c);
+	    		ch.setTouchListener(new GameEventListener() {
+	    			public void event(int puzz){
+	    			Puzzle p = c.getPuzzle(puzz);
+	    			mModel.setModelToGameOpening(p);
+	    		}
+		    	}); 
+	    		m.addWidget(ch);
+	    	} else {
+	    		m.addWidget(new LockedChapterWidget(c));
+	    	}
+	    	
 	    }
 	    
 	    //Widget that shows our backgrounds.

@@ -19,6 +19,16 @@ public class Puzzle {
 	int height;
 	List<Hint> hints = new ArrayList<Hint>();
 	Puzzle nextPuzzle;
+	Puzzle prevPuzzle;
+	
+	public Puzzle getPrevPuzzle() {
+		return prevPuzzle;
+	}
+
+	public void setPrevPuzzle(Puzzle prevPuzzle) {
+		this.prevPuzzle = prevPuzzle;
+	}
+
 	boolean completed = false;
 	long id;
 	Chapter ch;
@@ -32,6 +42,20 @@ public class Puzzle {
 		return text;
 	}
 
+	public boolean isUnlocked(){
+		//First puzzle in a chapter
+		if(prevPuzzle == null){
+			//First puzzle in the game!
+			if(ch.getPrevChapter() == null){
+				return true;
+			} else{
+				return ch.getPrevChapter().getCompleted();
+			}
+		} else{
+			return prevPuzzle.isCompleted();
+		}
+	}
+	
 	public void setText(String text) {
 		if(text == null)
 			this.text="";

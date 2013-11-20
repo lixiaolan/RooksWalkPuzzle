@@ -50,10 +50,15 @@ public class ChapterWidget extends GraphicWidget {
 
 		/*
 		 * Create a grid of flowers.
-		 * Look for the first not completed puzzle. Spin that one.
+		 * Look for the first not completed puzzle. Pulse that one.
 		 * mGrid2 should draw opaque squares. Without this, we end up 
 		 * having some serious framerate issues.
+		 * TODO:
+		 * Not sure I like this because the first puzzle in a chapter will always show up completed?
+		 * Maybe the puzzle widget should lock itself out?
+		 * Can I move this logic into puzzle widget?
 		 */
+		
 		mGrid = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .22f);
 		mGrid.setRelativeCenter(0, 0);
 		mGrid2 = new GridWidgetLayout(ch.getWidth(), ch.getHeight(), .22f);
@@ -64,15 +69,16 @@ public class ChapterWidget extends GraphicWidget {
 			PuzzleWidget mFlower = new PuzzleWidget(0,0,.15f, .15f, ch.getPuzzle(i));
 			ImageWidget overlay = new ImageWidget(0,0,.15f, .15f,TextureManager.CLEAR);
 			mFlower.setColor("white");
+			
 			overlay.setBorder(true);
-			if(!foundCompleted && !ch.getPuzzle(i).isCompleted()){
+			if(!foundCompleted && ch.getPuzzle(i).isUnlocked() && !ch.getPuzzle(i).isCompleted()){
 				mFlower.setPulse(true);
 				foundCompleted = true;
-			}else if(!ch.getPuzzle(i).isCompleted() && foundCompleted){
+			}
+			if(!ch.getPuzzle(i).isUnlocked()){
 				overlay.setColor("opaque");
 			} 
 			mGrid.addWidget(mFlower);
-
 			mGrid2.addWidget(overlay);
 		}
 		widgetList.add(mGrid);
@@ -101,19 +107,6 @@ public class ChapterWidget extends GraphicWidget {
 		}
 	}
 
-	/*public void setFinishedState(){
-		if((mChapterState == ChapterState.PUZZLE || (mChapterState == ChapterState.FINISHED && chEnd)) && ch.getCompleted()){
-			state = new Finished_State(false);
-			mChapterState = ChapterState.FINISHED;
-		}
-	}
-	
-	public void setFinishedChapter() {
-		state = new Finished_State(true);
-		mChapterState = ChapterState.FINISHED;
-	}
-	*/
-	
 	@Override
 	public void touchHandler(float[] pt){
 		state.touchHandler(pt);

@@ -22,6 +22,8 @@ public class ViewActivity extends Activity {
 	private Model mModel;
 	private MyGLRenderer mRenderer;    
 	private TextView mQuoteView;
+	private TextView mWaitView;
+	
 	private DataServer mDataServer;
 	private static LinearLayout loadingScreen;
 	public static Store mStore;
@@ -58,8 +60,11 @@ public class ViewActivity extends Activity {
 	    Typeface font = Typeface.createFromAsset(getAssets(), "font3.ttf");  
 	    mQuoteView.setTypeface(font);
 	    mQuoteView.setText(Html.fromHtml(quotes[sel]));
-	    mStore = new Store(this);		
 	    
+	    mWaitView = (TextView)findViewById(R.id.wait_view);
+	    mWaitView.setTypeface(font);
+	    
+	    mStore = new Store(this, mModel);		
 	    loadingScreen = (LinearLayout)findViewById(R.id.loadingScreen);
 	    //texturesLoadedEventHandler();
 	}

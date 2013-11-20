@@ -27,9 +27,6 @@ public class LevelPackWidget extends WidgetLayout{
 	mImage.setBorder(true);
 	mImage.setColor("white");
 	mImage.setMode(MyGLRenderer.CROPTOP);
-	
-	
-	//widgetList.add(mText);
 	widgetList.add(mImage);
 	
 	setCenter(0,0);

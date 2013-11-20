@@ -118,7 +118,7 @@
 		
 		</puzzle>
 
-		<puzzle id="26" text="" before_flower="flower2" after_flower="flower2color" text="This puzzle is easier then it looks! You are almost done!">
+		<puzzle id="26" before_flower="flower2" after_flower="flower2color" text="This puzzle is easier then it looks! You are almost done!">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,2,0,1,-1,1,0,0,3,-1,2,0,1,-1,-1,-1,3,2,0,1,-1,1,0,0,3</board>

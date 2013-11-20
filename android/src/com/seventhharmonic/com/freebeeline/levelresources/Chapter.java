@@ -19,8 +19,18 @@ public class Chapter {
 
 	Chapter prevChapter;
 	Chapter nextChapter;
-
+	LevelPack lp;
 	
+	public LevelPack getLp() {
+		return lp;
+	}
+
+
+	public void setLp(LevelPack lp) {
+		this.lp = lp;
+	}
+
+
 	public Chapter getPrevChapter() {
 		return prevChapter;
 	}
@@ -140,6 +150,8 @@ public class Chapter {
 		puzzles.add(p);
 		if(puzzles.size() > 1)
 			puzzles.get(puzzles.size()-2).setNextPuzzle(p);
+		if(puzzles.size() >= 2)
+			p.setPrevPuzzle(puzzles.get(puzzles.size()-2));
 	}
 	
 	public Puzzle getPuzzle(int i){

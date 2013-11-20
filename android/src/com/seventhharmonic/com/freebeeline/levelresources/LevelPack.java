@@ -9,12 +9,18 @@ import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 public class LevelPack {
 	List<Chapter> chapters = new ArrayList<Chapter>();
 	String title;
+	String id;
 	
 	public LevelPack(String name){
 		this.title = name;
 	}
 	
 	public LevelPack(){
+	}
+	
+	public String getId(){
+		//TODO: Incorporate this into XML
+		return "android.test.purchased";
 	}
 	
 	public String getStyle(){
@@ -43,6 +49,7 @@ public class LevelPack {
 
 	public void addChapter(Chapter c){
 		chapters.add(c);
+		c.setLp(this);
 		if(chapters.size() > 1)
 			chapters.get(chapters.size()-2).setNextChapter(c);
 		if(chapters.size() >= 2)

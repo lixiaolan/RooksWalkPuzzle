@@ -20,8 +20,6 @@ public class PuzzleWidget extends Widget{
     	this.height = height;
     	mFlower = new ImageWidget(0,0, width, height, p.getFlower());
 		mFlower.setPivot(new float[] {0.0f, 0.0f, 1.0f});
-		
-		
     }
     
     public void setColor(String color){
