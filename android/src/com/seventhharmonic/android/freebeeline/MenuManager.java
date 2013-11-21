@@ -51,15 +51,14 @@ class MenuManager {
 		mCallback = new Callback_MAIN_MENU_GEAR();
 		break;
 	    case MAIN_MENU_LIST:
-		if(state.resumeGameExists){
+		/*if(state.resumeGameExists){
 		    String[] textures2 = {TextureManager.RESUME, TextureManager.MENU, TextureManager.PLAY};
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 		    mCallback = new Callback_MAIN_MENU_LIST_RESUME();
-		} else {
+		} else {*/
 		    String[] textures2 = {TextureManager.MENU, TextureManager.PLAY};
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
-		    mCallback = new Callback_MAIN_MENU_LIST_NORESUME();
-		}
+		    mCallback = new Callback_MAIN_MENU_LIST();
 		break;
 	    case MAIN_MENU_OPTIONS:
 		String[] textures4 = new String[2];
@@ -161,16 +160,14 @@ class MenuManager {
 		updateState();
 		break;
 	    case 2: 
-		mModel.createTutorial();
-		mModel.setState(GameState.TUTORIAL_MAIN_MENU);
-		updateState();
+	    	mModel.setModelToTutorial();
+	    	updateState();
 		break;
 	    case 3:
-		mModel.createStory();
-		mModel.setState(GameState.STORY);
+	    	mModel.setModelToStory();
 		updateState();
 		break;
-	    case 0: state.state = GameState.MAIN_MENU_OPENING;
+	    case 0: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
 		break;
 		
@@ -178,51 +175,17 @@ class MenuManager {
 	    
 	}
     }
-    
-    class Callback_MAIN_MENU_LIST_RESUME extends Callback {
+
+    class Callback_MAIN_MENU_LIST extends Callback {
 	public void callback(int val) {
 	    switch(val) {
-	    case 1: 
-		state.saveCurrGame = true;
-		mModel.resumeGame();
-		mModel.setState(GameState.GAME_OPENING);
-		updateState();
-		break;
-	    case 2: state.state = GameState.MAIN_MENU_GEAR;
-		updateState();
-		break;
-	    case 3:
-		mModel.setModelToLevelPack();
-		updateState();
-		break;
-	    case 0: state.state = GameState.MAIN_MENU_OPENING;
-		updateState();
-		break;
-	    }
-	}
-    }
-    
-    class Callback_MAIN_MENU_LIST_NORESUME extends Callback {
-	public void callback(int val) {
-	    switch(val) {
-		/*if(state.firstRun){
-		  mModel.createTutorial();
-		  mModel.setState(GameState.TUTORIAL);
-		  state.state = GameState.TUTORIAL;
-		  state.firstRun = false;
-		  } else{
-		  state.state = GameState.MAIN_MENU_NEW;
-		  }
-		  updateState();
-		  break;*/ 
 	    case 1: state.state = GameState.MAIN_MENU_GEAR;
-		updateState();
+	    updateState();
 		break;
 	    case 2:
 		mModel.setModelToLevelPack();
 		updateState();
 		break;
-		
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
 		updateState();
 		break;
@@ -244,7 +207,7 @@ class MenuManager {
 		mModel.toggleLines(state.linesOn);
 		break;
 	    case 2:
-		state.ruleCheck = !state.ruleCheck;
+	    	state.ruleCheck = !state.ruleCheck;
 		if (state.ruleCheck)
 		    mGameMenu.setTexture(1,TextureManager.RULE_CHECK_ON);
 		else
@@ -260,12 +223,11 @@ class MenuManager {
     }
     
     class Callback_GAME_OPENING extends Callback {
-	
 	@Override
-	public void callback(int val) {
-	    mModel.setModelToChapterSelect();
-	    updateState();   
-	}
+		public void callback(int val) {
+	    	mModel.setModelToChapterSelect();
+	    	updateState();   
+		}
     }
     
     
@@ -273,23 +235,22 @@ class MenuManager {
     class Callback_TUTORIAL extends Callback {
 	
 	@Override
-	public void callback(int val) {
-	    switch(val) {
-	    case 1:
-	    	mModel.setState(GameState.GAME_OPENING);
-	    	updateState();
-	    	break;
-	    }
-	}
+		public void callback(int val) {
+	    	switch(val) {
+	    	case 1:
+	    		mModel.setState(GameState.GAME_OPENING);
+	    		updateState();
+	    		break;
+	    	}
+		}
     }
 
     class Callback_TUTORIAL_MAIN_MENU extends Callback {
-    	
     	@Override
     	public void callback(int val) {
     	    switch(val) {
     	    case 1:
-    	    	mModel.setState(GameState.MAIN_MENU_OPENING);
+    	    	mModel.setModelToLevelPack();
     	    	updateState();
     	    	break;
     	    }
@@ -298,57 +259,55 @@ class MenuManager {
 
     
     class Callback_FLOWER_MENU extends Callback {
-	
 	@Override
 	public void callback(int val) {
 	    switch(val) {
 	    case 1:
-		System.out.println("CALLED BACKSTATE");
-		mModel.mFlowerMenu.backState();
+	    	System.out.println("CALLED BACKSTATE");
+	    	mModel.mFlowerMenu.backState();
 		break;
 	    }
 	}
     }
 
-    
-    // class Callback_TABLE_OF_CONTENTS extends Callback {
-	
-    // 	@Override
-    // 	public void callback(int val) {
-    // 	    switch(val) {
-    // 	    case 1:
-    // 		System.out.println("In Menu");
-    // 		System.out.println(mModel.toc.mContents);
-    // 		mModel.setState(GameState.FLOWER_MENU);
-    // 		updateState();
-		
-    // 		// if(mModel.toc.mContents.equals(TableOfContents.Contents.LEVELPACKDISPLAY)){
-    // 		//     /*Comment: TOC already has a reference to Model 
-    // 		//      * - it could just do these state changes itself
-    // 		//      * That would be less awkward then this shit.
-    // 		//      */
-    // 		//     mModel.setState(GameState.MAIN_MENU_OPENING);
-    // 		//     updateState();
-    // 		// }
-    // 		// else {	
-    // 		//     mModel.toc.setState();
-    // 		// }
-    // 		break;
-    // 	    }
-    // 	}
-    // }
-    
+        
     class Callback_STORY extends Callback { 	
 	@Override
 	public void callback(int val) {
 	    
 	    switch(val) {
 	    case 1:
-		state.state = GameState.MAIN_MENU_OPENING;
-		mModel.setState(GameState.MAIN_MENU_OPENING);
-		updateState();
+	    	state.state = GameState.MAIN_MENU_OPENING;
+	    	mModel.setState(GameState.MAIN_MENU_OPENING);
+	    	updateState();
 		break;
 	    }
 	}
     }    
 }
+
+/*
+//TODO: THIS SHOULD GO AWAY SOON
+class Callback_MAIN_MENU_LIST_RESUME extends Callback {
+public void callback(int val) {
+    switch(val) {
+    case 1: 
+	state.saveCurrGame = true;
+	mModel.resumeGame();
+	mModel.setState(GameState.GAME_OPENING);
+	updateState();
+	break;
+    case 2: state.state = GameState.MAIN_MENU_GEAR;
+	updateState();
+	break;
+    case 3:
+	mModel.setModelToLevelPack();
+	updateState();
+	break;
+    case 0: state.state = GameState.MAIN_MENU_OPENING;
+	updateState();
+	break;
+    }
+}
+}
+*/

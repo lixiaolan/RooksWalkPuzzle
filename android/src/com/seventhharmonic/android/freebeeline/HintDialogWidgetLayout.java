@@ -95,7 +95,7 @@ public class HintDialogWidgetLayout extends WidgetLayout{
 		
 		if(twentyHints.isTouched(pt)){
 			Log.d("HintDialog", "You want to buy 20 hints");
-			//ViewActivity.mStore.onBuyTwentyHints(mHints);
+			ViewActivity.mStore.onBuyTwentyHints(mHints);
 			deactivate();
 		} 
 		

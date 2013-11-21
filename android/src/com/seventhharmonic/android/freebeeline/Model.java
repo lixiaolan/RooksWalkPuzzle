@@ -40,9 +40,6 @@ class Model {
     //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
     
     public Model(Context c) {
-	// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-	// mediaPlayer.setLooping(true);
-	// mediaPlayer.start();
 	initiateMembers(c, new Board(this));		
     }
     
@@ -262,15 +259,13 @@ class Model {
 	mMenuManager.updateState();
     }
     
-    public void firstRun() {
-    	setState(GameState.STORY);
-    	createStory();
+    /*public void firstRun() {
+    	//createStory();
+    	//setState(GameState.STORY);
     	mMenuManager.updateState();
-    }
+    }*/
     
-    public void clearBoard() {
-	mBoard.resetBoard();
-    }    
+   
     
     public void onBack(){
 	switch(state.state){
@@ -308,6 +303,11 @@ class Model {
     }
 
     public void setModelToLevelPack() {
+    	if(state.firstRun){
+    		setModelToTutorial();    		
+    		state.firstRun = false;
+    		return;
+    	}
     	setState(GameState.FLOWER_MENU);
     	mFlowerMenu.enterLevelPack();
         }
@@ -317,6 +317,15 @@ class Model {
     	mFlowerMenu.enterChapterSelect();
     }	
     
+    public void setModelToTutorial(){
+    	createTutorial();
+		setState(GameState.TUTORIAL_MAIN_MENU);
+    }
+    
+    public void setModelToStory(){
+    	createStory();
+    	setState(GameState.STORY);
+    }
     
 }
 

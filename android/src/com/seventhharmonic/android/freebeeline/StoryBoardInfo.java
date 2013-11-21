@@ -1,7 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
 public class StoryBoardInfo {
-	public static String[] banners = {"Beatrice was a happy bee ..."
+	public static String[] banners = {"Beatrice is a happy bee ..."
 										, "She loves collecting nectar from flowers..."
 										, "But Beatrice needs your help ... "
 										,""

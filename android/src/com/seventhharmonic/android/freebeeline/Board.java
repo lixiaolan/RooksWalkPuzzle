@@ -16,35 +16,34 @@ import com.seventhharmonic.com.freebeeline.levelresources.Puzzle;
 
 class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInterface {
 	String TAG = "board";
-	public int hints;
 	public int[] solution ;
 	public int[][] path;
 	public int boardWidth = 6;
 	public int boardHeight = 6;
 
-	private boolean toggleHints = true;
 	private boolean toggleLines = true;	
 	private boolean toggleError = true;
-	protected float flowerSize = .15f;
-	protected float tileSize = .11f;    
+		
 	private ErrorLog mErrorLog;
 	private TextBox mGameBanner;
 	private ImageWidget mBoardBg;
 	private Puzzle currPuzzle;
-	Model mModel;
+	private Model mModel;
 	private NewBee mBee;
 	private BoardBeeController mBeeController;
 	private PurchasedDataSource PDS;
 	protected BoardLineManager mBoardLineManager;
+	
+	//The following variables need to be global because they are accessed by several states.
 	//Number of moves in a puzzle.
 	int moves = 0;
 	//Par number of moves
 	int par  = 0;
 
 	public Board(Model mModel) {
-
 	    buildEmptyBoard();
-	    state = null;//new BoardPlay(tiles);
+	    state = null;
+	    
 	    mGameBanner = new TextBox(0.0f, 0.0f, .9f, "");
 	    mGameBanner.setFontSize(TextCreator.font1);
 	    mBoardBg = new ImageWidget(0,0,1.0f, 1.0f, "boardbg");
@@ -61,11 +60,17 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}    
 
 	public void restoreBoard(int[] solution, String[] numbers, String[] arrows, String[] trueArrows, int[][] path, boolean[] clickable){
+		Log.d("Board", "Restored");
 		for(int i=0;i<boardWidth*boardHeight;i++){
+			Log.d("Board","Restored "+Integer.toString(i));
 			tiles[i].setTrueSolution(solution[i]);
 			tiles[i].setArrow(arrows[i]);
 			tiles[i].setNumber(numbers[i]);
 			tiles[i].setTrueArrow(trueArrows[i]);
+			tiles[i].vPointedAt = false;
+			tiles[i].hPointedAt = false;
+			tiles[i].mEndDirectionType = EndDirectionType.NONE;
+			tiles[i].setColor("transparent");
 			if(clickable!=null)
 				if(!clickable[i] && tiles[i].getTrueSolution()!=-1)
 					tiles[i].setHint();
@@ -100,32 +105,26 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			Log.d("path", "dy "+Float.toString(dy));
 			if (dx > 0) {
 				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
 			}
 
 			if (dx < 0) {
 				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
 			}
 
 			if (dy > 0) {
 				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
 			}
 			if (dy < 0) {
 				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
 			}
 			Log.d("path", tiles[boardHeight*path[i][0] + path[i][1]].getTrueArrow());
 		}
 
-		if(toggleHints){
 			for(int i=0;i<hints.length;i++){
 				int r = hints[i];
 				Log.d(TAG, "hint");
 				Log.d(TAG, Integer.toString(r));
 				tiles[r].setHint();
-			}
 		}
 
 	}
@@ -141,56 +140,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			float Sy = (float)(-1.5*r+(1-r)*1.5);
 			float center[] = { Sx, Sy, 0.0f};
 			tiles[i] = new BoardTile(center, size);
-		}
-	}
-
-	public void buildBoardFromSolution(int hints) {
-		List<Integer> numbers = new ArrayList<Integer>();
-		for (int i = 0; i < tiles.length; i++) {	
-			//This does a hard reset on the board.
-			tiles[i].number = TextureManager.CLEAR;
-			tiles[i].arrow = TextureManager.CLEAR;
-			tiles[i].setTrueSolution(0);
-			tiles[i].setTrueArrow(TextureManager.CLEAR);
-			tiles[i].rotate = false;
-			if(solution [i] > 0){
-				numbers.add(i);
-				//tiles[i].setNumber(Integer.toString(solution[i]));
-			}
-			//Set the solution in the tile
-			tiles[i].setTrueSolution(solution[i]);
-		} 
-		int dx;
-		int dy;
-		int length = (path.length)/2;
-		for (int i = 0; i < length-1; i++) {
-			dx = path[i+1][0]-path[i][0];
-			dy = path[i+1][1]-path[i][1];
-
-			if (dx > 0) {
-				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("right_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "right_arrow";
-			}
-			if (dx < 0) {
-				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("left_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "left_arrow";
-			}
-			if (dy > 0) {
-				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("down_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "down_arrow";
-			}
-			if (dy < 0) {
-				tiles[boardHeight*path[i+1][0] + path[i+1][1]].setTrueArrow("up_arrow");
-				//tiles[6*path[i+1][0] + path[i+1][1]].arrow = "up_arrow";
-			}
-		}
-		//Note we are assuming that hints<numbers and that we have a unique solution
-		if(toggleHints){
-			Collections.shuffle(numbers);
-			for(int i=0;i<hints;i++){
-				int r = numbers.get(i);
-				tiles[r].setHint();
-			}
 		}
 	}
 
@@ -275,10 +224,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		toggleLines = toggle;
 	}
 
-	public void toggleHints(boolean toggle){
-		toggleHints = toggle;
-	}
-
 	public void toggleRules(boolean toggle){
 		toggleError = toggle;
 	}
@@ -295,11 +240,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
 				System.out.println("Found a potential tile");
 				if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
-					//tiles[i].setSolution();
-					//tiles[i].setTextures();
 					tiles[i].setHint();
 					mBoardLineManager.drawLines();
-
 					break;
 				}
 			}
@@ -333,7 +275,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	}
 
 	/////////////////////////////////////////////////////////////////////////////	
-
 	////////////////////////////////////////////////////////////////////////////////
 	//Bee Board Interface Methods:
 
@@ -374,9 +315,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 		return 0;
 	}
+	
 	////////////////////////////////////////////////////////////////////////////////
-
-
 	//This state defines board behavior during game play.
 	class BoardPlay extends State<BoardTile> {
 
@@ -399,15 +339,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		HintsDataSource DB;
 		TextBox mHints;
 		TextBox mMoves;
+		TextBox mPar;
 		HintDialogWidgetLayout mHintDialog;
 		Store mStore;
 		GridWidgetLayout buttonGrid;
-		//ButtonWidget mCheck;
+		GridWidgetLayout textGrid;
 
 		//TODO: Get rid of tiles as inputs to these functions.
 		public BoardPlay(BoardTile[] tiles) {
 			
-			par = (int)(2*(path.length-currPuzzle.getNumberOfHints()));
+			par = currPuzzle.getPar();
 			moves = 0;
 			
 			DB = GlobalApplication.getHintDB();
@@ -460,21 +401,19 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
 			}
 
-			//mCheck  = new ButtonWidget(0, 0, .11f, .11f, TextureManager.CHECK);
-			//mCheck.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
-
-			//Text Box with number of moves 
-			mMoves = new TextBox(.33f, mBoardBg.getCenterY()-mBoardBg.getHeight()-.3f, .22f, "moves:^ 0");
+			mMoves = new TextBox(0, 0, .22f, "moves:^ 0");
 			updateMoves();
 			mMoves.setJ(TextJustification.CENTER);
 			
+			mPar = new TextBox(0,0,.22f, "par:^ "+Integer.toString(par));
+			mPar.setJ(TextJustification.CENTER);
 			
 			//Grid Widget to store all these wonderful buttons.
-		
-			buttonGrid = new GridWidgetLayout(4,1, .18f);
+			buttonGrid = new GridWidgetLayout(3,2, .18f);
 			buttonGrid.setCenter(0, mBoardBg.getCenterY()-mBoardBg.getHeight()-.1f);
 			buttonGrid.addWidget(mHints);
 			buttonGrid.addWidget(mMoves);
+			buttonGrid.addWidget(mPar);
 			buttonGrid.addWidget(reset);
 			buttonGrid.addWidget(tutorial);
 
@@ -569,8 +508,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			mGameBanner.draw(r);
 			mBoardBg.draw(r);
+			mGameBanner.draw(r);
 			super.draw(tiles, r);
 			mBee.draw(r);
 			mMenu.draw(r);
@@ -683,17 +622,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		public void checkIfPuzzleSolved() {
 		    if(checkSolution()) {	
 		    	if(currPuzzle!=null){
-			    Log.d("board", "solved a puzzle and set completed to true");
-			    currPuzzle.setCompleted(true);
-			    if(moves <= par){
-			    	currPuzzle.setAward(TextureManager.GOLDSTAR);
-			    }
-			    mModel.state.saveCurrGame = false;
-			    mModel.state.resumeGameExists = false;
-			    mBeeController.setMood(Mood.HAPPY);
-			    mModel.setState(GameState.GAME_MENU_END);
-			    GlobalApplication.getPuzzleDB().setPuzzle(currPuzzle.getId(),"true");
-			    
+		    		Log.d("board", "solved a puzzle and set completed to true");
+		    		currPuzzle.completePuzzleListener(moves, true);
+		    		mBeeController.setMood(Mood.HAPPY);
+		    		mModel.setState(GameState.GAME_MENU_END);
 			}
 		    }
 		}
@@ -745,23 +677,31 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			}
 			checkIfPuzzleSolved();
 		}
-
 	}
+	
 	//This is the board after completing the game.
 	class BoardGameEnd extends State<BoardTile> {
 		boolean[] rotateTiles = new boolean[boardHeight*boardWidth];
 		boolean[] flipped = new boolean[boardHeight*boardWidth];
 		long[] refTime = new long[boardHeight*boardWidth];
 		EndGameDialogWidgetLayout mDialog;
-
+		ImageWidget mFlower;
+		
 		public BoardGameEnd(BoardTile[] tiles) {
+			//Top game banner
+			mFlower = new ImageWidget(0,mBoardBg.getCenterY()+mBoardBg.getHeight(),.15f,.15f,currPuzzle.getFlower());
+		
+			//Note: this is game moves! If this number is less then the puzzle moves, the puzzle will not change the number of moves.
 			if(moves <= par){
-				mGameBanner.setText("Perfect Puzzle Solution!");//+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));
+				mGameBanner.setText("Perfect Finish!");	
 			} else {
 				mGameBanner.setText("Puzzle Completed");
 			}
+			
 			mGameBanner.setFontSize(2);
 			mGameBanner.setJ(TextJustification.CENTER);
+			
+			//Buttons at the bottom.
 			mDialog = new EndGameDialogWidgetLayout(.8f);
 			mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
 			mDialog.setNextClickListener(new GameEventListener(){
@@ -770,7 +710,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mDialog.deactivate();
 					if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
-
+						
 						//TODO: Created a hack here to ensure we recreate the current chapter widget
 						mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
@@ -798,6 +738,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 			mDialog.activate();
 
+			//Initiate tiles
 			for (int i = 0; i < tiles.length; i++) {
 				flipped[i] = false;
 				rotateTiles[i] = false;
@@ -809,15 +750,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				refTime[i] = System.currentTimeMillis();
 				tiles[i].setAlpha(true);
 			}
-			if (toggleLines) {
-				mBoardLineManager.drawLines();
-			}
+			
+			//We should redraw the lines to be on the safe side
+			mBoardLineManager.drawLines();
+			
 		}
 
-		//The new animation:
 		public void enterAnimation(BoardTile[] tiles) {
-			//	    long time = System.currentTimeMillis()-refTime[0];
-
 			for (int i = 0; i < tiles.length ; i++) {
 				if (tiles[i].true_solution >0) {
 					float[] pivot = {1.0f,1.0f,0.0f};
@@ -844,7 +783,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 						s[0] = tiles[i].arrow;
 						s[1] = tiles[i].number;
 						tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-						//tiles[i].rotate = false;
 					}
 				}
 			}
@@ -864,8 +802,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mBee.draw(r);
 			mDialog.draw(r);
 			mGameBanner.draw(r);
+			mFlower.draw(r);
 		}
 	}        
 
 
 }
+
+////+"^^"+TextureManager.PUZZLESLEFT+Integer.toString(currPuzzle.getChapter().getNumberPuzzlesIncomplete()));

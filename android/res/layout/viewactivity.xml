@@ -15,8 +15,23 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:paddingLeft="0dp"
-    android:paddingRight="0dp" >
-
+    android:paddingRight="0dp" >    
+    
+  <TextView
+            android:id="@+id/wait_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|center_vertical"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp" 
+            android:text="Please wait for Beatrice to grab that off the shelf..."/>
+    
+    
     <com.seventhharmonic.android.freebeeline.GameView
         android:id="@+id/surface_view"
         android:layout_width="fill_parent"
