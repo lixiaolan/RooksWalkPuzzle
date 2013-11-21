@@ -25,7 +25,8 @@ public class GlobalApplication extends Application {
     private static HintsDataSource hDB;
     private static PurchasedDataSource PDS;
     private static MySQLiteHelper MSQLH;
-
+    private static MyMusic myMusic;
+    
     /*
      * Google Analytics configuration values.
      */
@@ -61,6 +62,8 @@ public class GlobalApplication extends Application {
 	hDB.open();
 	PDS = new PurchasedDataSource(this, MSQLH);
 	PDS.open();
+	
+	myMusic = new MyMusic(context); 
     }
     
     @Override
@@ -104,6 +107,10 @@ public class GlobalApplication extends Application {
 
     public static PurchasedDataSource getPurchasedDB(){
 	return PDS;
+    }
+
+    public static MyMusic getMyMusic(){
+	return myMusic;
     }
 
     

@@ -39,15 +39,16 @@ class Model {
     //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
     
     public Model(Context c) {
-	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-	mediaPlayer.setLooping(true);
-	mediaPlayer.start();
+	// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+	// mediaPlayer.setLooping(true);
+	// mediaPlayer.start();
 	initiateMembers(c, new Board(this));		
     }
     
     public Model(Context c, Board b){
-    	mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-    	mediaPlayer.start();	
+	// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
+	// mediaPlayer.setLooping(true);
+	// mediaPlayer.start();
     	initiateMembers(c, b);
     }
     

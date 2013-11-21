@@ -338,10 +338,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	//Bee Board Interface Methods:
 
 	public BoardTile getTile(int index) {
-		if (index >= tiles.length) {
-			return tiles[0];
-		}
-		return tiles[index];
+	    if (tiles == null) {
+		System.out.println("TILES WAS NULL IN BOARD: getTile");
+	    }
+	    if (index >= tiles.length) {
+		return tiles[0];
+	    }
+	    return tiles[index];
 	}
 
 	public int getBoardHeight() {
