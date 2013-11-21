@@ -21,11 +21,18 @@ public class BaseDataSource {
     }
     
     public void open() throws SQLException {
-    	database = dbHelper.getWritableDatabase();
+	if (database == null) {
+	    database = dbHelper.getWritableDatabase();
+	}
+	else if (!database.isOpen()) {
+	    database = dbHelper.getWritableDatabase();
+	}
     }
     
     public void close() {
     	dbHelper.close();
     }
+    
+    
    
 } 

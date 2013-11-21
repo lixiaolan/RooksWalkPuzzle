@@ -81,9 +81,14 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 	
 	@Override
 	public void control() {
-	    t = mBoardInterface.getTile(r);
-	    f = t.getCenter();
-	    bee.setTarget(f);
+	    try {
+		t = mBoardInterface.getTile(r);
+		f = t.getCenter();
+		bee.setTarget(f);
+	    }
+	    catch (NullPointerException e) {
+		System.out.println("Null Pointer Exception Caught in BoardBeeController::controll()");
+	    }
 	}
 	
 	@Override

@@ -30,11 +30,11 @@ public class MyMusic{
     private int length = 0;
     private int iVolume;
     private int fadeDuration = 666;
+    private boolean playing;
     private final static int INT_VOLUME_MAX = 100;
     private final static int INT_VOLUME_MIN = 0;
     private final static float FLOAT_VOLUME_MAX = 1;
     private final static float FLOAT_VOLUME_MIN = 0;
-    
 
 
     public MyMusic(Context c) {
@@ -42,8 +42,8 @@ public class MyMusic{
     }
     
     public void playSong(String song) {
-	if (song.equals(currSong) ) {
-	    
+	playing = true;
+	if (song.equals(currSong) ) {	    
 	}
 	else {
 	    if (song.equals("default") ) {
@@ -54,17 +54,9 @@ public class MyMusic{
 	    currSong = song;
 	}
     }
-    
-
-    // public class ServiceBinder extends Binder {
-    // 	MyMusic getService()
-    // 	{
-    // 	    return MyMusic.this;
-    // 	}
-    // }
-    
+        
     public void onCreate() {
-
+	playing = true;
 	if (mMediaPlayer != null) {
 	    mMediaPlayer.setLooping(true);
 	    mMediaPlayer.setVolume(100,100);
@@ -75,7 +67,7 @@ public class MyMusic{
 
     public void pauseMusic()
     {
-
+	playing = false;
 	if (mMediaPlayer != null) {
 	    //Set current volume, depending on fade or not
 	    if (fadeDuration > 0) 
@@ -98,7 +90,10 @@ public class MyMusic{
 				if (iVolume == INT_VOLUME_MIN)
 				    {
 					//Pause music
-					if (mMediaPlayer.isPlaying()) mMediaPlayer.pause();
+					if (mMediaPlayer.isPlaying()) {
+					    mMediaPlayer.pause();
+					    length=mMediaPlayer.getCurrentPosition();
+					}
 					timer.cancel();
 					timer.purge();
 				    }
@@ -122,6 +117,7 @@ public class MyMusic{
     
     public void resumeMusic()
     {
+	playing = true;
 	if (mMediaPlayer != null) {
 	    
 	    //Set current volume, depending on fade or not
@@ -133,8 +129,10 @@ public class MyMusic{
 	    updateVolume(0);
 	    
 	    //Play music
-	    if(!mMediaPlayer.isPlaying()) mMediaPlayer.start();
-	    
+	    if(!mMediaPlayer.isPlaying() )  {
+		mMediaPlayer.start();
+		mMediaPlayer.seekTo(length);
+	    }
 	    //Start increasing volume in increments
 	    if(fadeDuration > 0)
 		{
@@ -168,13 +166,25 @@ public class MyMusic{
 	}
     }
 
+    public void toggleMusic() {
+	if (playing) { 
+	    pauseMusic();
+	}
+	else {
+	    resumeMusic();
+	}
+	return;
+    }
+
     public void resetMusic() {
+	playing = false;
 	mMediaPlayer.stop();
-	
+	return;
     }
     
     public void stopMusic()
     {
+	playing = false;
 	currSong = "";
 	if (mMediaPlayer != null) {
 	    mMediaPlayer.stop();
@@ -186,7 +196,7 @@ public class MyMusic{
     
     public void onDestroy ()
     {
-	
+	playing = false;
 	if(mMediaPlayer != null)
 	    {
 		try{

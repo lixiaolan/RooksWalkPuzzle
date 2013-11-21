@@ -53,7 +53,6 @@ public class GlobalApplication extends Application {
 	geo = new Geometry();
 	mTextureBridge = new TextureBridge();
 	mLPP = new SAXLevelPackProvider();
-	
 	MSQLH = new MySQLiteHelper(this);
 	
 	mDB = new PuzzleDataSource(this, MSQLH);
@@ -64,6 +63,7 @@ public class GlobalApplication extends Application {
 	PDS.open();
 	
 	myMusic = new MyMusic(context); 
+	myMusic.playSong("default");
     }
     
     @Override
@@ -71,8 +71,6 @@ public class GlobalApplication extends Application {
 	super.onCreate();
 	initializeGa();
     }
-    
- 
     
     /*
      * Returns the Google Analytics tracker.

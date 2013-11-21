@@ -20,6 +20,7 @@ public class PuzzleDataSource extends BaseDataSource{
     }
     
     public SQLPuzzle getPuzzle(long id) {
+	open();
 
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_PUZZLES, allColumns,
 				       MySQLiteHelper.COLUMN_ID + " = " + id, 
@@ -44,6 +45,8 @@ public class PuzzleDataSource extends BaseDataSource{
     }
     
     public void setPuzzle(long id, String completed) {
+	open();
+
 	ContentValues values = new ContentValues();
 	long zero = 0;
 	values.put(MySQLiteHelper.COLUMN_PUZZLE, completed);
@@ -65,6 +68,7 @@ public class PuzzleDataSource extends BaseDataSource{
     }
     //overloaded so that old code is not broken.
     public void setPuzzle(long id, String completed, long movesUsed) {
+	open();
 
 	ContentValues values = new ContentValues();
 	values.put(MySQLiteHelper.COLUMN_PUZZLE, completed);
@@ -87,6 +91,8 @@ public class PuzzleDataSource extends BaseDataSource{
     }
 
     public void deletePuzzle(SQLPuzzle puz) {
+	open();
+
 	long id = puz.getId();
 	System.out.println("SQLPuzzle deleted with id: " + id);
 	database.delete(MySQLiteHelper.TABLE_PUZZLES, MySQLiteHelper.COLUMN_ID
@@ -94,6 +100,8 @@ public class PuzzleDataSource extends BaseDataSource{
     }
     
     public List<SQLPuzzle> getAllSQLPuzzles() {
+	open();
+	
 	List<SQLPuzzle> puzs = new ArrayList<SQLPuzzle>();
 	
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_PUZZLES,

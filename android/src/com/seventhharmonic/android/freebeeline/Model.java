@@ -26,6 +26,7 @@ class Model {
     private Vibrator vibe;
     public Context context;
     private ImageWidget mTitle;
+    private TextToggleButtonWidget muteButton;
     private Geometry geometry;
     private StoryBoard mStoryBoard;
     private DataServer mDataServer;
@@ -51,6 +52,7 @@ class Model {
 	// mediaPlayer.start();
     	initiateMembers(c, b);
     }
+
     
     public void initiateMembers(Context c, Board b){
     	mBoard = b;
@@ -61,6 +63,15 @@ class Model {
 	mTitle = new ImageWidget(.5f,.8f,.5f,.5f,"title");
 	mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
 	mVersionBanner.setCenter(0.0f, 0.0f);
+	//	muteButton = new ImageWidget(-.05f,GlobalApplication.getGeometry().getGeometry()[1],.1f, .1f, "title");
+	muteButton = new TextToggleButtonWidget(10.0f,.1f,.1f, .1f, "flower1", "title");
+	muteButton.setBorder(false);
+	muteButton.setClickListener(new GameEventListener() {
+		@Override
+		public void event(int i) {
+		    GlobalApplication.getMyMusic().toggleMusic();
+		}
+	    });
     }
     
     public void createPuzzleFromPuzzle(Puzzle p){
@@ -139,7 +150,7 @@ class Model {
 	    break;
 	default: break;
 	}
-
+	muteButton.touchHandler(pt);
     }
     
     public void swiped(float[] pt, String direction) {
@@ -194,6 +205,7 @@ class Model {
 	    break;
 	default: break;
 	}
+	muteButton.draw(r);
     }
     
     public void setGeometry(Geometry g) {
@@ -213,6 +225,7 @@ class Model {
 		mFlowerMenu = new FlowerMenu(this);
 		initializeToggle = true;
 	}
+	muteButton.setCenter(-1.0f+0.1f,GlobalApplication.getGeometry().getGeometry()[1]-.1f);
     }
     
     public void setState(GameState s){

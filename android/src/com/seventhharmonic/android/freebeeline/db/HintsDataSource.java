@@ -19,6 +19,8 @@ public class HintsDataSource extends BaseDataSource{
     }
     
     public SQLHint getHints() {
+	open();
+
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_HINTS, allColumns,
 				       MySQLiteHelper.COLUMN_ID + " = " + hintIndex, 
 				       null, null, null, null);
@@ -42,6 +44,8 @@ public class HintsDataSource extends BaseDataSource{
     }
     
     public void setHint(long num) {
+	open();
+
 	ContentValues values = new ContentValues();
 	values.put(MySQLiteHelper.COLUMN_HINTS, num);
 	values.put(MySQLiteHelper.COLUMN_ID, hintIndex);
@@ -59,6 +63,8 @@ public class HintsDataSource extends BaseDataSource{
     }
 
     public void addHints(long num) {
+	open();
+
 	SQLHint old = getHints();
 	
 	ContentValues values = new ContentValues();
@@ -79,6 +85,8 @@ public class HintsDataSource extends BaseDataSource{
     }
 
     public boolean useHint() {
+	
+	
 	SQLHint old = getHints();
 	
 	if (old.getNum() < 1) {

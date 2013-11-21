@@ -309,7 +309,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		
 		GlobalApplication.getGeometry().setGeometry(getGeometry()[0], getGeometry()[1]);
 		mModel.setGeometry(GlobalApplication.getGeometry());
-		
 	}
 
 	public float[] getTopLeft() {

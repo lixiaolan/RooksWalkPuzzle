@@ -21,6 +21,8 @@ public class PurchasedDataSource extends BaseDataSource{
     }
     
     public SQLPurchased getPurchased() {
+	open();
+
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_PURCHASED, allColumns,
 				       null, null, null, null, null);
 	
@@ -50,6 +52,7 @@ public class PurchasedDataSource extends BaseDataSource{
 	//Note: when doing a query on a string type column, you MUST put single quotes ''
 	//      around any sring variable (like sku) that you specify.  See below.  Not
 	//      doing this leads to very unstable results!
+	open();
 
 	Cursor cursor = database.query(MySQLiteHelper.TABLE_PURCHASED, allColumns,
 				       MySQLiteHelper.COLUMN_SKU + " = '" + sku + "'",
@@ -83,6 +86,8 @@ public class PurchasedDataSource extends BaseDataSource{
 
     
     public void setPurchased(String sku, Boolean pur) {
+	open();
+
 	ContentValues values = new ContentValues();
 	
 	long num = pur ? 1 : 0;
@@ -103,4 +108,6 @@ public class PurchasedDataSource extends BaseDataSource{
 
 	return;
     }
+    
+    
 } 

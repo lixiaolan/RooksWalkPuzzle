@@ -15,7 +15,7 @@ public class TextToggleButtonWidget extends ButtonWidget{
 	boolean toggle = true;
 	
 	public TextToggleButtonWidget(float centerX, float centerY, float width, float height, String text, String toggleText){
-		super(centerX, centerY, width, height, TextureManager.HIDE);
+		super(centerX, centerY, width, height, text);
 		//mText = new TextBox(centerX,centerY, width, text );
 		//mText.setJ(TextJustification.CENTERBOX);
 		//a.setColor("white");
@@ -28,13 +28,13 @@ public class TextToggleButtonWidget extends ButtonWidget{
 		super.touchHandler(pt);
 		if(super.isTouched(pt)){
 		if(toggle){
-			//mText.setText(toggleText);
-			super.setImage(TextureManager.SHOW);
-			toggle = false;
+		    //mText.setText(toggleText);
+		    super.setImage(toggleText);
+		    toggle = false;
 		} else{
-			super.setImage(TextureManager.HIDE);
-			//mText.setText(text);
-			toggle = true;
+		    super.setImage(text);
+		    //mText.setText(text);
+		    toggle = true;
 		}
 		}
 	}
