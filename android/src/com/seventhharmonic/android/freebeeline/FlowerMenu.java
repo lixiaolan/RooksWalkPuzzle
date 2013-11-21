@@ -42,6 +42,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     private static final int flowerCount = 25; 
     private FlowerTile[] tiles = new FlowerTile[flowerCount];
 
+    private MyMusic myMusic = GlobalApplication.getMyMusic();
+
     private long lastTouchTime;
     private float[] lastTouchPos = new float[2];
     
@@ -132,6 +134,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    mFlowerState = FlowerState.MAIN_MENU;
 	    
 	    mModel.setModelToMainMenuOpening();
+	    myMusic.stopMusic();
 	    break;
 	case CHAPTER_SELECT:
 	    mFlowerState = FlowerState.BOOK_SELECT;
@@ -227,6 +230,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 
 	    physics.resetPhysics();
 	    physics.setPhysics(currLevelPack.getStyle());
+
+	    myMusic.playSong(currLevelPack.getSong());
 	}
 	
 	@Override
@@ -252,6 +257,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    m.swipeHandler(direction);
 	    physics.resetPhysics();
 	    physics.setPhysics(currLevelPack.getStyle());
+	    myMusic.playSong(currLevelPack.getSong());
 	}
 	
 	@Override

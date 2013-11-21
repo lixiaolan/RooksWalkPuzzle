@@ -117,10 +117,15 @@ public class Puzzle {
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
-	    GlobalApplication.getPuzzleDB().setPuzzle(this.getId(),"true");
-
 	}
 
+	public void completePuzzleListener(int moves, boolean completed){
+		setMoves(moves);
+		setCompleted(completed);
+		GlobalApplication.getPuzzleDB().setPuzzle(this.getId(),"true",moves);
+
+	}
+	
 	public int getMoves(){
 		return moves;
 	}

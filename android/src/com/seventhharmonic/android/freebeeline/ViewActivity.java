@@ -16,7 +16,24 @@ import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 
+import android.media.MediaPlayer;
+import android.media.AudioManager;
+import android.content.Context;
+import android.content.*;
+import android.app.Activity;
+import android.app.Service;
+import android.os.Binder;
+import android.os.IBinder;
+import android.content.Intent;
+
+
 public class ViewActivity extends Activity {
+        
+    
+    boolean savedGame = false;
+    static final String savefile = "savefile";
+    static final String settingsfile = "settingsfile";
+    static final String TAG = "ViewActivity";
 
 	private GLSurfaceView mGLView;
 	private Model mModel;
@@ -27,12 +44,7 @@ public class ViewActivity extends Activity {
 	private DataServer mDataServer;
 	private static LinearLayout loadingScreen;
 	public static Store mStore;
-	
-	boolean savedGame = false;
-	static final String savefile = "savefile";
-	static final String settingsfile = "settingsfile";
-	static final String TAG = "ViewActivity";
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    
@@ -84,21 +96,22 @@ public class ViewActivity extends Activity {
 	GlobalApplication.getPuzzleDB().close();
 	GlobalApplication.getHintDB().close();
 	GlobalApplication.getPurchasedDB().close();
-	Log.d(TAG, "Got Paused");
+
+	GlobalApplication.getMyMusic().pauseMusic();
     }
     
-	@Override
-	protected void onResume() {
-	    super.onResume();
-	    // The following call resumes a paused rendering thread.
-	    // If you de-allocated graphic objects for onPause()
-	    // this is a good place to re-allocate them.
-	    GlobalApplication.getPuzzleDB().open();
-	    GlobalApplication.getHintDB().open();
-	    GlobalApplication.getPurchasedDB().open();
-	    Log.d(TAG,"Got Resumed");
-	    mGLView.onResume();
-	}
+    @Override
+    protected void onResume() {
+	super.onResume();
+	// The following call resumes a paused rendering thread.
+	// If you de-allocated graphic objects for onPause()
+	// this is a good place to re-allocate them.
+	GlobalApplication.getPuzzleDB().open();
+	GlobalApplication.getHintDB().open();
+	GlobalApplication.getPurchasedDB().open();	
+	mGLView.onResume();
+	GlobalApplication.getMyMusic().resumeMusic();
+    }
     
     @Override
     protected void onStart() {
@@ -136,51 +149,54 @@ public class ViewActivity extends Activity {
 		}
 
 		
-	}
+	}	
 
-	
-	
-	protected void onStop() {
-		super.onStop();
-	}
-	
-	public void onDestroy() {
-        super.onDestroy();
-        // very important:
-        Log.d(TAG, "Destroying helper.");
-        if (mStore.mHelper != null) {
-            mStore.mHelper.dispose();
-            mStore.mHelper = null;
-        }
+    
+    
+    
+    protected void onStop() {
+	super.onStop();
+	//	GlobalApplication.getMyMusic().stopMusic();
     }
+    
+    public void onDestroy() {
+	super.onDestroy();
+	// very important:
+	Log.d(TAG, "Destroying helper.");
+	if (mStore.mHelper != null) {
+	    mStore.mHelper.dispose();
+	    mStore.mHelper = null;
+	}
+	//	GlobalApplication.getMyMusic().onDestroy();	
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	super.onActivityResult(requestCode, resultCode, data);
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    super.onActivityResult(requestCode, resultCode, data);
-
-	    // Pass on the activity result to the helper for handling
-	    // NOTE: handleActivityResult() will update the state of the helper,
-	    // allowing you to make further calls without having it exception on you
-	    if (mStore.mHelper.handleActivityResult(requestCode, resultCode, data)) {
-	        Log.d(TAG, "onActivityResult handled by IABUtil.");
-	        //handlePurchaseResult(requestCode, resultCode, data);
-	        return;
-	    }
-
-	    // What you would normally do
-	    // ...
+	// Pass on the activity result to the helper for handling
+	// NOTE: handleActivityResult() will update the state of the helper,
+	// allowing you to make further calls without having it exception on you
+	if (mStore.mHelper.handleActivityResult(requestCode, resultCode, data)) {
+	    Log.d(TAG, "onActivityResult handled by IABUtil.");
+	    //handlePurchaseResult(requestCode, resultCode, data);
+	    return;
 	}
 	
-	public void closeQuoteScreen(View v) {
-		loadingScreen.setVisibility(View.INVISIBLE);
-	}
-	
-	
-	
-	
-	public void onBackPressed() {
-		   mModel.onBack();
-		}	
+	// What you would normally do
+	// ...
+    }
+    
+    public void closeQuoteScreen(View v) {
+	loadingScreen.setVisibility(View.INVISIBLE);
+    }
+    
+    
+    
+    
+    public void onBackPressed() {
+	mModel.onBack();
+    }	
 }    
 
 

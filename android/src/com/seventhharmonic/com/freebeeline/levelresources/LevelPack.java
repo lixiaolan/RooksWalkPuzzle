@@ -27,6 +27,11 @@ public class LevelPack {
 		//TODO: Make this read the style from the XML!!!!
 		return "default";
 	}
+
+    public String getSong() {
+	//TODO: Make this read the song from the XML!!!!
+	return "default";
+    }
 	
 	public String getTitle() {
 		return title;

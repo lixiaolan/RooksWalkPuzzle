@@ -22,6 +22,8 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 
 
     public void setBee(NewBee inBee) {
+	//Perhaps this needs to be in the order so that we don't fuck
+	//up the bee that the old controller is trying to work with?
 	bee = inBee;
 	setControllerUnit(new StayStillController());
     }

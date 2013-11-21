@@ -1,0 +1,7 @@
+​indexes:
+- kind: Email
+  ancestor: yes
+  properties:
+  - name: email
+  - name: date
+    direction: desc
