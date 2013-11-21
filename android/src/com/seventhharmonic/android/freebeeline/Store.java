@@ -46,16 +46,15 @@ public class Store {
 		this.mModel = mModel;
 		PDS = GlobalApplication.getPurchasedDB();
 		purchasables = new ArrayList<String>(Arrays.asList(
-				new String[]{"android.test.purchased","levelPack1","levelPack2"}));
+				new String[]{"android.test.purchased","levelpack1","levelpack2"}));
 		levelPackToChapterLimit = new HashMap<String, Integer>();
 		levelPackToChapterLimit.put("android.test.purchased", Integer.valueOf(1));
-		levelPackToChapterLimit.put("levelPack1", Integer.valueOf(1));
-		levelPackToChapterLimit.put("levelPack2", Integer.valueOf(3));
+		levelPackToChapterLimit.put("levelpack1", Integer.valueOf(1));
+		levelPackToChapterLimit.put("levelpack2", Integer.valueOf(3));
 		
 		initializeIab();
 		
 	}
-
 	
 	void initializeIab() {
 		String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAocHERvmpvt+dCcMh2R8GnAS8scYLWLnPDC7KFw4qadzDw5iv7rPcgAzvGcwkPjN/nUHamJ/eHRvYhMJiekFGtOn/zFKTLOUU+JmTUHrQuvE7cQ8P30fej7GB4htm1h6FfOjJ9ZQRgyR78LMa9cMQnSY3BSxY3qhAPP4vmlj0ruTIPN7Selepc8ybP0RQtpyGSDfHAZ6v2B8Wnh23lqBg87JWyyvqD4bsIJeMr79WT7BD20dt3IsGKZ72I9XAH86S4CKb4TvaDqmWRU2qXmYq9QrqvJGNBdAwg3Wf4nAZfnVpeliF4y6ryq/lKvPCOcAsajREczSQGdNaLyYbRRAhHwIDAQAB";
@@ -83,7 +82,7 @@ public class Store {
 				Log.d(TAG, "Setup successful. Querying inventory.");
 				
 				/*TODO:
-				 * Have completely commented out Security. There should be a newer version of the code
+				 * Have completely commented out Security to make this work. There should be a newer version of the code
 				 * which does the necessary verification of the security.
 				 */
 				mHelper.queryInventoryAsync(mGotInventoryListener);
@@ -109,7 +108,6 @@ public class Store {
 		
 		
 	}
-
 	
 	IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
 		public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
@@ -147,16 +145,16 @@ public class Store {
 	 */
 	public void onBuyFiveHints(TextBox mHints) {
 		Log.d(TAG, "Buy hints button clicked.");
-		// launch the gas purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
-		//setWaitScreen(true);
+		setWaitScreen(true);
 		Log.d(TAG, "Launching purchase flow for hints.");
+		
 		/* TODO: for security, generate your payload here for verification. See the comments on
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
 		hintWidget = mHints;
-		mHelper.launchPurchaseFlow(mContext, "android.test.purchased", RC_REQUEST,
+		mHelper.launchPurchaseFlow(mContext, "hints5", RC_REQUEST,
 				mPurchaseFiveHintsFinishedListener, payload);
 	}
 
@@ -171,12 +169,13 @@ public class Store {
 
 				if (result.isFailure()) {
 					complain("Error purchasing: " + result);
-					//setWaitScreen(false);
+					setWaitScreen(false);
 					return;
 				}
+				
 				if (!verifyDeveloperPayload(purchase)) {
 					complain("Error purchasing. Authenticity verification failed.");
-					//setWaitScreen(false);
+					setWaitScreen(false);
 					return;
 				} 
 
@@ -211,46 +210,97 @@ public class Store {
 			else {
 				complain("Error while consuming: " + result);
 			}
+			setWaitScreen(false);
 		}
 	};
 
 	/************************************************************************/
+	/*
+	 * Code run when you decide to buy 20 hints.
+	 */
+	public void onBuyTwentyHints(TextBox mHints) {
+		Log.d(TAG, "Buy hints button clicked.");
+		// launch the gas purchase UI flow.
+		// We will be notified of completion via mPurchaseFinishedListener
+		setWaitScreen(true);
+		Log.d(TAG, "Launching purchase flow for hints.");
+		/* TODO: for security, generate your payload here for verification. See the comments on
+		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
+		 *        an empty string, but on a production app you should carefully generate this. */
+		String payload = "";
+		hintWidget = mHints;
+		mHelper.launchPurchaseFlow(mContext, "hints20", RC_REQUEST,
+				mPurchaseTwentyHintsFinishedListener, payload);
+	}
 
+	IabHelper.OnIabPurchaseFinishedListener mPurchaseTwentyHintsFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+		public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+			Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+			try{
+				// if we were disposed of in the meantime, quit.
+				if (mHelper == null){
+					return ;
+				}
+
+				if (result.isFailure()) {
+					complain("Error purchasing: " + result);
+					setWaitScreen(false);
+					return;
+				}
+				if (!verifyDeveloperPayload(purchase)) {
+					complain("Error purchasing. Authenticity verification failed.");
+					setWaitScreen(false);
+					return;
+				} 
+
+				//Consume this purchase immediately!!! Can change this in the future.
+				mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
+
+				//Fill DB
+				GlobalApplication.getHintDB().open();
+				GlobalApplication.getHintDB().addHints(20);
+				hintWidget.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
+				GlobalApplication.getHintDB().close();	
+				Log.d(TAG,"In Store, how many hints did I get? hints: "+Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
+				Log.d("Board",Long.toString(GlobalApplication.getHintDB().getHints().getNum()));
+
+			}catch(Exception e){
+				//Should actually throw an exception here! This is a mess.
+				Log.e(TAG, e.getMessage());
+			}
+		}
+	};
 	/************************************************************************/
 	/*
 	 * Code run when you decide to buy infinity hints.
 	 */
-	String sku = "test5";
-
 	public boolean hasUnlimitedHints(){
-		return false;
-		/*
+		String sku = "unlimitedhints";
 		if(mInventory == null){
 			return PDS.getPurchased(sku);
 		}
 		
-		//TODO: Compare to how mainActivity in trivialDrive is doing this more safely. You should really verify the purchase here. 
+		//TODO: VERIFY. Compare to how mainActivity in trivialDrive is doing this more safely. You should really verify the purchase here. 
 		if(mInventory.hasPurchase(sku)){
 			return true;
 		} else {
 			return false;
 		}
-		*/
+		
 	}
 
 	public void onBuyUnlimitedHints(TextBox mHints) {
 		Log.d(TAG, "Buy unlimited hints button clicked.");
 		// launch the  purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
-		//setWaitScreen(true);
+		setWaitScreen(true);
 		Log.d(TAG, "Launching purchase flow for unlimited hints.");
 		/* TODO: for security, generate your payload here for verification. See the comments on
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
 		hintWidget = mHints;
-
-		mHelper.launchPurchaseFlow(mContext, sku, RC_REQUEST,
+		mHelper.launchPurchaseFlow(mContext, "hintsunlimited", RC_REQUEST,
 				mPurchaseUnlimitedHintFinishedListener, payload);
 	}
 
@@ -265,28 +315,25 @@ public class Store {
 
 				if (result.isFailure()) {
 					complain("Error purchasing: " + result);
-					//setWaitScreen(false);
+					setWaitScreen(false);
 					return;
 				}
 				if (!verifyDeveloperPayload(purchase)) {
 					complain("Error purchasing. Authenticity verification failed.");
-					//setWaitScreen(false);
+					setWaitScreen(false);
 					return;
 				} 
 
-				//Note that we should NOT CONSUME since you get unlimited hints.
-				//Need to update the inventory object.
-				mHelper.queryInventoryAsync(mGotInventoryListener);
-
+				//Update the inventory.
+				mInventory.addPurchase(purchase);
+				
 				//TODO: Need code here to open the DB and set the fact that we have bought unlimited hints.
 				PDS.open();
-				PDS.setPurchased(sku, true);
+				PDS.setPurchased("hintsunlimited", true);
 				PDS.close();
 				//Update the board test widget.
 				hintWidget.setText(TextureManager.HIVE);
-
-
-
+				setWaitScreen(false);
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.
 				Log.e(TAG, e.getMessage());
@@ -307,7 +354,7 @@ public class Store {
 			}
 			
 			//TODO: Compare to how mainActivity is doing this more safely. You should really verify the purchase here. 
-			if(mInventory.hasPurchase(id)){
+			if(mInventory.hasPurchase(id)){	
 				return true;
 			} else {
 				return false;
@@ -329,7 +376,6 @@ public class Store {
 	}
 	
 	public void onBuyLevelPack(LevelPack lp) {
-		String id  = lp.getId();
 		Log.d(TAG, "Buy Level Pack button clicked.");
 		// launch the  purchase UI flow.
 		// We will be notified of completion via mPurchaseFinishedListener
@@ -339,8 +385,7 @@ public class Store {
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
-
-		mHelper.launchPurchaseFlow(mContext, "android.test.purchased", RC_REQUEST,
+		mHelper.launchPurchaseFlow(mContext, lp.getId(), RC_REQUEST,
 				mPurchaseLevelPackFinishedListener, payload);
 		
 	}

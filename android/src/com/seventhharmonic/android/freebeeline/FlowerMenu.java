@@ -297,6 +297,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    m = new ScreenSlideWidgetLayout(2.0f);
 	    boolean unlocked = ViewActivity.mStore.hasLevelPack(currLevelPack);
 	    int limit = ViewActivity.mStore.getLevelPackChapterLimit(currLevelPack);
+	   
 	    Log.d(TAG, "Limit: "+Integer.toString(limit)+" unlocked: "+Boolean.toString(unlocked));
 	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
 	    	final Chapter c = currLevelPack.getChapter(i);
@@ -305,7 +306,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    		ch.setTouchListener(new GameEventListener() {
 	    			public void event(int puzz){
 	    			Puzzle p = c.getPuzzle(puzz);
-	    			mModel.setModelToGameOpening(p);
+	    			if(p.isUnlocked())
+	    				mModel.setModelToGameOpening(p);
 	    		}
 		    	}); 
 	    		m.addWidget(ch);

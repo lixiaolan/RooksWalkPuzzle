@@ -20,7 +20,7 @@ public class LevelPack {
 	
 	public String getId(){
 		//TODO: Incorporate this into XML
-		return "android.test.purchased";
+		return "levelpack1";
 	}
 	
 	public String getStyle(){

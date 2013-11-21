@@ -84,7 +84,7 @@ public class ViewActivity extends Activity {
 	GlobalApplication.getPuzzleDB().close();
 	GlobalApplication.getHintDB().close();
 	GlobalApplication.getPurchasedDB().close();
-
+	Log.d(TAG, "Got Paused");
     }
     
 	@Override
@@ -96,7 +96,7 @@ public class ViewActivity extends Activity {
 	    GlobalApplication.getPuzzleDB().open();
 	    GlobalApplication.getHintDB().open();
 	    GlobalApplication.getPurchasedDB().open();
-
+	    Log.d(TAG,"Got Resumed");
 	    mGLView.onResume();
 	}
     
