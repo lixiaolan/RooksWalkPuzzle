@@ -1,5 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
@@ -13,12 +14,14 @@ class MenuManager {
 	private float[] bottomRight = new float[3];
 	private float scale1;
 	private float scale2;
+    EasyTracker mTracker;
+
 
 	public MenuManager(GlobalState s, Model m) {
 		state = s;
 		mModel = m;
 		updateState();
-
+        mTracker = GlobalApplication.getGaTracker();
 	}
 	//Each case statement should have a declaration of
 	//a new menu.

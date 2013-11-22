@@ -279,7 +279,7 @@ public class TextureManager {
 	}
 
 	public void buildSheet(){
-		buildTextures(context, R.drawable.boardsheet, "sheet");
+		buildTextures(context, R.drawable.boardsheet2, "sheet");
 		try{
 		BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("sheetdata")));
 		String name;

@@ -12,13 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
 import android.content.res.Resources;
+
+import com.google.analytics.tracking.android.EasyTracker;
 import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 
 import android.media.MediaPlayer;
 import android.media.AudioManager;
-import android.content.Context;
 import android.content.*;
 import android.app.Activity;
 import android.app.Service;
@@ -79,7 +80,7 @@ public class ViewActivity extends Activity {
 	mStore = new Store(this, mModel);		
 	loadingScreen = (LinearLayout)findViewById(R.id.loadingScreen);
 	//texturesLoadedEventHandler();
-	
+	/*
 	if (Build.VERSION.SDK_INT < 16) {
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -88,7 +89,7 @@ public class ViewActivity extends Activity {
 	    View decorView = getWindow().getDecorView();
 	    int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
 	    decorView.setSystemUiVisibility(uiOptions);
-	}
+	}*/
     }
     
     
@@ -146,7 +147,7 @@ public class ViewActivity extends Activity {
 	LevelPack mLP = mLPP.getLevelPack(0);
 	//	Log.d(TAG, mLP.getTitle());
 	//	Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
-	SQLPuzzle q;
+	/*SQLPuzzle q;
 	for(Chapter c: mLP.getAllChapters()){
 	    for(Puzzle p: c.getAllPuzzles()){
 		q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
@@ -157,8 +158,8 @@ public class ViewActivity extends Activity {
 		p.setMoves((int)q.getMovesUsed());
 	    }
 	}
-	
-	
+	 */
+		EasyTracker.getInstance(this).activityStart(this);
     }	
     
     
@@ -167,6 +168,7 @@ public class ViewActivity extends Activity {
     protected void onStop() {
 	super.onStop();
 	//	GlobalApplication.getMyMusic().stopMusic();
+    	EasyTracker.getInstance(this).activityStop(this);
     }
     
     public void onDestroy() {
