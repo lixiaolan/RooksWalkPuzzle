@@ -324,29 +324,52 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    }
 	    
 	    //Widget that shows our backgrounds.
-	    mGIF = new AnimatedGIFWidget(currLevelPack);
+	    mGIF = new AnimatedGIFWidget(currLevelPack, 1);
 	    
 	    //Say that a user was staring at chapter 4 - then we should move the slider ahead to that
 	    //if the saved chapter was 0, then we jump to the most current chapter.
 	    if(savedChapter != 0){
 	    	m.setActiveWidget(savedChapter);
-	    	mGIF.setKeyFrame(savedChapter);
+	    	mGIF.setCurrFrame(savedChapter);
+	    	if(savedChapter == currLevelPack.getNumberOfChapters()-1)
+	    		mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
 	    } else {
 	    	m.setActiveWidget(currLevelPack.getCurrChapter());
-	    	mGIF.setKeyFrame(currLevelPack.getCurrChapter());
+	    	mGIF.setCurrFrame(currLevelPack.getCurrChapter());
+	    	if(currLevelPack.getCurrChapter() == currLevelPack.getNumberOfChapters()-1)
+	    		mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
 	    }
 	    
 	    //Set the current chapter appropriately.
 	    currChapterWidget = m.getWidget(m.getActiveWidget());
 	}
 	
+	long refTime;
+	
 	@Override
 	public void enterAnimation() {
+		refTime = System.currentTimeMillis();
 	    period = DrawPeriod.DURING;
 	}
 	
+	boolean timeSet = false;
+	long time;
 	@Override
 	public void duringAnimation(){
+		time = System.currentTimeMillis() - refTime; 
+		if(m.getActiveWidget() == currLevelPack.getNumberOfChapters()-1 && currLevelPack.getChapter(m.getActiveWidget()).getCompleted()) {
+			if ( mGIF.onLastFrame() ) {
+				if (!timeSet) {
+					refTime = System.currentTimeMillis();
+					time = System.currentTimeMillis() - refTime; 
+					timeSet = true;
+				}
+				if (time > 250) {
+					mGIF.setCurrFrame(m.getActiveWidget()+1);
+					timeSet = false;
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -364,7 +387,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 		 * which sets a flag in a chapter widget.
 		*/
 		m.swipeHandler(direction);
-		mGIF.setTargetFrame(m.getActiveWidget());
+		//Get's us to the keyframe
+		setAnimatedGIFWidgetState();
 		Log.d(TAG, Integer.toString(m.getActiveWidget()));
 	}
 
@@ -381,17 +405,27 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    savedChapter = m.activeWidget;
 	    currChapterWidget.touchHandler(pt);
 	    gridToggle.touchHandler(pt);
+	    setAnimatedGIFWidgetState();
 	}
 
+	
+	public void setAnimatedGIFWidgetState(){
+	if(m.getActiveWidget() == currLevelPack.getNumberOfChapters()-1 && currLevelPack.getChapter(m.getActiveWidget()).getCompleted())
+		mGIF.setTargetFrame(m.getActiveWidget()+2);
+	else
+		mGIF.setTargetFrame(m.getActiveWidget());
     }
 
+    }
+    
+    
     class ChapterEnd extends StateWidget{
     	AnimatedGIFWidget mGIF;		//Displays the backgrounds and handles their animation
     	TextBox mText;
     	float h = GlobalApplication.getGeometry().getGeometry()[1];
     	
     	public ChapterEnd(){
-    		mGIF = new AnimatedGIFWidget(currLevelPack);
+    		mGIF = new AnimatedGIFWidget(currLevelPack,0);
     		mGIF.setSpeedMultiplier(500);
     		mGIF.setKeyFrame(savedChapter);
     		mGIF.setTargetFrame(savedChapter+1);
@@ -423,7 +457,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 
 		@Override
 		public void touchHandler(float[] pt) {
-			savedChapter = savedChapter+1;
+			savedChapter = Math.min(savedChapter+1,currLevelPack.getNumberOfChapters()-1);
 			mFlowerState  = FlowerState.CHAPTER_SELECT;
 			updateState();
 		}

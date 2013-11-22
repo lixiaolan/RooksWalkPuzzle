@@ -22,8 +22,8 @@ class AnimatedGIFWidget extends Widget{
     long time;	
     long refTime = 0;
     long speed = 250;
-    
-    List<Integer> keyFrames = new ArrayList<Integer>();
+
+	List<Integer> keyFrames = new ArrayList<Integer>();
     List<String> frameList = new ArrayList<String>();
     
     //This is the image being drawn.
@@ -32,7 +32,7 @@ class AnimatedGIFWidget extends Widget{
     
     float height = GlobalApplication.getGeometry().getGeometry()[1];
     
-    public AnimatedGIFWidget(LevelPack LP) {
+    public AnimatedGIFWidget(LevelPack LP, int kickback) {
 	
 	List<Chapter> chapterList;
 	chapterList = LP.getAllChapters();
@@ -54,10 +54,23 @@ class AnimatedGIFWidget extends Widget{
 		}
 	    }
 	}
-	mImage = new ImageWidget(0, 0.05f, .9f, .9f*height, frameList.get(keyFrames.get(LP.getCurrChapter())));
+    //Add the last frame as a keyframe and a kickback frame that can be optionally used for final looping.
+	keyFrames.add(i-1-kickback);
+	keyFrames.add(i-1);
+	mImage = new ImageWidget(0, 0, 1.0f, 1.0f*height, frameList.get(keyFrames.get(LP.getCurrChapter())));
 	mImage.setMode(MyGLRenderer.FIXEDWIDTH);
 	mImage.setBorder(true);
     }    
+
+    public long getSpeed() {
+		return speed;
+	}
+
+
+	public void setSpeed(long speed) {
+		this.speed = speed;
+	}
+
     
     public void setTargetFrame(int i) {
 	if ( i < 0 || i >= keyFrames.size()) {
@@ -83,6 +96,16 @@ class AnimatedGIFWidget extends Widget{
     @Override
     public void touchHandler(float[] pt){
 	return;
+    } 
+   
+    public boolean onLastFrame() {
+    	/*time = System.currentTimeMillis() - refTime;
+    	Log.d(TAG, Long.toString(time)+" "+Long.toString(refTime));
+    	if(time > speed && )
+    		return true;
+    	return false;
+    	*/
+    	return currFrame == frameList.size()-1;
     }
     
     protected void animate(){
@@ -103,10 +126,14 @@ class AnimatedGIFWidget extends Widget{
 	}
     }
     
+    public boolean nonTimedAnimationFinished(){
+    	return currFrame == targetFrame;
+    }
+    
     public boolean animationFinished(){
     	time = System.currentTimeMillis() - refTime;
     	if(time > speed && currFrame == targetFrame)
-	    return true;
+    		return true;
     	return false;
     }
     
@@ -122,8 +149,16 @@ class AnimatedGIFWidget extends Widget{
     	//Log.d(TAG,"setkeyFrame currFrame "+Integer.toString(currFrame)+" "+"targetFrame "+Integer.toString(targetFrame));
     }    
     
+    public void setCurrFrame(int i){
+    	mImage.setImage(frameList.get(keyFrames.get(i)));
+    	currFrame = keyFrames.get(i);
+    	//targetFrame = keyFrames.get(i);
+    	//Log.d(TAG,"setkeyFrame currFrame "+Integer.toString(currFrame)+" "+"targetFrame "+Integer.toString(targetFrame));
+    }    
+    
     public void draw(MyGLRenderer r) {
     	animate();
+    	//Log.d(TAG,"draw currFrame "+Integer.toString(currFrame)+" "+"targetFrame "+Integer.toString(targetFrame));
     	mImage.draw(r);
     }
 }
