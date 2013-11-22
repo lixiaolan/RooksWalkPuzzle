@@ -225,6 +225,7 @@ class Model {
 		mFlowerMenu = new FlowerMenu(this);
 		initializeToggle = true;
 	}
+	mTitle.setCenter(1.0f-0.5f,GlobalApplication.getGeometry().getGeometry()[1]-.5f);
 	muteButton.setCenter(-1.0f+0.1f,GlobalApplication.getGeometry().getGeometry()[1]-.1f);
     }
     

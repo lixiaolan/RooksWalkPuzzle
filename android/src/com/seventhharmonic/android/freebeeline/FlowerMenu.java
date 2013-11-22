@@ -159,7 +159,6 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
      * 
      */
     public void enterChapterEnd(){
-	if (
     	mFlowerState = FlowerState.CHAPTER_END;
     	updateState();
     }
