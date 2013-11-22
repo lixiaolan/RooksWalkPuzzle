@@ -29,12 +29,41 @@ int main(int argc, char *argv[]){
   ss >> str;
   
   if (str == "add") {
+    //row, col, length, hints
     int a, b, c, d;
     ss >> a;
     ss >> b;
     ss >> c;
     ss >> d;
     PP.add(a, b, c, d);
+  }
+
+  else if (str == "add_hint") {
+    int p, r, c;
+    ss >> p;
+    ss >> r;
+    ss >> c;
+    PP.add_hint(p,r,c);
+  }
+
+  else if (str == "clear_hint") {
+    int p, r, c;
+    ss >> p;
+    ss >> r;
+    ss >> c;
+    PP.clear_hint(p,r,c);
+  }
+
+  else if (str == "test_unique") {
+    int a;
+    ss >> a;
+    bool unique = PP.test_unique(a);
+    if (unique) {
+      cout << "Unique!" << endl;
+    }
+    else {
+      cout << "Not Unique!" << endl;
+    }
   }
 
   else if (str == "clear") {
@@ -89,22 +118,31 @@ int main(int argc, char *argv[]){
     string bookStyle = "default";
     
     vector<string> chapterTitles;
-    chapterTitles.push_back("Chapter One: A lone bee encounters a dreary, lifeless world.");
-    chapterTitles.push_back("Chapter Two: Wherein our heroic bee sets forth to better her surroundings but is met with great adversary.");
-    chapterTitles.push_back("Chapter Three: A time during which Beatrice questions the meaning of right and wrong and ultimately comes to no really conclusion");
-    chapterTitles.push_back("Chapter Four: Beatrice continues her struggle to bring life and color to the landscape with moderate success");
-    chapterTitles.push_back("Chapter Five: Wherein our magnanimous bee ponders the confines of her mortal shell");
-    chapterTitles.push_back("Chapter Six: ");
-    chapterTitles.push_back("Chapter Seven: ");
+    chapterTitles.push_back("Chapter One");
+    chapterTitles.push_back("Chapter Two");
+    chapterTitles.push_back("Chapter Three");
+    chapterTitles.push_back("Chapter Four");
+    chapterTitles.push_back("Chapter Five");
+    chapterTitles.push_back("Chapter Six");
+    chapterTitles.push_back("Chapter Seven");
+
+    vector<string> chapterEndText;
+    chapterEndText.push_back("test text");
+    chapterEndText.push_back("test text");
+    chapterEndText.push_back("test text");
+    chapterEndText.push_back("test text");
+    chapterEndText.push_back("test text");
+    chapterEndText.push_back("test text");
+    chapterEndText.push_back("test text");
     
     vector<string> beforeImages;
-    beforeImages.push_back("locked");
-    beforeImages.push_back("locked");
-    beforeImages.push_back("locked");
-    beforeImages.push_back("locked");
-    beforeImages.push_back("locked");
-    beforeImages.push_back("locked");
-    beforeImages.push_back("locked");
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
 
     vector<string> temp;
     vector< vector<string> > afterImages;    
@@ -116,26 +154,46 @@ int main(int argc, char *argv[]){
     
     temp.clear();
     temp.push_back("book1chapter2");
+    temp.push_back("book1chapter2_1");
+    temp.push_back("book1chapter2_2");
     afterImages.push_back(temp);
     
     temp.clear();
     temp.push_back("book1chapter3");
+    temp.push_back("book1chapter3_1");
+    temp.push_back("book1chapter3_2");
     afterImages.push_back(temp);
     
     temp.clear();
     temp.push_back("book1chapter4");
+    temp.push_back("book1chapter4_1");
+    temp.push_back("book1chapter4_2");
     afterImages.push_back(temp);
     
     temp.clear();
     temp.push_back("book1chapter5");
+    temp.push_back("book1chapter5_1");
+    temp.push_back("book1chapter5_2");
     afterImages.push_back(temp);
     
     temp.clear();
     temp.push_back("book1chapter6");
+    temp.push_back("book1chapter6_1");
+    temp.push_back("book1chapter6_2");
     afterImages.push_back(temp);
     
     temp.clear();
     temp.push_back("book1chapter7");
+    temp.push_back("book1chapter7_1");
+    temp.push_back("book1chapter7_2");
+    temp.push_back("book1chapter8");
+    temp.push_back("book1chapter8_1");
+    temp.push_back("book1chapter8_2");
+    temp.push_back("book1chapter9");
+    temp.push_back("book1chapter9_1");
+    temp.push_back("book1chapter9_2");
+    temp.push_back("book1chapter9_3");
+
     afterImages.push_back(temp);
     
 
@@ -160,7 +218,7 @@ int main(int argc, char *argv[]){
 
     int startIndex = 0;
 
-    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, beforeImages, afterImages, beforeFlower, afterFlower, startIndex);
+    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, chapterEndText, beforeImages, afterImages, beforeFlower, afterFlower, startIndex);
     
     ofs.open("XMLOut.xml");
     PB.printXML(ofs);

@@ -19,9 +19,13 @@ public:
   void clear(int index);
   void pop_back();
   void swap(int a, int b);
+  void add_hint(int p, int r, int c);
+  void clear_hint(int p, int r, int c);
+  bool test_unique(int p);
+
   void plotToFile(ofstream &ofs);
   void printSoln();
-  void buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, vector<string> afterImage, string beforeFlower, string afterFlower, int*);
+  void buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string endText, string beforeImage, vector<string> afterImage, string beforeFlower, string afterFlower, int*);
 private:
   vector<BeeLinePuzzle> puzzles;
 };

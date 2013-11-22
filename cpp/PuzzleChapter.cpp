@@ -31,6 +31,21 @@ void PuzzleChapter::clearAll() {
   return;
 }
 
+void PuzzleChapter::add_hint(int p, int r, int c) {
+  puzzles[p-1].addHint(r, c);
+  return;
+}
+
+void PuzzleChapter::clear_hint(int p, int r, int c) {
+  puzzles[p-1].clearHint(r, c);
+  return;
+}
+
+bool PuzzleChapter::test_unique(int p) {
+  return puzzles[p-1].checkUnique();
+}
+
+
 void PuzzleChapter::clear(int index) {
   puzzles.erase(puzzles.begin()+index);
   return;
@@ -64,7 +79,7 @@ void PuzzleChapter::plotToFile(ofstream &ofs) {
   return;
 }
 
-void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string beforeImage, vector<string> afterImage,string beforeFlower, string afterFlower, int *puzzleIndex) {
+void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string endText, string beforeImage, vector<string> afterImage,string beforeFlower, string afterFlower, int *puzzleIndex) {
   xml_node<> *chapter;
   xml_node<> *afterIm;
   xml_node<> *node;
@@ -75,6 +90,9 @@ void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string 
   levelpack->append_node(chapter);
   name = doc->allocate_string(title.c_str());
   attr = doc->allocate_attribute("title", name);
+  chapter->append_attribute(attr);
+  name = doc->allocate_string(endText.c_str());
+  attr = doc->allocate_attribute("end_text", name);
   chapter->append_attribute(attr);
   name = doc->allocate_string(beforeImage.c_str());
   attr = doc->allocate_attribute("before_image", name);
@@ -90,12 +108,28 @@ void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string 
     node->append_attribute(attr);
     afterIm->append_node(node);
   }
+  if (puzzles.size() == 4) {
+    node = doc->allocate_node(node_element, "width", "2");
+    chapter->append_node(node);
+    node = doc->allocate_node(node_element, "height", "2");
+    chapter->append_node(node);
+  }
 
-  node = doc->allocate_node(node_element, "width", "3");
-  chapter->append_node(node);
-  node = doc->allocate_node(node_element, "height", "3");
-  chapter->append_node(node);
+  if (puzzles.size() == 9) {
+    node = doc->allocate_node(node_element, "width", "3");
+    chapter->append_node(node);
+    node = doc->allocate_node(node_element, "height", "3");
+    chapter->append_node(node);
+  }
 
+  if (puzzles.size() == 16) {
+    node = doc->allocate_node(node_element, "width", "4");
+    chapter->append_node(node);
+    node = doc->allocate_node(node_element, "height", "4");
+    chapter->append_node(node);
+  }
+
+    
   for (BeeLinePuzzle puz : puzzles) {
     puz.buildXML(doc, chapter, beforeFlower, afterFlower ,puzzleIndex);
   }

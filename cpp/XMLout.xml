@@ -1,19 +1,25 @@
 <levelpack title="Beatrice the bee" bookStyle="default">
-	<chapter title="Chapter One: A lone bee encounters a dreary, lifeless world." before_image="locked">
+	<chapter title="Chapter One" end_text="test text" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter1"/>
 			<image image="book1chapter1_1"/>
 			<image image="book1chapter1_2"/>
 		</afterImage>
-		<width>3</width>
-		<height>3</height>
+		<width>2</width>
+		<height>2</height>
 		<puzzle id="0" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
-			<board>-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,2,0,1,-1,-1,1,0,2,-1</board>
-			<path>3,3,3,1,4,1,4,3,3,3</path>
+			<board>-1,-1,-1,-1,-1,3,0,2,-1,-1,0,-1,0,-1,-1,0,-1,0,-1,-1,2,0,3,-1,-1</board>
+			<path>1,2,4,2,4,0,1,0,1,2</path>
 			<hint>
-				<index>21</index>
+				<index>5</index>
+			</hint>
+			<hint>
+				<index>20</index>
+			</hint>
+			<hint>
+				<index>7</index>
 			</hint>
 		</puzzle>
 		<puzzle id="1" text="" before_flower="flower1" after_flower="flower1color">
@@ -26,6 +32,9 @@
 			</hint>
 			<hint>
 				<index>2</index>
+			</hint>
+			<hint>
+				<index>7</index>
 			</hint>
 		</puzzle>
 		<puzzle id="2" text="" before_flower="flower1" after_flower="flower1color">
@@ -43,31 +52,25 @@
 		<puzzle id="3" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
-			<board>-1,-1,-1,-1,-1,2,0,0,3,1,0,-1,-1,-1,0,4,0,0,0,2,-1,-1,-1,-1,-1</board>
-			<path>1,0,1,3,1,4,3,4,3,0,1,0</path>
+			<board>2,1,0,0,3,0,-1,-1,-1,1,1,-1,-1,-1,0,3,0,0,1,2,-1,-1,-1,-1,-1</board>
+			<path>3,4,3,3,3,0,2,0,0,0,0,1,0,4,1,4,3,4</path>
 			<hint>
-				<index>15</index>
+				<index>18</index>
 			</hint>
-			<hint>
-				<index>8</index>
-			</hint>
-		</puzzle>
-		<puzzle id="4" text="" before_flower="flower1" after_flower="flower1color">
-			<height>5</height>
-			<width>5</width>
-			<board>3,0,0,0,4,0,-1,-1,-1,1,0,-1,-1,-1,0,1,-1,-1,-1,0,4,0,0,0,3</board>
-			<path>4,0,3,0,0,0,0,4,1,4,4,4,4,0</path>
 			<hint>
 				<index>4</index>
 			</hint>
-			<hint>
-				<index>24</index>
-			</hint>
-			<hint>
-				<index>15</index>
-			</hint>
 		</puzzle>
-		<puzzle id="5" text="" before_flower="flower1" after_flower="flower1color">
+	</chapter>
+	<chapter title="Chapter Two" end_text="test text" before_image="questionmark">
+		<afterImage>
+			<image image="book1chapter2"/>
+			<image image="book1chapter2_1"/>
+			<image image="book1chapter2_2"/>
+		</afterImage>
+		<width>2</width>
+		<height>2</height>
+		<puzzle id="4" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,-1,-1,-1,-1,-1,3,0,2,-1,3,0,0,1,-1,0,0,-1,-1,-1,2,1,-1,-1</board>
@@ -82,174 +85,46 @@
 				<index>7</index>
 			</hint>
 		</puzzle>
-		<puzzle id="6" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="5" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
-			<board>-1,-1,-1,-1,-1,3,1,0,2,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,1,2,0,3,-1</board>
-			<path>1,3,4,3,4,1,4,0,1,0,1,1,1,3</path>
-			<hint>
-				<index>5</index>
-			</hint>
-			<hint>
-				<index>21</index>
-			</hint>
-			<hint>
-				<index>8</index>
-			</hint>
-		</puzzle>
-		<puzzle id="7" text="" before_flower="flower1" after_flower="flower1color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,3,0,0,1,-1,0,-1,-1,2,-1,2,-1,-1,0,-1,1,0,0,3,-1,-1,-1,-1,-1</board>
-			<path>2,1,3,1,3,4,1,4,0,4,0,1,2,1</path>
-			<hint>
-				<index>11</index>
-			</hint>
-			<hint>
-				<index>9</index>
-			</hint>
-		</puzzle>
-		<puzzle id="8" text="" before_flower="flower1" after_flower="flower1color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,2,1,-1,-1,-1,0,0,-1,-1,-1,1,0,-1,-1,-1,3,0,0,1,-1,-1,4,0,2</board>
-			<path>3,4,3,1,2,1,0,1,0,2,4,2,4,4,3,4</path>
-			<hint>
-				<index>1</index>
-			</hint>
+			<board>-1,-1,2,0,1,3,0,0,0,4,0,-1,0,-1,-1,0,-1,0,-1,-1,2,0,4,-1,-1</board>
+			<path>0,2,4,2,4,0,1,0,1,4,0,4,0,2</path>
 			<hint>
 				<index>22</index>
 			</hint>
 		</puzzle>
-	</chapter>
-	<chapter title="Chapter Two: Wherein our heroic bee sets forth to better her surroundings but is met with great adversary." before_image="locked">
-		<afterImage>
-			<image image="book1chapter2"/>
-		</afterImage>
-		<width>3</width>
-		<height>3</height>
-		<puzzle id="9" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="6" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
-			<board>-1,-1,-1,4,1,-1,-1,-1,0,0,4,0,0,0,2,0,-1,-1,0,-1,2,0,0,3,-1</board>
-			<path>0,4,2,4,2,0,4,0,4,3,0,3,0,4</path>
+			<board>-1,3,1,0,2,4,0,0,0,1,0,0,-1,-1,-1,2,1,-1,-1,-1,-1,-1,-1,-1,-1</board>
+			<path>3,1,0,1,0,2,0,4,1,4,1,0,3,0,3,1</path>
 			<hint>
-				<index>10</index>
+				<index>5</index>
 			</hint>
+			<hint>
+				<index>16</index>
+			</hint>
+		</puzzle>
+		<puzzle id="7" text="" before_flower="flower2" after_flower="flower2color">
+			<height>5</height>
+			<width>5</width>
+			<board>-1,1,3,-1,-1,-1,0,0,1,3,1,2,0,0,0,0,-1,1,2,0,2,0,0,3,1</board>
+			<path>1,4,1,3,3,3,3,2,0,2,0,1,2,1,2,0,4,0,4,3,4,4,1,4</path>
 			<hint>
 				<index>23</index>
 			</hint>
 		</puzzle>
-		<puzzle id="10" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,4,1,-1,-1,-1,0,0,-1,-1,-1,0,0,-1,-1,-1,0,3,0,2,-1,3,0,0,1</board>
-			<path>0,1,0,2,3,2,3,4,4,4,4,1,0,1</path>
-			<hint>
-				<index>21</index>
-			</hint>
-		</puzzle>
-		<puzzle id="11" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>3,1,-1,-1,-1,0,0,-1,3,1,0,0,-1,0,0,4,0,0,0,2,-1,4,0,2,-1</board>
-			<path>1,3,1,4,3,4,3,0,0,0,0,1,4,1,4,3,1,3</path>
-			<hint>
-				<index>8</index>
-			</hint>
-			<hint>
-				<index>1</index>
-			</hint>
-			<hint>
-				<index>0</index>
-			</hint>
-		</puzzle>
-		<puzzle id="12" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,-1,4,0,2,-1,-1,0,-1,0,1,0,0,3,0,4,0,0,0,3,-1,-1,1,2,-1</board>
-			<path>3,0,2,0,2,3,4,3,4,2,0,2,0,4,3,4,3,0</path>
-			<hint>
-				<index>2</index>
-			</hint>
-			<hint>
-				<index>15</index>
-			</hint>
-			<hint>
-				<index>23</index>
-			</hint>
-		</puzzle>
-		<puzzle id="13" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>3,0,0,1,4,0,-1,-1,-1,0,2,0,0,3,0,-1,-1,-1,0,0,-1,-1,-1,2,1</board>
-			<path>2,0,2,3,4,3,4,4,0,4,0,3,0,0,2,0</path>
-			<hint>
-				<index>4</index>
-			</hint>
-			<hint>
-				<index>3</index>
-			</hint>
-			<hint>
-				<index>0</index>
-			</hint>
-		</puzzle>
-		<puzzle id="14" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,2,1,-1,-1,-1,0,0,-1,-1,-1,3,0,0,2,2,0,3,-1,0,1,0,0,0,4</board>
-			<path>2,1,0,1,0,2,3,2,3,0,4,0,4,4,2,4,2,1</path>
-			<hint>
-				<index>11</index>
-			</hint>
-			<hint>
-				<index>20</index>
-			</hint>
-			<hint>
-				<index>1</index>
-			</hint>
-		</puzzle>
-		<puzzle id="15" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>2,1,0,0,3,0,-1,-1,-1,1,1,-1,-1,-1,0,3,0,0,1,2,-1,-1,-1,-1,-1</board>
-			<path>3,4,3,3,3,0,2,0,0,0,0,1,0,4,1,4,3,4</path>
-			<hint>
-				<index>18</index>
-			</hint>
-			<hint>
-				<index>4</index>
-			</hint>
-		</puzzle>
-		<puzzle id="16" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,-1,2,0,3,1,3,0,-1,0,0,0,0,-1,0,2,0,0,0,4,-1,1,4,-1,-1</board>
-			<path>1,1,1,0,3,0,3,4,0,4,0,2,4,2,4,1,1,1</path>
-			<hint>
-				<index>19</index>
-			</hint>
-			<hint>
-				<index>4</index>
-			</hint>
-		</puzzle>
-		<puzzle id="17" text="" before_flower="flower2" after_flower="flower2color">
-			<height>5</height>
-			<width>5</width>
-			<board>-1,-1,-1,1,2,2,0,3,0,0,1,0,0,0,4,-1,-1,0,0,-1,-1,-1,1,4,-1</board>
-			<path>0,4,0,3,4,3,4,2,1,2,1,0,2,0,2,4,0,4</path>
-			<hint>
-				<index>3</index>
-			</hint>
-		</puzzle>
 	</chapter>
-	<chapter title="Chapter Three: A time during which Beatrice questions the meaning of right and wrong and ultimately comes to no really conclusion" before_image="locked">
+	<chapter title="Chapter Three" end_text="test text" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter3"/>
+			<image image="book1chapter3_1"/>
+			<image image="book1chapter3_2"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="18" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="8" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,1,0,2,-1,-1,3,0,0,1,2,0,0,0,4,0,-1,-1,0,-1,3,0,0,4,-1</board>
@@ -261,7 +136,7 @@
 				<index>20</index>
 			</hint>
 		</puzzle>
-		<puzzle id="19" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="9" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,2,0,0,3,4,0,0,0,1,1,1,-1,-1,-1,0,3,0,0,1,2,0,0,0,4</board>
@@ -276,7 +151,7 @@
 				<index>20</index>
 			</hint>
 		</puzzle>
-		<puzzle id="20" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="10" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>3,1,-1,1,2,0,0,-1,0,0,0,2,0,0,3,1,-1,-1,0,-1,2,0,1,4,-1</board>
@@ -288,7 +163,7 @@
 				<index>4</index>
 			</hint>
 		</puzzle>
-		<puzzle id="21" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="11" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>3,0,2,1,3,0,-1,0,0,0,0,-1,0,0,0,1,-1,3,0,2,2,0,1,4,-1</board>
@@ -300,7 +175,7 @@
 				<index>17</index>
 			</hint>
 		</puzzle>
-		<puzzle id="22" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="12" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>1,0,0,3,-1,2,0,1,0,-1,-1,-1,2,0,1,-1,1,0,0,3,-1,2,0,4,-1</board>
@@ -309,7 +184,7 @@
 				<index>5</index>
 			</hint>
 		</puzzle>
-		<puzzle id="23" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="13" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,3,1,-1,-1,3,0,0,2,3,0,0,2,0,0,2,1,-1,1,2,1,0,0,3</board>
@@ -330,7 +205,7 @@
 				<index>10</index>
 			</hint>
 		</puzzle>
-		<puzzle id="24" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="14" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>1,0,0,0,4,2,-1,3,1,0,0,3,0,0,2,3,0,0,2,-1,-1,2,1,-1,-1</board>
@@ -345,7 +220,7 @@
 				<index>8</index>
 			</hint>
 		</puzzle>
-		<puzzle id="25" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="15" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,1,2,-1,-1,2,0,0,3,1,0,0,1,2,0,1,3,-1,0,0,-1,-1,-1,1,3</board>
@@ -357,7 +232,7 @@
 				<index>12</index>
 			</hint>
 		</puzzle>
-		<puzzle id="26" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="16" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,2,0,1,-1,1,0,0,3,-1,2,0,1,-1,-1,-1,3,2,0,1,-1,1,0,0,3</board>
@@ -367,13 +242,15 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Four: Beatrice continues her struggle to bring life and color to the landscape with moderate success" before_image="locked">
+	<chapter title="Chapter Four" end_text="test text" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter4"/>
+			<image image="book1chapter4_1"/>
+			<image image="book1chapter4_2"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="27" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="17" text="" before_flower="flower4" after_flower="flower4color">
 			<height>5</height>
 			<width>5</width>
 			<board>2,0,3,-1,-1,1,2,0,3,-1,0,1,0,0,3,0,-1,2,0,1,3,1,0,2,-1</board>
@@ -388,7 +265,7 @@
 				<index>21</index>
 			</hint>
 		</puzzle>
-		<puzzle id="28" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="18" text="" before_flower="flower4" after_flower="flower4color">
 			<height>5</height>
 			<width>5</width>
 			<board>2,0,0,0,4,0,3,0,0,1,4,0,0,0,2,-1,2,-1,-1,0,-1,1,0,0,3</board>
@@ -397,7 +274,7 @@
 				<index>10</index>
 			</hint>
 		</puzzle>
-		<puzzle id="29" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="19" text="" before_flower="flower4" after_flower="flower4color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,1,2,-1,-1,2,0,0,3,1,0,0,1,2,0,1,3,-1,0,0,-1,-1,-1,1,3</board>
@@ -406,7 +283,7 @@
 				<index>9</index>
 			</hint>
 		</puzzle>
-		<puzzle id="30" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="20" text="" before_flower="flower4" after_flower="flower4color">
 			<height>5</height>
 			<width>5</width>
 			<board>1,0,0,3,-1,4,0,0,0,3,3,0,0,2,0,0,-1,-1,-1,0,2,0,0,3,1</board>
@@ -415,7 +292,7 @@
 				<index>24</index>
 			</hint>
 		</puzzle>
-		<puzzle id="31" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="21" text="" before_flower="flower4" after_flower="flower4color">
 			<height>5</height>
 			<width>5</width>
 			<board>2,0,0,3,1,0,-1,1,2,0,1,2,0,0,0,-1,0,0,1,3,-1,1,3,-1,-1</board>
@@ -427,7 +304,7 @@
 				<index>4</index>
 			</hint>
 		</puzzle>
-		<puzzle id="32" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="22" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,1,-1,-1,-1,0,-1,2,-1,3,1,0,-1,0,-1,0,0,3,-1,3,0,0,2,1,0,0,0,4,-1,-1,-1,-1,-1,-1,-1</board>
@@ -439,7 +316,7 @@
 				<index>24</index>
 			</hint>
 		</puzzle>
-		<puzzle id="33" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="23" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,0,3,-1,-1,2,0,1,0,-1,-1,-1,-1,2,0,1,3,2,1,0,0,3,0,0,-1,-1,0,0,0,3,0,0,5,2,1</board>
@@ -451,7 +328,7 @@
 				<index>22</index>
 			</hint>
 		</puzzle>
-		<puzzle id="34" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="24" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,1,3,-1,-1,-1,-1,0,0,-1,-1,4,0,0,0,1,2,1,-1,0,1,2,0,0,-1,4,0,0,3,2,1,0,0,3,-1</board>
@@ -463,7 +340,7 @@
 				<index>12</index>
 			</hint>
 		</puzzle>
-		<puzzle id="35" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="25" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,1,2,0,3,3,0,0,0,4,0,0,3,0,0,1,0,0,-1,3,0,2,1,2,0,1,4,-1,-1,-1,-1,-1,-1,-1,-1</board>
@@ -476,13 +353,15 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Five: Wherein our magnanimous bee ponders the confines of her mortal shell" before_image="locked">
+	<chapter title="Chapter Five" end_text="test text" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter5"/>
+			<image image="book1chapter5_1"/>
+			<image image="book1chapter5_2"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="36" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="26" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>3,0,0,1,2,-1,0,-1,-1,-1,0,-1,2,0,0,3,1,3,-1,-1,-1,0,-1,0,3,0,0,2,-1,0,1,0,0,3,0,2</board>
@@ -500,7 +379,7 @@
 				<index>15</index>
 			</hint>
 		</puzzle>
-		<puzzle id="37" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="27" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,-1,5,1,-1,1,3,-1,0,0,-1,0,0,-1,0,0,3,0,0,1,0,0,1,0,2,2,0,4,-1,4,0,0,3,-1</board>
@@ -518,7 +397,7 @@
 				<index>34</index>
 			</hint>
 		</puzzle>
-		<puzzle id="38" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="28" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,1,0,0,3,-1,0,3,0,2,1,-1,3,0,0,1,0,-1,-1,0,-1,-1,0,-1,-1,1,-1,-1,0,-1,-1,2,0,1,4</board>
@@ -530,7 +409,7 @@
 				<index>35</index>
 			</hint>
 		</puzzle>
-		<puzzle id="39" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="29" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,4,1,-1,1,2,-1,0,0,-1,0,0,-1,0,0,-1,0,1,2,0,3,-1,0,-1,-1,2,0,1,4,0,0,3,0,2</board>
@@ -542,7 +421,7 @@
 				<index>30</index>
 			</hint>
 		</puzzle>
-		<puzzle id="40" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="30" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,3,0,0,1,4,1,0,1,2,3,0,0,0,0,0,0,0,2,0,0,3,0,0,-1,4,3,0,2,2,0,1,-1,-1,-1</board>
@@ -557,7 +436,7 @@
 				<index>26</index>
 			</hint>
 		</puzzle>
-		<puzzle id="41" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="31" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,0,3,-1,-1,4,0,0,0,3,-1,2,0,3,0,0,1,0,1,0,0,0,4,0,2,0,4,1,-1,3,0,0,0,4,-1</board>
@@ -572,7 +451,7 @@
 				<index>6</index>
 			</hint>
 		</puzzle>
-		<puzzle id="42" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="32" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,3,0,2,1,1,0,0,0,4,0,2,-1,0,-1,1,0,0,2,1,-1,0,0,5,0,0,0,0,4,-1,1,2,0,3,-1</board>
@@ -587,7 +466,7 @@
 				<index>12</index>
 			</hint>
 		</puzzle>
-		<puzzle id="43" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="33" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,0,0,3,-1,-1,2,3,1,0,-1,3,0,0,0,0,5,0,4,0,0,0,1,0,-1,2,0,4,-1,2,0,1,4,-1,-1</board>
@@ -599,7 +478,7 @@
 				<index>30</index>
 			</hint>
 		</puzzle>
-		<puzzle id="44" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="34" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,0,0,0,5,0,-1,-1,2,0,1,1,3,0,0,2,-1,5,0,0,0,0,2,-1,2,-1,3,1,0,-1,1,0,0,0,4</board>
@@ -612,13 +491,15 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Six: " before_image="locked">
+	<chapter title="Chapter Six" end_text="test text" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter6"/>
+			<image image="book1chapter6_1"/>
+			<image image="book1chapter6_2"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="45" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="35" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,3,0,0,1,2,3,0,0,2,-1,0,1,0,2,0,0,3,1,0,0,3,-1,-1,2,0,3,0,0,1,-1,5,1,0,0,3</board>
@@ -639,7 +520,7 @@
 				<index>4</index>
 			</hint>
 		</puzzle>
-		<puzzle id="46" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="36" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,3,0,2,1,-1,1,0,2,0,0,3,2,0,1,3,0,0,-1,1,-1,0,0,2,-1,4,0,0,0,1,-1,-1,-1,1,5,-1</board>
@@ -657,7 +538,7 @@
 				<index>8</index>
 			</hint>
 		</puzzle>
-		<puzzle id="47" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="37" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,2,0,4,-1,-1,0,4,1,0,-1,3,0,0,0,0,5,0,0,0,0,0,1,0,0,0,3,1,0,1,5,3,0,0,2</board>
@@ -675,7 +556,7 @@
 				<index>2</index>
 			</hint>
 		</puzzle>
-		<puzzle id="48" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="38" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,3,0,0,1,-1,2,0,1,3,4,-1,1,0,2,0,0,-1,2,0,0,0,0,5,0,0,0,2,0,1,1,5,3,0,2,-1</board>
@@ -693,7 +574,7 @@
 				<index>9</index>
 			</hint>
 		</puzzle>
-		<puzzle id="49" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="39" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,3,2,0,4,-1,0,0,0,2,0,1,2,0,0,0,0,3,0,1,3,0,0,0,0,-1,-1,3,1,0,3,1,0,0,0,4</board>
@@ -711,7 +592,7 @@
 				<index>11</index>
 			</hint>
 		</puzzle>
-		<puzzle id="50" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="40" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,0,0,3,-1,-1,4,3,1,0,-1,-1,0,0,0,2,1,4,0,0,0,2,0,1,0,2,0,0,0,-1,2,0,4,1,3</board>
@@ -726,7 +607,7 @@
 				<index>8</index>
 			</hint>
 		</puzzle>
-		<puzzle id="51" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="41" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,1,3,-1,4,0,2,0,0,-1,0,2,0,0,0,4,0,0,0,3,2,1,0,1,3,0,0,0,3,0,0,2,1,2</board>
@@ -738,7 +619,7 @@
 				<index>4</index>
 			</hint>
 		</puzzle>
-		<puzzle id="52" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="42" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,5,0,2,1,1,0,0,0,4,0,2,3,0,0,1,0,0,1,0,2,0,3,3,0,0,1,-1,-1,-1,2,1,-1,-1,-1</board>
@@ -753,7 +634,7 @@
 				<index>2</index>
 			</hint>
 		</puzzle>
-		<puzzle id="53" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="43" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,4,-1,3,0,2,0,0,3,0,0,1,0,0,1,0,2,-1,3,0,2,1,0,-1,-1,1,-1,-1,0,-1,-1,2,0,1,3,-1</board>
@@ -766,13 +647,22 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Chapter Seven: " before_image="locked">
+	<chapter title="Chapter Seven" end_text="test text" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter7"/>
+			<image image="book1chapter7_1"/>
+			<image image="book1chapter7_2"/>
+			<image image="book1chapter8"/>
+			<image image="book1chapter8_1"/>
+			<image image="book1chapter8_2"/>
+			<image image="book1chapter9"/>
+			<image image="book1chapter9_1"/>
+			<image image="book1chapter9_2"/>
+			<image image="book1chapter9_3"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="54" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="44" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,3,0,2,1,2,4,0,2,0,0,0,0,0,1,0,0,3,0,1,2,0,3,-1,0,-1,-1,0,-1,-1,1,2,0,5,-1,-1</board>
@@ -790,7 +680,7 @@
 				<index>17</index>
 			</hint>
 		</puzzle>
-		<puzzle id="55" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="45" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,0,1,-1,-1,2,0,3,3,4,1,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,2,0,3,4,1,0,0,3,-1</board>
@@ -808,7 +698,7 @@
 				<index>30</index>
 			</hint>
 		</puzzle>
-		<puzzle id="56" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="46" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>3,0,2,1,-1,-1,0,-1,2,0,4,-1,0,3,0,0,0,4,1,0,0,0,0,0,2,0,3,0,0,0,-1,2,0,5,1,3</board>
@@ -826,7 +716,7 @@
 				<index>31</index>
 			</hint>
 		</puzzle>
-		<puzzle id="57" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="47" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,5,1,0,0,3,1,0,0,0,4,0,2,0,2,0,1,0,0,0,0,-1,-1,0,3,0,0,1,-1,0,-1,1,3,2,0,5</board>
@@ -844,7 +734,7 @@
 				<index>1</index>
 			</hint>
 		</puzzle>
-		<puzzle id="58" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="48" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,0,0,0,5,4,0,0,0,2,0,-1,-1,3,0,0,2,2,1,0,0,3,-1,0,-1,2,0,0,3,3,0,0,2,0,1</board>
@@ -859,7 +749,7 @@
 				<index>6</index>
 			</hint>
 		</puzzle>
-		<puzzle id="59" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="49" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,4,0,0,3,1,1,0,0,3,-1,0,4,0,0,0,1,0,-1,0,1,0,2,0,-1,1,3,0,0,4,-1,2,0,4,-1,-1</board>
@@ -874,7 +764,7 @@
 				<index>29</index>
 			</hint>
 		</puzzle>
-		<puzzle id="60" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="50" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,5,1,3,-1,1,3,0,0,0,4,0,0,0,2,0,0,0,0,0,0,1,2,3,1,0,0,-1,-1,-1,-1,1,3,-1,-1</board>
@@ -889,7 +779,7 @@
 				<index>2</index>
 			</hint>
 		</puzzle>
-		<puzzle id="61" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="51" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,2,0,1,-1,2,0,1,-1,3,-1,1,0,0,3,0,-1,-1,-1,-1,1,0,1,0,0,3,0,2,3,0,0,1,2,-1</board>
@@ -904,7 +794,7 @@
 				<index>27</index>
 			</hint>
 		</puzzle>
-		<puzzle id="62" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="52" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,0,3,1,-1,0,-1,4,0,0,3,3,4,0,0,0,1,0,0,0,-1,3,1,0,0,0,-1,-1,0,1,3,3,0,0,2</board>

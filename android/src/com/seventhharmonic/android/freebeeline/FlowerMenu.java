@@ -308,17 +308,17 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    for(int i =0;i<currLevelPack.getNumberOfChapters();i++){
 	    	final Chapter c = currLevelPack.getChapter(i);
 	    	if(i < limit || unlocked){
-	    		ChapterWidget ch  = new ChapterWidget(c);
-	    		ch.setTouchListener(new GameEventListener() {
-	    			public void event(int puzz){
+		    ChapterWidget ch  = new ChapterWidget(c);
+		    ch.setTouchListener(new GameEventListener() {
+			    public void event(int puzz){
 	    			Puzzle p = c.getPuzzle(puzz);
 	    			if(p.isUnlocked())
-	    				mModel.setModelToGameOpening(p);
-	    		}
+				    mModel.setModelToGameOpening(p);
+			    }
 		    	}); 
-	    		m.addWidget(ch);
+		    m.addWidget(ch);
 	    	} else {
-	    		m.addWidget(new LockedChapterWidget(c));
+		    m.addWidget(new LockedChapterWidget(c));
 	    	}
 	    	
 	    }

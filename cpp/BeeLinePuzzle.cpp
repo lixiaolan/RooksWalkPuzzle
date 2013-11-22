@@ -72,6 +72,64 @@ void BeeLinePuzzle::getHints(int num) {
   // cout << endl;
 }
 
+void BeeLinePuzzle::addHint(int r, int c) {
+  
+  int i;
+
+  for (i = 1; i < positions.size(); i++) {
+    if (positions[i].r == r && positions[i].c == c) {
+      break;
+    }
+    else if ( i == positions.size() - 1 ) {
+      return;
+    }
+  }
+  
+  for (int j = 0; j < hintsIndex.size(); j++) {
+    if (i == hintsIndex[j]) {
+      return;
+    }
+  }
+
+  hintsIndex.push_back(i);
+  hintsPos.push_back(positions[i]);
+  hintsNum.push_back(moveArea[positions[i].r][positions[i].c]);
+  
+  pos diff = positions[i] - positions[i-1];
+  
+  hintsVertical.push_back(diff.c == 0);
+  hintsLeftUp.push_back((diff.c+diff.r)>0);
+}
+
+void BeeLinePuzzle::clearHint(int r, int c) {
+  
+  int i;
+
+  for (i = 1; i < positions.size(); i++) {
+    if (positions[i].r == r && positions[i].c == c) {
+      break;
+    }
+    else if ( i == positions.size() - 1 ) {
+      return;
+    }
+  }
+  int j;
+  for (j = 0; j < hintsIndex.size(); j++) {
+    if (i == hintsIndex[j]) {
+      break;
+    }
+    else if (j == hintsIndex.size()-1) {
+      return;
+    }
+  }
+
+  hintsIndex.erase(hintsIndex.begin()+j);
+  hintsPos.erase(hintsPos.begin()+j);
+  hintsNum.erase(hintsNum.begin()+j);
+  hintsVertical.erase(hintsVertical.begin()+j);
+  hintsLeftUp.erase(hintsLeftUp.begin()+j);
+}
+
 //function for generating legal moves lists
 vector<pos> BeeLinePuzzle::legalMoves() {
   // Find the last position.

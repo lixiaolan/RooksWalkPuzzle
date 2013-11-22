@@ -29,6 +29,7 @@ class BeeLinePuzzle {
 private:
   friend ofstream &operator<<(ofstream &, BeeLinePuzzle &);
   friend ifstream &operator>>(ifstream &, BeeLinePuzzle &);
+  friend class PuzzleChapter;
   int height;
   int width;
   int length;
@@ -63,7 +64,8 @@ private:
   bool goodPlayTestUnique(pos, pos);
   void markUnused();
   void clearBoolMats();
-  
+  void addHint(int r, int c);
+  void clearHint(int r, int c);
   void setDir(pos, pos);
   void markLRUD(pos, pos);
   void unMarkLRUD(pos, pos);
