@@ -143,7 +143,8 @@ public class ViewActivity extends Activity {
 			    String result = q.getCompleted();
 			    Log.d(TAG,"db result "+result+" "+p.getId());
 			    if(result.equals("true"))
-				p.setCompleted(true);
+				p.setCompleted(true);	    
+			    p.setMoves((int)q.getMovesUsed());
 			}
 		}
 

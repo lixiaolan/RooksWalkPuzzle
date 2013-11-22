@@ -133,6 +133,24 @@
 		    <image image="book1chapter3"/>
 		    <image image="book1chapter3_1"/>
 		    <image image="book1chapter3_2"/>
+		    <image image="book1chapter4"/>
+		    <image image="book1chapter4_1"/>
+		    <image image="book1chapter4_2"/>
+		    <image image="book1chapter5"/>
+		    <image image="book1chapter5_1"/>
+		    <image image="book1chapter5_2"/>
+		    <image image="book1chapter6"/>
+		    <image image="book1chapter6_1"/>
+		    <image image="book1chapter6_2"/>
+		    <image image="book1chapter7"/>
+		    <image image="book1chapter7_1"/>
+		    <image image="book1chapter7_2"/>
+		    <image image="book1chapter8"/>
+		    <image image="book1chapter8_1"/>
+		    <image image="book1chapter8_2"/>
+		    <image image="book1chapter9"/>
+		    <image image="book1chapter9_1"/>
+		    <image image="book1chapter9_2"/>
 		 </afterImage>
 		<width>3</width>
 		<height>3</height>
