@@ -95,7 +95,7 @@ class MenuManager {
 		break;
 		
 	    case TUTORIAL_MAIN_MENU:
-		String[] texturesTUTORIAL_MAIN_MENU = {TextureManager.BACK};
+		String[] texturesTUTORIAL_MAIN_MENU = {TextureManager.DONE};
 		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesTUTORIAL_MAIN_MENU); 
 		mCallback = new Callback_TUTORIAL_MAIN_MENU();
 		break;	
@@ -286,28 +286,3 @@ class MenuManager {
     }    
 }
 
-/*
-//TODO: THIS SHOULD GO AWAY SOON
-class Callback_MAIN_MENU_LIST_RESUME extends Callback {
-public void callback(int val) {
-    switch(val) {
-    case 1: 
-	state.saveCurrGame = true;
-	mModel.resumeGame();
-	mModel.setState(GameState.GAME_OPENING);
-	updateState();
-	break;
-    case 2: state.state = GameState.MAIN_MENU_GEAR;
-	updateState();
-	break;
-    case 3:
-	mModel.setModelToLevelPack();
-	updateState();
-	break;
-    case 0: state.state = GameState.MAIN_MENU_OPENING;
-	updateState();
-	break;
-    }
-}
-}
-*/

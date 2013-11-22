@@ -1,7 +1,5 @@
 package com.seventhharmonic.android.freebeeline;
 
-//TODO: Redo this class using a grid widget.
-
 public class CircleProgressBarWidget extends Widget {
 
 	CircleTile[] circleTiles;

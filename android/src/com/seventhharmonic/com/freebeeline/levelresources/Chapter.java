@@ -93,9 +93,9 @@ public class Chapter {
 	}
 
 	public boolean getCompleted(){
-		//TODO: Put this code back!
-		for(Puzzle p: puzzles){
-		 	if(!p.isCompleted()){
+		
+		for(int i =0;i<puzzles.size();i++){
+		 	if(!puzzles.get(i).isCompleted()){
 		 		return false;
 		 	}
 		 }

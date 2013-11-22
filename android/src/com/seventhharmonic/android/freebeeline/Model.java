@@ -115,7 +115,7 @@ class Model {
 	    mMenuManager.touchHandler(pt);
 	    //TODO: This may not exist yet but still be touched. We should be careful about this.
 	    if(mFlowerMenu != null){
-	    mFlowerMenu.touchHandler(pt);
+	    	mFlowerMenu.touchHandler(pt);
 	    }
 	    break;
 	case FLOWER_MENU:
@@ -126,12 +126,6 @@ class Model {
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-/*	TODO:Delete this code    at = mBoard.touched(pt);
-	    if(at != -1) {
-		float[] pivot = {0,0,1};
-		mBoard.tiles[at].setPivot(pivot);
-		mBoard.tiles[at].setRotate(true);
-	    }*/
 	    if(mBoard.beeTouched(pt) == 1){
 		vibe.vibrate(100);
 	    }
@@ -196,7 +190,8 @@ class Model {
 	    break;
 	case FLOWER_MENU:	
 	    mFlowerMenu.draw(r);
-	    mMenuManager.draw(r);
+	    if(!mFlowerMenu.inChapterEndState())
+	    	mMenuManager.draw(r);
 	    break;
 	case TUTORIAL_MAIN_MENU:
 	case TUTORIAL:
@@ -218,8 +213,8 @@ class Model {
 	//Log.d("Model","global");
 	//	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
 	/*TODO: This is a bit of hack to make sure these classes are not initialized too early.
-	*the initialize Toggle is to fix the fact that this function is called from the Renderer.
-	*Can the renderer initialize before the DB????
+	*	the initialize Toggle is to fix the fact that this function is called from the Renderer.
+	*	Can the renderer initialize before the DB????
 	*/
 	if(!initializeToggle){
 		mFlowerMenu = new FlowerMenu(this);
