@@ -10,19 +10,19 @@ import android.util.Log;
 
 
 class AnimatedGIFWidget extends Widget{
-
+    
     //This is the frame the widget is animating towards
     int targetFrame;
     
     //This is the frame that the widget is currently showing
     int currFrame;
-
+    
     String TAG = "GIF";
     int length;
     long time;	
     long refTime = 0;
     long speed = 250;
-
+    
     List<Integer> keyFrames = new ArrayList<Integer>();
     List<String> frameList = new ArrayList<String>();
     
@@ -33,13 +33,13 @@ class AnimatedGIFWidget extends Widget{
     float height = GlobalApplication.getGeometry().getGeometry()[1];
     
     public AnimatedGIFWidget(LevelPack LP) {
-
+	
 	List<Chapter> chapterList;
 	chapterList = LP.getAllChapters();
 	int i = 0;
 	for (int j =0; j<chapterList.size(); j++) {
-		Chapter ch  = chapterList.get(j);
-		keyFrames.add(i);
+	    Chapter ch  = chapterList.get(j);
+	    keyFrames.add(i);
 	    if (ch.getCompleted()) {
 		for (String s : ch.getAfterCompletionImageList()) {
 		    frameList.add(s);
@@ -48,15 +48,15 @@ class AnimatedGIFWidget extends Widget{
 	    }
 	    else {
 		for (String s : ch.getBeforeCompletionImageList()) {
-			Log.d(TAG,s);
+		    Log.d(TAG,s);
 		    frameList.add(s);
 		    i++;
 		}
 	    }
 	}
-		mImage = new ImageWidget(0, 0.05f, .9f, .9f*height, frameList.get(keyFrames.get(LP.getCurrChapter())));
-		mImage.setMode(MyGLRenderer.FIXEDWIDTH);
-		mImage.setBorder(true);
+	mImage = new ImageWidget(0, 0.05f, .9f, .9f*height, frameList.get(keyFrames.get(LP.getCurrChapter())));
+	mImage.setMode(MyGLRenderer.FIXEDWIDTH);
+	mImage.setBorder(true);
     }    
     
     public void setTargetFrame(int i) {
@@ -70,7 +70,7 @@ class AnimatedGIFWidget extends Widget{
 	//Log.d(TAG,"setTargetFrame currFrame "+Integer.toString(currFrame)+" "+"targetFrame "+Integer.toString(targetFrame));
 	refTime = System.currentTimeMillis();
     }
-
+    
     public void setSpeedMultiplier(long speed){
     	this.speed = speed;
     }
@@ -87,7 +87,7 @@ class AnimatedGIFWidget extends Widget{
     
     protected void animate(){
 	time = System.currentTimeMillis() - refTime;
-    if (time > speed) {
+	if (time > speed) {
 	    if (currFrame < targetFrame) {
 		currFrame++;
 		setFrame(currFrame);
@@ -106,14 +106,14 @@ class AnimatedGIFWidget extends Widget{
     public boolean animationFinished(){
     	time = System.currentTimeMillis() - refTime;
     	if(time > speed && currFrame == targetFrame)
-    		return true;
+	    return true;
     	return false;
     }
     
     protected void setFrame(int i) {
     	mImage.setImage(frameList.get(i));
     }
-
+    
     //Set the whole widget to a certain frame.
     public void setKeyFrame(int i){
     	mImage.setImage(frameList.get(keyFrames.get(i)));
@@ -125,7 +125,7 @@ class AnimatedGIFWidget extends Widget{
     public void draw(MyGLRenderer r) {
     	animate();
     	mImage.draw(r);
-	}
+    }
 }
 
 

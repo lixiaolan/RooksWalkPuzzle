@@ -119,7 +119,7 @@ class TutorialBoard2 extends Board {
 			for (int i = 0; i < tiles.length; i++) {
 				tiles[i].rotate = false;
 				tiles[i].setTextures();
-				tiles[i].setSize(tileSize);
+				//tiles[i].setSize(tileSize);
 			}
 			mBanner.setText(mTutorialInfo.banners[0]);
 			mBoardLineManager.drawLines();

@@ -83,7 +83,7 @@ public class StoryBoard extends Board{
 		    for (int i = 0;i<tiles.length;i++){
 		    	tiles[i].setTextures(TextureManager.CLEAR, tiles[i].flowerTexture);
 				tiles[i].setColor("transparent");
-				tiles[i].setSize(flowerSize);
+				//tiles[i].setSize(flowerSize);
 				tiles[i].setAngle(0f);
 				tiles[i].setPivot(pivot);
 		    }

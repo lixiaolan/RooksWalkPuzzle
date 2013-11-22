@@ -30,7 +30,7 @@ public class MyMusic{
     private int length = 0;
     private int iVolume;
     private int fadeDuration = 666;
-    private boolean playing;
+    private boolean playing = true;
     private final static int INT_VOLUME_MAX = 100;
     private final static int INT_VOLUME_MIN = 0;
     private final static float FLOAT_VOLUME_MAX = 1;
@@ -42,7 +42,6 @@ public class MyMusic{
     }
     
     public void playSong(String song) {
-	playing = true;
 	if (song.equals(currSong) ) {	    
 	}
 	else {
@@ -67,7 +66,6 @@ public class MyMusic{
 
     public void pauseMusic()
     {
-	playing = false;
 	if (mMediaPlayer != null) {
 	    //Set current volume, depending on fade or not
 	    if (fadeDuration > 0) 
@@ -117,8 +115,7 @@ public class MyMusic{
     
     public void resumeMusic()
     {
-	playing = true;
-	if (mMediaPlayer != null) {
+	if (mMediaPlayer != null && playing) {
 	    
 	    //Set current volume, depending on fade or not
 	    if (fadeDuration > 0) 
@@ -168,23 +165,23 @@ public class MyMusic{
 
     public void toggleMusic() {
 	if (playing) { 
+	    playing = false;
 	    pauseMusic();
 	}
 	else {
+	    playing = true;
 	    resumeMusic();
 	}
 	return;
     }
 
     public void resetMusic() {
-	playing = false;
 	mMediaPlayer.stop();
 	return;
     }
     
     public void stopMusic()
     {
-	playing = false;
 	currSong = "";
 	if (mMediaPlayer != null) {
 	    mMediaPlayer.stop();
@@ -196,7 +193,6 @@ public class MyMusic{
     
     public void onDestroy ()
     {
-	playing = false;
 	if(mMediaPlayer != null)
 	    {
 		try{

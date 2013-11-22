@@ -42,7 +42,20 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
     public void targetReached() {
 	controllerUnit.targetReached();
     }
+
+
+    //This may be a bad idea..............
     
+    // public class visitHintTileController extends ControllerUnitBase {
+    // 	private float[] fixedPos = {0.8f,-1.0f,0.0f};
+	
+    // 	public visitHintTileController() {
+    // 	    bee.setMood(Mood.FAST);
+    // 	}
+
+    // 	@Override
+    // }
+
     public class StayStillController extends ControllerUnitBase {
 
 	private float[] fixedPos = {0.8f,-1.0f,0.0f};

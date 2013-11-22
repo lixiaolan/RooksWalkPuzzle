@@ -159,6 +159,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
      * 
      */
     public void enterChapterEnd(){
+	if (
     	mFlowerState = FlowerState.CHAPTER_END;
     	updateState();
     }
@@ -285,9 +286,9 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	Widget currChapterWidget;	//The current chapter that the screenslide widget is on.
 	ButtonWidget gridToggle;	//Toggles the showing of puzzles
 	AnimatedGIFWidget mGIF;		//Displays the backgrounds and handles their animation
-
 	
-	public ChapterDisplay(){
+	
+	public ChapterDisplay(){ 
 		//Set up the grid toggle
 		gridToggle = new TextToggleButtonWidget(1f-.15f,-1*GlobalApplication.getGeometry().getGeometry()[1]+.15f, .15f, .15f, "hide", "show" );
 	    gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.CIRCLE);
@@ -395,8 +396,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     		mGIF.setSpeedMultiplier(500);
     		mGIF.setKeyFrame(savedChapter);
     		mGIF.setTargetFrame(savedChapter+1);
+
     		String text = "          Congratulations! ^You helped Beatrice finish Chapter "+Integer.toString(savedChapter+1)+" .^ Click to move onto the next chapter.";
-    	
     		mText = new TextBox(0, h -.2f,.9f, text);
     		mText.setFontSize(TextCreator.font1);
     		//TODO: This sucks. There must be a more flexible way to figure out the gometry.
@@ -434,7 +435,6 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 			mGIF.draw(r);			
 			mText.draw(r);
 		}
-    	
     }
 
     @Override

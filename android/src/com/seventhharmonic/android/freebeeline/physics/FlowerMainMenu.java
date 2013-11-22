@@ -56,10 +56,14 @@ class FlowerMainMenu extends StateWidget {
     }
     
     float[] force = new float[2];
+    long time;
+    float fTime;
+    float dt;
+    
     @Override
     public void duringAnimation() {
-	long time = System.currentTimeMillis()-refTime;
-	float dt = Math.min(((float)time)/1000.0f, 33.3f);
+	time = System.currentTimeMillis()-refTime;
+	dt = Math.min(((float)time)/1000.0f, .0333f);
 	refTime = System.currentTimeMillis();
 	for(int i=0;i<tiles.length;i++){
 	    getForce(tiles, i);
@@ -72,6 +76,7 @@ class FlowerMainMenu extends StateWidget {
     
     float[] temp = new float[2];
     float[] mid = new float[3];
+    float sTemp;
     
     public void getForce(FlowerTile[] tiles, int i) {
 	mid[0] = centers[2*i]; mid[1] = centers[2*i+1]; 
@@ -79,11 +84,12 @@ class FlowerMainMenu extends StateWidget {
 	LATools.vSProd(-2.0f,temp, force); 
 	LATools.vSProd(-1.2f,tiles[i].velocity, temp);
 	LATools.vSum(force, temp, force);
+
 	//Compute wave of forces due to touch
-	float time = 2*(System.currentTimeMillis()-lastTouchTime)/1000f;
+	fTime = 2*((float)(System.currentTimeMillis()-lastTouchTime))/1000f;
 	LATools.vDiff(tiles[i].center, lastTouchPos, temp);
-	float sTemp = LATools.abs(temp);
-	if (sTemp<time && sTemp > time - .2f && sTemp > .00001f){
+	sTemp = LATools.abs(temp);
+	if (sTemp<fTime && sTemp > fTime - .2f && sTemp > .00001f){
 	    LATools.vSProd(5f/((float)Math.pow(sTemp,1)), temp, temp);
 	    LATools.vSum(force, temp, force);
 	}

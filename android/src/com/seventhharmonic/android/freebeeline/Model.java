@@ -86,13 +86,16 @@ class Model {
 	mStoryBoard = new StoryBoard(this);
     }
     
-    public void toggleHints(boolean toggle) {
-	mBoard.toggleHints(toggle);
-    }
+    //WHERE DID THIS GO?
+    // public void toggleHints(boolean toggle) {
+    // 	mBoard.toggleHints(toggle);
+    // }
     
     public void toggleLines(boolean toggle) {
 	mBoard.toggleLines(toggle);
-	GlobalApplication.getHintDB().addHints(10);
+	
+	//This used to be the secrete way to get hints in game :)  Cute!
+	//GlobalApplication.getHintDB().addHints(10);
     }
     
     public void toggleRules(boolean toggle) {
@@ -287,7 +290,6 @@ class Model {
    //INTERFACE CLASSES FOR FLOWERMENU:   
     public void setModelToMainMenuOpening() {
 	setState(GameState.MAIN_MENU_OPENING);
-	System.out.println("GETTING HERE?A?A?A?A......NOPE!");
     }
 
     public void setModelToGameOpening(Puzzle p) {

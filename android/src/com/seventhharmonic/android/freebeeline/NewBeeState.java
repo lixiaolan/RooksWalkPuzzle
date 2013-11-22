@@ -11,10 +11,14 @@ package com.seventhharmonic.android.freebeeline;
 public abstract class NewBeeState<T extends Tile> extends State<T> {
 
     protected float[] target = new float[3];
+    protected float[] lastPos = new float[3];
 
-    protected void setTarget(float[] in) {
-    	target = in;
+    protected void setTarget(float[] tar, float[] last) {
+	target = tar;
+	lastPos = last;
     }
+
+    
 
 
 }

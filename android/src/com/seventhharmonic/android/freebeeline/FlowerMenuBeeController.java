@@ -37,7 +37,7 @@ public class FlowerMenuBeeController extends ControllerBase implements BeeInterf
 	public long relativeRefTime;
 	
 	protected long time;
-	protected float interval = 10000f;
+	protected float interval = 6000f;
 	protected int r;
 	
 	@Override

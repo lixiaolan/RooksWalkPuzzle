@@ -35,10 +35,6 @@ public class Physics implements PhysicsInterface {
 	str2physics.put("default", new LevelPack1(tiles));
 	
 	state = str2physics.get("main_menu");
-	System.out.println("WE GOT INTO PHYSICS CONSTRUCTOR");
-	if (state == null) {
-	    System.out.println("HSD:LFKJS:DLFKJS:LDKJF:LSDKJF:LSDFKHSDLKFHKLSDHFLKSDHFKLHSDKLFHSD");
-	}
     }
 
     @Override

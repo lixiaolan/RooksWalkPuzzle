@@ -44,7 +44,7 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
     }
 
     public void setTarget(float[] in) {
-	state.setTarget(in);
+	state.setTarget(in, bee.getCenter());
     }
         
     public void touched(float[] pt) {
@@ -69,11 +69,30 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	
 	//Used in the movement of the bee;
 	private float attraction = 1.5f;
-	private float friction = 0.8f;
+	private float friction = 1.4f;
+
+	// //These are for the size computations:
+	// private float maxSize = .18f;
+	// private float minSize = 0.08f;
+	// private float sizeScale = 1.0f;
+	// private float speed;
 	
 	public BeeLazy() {
 	}
+
+	float[] force = new float[2];
+	float[] temp = new float[2];
+	float[] temp2 = new float[2];
 	
+	@Override
+	    protected void setTarget(float[] tar, float[] last) {
+	    target = tar;
+	    lastPos = last;
+	    if (LATools.abs(bee.velocity) != 0) {
+		LATools.vSProd(1.0f/LATools.abs(bee.velocity),bee.velocity, bee.velocity); 
+	    }
+	}
+
 	public void enterAnimation(BeeTile[] tiles){
 	    globalRefTime = 0;
 	    relativeRefTime = System.currentTimeMillis();
@@ -81,9 +100,6 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    period = DrawPeriod.DURING;
 	}    
 	
-	float[] force = new float[2];
-	float[] temp = new float[2];
-	float[] temp2 = new float[2];
 	
 	public void duringAnimation(BeeTile[] tiles) {
 	    
@@ -93,6 +109,7 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    relativeRefTime = System.currentTimeMillis();
 	    
 	    getForce();
+
 	    LATools.vSProd(dt, bee.velocity, temp2);
 	    LATools.vSum(bee.getCenter(), temp2, temp);
 	    bee.setCenter2D(temp);
@@ -102,6 +119,7 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    if(LATools.abs(bee.velocity) < speedTol && LATools.abs(temp) < positionTol){
 	    	mBeeInterface.targetReached();
 	    }
+
 	}
 	
 	public void getForce() {
@@ -112,6 +130,12 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    LATools.vSum(force, temp2, force);	    
 
 	}	
+
+	// public void getSize() {
+	//     speed = LATools.abs(bee.velocity);
+	//     bee.setSize((float)(minSize + 2.0f/Math.PI*Math.atan(speed*sizeScale)*(maxSize - minSize) ));
+	// }
+
     }
     
     class BeeFast extends NewBeeState<BeeTile> {
@@ -127,7 +151,12 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	//Used in the movement of the bee;
 	private float attraction = 2.5f;
 	private float friction = 2.6f;
-	
+
+	//These are for the size computations:
+	private float maxSize = .18f;
+	private float minSize = 0.08f;
+	private float sizeScale = 1.0f;
+	private float speed;
 	public BeeFast() {
 	}
 	
@@ -142,15 +171,16 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	float[] force = new float[2];
 	float[] temp = new float[2];
 	float[] temp2 = new float[2];
-	
+       
+
 	public void duringAnimation(BeeTile[] tiles) {
-	    
 	    mBeeInterface.control();
 	    
 	    dt = Math.min(((float)(System.currentTimeMillis() - relativeRefTime))/1000f, .0333f);
 	    relativeRefTime = System.currentTimeMillis();
 	    
 	    getForce();
+	    getSize();
 	    LATools.vSProd(dt, bee.velocity, temp2);
 	    LATools.vSum(bee.getCenter(), temp2, temp);
 	    bee.setCenter2D(temp);
@@ -178,6 +208,11 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    LATools.vSum(force, temp2, force);
 
 	}	
+
+	public void getSize() {
+	    speed = LATools.abs(bee.velocity);
+	    bee.setSize((float)(minSize + 2.0f/Math.PI*Math.atan(speed*sizeScale)*(maxSize - minSize) ));
+	}
 	
     }
 

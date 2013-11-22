@@ -96,7 +96,6 @@ public class ViewActivity extends Activity {
 	GlobalApplication.getPuzzleDB().close();
 	GlobalApplication.getHintDB().close();
 	GlobalApplication.getPurchasedDB().close();
-
 	GlobalApplication.getMyMusic().pauseMusic();
     }
     
