@@ -31,11 +31,12 @@ class MainHandler(webapp.RequestHandler):
 class EmailHandler(webapp2.RequestHandler):
   def post(self):
     emailbook_name = self.request.get('email_input', DEFAULT_DB_NAME)
+    print "GOTHIS: "+emailbook_name
     emailEntity = Email(parent=email_key(emailbook_name))
     emailEntity.email = self.request.get('email_input')
     emailEntity.put()
     #query_params = {'emailbook_name': emailbook_name}
-    self.redirect('/')
+    #self.redirect('/')
 
 application = webapp.WSGIApplication ([('/(.*html)?', MainHandler),('/email',EmailHandler)], debug=True)
 #  util.run_wsgi_app (application)

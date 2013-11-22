@@ -80,19 +80,13 @@ public class TextBox extends Widget{
 	@Override
 	public void setCenter(float x, float y){
 		super.setCenter(x,y);
+		background.setCenter(x, y);
 	}
 	
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		//If a background is drawn, the renderer queries the current height.
-		//TODO: This sucks. Make this better.
-		/*
-		if(background.getBorder() && background.getHeight()==0){
-			background.setHeight(r.getTextHeight(fontSize, text));
-			Log.d("background", Float.toString(r.getTextHeight(fontSize, text)));
-			background.setBorder(true);
-		*/
+		
 		if(background.getBorder()){
 			background.draw(r);
 		}
@@ -101,13 +95,10 @@ public class TextBox extends Widget{
 
 	@Override
 	public void touchHandler(float[] pt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void swipeHandler(String direction) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -15,7 +15,8 @@ class TutorialBoard2 extends Board {
 	TutorialState mTutorialState;
 	TutorialInfo2 mTutorialInfo = new TutorialInfo2();
 	CircleProgressBarWidget mCPB;
-	
+	ImageWidget leftArrow;
+	ImageWidget rightArrow;
 
 	public TutorialBoard2() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
@@ -25,12 +26,15 @@ class TutorialBoard2 extends Board {
 		mBanner = new TextBox(0,0,.9f,"");
 		mBanner.setFontSize(TextCreator.font1);
 		mBoardBg = new ImageWidget(0,0,1,1,"boardbg");
-		//mBee = new Bee(this);
-		//mBee.setState(GameState.GAME_OPENING, TutorialInfo2.length);
 		state = new SLIDE1(tiles,true);
 		mTutorialState = TutorialState.SLIDE1;
-		
-		
+		leftArrow = new ImageWidget(0, 0, .10f, .10f, TextureManager.LWEDGE);
+		rightArrow = new ImageWidget(0, 0, .10f, .10f, TextureManager.RWEDGE);
+		float xCPW = 0;
+		float yCPW = -1;
+		float circleSize = .05f;
+		rightArrow.setCenter(xCPW-4/2*(2.5f*circleSize)-circleSize, yCPW);
+		leftArrow.setCenter(xCPW+4/2*(2.5f*circleSize)+circleSize, yCPW);
 		mBoardLineManager = new BoardLineManager(this);
 	}
 
@@ -92,6 +96,11 @@ class TutorialBoard2 extends Board {
 
 	public void touchHandler(float[] pt) {
 		state.touchHandler(pt);
+		if(leftArrow.isTouched(pt)){
+			swipeHandler("right_arrow");
+		} else if(rightArrow.isTouched(pt)){
+			swipeHandler("left_arrow");
+		}
 	}
 
 	
@@ -170,6 +179,8 @@ class TutorialBoard2 extends Board {
 			super.draw(tiles, r);
 			mBanner.draw(r);
 			mCPB.draw(r);
+			rightArrow.draw(r);
+			leftArrow.draw(r);
 		}
 
 	}    
@@ -274,6 +285,8 @@ class TutorialBoard2 extends Board {
 			if(handToggle)
 				hand.draw(r);
 			mCPB.draw(r);
+			rightArrow.draw(r);
+			leftArrow.draw(r);
 		}
 
 	}
@@ -327,6 +340,8 @@ class TutorialBoard2 extends Board {
 			super.draw(tiles, r);
 			mBanner.draw(r);
 			mCPB.draw(r);
+			rightArrow.draw(r);
+			leftArrow.draw(r);
 		}
 
 	}
@@ -403,6 +418,8 @@ class TutorialBoard2 extends Board {
 			mBanner.draw(r);
 			mCheck.draw(r);
 			mCPB.draw(r);
+			rightArrow.draw(r);
+			leftArrow.draw(r);
 		}
 	}
 

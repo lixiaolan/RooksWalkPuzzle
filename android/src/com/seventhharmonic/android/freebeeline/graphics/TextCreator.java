@@ -233,7 +233,6 @@ public class TextCreator {
 			/*Notes:
 			 * Recall that a tile is 2*width across. 
 			 * width-letterX+x is the correct translation to align the text at the top of a TextBox
-			 * TODO: Set it up so we don't truncate words at the end of line. Need a DFA
 			*/
 			//
 			if(text.charAt(i)=='^'){
@@ -265,7 +264,7 @@ public class TextCreator {
 			}
 		}
 	}
-
+	
 	public void drawCenter(MyGLRenderer r, String text, float x, float y, float width, float scaleX, float scaleY){
 		String[] lines = text.split("\\^");
 		

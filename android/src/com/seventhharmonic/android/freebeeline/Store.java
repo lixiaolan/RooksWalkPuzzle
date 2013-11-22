@@ -327,7 +327,7 @@ public class Store {
 				//Update the inventory.
 				mInventory.addPurchase(purchase);
 				
-				//TODO: Need code here to open the DB and set the fact that we have bought unlimited hints.
+				//Need code here to open the DB and set the fact that we have bought unlimited hints.
 				PDS.open();
 				PDS.setPurchased("hintsunlimited", true);
 				PDS.close();
@@ -414,7 +414,7 @@ public class Store {
 				//Need to update the inventory object.
 				mInventory.addPurchase(purchase);
 
-				//TODO: Need code here to open the DB and set the fact that we have bought the LevelPack.
+				//Need code here to open the DB and set the fact that we have bought the LevelPack.
 				PDS.open();
 				PDS.setPurchased(purchase.getSku(), true);
 				PDS.close();

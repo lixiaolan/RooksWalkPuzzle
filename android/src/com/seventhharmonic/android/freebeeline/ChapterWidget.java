@@ -38,14 +38,14 @@ public class ChapterWidget extends GraphicWidget {
 		setHeight(height);
 		
 		this.ch = ch;
-		/*TODO: Place some kind of text here. - OR NOT>>>>>>
-		 * Set the text at the top of the screen.
-		 */
-		mText = new TextBox(0f, 0f, 1f, ch.getTitle());
+
+		mText = new TextBox(0f, 0f, .9f, ch.getTitle());
 		Log.d(TAG, ch.getTitle());
 		mText.setFontSize(2);
-		mText.setRelativeCenter(0,height-.2f);
+		mText.setRelativeCenter(0,height-.3f);
 		mText.setJ(TextJustification.CENTER);
+		mText.setBorder(true, 0, height-.3f, 1, .1f);
+		mText.setColor("white");
 		widgetList.add(mText);
 
 		/*
@@ -178,9 +178,7 @@ public class ChapterWidget extends GraphicWidget {
 		}
 
 		@Override
-		public void swipeHandler(String direction) {
-			// TODO Auto-generated method stub
-			
+		public void swipeHandler(String direction) {			
 		}
 
 		@Override
@@ -264,12 +262,10 @@ public class ChapterWidget extends GraphicWidget {
 		
 		@Override
 		public void duringAnimation() {
-			// TODO Auto-generated method stub	
 		}
 		
 		@Override
 		public void swipeHandler(String direction) {
-			// TODO Auto-generated method stub
 		}
 
 		@Override
@@ -317,9 +313,9 @@ public class ChapterWidget extends GraphicWidget {
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		state.draw(r);
-
 		mText.draw(r);
+		state.draw(r);
+		
 	}	
 
 }

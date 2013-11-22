@@ -57,7 +57,9 @@ public class TextureManager {
 	public static final String LINES_OFF = "lines off";
 	public static final String RULE_CHECK_ON = "help on";
 	public static final String RULE_CHECK_OFF = "help off";
-
+	public static final String DONE = "done";
+	
+	
 	public static final String CLEAR_BOARD = "reset";
 	//public static final String QUIT = "quit";
 	public static final String YES = "yes";
@@ -133,19 +135,23 @@ public class TextureManager {
 
 			
 		buildTextures(context, R.drawable.menu_circle_light_grey2, MENUCIRCLE);
+		
 		buildTextures(context, R.drawable.flower1,"flower0");
+		
 		buildTextures(context, R.drawable.board6, "boardbg");
-		buildTextures(context, R.drawable.check2, "check");
-		buildTextures(context, R.drawable.share, SHARE);
+		buildTextures(context, R.drawable.board5, BOARD5);
+		
 		buildTextures(context, R.drawable.title_compact, "title");
 		buildTextures(context, R.drawable.hand, HAND);
+		
 		buildTextures(context, R.drawable.opencircle, OPENCIRCLE);
 		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
+		
 		buildTextures(context, R.drawable.lwedge, LWEDGE);
 		buildTextures(context, R.drawable.rwedge, RWEDGE);
+		
 		buildTextures(context, R.drawable.revert, ERASER);
-		buildTextures(context, R.drawable.board5, BOARD5);
-		buildTextures(context, R.drawable.star, GOLDSTAR);
+		
 		buildTextures("", 128, 140, CLEAR, 50);
 
 		
@@ -244,6 +250,7 @@ public class TextureManager {
 		buildTextures(NEXT, xpos, ypos, NEXT, fontSize);
 		buildTextures(HIDE, xpos, ypos, HIDE, fontSize);
 		buildTextures(SHOW, xpos, ypos, SHOW, fontSize);
+		buildTextures(DONE, xpos, ypos, DONE, fontSize);
 	}
 
 	public int closestPower(int a){

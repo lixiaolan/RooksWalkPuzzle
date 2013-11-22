@@ -417,8 +417,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     }
 
     }
-    
-    
+      
     class ChapterEnd extends StateWidget{
     	AnimatedGIFWidget mGIF;		//Displays the backgrounds and handles their animation
     	TextBox mText;
@@ -431,11 +430,11 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     		mGIF.setTargetFrame(savedChapter+1);
 
     		String text = "          Congratulations! ^You helped Beatrice finish Chapter "+Integer.toString(savedChapter+1)+" .^ Click to move onto the next chapter.";
-    		mText = new TextBox(0, h -.2f,.9f, text);
+    		mText = new TextBox(0, h -.2f,.99f, text);
     		mText.setFontSize(TextCreator.font1);
-    		//TODO: This sucks. There must be a more flexible way to figure out the gometry.
-    		mText.setBorder(true, 0, h-.4f, .9f,.3f);
-    		mText.setColor("opaque");
+    		//TODO: This sucks. There must be a more flexible way to figure out the geometry.
+    		mText.setBorder(true, 0, h-.4f, .99f,.3f);
+    		mText.setColor("white");
     	}
 
 		@Override
@@ -483,10 +482,12 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     public void setTileRotate(int i) {
 	return;
     }
-
-
     @Override
     public void setState() {
 	return;
+    }
+
+    public boolean inChapterEndState(){
+    	return (mFlowerState==FlowerState.CHAPTER_END) ? true:false;	
     }
 }
