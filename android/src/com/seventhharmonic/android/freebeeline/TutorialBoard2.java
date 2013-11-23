@@ -40,7 +40,7 @@ class TutorialBoard2 extends Board {
 
 	public void setGeometry(float[] g){
 		super.setGeometry(g);
-		mBanner.setCenter(0, g[1]-.07f);
+		mBanner.setCenter(0, g[1]-.15f);
 	}
 
 	public void setStateForward()	{

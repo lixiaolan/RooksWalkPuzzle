@@ -337,7 +337,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    	m.setActiveWidget(currLevelPack.getCurrChapter());
 	    	mGIF.setKeyFrame(currLevelPack.getCurrChapter());
 	    	if(currLevelPack.getCurrChapter() == currLevelPack.getNumberOfChapters()-1)
-		    mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
+	    		mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
 	    }
 	    
 	    //Set the current chapter appropriately.
@@ -429,7 +429,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     		mGIF.setKeyFrame(savedChapter);
     		mGIF.setTargetFrame(savedChapter+1);
 
-    		String text = "          Congratulations! ^You helped Beatrice finish Chapter "+Integer.toString(savedChapter+1)+" .^ Click to move onto the next chapter.";
+    		String text = currLevelPack.getChapter(savedChapter).getEnd_text()+" .^ Touch to continue.";
     		mText = new TextBox(0, h -.2f,.99f, text);
     		mText.setFontSize(TextCreator.font1);
     		//TODO: This sucks. There must be a more flexible way to figure out the geometry.

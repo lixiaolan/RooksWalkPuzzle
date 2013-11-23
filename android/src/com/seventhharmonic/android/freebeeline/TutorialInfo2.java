@@ -7,8 +7,8 @@ public class TutorialInfo2 {
     }
 
     //Boob Dyla
-   public static String[] banners = {"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.",
-    								"Touch an empty square to enter a number. Swipe to enter a direction.",
+   public static String[] banners = {"Create a loop and fill the board.^ The arrows tell you where to go and the numbers indicate how far.",
+    								"Touch an empty square to enter a number.^ Swipe to enter a direction.",
     								"The yellow squares are parts of the path we have given you. Squares with a circle are the next segment of the path.",
     								"Don't forget Beatrice's Rule:^ A square with a number can't face towards a square with the same number.",
     							};
