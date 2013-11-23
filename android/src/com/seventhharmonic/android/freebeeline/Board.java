@@ -247,8 +247,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    }
 		}
 	    }
-	    mErrorLog.setLog();
-	    turnErrorRed(0);
 	}
 
 	/*
@@ -421,7 +419,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				    if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
 					showHint();
 					setHintsText();
-					
+					mErrorLog.setLog();
+				    turnErrorRed(0);
 				    } else {
 					mHintDialog.activate();
 				    }
@@ -542,26 +541,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		@Override
 		public void touchHandler(float[] pt){
-		    if(mHints.isTouched(pt)){
-			if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
-			    showHint();
-			    setHintsText();
-			} else {
-			    mHintDialog.activate();
-			}
-		    }
-		    beeBox.touchHandler(pt);
-		    reset.touchHandler(pt);
+			reset.touchHandler(pt);
 		    tutorial.touchHandler(pt);
-
-		    if(mHintDialog.isActive()){
-			mHintDialog.touchHandler(pt);
-			return;
-		    }
-		    
-		    // this checks that the errors have been resolved before one moves on.  Comment this out
+			
+			// this checks that the errors have been resolved before one moves on.  Comment this out
 		    // to turn off this feature.
-		    
 		    if (mErrorLog.hasError() && toggleError) {
 		    	float[] f = new float[2];
 		    	f[0] = pt[0];
@@ -579,8 +563,24 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    	    return;
 		    	}
 		    }
-
-
+			
+			if(mHints.isTouched(pt)){
+			if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
+			    showHint();
+			    setHintsText();
+			    mErrorLog.setLog();
+			    turnErrorRed(0);
+			} else {
+				mHintDialog.activate();
+			}	
+		    }	
+		    beeBox.touchHandler(pt);
+		    
+		    if(mHintDialog.isActive()){
+			mHintDialog.touchHandler(pt);
+			return;
+		    }
+		    
 		    //onto the main logic of the game
 		    val = mMenu.touched(pt);
 		    if(val == -1){

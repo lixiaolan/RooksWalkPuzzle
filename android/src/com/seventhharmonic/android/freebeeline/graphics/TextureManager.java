@@ -273,8 +273,6 @@ public class TextureManager {
 		for(int i=1;i<7;i++){
 			buildTextures(Integer.toString(i),2*64,2*80,"menu_"+Integer.toString(i+1),2*50);
 		}
-
-
 		int fontSize = 50; 
 		int xpos = 128;
 		int ypos = 140;
@@ -377,13 +375,6 @@ public class TextureManager {
 	
 	public float[] getSheetCoord(String t){
 		if(sheetLibrary.containsKey(t)){
-			/*if(togg == 0)
-				return sheetLibrary.get("up_arrow").coords;
-			else if (togg == 1)
-				return sheetLibrary.get("down_arrow").coords;
-		Log.d(TAG, Integer.toString(togg));
-			togg=(togg+1)%2;
-			 */			
 			return sheetLibrary.get(t).coords;
 		}
 		

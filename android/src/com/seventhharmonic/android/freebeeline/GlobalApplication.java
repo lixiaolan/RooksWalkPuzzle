@@ -36,7 +36,7 @@ public class GlobalApplication extends Application {
      */
     
     // Placeholder property ID.
-    private static final String GA_PROPERTY_ID = "UA-44910433-1";
+    private static final String GA_PROPERTY_ID = "UA-44910433-2";
     
     // Dispatch period in seconds.
     private static final int GA_DISPATCH_PERIOD = 5;
