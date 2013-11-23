@@ -20,6 +20,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	public int[][] path;
 	public int boardWidth = 6;
 	public int boardHeight = 6;
+	public float[] beeBoxCenter = {0.0f, 0.0f, 0.0f};
 
 	private boolean toggleLines = true;	
 	private boolean toggleError = true;
@@ -236,44 +237,45 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	 * Show a hint on the board. This should be triggered when the bee is clicked.
 	 */
 	public void showHint() {
-		for(int i =0; i< tiles.length; i++){
-			if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
-				System.out.println("Found a potential tile");
-				if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
-					tiles[i].setHint();
-					mBoardLineManager.drawLines();
-					break;
-				}
-			}
+	    for(int i =0; i< tiles.length; i++){
+		if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
+		    System.out.println("Found a potential tile");
+		    if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
+			tiles[i].setHint();
+			mBoardLineManager.drawLines();
+			break;
+		    }
 		}
+	    }
 	}
 
 	/*
 	 * Show solution at the end of the game. Currently just a utility function.
 	 */
 	public void showSolution(){
-		String sol = "";
-		for(int i =0;i <tiles.length;i++){
-			if(tiles[i].getTrueSolution() == 0)
-				sol  = "clear";
-			else
-				sol = Integer.toString(tiles[i].getTrueSolution());
-			tiles[i].setNumber(sol);
-			tiles[i].setArrow(tiles[i].getTrueArrow());
-		}
+	    String sol = "";
+	    for(int i =0;i <tiles.length;i++){
+		if(tiles[i].getTrueSolution() == 0)
+		    sol  = "clear";
+		else
+		    sol = Integer.toString(tiles[i].getTrueSolution());
+		tiles[i].setNumber(sol);
+		tiles[i].setArrow(tiles[i].getTrueArrow());
+	    }
 	}
-
+	
 	/*
 	 *	Get's called by Model's set geometry.
 	 */
+	
 	public void setGeometry(float[] g) {
-		super.setGeometry(g);
-		mBoardLineManager.setGeometry(g);
-
-		//Place the banner halfway between the board and the top of the screen.
-		mGameBanner.setCenter(0, (g[1]+1)/2);
+	    super.setGeometry(g);
+	    mBoardLineManager.setGeometry(g);
+	    
+	    //Place the banner halfway between the board and the top of the screen.
+	    mGameBanner.setCenter(0, (g[1]+1)/2);
 	}
-
+	
 	/////////////////////////////////////////////////////////////////////////////	
 	////////////////////////////////////////////////////////////////////////////////
 	//Bee Board Interface Methods:
@@ -316,6 +318,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		return 0;
 	}
 	
+	public float[] getBeeBoxCenter() {
+	    return beeBoxCenter;
+	}
+
+	
 	////////////////////////////////////////////////////////////////////////////////
 	//This state defines board behavior during game play.
 	class BoardPlay extends State<BoardTile> {
@@ -336,6 +343,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		
 		ButtonWidget reset;
 		ButtonWidget tutorial;
+		ButtonWidget beeBox;
 		HintsDataSource DB;
 		TextBox mHints;
 		TextBox mMoves;
@@ -408,6 +416,20 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mPar = new TextBox(0,0,.22f, "par:^ "+Integer.toString(par));
 			mPar.setJ(TextJustification.CENTER);
 			
+			beeBox = new ButtonWidget(-.7f, 1.0f, .11f, .11f, TextureManager.CLEAR);
+			beeBox.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
+			beeBox.setClickListener(new GameEventListener(){
+				public void event(int i){
+				    if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
+					showHint();
+					setHintsText();
+				    } else {
+					mHintDialog.activate();
+				    }
+				}
+			    });
+			
+			
 			//Grid Widget to store all these wonderful buttons.
 			buttonGrid = new GridWidgetLayout(3,2, .18f);
 			buttonGrid.setCenter(0, mBoardBg.getCenterY()-mBoardBg.getHeight()-.1f);
@@ -416,10 +438,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			buttonGrid.addWidget(mPar);
 			buttonGrid.addWidget(reset);
 			buttonGrid.addWidget(tutorial);
-
+			buttonGrid.addWidget(beeBox);
 			
-			 // The dialog box that appears when you run out of hints.
-			 
+			beeBoxCenter = buttonGrid.getWidget(5).getCenter();
+			
+			
+			// The dialog box that appears when you run out of hints.
 			mHintDialog = new HintDialogWidgetLayout(mHints);
 			mGameBanner.setText(currPuzzle.getText());
 			initSize = tiles[0].getSize();
@@ -528,7 +552,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			    mHintDialog.activate();
 			}
 		    }
-		    
+		    beeBox.touchHandler(pt);
 		    reset.touchHandler(pt);
 		    tutorial.touchHandler(pt);
 

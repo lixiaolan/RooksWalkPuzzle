@@ -53,6 +53,7 @@ public class GridWidgetLayout extends WidgetLayout{
 	 * Unlike the rest of the program, we are taking the care here to perform a rotation
 	 * Hence index 0 is a the upper left. 
 	 */
+
 	public void initiateGeometry(){
 		xcoords = new float[width*height];
 		ycoords = new float[width*height];

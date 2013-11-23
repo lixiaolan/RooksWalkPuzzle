@@ -118,22 +118,22 @@ int main(int argc, char *argv[]){
     string bookStyle = "default";
     
     vector<string> chapterTitles;
-    chapterTitles.push_back("Chapter One");
-    chapterTitles.push_back("Chapter Two");
-    chapterTitles.push_back("Chapter Three");
-    chapterTitles.push_back("Chapter Four");
-    chapterTitles.push_back("Chapter Five");
-    chapterTitles.push_back("Chapter Six");
-    chapterTitles.push_back("Chapter Seven");
+    chapterTitles.push_back("The Natural Log");
+    chapterTitles.push_back("The Babbling Brook");
+    chapterTitles.push_back("The Bradford Pear Tree");
+    chapterTitles.push_back("Cats And Lilies");
+    chapterTitles.push_back("Over The Hills");
+    chapterTitles.push_back("Tigers In The Grass");
+    chapterTitles.push_back("Beatrice's Garden");
 
     vector<string> chapterEndText;
-    chapterEndText.push_back("test text");
-    chapterEndText.push_back("test text");
-    chapterEndText.push_back("test text");
-    chapterEndText.push_back("test text");
-    chapterEndText.push_back("test text");
-    chapterEndText.push_back("test text");
-    chapterEndText.push_back("test text");
+    chapterEndText.push_back("Congratulations!^ You helped Beatrice visit all the flowers on the log!");
+    chapterEndText.push_back("Congratulations!^ You helped Beatrice find the flowers along side the brook!");
+    chapterEndText.push_back("Congratulations!^ You helped Beatrice pollinate every flower in the tree!");
+    chapterEndText.push_back("Congratulations!^ Do you feel emotionally connected to Beatrice yet?");
+    chapterEndText.push_back("Congratulations!^ You thought those were tricky? Just wait!");
+    chapterEndText.push_back("Congratulations!^ Don't worry, Beatrice still loves you!");
+    chapterEndText.push_back("Congratulations!^ You did it! You helped Beatrice bring color to her world!");
     
     vector<string> beforeImages;
     beforeImages.push_back("questionmark");

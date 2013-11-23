@@ -8,6 +8,6 @@ public interface BeeBoardInterface {
     public int getPathLength();
     public void setTileRotate(int index);
     public int getPathToArray(int index);
-
+    public float[] getBeeBoxCenter();
 }
 

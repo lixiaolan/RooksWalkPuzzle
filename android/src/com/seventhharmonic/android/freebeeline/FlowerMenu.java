@@ -337,7 +337,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    	m.setActiveWidget(currLevelPack.getCurrChapter());
 	    	mGIF.setKeyFrame(currLevelPack.getCurrChapter());
 	    	if(currLevelPack.getCurrChapter() == currLevelPack.getNumberOfChapters()-1)
-	    		mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
+		    mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
 	    }
 	    
 	    //Set the current chapter appropriately.
@@ -356,25 +356,25 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	long time;
 	@Override
 	public void duringAnimation(){
-		time = System.currentTimeMillis() - refTime; 
-		if(m.getActiveWidget() == currLevelPack.getNumberOfChapters()-1 && currLevelPack.getChapter(m.getActiveWidget()).getCompleted()) {
-			if ( mGIF.onLastFrame() ) {
-				if (!timeSet) {
-					refTime = System.currentTimeMillis();
-					time = System.currentTimeMillis() - refTime; 
-					timeSet = true;
-				}
-				if (time > 250) {
-					mGIF.setCurrFrame(m.getActiveWidget()+1);
-					timeSet = false;
-				}
-			}
+	    time = System.currentTimeMillis() - refTime; 
+	    if(m.getActiveWidget() == currLevelPack.getNumberOfChapters()-1 && currLevelPack.getChapter(m.getActiveWidget()).getCompleted()) {
+		if ( mGIF.onLastFrame() ) {
+		    if (!timeSet) {
+			refTime = System.currentTimeMillis();
+			time = System.currentTimeMillis() - refTime; 
+			timeSet = true;
+		    }
+		    if (time > 250) {
+			mGIF.setCurrFrame(m.getActiveWidget()+1);
+			timeSet = false;
+		    }
 		}
+	    }
 	}
 	
 	@Override
 	public void draw(MyGLRenderer r){
-		//physics.draw(r);
+	    //physics.draw(r);
 	    mGIF.draw(r);
 	    super.draw(r);
 	    m.draw(r);

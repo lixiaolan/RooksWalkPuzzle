@@ -66,11 +66,12 @@ public class BoardBeeController extends ControllerBase implements BeeInterface {
 	
 	@Override
 	public void control() {
-	    bee.setTarget(fixedPos);
+	    bee.setTarget(mBoardInterface.getBeeBoxCenter());
 	}
 	
 	@Override
 	public void targetReached() {
+	    bee.setCenter(mBoardInterface.getBeeBoxCenter());
 	    bee.setMood(Mood.ASLEEP);
 	    //input method to make the bee face the right way!
 	}

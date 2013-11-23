@@ -39,7 +39,7 @@ public abstract class WidgetLayout extends Widget{
 	public void addWidget(Widget w){
 		widgetList.add(w);
 		computeGeometry();
-	}
+	 }
 	
 	public Widget getWidget(int i){
 		return widgetList.get(i);

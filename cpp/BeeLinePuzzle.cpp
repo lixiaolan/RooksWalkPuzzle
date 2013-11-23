@@ -28,12 +28,20 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), widt
   makeBoard(l);
   markUnused();
   bool test;
-  do {
-    cout << "Number Unique..." << endl;
+  for (int i = 0; i < 20; i++) {
+
+    cout << "try..." << endl;
     getHints(hintNum);//select the hints to be used;
     test = checkUnique();
-    cout << uniqueCounter << endl;
-  } while (uniqueCounter > 1);
+
+    
+  }
+  if (uniqueCounter == 1) {
+    cout << "win!" << endl;
+  }
+  else {
+    cout << "fail!" << endl;
+  }
 
   // cout << printUnique() << endl;
   // cout << "tPosVec.size(): "<<tPosVec.size() << endl;
