@@ -564,7 +564,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    // this checks that the errors have been resolved before one moves on.  Comment this out
 		    // to turn off this feature.
 		    
-		    if (mErrorLog.hasError()) {
+		    if (mErrorLog.hasError() && toggleError) {
 		    	float[] f = new float[2];
 		    	f[0] = pt[0];
 		    	f[1] = pt[1];
