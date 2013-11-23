@@ -675,11 +675,20 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void turnErrorRed(int at){
-			String error = mErrorLog.getError(at); 
-			if(!error.equals("")){
+		    for (int i = 0; i < tiles.length; i++) {
+			
+			String error = mErrorLog.getError(i); 
+			if(!error.equals("") && !tiles[i].isHint()){
 			    //tiles[at].setAngryGlow(1,0);
-			    tiles[at].setColor("red");
-			} 
+			    tiles[i].setColor("red");
+			}
+		    }
+			// String error = mErrorLog.getError(at); 
+			// if(!error.equals("")){
+			//     //tiles[at].setAngryGlow(1,0);
+			//     tiles[at].setColor("red");
+			// }
+			
 		}
 
 		public void swipeHandler(String direction){

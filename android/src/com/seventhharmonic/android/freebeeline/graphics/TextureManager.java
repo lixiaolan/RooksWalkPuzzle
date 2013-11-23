@@ -102,7 +102,7 @@ public class TextureManager {
 	public static final String OFFBOARD = "Oh no! Your path went off the board!";
 	public static final String MULTIPOINTRULE = "Uh Oh, multiple numbers are pointing towards the same square";
 	public static final String HINTPROMPT = "You are out of hints! Select the amount you would like to purchase below.";
-    public static final String PLEASEFIXERROR = "Please correct the red square before continuing!";
+    public static final String PLEASEFIXERROR = "Please correct the red squares before continuing!";
 	
 	public static final String VERSION = "alpha-0.2";
 	public static final String BOX = "box";
