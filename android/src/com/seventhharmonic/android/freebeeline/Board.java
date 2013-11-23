@@ -247,6 +247,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    }
 		}
 	    }
+	    mErrorLog.setLog();
+	    turnErrorRed(0);
 	}
 
 	/*
@@ -419,6 +421,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				    if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
 					showHint();
 					setHintsText();
+					
 				    } else {
 					mHintDialog.activate();
 				    }
