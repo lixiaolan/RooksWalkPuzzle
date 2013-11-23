@@ -164,7 +164,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.speaker3, SPEAKER_ON);
 		buildTextures(context, R.drawable.speaker3_mute, SPEAKER_OFF);
 		
-		
+		buildTextures(context, R.drawable.check2, CHECK);
 		
 		buildMenuBanners();
 		loadBitmapFromAssets();

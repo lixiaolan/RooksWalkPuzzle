@@ -429,7 +429,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     		mGIF.setKeyFrame(savedChapter);
     		mGIF.setTargetFrame(savedChapter+1);
 
-    		String text = currLevelPack.getChapter(savedChapter).getEnd_text()+" .^ Touch to continue.";
+    		String text = currLevelPack.getChapter(savedChapter).getEnd_text()+" ^ Touch to continue.";
     		mText = new TextBox(0, h -.2f,.99f, text);
     		mText.setFontSize(TextCreator.font1);
     		//TODO: This sucks. There must be a more flexible way to figure out the geometry.

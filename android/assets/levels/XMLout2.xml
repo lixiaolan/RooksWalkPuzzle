@@ -1,5 +1,5 @@
 <levelpack title="Beatrice the bee" bookStyle="default">
-	<chapter title="The Natural Log" end_text="Congratulations!^ You helped Beatrice visit all the flowers on the log!" before_image="questionmark">
+	<chapter title="The Natural Log" end_text=" Congratulations!^ You helped Beatrice visit all the flowers on the log!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter1"/>
 			<image image="book1chapter1_1"/>
@@ -7,7 +7,7 @@
 		</afterImage>
 		<width>2</width>
 		<height>2</height>
-		<puzzle id="0" text="Close the path. Touch the square with the circle to enter a 3 and then swipe right." before_flower="flower1" after_flower="flower1color">
+		<puzzle id="0" text=" Close the path. Touch the square with the circle to enter a 3 and then swipe right." before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,-1,-1,-1,3,0,2,-1,-1,0,-1,0,-1,-1,0,-1,0,-1,-1,2,0,3,-1,-1</board>
@@ -22,7 +22,7 @@
 				<index>7</index>
 			</hint>
 		</puzzle>
-		<puzzle id="1" text="Nice work. The yellow squares are part of a path we are giving you." before_flower="flower1" after_flower="flower1color">
+		<puzzle id="1" text=" Nice work. The yellow squares are part of a path we are giving you." before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,1,0,2,-1,-1,3,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,0,-1,-1,2,0,4</board>
@@ -37,7 +37,7 @@
 				<index>7</index>
 			</hint>
 		</puzzle>
-		<puzzle id="2" text="TIP: Beatrice loves you. If you touch her, she'll give you a hint. Touch the questionmark to see the rules." before_flower="flower1" after_flower="flower1color">
+		<puzzle id="2" text=" TIP: Beatrice loves you. If you touch her, she'll give you a hint. Touch the questionmark to see the rules." before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>4,0,0,3,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,0,-1,-1,0,-1,1,2,0,4,-1</board>
@@ -49,7 +49,7 @@
 				<index>20</index>
 			</hint>
 		</puzzle>
-		<puzzle id="3" text="This puzzle is harder then it looks. Remember Beatrice's rule!" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="3" text=" This puzzle is harder then it looks. Remember Beatrice's rule!" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>2,1,0,0,3,0,-1,-1,-1,1,1,-1,-1,-1,0,3,0,0,1,2,-1,-1,-1,-1,-1</board>
@@ -62,7 +62,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="The Babbling Brook" end_text="Congratulations!^ You helped Beatrice find the flowers along side the brook!" before_image="questionmark">
+	<chapter title="The Babbling Brook" end_text=" Congratulations!^ You helped Beatrice find the flowers along side the brook!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter2"/>
 			<image image="book1chapter2_1"/>
@@ -116,7 +116,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="The Bradford Pear Tree" end_text="Congratulations!^ You helped Beatrice pollinate every flower in the tree!" before_image="questionmark">
+	<chapter title="Bradford Pear Tree" end_text=" Congratulations!^ You helped Beatrice pollinate every flower in the tree!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter3"/>
 			<image image="book1chapter3_1"/>
@@ -227,7 +227,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Cats And Lilies" end_text="Congratulations!^ Do you feel emotionally connected to Beatrice yet?" before_image="questionmark">
+	<chapter title="Cats And Lilies" end_text=" Congratulations!^ Do you feel emotionally connected to Beatrice yet?" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter4"/>
 			<image image="book1chapter4_1"/>
@@ -365,7 +365,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Over The Hills" end_text="Congratulations!^ You thought those were tricky? Just wait!" before_image="questionmark">
+	<chapter title="Over The Hills" end_text=" Congratulations!^ You thought those were tricky? Just wait!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter5"/>
 			<image image="book1chapter5_1"/>
@@ -512,7 +512,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Tigers In The Grass" end_text="Congratulations!^ Don't worry, Beatrice still loves you!" before_image="questionmark">
+	<chapter title="Tigers In The Grass" end_text=" Congratulations!^ Don't worry, Beatrice still loves you!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter6"/>
 			<image image="book1chapter6_1"/>
@@ -683,7 +683,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Beatrice's Garden" end_text="Congratulations!^ You did it! You helped Beatrice bring color to her world!" before_image="questionmark">
+	<chapter title="Beatrice's Garden" end_text=" Congratulations!^ You did it! You helped Beatrice bring color to her world!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter7"/>
 			<image image="book1chapter7_1"/>
