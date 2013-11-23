@@ -1,7 +1,10 @@
 #include "PuzzleChapter.hpp"
 
 void PuzzleChapter::add(int h, int w, int l, int hints) {
-  BeeLinePuzzle BLP(h, w, l, hints);
+  BeeLinePuzzle BLP;
+  do {
+  BLP = BeeLinePuzzle(h, w, l, hints);
+  } while (BLP.uniqueCounter > 1);
   puzzles.push_back(BLP);
   return;
 }

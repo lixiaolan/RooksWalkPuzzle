@@ -56,6 +56,10 @@ public class NewBee extends Graphic<BeeTile, NewBeeState<BeeTile> > {
 	    mBeeInterface.beeTouched(false);
 	}
     }
+
+    public void setCenter(float[] f) {
+	bee.setCenter2D(f);
+    }
   
     class BeeLazy extends NewBeeState<BeeTile> {
 	//Used to animate
