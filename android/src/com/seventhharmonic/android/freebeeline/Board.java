@@ -365,7 +365,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mGameBanner.setFontSize(TextCreator.font1);
 
 			if(boardWidth == 6){
-				mBoardBg = new ImageWidget(0,0, 1.0f,1.0f,"boardbg");
+				mBoardBg = new ImageWidget(0,0, 1.0f,1.0f,TextureManager.BOARD6);
 			} else if(boardWidth == 5){
 				float mBoardBgScale = 1.0f;
 				mBoardBg = new ImageWidget(0,0,mBoardBgScale,mBoardBgScale,TextureManager.BOARD5);
@@ -396,7 +396,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mHints = new TextBox(0, 0, .12f, "");
 			mHints.setJ(TextJustification.CENTER);
 			if(mStore.hasUnlimitedHints()){
-				mHints.setText(TextureManager.HIVE);
+				mHints.setText(TextureManager.buildHint("%"));
 			} else {
 				mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
 			}
@@ -710,7 +710,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mDialog.deactivate();
 					if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
-						
 						//TODO: Created a hack here to ensure we recreate the current chapter widget
 						mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
@@ -793,7 +792,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			super.draw(tiles, r);
+			super.draw(tiles, r); //TODO: The code once died on this line :(
 			for(int i =0;i<tiles.length;i++){
 				if(tiles[i].getTrueSolution() != -1 && tiles[i] !=null){
 					tiles[i].draw(r);

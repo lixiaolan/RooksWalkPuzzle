@@ -33,6 +33,7 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Display;
 
 /*NOTES: 
  * - A tile of size 1 has each side length 2.
@@ -58,7 +59,6 @@ public class TextureManager {
 	public static final String RULE_CHECK_ON = "help on";
 	public static final String RULE_CHECK_OFF = "help off";
 	public static final String DONE = "done";
-	
 	
 	public static final String CLEAR_BOARD = "reset";
 	//public static final String QUIT = "quit";
@@ -108,6 +108,8 @@ public class TextureManager {
 	public static final String BOX = "box";
 	public static final String ERASER = "eraser";
 	public static final String TABLE_OF_CONTENTS = "Table of Contents";
+	public static final String BOARD6 = "board6";
+
 	public static final String BOARD5 = "board5";
 	public static final String QUESTIONMARK = "?";
 	public static final String IMAGEBORDER = "imageborder";
@@ -118,27 +120,32 @@ public class TextureManager {
 	public static final String LEFTDOT = "leftdot";
 	public static final String RIGHTDOT = "rightdot";
 	public static final String GOLDSTAR = "goldstar";
+	public static final String SPEAKER_ON = "speaker_on";
+	public static final String SPEAKER_OFF = "speaker_off";
+	
 	
 	TextCreator tC = new TextCreator();
 	public Map <String, Integer> library = new HashMap<String, Integer>();
 	public Map <String, TextureObject> sheetLibrary = new HashMap<String, TextureObject>();
 	Typeface tf;
 	Context context;
-
-
+	
+	int screenWidth;        
+	private static BitmapFactory.Options options = new BitmapFactory.Options();
+	
 	public TextureManager(Context context) {
-		tf = Typeface.createFromAsset(context.getAssets(), "font3.ttf");
+		tf = Typeface.createFromAsset(context.getAssets(), "Scribblz.ttf");
 		this.context = context; 
+		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
 	}
 
 	public void buildTextures() {
 
 			
 		buildTextures(context, R.drawable.menu_circle_light_grey2, MENUCIRCLE);
+		buildTextures(context, R.drawable.beecolor, BEE);
 		
-		buildTextures(context, R.drawable.flower1,"flower0");
-		
-		buildTextures(context, R.drawable.board6, "boardbg");
+		buildTextures(context, R.drawable.board6, BOARD6);
 		buildTextures(context, R.drawable.board5, BOARD5);
 		
 		buildTextures(context, R.drawable.title_compact, "title");
@@ -151,9 +158,12 @@ public class TextureManager {
 		buildTextures(context, R.drawable.rwedge, RWEDGE);
 		
 		buildTextures(context, R.drawable.revert, ERASER);
+		buildTextures(context, R.drawable.revert, ERASER);
 		
-		buildTextures("", 128, 140, CLEAR, 50);
-
+		
+		buildTextures(context, R.drawable.speaker3, SPEAKER_ON);
+		buildTextures(context, R.drawable.speaker3_mute, SPEAKER_OFF);
+		
 		
 		
 		buildMenuBanners();
@@ -166,16 +176,40 @@ public class TextureManager {
 	 * @param i
 	 * @return
 	 */
-	
-	
-	
 	public static String buildHint(long i){
 		return "hints:^"+Long.toString(i);
 	}
 	
+	public static String buildHint(String g){
+		return "hints:^"+g;
+	}
+	
+	public int getFactor(int w){
+		if(w<= 256){
+			return 8;
+		} else if(w<= 512){
+			return 4;
+		} else if (w <= 1024){
+			return 2;
+		} else 
+			return 1;
+	}
+	
+	public String getSize(){
+		if(screenWidth > 1024){
+			//Should get the 2048 image
+			return "large";
+		} else {
+			//Should get a 1024 image
+			return "new_medium";
+		} 
+		} 
+
+	
 	public void loadBitmapFromAssets() {
 		// load text
 		String BASE = "images/basics";
+		Log.d(TAG,"int "+Integer.toString(screenWidth));
 		try {
 			// get input stream for flower pictures
 			String[] imageList = context.getAssets().list(BASE);
@@ -187,20 +221,23 @@ public class TextureManager {
 			}
 			
 			//Now the larger images
-			BASE = "images/murals"; 
+			BASE = "images/murals/"+getSize(); 
 			Bitmap b = null;
 			imageList = context.getAssets().list(BASE);
+
 			for(String s: imageList){
 				InputStream is = context.getAssets().open(BASE+"/"+s);
+				Log.d(TAG,"currbmp "+s);
 				if(b == null){
+					Log.d(TAG,"null bmp "+s);
+					//Log.d(TAG, Boolean.toString(b.isRecycled()));
 					b =  BitmapFactory.decodeStream(is);
 				}
 				b = loadLargeBitmaps(is, b, false);
-				//Remove the .png
 				library.put(s.substring(0, s.length()-4),textureFromBitmap2(b));
 			}
-			b.recycle();
 			
+			b.recycle();
 		}
 		catch (IOException ex) {
 			Log.d("TAG", "Broke texture manager on large textures");
@@ -208,8 +245,7 @@ public class TextureManager {
 		}
 	}
 
-	 private static BitmapFactory.Options options = new BitmapFactory.Options();
-	 private static Bitmap loadLargeBitmaps(InputStream is, Bitmap reuseBitmap, boolean useRGB565) {
+	private static Bitmap loadLargeBitmaps(InputStream is, Bitmap reuseBitmap, boolean useRGB565) {
         options.inPreferredConfig = useRGB565 ? Bitmap.Config.RGB_565 : Bitmap.Config.ARGB_8888;
         options.inMutable = true;
         options.inSampleSize = 1;
@@ -218,12 +254,16 @@ public class TextureManager {
 
         if (options.inBitmap != bitmap && options.inBitmap != null) {
             // the bitmap wasn't re-used and a new bitmap was returned.
+        	Log.d(TAG, "new bitmap");
         }
         return bitmap;
 }
 	
+	Bitmap menuBmp;
+	 
 	private void buildMenuBanners() {
 		buildTextures(context, R.drawable.red_x, "menu_1");
+		menuBmp = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);; 
 		for(int i=1;i<7;i++){
 			buildTextures(Integer.toString(i),2*64,2*80,"menu_"+Integer.toString(i+1),2*50);
 		}
@@ -232,7 +272,7 @@ public class TextureManager {
 		int fontSize = 50; 
 		int xpos = 128;
 		int ypos = 140;
-
+		buildTextures("", 128, 140, CLEAR, 50);
 		buildTextures(QUESTIONMARK, xpos, ypos, QUESTIONMARK, 2*fontSize);
 		buildTextures(MENU, xpos, ypos, MENU, fontSize);
 		buildTextures(START, xpos, ypos, START, fontSize);
@@ -251,6 +291,7 @@ public class TextureManager {
 		buildTextures(HIDE, xpos, ypos, HIDE, fontSize);
 		buildTextures(SHOW, xpos, ypos, SHOW, fontSize);
 		buildTextures(DONE, xpos, ypos, DONE, fontSize);
+		menuBmp.recycle();
 	}
 
 	public int closestPower(int a){
@@ -269,7 +310,7 @@ public class TextureManager {
 	}
 
 	public static String getFlowerTexture() {
-		int r = (int)(Math.random()*8.0f);
+		int r = Math.min((int)(Math.random()*8.0f)+1, 7);
 		return "flower"+Integer.toString(r);
 	}
 
@@ -284,7 +325,7 @@ public class TextureManager {
 		BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open("sheetdata")));
 		String name;
 		//TODO: More flexible for loop here. Maybe a while loop?
-		for (int i = 0; i < 34; i++) {
+		for (int i = 0; i < 33; i++) {
 			name = br.readLine();
 			//Log.d(TAG, name);
 			// Split the lines using comma as delimiter
@@ -345,7 +386,7 @@ public class TextureManager {
 	}
 	
 	public void buildTextures(String a, int x, int y, String key , int font){
-		library.put(key, textureFromBitmap(bitmapFromShortString(a,x,y, font)));
+		library.put(key, textureFromBitmap2(bitmapFromShortString(a,x,y, font)));
 	}
 	
 	public void buildTextures(final Context context, final int resourceId, String key){
@@ -356,7 +397,7 @@ public class TextureManager {
 		if (textureHandle[0] != 0)
 		{
 			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inScaled = false;	// No pre-scaling
+			options.inSampleSize = 2*getFactor(screenWidth);	// No pre-scaling
 			//options.inPreferredConfig = Bitmap.Config.RGB_565;
 			// Read in the resource
 			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
@@ -376,8 +417,7 @@ public class TextureManager {
 			//SaveImage(bitmap);
 			
 			bitmap.recycle();		
-			//bitmap = null;
-			//System.gc();
+
 		}
 
 		if (textureHandle[0] == 0)
@@ -419,6 +459,7 @@ public class TextureManager {
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
 		//SaveImage(bmp);
 		bmp.recycle();
+		bmp = null;
 		return texture[0];
 	}
 
@@ -430,16 +471,14 @@ public class TextureManager {
 		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,GLES20.GL_LINEAR);
 		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLES20.GL_RGBA, bmp,0); 
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
-		//SaveImage(bmp);
-		//bmp.recycle();
 		return texture[0];
 	}
 	
 	Bitmap bitmapFromShortString(String text, int x, int y, int font){
-		Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
+		//Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
 		// get a canvas to paint over the bitmap
-		Canvas canvas = new Canvas(bitmap);
-		//bitmap.eraseColor(Color.TRANSPARENT);
+		Canvas canvas = new Canvas(menuBmp);
+		menuBmp.eraseColor(Color.TRANSPARENT);
 
 		// Draw the text
 		Paint textPaint = new Paint();
@@ -453,7 +492,7 @@ public class TextureManager {
 		// draw the text centered
 		canvas.drawColor(Color.TRANSPARENT);
 		canvas.drawText(text, x , y, textPaint);
-		return bitmap;
+		return menuBmp;
 	}
 
 }

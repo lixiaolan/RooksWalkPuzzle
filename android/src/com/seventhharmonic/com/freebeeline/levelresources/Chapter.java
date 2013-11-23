@@ -10,13 +10,21 @@ import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 public class Chapter {
 	String TAG = "Chapter";
 	String title;
+	String end_text;
+	public String getEnd_text() {
+		return end_text;
+	}
+
+
+	public void setEnd_text(String end_text) {
+		this.end_text = end_text;
+	}
+
 	List<Puzzle> puzzles =  new ArrayList<Puzzle>();
 	int height = 0;
 	int width = 0;
-
 	List<String> beforeImageList = new ArrayList<String>();
 	List<String> afterImageList = new ArrayList<String>();
-
 	Chapter prevChapter;
 	Chapter nextChapter;
 	LevelPack lp;
@@ -134,13 +142,15 @@ public class Chapter {
 		this.width = width;
 	}
 
-	public Chapter(String title){
+	public Chapter(String title, String end_text){
 		this.title = title;
+		this.end_text = end_text;
 	}
 	
-	private Chapter(List<Puzzle> puzzles, String title){
+	private Chapter(List<Puzzle> puzzles, String title, String end_text){
 		this.puzzles = puzzles;
 		this.title = title;
+		this.end_text = end_text;
 	}
 	
 	public Chapter(){
@@ -169,7 +179,7 @@ public class Chapter {
 	}
 	
 	public Chapter copy(){
-		Chapter ch  = new Chapter(puzzles, title);
+		Chapter ch  = new Chapter(puzzles, title, end_text);
 		for(Puzzle p:puzzles){
 			p.setChapter(ch);
 		}

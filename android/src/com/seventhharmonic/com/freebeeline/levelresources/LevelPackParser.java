@@ -40,6 +40,7 @@ public class LevelPackParser extends BaseParser {
     	Element hizzle = puzzle.getChild(HINT);
     	Element afterImage = chapter.getChild(AFTERIMAGE);
     	
+    	
     	root.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
 		    lp.setTitle(body);
@@ -52,6 +53,7 @@ public class LevelPackParser extends BaseParser {
 		    ch.reset();
 		    Log.d(TAG, "Start Chapter");
 		    ch.setTitle(a.getValue("title"));
+		    ch.setEnd_text(a.getValue("end_text"));
 		    Log.d(TAG,"found title");
 		    Log.d(TAG, a.getValue("title"));
 		    ch.beforeImageList.add(a.getValue("before_image"));

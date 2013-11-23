@@ -330,12 +330,12 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    //if the saved chapter was 0, then we jump to the most current chapter.
 	    if(savedChapter != 0){
 	    	m.setActiveWidget(savedChapter);
-	    	mGIF.setCurrFrame(savedChapter);
+	    	mGIF.setKeyFrame(savedChapter);
 	    	if(savedChapter == currLevelPack.getNumberOfChapters()-1)
 	    		mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
 	    } else {
 	    	m.setActiveWidget(currLevelPack.getCurrChapter());
-	    	mGIF.setCurrFrame(currLevelPack.getCurrChapter());
+	    	mGIF.setKeyFrame(currLevelPack.getCurrChapter());
 	    	if(currLevelPack.getCurrChapter() == currLevelPack.getNumberOfChapters()-1)
 	    		mGIF.setTargetFrame(currLevelPack.getNumberOfChapters()+1);
 	    }

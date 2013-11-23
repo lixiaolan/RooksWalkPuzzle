@@ -70,7 +70,7 @@ public class ViewActivity extends Activity {
 	String[] quotes = res.getStringArray(R.array.quotes);
 	int sel = (int)(Math.random()*quotes.length);
 	
-	Typeface font = Typeface.createFromAsset(getAssets(), "font3.ttf");  
+	Typeface font = Typeface.createFromAsset(getAssets(), "Scribblz.ttf");  
 	mQuoteView.setTypeface(font);
 	mQuoteView.setText(Html.fromHtml(quotes[sel]));
 	
@@ -147,7 +147,7 @@ public class ViewActivity extends Activity {
 	LevelPack mLP = mLPP.getLevelPack(0);
 	//	Log.d(TAG, mLP.getTitle());
 	//	Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
-	/*SQLPuzzle q;
+	SQLPuzzle q;
 	for(Chapter c: mLP.getAllChapters()){
 	    for(Puzzle p: c.getAllPuzzles()){
 		q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
@@ -158,7 +158,7 @@ public class ViewActivity extends Activity {
 		p.setMoves((int)q.getMovesUsed());
 	    }
 	}
-	 */
+	 
 		EasyTracker.getInstance(this).activityStart(this);
     }	
     

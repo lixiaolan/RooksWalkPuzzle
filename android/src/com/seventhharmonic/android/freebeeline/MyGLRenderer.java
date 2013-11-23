@@ -235,8 +235,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		
 		//Create all the necessary text fonts here
 		TC = new TextCreator();
-		TC.load("font3.ttf", 50, 2, 2);
-		
+		TC.load("Scribblz.ttf", 50, 2, 2);
+
 		Log.d(TAG, Float.toString(cameraDistance));
 		// Set our per-vertex lighting program.
 		GLES20.glUseProgram(mProgramHandle);

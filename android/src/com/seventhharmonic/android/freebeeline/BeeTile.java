@@ -12,6 +12,7 @@ public class BeeTile extends Tile{
 	touched_flag = false;
 	color = "transparent";
 	textures[0] = TextureManager.BEE;
+	textures[1] = TextureManager.CLEAR;
 	velocity[0] = 0.0f;
 	velocity[1] = 0.0f;
     }
@@ -32,7 +33,7 @@ public class BeeTile extends Tile{
 	    }
 	}
 	angle = angle - 90.0f;
-	r.drawSheetTile(center, size, textures, color, angle, pivot, true);
+	r.drawTile(center, size, textures, color, angle, pivot, true);
     }
     
     public void setVelocity2D(float[] in) {

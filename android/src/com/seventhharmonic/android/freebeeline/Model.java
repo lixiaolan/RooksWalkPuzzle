@@ -61,7 +61,7 @@ class Model {
 	mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
 	mVersionBanner.setCenter(0.0f, 0.0f);
 	//	muteButton = new ImageWidget(-.05f,GlobalApplication.getGeometry().getGeometry()[1],.1f, .1f, "title");
-	muteButton = new TextToggleButtonWidget(10.0f,.1f,.1f, .1f, "flower1", "title");
+	muteButton = new TextToggleButtonWidget(10.0f,.1f,.1f, .1f, TextureManager.SPEAKER_ON, TextureManager.SPEAKER_OFF);
 	muteButton.setBorder(false);
 	muteButton.setClickListener(new GameEventListener() {
 		@Override

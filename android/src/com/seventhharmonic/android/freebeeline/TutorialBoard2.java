@@ -25,7 +25,7 @@ class TutorialBoard2 extends Board {
 		mCPB = new CircleProgressBarWidget(4, 0, -1, .05f);
 		mBanner = new TextBox(0,0,.9f,"");
 		mBanner.setFontSize(TextCreator.font1);
-		mBoardBg = new ImageWidget(0,0,1,1,"boardbg");
+		mBoardBg = new ImageWidget(0,0,1,1,TextureManager.BOARD6);
 		state = new SLIDE1(tiles,true);
 		mTutorialState = TutorialState.SLIDE1;
 		leftArrow = new ImageWidget(0, 0, .10f, .10f, TextureManager.LWEDGE);
