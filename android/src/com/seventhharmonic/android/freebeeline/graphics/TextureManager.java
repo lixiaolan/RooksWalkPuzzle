@@ -122,6 +122,8 @@ public class TextureManager {
 	public static final String GOLDSTAR = "goldstar";
 	public static final String SPEAKER_ON = "speaker_on";
 	public static final String SPEAKER_OFF = "speaker_off";
+	public static final String LOGO = "logo";
+	public static final String ABOUT = "about";
 	
 	
 	TextCreator tC = new TextCreator();
@@ -149,7 +151,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.board5, BOARD5);
 		
 		buildTextures(context, R.drawable.title_compact, "title");
-		buildTextures(context, R.drawable.hand, HAND);
+		buildTextures(context, R.drawable.hand1, HAND);
 		
 		buildTextures(context, R.drawable.opencircle, OPENCIRCLE);
 		buildTextures(context, R.drawable.closedcircle, CLOSEDCIRCLE);
@@ -165,7 +167,7 @@ public class TextureManager {
 		buildTextures(context, R.drawable.speaker3_mute, SPEAKER_OFF);
 		
 		buildTextures(context, R.drawable.check2, CHECK);
-		
+		buildTextures(context, R.drawable.logo, LOGO);
 		buildMenuBanners();
 		loadBitmapFromAssets();
 		buildSheet();
@@ -190,7 +192,7 @@ public class TextureManager {
 		} else if(w<= 512){
 			return 4;
 		} else if (w <= 1024){
-			return 2;
+			return 1;
 		} else 
 			return 1;
 	}
@@ -230,7 +232,6 @@ public class TextureManager {
 				Log.d(TAG,"currbmp "+s);
 				if(b == null){
 					Log.d(TAG,"null bmp "+s);
-					//Log.d(TAG, Boolean.toString(b.isRecycled()));
 					b =  BitmapFactory.decodeStream(is);
 				}
 				b = loadLargeBitmaps(is, b, false);
@@ -250,10 +251,15 @@ public class TextureManager {
         options.inMutable = true;
         options.inSampleSize = 1;
         options.inBitmap = reuseBitmap;
-        Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
-
+        Bitmap bitmap;
+        try{
+        	bitmap = BitmapFactory.decodeStream(is, null, options);
+        }
+        catch(Exception e){
+        	Log.d(TAG, "Failed to load bitmap");
+        	bitmap = BitmapFactory.decodeStream(is);
+        }
         if (options.inBitmap != bitmap && options.inBitmap != null) {
-            // the bitmap wasn't re-used and a new bitmap was returned.
         	Log.d(TAG, "new bitmap");
         }
         return bitmap;
@@ -291,6 +297,7 @@ public class TextureManager {
 		buildTextures(HIDE, xpos, ypos, HIDE, fontSize);
 		buildTextures(SHOW, xpos, ypos, SHOW, fontSize);
 		buildTextures(DONE, xpos, ypos, DONE, fontSize);
+		buildTextures(ABOUT, xpos, ypos, ABOUT, fontSize);
 		menuBmp.recycle();
 	}
 
@@ -397,7 +404,7 @@ public class TextureManager {
 		if (textureHandle[0] != 0)
 		{
 			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inSampleSize = 2*getFactor(screenWidth);	// No pre-scaling
+			options.inSampleSize = getFactor(screenWidth);	// No pre-scaling
 			//options.inPreferredConfig = Bitmap.Config.RGB_565;
 			// Read in the resource
 			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);

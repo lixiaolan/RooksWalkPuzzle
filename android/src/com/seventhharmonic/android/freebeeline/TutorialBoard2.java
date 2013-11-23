@@ -191,7 +191,7 @@ class TutorialBoard2 extends Board {
 		long refTime;
 		float[] pt0 = {.22f,-.33f};
 		float[] pt1 = {.22f, -.05f};
-		float[] pt2 = {-.25f,-.05f};
+		float[] pt2 = {-.25f,-0f};
 		float[] pt3 = {.35f,-.19f};
 		float[] pt4 = {-.35f, -.19f};
 		int time1 = 1;
@@ -203,9 +203,10 @@ class TutorialBoard2 extends Board {
 		boolean lines = true;
 		boolean handToggle = true;
 		Menu mMenu;
+		float handSize = .25f;
 		
 		public SLIDE2(){
-			hand = new ImageWidget(.23f,.12f,.5f,.5f,TextureManager.HAND);
+			hand = new ImageWidget(.23f,.12f,handSize,handSize,TextureManager.HAND);
 			refTime = System.currentTimeMillis();
 			restoreBoard(TutorialInfo2.solutionNumbersSlide2, TutorialInfo2.initialNumbersSlide2, TutorialInfo2.initialArrowsSlide2, TutorialInfo2.solutionArrowsSlide2, path, null);
 			//prepBoard();
@@ -229,21 +230,21 @@ class TutorialBoard2 extends Board {
 				hand.setCenter(pt1[0]*(time)+(1-(time))*pt0[0], pt1[1]*(time)+(1-(time))*pt0[1]);
 			} else if(time < time2){
 				//Activate Menu
-				hand.setWidth(.5f*(time-time1)+(1-(time-time1))*.4f);
-				hand.setHeight(.5f*(time-time1)+(1-(time-time1))*.4f);
+				hand.setWidth(handSize*(time-time1)+(1-(time-time1))*.8f*handSize);
+				hand.setHeight(handSize*(time-time1)+(1-(time-time1))*.8f*handSize);
 				if(!mMenu.menuActive){
 					mMenu.activate(pt1);
 					tiles[27].setColor("blue");
 				}
 			} else if(time < time3){
 				//Move to correct bubble
-				hand.setWidth(.5f);
-				hand.setHeight(.5f);
+				hand.setWidth(handSize);
+				hand.setHeight(handSize);
 				hand.setCenter(pt2[0]*(time-2)+(1-(time-2))*pt1[0], pt2[1]*(time-2)+(1-(time-2))*pt1[1]);
 			} else if (time < time3halves){
 				//Wait at this bubble. Shrink the hand.
-				hand.setWidth(.5f*(time-time3)+(1-(time-time3))*.4f);
-				hand.setHeight(.5f*(time-time3)+(1-(time-time3))*.4f);
+				hand.setWidth(handSize*(time-time3)+(1-(time-time3))*.8f*handSize);
+				hand.setHeight(handSize*(time-time3)+(1-(time-time3))*.8f*handSize);
 			}
 			else if (time < time4) {
 				mMenu.menuActive = false;
@@ -252,8 +253,8 @@ class TutorialBoard2 extends Board {
 				handToggle = false;
 				//Move back down
 				hand.setCenter(pt3[0], pt3[1]);
-				hand.setWidth(.5f);
-				hand.setHeight(.5f);
+				hand.setWidth(handSize);
+				hand.setHeight(handSize);
 			} else if(time < time5){
 				//Swipe across
 				handToggle = true;

@@ -10,6 +10,7 @@ public enum GameState {
     GAME_MENU_END,
     TUTORIAL,
     TUTORIAL_MAIN_MENU,
-    STORY
+    STORY,
+    ABOUT
 };
 

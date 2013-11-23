@@ -29,6 +29,7 @@ class Model {
     private TextToggleButtonWidget muteButton;
     private Geometry geometry;
     private StoryBoard mStoryBoard;
+    private AboutScreenWidget mAboutScreen;
     private DataServer mDataServer;
     public boolean createTextures = false;
     public MediaPlayer mediaPlayer;    
@@ -77,23 +78,16 @@ class Model {
     }
     
     public void createTutorial(){
-	mTutorialBoard = new TutorialBoard2();
-	mTutorialBoard.setGeometry(geometry.getGeometry());
-	
+    	mTutorialBoard = new TutorialBoard2();
+		mTutorialBoard.setGeometry(geometry.getGeometry());
     }
     
     public void createStory(){
 	mStoryBoard = new StoryBoard(this);
     }
     
-    //WHERE DID THIS GO?
-    // public void toggleHints(boolean toggle) {
-    // 	mBoard.toggleHints(toggle);
-    // }
-    
     public void toggleLines(boolean toggle) {
 	mBoard.toggleLines(toggle);
-	
 	//This used to be the secrete way to get hints in game :)  Cute!
 	//GlobalApplication.getHintDB().addHints(10);
     }
@@ -126,9 +120,6 @@ class Model {
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-	    if(mBoard.beeTouched(pt) == 1){
-		vibe.vibrate(100);
-	    }
 	    //The order of these is important:
 	    mFlowerMenu.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
@@ -140,6 +131,9 @@ class Model {
 	    break;
 	case STORY:
 	    mStoryBoard.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
+	    break;
+	case ABOUT:
 	    mMenuManager.touchHandler(pt);
 	    break;
 	default: break;
@@ -198,6 +192,10 @@ class Model {
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
 	    break;
+	case ABOUT:
+	    mAboutScreen.draw(r);
+	    mMenuManager.draw(r);
+	    break;
 	default: break;
 	}
 	muteButton.draw(r);
@@ -218,6 +216,7 @@ class Model {
 	*/
 	if(!initializeToggle){
 		mFlowerMenu = new FlowerMenu(this);
+		mAboutScreen = new AboutScreenWidget();
 		initializeToggle = true;
 	}
 
@@ -324,6 +323,10 @@ class Model {
     public void setModelToStory(){
     	createStory();
     	setState(GameState.STORY);
+    }
+    
+    public void setModelToAbout(){
+    	setState(GameState.ABOUT);
     }
     
 }

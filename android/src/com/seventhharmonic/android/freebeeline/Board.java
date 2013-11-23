@@ -403,11 +403,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			 */
 			mHints = new TextBox(0, 0, .12f, "");
 			mHints.setJ(TextJustification.CENTER);
-			if(mStore.hasUnlimitedHints()){
-				mHints.setText(TextureManager.buildHint("%"));
-			} else {
-				mHints.setText(TextureManager.buildHint(DB.getHints().getNum()));
-			}
+			setHintsText();
 
 			mMoves = new TextBox(0, 0, .22f, "moves:^ 0");
 			updateMoves();
@@ -436,12 +432,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			buttonGrid.addWidget(mHints);
 			buttonGrid.addWidget(mMoves);
 			buttonGrid.addWidget(mPar);
+			buttonGrid.addWidget(beeBox);
 			buttonGrid.addWidget(reset);
 			buttonGrid.addWidget(tutorial);
-			buttonGrid.addWidget(beeBox);
 			
-			beeBoxCenter = buttonGrid.getWidget(5).getCenter();
-			
+			beeBoxCenter = buttonGrid.getWidget(3).getCenter();
 			
 			// The dialog box that appears when you run out of hints.
 			mHintDialog = new HintDialogWidgetLayout(mHints);
@@ -656,7 +651,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		public void setHintsText(){
 			if(mStore.hasUnlimitedHints()){
-				mHints.setText(TextureManager.HIVE);
+				mHints.setText(TextureManager.buildHint("%"));
 			} else {
 				mHints.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
 			}

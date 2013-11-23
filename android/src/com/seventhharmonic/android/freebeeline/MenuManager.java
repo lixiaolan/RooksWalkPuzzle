@@ -49,7 +49,7 @@ class MenuManager {
 		break;
 		
 	    case MAIN_MENU_GEAR:
-		String[] texturesGear = {TextureManager.OPTIONS, TextureManager.TUTORIAL,  TextureManager.STORY};
+		String[] texturesGear = {TextureManager.OPTIONS, TextureManager.TUTORIAL, TextureManager.ABOUT};
 		mGameMenu = new GameMenu(pos1,scale1, texturesGear, TextureManager.BACK); 
 		mCallback = new Callback_MAIN_MENU_GEAR();
 		break;
@@ -108,11 +108,19 @@ class MenuManager {
 		mGameMenu = new SelectOneMenu(bottomPos2, scale2, textures10); 
 		mCallback = new Callback_STORY();
 		break;
+		
 	    case FLOWER_MENU:
 		String[] texturesFM = {TextureManager.BACK};
 		mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesFM); 
 		mCallback = new Callback_FLOWER_MENU();
 		break;
+		
+	    case ABOUT:
+			String[] texturesAbout = {TextureManager.BACK};
+			mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesAbout); 
+			mCallback = new Callback_ABOUT();
+			break;
+		
 	    }
 
 	}
@@ -167,8 +175,8 @@ class MenuManager {
 	    	updateState();
 		break;
 	    case 3:
-	    	mModel.setModelToStory();
-		updateState();
+	    	mModel.setModelToAbout();
+	    	updateState();
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_LIST;
 		updateState();
@@ -233,6 +241,14 @@ class MenuManager {
 		}
     }
     
+    
+    class Callback_ABOUT extends Callback {
+    	@Override
+    		public void callback(int val) {
+    			state.state = GameState.MAIN_MENU_GEAR;
+    	    	updateState();   
+    		}
+        }
     
     
     class Callback_TUTORIAL extends Callback {

@@ -169,6 +169,7 @@ public class ViewActivity extends Activity {
 	super.onStop();
 	//	GlobalApplication.getMyMusic().stopMusic();
     	EasyTracker.getInstance(this).activityStop(this);
+    	mGLView.onPause();
     }
     
     public void onDestroy() {
@@ -180,6 +181,7 @@ public class ViewActivity extends Activity {
 	    mStore.mHelper = null;
 	}
 	//	GlobalApplication.getMyMusic().onDestroy();	
+	mGLView.onPause();
     }
     
     @Override
