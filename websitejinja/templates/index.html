@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <center>
+    <img src="img/banner.png" align="center" valign="center" />
+    </center>
+    <div class="jumbotron">     
+      <div class="container">
+	<h3>We are excited to announce our first product, BeeLine!</h3>
+	<h4>Interested in being a beta tester? Enter your email below.</h4>
+	
+	<form class="form-inline" id="email_form">
+	  <div class="form-group">
+	    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+	    <input type="email" class="form-control" id="email_input" placeholder="Enter Email"></input>
+	  </div>
+	  <input type="submit" class="btn btn-default" value="Submit"></input>
+	</form>
+	
+	<h4 id="submission_confirmation"></h4> 
+      </div>
+    </div>
+    <script>
+      $("#email_form").submit( function (event) {
+      console.log("posted crap");
+      event.preventDefault();
+      document.getElementById('submission_confirmation').innerHTML = 'Thanks! We\'ll contact you soon.';      
+      var xmlhttp;
+      xmlhttp=new XMLHttpRequest();
+      xmlhttp.open("POST", "/email", true);
+      xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      xmlhttp.send("email_input=" + encodeURI(document.getElementById('email_input').value));
+      return false;
+      });
+    </script>
+{% endblock %}

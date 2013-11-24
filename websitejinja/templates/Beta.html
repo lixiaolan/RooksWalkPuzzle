@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Beta{% endblock %}
+{% block content %}
+
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>Beta Testing</h1>
+    <p class="lead">Thanks for signing up to be a Beta tester! Below is an overview of the beta testing process.</p>
+</header>
+
+
+<div class="container">
+  <div class="row">
+    <div class="span9">
+      <section id="GoogleGroupEmail">
+	<div class="page-header">
+          <h2> Receive an Email from Google Groups</h2>
+	</div>
+	<p>After submitting your email to our site, you will be sent an email from Google Groups adding you to the Beta Testers group. This will contain a link to the Google Play store where you can install BeeLine!</p>
+	</section>
+      
+      <section id="GoogleGroupEmail">
+	<div class="page-header">
+          <h2> Play!</h2>
+	</div>
+	<p>Play the game as much as possible!!</p>
+	</section>
+      
+      <section id="GoogleGroupEmail">
+	<div class="page-header">
+          <h2> Feedback and Bug Report</h2>
+	</div>
+	<p>Please give us feedback! </p>
+	<form class="form-inline" id="feedback_form">
+	  <div class="form-group">
+	    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+	    <input type="email" class="form-control" id="email_input" placeholder="Enter Email"></input>
+	  </div>
+
+	  <div class="form-group">
+	    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+	    <input type="email" class="form-control" id="email_input" placeholder="Enter Email"></input>
+	  </div>
+	  
+	  <input type="submit" class="btn btn-default" value="Submit"></input>
+	</form>
+
+	<form id="feedback_form" class="form-inline">
+	  <div class="form-group">
+	    <label class="sr-only" for="email">Email </label>
+	    <input id="email_input" class="form-control" type="email"/> 
+	
+	    <label class="sr-only" for="element_2">Phone Model </label>
+	    <input id="phone_model_input" class="form-control" type="text"/> 
+	    
+	    <label class="description" for="element_3">Feedback/Bugs </label>
+	    <textarea id="element_3" name="element_3" class="element textarea medium"></textarea> 
+	    
+	    
+	    <li class="buttons">
+	      <input type="hidden" name="form_id" value="748794" />
+	      <input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
+	    </li>
+	</form>	
+	
+	<h4 id="submission_confirmation"></h4> 
+	</section>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
