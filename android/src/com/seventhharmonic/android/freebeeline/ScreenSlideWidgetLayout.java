@@ -165,11 +165,14 @@ class ScreenSlideWidgetLayout extends WidgetLayout{
 
 
 	public void draw(MyGLRenderer r) {
+		//TODO: Display only the active, something before and something after.
+		if(active){
+			animate();
 		for(int i = 0 ;i < widgetList.size(); i++){
-			if(active){
-				animate();
-			} 
 			widgetList.get(i).draw(r);
+		}
+		} else{
+			widgetList.get(activeWidget).draw(r);
 		}
 		if(displayProgressBar){
 			mCPW.draw(r);

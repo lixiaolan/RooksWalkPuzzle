@@ -2,6 +2,7 @@ package com.seventhharmonic.android.freebeeline;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Logger.LogLevel;
 import com.seventhharmonic.android.freebeeline.db.*;
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureBridge;
@@ -18,8 +19,7 @@ import android.content.Context;
  */
 public class GlobalApplication extends Application {
     
-	private static GoogleAnalytics mGa;
-	private static EasyTracker mTracker;
+	
     private static Context context;
     private static LevelPackProvider mLPP;
     private static Geometry geo;
@@ -36,16 +36,16 @@ public class GlobalApplication extends Application {
      */
     
     // Placeholder property ID.
-    private static final String GA_PROPERTY_ID = "UA-44910433-2";
+//    private static final String GA_PROPERTY_ID = "UA-44910433-2";
     
     // Dispatch period in seconds.
-    private static final int GA_DISPATCH_PERIOD = 5;
+//    private static final int GA_DISPATCH_PERIOD = 5;
     
     // Prevent hits from being sent to reports, i.e. during testing.
-    private static final boolean GA_IS_DRY_RUN = false;
+//    private static final boolean GA_IS_DRY_RUN = false;
     
     // Key used to store a user's tracking preferences in SharedPreferences.
-    private static final String TRACKING_PREF_KEY = "trackingPreference";    
+//    private static final String TRACKING_PREF_KEY = "trackingPreference";    
     
     /*
      * Method to handle basic Google Analytics initialization. This call will not
@@ -53,8 +53,6 @@ public class GlobalApplication extends Application {
      */
     
     private void initializeGa() {
-    mGa = GoogleAnalytics.getInstance(this);
-    mTracker = EasyTracker.getInstance(this);//mGa.getTracker(GA_PROPERTY_ID);
 	context = getApplicationContext();
 	geo = new Geometry();
 	mTextureBridge = new TextureBridge();

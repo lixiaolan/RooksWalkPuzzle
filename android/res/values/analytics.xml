@@ -2,7 +2,7 @@
 
 <resources>
   <!--Replace placeholder ID with your tracking ID-->
-  <string name="ga_trackingId">UA-44910433-1</string>
+  <string name="ga_trackingId">UA-44910433-2</string>
 
   <!--Enable automatic activity tracking-->
   <bool name="ga_autoActivityTracking">true</bool>
@@ -11,5 +11,7 @@
   <bool name="ga_reportUncaughtExceptions">true</bool>
 
   <integer name="ga_dispatchPeriod">5</integer>
+
+  <integer name="ga_sessionTimeout">30</integer>
   
 </resources>

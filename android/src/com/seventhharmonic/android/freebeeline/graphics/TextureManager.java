@@ -396,7 +396,8 @@ public class TextureManager {
 		{
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inSampleSize = getFactor(screenWidth);	// No pre-scaling
-			//options.inPreferredConfig = Bitmap.Config.RGB_565;
+			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+			options.inScaled =false;
 			// Read in the resource
 			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
 
