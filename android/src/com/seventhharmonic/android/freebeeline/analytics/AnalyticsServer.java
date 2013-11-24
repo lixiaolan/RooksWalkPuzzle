@@ -19,8 +19,8 @@ public class AnalyticsServer {
 	
 	public AnalyticsServer(GlobalApplication a) {    
 		mGa = GoogleAnalytics.getInstance(a);
-		mGa.setDryRun(true);
-		GoogleAnalytics.getInstance(a).getLogger().setLogLevel(LogLevel.VERBOSE);
+		//mGa.setDryRun(true);
+		//GoogleAnalytics.getInstance(a).getLogger().setLogLevel(LogLevel.VERBOSE);
 		mTracker = EasyTracker.getInstance(a);//mGa.getTracker(GA_PROPERTY_ID);
 		context = a.getContext();
 	}
@@ -32,11 +32,11 @@ public class AnalyticsServer {
 	 * @param moves Moves
 	 */
 	
-	public void sendPuzzleFirstTimeCompleteTiming(String id, String par, long time, int moves) {
+	public void sendPuzzleFirstTimeCompleteTiming(long id, int par, long time, int moves) {
 		mTracker.send(MapBuilder
 			      .createTiming("puzzles_first_run",    // Timing category (required)
 			                    time,       // Timing interval in milliseconds (required)
-			                    id+"_"+par,  // Timing name
+			                    Long.toString(id)+"_"+Integer.toString(par),  // Timing name
 			                    Integer.toString(moves))           // Timing label
 			      .build()
 			  );
@@ -48,11 +48,11 @@ public class AnalyticsServer {
 	 * @param time Time to completion
 	 * @param moves Moves
 	 */
-	public void sendPuzzleReplayedTiming(String id, String par, long time, int moves){
+	public void sendPuzzleReplayedTiming(long id, int par, long time, int moves){
 		mTracker.send(MapBuilder
 			      .createTiming("puzzles_replay",    // Timing category (required)
 			                    time,       // Timing interval in milliseconds (required)
-			                    id+"_"+par,  // Timing name
+			                    Long.toString(id)+"_"+Integer.toString(par),  // Timing name
 			                    Integer.toString(moves))           // Timing label
 			      .build()
 			  );	
@@ -72,7 +72,7 @@ public class AnalyticsServer {
 			      .createEvent("art_event",     // Event category (required)
 			                   "button_press",  // Event action (required)
 			                   "toggle_puzzle_view",   // Event label
-			                   (long)((show) ? 1 : 0))            // Event value
+			                   null)            // Event value
 			      .build()
 			  );
 	}
@@ -90,7 +90,7 @@ public class AnalyticsServer {
 			      .createEvent("art_event",     // Event category (required)
 			                   "button_press",  // Event action (required)
 			                   "toggle_music",   // Event label
-			                   (long)((mute) ? 1 : 0))            // Event value
+			                   null)            // Event value
 			      .build()
 			  );
 	}
@@ -108,7 +108,7 @@ public class AnalyticsServer {
 			      .createEvent("ui_event",     // Event category (required)
 			                   "button_press",  // Event action (required)
 			                   "toggle_lines",   // Event label
-			                   (long)((show) ? 1 : 0))            // Event value
+			                   null)            // Event value
 			      .build()
 			  );
 	}
@@ -126,7 +126,7 @@ public class AnalyticsServer {
 			      .createEvent("ui_event",     // Event category (required)
 			                   "button_press",  // Event action (required)
 			                   "toggle_errors",   // Event label
-			                   (long)((show) ? 1 : 0))            // Event value
+			                   null)            // Event value
 			      .build()
 			  );
 	}
@@ -140,16 +140,32 @@ public class AnalyticsServer {
 	 * @param hints Number of hints the user had. I.e., if people had infinite hints, did they use more?
 	 * @param puzzleID the id of the puzzle on which the hint was used. 
 	 */
-	public void sendUsedHint(String puzzleID, long hintNum) {
+	public void sendUsedHint(long puzzleID, long hintNum) {
 			mTracker.send(MapBuilder
 				      .createEvent("gameplay_event",     // Event category (required)
 				                   "use hint",  // Event action (required)
-				                   puzzleID,   // Event label
-				                   hintNum)            // Event value
+				                   Long.toString(puzzleID),   // Event label
+				                   null)            // Event value
 				      .build()
 				  );	
 	}
 	
+	/**
+	 * Category: store_error
+	 * Action: query
+	 * Label: error
+	 * Value: null
+	 * @param error Custom error message 
+	 */
+	public void sendStoreError(String error) {
+			mTracker.send(MapBuilder
+				      .createEvent("store_error",     // Event category (required)
+				                   "query",  // Event action (required)
+				                   error,   // Event label
+				                   null)            // Event value
+				      .build()
+				  );	
+	}
 	
 	//Campaigns:
 	/**
@@ -178,16 +194,17 @@ public class AnalyticsServer {
 	/**
 	 * The screen names sent should be in the list below:
 	 * 
-	 * main_menu
-	 * main_tutorial
-	 * main_options
-	 * main_about
-	 * puzzle_pack_select
-	 * chapter_select
-	 * puzzle
+	 * DONE - main_menu
+	 * DONE - main_tutorial
+	 * DONE - main_options
+	 * DONE - main_about
+	 * DONE - main_gear
+	 * DONE - level_pack_select
+	 * DONE - chapter_select
+	 * DONE - puzzle_begin
 	 * puzzle_tutorial
-	 * puzzle_end
-	 * chapter_end
+	 * DONE - puzzle_end
+	 * DONE - chapter_end
 	 * 
 	 * @param screen This is the current screen:
 	 */

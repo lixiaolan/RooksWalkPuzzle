@@ -1,8 +1,6 @@
 package com.seventhharmonic.android.freebeeline;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
+import java.util.List;
 import android.util.Log;
 
 import com.seventhharmonic.android.freebeeline.db.HintsDataSource;
@@ -241,9 +239,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		if(tiles[i].getTrueSolution() > 0 && !tiles[i].isHint()){
 		    System.out.println("Found a potential tile");
 		    if(tiles[i].textures[0].equals(TextureManager.CLEAR) || tiles[i].textures[1].equals(TextureManager.CLEAR)){
-			tiles[i].setHint();
-			mBoardLineManager.drawLines();
-			break;
+		    	tiles[i].setHint();
+		    	mBoardLineManager.drawLines();
+			    GlobalApplication.getAnalytics().sendUsedHint(currPuzzle.getId(), getHints());
+
+		    	break;
 		    }
 		}
 	    }
@@ -322,6 +322,13 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	    return beeBoxCenter;
 	}
 
+	public long getHints(){
+		if(ViewActivity.mStore.hasUnlimitedHints()){
+			return -1;
+		} else {
+			return GlobalApplication.getHintDB().getHints().getNum();
+		}
+	}
 	
 	////////////////////////////////////////////////////////////////////////////////
 	//This state defines board behavior during game play.
@@ -341,6 +348,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		int val;
 		int temp;
 		
+		long analyticsTime;
 		ButtonWidget reset;
 		ButtonWidget tutorial;
 		ButtonWidget beeBox;
@@ -355,7 +363,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 		//TODO: Get rid of tiles as inputs to these functions.
 		public BoardPlay(BoardTile[] tiles) {
-			
+			analyticsTime = System.currentTimeMillis();
 			par = currPuzzle.getPar();
 			moves = 0;
 			
@@ -391,6 +399,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			tutorial.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			tutorial.setClickListener(new GameEventListener(){
 				public void event(int i){
+			    	GlobalApplication.getAnalytics().sendScreen("puzzle_tutorial");
 					mModel.createTutorial();
 					mModel.setState(GameState.TUTORIAL);
 				}
@@ -645,6 +654,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    if(checkSolution()) {	
 		    	if(currPuzzle!=null){
 		    		Log.d("board", "solved a puzzle and set completed to true");
+		    		long time = System.currentTimeMillis() - analyticsTime;
+		    		if(!currPuzzle.isCompleted())
+		    			GlobalApplication.getAnalytics().sendPuzzleFirstTimeCompleteTiming(currPuzzle.getId(), par, time, moves);
+		    		else
+		    			GlobalApplication.getAnalytics().sendPuzzleReplayedTiming(currPuzzle.getId(), par, time, moves);		
 		    		currPuzzle.completePuzzleListener(moves, true);
 		    		mBeeController.setMood(Mood.HAPPY);
 		    		mModel.setState(GameState.GAME_MENU_END);
@@ -659,6 +673,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				mHints.setText(TextureManager.buildHint(GlobalApplication.getHintDB().getHints().getNum()));
 			}
 		}
+		
+		
 
 		public void updateErrors(){
 		    for(int i =0;i<tiles.length;i++){
@@ -783,7 +799,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			
 			//We should redraw the lines to be on the safe side
 			mBoardLineManager.drawLines();
-			
+	    	GlobalApplication.getAnalytics().sendScreen("puzzle_end");
 		}
 
 		public void enterAnimation(BoardTile[] tiles) {

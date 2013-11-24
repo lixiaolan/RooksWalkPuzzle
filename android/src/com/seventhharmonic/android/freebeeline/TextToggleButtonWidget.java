@@ -22,7 +22,10 @@ public class TextToggleButtonWidget extends ButtonWidget{
 		this.text = text;
 		this.toggleText = toggleText;
 	}
-		
+	
+	public boolean getToggle(){
+		return toggle;
+	}
 	
 	public void touchHandler(float[] pt){
 		super.touchHandler(pt);

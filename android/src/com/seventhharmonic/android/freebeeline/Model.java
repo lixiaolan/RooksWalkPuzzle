@@ -67,6 +67,7 @@ class Model {
 	muteButton.setClickListener(new GameEventListener() {
 		@Override
 		public void event(int i) {
+			GlobalApplication.getAnalytics().sendMuteSound(muteButton.getToggle());
 		    GlobalApplication.getMyMusic().toggleMusic();
 		}
 	    });
@@ -285,11 +286,13 @@ class Model {
 
    //INTERFACE CLASSES FOR FLOWERMENU:   
     public void setModelToMainMenuOpening() {
+    	GlobalApplication.getAnalytics().sendScreen("main_menu");
 	setState(GameState.MAIN_MENU_OPENING);
     }
 
     public void setModelToGameOpening(Puzzle p) {
 	createPuzzleFromPuzzle(p);
+	GlobalApplication.getAnalytics().sendScreen("puzzle_begin");
 	//Resets the chapter display information.
 	mFlowerMenu.enterChapterSelect();
 	setState(GameState.GAME_OPENING);
@@ -297,36 +300,42 @@ class Model {
 
     public void setModelToChapterEnd(){
     	mFlowerMenu.enterChapterEnd();
+    	GlobalApplication.getAnalytics().sendScreen("chapter_end");
     	setState(GameState.FLOWER_MENU);
     }
 
     public void setModelToLevelPack() {
     	if(state.firstRun){
     		setModelToTutorial();    		
-    		state.firstRun = false;
     		return;
     	}
+    	GlobalApplication.getAnalytics().sendScreen("level_pack_select");
     	setState(GameState.FLOWER_MENU);
     	mFlowerMenu.enterLevelPack();
         }
     
     public void setModelToChapterSelect() {
     	setState(GameState.FLOWER_MENU);
+    	GlobalApplication.getAnalytics().sendScreen("chapter_select");
     	mFlowerMenu.enterChapterSelect();
     }	
     
     public void setModelToTutorial(){
     	createTutorial();
+    	GlobalApplication.getAnalytics().sendScreen("main_tutorial");
 		setState(GameState.TUTORIAL_MAIN_MENU);
     }
     
     public void setModelToStory(){
     	createStory();
+    	GlobalApplication.getAnalytics().sendScreen("main_story");
     	setState(GameState.STORY);
     }
     
     public void setModelToAbout(){
     	setState(GameState.ABOUT);
+    	GlobalApplication.getAnalytics().sendScreen("main_about");
+
     }
     
 }

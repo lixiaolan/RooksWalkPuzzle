@@ -9,19 +9,12 @@ import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
 
 public class LockedChapterWidget extends WidgetLayout{
 	String TAG = "LockedChapterWidget";
-	TextBox mText;
 	ImageWidget mLocked;
 	Chapter ch;
 	public LockedChapterWidget(Chapter ch){
 
 		this.ch  = ch;
-		mText = new TextBox(0f, 0f, 1f, ch.getTitle());
-		Log.d(TAG, ch.getTitle());
-		mText.setFontSize(2);
-		mText.setRelativeCenter(0,height-.2f);
-		mText.setJ(TextJustification.CENTER);
-		widgetList.add(mText);
-
+		
 		mLocked = new ImageWidget(0,0,.8f, .6f, "chapterLockedBanner");
 		mLocked.setRelativeCenter(0,0);
 		mLocked.setBorder(true);

@@ -42,10 +42,7 @@ public class Inventory {
 
     /** Returns whether or not there exists a purchase of the given product. */
     public boolean hasPurchase(String sku) {
-	////////////////////////REMOVE TO FIX PURCHACING//////////////
-	return true;
-	////////////////////////////////////
-        //return mPurchaseMap.containsKey(sku);
+        return mPurchaseMap.containsKey(sku);
     }
 
     /** Return whether or not details about the given product are available. */

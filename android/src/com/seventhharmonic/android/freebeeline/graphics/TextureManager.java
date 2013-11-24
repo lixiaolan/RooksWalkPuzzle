@@ -13,13 +13,10 @@ import java.util.Map;
 import java.util.Random;
 
 import com.seventhharmonic.android.freebeeline.R;
-import com.seventhharmonic.android.freebeeline.StoryBoardInfo;
-import com.seventhharmonic.android.freebeeline.TutorialInfo2;
-import com.seventhharmonic.android.freebeeline.R.drawable;
+
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.AssetManager;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -104,7 +101,7 @@ public class TextureManager {
 	public static final String HINTPROMPT = "You are out of hints! Select the amount you would like to purchase below.";
     public static final String PLEASEFIXERROR = "Please correct the red squares before continuing!";
 	
-	public static final String VERSION = "alpha-0.2";
+	public static final String VERSION = "beta-1.0";
 	public static final String BOX = "box";
 	public static final String ERASER = "eraser";
 	public static final String TABLE_OF_CONTENTS = "Table of Contents";

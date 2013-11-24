@@ -114,6 +114,7 @@ public class Store {
 			Log.d(TAG, "Query inventory finished.");
 			if(inventory == null){
 				Log.d(TAG, "Null inventory");
+				GlobalApplication.getAnalytics().sendStoreError("null inventory");
 				return;
 			}
 			mInventory = inventory;
@@ -125,13 +126,6 @@ public class Store {
 				complain("Failed to query inventory: " + result);
 				return;
 			}
-			
-			/*try{
-				consumeStaticResponse("android.test.purchased");
-			} catch(Exception e){
-				Log.d(TAG, "Failed to consume the test purchase");
-				Log.d(TAG, e.getLocalizedMessage());
-			}*/
 			
 			Log.d(TAG, "Query inventory was successful.");
 			Log.d(TAG, "Initial inventory query finished; enabling main UI.");
@@ -181,7 +175,7 @@ public class Store {
 
 				//Consume this purchase immediately!!! Can change this in the future.
 				mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
-
+				GlobalApplication.getAnalytics().sendPurchase("hints5");
 				//Fill DB
 				GlobalApplication.getHintDB().open();
 				GlobalApplication.getHintDB().addHints(5);
@@ -192,6 +186,7 @@ public class Store {
 
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.
+				GlobalApplication.getAnalytics().sendCaughtException(e);
 				Log.e(TAG, e.getMessage());
 			}
 		}
@@ -255,6 +250,7 @@ public class Store {
 
 				//Consume this purchase immediately!!! Can change this in the future.
 				mHelper.consumeAsync(purchase,mConsumeHintsFinishedListener);	
+				GlobalApplication.getAnalytics().sendPurchase("hints20");
 
 				//Fill DB
 				GlobalApplication.getHintDB().open();
@@ -266,6 +262,7 @@ public class Store {
 
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.
+				GlobalApplication.getAnalytics().sendCaughtException(e);
 				Log.e(TAG, e.getMessage());
 			}
 		}
@@ -300,6 +297,7 @@ public class Store {
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
 		hintWidget = mHints;
+		GlobalApplication.getAnalytics().sendPurchase("hintsunlimited");
 		mHelper.launchPurchaseFlow(mContext, "hintsunlimited", RC_REQUEST,
 				mPurchaseUnlimitedHintFinishedListener, payload);
 	}
@@ -326,7 +324,8 @@ public class Store {
 
 				//Update the inventory.
 				mInventory.addPurchase(purchase);
-				
+				GlobalApplication.getAnalytics().sendPurchase("hintsunlimited");
+
 				//Need code here to open the DB and set the fact that we have bought unlimited hints.
 				PDS.open();
 				PDS.setPurchased("hintsunlimited", true);
@@ -336,6 +335,7 @@ public class Store {
 				setWaitScreen(false);
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.
+				GlobalApplication.getAnalytics().sendCaughtException(e);
 				Log.e(TAG, e.getMessage());
 			}
 		}
@@ -346,7 +346,8 @@ public class Store {
 	/***********************************************************************/
 	//Code for level pack purchase
 	public boolean hasLevelPack(LevelPack lp){
-		String id  = lp.getId();
+		//TODO: Uncomment to lock levelpack.
+		/*String id  = lp.getId();
 		if(purchasables.contains(id)){
 			if(mInventory == null){
 				Log.d(TAG, "Found a null inventory");
@@ -360,7 +361,7 @@ public class Store {
 				return false;
 			}
 		}
-		Log.d(TAG, "Didn't contain id "+id);
+		Log.d(TAG, "Didn't contain id "+id);*/
 		return true;
 	}
 
@@ -385,6 +386,7 @@ public class Store {
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
+		GlobalApplication.getAnalytics().sendPurchase(lp.getId());
 		mHelper.launchPurchaseFlow(mContext, lp.getId(), RC_REQUEST,
 				mPurchaseLevelPackFinishedListener, payload);
 		
@@ -413,6 +415,8 @@ public class Store {
 				//Note that we should NOT CONSUME since you get unlimited hints.
 				//Need to update the inventory object.
 				mInventory.addPurchase(purchase);
+				GlobalApplication.getAnalytics().sendPurchase(purchase.getSku());
+
 
 				//Need code here to open the DB and set the fact that we have bought the LevelPack.
 				PDS.open();
@@ -424,6 +428,7 @@ public class Store {
 				setWaitScreen(false);
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.
+				GlobalApplication.getAnalytics().sendCaughtException(e);
 				Log.e(TAG, e.getMessage());
 			}
 		}

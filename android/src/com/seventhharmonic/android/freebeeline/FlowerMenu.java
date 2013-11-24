@@ -132,12 +132,12 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	case BOOK_SELECT:
 	    System.out.println("In backState: BOOK_SELECT");
 	    mFlowerState = FlowerState.MAIN_MENU;
-	    
 	    mModel.setModelToMainMenuOpening();
 	    //myMusic.stopMusic();
 	    break;
 	case CHAPTER_SELECT:
 	    mFlowerState = FlowerState.BOOK_SELECT;
+    	GlobalApplication.getAnalytics().sendScreen("level_pack_select");
 	    break;
 	default:
 	    break;
@@ -146,8 +146,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     }
 
     public void enterLevelPack() {
-	mFlowerState = FlowerState.BOOK_SELECT;
-	updateState();
+    	mFlowerState = FlowerState.BOOK_SELECT;
+    	updateState();
     }
 
     public void enterChapterSelect() {
@@ -271,6 +271,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 		Log.d(TAG,"touched LevelPackDisplay");
 		if(m.isTouched(pt)){
 		    mFlowerState = FlowerState.CHAPTER_SELECT;
+	    	GlobalApplication.getAnalytics().sendScreen("chapter_select");
 		    currLevelPack = currLevelPack;
 		    updateState();
 		}	
@@ -283,7 +284,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     class ChapterDisplay extends StateWidget{
 	ScreenSlideWidgetLayout m;	//Widget to hold all the chapters
 	Widget currChapterWidget;	//The current chapter that the screenslide widget is on.
-	ButtonWidget gridToggle;	//Toggles the showing of puzzles
+	TextToggleButtonWidget gridToggle;	//Toggles the showing of puzzles
 	AnimatedGIFWidget mGIF;		//Displays the backgrounds and handles their animation
 	
 	
@@ -293,8 +294,9 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    gridToggle.setBorderStyle(ButtonWidget.ButtonStyle.CIRCLE);
 	    //Yes - we do toggle all the grids on ALL the puzzles.
 	    gridToggle.setClickListener(new GameEventListener(){ 
-		    public void event(int i){
-			for(Widget w: m.getWidgetList())
+		    public void event(int i){   	
+			GlobalApplication.getAnalytics().sendPuzzleShow(gridToggle.getToggle());
+		    for(Widget w: m.getWidgetList())
 			    ((ChapterWidget)w).setState();
 		    }
 		});
@@ -313,7 +315,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 			    public void event(int puzz){
 	    			Puzzle p = c.getPuzzle(puzz);
 	    			if(p.isUnlocked())
-				    mModel.setModelToGameOpening(p);
+	    				mModel.setModelToGameOpening(p);
 			    }
 		    	}); 
 		    m.addWidget(ch);
@@ -458,6 +460,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 		public void touchHandler(float[] pt) {
 			savedChapter = Math.min(savedChapter+1,currLevelPack.getNumberOfChapters()-1);
 			mFlowerState  = FlowerState.CHAPTER_SELECT;
+			GlobalApplication.getAnalytics().sendScreen("chapter_select");
 			updateState();
 		}
 		

@@ -14,14 +14,14 @@ class MenuManager {
 	private float[] bottomRight = new float[3];
 	private float scale1;
 	private float scale2;
-    EasyTracker mTracker;
+    //EasyTracker mTracker;
 
 
 	public MenuManager(GlobalState s, Model m) {
 		state = s;
 		mModel = m;
 		updateState();
-        mTracker = GlobalApplication.getGaTracker();
+        //mTracker = GlobalApplication.getGaTracker();
 	}
 	//Each case statement should have a declaration of
 	//a new menu.
@@ -168,6 +168,7 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 	    case 1: state.state = GameState.MAIN_MENU_OPTIONS;
+	    GlobalApplication.getAnalytics().sendScreen("main_options");
 		updateState();
 		break;
 	    case 2: 
@@ -191,6 +192,7 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 	    case 1: state.state = GameState.MAIN_MENU_GEAR;
+	    GlobalApplication.getAnalytics().sendScreen("main_gear");
 	    updateState();
 		break;
 	    case 2:
@@ -211,18 +213,26 @@ class MenuManager {
 	    switch(val) {
 		
 	    case 1: state.linesOn = !state.linesOn;
-		if (state.linesOn)
+		if (state.linesOn){
 		    mGameMenu.setTexture(0,TextureManager.LINES_ON);
-		else
+			GlobalApplication.getAnalytics().sendToggleLines(true);
+		}
+		else{
 		    mGameMenu.setTexture(0,TextureManager.LINES_OFF);
+		    GlobalApplication.getAnalytics().sendToggleErrors(false);
+		}
 		mModel.toggleLines(state.linesOn);
 		break;
 	    case 2:
 	    	state.ruleCheck = !state.ruleCheck;
-		if (state.ruleCheck)
+		if (state.ruleCheck){
 		    mGameMenu.setTexture(1,TextureManager.RULE_CHECK_ON);
-		else
+			GlobalApplication.getAnalytics().sendPuzzleShow(true);
+		}
+		else{
 		    mGameMenu.setTexture(1,TextureManager.RULE_CHECK_OFF);
+		    GlobalApplication.getAnalytics().sendToggleErrors(false);
+		}
 		mModel.toggleRules(state.ruleCheck);
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_LIST;
@@ -237,6 +247,7 @@ class MenuManager {
 	@Override
 		public void callback(int val) {
 	    	mModel.setModelToChapterSelect();
+		    GlobalApplication.getAnalytics().sendScreen("main_gear");
 	    	updateState();   
 		}
     }
@@ -246,6 +257,7 @@ class MenuManager {
     	@Override
     		public void callback(int val) {
     			state.state = GameState.MAIN_MENU_GEAR;
+    		    GlobalApplication.getAnalytics().sendScreen("main_gear");
     	    	updateState();   
     		}
         }
@@ -258,6 +270,7 @@ class MenuManager {
 	    	switch(val) {
 	    	case 1:
 	    		mModel.setState(GameState.GAME_OPENING);
+	    	    GlobalApplication.getAnalytics().sendScreen("puzzle_begin");
 	    		updateState();
 	    		break;
 	    	}
@@ -269,7 +282,13 @@ class MenuManager {
     	public void callback(int val) {
     	    switch(val) {
     	    case 1:
-    	    	mModel.setModelToLevelPack();
+    	    	if(!state.firstRun){
+    	    		state.state = GameState.MAIN_MENU_GEAR;
+    	    		GlobalApplication.getAnalytics().sendScreen("main_gear");
+    	    	} else if(state.firstRun){
+    	    		state.firstRun = false;
+    	    		mModel.setModelToLevelPack();
+    	    	}
     	    	updateState();
     	    	break;
     	    }

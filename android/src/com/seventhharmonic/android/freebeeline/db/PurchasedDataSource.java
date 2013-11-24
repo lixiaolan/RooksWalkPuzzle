@@ -40,10 +40,7 @@ public class PurchasedDataSource extends BaseDataSource{
 		bool = false;
 	    }
 
-	    ////////////////////////////EXCHANGE TO FIX THE PURCHCED INFO//////////////////////
-	    mSkuMap.put(str, true);
-	    //mSkuMap.put(str, bool);
-	    ////////////////////////////////////////////////////////////////////////////////
+	    mSkuMap.put(str, bool);
 	    cursor.moveToNext();
 	}
 	cursor.close();
@@ -85,11 +82,8 @@ public class PurchasedDataSource extends BaseDataSource{
 	}
 
        	cursor.close();
-	////////////////////////////EXCHANGE TO FIX THE PURCHCED INFO//////////////////////
-	return true;
-	//return bool;
-	////////////////////////////////////////////////////////////////////////////////////
-
+		return bool;
+	
 
 
     }

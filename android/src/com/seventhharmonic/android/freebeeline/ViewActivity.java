@@ -133,13 +133,10 @@ public class ViewActivity extends Activity {
 	GlobalApplication.getHintDB().open();
 	GlobalApplication.getPurchasedDB().open();
 	
-	/*
+	
 	  if(mModel.state.firstRun){
-	  mQuoteView.setVisibility(View.INVISIBLE);
-	  mModel.firstRun();
-	  } else {
-	  //mModel.reset();
-	  }*/
+		GlobalApplication.getHintDB().addHints(15);
+	  }
 	
 	
 	//TODO: Loading puzzles with their completion value. This sucks balls. Do this elsewhere.
@@ -181,6 +178,7 @@ public class ViewActivity extends Activity {
 	    mStore.mHelper = null;
 	}
 	//	GlobalApplication.getMyMusic().onDestroy();	
+	EasyTracker.getInstance(this).activityStop(this);
 	mGLView.onPause();
     }
     

@@ -3,6 +3,7 @@ package com.seventhharmonic.android.freebeeline;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Logger.LogLevel;
+import com.seventhharmonic.android.freebeeline.analytics.AnalyticsServer;
 import com.seventhharmonic.android.freebeeline.db.*;
 import com.seventhharmonic.android.freebeeline.graphics.Geometry;
 import com.seventhharmonic.android.freebeeline.graphics.TextureBridge;
@@ -30,7 +31,7 @@ public class GlobalApplication extends Application {
     private static PurchasedDataSource PDS;
     private static MySQLiteHelper MSQLH;
     private static MyMusic myMusic;
-    
+    private static AnalyticsServer mASS;
     /*
      * Google Analytics configuration values.
      */
@@ -54,6 +55,8 @@ public class GlobalApplication extends Application {
     
     private void initializeGa() {
 	context = getApplicationContext();
+	mASS = new AnalyticsServer(this);
+	
 	geo = new Geometry();
 	mTextureBridge = new TextureBridge();
 	mLPP = new SAXLevelPackProvider();
@@ -80,16 +83,19 @@ public class GlobalApplication extends Application {
     /*
      * Returns the Google Analytics tracker.
      */
-    public static EasyTracker getGaTracker() {
+   /* public static EasyTracker getGaTracker() {
       return mTracker; 
     }
 
-    /*
-     * Returns the Google Analytics instance.
-     */
     public static GoogleAnalytics getGaInstance() {
       return mGa;
     }
+    */
+
+    public static AnalyticsServer getAnalytics() {
+    	return mASS;
+        }
+        
     
     public static LevelPackProvider getLevelPackProvider() {
 	return mLPP;

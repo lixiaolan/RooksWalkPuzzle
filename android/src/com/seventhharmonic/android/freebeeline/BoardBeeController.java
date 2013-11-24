@@ -1,7 +1,5 @@
 package com.seventhharmonic.android.freebeeline;
 
-import com.seventhharmonic.android.freebeeline.util.LATools;
-import android.util.Log;
 
 public class BoardBeeController extends ControllerBase implements BeeInterface {
     public NewBee bee;

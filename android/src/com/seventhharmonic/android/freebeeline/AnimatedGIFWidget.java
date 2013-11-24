@@ -3,7 +3,6 @@ package com.seventhharmonic.android.freebeeline;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
 
 import android.util.Log;

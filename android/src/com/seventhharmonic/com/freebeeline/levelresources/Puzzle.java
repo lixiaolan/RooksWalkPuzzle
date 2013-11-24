@@ -38,6 +38,8 @@ public class Puzzle {
 	int moves;
 	int par;
 	
+	
+	
 	public String getText() {
 		return text;
 	}
