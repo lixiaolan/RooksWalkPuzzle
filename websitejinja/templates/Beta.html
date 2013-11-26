@@ -4,7 +4,7 @@
 
 <header class="jumbotron subhead" id="overview">
   <div class="container">
-    <h1>Beta Testing</h1>
+    <h1>Bee-Line Beta Testing</h1>
     <p class="lead">Thanks for signing up to be a Beta tester! Below is an overview of the beta testing process.</p>
 </header>
 
@@ -16,55 +16,53 @@
 	<div class="page-header">
           <h2> Receive an Email from Google Groups</h2>
 	</div>
-	<p>After submitting your email to our site, you will be sent an email from Google Groups adding you to the Beta Testers group. This will contain a link to the Google Play store where you can install BeeLine!</p>
+	<p>After submitting your email to our site, you will be sent an email from Google Groups adding you to the Beta Testers group. This will contain a link to the Google Play store where you can install BeeLine! If you have any trouble with this step, email us at harmonicanalysisdev@gmail.com or fill out the form below.</p> 
 	</section>
       
       <section id="GoogleGroupEmail">
 	<div class="page-header">
           <h2> Play!</h2>
 	</div>
-	<p>Play the game as much as possible!!</p>
+	<p>Play the game as much as possible!! We are interested in know whether the game works on your phone, how smooth it runs, and what you think of the overall look and feel. All comments and suggestions will be taken very seriously. Feel free to email us with feedback or fill out the form below.</p>
+
+<p>Currently the only purchasable item in the game is hints. If you buy hints, you will be charged!!! We can allow a small number of people to test In App Billing without being charged. If you are interested in this, send us an email at harmonicanalysisdev@gmail.com</p>
 	</section>
       
       <section id="GoogleGroupEmail">
 	<div class="page-header">
           <h2> Feedback and Bug Report</h2>
 	</div>
-	<p>Please give us feedback! </p>
-	<form class="form-inline" id="feedback_form">
-	  <div class="form-group">
-	    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-	    <input type="email" class="form-control" id="email_input" placeholder="Enter Email"></input>
-	  </div>
-
-	  <div class="form-group">
-	    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-	    <input type="email" class="form-control" id="email_input" placeholder="Enter Email"></input>
-	  </div>
-	  
-	  <input type="submit" class="btn btn-default" value="Submit"></input>
-	</form>
+	<p>Please give us feedback! We have provided a form below for feedback. Of course, screenshots are always more useful than text, so feel free to email us at harmonicanalysisdev@gmail.com</p>
 
 	<form id="feedback_form" class="form-inline">
 	  <div class="form-group">
-	    <label class="sr-only" for="email">Email </label>
-	    <input id="email_input" class="form-control" type="email"/> 
+
+	    <label for="email_input">Email </label>
+	    <input id="email_input" name="email_input" class="form-control" type="email"/> 
 	
-	    <label class="sr-only" for="element_2">Phone Model </label>
-	    <input id="phone_model_input" class="form-control" type="text"/> 
+	    <label for="phone_model_input">Phone Model </label>
+	    <input id="phone_model_input" name="phone_model_input" class="form-control" type="text"/> 
 	    
-	    <label class="description" for="element_3">Feedback/Bugs </label>
-	    <textarea id="element_3" name="element_3" class="element textarea medium"></textarea> 
-	    
-	    
-	    <li class="buttons">
-	      <input type="hidden" name="form_id" value="748794" />
-	      <input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
-	    </li>
+	    <label for="feeback_input">Feedback/Bugs </label>
+	    <textarea id="feedback_input" name="feedback_input" class="form-control" rows="10"></textarea> 
+	    		 
+	    <input type="submit" class="btn btn-default" value="Submit"></input>
+	  </div>
 	</form>	
-	
 	<h4 id="submission_confirmation"></h4> 
-	</section>
+      </section>
+      
+      <script>
+	$("#feedback_form").on( "submit", function (event) {
+	console.log($(this).serialize() );
+	event.preventDefault();
+	document.getElementById('submission_confirmation').innerHTML = 'Thanks for your feedback! If you submitted any bugs, we will contact you soon.';      
+	
+	$.post("feedback", $("#feedback_form").serialize());
+	return false;
+	} );
+      </script>
+
 
     </div>
   </div>

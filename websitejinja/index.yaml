@@ -5,3 +5,10 @@
   - name: email
   - name: date
     direction: desc
+
+- kind: Feedback
+  ancestor: yes
+  properties:
+  - name: email
+  - name: phone_model
+  - name: date
