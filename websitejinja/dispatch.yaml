@@ -1,0 +1,8 @@
+application: seventhharmonicwebsite
+dispatch:
+
+- url: "*/"
+  module: default
+
+- url: "*/blog*"
+  module: wordpress

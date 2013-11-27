@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Beta{% endblock %}
+{% block content %}
+
+<head>  
+  <link rel="stylesheet" href="css/slider.css" type="text/css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+  <script src="js/screenSlider/jquery.flexslider-min.js"></script>
+  <meta name="robots" content="noindex,follow" />
+<head/>
+<!----
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h3>Bee-Line</h3>
+    <p class="lead">Bee-Line is an original puzzle game developed by three graduate students in math.  It is easy to pick up and fun to play, but has a surprising amount of depth and complexity as the difficulty increases. We hope you enjoy playing our game as much as we enjoyed making it a reality!</p>
+</header>
+--->
+
+<div class="container">
+  <div class="row">    
+    <div class = "col-md-6"><p><br/> Bee-Line is an original puzzle game developed by three graduate students in math.  It is easy to pick up and fun to play, but has a surprising amount of depth and complexity as the difficulty increases. We hope you enjoy playing our game as much as we enjoyed making it a reality! </p></div>    
+    <div class="col-md-6">
+      <div class="flex-container">
+	<div class="flexslider">
+	  <ul class="slides">
+	    <li>
+	      <a href="#"><img src="img/screenShots/slide1.png" /></a>
+	      <p>Hand drawn art</p>
+	    </li>
+	    
+	    <li>
+	      <img src="img/screenShots/slide2.png" />
+	      <p>Multiple level packs</p>
+	    </li>
+	    
+	    <li>
+	      <img src="img/screenShots/slide3.png" />
+	      <p>Addicting and challenging puzzles</p>
+	      
+	    </li>
+	    <li>
+	      <img src="img/screenShots/slide4.png" />
+	      <p>Puzzle chapters with evolving backgrounds</p>
+	    </li>
+	    
+	  </ul>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+  $('.flexslider').flexslider({
+  animation: 'fade',
+	controlsContainer: '.flexslider'
+  });
+  });
+</script>
+
+{% endblock %}
+
+
