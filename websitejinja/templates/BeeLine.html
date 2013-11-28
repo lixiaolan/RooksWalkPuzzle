@@ -8,41 +8,51 @@
   <script src="js/screenSlider/jquery.flexslider-min.js"></script>
   <meta name="robots" content="noindex,follow" />
 <head/>
-<!----
-<header class="jumbotron subhead" id="overview">
-  <div class="container">
-    <h3>Bee-Line</h3>
-    <p class="lead">Bee-Line is an original puzzle game developed by three graduate students in math.  It is easy to pick up and fun to play, but has a surprising amount of depth and complexity as the difficulty increases. We hope you enjoy playing our game as much as we enjoyed making it a reality!</p>
-</header>
---->
 
 <div class="container">
   <div class="row">    
-    <div class = "col-md-6"><p><br/> Bee-Line is an original puzzle game developed by three graduate students in math.  It is easy to pick up and fun to play, but has a surprising amount of depth and complexity as the difficulty increases. We hope you enjoy playing our game as much as we enjoyed making it a reality! </p></div>    
+    <div class = "col-md-6">
+      <section id="BeeLine">
+	<div class="page-header">
+          <h2>Bee-Line</h2>
+	</div>
+	<p>Bee-Line is an original puzzle game designed, programmed, and illustrated by three graduate students in math.</p> 
+      </section>
+      <section id="Description">
+	<div class="page-header">
+          <h3>Description</h3>
+	</div>
+	<p>The goal in Bee-Line is to help Beatrice the bee find a path through a garden of flowers. As the paths get longer the challenge and fun increases!</p> 
+      </section>
+      <section id="Features">
+	<div class="page-header">
+          <h3>Features</h3>
+	</div>
+	<p>As you solve puzzles in Bee-Line your progress through a level pack is rewarded with colorful evolving murals! Other features include dynamic and responsive menus, a slick user interface, original music, and optional dynamic error checking. On top of all this, EVERYHING you see on screen was drawn by hand, even the font!</p> 
+      </section>
+      <section id="History">
+	<div class="page-header">
+          <h3>History</h3>
+	</div>
+	<p>The concept for the puzzle dates back to the summer of 2012 where Leland J. Jefferis (one of the co-founders of Seventh Harmonic) spent his days in a cubical in ShangHai making up a number puzzle simply to amuse himself.  This puzzle became known as "The Rooks Walk". The puzzle is "featured" on his home page with daily updates.  The site attracts up to one viewer every single day (Leland) and was a hit (with Leland). When Lalit K. Jain (the other co-founder) came upon the idea of Android-ifying the puzzle, a rapid development process ensued where in the puzzle evolved to its current form. This process involved (and still involves) three chai lattes per day and fierce dedication to learning the Android platform from the bottom up! It's been fun! Keep up with the goings on by vising the blog where you will find all kinds of rants and raves surrounding the trials and triumphs of creating Bee-Line.</p> 
+      </section>
+    </div>    
     <div class="col-md-6">
       <div class="flex-container">
 	<div class="flexslider">
 	  <ul class="slides">
 	    <li>
 	      <a href="#"><img src="img/screenShots/slide1.png" /></a>
-	      <p>Hand drawn art</p>
 	    </li>
-	    
 	    <li>
 	      <img src="img/screenShots/slide2.png" />
-	      <p>Multiple level packs</p>
 	    </li>
-	    
 	    <li>
 	      <img src="img/screenShots/slide3.png" />
-	      <p>Addicting and challenging puzzles</p>
-	      
 	    </li>
 	    <li>
 	      <img src="img/screenShots/slide4.png" />
-	      <p>Puzzle chapters with evolving backgrounds</p>
-	    </li>
-	    
+	    </li>	    
 	  </ul>
 	</div>
       </div>
@@ -53,7 +63,7 @@
   $(document).ready(function () {
   $('.flexslider').flexslider({
   animation: 'fade',
-	controlsContainer: '.flexslider'
+  controlsContainer: '.flexslider'
   });
   });
 </script>

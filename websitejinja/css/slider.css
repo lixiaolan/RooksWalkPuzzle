@@ -99,25 +99,29 @@ html[xmlns] .slides { display: block; }
 	display: block;
 	position: absolute;
 	margin: -17px 0 0 0;
+	/* width: 35px; */
 	width: 35px;
+	/* height: 35px; */
 	height: 35px;
 	top: 50%;
 	cursor: pointer;
 	text-indent: -9999px;
 	z-index: 9999;
 
-	background-color: #82d344;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#82d344), to(#51af34));
-	background-image: -webkit-linear-gradient(top, #82d344, #51af34);
-	background-image: -moz-linear-gradient(top, #82d344, #51af34);
-	background-image: -o-linear-gradient(top, #82d344, #51af34);
-	background-image: linear-gradient(to bottom, #82d344, #51af34);
+	/* background-color: #82d344; */
+	/* background-image: -webkit-gradient(linear, left top, left bottom, from(#82d344), to(#51af34)); */
+	/* background-image: -webkit-linear-gradient(top, #82d344, #51af34); */
+	/* background-image: -moz-linear-gradient(top, #82d344, #51af34); */
+	/* background-image: -o-linear-gradient(top, #82d344, #51af34); */
+	/* background-image: linear-gradient(to bottom, #82d344, #51af34); */
 }
 
 .flex-direction-nav a:before {
 	display: block;
 	position: absolute;
 	content: '';
+	/* width: 9px; */
+	/* height: 13px; */
 	width: 9px;
 	height: 13px;
 	top: 11px;
@@ -125,26 +129,24 @@ html[xmlns] .slides { display: block; }
 	background: url(../img/arrows.png) no-repeat;
 }
 
-.flex-direction-nav a:after {
-	display: block;
-	position: absolute;
-	content: '';
-	width: 0;
-	height: 0;
-	top: 35px;
-}
+/* .flex-direction-nav a:after { */
+/* 	display: block; */
+/* 	position: absolute; */
+/* 	content: ''; */
+/* 	width: 0; */
+/* 	height: 0; */
+/* 	top: 35px; */
+/* } */
 
 .flex-direction-nav .flex-next {
-	right: -5px;
-
+	right: -10px;
 	-webkit-border-radius: 3px 0 0 3px;
 	-moz-border-radius: 3px 0 0 3px;
 	border-radius: 3px 0 0 3px;
 }
 
 .flex-direction-nav .flex-prev {
-	left: -5px;
-
+	left: -10px;
 	-webkit-border-radius: 0 3px 3px 0;
 	-moz-border-radius: 0 3px 3px 0;
 	border-radius: 0 3px 3px 0;
@@ -211,8 +213,6 @@ html[xmlns] .slides { display: block; }
 	-moz-box-shadow: none;
 	box-shadow: none;
 }
-
-
 
 /* Captions */
 .flexslider .slides p {
