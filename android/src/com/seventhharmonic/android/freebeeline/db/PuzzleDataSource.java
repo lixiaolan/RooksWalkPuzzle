@@ -121,10 +121,10 @@ public class PuzzleDataSource extends BaseDataSource{
     private SQLPuzzle cursorToSQLPuzzle(Cursor cursor) {
     	SQLPuzzle puz = new SQLPuzzle();
     	puz.setId(cursor.getLong(0));
-    	puz.setCompleted("true");
-    	puz.setMovesUsed(0);
-    	// puz.setCompleted(cursor.getString(1));
-	// puz.setMovesUsed(cursor.getLong(2));
+    	//puz.setCompleted("true");
+    	//puz.setMovesUsed(0);
+    	puz.setCompleted(cursor.getString(1));
+	    puz.setMovesUsed(cursor.getLong(2));
     	return puz;
     }
 } 

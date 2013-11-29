@@ -46,7 +46,7 @@ public class Puzzle {
 
 	public boolean isUnlocked(){
 		//First puzzle in a chapter
-		if(prevPuzzle == null){
+		/*if(prevPuzzle == null){
 			//First puzzle in the game!
 			if(ch.getPrevChapter() == null){
 				return true;
@@ -55,16 +55,16 @@ public class Puzzle {
 			}
 		} else{
 			return prevPuzzle.isCompleted();
-		}
+		}*/
 		
 		//New logic. A puzzle is unlocked when the whole previous chapter is unlocked.
-	/*	if(prevPuzzle == null || ch.getPrevChapter() == null){
+		if(ch.getPrevChapter() == null){
 			return true;
 		} else if(ch.getPrevChapter().getCompleted()){
 			return true;
 		} else{
 			return false;
-		}*/
+		}
 	}
 	
 	public void setText(String text) {
@@ -103,6 +103,10 @@ public class Puzzle {
 	}
 	
 	public String getFlower(){
+		if(!isUnlocked()){
+			return TextureManager.CLEAR;
+		}
+		
 		if(isCompleted()){
 			return getAfterFlower();
 		}

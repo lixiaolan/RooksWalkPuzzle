@@ -38,7 +38,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	int moves = 0;
 	//Par number of moves
 	int par  = 0;
-
+	boolean firstCompleted  = false;
 	public Board(Model mModel) {
 	    buildEmptyBoard();
 	    state = null;
@@ -159,6 +159,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	public void createPuzzleFromPuzzle(Puzzle p){
 		boardHeight = p.getHeight();
 		boardWidth = p.getWidth();
+		firstCompleted = false;
 		System.out.println("boardHeight: " + Integer.toString(boardHeight));
 		System.out.println("boardWidth: " + Integer.toString(boardWidth));
 		currPuzzle = p;
@@ -653,6 +654,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		public void checkIfPuzzleSolved() {
 		    if(checkSolution()) {	
 		    	if(currPuzzle!=null){
+		    		boolean beforeChCompleted = currPuzzle.getChapter().getCompleted();
 		    		Log.d("board", "solved a puzzle and set completed to true");
 		    		long time = System.currentTimeMillis() - analyticsTime;
 		    		if(!currPuzzle.isCompleted())
@@ -661,7 +663,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    			GlobalApplication.getAnalytics().sendPuzzleReplayedTiming(currPuzzle.getId(), par, time, moves);		
 		    		currPuzzle.completePuzzleListener(moves, true);
 		    		mBeeController.setMood(Mood.HAPPY);
+		    		
+		    		if(!beforeChCompleted &&  currPuzzle.getChapter().getCompleted()){
+		    			firstCompleted = true;
+		    		}
 		    		mModel.setState(GameState.GAME_MENU_END);
+		    		
 			}
 		    }
 		}
@@ -755,14 +762,24 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				public void event(int i ){
 					Log.d("Dialog","Clicked");
 					mDialog.deactivate();
-					if(currPuzzle.getNextPuzzle() != null) {
+					//If this is the first time you completed a chapter
+					if(firstCompleted == true) {
+						mModel.setModelToChapterEnd();
+					} 
+					//If there is a next puzzle and the chapter is not finished
+					else if(currPuzzle.getNextPuzzle() != null) {
 						Log.d("next puzzle", "Apparently, there is another puzzle!");
 						//TODO: Created a hack here to ensure we recreate the current chapter widget
 						mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
 						setState(GameState.GAME_OPENING);
-
-					} else {
+					} 
+					//If you are the last puzzle in a chapter and the chapter is now completed
+					else if(currPuzzle.getNextPuzzle() == null && currPuzzle.getChapter().getCompleted()) {
 						mModel.setModelToChapterEnd();
+					} 
+					//If you are the last puzzle in a chapter and the chapter is not completed.
+					else {
+						mModel.setModelToChapterSelect();
 					}
 				}
 

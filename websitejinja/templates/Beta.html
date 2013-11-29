@@ -59,6 +59,7 @@
 	document.getElementById('submission_confirmation').innerHTML = 'Thanks for your feedback! If you submitted any bugs, we will contact you soon.';      
 	
 	$.post("feedback", $("#feedback_form").serialize());
+	$("#feedback_form")[0].reset();
 	return false;
 	} );
       </script>
