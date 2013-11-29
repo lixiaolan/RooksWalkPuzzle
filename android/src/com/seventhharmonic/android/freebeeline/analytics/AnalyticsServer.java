@@ -19,6 +19,7 @@ public class AnalyticsServer {
 	
 	public AnalyticsServer(GlobalApplication a) {    
 		mGa = GoogleAnalytics.getInstance(a);
+		//hello world
 		//mGa.setDryRun(true);
 		//GoogleAnalytics.getInstance(a).getLogger().setLogLevel(LogLevel.VERBOSE);
 		//mGa.setAppOptOut(true);
