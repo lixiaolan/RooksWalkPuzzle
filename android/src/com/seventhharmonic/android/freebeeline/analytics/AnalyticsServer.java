@@ -22,7 +22,7 @@ public class AnalyticsServer {
 		//hello world
 		//mGa.setDryRun(true);
 		//GoogleAnalytics.getInstance(a).getLogger().setLogLevel(LogLevel.VERBOSE);
-		//mGa.setAppOptOut(true);
+		mGa.setAppOptOut(true);
 		mTracker = EasyTracker.getInstance(a);//mGa.getTracker(GA_PROPERTY_ID);
 		context = a.getContext();
 	}
