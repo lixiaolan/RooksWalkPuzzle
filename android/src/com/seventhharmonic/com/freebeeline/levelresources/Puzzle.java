@@ -56,6 +56,15 @@ public class Puzzle {
 		} else{
 			return prevPuzzle.isCompleted();
 		}
+		
+		//New logic. A puzzle is unlocked when the whole previous chapter is unlocked.
+	/*	if(prevPuzzle == null || ch.getPrevChapter() == null){
+			return true;
+		} else if(ch.getPrevChapter().getCompleted()){
+			return true;
+		} else{
+			return false;
+		}*/
 	}
 	
 	public void setText(String text) {
@@ -198,18 +207,6 @@ public class Puzzle {
 		}
 		return sol;
 	}
-
-/*	
-	public String getImage(){
-		if(completed)
-			return "check";
-		return image;
-	}
-	
-	public void setImage(String image){
-		this.image = image;
-	}
-*/	
 	
 	public void reset(){
 		hints = new ArrayList<Hint>();

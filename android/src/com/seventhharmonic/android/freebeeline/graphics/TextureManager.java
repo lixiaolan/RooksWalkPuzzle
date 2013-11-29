@@ -121,6 +121,7 @@ public class TextureManager {
 	public static final String SPEAKER_OFF = "speaker_off";
 	public static final String LOGO = "logo";
 	public static final String ABOUT = "about";
+	public static final String LOCK = "lock";
 	
 	
 	TextCreator tC = new TextCreator();
@@ -165,6 +166,9 @@ public class TextureManager {
 		
 		buildTextures(context, R.drawable.check2, CHECK);
 		buildTextures(context, R.drawable.logo, LOGO);
+		
+		buildTextures(context, R.drawable.lock, LOCK);
+
 		buildMenuBanners();
 		loadBitmapFromAssets();
 		buildSheet();
