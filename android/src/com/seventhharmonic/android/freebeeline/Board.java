@@ -392,6 +392,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			reset.setClickListener(new GameEventListener(){
 				public void event(int i){
 					resetBoard();
+					updateErrors();
 				}
 			});
 
