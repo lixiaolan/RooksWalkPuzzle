@@ -685,6 +685,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		
 
 		public void updateErrors(){
+		    mErrorLog.setLog();
 		    for(int i =0;i<tiles.length;i++){
 			String error = mErrorLog.getError(i); 
 			if(error.equals("")){
