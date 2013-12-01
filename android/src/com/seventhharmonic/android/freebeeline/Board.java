@@ -717,10 +717,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					mBoardLineManager.animatePlay(at); 
 				}
 				if(toggleError){
-					mErrorLog.setLog();
-					turnErrorRed(at);
-					mGameBanner.setText(mErrorLog.getError(at));
-					updateErrors();
+				    mErrorLog.setLog();
+				    turnErrorRed(at);
+				    mGameBanner.setText(mErrorLog.getError(at));
+				    updateErrors();
 				}
 				mMenu.menuActive = false;
 			}
