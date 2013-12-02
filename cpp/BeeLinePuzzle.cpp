@@ -159,14 +159,14 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = i - last.r;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlay(pos(i,last.c),last)) {
+	  if (goodPlaySud(pos(i,last.c),last)) {
 	    legalMovesList.push_back(pos(i,last.c));
 	  }
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlay(pos(i,last.c),last)) {
+	    if (goodPlaySud(pos(i,last.c),last)) {
 	      legalMovesList.push_back(pos(i,last.c));
 	    }
 	}
@@ -180,13 +180,13 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = last.r - i;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlay(pos(i,last.c),last))
+	  if (goodPlaySud(pos(i,last.c),last))
 	    legalMovesList.push_back(pos(i,last.c));
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlay(pos(i,last.c),last))
+	    if (goodPlaySud(pos(i,last.c),last))
 	      legalMovesList.push_back(pos(i,last.c));
 	}
 	else
@@ -200,13 +200,13 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = i - last.c;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlay(pos(last.r,i),last))
+	  if (goodPlaySud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
 	  break;
 	}
 	if (leftRight[last.r][i] == false) {
 	  if (upDown[last.r][i] == false)
-	    if (goodPlay(pos(last.r,i),last))
+	    if (goodPlaySud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -219,13 +219,13 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = last.c - i;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlay(pos(last.r,i),last))
+	  if (goodPlaySud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
 	  break;
 	}
 	if (leftRight[last.r][i]==false){
 	  if (upDown[last.r][i] == false)
-	    if (goodPlay(pos(last.r,i),last))
+	    if (goodPlaySud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -256,14 +256,14 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = i - last.r;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlayTestUnique(pos(i,last.c),last)) {
+	  if (goodPlayTestUniqueSud(pos(i,last.c),last)) {
 	    legalMovesList.push_back(pos(i,last.c));
 	  }
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlayTestUnique(pos(i,last.c),last)) {
+	    if (goodPlayTestUniqueSud(pos(i,last.c),last)) {
 	      legalMovesList.push_back(pos(i,last.c));
 	    }
 	}
@@ -277,13 +277,13 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = last.r - i;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlayTestUnique(pos(i,last.c),last))
+	  if (goodPlayTestUniqueSud(pos(i,last.c),last))
 	    legalMovesList.push_back(pos(i,last.c));
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlayTestUnique(pos(i,last.c),last))
+	    if (goodPlayTestUniqueSud(pos(i,last.c),last))
 	      legalMovesList.push_back(pos(i,last.c));
 	}
 	else
@@ -297,13 +297,13 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = i - last.c;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlayTestUnique(pos(last.r,i),last))
+	  if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
 	  break;
 	}
 	if (leftRight[last.r][i] == false) {
 	  if (upDown[last.r][i] == false)
-	    if (goodPlayTestUnique(pos(last.r,i),last))
+	    if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -316,13 +316,13 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = last.c - i;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlayTestUnique(pos(last.r,i),last))
+	  if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
 	  break;
 	}
 	if (leftRight[last.r][i]==false){
 	  if (upDown[last.r][i] == false)
-	    if (goodPlayTestUnique(pos(last.r,i),last))
+	    if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -378,6 +378,57 @@ bool BeeLinePuzzle::goodPlay(pos play, pos orig) {
   for (int i = play.c; i >= 0; i--) {
     if (i != play.c) {
       if (moveArea[play.r][i] == num && !vertical[play.r][i] && !leftUp[play.r][i]) {
+  	return false;
+      }
+    }
+  }
+  return true;
+}
+
+bool BeeLinePuzzle::goodPlaySud(pos play, pos orig) {
+  // If the suggest move is already occupied, return false
+  if (moveArea[play.r][play.c] != 0) return false;
+  
+  // Otherwise, check that the number placed is a proper
+  // distance from any matching number in the row or col.
+
+  pos diff = play - orig;
+  int num = abs(diff.r)+abs(diff.c);    
+
+
+  if (!goodDirSud( play, num, diff.c == 0 ,(diff.c+diff.r)>0)) {
+    return false;
+  }
+  if (moveArea[orig.r][orig.c] == num)
+    return false;
+
+  for (int i = play.r; i < height; i++) {
+    if (i != play.r) {
+      if (moveArea[i][play.c] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.r; i >= 0; i--) {
+    if (i != play.r) {
+      if (moveArea[i][play.c] == num) {
+	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i < width; i++) {
+    if (i != play.c) {
+      if (moveArea[play.r][i] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i >= 0; i--) {
+    if (i != play.c) {
+      if (moveArea[play.r][i] == num) {
   	return false;
       }
     }
@@ -449,12 +500,75 @@ bool BeeLinePuzzle::goodPlayTestUnique(pos play, pos orig) {
   return true;
 }
 
+bool BeeLinePuzzle::goodPlayTestUniqueSud(pos play, pos orig) {
+  // If the suggest move is already occupied, return false
+  if (gameBoard[play.r][play.c] != 0) return false;
+  
+  // Otherwise, check that the number placed is a proper
+  // distance from any matching number in the row or col.
+
+  pos diff = play - orig;
+  int num = abs(diff.r)+abs(diff.c);    
+  
+  bool vert = (diff.c == 0);
+  bool leup = ((diff.c+diff.r)>0);
+
+  for (int i = 0; i < hintsPos.size(); i++) {
+    if (hintsPos[i] == play) {
+      if (hintsNum[i] == num && hintsVertical[i] == vert && hintsLeftUp[i] == leup) {
+      }
+      else {
+	return false;
+      }
+    }
+  }
+  
+  if (!goodDirTestUniqueSud( play, num, vert, leup)) {
+    return false;
+  }
+  if (gameBoard[orig.r][orig.c] == num) {
+    return false;
+  }
+
+  for (int i = play.r; i < height; i++) {
+    if (i != play.r) {
+      if (gameBoard[i][play.c] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.r; i >= 0; i--) {
+    if (i != play.r) {
+      if (gameBoard[i][play.c] == num) {
+	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i < width; i++) {
+    if (i != play.c) {
+      if (gameBoard[play.r][i] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i >= 0; i--) {
+    if (i != play.c) {
+      if (gameBoard[play.r][i] == num) {
+  	return false;
+      }
+    }
+  }
+  return true;
+}
+
 bool BeeLinePuzzle::goodDir(pos in, int temp, bool v, bool ul) {
   if (positions.size() == 1)
     return true;
 
   //int temp = moveArea[in.r][in.c];
-
 
   if (v) {
     if (ul) {
@@ -488,6 +602,35 @@ bool BeeLinePuzzle::goodDir(pos in, int temp, bool v, bool ul) {
       }
     }
   }
+  return true;
+}
+
+bool BeeLinePuzzle::goodDirSud(pos in, int temp, bool v, bool ul) {
+  if (positions.size() == 1)
+    return true;
+
+  //int temp = moveArea[in.r][in.c];
+
+      for (int i = in.r; i >=0; i--) {
+  	if (i != in.r && moveArea[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.r; i < height; i++) {
+  	if (i != in.r && moveArea[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i >=0; i--) {
+  	if (i != in.c && moveArea[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i < width; i++) {
+  	if (i != in.c && moveArea[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
   return true;
 }
 
@@ -530,6 +673,33 @@ bool BeeLinePuzzle::goodDirTestUnique(pos in, int temp, bool v, bool ul) {
   return true;
 }
 
+bool BeeLinePuzzle::goodDirTestUniqueSud(pos in, int temp, bool v, bool ul) {
+  if (tPosVec.size() == 1)
+    return true;
+
+      for (int i = in.r; i >=0; i--) {
+  	if (i != in.r && gameBoard[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.r; i < height; i++) {
+  	if (i != in.r && gameBoard[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i >=0; i--) {
+  	if (i != in.c && gameBoard[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i < width; i++) {
+  	if (i != in.c && gameBoard[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
+  return true;
+}
+
 //The recrusive board maker.
 bool BeeLinePuzzle::makeBoard(int depth) {
   // If our puzzle has already reached the desired length, make sure
@@ -562,7 +732,7 @@ bool BeeLinePuzzle::makeBoard(int depth) {
   //Generate all legalMoves from current location
   // vector<pos> lm = legalMoves();
 
-  vector<pos> lm = legalMoves();
+  vector<pos> lm = legalMovesSud();
   //vector<pos> lm = legalMovesNoPassOver();
   //cout << lm.size() << endl;
 
@@ -645,7 +815,7 @@ void BeeLinePuzzle::countAllSolutions() {
     }
   }
     
-  vector<pos> lm = legalMovesTestUnique();
+  vector<pos> lm = legalMovesTestUniqueSud();
   // If there are none, return
   if (lm.size() == 0) return;   
   // Loop though all possible legal moves
@@ -685,7 +855,7 @@ bool BeeLinePuzzle::isUnique() {
     }
   }
     
-  vector<pos> lm = legalMovesTestUnique();
+  vector<pos> lm = legalMovesTestUniqueSud();
   // If there are none, return
   if (lm.size() == 0) return true;   
   // Loop though all possible legal moves
@@ -1181,9 +1351,6 @@ string BeeLinePuzzle::getPathXML() {
   }
   return oss.str();
 }
-
-
-
 
 // Overloaded ofstream &<< to print the game board in a standard format
 // which can be ready by any other program.
