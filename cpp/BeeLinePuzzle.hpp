@@ -55,13 +55,22 @@ private:
   
   vector<pos> legalMoves();
   vector<pos> legalMovesTestUnique();
+
+
   bool goodDir(pos, int, bool, bool);
   bool goodDirTestUnique(pos, int, bool, bool);
+  bool goodDirSud(pos, int, bool, bool);
+  bool goodDirTestUniqueSud(pos, int, bool, bool);
+
   bool makeBoard(int);
   void countAllSolutions();
   bool isUnique();
   bool goodPlay(pos, pos);
   bool goodPlayTestUnique(pos, pos);
+  bool goodPlaySud(pos, pos);
+  bool goodPlayTestUniqueSud(pos, pos);
+
+
   void markUnused();
   void clearBoolMats();
   void addHint(int r, int c);

@@ -732,7 +732,7 @@ bool BeeLinePuzzle::makeBoard(int depth) {
   //Generate all legalMoves from current location
   // vector<pos> lm = legalMoves();
 
-  vector<pos> lm = legalMovesSud();
+  vector<pos> lm = legalMoves();
   //vector<pos> lm = legalMovesNoPassOver();
   //cout << lm.size() << endl;
 
@@ -815,7 +815,7 @@ void BeeLinePuzzle::countAllSolutions() {
     }
   }
     
-  vector<pos> lm = legalMovesTestUniqueSud();
+  vector<pos> lm = legalMovesTestUnique();
   // If there are none, return
   if (lm.size() == 0) return;   
   // Loop though all possible legal moves
@@ -855,7 +855,7 @@ bool BeeLinePuzzle::isUnique() {
     }
   }
     
-  vector<pos> lm = legalMovesTestUniqueSud();
+  vector<pos> lm = legalMovesTestUnique();
   // If there are none, return
   if (lm.size() == 0) return true;   
   // Loop though all possible legal moves
