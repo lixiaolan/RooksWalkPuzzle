@@ -11,8 +11,10 @@ public class ErrorBundle {
     public boolean pointsOffBoard;
     public boolean pointsAtMultiPointedTo; //
     public boolean multiPointedTo;
-
+    public boolean sudokuRule;
+    
     public boolean hasError() {
-	return ( pointsPast || pointedPast || pointsAtSame || pointedAtBySame || pointsAtBadDir || pointedAtByBadDir || pointsOffBoard || pointsAtMultiPointedTo || multiPointedTo );
+    	return ( pointsPast || pointedPast || sudokuRule || pointsAtBadDir || pointedAtByBadDir || pointsOffBoard || pointsAtMultiPointedTo || multiPointedTo );
+    	//return ( pointsPast || pointedPast || pointsAtSame || pointedAtBySame || pointsAtBadDir || pointedAtByBadDir || pointsOffBoard || pointsAtMultiPointedTo || multiPointedTo );
     }
 }
