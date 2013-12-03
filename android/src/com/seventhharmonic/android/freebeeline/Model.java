@@ -266,17 +266,27 @@ class Model {
     }*/
     
    
-    
+    //Broken on Game_Menu_End - this might be okay.
     public void onBack(){
 	switch(state.state){
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-	case GAME_OPENING:
-	    mMenuManager.callCallback(0);
+	case ABOUT:
+		mMenuManager.callCallback(0);
 	    break;
 	case MAIN_MENU_OPENING:
 	    ((Activity)context).finish();
+	    break;
+	case TUTORIAL_MAIN_MENU:
+	case TUTORIAL:
+	    mMenuManager.callCallback(1);
+	    break;
+	case GAME_OPENING:
+	    mMenuManager.callCallback(0);
+	    break;
+	case FLOWER_MENU:
+	    mMenuManager.callCallback(1);
 	    break;
 	default:
 	    break;

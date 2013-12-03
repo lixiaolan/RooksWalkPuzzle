@@ -10,7 +10,16 @@ public class LevelPack {
 	List<Chapter> chapters = new ArrayList<Chapter>();
 	String title;
 	String id;
+	String banner;
 	
+	protected String getBanner() {
+		return banner;
+	}
+
+	protected void setBanner(String banner) {
+		this.banner = banner;
+	}
+
 	public LevelPack(String name){
 		this.title = name;
 	}
@@ -74,6 +83,6 @@ public class LevelPack {
 	}
 	
 	public String getCurrTitleImage() {
-		return "levelPack1Banner";
+		return getBanner();
 	}	
 }

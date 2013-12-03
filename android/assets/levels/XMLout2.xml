@@ -1,4 +1,4 @@
-<levelpack title="Beatrice the bee" bookStyle="default">
+<levelpack title="StoryPackOne" bookStyle="default">
 	<chapter title="The Natural Log" end_text=" Congratulations!^ You helped Beatrice visit all the flowers on the log!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter1"/>

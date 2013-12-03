@@ -420,7 +420,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			updateMoves();
 			mMoves.setJ(TextJustification.CENTER);
 			
-			mPar = new TextBox(0,0,.22f, "par:^ "+Integer.toString(par));
+			mPar = new TextBox(0,0,.22f, "goal:^ "+Integer.toString(par));
 			mPar.setJ(TextJustification.CENTER);
 			
 			beeBox = new ButtonWidget(-.7f, 1.0f, .11f, .11f, TextureManager.CLEAR);
@@ -544,10 +544,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mGameBanner.draw(r);
 			super.draw(tiles, r);
 			mBee.draw(r);
+			buttonGrid.draw(r);
 			mMenu.draw(r);
 			mHintDialog.draw(r);
-			buttonGrid.draw(r);
-			mMoves.draw(r);
+			
 		}	
 
 		@Override

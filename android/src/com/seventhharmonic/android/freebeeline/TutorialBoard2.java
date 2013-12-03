@@ -396,9 +396,11 @@ class TutorialBoard2 extends Board {
 				tiles[10].setArrow("left_arrow");
 				tiles[10].setTextures();
 				tiles[10].setColor("red");
+				tiles[7].setColor("red");
 
 			} else if(time < 4){
 				tiles[10].setColor("transparent");
+				tiles[7].setColor("transparent");
 				tiles[10].setNumber("3");
 				tiles[10].setArrow("left_arrow");
 				tiles[10].setTextures();

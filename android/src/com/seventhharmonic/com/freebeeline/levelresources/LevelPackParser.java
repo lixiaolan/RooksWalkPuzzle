@@ -40,6 +40,11 @@ public class LevelPackParser extends BaseParser {
     	Element hizzle = puzzle.getChild(HINT);
     	Element afterImage = chapter.getChild(AFTERIMAGE);
     	
+    	root.setStartElementListener(new StartElementListener(){
+    		public void start(Attributes a){
+    			lp.setBanner(a.getValue("banner"));
+    		}
+    	});
     	
     	root.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
