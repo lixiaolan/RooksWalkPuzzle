@@ -32,9 +32,9 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), widt
 
     cout << "try..." << endl;
     getHints(hintNum);//select the hints to be used;
-    test = checkUnique();
-
-    
+    if (checkUnique())
+      break;
+  
   }
   if (uniqueCounter == 1) {
     cout << "win!" << endl;
