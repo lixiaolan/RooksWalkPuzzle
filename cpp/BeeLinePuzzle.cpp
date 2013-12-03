@@ -1248,7 +1248,7 @@ int BeeLinePuzzle::getLength() {
   return length-1;
 }
 
-void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower ,int *puzzleIndex) {
+void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower , map<int, string> textMap,int *puzzleIndex) {
   
   xml_node<> *puzzle;
   xml_node<> *node;
@@ -1256,7 +1256,15 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string be
   xml_attribute<> *attr;
   char *name;
   int myInt;
-  string str("");
+  string str;
+  
+  map<int, string>::iterator it = textMap.find(*puzzleIndex);
+  if (it != textMap.end()) {
+    str = it->second;
+  }
+  else {
+    str = "";
+  } 
   
   puzzle = doc->allocate_node(node_element, "puzzle");
   chapter->append_node(puzzle);

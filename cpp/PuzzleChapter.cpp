@@ -82,7 +82,7 @@ void PuzzleChapter::plotToFile(ofstream &ofs) {
   return;
 }
 
-void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string endText, string beforeImage, vector<string> afterImage,string beforeFlower, string afterFlower, int *puzzleIndex) {
+void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string endText, string beforeImage, vector<string> afterImage,string beforeFlower, string afterFlower,map<int, string> textMap,int *puzzleIndex) {
   xml_node<> *chapter;
   xml_node<> *afterIm;
   xml_node<> *node;
@@ -134,7 +134,7 @@ void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, string 
 
     
   for (BeeLinePuzzle puz : puzzles) {
-    puz.buildXML(doc, chapter, beforeFlower, afterFlower ,puzzleIndex);
+    puz.buildXML(doc, chapter, beforeFlower, afterFlower ,textMap ,puzzleIndex);
   }
 }
 
@@ -145,13 +145,13 @@ ofstream &operator<<(ofstream &ofs, PuzzleChapter &PP) {
   return ofs;
 }
 
-ifstream &operator>>(ifstream &ifs, PuzzleChapter &PP) {
-  PP.puzzles.clear();
+ifstream &operator>>(ifstream &ifs, PuzzleChapter &PC) {
+  PC.puzzles.clear();
 
   while (true) {
     BeeLinePuzzle BLP;
     if (ifs >> BLP) {
-      PP.puzzles.push_back(BLP);
+      PC.puzzles.push_back(BLP);
     }
     else {
       break;

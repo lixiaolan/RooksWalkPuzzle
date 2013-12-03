@@ -6,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-
+#include <map>
 class PuzzleBook {
 public:
   friend ofstream &operator<<(ofstream&, PuzzleBook&);
@@ -14,9 +14,13 @@ public:
   void add(PuzzleChapter);
   void printXML(ofstream&);
   PuzzleBook(vector<string>,string, string, vector<string>, vector<string>, vector<string>, vector< vector <string> >, vector<string>, vector<string>, int);
+  
+  PuzzleBook(vector<string>,string, string, vector<string>, vector<string>, vector<string>, vector< vector <string> >, vector<string>, vector<string>,map<int, string>, int);
+
 private:
   int *puzzleIndex;
   int pi;
+  map<int, string> textMap;
   string bookTitle;
   string bookStyle;
   vector<PuzzleChapter> chapters;

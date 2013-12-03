@@ -18,7 +18,7 @@
 #include <ctime>
 #include <cstdlib> 
 #include <string>
-
+#include <map>
 
 using namespace rapidxml;
 using namespace std;
@@ -93,7 +93,7 @@ public:
   int uniqueCounter;
   void plotToFile(ofstream &ofs);
   int getLength();
-  void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, int*);
+  void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, map<int, string> textMap,int*);
   string getHintDir(int i);
   string getBoardXML();
   string getPathXML();
