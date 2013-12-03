@@ -19,8 +19,10 @@ public class AnalyticsServer {
 	
 	public AnalyticsServer(GlobalApplication a) {    
 		mGa = GoogleAnalytics.getInstance(a);
+		//hello world 2
 		//mGa.setDryRun(true);
 		//GoogleAnalytics.getInstance(a).getLogger().setLogLevel(LogLevel.VERBOSE);
+		mGa.setAppOptOut(true);
 		mTracker = EasyTracker.getInstance(a);//mGa.getTracker(GA_PROPERTY_ID);
 		context = a.getContext();
 	}

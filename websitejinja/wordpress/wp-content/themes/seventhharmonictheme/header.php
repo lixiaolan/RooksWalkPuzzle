@@ -25,3 +25,5 @@ if ( $paged >= 2 || $page >= 2 )
     wp_head();
 ?>
 </head>
+<body>
+<?php get_template_part('my_header'); ?>

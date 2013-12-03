@@ -71,13 +71,19 @@ public class ChapterWidget extends GraphicWidget {
 			mFlower.setColor("white");
 			
 			overlay.setBorder(true);
+			//Set the pulsing flower
 			if(!foundCompleted && ch.getPuzzle(i).isUnlocked() && !ch.getPuzzle(i).isCompleted()){
 				mFlower.setPulse(true);
 				foundCompleted = true;
-			}
-			if(!ch.getPuzzle(i).isUnlocked()){
+			} else if (ch.getPuzzle(i).isUnlocked() && !ch.getPuzzle(i).isCompleted()){
 				overlay.setColor("opaque");
+			}
+			//If the puzzle is not unlocked, it should be a lock.
+			if(!ch.getPuzzle(i).isUnlocked()){
+				overlay.setImage(TextureManager.LOCK);
 			} 
+			
+			
 			mGrid.addWidget(mFlower);
 			mGrid2.addWidget(overlay);
 		}

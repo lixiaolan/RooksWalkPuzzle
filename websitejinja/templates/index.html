@@ -36,6 +36,7 @@
   xmlhttp.open("POST", "/email", true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xmlhttp.send("email_input=" + encodeURI(document.getElementById('email_input').value));
+  $("#email_form")[0].reset();
   return false;
   });
 </script>
