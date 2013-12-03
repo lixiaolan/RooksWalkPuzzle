@@ -100,7 +100,8 @@ public class TextureManager {
 	public static final String MULTIPOINTRULE = "Uh Oh, multiple numbers are pointing towards the same square";
 	public static final String HINTPROMPT = "You are out of hints! Select the amount you would like to purchase below.";
     public static final String PLEASEFIXERROR = "Please correct the red squares before continuing!";
-	
+    public static final String SUDOKURULE = "You can't have the same number in the same row or column.";
+
 	public static final String VERSION = "beta-1.1";
 	public static final String BOX = "box";
 	public static final String ERASER = "eraser";
