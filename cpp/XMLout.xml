@@ -291,6 +291,9 @@
 			<hint>
 				<index>13</index>
 			</hint>
+			<hint>
+				<index>16</index>
+			</hint>
 		</puzzle>
 		<puzzle id="16" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
@@ -299,6 +302,9 @@
 			<path>3,0,3,3,2,3,0,3,0,4,4,4,4,2,4,1,1,1,1,0,3,0</path>
 			<hint>
 				<index>5</index>
+			</hint>
+			<hint>
+				<index>24</index>
 			</hint>
 		</puzzle>
 		<puzzle id="17" text="" before_flower="flower2" after_flower="flower2color">
