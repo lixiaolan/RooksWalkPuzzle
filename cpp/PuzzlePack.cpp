@@ -105,13 +105,13 @@ int main(int argc, char *argv[]){
   else if (str == "printXML") {
 
     vector<string> files;
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterOne.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterTwo.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterThree.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterFour.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterFive.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterSix.txt");
-    files.push_back("PuzzleBooks/BookOne/BookOneChapterSeven.txt");
+    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterOne.txt");
+    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterTwo.txt");
+    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterThree.txt");
+    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterFour.txt");
+    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterFive.txt");
+    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterSix.txt");
+    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterSeven.txt");
 
     string bookTitle = "Beatrice the bee";
 
