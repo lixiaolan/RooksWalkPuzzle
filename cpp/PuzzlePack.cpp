@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <map>
+
 
 int main(int argc, char *argv[]){
 
@@ -102,25 +104,111 @@ int main(int argc, char *argv[]){
     PP.printSoln();
   }
 
-  else if (str == "printXML") {
+
+  else if (str == "printStoryPackOne") {
+    
+    vector<string> files;
+    files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterOne.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterTwo.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterThree.txt");
+
+    string bookTitle = "storyPack1Banner";
+
+    string bookStyle = "default";
+    
+    vector<string> chapterTitles;
+    chapterTitles.push_back("Beatrice Buzzes");
+    chapterTitles.push_back("The flowers in the garden");
+    chapterTitles.push_back("Raise up to greet her");
+
+    vector<string> chapterEndText;
+    chapterEndText.push_back("Congratulations!^ You completed your very first chapter!");
+    chapterEndText.push_back("Congratulations!^ Wow, that was fast! Let's try the last chapter...");
+    chapterEndText.push_back("Congratulations!^ Beatrice is so happy! Help her collect flowers in level pack two!");
+    
+    vector<string> beforeImages;
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
+    beforeImages.push_back("questionmark");
+
+    vector<string> temp;
+    vector< vector<string> > afterImages;    
+    temp.clear();
+    temp.push_back("book1chapter1");
+    temp.push_back("book1chapter1_1");
+    temp.push_back("book1chapter1_2");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter2");
+    temp.push_back("book1chapter2_1");
+    temp.push_back("book1chapter2_2");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("book1chapter7");
+    temp.push_back("book1chapter7_1");
+    temp.push_back("book1chapter7_2");
+    temp.push_back("book1chapter8");
+    temp.push_back("book1chapter8_1");
+    temp.push_back("book1chapter8_2");
+    temp.push_back("book1chapter9");
+    temp.push_back("book1chapter9_1");
+    temp.push_back("book1chapter9_2");
+    temp.push_back("book1chapter9_3");
+    afterImages.push_back(temp);    
+
+    vector<string> beforeFlower;
+    beforeFlower.push_back("flower1");
+    beforeFlower.push_back("flower2");
+    beforeFlower.push_back("flower3");
+
+
+    vector<string> afterFlower;
+    afterFlower.push_back("flower1color");
+    afterFlower.push_back("flower2color");
+    afterFlower.push_back("flower3color");
+
+    int startIndex = 0;
+
+    map<int, string> textMap;
+    textMap[0] = " Close the path. Touch the square with the circle to enter a 3 and then swipe right.";
+    textMap[1] = " Nice work. The yellow squares are part of a path we are giving you.";
+    textMap[2] = " TIP: Beatrice loves you. If you touch her, she'll give you a hint. Touch the questionmark to see the rules.";
+    textMap[3] = " This puzzle is harder then it looks. Remember Beatrice's rule!";
+    textMap[4] = " Not all paths have to be rectangles!";
+    textMap[5] = " Some paths have to cross themselves.";
+    textMap[6] = " Keep it up!";
+    textMap[7] = " This puzzle is easier then it looks! You are almost done!";
+    textMap[8] = " Looks like you got the hang of things. Touch Beatrice if you need help.";
+
+    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, chapterEndText, beforeImages, afterImages, beforeFlower, afterFlower,textMap, startIndex);
+    
+    ofs.open("StoryPackOne.xml");
+    PB.printXML(ofs);
+    ofs.close();
+
+  }
+
+  else if (str == "printStoryPackTwo") {
 
     vector<string> files;
-    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterOne.txt");
-    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterTwo.txt");
-    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterThree.txt");
-    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterFour.txt");
-    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterFive.txt");
-    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterSix.txt");
-    files.push_back("BeeDokuPuzzleBooks/BookOne/BookOneChapterSeven.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackTwo/StoryPackTwoChapterOne.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackTwo/StoryPackTwoChapterTwo.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackTwo/StoryPackTwoChapterThree.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackTwo/StoryPackTwoChapterFour.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackTwo/StoryPackTwoChapterFive.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackTwo/StoryPackTwoChapterSix.txt");
+    files.push_back("BeeDokuPuzzleBooks/StoryPackTwo/StoryPackTwoChapterSeven.txt");
 
-    string bookTitle = "Beatrice the bee";
+    string bookTitle = "storyPack2Banner";
 
     string bookStyle = "default";
     
     vector<string> chapterTitles;
     chapterTitles.push_back("The Natural Log");
     chapterTitles.push_back("The Babbling Brook");
-    chapterTitles.push_back("The Bradford Pear Tree");
+    chapterTitles.push_back("The Cherry Tree");
     chapterTitles.push_back("Cats And Lilies");
     chapterTitles.push_back("Over The Hills");
     chapterTitles.push_back("Tigers In The Grass");
@@ -216,14 +304,15 @@ int main(int argc, char *argv[]){
     afterFlower.push_back("flower6color");
     afterFlower.push_back("flower7color");
 
-    int startIndex = 0;
+    int startIndex = 100;
 
     PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, chapterEndText, beforeImages, afterImages, beforeFlower, afterFlower, startIndex);
     
-    ofs.open("XMLOut.xml");
+    ofs.open("StoryPackTwo.xml");
     PB.printXML(ofs);
     ofs.close();
   }
+
 
   else {
     cout << "command not recognized!!!" << endl;

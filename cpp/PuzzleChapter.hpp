@@ -7,7 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-
+#include <map>
 class PuzzleChapter {
 public:
   friend ofstream &operator<<(ofstream&, PuzzleChapter&);
@@ -25,7 +25,7 @@ public:
 
   void plotToFile(ofstream &ofs);
   void printSoln();
-  void buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string endText, string beforeImage, vector<string> afterImage, string beforeFlower, string afterFlower, int*);
+  void buildXML(xml_document<> *doc, xml_node<> *levelpack, string title, string endText, string beforeImage, vector<string> afterImage, string beforeFlower, string afterFlower,map<int, string> textMap, int*);
 private:
   vector<BeeLinePuzzle> puzzles;
 };
