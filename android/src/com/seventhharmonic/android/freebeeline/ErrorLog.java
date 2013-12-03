@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import android.util.Log;
+
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class ErrorLog {
@@ -84,22 +86,23 @@ public class ErrorLog {
 			if(mBoard.tiles[i].hasNumber()){
 				int height = mBoard.boardHeight;
 				int width = mBoard.boardWidth;
-				int col = i%mBoard.boardWidth;
-				int row = i%mBoard.boardHeight;
 				//Assuming height is same as width
 				for(int k = 0; k< mBoard.boardHeight;k++){
 					//row check
-					if(mBoard.tiles[i%height+height*k].getNumber().equals(mBoard.tiles[i].getNumber()) && i%height+height*k!=i){
+					if(mBoard.tiles[i%height+height*k].getNumber().equals(mBoard.tiles[i].getNumber()) && (i%height+height*k)!=i){
 						errorMap.get(i).sudokuRule = true;
+						Log.d("ErrorLog", "row error "+Integer.toString(i));
 						break;
 					}
 					//column check
-					if(mBoard.tiles[i/width+k].getNumber().equals(mBoard.tiles[i].getNumber()) && i/width + k!=i){
+					if(mBoard.tiles[i/width*width+k].getNumber().equals(mBoard.tiles[i].getNumber()) && (i/width*width + k)!=i){
 						errorMap.get(i).sudokuRule = true;
+						Log.d("ErrorLog", "column error "+Integer.toString(i));
 						break;
 					}
 				}
 			}
+			
 			if (mBoard.tiles[i].hasNumber() && mBoard.tiles[i].hasArrow()) {
 				num = Integer.parseInt(mBoard.tiles[i].number);	
 				if (mBoard.tiles[i].getArrow().equals(TextureManager.UPARROW)) {
