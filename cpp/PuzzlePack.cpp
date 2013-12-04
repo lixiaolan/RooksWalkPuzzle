@@ -203,7 +203,7 @@ int main(int argc, char *argv[]){
 
     string bookTitle = "storyPack2Banner";
 
-    string bookStyle = "default";
+    string bookStyle = "lp2";
     
     vector<string> chapterTitles;
     chapterTitles.push_back("The Natural Log");
