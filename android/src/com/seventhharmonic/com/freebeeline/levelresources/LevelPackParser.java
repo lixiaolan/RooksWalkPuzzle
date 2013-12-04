@@ -42,17 +42,18 @@ public class LevelPackParser extends BaseParser {
     	
     	root.setStartElementListener(new StartElementListener(){
     		public void start(Attributes a){
-    			lp.setBanner(a.getValue("banner"));
+    			lp.setTitle(a.getValue("title"));
     		}
     	});
     	
+    	/*
     	root.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
 		    lp.setTitle(body);
     		}
     		
 	    });
-    	
+    	*/
     	root.getChild(CHAPTER).setStartElementListener(new StartElementListener(){
     		public void start(Attributes a) {
 		    ch.reset();

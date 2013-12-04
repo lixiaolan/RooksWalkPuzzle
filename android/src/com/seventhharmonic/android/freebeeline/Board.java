@@ -575,22 +575,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		    	}
 		    }
 			
-			if(mHints.isTouched(pt)){
-			if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
-			    showHint();
-			    setHintsText();
-			    mErrorLog.setLog();
-			    turnErrorRed(0);
-			} else {
-				mHintDialog.activate();
-			}	
-		    }	
-		    beeBox.touchHandler(pt);
-		    
-		    if(mHintDialog.isActive()){
-			mHintDialog.touchHandler(pt);
-			return;
-		    }
 		    
 		    //onto the main logic of the game
 		    val = mMenu.touched(pt);
@@ -645,6 +629,24 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			    }
 			}
 		    }
+
+			if(mHints.isTouched(pt)){
+			if (GlobalApplication.getHintDB().useHint() || mStore.hasUnlimitedHints()) {
+			    showHint();
+			    setHintsText();
+			    mErrorLog.setLog();
+			    turnErrorRed(0);
+			} else {
+				mHintDialog.activate();
+			}	
+		    }	
+		    beeBox.touchHandler(pt);
+		    
+		    if(mHintDialog.isActive()){
+			mHintDialog.touchHandler(pt);
+			return;
+		    }
+
 		    checkIfPuzzleSolved();
 		}
 

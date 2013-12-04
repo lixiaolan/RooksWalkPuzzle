@@ -12,17 +12,6 @@ public class LevelPack {
 	String id;
 	String banner;
 	
-	protected String getBanner() {
-		return banner;
-	}
-
-	protected void setBanner(String banner) {
-		this.banner = banner;
-	}
-
-	public LevelPack(String name){
-		this.title = name;
-	}
 	
 	public LevelPack(){
 	}
@@ -83,6 +72,6 @@ public class LevelPack {
 	}
 	
 	public String getCurrTitleImage() {
-		return getBanner();
+		return getTitle();
 	}	
 }

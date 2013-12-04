@@ -141,7 +141,8 @@ public class ViewActivity extends Activity {
 	
 	//TODO: Loading puzzles with their completion value. This sucks balls. Do this elsewhere.
 	LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
-	LevelPack mLP = mLPP.getLevelPack(0);
+	for(int i =0;i<mLPP.getNumberOfLevelPacks();i++){
+	LevelPack mLP = mLPP.getLevelPack(i);
 	//	Log.d(TAG, mLP.getTitle());
 	//	Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
 	SQLPuzzle q;
@@ -155,7 +156,7 @@ public class ViewActivity extends Activity {
 		p.setMoves((int)q.getMovesUsed());
 	    }
 	}
-	 
+	}
 		EasyTracker.getInstance(this).activityStart(this);
     }	
     
