@@ -220,7 +220,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     class LevelPackDisplay extends StateWidget {
 	ScreenSlideWidgetLayout m;
 	public LevelPackDisplay(){
-	    m = new ScreenSlideWidgetLayout(2.0f);
+	    m = new ScreenSlideWidgetLayout(1.75f);
 	    m.setDrawProgressBar(true);
 	    for(int i =0;i<LPP.getNumberOfLevelPacks();i++){
 	    	m.addWidget(new LevelPackWidget(TextureManager.CLEAR, LPP.getLevelPack(i).getCurrTitleImage()));

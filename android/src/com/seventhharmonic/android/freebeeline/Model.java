@@ -36,7 +36,7 @@ class Model {
     public FlowerMenu mFlowerMenu;
     private boolean initializeToggle = false;
     
-    TextBox mVersionBanner;
+    //TextBox mVersionBanner;
     Store mStore;
     //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
     
@@ -59,8 +59,8 @@ class Model {
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
 	mTitle = new ImageWidget(.5f,.8f,.5f,.5f,"title");
-	mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
-	mVersionBanner.setCenter(0.0f, 0.0f);
+	//mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
+	//mVersionBanner.setCenter(0.0f, 0.0f);
 	//	muteButton = new ImageWidget(-.05f,GlobalApplication.getGeometry().getGeometry()[1],.1f, .1f, "title");
 	muteButton = new TextToggleButtonWidget(10.0f,.1f,.1f, .1f, TextureManager.SPEAKER_ON, TextureManager.SPEAKER_OFF);
 	muteButton.setBorder(false);
@@ -94,7 +94,7 @@ class Model {
     }
     
     public void toggleRules(boolean toggle) {
-	mBoard.toggleRules(toggle);
+    	mBoard.toggleRules(toggle);
     }
     
     public void touched(float[] pt) {
@@ -180,7 +180,6 @@ class Model {
 	case MAIN_MENU_GEAR:
 	    mFlowerMenu.draw(r);
 	    mTitle.draw(r);
-	    mVersionBanner.draw(r);
 	    mMenuManager.draw(r);
 	    break;
 	case FLOWER_MENU:	

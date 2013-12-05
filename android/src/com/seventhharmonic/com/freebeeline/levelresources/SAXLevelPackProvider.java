@@ -24,7 +24,8 @@ public class SAXLevelPackProvider implements LevelPackProvider{
 	public void initialize() {
 	    Context context = GlobalApplication.getContext();
 	    try{
-		String[] levelPackList = context.getAssets().list(BASE);
+	    levelPacks.clear();
+	    String[] levelPackList = context.getAssets().list(BASE);
 		for(String s: levelPackList){
 		    levelPacks.add(mLevelPackParser.parse(BASE+"/"+s));	    
 		}
