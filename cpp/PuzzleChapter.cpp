@@ -2,9 +2,9 @@
 
 void PuzzleChapter::add(int h, int w, int l, int hints) {
   BeeLinePuzzle BLP;
-  do {
+  //do {
   BLP = BeeLinePuzzle(h, w, l, hints);
-  } while (BLP.uniqueCounter > 1);
+  //} while (BLP.uniqueCounter > 1);
   puzzles.push_back(BLP);
   return;
 }

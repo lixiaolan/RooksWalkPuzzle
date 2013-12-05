@@ -114,6 +114,8 @@ int main(int argc, char *argv[]){
 
     string bookTitle = "storyPack1Banner";
 
+    string kickBack = "1";
+
     string bookStyle = "default";
     
     vector<string> chapterTitles;
@@ -203,7 +205,9 @@ int main(int argc, char *argv[]){
 
     string bookTitle = "storyPack2Banner";
 
-    string bookStyle = "default";
+    string kickBack = "1";
+
+    string bookStyle = "lp2";
     
     vector<string> chapterTitles;
     chapterTitles.push_back("The Natural Log");
@@ -309,6 +313,110 @@ int main(int argc, char *argv[]){
     PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, chapterEndText, beforeImages, afterImages, beforeFlower, afterFlower, startIndex);
     
     ofs.open("StoryPackTwo.xml");
+    PB.printXML(ofs);
+    ofs.close();
+  }
+
+  else if (str == "printChallengePackOne") {
+
+    vector<string> files;
+    files.push_back("BeeDokuPuzzleBooks/ChallengePackOne/ChallengePackOneChapterOne.txt");
+    files.push_back("BeeDokuPuzzleBooks/ChallengePackOne/ChallengePackOneChapterTwo.txt");
+    files.push_back("BeeDokuPuzzleBooks/ChallengePackOne/ChallengePackOneChapterThree.txt");
+    files.push_back("BeeDokuPuzzleBooks/ChallengePackOne/ChallengePackOneChapterFour.txt");
+    files.push_back("BeeDokuPuzzleBooks/ChallengePackOne/ChallengePackOneChapterFive.txt");
+    files.push_back("BeeDokuPuzzleBooks/ChallengePackOne/ChallengePackOneChapterSix.txt");
+    files.push_back("BeeDokuPuzzleBooks/ChallengePackOne/ChallengePackOneChapterSeven.txt");
+
+    string bookTitle = "challengePack1Banner";
+    
+    string kickBack = "0";
+    
+    string bookStyle = "lp2";
+    
+    vector<string> chapterTitles;
+    chapterTitles.push_back("One");
+    chapterTitles.push_back("Two");
+    chapterTitles.push_back("Three");
+    chapterTitles.push_back("Four");
+    chapterTitles.push_back("Five");
+    chapterTitles.push_back("Six");
+    chapterTitles.push_back("Seven");
+
+    vector<string> chapterEndText;
+    chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    
+    vector<string> beforeImages;
+    beforeImages.push_back("challengePackOne");
+    beforeImages.push_back("challengePackOne");
+    beforeImages.push_back("challengePackOne");
+    beforeImages.push_back("challengePackOne");
+    beforeImages.push_back("challengePackOne");
+    beforeImages.push_back("challengePackOne");
+    beforeImages.push_back("challengePackOne");
+
+    vector<string> temp;
+    vector< vector<string> > afterImages;    
+    temp.clear();
+    temp.push_back("challengePackOne");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("challengePackOne");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("challengePackOne");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("challengePackOne");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("challengePackOne");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("challengePackOne");
+    afterImages.push_back(temp);
+    
+    temp.clear();
+    temp.push_back("challengePackOne");
+
+    afterImages.push_back(temp);
+    
+
+    vector<string> beforeFlower;
+    beforeFlower.push_back("flower1");
+    beforeFlower.push_back("flower2");
+    beforeFlower.push_back("flower3");
+    beforeFlower.push_back("flower4");
+    beforeFlower.push_back("flower5");
+    beforeFlower.push_back("flower6");
+    beforeFlower.push_back("flower7");
+
+
+    vector<string> afterFlower;
+    afterFlower.push_back("flower1color");
+    afterFlower.push_back("flower2color");
+    afterFlower.push_back("flower3color");
+    afterFlower.push_back("flower4color");
+    afterFlower.push_back("flower5color");
+    afterFlower.push_back("flower6color");
+    afterFlower.push_back("flower7color");
+
+    int startIndex = 200;
+
+    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, chapterEndText, beforeImages, afterImages, beforeFlower, afterFlower, startIndex);
+    
+    ofs.open("ChallengePackOne.xml");
     PB.printXML(ofs);
     ofs.close();
   }

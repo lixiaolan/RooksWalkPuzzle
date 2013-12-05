@@ -88,6 +88,8 @@ public:
   BeeLinePuzzle();
   void print();
   void printSoln();
+  void printGameBoard();
+
   string printUnique();
   void printPuzzle();
   int uniqueCounter;

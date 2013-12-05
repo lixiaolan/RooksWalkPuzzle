@@ -28,7 +28,7 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), widt
   makeBoard(l);
   markUnused();
   bool test;
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 40; i++) {
 
     cout << "try..." << endl;
     getHints(hintNum);//select the hints to be used;
@@ -261,6 +261,11 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
 	  }
 	  break;
 	}
+	//This makes sure that the path does not go though black squares
+	//already designated in the puzzle:
+	if (moveArea[i][last.c] == -1) {
+	  break;
+	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
 	    if (goodPlayTestUniqueSud(pos(i,last.c),last)) {
@@ -279,6 +284,9 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
 	if (pos(i,last.c) == im) {
 	  if (goodPlayTestUniqueSud(pos(i,last.c),last))
 	    legalMovesList.push_back(pos(i,last.c));
+	  break;
+	}
+	if (moveArea[i][last.c] == -1) {
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
@@ -301,6 +309,9 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
 	    legalMovesList.push_back(pos(last.r,i));
 	  break;
 	}
+	if (moveArea[last.r][i] == -1) {
+	  break;
+	}
 	if (leftRight[last.r][i] == false) {
 	  if (upDown[last.r][i] == false)
 	    if (goodPlayTestUniqueSud(pos(last.r,i),last))
@@ -318,6 +329,9 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
 	if (pos(last.r,i) == im) {
 	  if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (moveArea[last.r][i] == -1) {
 	  break;
 	}
 	if (leftRight[last.r][i]==false){
@@ -848,9 +862,10 @@ bool BeeLinePuzzle::isUnique() {
       }
       if (b) {
 	uniqueCounter += 1;
-	if (uniqueCounter > 1) {
-	  return false;
-	}
+	printGameBoard();
+	// if (uniqueCounter > 1) {
+	//   return false;
+	// }
       }
     }
   }
@@ -879,6 +894,9 @@ bool BeeLinePuzzle::isUnique() {
     if (!test) {
       return false;
     }
+  }
+  if (uniqueCounter > 1) {
+    return false;
   }
   return true;
 }
@@ -1127,6 +1145,56 @@ void BeeLinePuzzle::printPuzzle() {
 	if (!b) {
 	  cout << ".   ";
 	} 
+      }
+    }
+    cout << ".\n";
+  }
+}
+
+void BeeLinePuzzle::printGameBoard() {
+
+  for (int j = 0; j < width+1; j++) {
+    cout << ".   ";
+  }
+  cout << '\n';
+
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      if (gameBoard[i][j] == -1) {
+	cout << " ***";
+      } else if (gameBoard[i][j] == 0){
+	cout << "    ";
+      }
+      else {
+	cout << " " << gameBoard[i][j] << "  ";
+      }
+    }
+
+    //CRAP... vertical and leftup are overwritten by check soln :(
+    cout << '\n';
+    for (int j = 0; j < width; j++) {
+      if (gameBoard[i][j] == -1) {
+	cout << ".***";
+      } else if (gameBoard[i][j] == 0){
+	cout << ".   ";
+      }
+      else {
+	if (vertical[i][j]) {
+	  if (leftUp[i][j]) {
+	    cout << ".  ^";
+	  }
+	  else {
+	    cout << ".  v";
+	  }
+	}
+	else {
+	  if (leftUp[i][j]) {
+	    cout << ".  <";
+	  }
+	  else {
+	    cout << ".  >";
+	  }
+	}
       }
     }
     cout << ".\n";

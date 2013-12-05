@@ -43,6 +43,8 @@ public class LevelPackParser extends BaseParser {
     	root.setStartElementListener(new StartElementListener(){
     		public void start(Attributes a){
     			lp.setTitle(a.getValue("title"));
+			lp.setStyle(a.getValue("bookStyle"));
+			Log.d(TAG, "Style in Parser: "+a.getValue("bookStyle"));
     		}
     	});
     	
