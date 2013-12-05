@@ -255,8 +255,10 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	public void swipeHandler(String direction) {
 	    physics.swipeHandler(direction);
 	    m.swipeHandler(direction);
+	    currLevelPack = LPP.getLevelPack(m.getActiveWidget());
 	    physics.resetPhysics();
 	    physics.setPhysics(currLevelPack.getStyle());
+	    Log.d(TAG, "Style: "+currLevelPack.getStyle());
 	    //myMusic.playSong(currLevelPack.getSong());
 	}
 	

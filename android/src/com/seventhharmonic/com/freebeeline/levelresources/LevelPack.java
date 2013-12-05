@@ -11,7 +11,7 @@ public class LevelPack {
 	String title;
 	String id;
 	String banner;
-	
+    String style;
 	
 	public LevelPack(){
 	}
@@ -23,8 +23,15 @@ public class LevelPack {
 	
 	public String getStyle(){
 		//TODO: Make this read the style from the XML!!!!
-		return "default";
+		return style;
 	}
+
+	public void setStyle(String style){
+		//TODO: Make this read the style from the XML!!!!
+		this.style = style;
+	}
+
+
 
     public String getSong() {
 	//TODO: Make this read the song from the XML!!!!
