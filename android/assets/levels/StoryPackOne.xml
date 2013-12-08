@@ -1,9 +1,9 @@
 <levelpack id="storyPack1" title="storyPack1Banner" purchaseId="storypack1" purchaseBanner="storyPack1PurchaseBanner" purchaseTag="unlockTag" bookStyle="default">
 	<chapter title="Beatrice Buzzes" end_text="Congratulations!^ You completed your very first chapter!" before_image="questionmark">
 		<afterImage>
-			<image image="book1chapter1"/>
-			<image image="book1chapter1_1"/>
-			<image image="book1chapter1_2"/>
+			<image image="storypack1chapter1"/>
+			<image image="storypack1chapter1_1"/>
+			<image image="storypack1chapter1_2"/>
 		</afterImage>
 		<width>2</width>
 		<height>2</height>
@@ -73,9 +73,9 @@
 	</chapter>
 	<chapter title="The flowers in the garden" end_text="Congratulations!^ Wow, that was fast! Let's try the last chapter..." before_image="questionmark">
 		<afterImage>
-			<image image="book1chapter2"/>
-			<image image="book1chapter2_1"/>
-			<image image="book1chapter2_2"/>
+			<image image="storypack1chapter2"/>
+			<image image="storypack1chapter2_1"/>
+			<image image="storypack1chapter2_2"/>
 		</afterImage>
 		<width>2</width>
 		<height>2</height>
@@ -139,16 +139,16 @@
 	</chapter>
 	<chapter title="Raise up to greet her" end_text="Congratulations!^ Beatrice is so happy! Help her collect flowers in level pack two!" before_image="questionmark">
 		<afterImage>
-			<image image="book1chapter7"/>
-			<image image="book1chapter7_1"/>
-			<image image="book1chapter7_2"/>
-			<image image="book1chapter8"/>
-			<image image="book1chapter8_1"/>
-			<image image="book1chapter8_2"/>
-			<image image="book1chapter9"/>
-			<image image="book1chapter9_1"/>
-			<image image="book1chapter9_2"/>
-			<image image="book1chapter9_3"/>
+			<image image="storypack1chapter7"/>
+			<image image="storypack1chapter7_1"/>
+			<image image="storypack1chapter7_2"/>
+			<image image="storypack1chapter8"/>
+			<image image="storypack1chapter8_1"/>
+			<image image="storypack1chapter8_2"/>
+			<image image="storypack1chapter9"/>
+			<image image="storypack1chapter9_1"/>
+			<image image="storypack1chapter9_2"/>
+			<image image="storypack1chapter9_3"/>
 		</afterImage>
 		<width>2</width>
 		<height>2</height>
