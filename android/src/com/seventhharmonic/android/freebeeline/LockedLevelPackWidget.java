@@ -33,10 +33,10 @@ public class LockedLevelPackWidget extends WidgetLayout{
 	mMain.setMode(MyGLRenderer.CROPTOP);
 	widgetList.add(mMain);
 	
-	mTag = new ImageWidget(0,0,.8f, .5f, lp.getPurchaseTag());
-	mTag.setRelativeCenter(0,-height+.8f);
-	mTag.setBorder(true);
-	mTag.setColor("white");
+	mTag = new ImageWidget(0,0,.4f, .4f, lp.getPurchaseTag());
+	mTag.setRelativeCenter(0,-.9f);
+	//mTag.setBorder(true);
+	mTag.setColor("transparent");
 	mTag.setMode(MyGLRenderer.CROPTOP);
 	widgetList.add(mTag);
 	
