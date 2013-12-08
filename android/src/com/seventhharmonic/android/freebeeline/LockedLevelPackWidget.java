@@ -27,7 +27,7 @@ public class LockedLevelPackWidget extends WidgetLayout{
 	//mText.setRelativeCenter(0,height-mText.getHeight());
 	this.lp = lp;
 	mMain = new ImageWidget(0,0,.8f, .5f, lp.getPurchaseBanner());
-	mMain.setRelativeCenter(0,height-.8f);
+	mMain.setRelativeCenter(0,0);
 	mMain.setBorder(true);
 	mMain.setColor("white");
 	mMain.setMode(MyGLRenderer.CROPTOP);

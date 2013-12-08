@@ -139,16 +139,12 @@
 	</chapter>
 	<chapter title="Raise up to greet her" end_text="Congratulations!^ Beatrice is so happy! Help her collect flowers in level pack two!" before_image="questionmark">
 		<afterImage>
-			<image image="storypack1chapter7"/>
-			<image image="storypack1chapter7_1"/>
-			<image image="storypack1chapter7_2"/>
-			<image image="storypack1chapter8"/>
-			<image image="storypack1chapter8_1"/>
-			<image image="storypack1chapter8_2"/>
-			<image image="storypack1chapter9"/>
-			<image image="storypack1chapter9_1"/>
-			<image image="storypack1chapter9_2"/>
-			<image image="storypack1chapter9_3"/>
+			<image image="storypack1chapter3"/>
+			<image image="storypack1chapter3_1"/>
+			<image image="storypack1chapter3_2"/>
+			<image image="storypack1chapter4"/>
+			<image image="storypack1chapter4_1"/>
+			<image image="storypack1chapter4_2"/>
 		</afterImage>
 		<width>2</width>
 		<height>2</height>
