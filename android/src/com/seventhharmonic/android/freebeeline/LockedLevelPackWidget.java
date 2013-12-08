@@ -11,29 +11,38 @@ import android.util.Log;
  * 
  */
 
-public class LevelPackWidget extends WidgetLayout{
+public class LockedLevelPackWidget extends WidgetLayout{
     //TextWidget mText;
-    ImageWidget mImage;
+    ImageWidget mMain;
+    ImageWidget mTag;
     String TAG = "LevelPackWidget";
-
-    public LevelPackWidget(LevelPack lp){
-
+    LevelPack lp;
+    
+    public LockedLevelPackWidget(LevelPack lp){
+    	
 	float height = Math.abs(GlobalApplication.getGeometry().getGeometry()[1]);
 	
 	Log.d(TAG, Float.toString(height));
 	//mText = new TextWidget(0,0,1,.5f,text);
 	//mText.setRelativeCenter(0,height-mText.getHeight());
+	this.lp = lp;
+	mMain = new ImageWidget(0,0,.8f, .5f, lp.getPurchaseBanner());
+	mMain.setRelativeCenter(0,height-.8f);
+	mMain.setBorder(true);
+	mMain.setColor("white");
+	mMain.setMode(MyGLRenderer.CROPTOP);
+	widgetList.add(mMain);
 	
-	mImage = new ImageWidget(0,0,.8f, .6f, lp.getTitle());
-	mImage.setRelativeCenter(0,0);
-	mImage.setBorder(true);
-	mImage.setColor("white");
-	mImage.setMode(MyGLRenderer.CROPTOP);
-	widgetList.add(mImage);
+	mTag = new ImageWidget(0,0,.8f, .5f, lp.getPurchaseTag());
+	mTag.setRelativeCenter(0,-height+.8f);
+	mTag.setBorder(true);
+	mTag.setColor("white");
+	mTag.setMode(MyGLRenderer.CROPTOP);
+	widgetList.add(mTag);
 	
 	setCenter(0,0);
-	setWidth(mImage.getWidth());
-	setHeight(mImage.getHeight());
+	setWidth(mMain.getWidth());
+	setHeight(mMain.getHeight());
     }
 
     @Override
@@ -57,16 +66,21 @@ public class LevelPackWidget extends WidgetLayout{
     }
 
     public boolean isTouched(float[] pt){
-	return mImage.isTouched(pt);
+    	//This is important - not a huge fan of this but basically, FlowerMenu check if this was touched.
+    	//This will be touched and will launch the chapter selection iff the main image is touched.
+    	return mMain.isTouched(pt);
     }
 
 	@Override
 	public void touchHandler(float[] pt) {
-		return;
+		//Going into the Chapter Select logic is in Flower menu.
+		//All we need to do is go into the store.
+		if(mTag.isTouched(pt)){
+				ViewActivity.mStore.onBuyLevelPack(lp);
+			}
 	}
 
 	@Override
 	public void swipeHandler(String direction) {
-		return;
 	}    
 }

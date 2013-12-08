@@ -9,25 +9,55 @@ import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 public class LevelPack {
 	List<Chapter> chapters = new ArrayList<Chapter>();
 	String title;
-	String id;
+	String purchaseId;
 	String banner;
     String style;
+    String purchaseTag;
+    String purchaseBanner;
+    String id;
+    
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getPurchaseBanner() {
+		return purchaseBanner;
+	}
+
+	public void setPurchaseBanner(String purchaseBanner) {
+		this.purchaseBanner = purchaseBanner;
+	}
+
+	public String getPurchaseTag() {
+		return purchaseTag;
+	}
+
+	public void setPurchaseTag(String tag) {
+		this.purchaseTag = tag;
+	}
+
 	public LevelPack(){
 	}
 	
-	public String getId(){
-		//TODO: Incorporate this into XML
-		return "levelpack1";
+	public String getPurchaseId(){
+		return purchaseId;
 	}
+
+	public void setPurchaseId(String id){
+		this.purchaseId = id;
+	}
+
 	
 	public String getStyle(){
-		//TODO: Make this read the style from the XML!!!!
 		return style;
 	}
 
 	public void setStyle(String style){
-		//TODO: Make this read the style from the XML!!!!
 		this.style = style;
 	}
 
@@ -78,7 +108,4 @@ public class LevelPack {
 		return chapters.size();
 	}
 	
-	public String getCurrTitleImage() {
-		return getTitle();
-	}	
 }

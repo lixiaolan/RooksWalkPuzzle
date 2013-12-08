@@ -25,11 +25,13 @@ public class SAXLevelPackProvider implements LevelPackProvider{
 	    Context context = GlobalApplication.getContext();
 	    try{
 	    levelPacks.clear();
-	    String[] levelPackList = context.getAssets().list(BASE);
+	    //Notice that this ordering is very important!
+	    //TODO: Change this when we add more level packs
+	    String[] levelPackList = {"StoryPackOne.xml","StoryPackTwo.xml","ChallengePackOne.xml"};
 		for(String s: levelPackList){
 		    levelPacks.add(mLevelPackParser.parse(BASE+"/"+s));	    
 		}
-	    } catch(IOException e){
+	    } catch(Exception e){
 		throw new RuntimeException(e);
 	    }
 	    Log.d(TAG,"Level Pack parsed");

@@ -42,9 +42,13 @@ public class LevelPackParser extends BaseParser {
     	
     	root.setStartElementListener(new StartElementListener(){
     		public void start(Attributes a){
+    			lp.setId(a.getValue("id"));
+    			lp.setPurchaseId(a.getValue("purchaseId"));
     			lp.setTitle(a.getValue("title"));
-			lp.setStyle(a.getValue("bookStyle"));
-			Log.d(TAG, "Style in Parser: "+a.getValue("bookStyle"));
+    			lp.setStyle(a.getValue("bookStyle"));
+    			lp.setPurchaseBanner(a.getValue("purchaseBanner"));
+    			lp.setPurchaseTag(a.getValue("purchaseTag"));
+    			Log.d(TAG, "Style in Parser: "+a.getValue("bookStyle"));
     		}
     	});
     	

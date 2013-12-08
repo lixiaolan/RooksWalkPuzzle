@@ -27,8 +27,9 @@ public class LockedChapterWidget extends WidgetLayout{
 	@Override
 	public void touchHandler(float[] pt){
 		if(mLocked.isTouched(pt)){
-			if(ch.getLp() == null)
+			if(ch.getLp() == null){
 				Log.d("LockedChapter", "null levelpack");
+			}
 			ViewActivity.mStore.onBuyLevelPack(ch.getLp());
 		}
 	}

@@ -116,10 +116,11 @@ public class ViewActivity extends Activity {
 	// The following call resumes a paused rendering thread.
 	// If you de-allocated graphic objects for onPause()
 	// this is a good place to re-allocate them.
+	mGLView.onResume();
+	
 	GlobalApplication.getPuzzleDB().open();
 	GlobalApplication.getHintDB().open();
 	GlobalApplication.getPurchasedDB().open();	
-	mGLView.onResume();
 	GlobalApplication.getMyMusic().resumeMusic();
     }
     
@@ -164,7 +165,7 @@ public class ViewActivity extends Activity {
     
     
     protected void onStop() {
-	super.onStop();
+    	super.onStop();
 	//	GlobalApplication.getMyMusic().stopMusic();
     	EasyTracker.getInstance(this).activityStop(this);
     	mGLView.onPause();
@@ -201,7 +202,7 @@ public class ViewActivity extends Activity {
     }
     
     public void closeQuoteScreen(View v) {
-	loadingScreen.setVisibility(View.INVISIBLE);
+    	loadingScreen.setVisibility(View.INVISIBLE);
     }    
     
     public void onBackPressed() {

@@ -1,4 +1,4 @@
-<levelpack title="storyPack1Banner" bookStyle="default">
+<levelpack id="storyPack1" title="storyPack1Banner" purchaseId="storypack1" purchaseBanner="storyPack1PurchaseBanner" purchaseTag="unlockTag" bookStyle="default">
 	<chapter title="Beatrice Buzzes" end_text="Congratulations!^ You completed your very first chapter!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter1"/>

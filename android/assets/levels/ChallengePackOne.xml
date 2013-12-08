@@ -1,4 +1,4 @@
-<levelpack title="challengePack1Banner" bookStyle="lp2">
+<levelpack id="challengePack1" title="challengePack1Banner" purchaseId="test3" purchaseBanner="challengePack1PurchaseBanner" purchaseTag="unlockTag" bookStyle="lp2">
 	<chapter title="One" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
 			<image image="challengePackOne"/>
