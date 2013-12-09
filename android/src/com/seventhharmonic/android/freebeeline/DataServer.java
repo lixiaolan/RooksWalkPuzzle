@@ -23,6 +23,7 @@ public class DataServer {
 		mContext = context;
 	}
 	
+	
 	public void saveGame(Board mBoard) {
 		File file = new File(mContext.getFilesDir(), "savefile");
 		int[] solutions = dumpSolution(mBoard);
@@ -148,14 +149,37 @@ public class DataServer {
 		return false;
 	}
 	
+	public void saveLinesOption(boolean lines){
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
+		SharedPreferences.Editor editor = s.edit();
+		editor.putBoolean("lines", lines);
+        editor.commit();
+	}
+	
+	public void saveErrorCheckingOption(boolean error){
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
+		SharedPreferences.Editor editor = s.edit();
+		editor.putBoolean("errorChecking", error);
+        editor.commit();
+	}
+	
+	public boolean getLinesOption(){
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
+		return s.getBoolean("lines", true);
+	}
+	
+	public boolean getErrorCheckingOption(){
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
+		return s.getBoolean("errorChecking", true);
+	}
+	
 	public int getFlowersVisited() {
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
 		int totalLines = s.getInt("flowersVisited", 0);	
 		return totalLines;
 	}
 	
-	public void setFlowers(int value){
-		
+	public void setFlowers(int value){		
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
 		int totalFlowers = 0;
 		SharedPreferences.Editor editor = s.edit();
@@ -164,51 +188,6 @@ public class DataServer {
         editor.commit();
 	}
 
-	public void setGames(GameType g){
-		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
-		int totalGames = 0;
-		SharedPreferences.Editor editor = s.edit();
-	switch(g) {
-	case SHORT:
-		totalGames = s.getInt("shortGames", 0);
-		editor.putInt("shortGames", totalGames+1); 
-		break;
-	case MEDIUM:
-		totalGames = s.getInt("mediumGames", 0);
-		editor.putInt("mediumGames", totalGames+1); 
-		break;
-	case LONGER:
-		totalGames = s.getInt("longerGames", 0);
-		editor.putInt("longerGames", totalGames+1); 
-		break;
-	case LONGEST:
-		totalGames = s.getInt("longestGames", 0);	
-		editor.putInt("longestGames", totalGames+1); 
-		break;
-	}
-		editor.commit();
-	}
-	
-	public int getShortGames(){
-		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("shortGames",0);
-	}
-	
-	public int getMediumGames() {
-		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("mediumGames",0);
-		
-	}
-
-	public int getLongerGames() {
-		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("longerGames",0);
-	}
-	
-	public int getLongestGames() {
-		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);	
-		return s.getInt("longestGames",0);
-	}
 	
 	public int[] dumpSolution(Board mBoard) {
 		int[] solution = new int[36];

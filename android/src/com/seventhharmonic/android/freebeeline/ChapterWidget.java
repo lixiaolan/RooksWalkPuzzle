@@ -203,7 +203,9 @@ public class ChapterWidget extends GraphicWidget {
 			}
 			if(period == DrawPeriod.DURING)
 				mGrid2.draw(r);
+			mText.draw(r);
 		}
+		
 		
 	}
 	
@@ -319,7 +321,7 @@ public class ChapterWidget extends GraphicWidget {
 	
 	@Override
 	public void draw(MyGLRenderer r) {
-		mText.draw(r);
+		
 		state.draw(r);
 		
 	}	

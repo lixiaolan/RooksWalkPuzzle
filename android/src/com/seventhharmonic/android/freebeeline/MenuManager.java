@@ -221,6 +221,7 @@ class MenuManager {
 		    mGameMenu.setTexture(0,TextureManager.LINES_OFF);
 		    GlobalApplication.getAnalytics().sendToggleErrors(false);
 		}
+		ViewActivity.mDataServer.saveLinesOption(state.linesOn);
 		mModel.toggleLines(state.linesOn);
 		break;
 	    case 2:
@@ -233,6 +234,7 @@ class MenuManager {
 		    mGameMenu.setTexture(1,TextureManager.RULE_CHECK_OFF);
 		    GlobalApplication.getAnalytics().sendToggleErrors(false);
 		}
+		ViewActivity.mDataServer.saveErrorCheckingOption(state.ruleCheck);
 		mModel.toggleRules(state.ruleCheck);
 		break;
 	    case 0: state.state = GameState.MAIN_MENU_LIST;

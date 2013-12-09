@@ -317,8 +317,11 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    gridToggle.setClickListener(new GameEventListener(){ 
 		    public void event(int i){   	
 			GlobalApplication.getAnalytics().sendPuzzleShow(gridToggle.getToggle());
-		    for(Widget w: m.getWidgetList())
-			    ((ChapterWidget)w).setState();
+		    //TODO: I hate this! Should do something more polymorphic. But until then...
+			for(Widget w: m.getWidgetList()){
+				if(w instanceof ChapterWidget)
+					((ChapterWidget)w).setState();
+			}
 		    }
 		});
 	    

@@ -42,16 +42,18 @@ public class ViewActivity extends Activity {
     private TextView mQuoteView;
     private TextView mWaitView;
     
-    private DataServer mDataServer;
-    private static LinearLayout loadingScreen;
-    public static Store mStore;
     
+    private static LinearLayout loadingScreen;
+
+    public static Store mStore;
+    public static DataServer mDataServer;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.viewactivity);
 	Log.d(TAG, "Run View Activity");
+	
 	mModel = new Model(this);
 	mRenderer = new MyGLRenderer(this, mModel);
 	
@@ -153,7 +155,7 @@ public class ViewActivity extends Activity {
 		String result = q.getCompleted();
 		Log.d(TAG,"db result "+result+" "+p.getId());
 		//TODO: BOOGIE:Uncomment to unmark all puzzles as completed
-		//if(result.equals("true"))
+		if(result.equals("true"))
 		    p.setCompleted(true);	    
 		p.setMoves((int)q.getMovesUsed());
 	    }

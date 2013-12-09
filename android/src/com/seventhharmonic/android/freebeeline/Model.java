@@ -234,6 +234,8 @@ class Model {
 
     public void setDataServer(DataServer d){
     	mDataServer = d;
+    	state.linesOn = d.getLinesOption();
+    	state.ruleCheck = d.getErrorCheckingOption();
     }
     
     public void setStore(Store s){
