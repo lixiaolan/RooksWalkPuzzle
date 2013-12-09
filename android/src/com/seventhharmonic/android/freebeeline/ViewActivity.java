@@ -152,7 +152,8 @@ public class ViewActivity extends Activity {
 		q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
 		String result = q.getCompleted();
 		Log.d(TAG,"db result "+result+" "+p.getId());
-		if(result.equals("true"))
+		//TODO: BOOGIE:Uncomment to unmark all puzzles as completed
+		//if(result.equals("true"))
 		    p.setCompleted(true);	    
 		p.setMoves((int)q.getMovesUsed());
 	    }

@@ -347,7 +347,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    }
 	    
 	    //Widget that shows our backgrounds.
-	    mGIF = new AnimatedGIFWidget(currLevelPack, 1);
+	    //This is where the kickback is specifed?
+	    mGIF = new AnimatedGIFWidget(currLevelPack, currLevelPack.getKickback());
 	    
 	    //Say that a user was staring at chapter 4 - then we should move the slider ahead to that
 	    //if the saved chapter was 0, then we jump to the most current chapter.

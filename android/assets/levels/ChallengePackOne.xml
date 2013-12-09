@@ -1,7 +1,8 @@
-<levelpack id="challengePack1" title="challengePack1Banner" purchaseId="storyPack2" purchaseBanner="challengePack1PurchaseBanner" purchaseTag="unlockTag" bookStyle="lp2">
+<levelpack id="challengePack1" title="challengePack1Banner" purchaseId="storyPack2" purchaseBanner="challengePack1PurchaseBanner" purchaseTag="unlockTag" bookStyle="lp2" kickback="2">
 	<chapter title="One" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
-			<image image="challengePackOne"/>
+			<image image="challengepack1chapter1.png"/>
+			<image image="challengepack1chapter1_1.png"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -125,7 +126,8 @@
 	</chapter>
 	<chapter title="Two" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
-			<image image="challengePackOne"/>
+			<image image="challengepack1chapter2.png"/>
+			<image image="challengepack1chapter2_1.png"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -249,7 +251,8 @@
 	</chapter>
 	<chapter title="Three" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
-			<image image="challengePackOne"/>
+			<image image="challengepack1chapter3.png"/>
+			<image image="challengepack1chapter3_1.png"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -379,7 +382,8 @@
 	</chapter>
 	<chapter title="Four" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
-			<image image="challengePackOne"/>
+			<image image="challengepack1chapter4.png"/>
+			<image image="challengepack1chapter4_1.png"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -512,7 +516,8 @@
 	</chapter>
 	<chapter title="Five" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
-			<image image="challengePackOne"/>
+			<image image="challengepack1chapter5.png"/>
+			<image image="challengepack1chapter5_1.png"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -645,7 +650,8 @@
 	</chapter>
 	<chapter title="Six" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
-			<image image="challengePackOne"/>
+			<image image="challengepack1chapter6.png"/>
+			<image image="challengepack1chapter6_1.png"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
@@ -772,7 +778,10 @@
 	</chapter>
 	<chapter title="Seven" end_text="Congratulations!^ You Bee Awesome" before_image="challengePackOne">
 		<afterImage>
-			<image image="challengePackOne"/>
+			<image image="challengepack1chapter7.png"/>
+			<image image="challengepack1chapter7_1.png"/>
+			<image image="challengepack1chapter8.png"/>
+			<image image="challengepack1chapter8_1.png"/>
 		</afterImage>
 		<width>3</width>
 		<height>3</height>

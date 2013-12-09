@@ -15,8 +15,19 @@ public class LevelPack {
     String purchaseTag;
     String purchaseBanner;
     String id;
+    int kickback;
+    
+    
     
 	
+	public int getKickback() {
+		return kickback;
+	}
+
+	public void setKickback(int kickback) {
+		this.kickback = kickback;
+	}
+
 	public String getId() {
 		return id;
 	}

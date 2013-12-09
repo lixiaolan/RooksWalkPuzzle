@@ -48,6 +48,7 @@ public class LevelPackParser extends BaseParser {
     			lp.setStyle(a.getValue("bookStyle"));
     			lp.setPurchaseBanner(a.getValue("purchaseBanner"));
     			lp.setPurchaseTag(a.getValue("purchaseTag"));
+    			lp.setKickback(Integer.parseInt(a.getValue("kickback")));
     			Log.d(TAG, "Style in Parser: "+a.getValue("bookStyle"));
     		}
     	});
