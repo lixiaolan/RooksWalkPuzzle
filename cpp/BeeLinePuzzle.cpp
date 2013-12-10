@@ -1384,6 +1384,86 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string be
   }
 }
 
+void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBookData &PBD) {
+  
+  xml_node<> *puzzle;
+  xml_node<> *node;
+  xml_node<> *hint;
+  xml_attribute<> *attr;
+  char *name;
+  int myInt;
+  string str;
+  
+  map<int, string>::iterator it = PBD.textMap.find(PBD.startIndex);
+  if (it != textMap.end()) {
+    str = it->second;
+  }
+  else {
+    str = "";
+  } 
+  
+  puzzle = doc->allocate_node(node_element, "puzzle");
+  chapter->append_node(puzzle);
+
+  name = doc->allocate_string(intTooString(PBD.startIndex).c_str());
+  attr = doc->allocate_attribute("id", name);
+  puzzle->append_attribute(attr);
+
+  //This should actually do something usefull later :)
+  name = doc->allocate_string(str.c_str());
+  attr = doc->allocate_attribute("text", name);
+  puzzle->append_attribute(attr);
+
+  PBD.startIndex += 1;
+
+  name = doc->allocate_string(PBD.beforeFlower.c_str());
+  attr = doc->allocate_attribute("before_flower", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(PBD.afterFlower.c_str());
+  attr = doc->allocate_attribute("after_flower", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(intTooString(height).c_str());
+  node = doc->allocate_node(node_element, "height", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(intTooString(width).c_str());
+  node = doc->allocate_node(node_element, "width", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getBoardXML().c_str());
+  node = doc->allocate_node(node_element, "board", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getPathXML().c_str());
+  node = doc->allocate_node(node_element, "path", name);
+  puzzle->append_node(node);
+  for (int i = 0; i < PBD.hintsPos.size(); i++) {
+    hint = doc->allocate_node(node_element, "hint");
+    puzzle->append_node(hint);
+    myInt = height*hintsPos[i].r + hintsPos[i].c;
+    name = doc->allocate_string(intTooString(myInt).c_str());
+    node = doc->allocate_node(node_element, "index", name);
+    hint->append_node(node);
+  }
+}
+
+// void BeeLinePuzzle::readXML(xml_node<> *puzzle) {
+//   BLP.gameBoard.clear();
+//   BLP.positions.clear();
+//   BLP.vertical.clear();
+//   BLP.leftUp.clear();
+
+//   BLP.hintsNum.clear();
+//   BLP.hintsIndex.clear();
+//   BLP.hintsVertical.clear();
+//   BLP.hintsLeftUp.clear();
+//   BLP.hintsPos.clear();
+  
+//   int r, c, t;
+  
+//   puzzle->
+
+// }
+
 string BeeLinePuzzle::getHintDir(int i) {
   if (hintsVertical[i]) {
     if (hintsLeftUp[i]) {
@@ -1451,15 +1531,12 @@ ifstream &operator>>(ifstream &ifs, BeeLinePuzzle &BLP) {
   BLP.positions.clear();
   BLP.vertical.clear();
   BLP.leftUp.clear();
-  BLP.hintsPos.clear();
-  BLP.hintsNum.clear();
-  BLP.hintsVertical.clear();
-  BLP.hintsLeftUp.clear();
-  BLP.hintsPos.clear();
+
   BLP.hintsNum.clear();
   BLP.hintsIndex.clear();
   BLP.hintsVertical.clear();
   BLP.hintsLeftUp.clear();
+  BLP.hintsPos.clear();
 
   int r, c, t;
 

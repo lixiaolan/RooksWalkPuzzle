@@ -2,6 +2,7 @@
 #define PUZZLE_BOOK
 
 #include "PuzzleChapter.hpp"
+#include "PuzzleBookData.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -13,11 +14,15 @@ public:
   friend ifstream &operator>>(ifstream&, PuzzleBook&);
   void add(PuzzleChapter);
   void printXML(ofstream&);
+  void printXML2(ofstream&);
   PuzzleBook(vector<string>,string, string, vector<string>, vector<string>, vector<string>, vector< vector <string> >, vector<string>, vector<string>, int);
   
   PuzzleBook(vector<string>,string, string, vector<string>, vector<string>, vector<string>, vector< vector <string> >, vector<string>, vector<string>,map<int, string>, int);
 
+  PuzzleBook(PuzzleBookData PBD);
+
 private:
+  PuzzleBookData PBD;
   int *puzzleIndex;
   int pi;
   map<int, string> textMap;

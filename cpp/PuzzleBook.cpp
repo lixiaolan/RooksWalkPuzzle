@@ -50,6 +50,34 @@ void PuzzleBook::printXML(ofstream& ofs) {
   return;
 }
 
+void PuzzleBook::printXML2(ofstream& ofs) {
+
+  xml_document<> d;
+  xml_document<> *doc = &d;
+  xml_node<> *levelpack;
+  xml_attribute<> *attr;
+  char *name;
+
+  levelpack = doc->allocate_node(node_element, "levelpack");
+  doc->append_node(levelpack);
+  
+  name = doc->allocate_string(PBD.bookTitle.c_str());
+  attr = doc->allocate_attribute("title", name);
+  levelpack->append_attribute(attr);
+
+  name = doc->allocate_string(PBD.bookStyle.c_str());
+  attr = doc->allocate_attribute("bookStyle", name);
+  levelpack->append_attribute(attr);
+
+  for (int i = 0; i < chapters.size(); i++) {
+    chapters[i].buildXML(doc, levelpack, PBD);
+  }
+
+  ofs << *doc;
+
+  return;
+}
+
 void PuzzleBook::add(PuzzleChapter PC) {
   chapters.push_back(PC);
 }
@@ -76,3 +104,7 @@ PuzzleBook::PuzzleBook(vector<string> files, string a, string aa ,vector<string>
   puzzleIndex = &pi;
   loadChapters(files);
 }
+
+PuzzleBook::PuzzleBook(PuzzleBookData PBD): this.PBD(PBD){
+  loadChapters(this.PBD.files);
+};
