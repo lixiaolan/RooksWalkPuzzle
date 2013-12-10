@@ -393,6 +393,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			reset.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			reset.setClickListener(new GameEventListener(){
 				public void event(int i){
+					moves = 0;
 					resetBoard();
 					updateErrors();
 				}

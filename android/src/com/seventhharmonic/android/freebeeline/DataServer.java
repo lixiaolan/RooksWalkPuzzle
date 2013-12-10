@@ -175,6 +175,11 @@ public class DataServer {
 		return s.getBoolean("lines", true);
 	}
 	
+	public boolean getMusicToggle(){
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
+		return s.getBoolean("music", true);
+	}
+	
 	public boolean getErrorCheckingOption(){
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
 		return s.getBoolean("errorChecking", true);

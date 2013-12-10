@@ -1,5 +1,5 @@
-<levelpack id="challengePack1" title="challengePack1Banner" purchaseId="storypack2" purchaseBanner="challengePack1PurchaseBanner" purchaseTag="unlockTag" bookStyle="lp2" kickback="2">
-	<chapter title="One" end_text="Congratulations!^ You Bee Awesome" >
+<levelpack bookStyle="lp2" id="challengePack1" kickback="2" purchaseBanner="challengePack1PurchaseBanner" purchaseId="storypack2" purchaseTag="unlockTag" title="challengePack1Banner">
+	<chapter title="One" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter1"/>
 			<image image="challengepack1chapter1_1"/>

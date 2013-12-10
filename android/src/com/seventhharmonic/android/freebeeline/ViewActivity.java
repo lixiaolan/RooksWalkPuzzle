@@ -119,11 +119,14 @@ public class ViewActivity extends Activity {
 	// If you de-allocated graphic objects for onPause()
 	// this is a good place to re-allocate them.
 	mGLView.onResume();
-	
 	GlobalApplication.getPuzzleDB().open();
 	GlobalApplication.getHintDB().open();
 	GlobalApplication.getPurchasedDB().open();	
-	GlobalApplication.getMyMusic().resumeMusic();
+	//TODO:This also sucks. Why is music hard???
+	if(mDataServer.getMusicToggle()) {
+		Log.d(TAG, "WHY AM I RESUMING .,.....");
+		GlobalApplication.getMyMusic().resumeMusic();
+	}
     }
     
     @Override

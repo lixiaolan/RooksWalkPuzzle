@@ -70,7 +70,6 @@ public class GlobalApplication extends Application {
 	PDS.open();
 	
 	myMusic = new MyMusic(context); 
-	myMusic.playSong("default");
     }
     
     @Override
