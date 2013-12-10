@@ -70,6 +70,7 @@ void PuzzleBook::printXML2(ofstream& ofs) {
   levelpack->append_attribute(attr);
 
   for (int i = 0; i < chapters.size(); i++) {
+    PBD.currChapter = i;
     chapters[i].buildXML(doc, levelpack, PBD);
   }
 

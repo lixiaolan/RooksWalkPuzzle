@@ -34,9 +34,5 @@ public:
   vector<string> getAfterImages(){return afterImages[currChapter];};
   string getBeforeFlower(){return beforeFlower[currChapter];};
   string getAfterFlower(){return afterFlower[currChapter];};
-
-}
-
-
-
+};
 #endif
