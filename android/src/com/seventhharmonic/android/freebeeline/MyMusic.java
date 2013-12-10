@@ -35,8 +35,9 @@ public class MyMusic{
     private final static int INT_VOLUME_MIN = 0;
     private final static float FLOAT_VOLUME_MAX = 1;
     private final static float FLOAT_VOLUME_MIN = 0;
-
-
+    private TimerTask timerTask; 
+    private Timer timer;
+    
     public MyMusic(Context c) {
 	context = c;
     }
@@ -53,17 +54,17 @@ public class MyMusic{
 	    currSong = song;
 	}
     }
-        
+    
     public void onCreate() {
 	playing = true;
 	if (mMediaPlayer != null) {
 	    mMediaPlayer.setLooping(true);
-	    mMediaPlayer.setVolume(100,100);
+	    mMediaPlayer.setVolume(0,0);
 	}
-
+	
 	mMediaPlayer.start();
     }
-
+    
     public void pauseMusic()
     {
 	if (mMediaPlayer != null) {
@@ -78,8 +79,12 @@ public class MyMusic{
 	    //Start increasing volume in increments
 	    if(fadeDuration > 0)
 		{
-		    final Timer timer = new Timer(true);
-		    TimerTask timerTask = new TimerTask() 
+		    if (timer != null) {
+			timer.cancel();
+			timer.purge();
+		    }
+		    timer = new Timer(true);
+		    timerTask = new TimerTask() 
 			{
 			    @Override
 			    public void run() 
@@ -133,8 +138,12 @@ public class MyMusic{
 	    //Start increasing volume in increments
 	    if(fadeDuration > 0)
 		{
-		    final Timer timer = new Timer(true);
-		    TimerTask timerTask = new TimerTask() 
+		    if (timer != null) {
+			timer.cancel();
+			timer.purge();
+		    }
+		    timer = new Timer(true);
+		    timerTask = new TimerTask() 
 			{
 			    @Override
 			    public void run() 
@@ -153,13 +162,7 @@ public class MyMusic{
 		    if (delay == 0) delay = 1;
 		    
 		    timer.schedule(timerTask, delay, delay);
-		}
-	    
-	    // if(mMediaPlayer.isPlaying()==false)
-	    // 	{
-	    // 	    mMediaPlayer.seekTo(length);
-	    // 	    mMediaPlayer.start();
-	    // 	}
+		}	    
 	}
     }
 
@@ -173,6 +176,19 @@ public class MyMusic{
 	    resumeMusic();
 	}
 	return;
+    }
+
+    public void setMusic(boolean on) {
+	if (on) {
+	    if (!playing) {
+		toggleMusic();
+	    }
+	}
+	else {
+	    if (playing) {
+		toggleMusic();
+	    }
+	}
     }
 
     public void resetMusic() {

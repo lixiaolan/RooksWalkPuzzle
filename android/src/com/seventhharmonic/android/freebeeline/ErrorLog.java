@@ -122,7 +122,7 @@ public class ErrorLog {
 				errorMap.get(index).pointedPast = true;
 			    }
 			    //Check if any numbers point onto the the path
-			    if (t.isPointedAt()) {
+			    if (t.pointedToCount > 0) {
 				errorMap.get(i).pointsPast = true;
 			    }
 			}
@@ -171,7 +171,7 @@ public class ErrorLog {
 				errorMap.get(index).pointedPast = true;
 			    }
 			    //Check if any numbers point onto the the path
-			    if (t.isPointedAt()) {
+			    if (t.pointedToCount > 0) {
 				errorMap.get(i).pointsPast = true;
 			    }
 			}
@@ -223,7 +223,7 @@ public class ErrorLog {
 				errorMap.get(index).pointedPast = true;
 			    }
 			    //Check if any numbers point onto the the path
-			    if (t.isPointedAt()) {
+			    if (t.pointedToCount > 0) {
 				errorMap.get(i).pointsPast = true;
 			    }
 			}
@@ -272,7 +272,7 @@ public class ErrorLog {
 				errorMap.get(index).pointedPast = true;
 			    }
 			    //Check if any numbers point onto the the path
-			    if (t.isPointedAt()) {
+			    if (t.pointedToCount > 0) {
 				errorMap.get(i).pointsPast = true;
 			    }
 			}

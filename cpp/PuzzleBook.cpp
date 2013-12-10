@@ -61,13 +61,12 @@ void PuzzleBook::printXML2(ofstream& ofs) {
   levelpack = doc->allocate_node(node_element, "levelpack");
   doc->append_node(levelpack);
   
-  name = doc->allocate_string(PBD.bookTitle.c_str());
-  attr = doc->allocate_attribute("title", name);
-  levelpack->append_attribute(attr);
-
-  name = doc->allocate_string(PBD.bookStyle.c_str());
-  attr = doc->allocate_attribute("bookStyle", name);
-  levelpack->append_attribute(attr);
+  //put in all attributes in one loop.
+  for (map<string, string>::iterator i = PBD.puzzleBookAttr.begin(); i!=PBD.puzzleBookAttr.end(); i++ ){
+    name = doc->allocate_string((i->second).c_str());
+    attr = doc->allocate_attribute((i->first).c_str(), name);
+    levelpack->append_attribute(attr);
+  }
 
   for (int i = 0; i < chapters.size(); i++) {
     PBD.currChapter = i;

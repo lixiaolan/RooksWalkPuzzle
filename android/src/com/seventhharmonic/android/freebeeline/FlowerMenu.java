@@ -42,7 +42,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     private static final int flowerCount = 25; 
     private FlowerTile[] tiles = new FlowerTile[flowerCount];
 
-    private MyMusic myMusic = GlobalApplication.getMyMusic();
+    //private MyMusic myMusic = GlobalApplication.getMyMusic();
 
     private long lastTouchTime;
     private float[] lastTouchPos = new float[2];

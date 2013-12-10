@@ -10,13 +10,10 @@ using namespace std;
 class PuzzleBookData {
 public:
   PuzzleBookData(){};
+
+  map<string, string> puzzleBookAttr;  
+
   vector<string> files;
-  string bookTitle;
-  string kickBack;
-  string bookStyle;
-  string purchaceId;
-  string purchaceBanner;
-  string purchaceTag;
   vector<string> chapterTitles;
   vector<string> chapterEndText;  
   vector<string> beforeImages;
