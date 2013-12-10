@@ -4,6 +4,7 @@ public class ErrorBundle {
     
     public boolean pointsPast = false;
     public boolean pointedPast = false;
+    public boolean pointsOnTo = false;
     public boolean pointsAtSame = false; //(points at same number)
     public boolean pointedAtBySame = false; //(pointed at by same number)
     public boolean pointsAtBadDir = false; //(right angle rule broken!)
@@ -14,7 +15,7 @@ public class ErrorBundle {
     public boolean sudokuRule= false;
     
     public boolean hasError() {
-    	return ( pointsPast || pointedPast || sudokuRule || pointsAtBadDir || pointedAtByBadDir || pointsOffBoard || pointsAtMultiPointedTo || multiPointedTo );
+    	return (pointsOnTo || pointsPast || pointedPast || sudokuRule || pointsAtBadDir || pointedAtByBadDir || pointsOffBoard || pointsAtMultiPointedTo || multiPointedTo );
     	//return ( pointsPast || pointedPast || pointsAtSame || pointedAtBySame || pointsAtBadDir || pointedAtByBadDir || pointsOffBoard || pointsAtMultiPointedTo || multiPointedTo );
     }
 }
