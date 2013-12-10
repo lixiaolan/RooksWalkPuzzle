@@ -5,7 +5,6 @@
 #include <sstream>
 #include <map>
 
-
 int main(int argc, char *argv[]){
 
   ofstream ofs;
@@ -107,45 +106,43 @@ int main(int argc, char *argv[]){
 
   else if (str == "printStoryPackOne") {
     
-    vector<string> files;
-    files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterOne.txt");
-    files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterTwo.txt");
-    files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterThree.txt");
+    PuzzleBookData PBD;
 
-    string bookTitle = "storyPack1Banner";
+    PBD.files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterOne.txt");
+    PBD.files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterTwo.txt");
+    PBD.files.push_back("BeeDokuPuzzleBooks/StoryPackOne/StoryPackOneChapterThree.txt");
 
-    string kickBack = "1";
+    PBD.bookTitle = "storyPack1Banner";
 
-    string bookStyle = "default";
+    PBD.kickBack = "1";
+
+    PBD.bookStyle = "default";
     
-    vector<string> chapterTitles;
-    chapterTitles.push_back("Beatrice Buzzes");
-    chapterTitles.push_back("The flowers in the garden");
-    chapterTitles.push_back("Raise up to greet her");
+    PBD.chapterTitles.push_back("Beatrice Buzzes");
+    PBD.chapterTitles.push_back("The flowers in the garden");
+    PBD.chapterTitles.push_back("Raise up to greet her");
 
-    vector<string> chapterEndText;
-    chapterEndText.push_back("Congratulations!^ You completed your very first chapter!");
-    chapterEndText.push_back("Congratulations!^ Wow, that was fast! Let's try the last chapter...");
-    chapterEndText.push_back("Congratulations!^ Beatrice is so happy! Help her collect flowers in level pack two!");
+    PBD.chapterEndText.push_back("Congratulations!^ You completed your very first chapter!");
+    PBD.chapterEndText.push_back("Congratulations!^ Wow, that was fast! Let's try the last chapter...");
+    PBD.chapterEndText.push_back("Congratulations!^ Beatrice is so happy! Help her collect flowers in level pack two!");
     
-    vector<string> beforeImages;
-    beforeImages.push_back("questionmark");
-    beforeImages.push_back("questionmark");
-    beforeImages.push_back("questionmark");
+
+    PBD.beforeImages.push_back("questionmark");
+    PBD.beforeImages.push_back("questionmark");
+    PBD.beforeImages.push_back("questionmark");
 
     vector<string> temp;
-    vector< vector<string> > afterImages;    
     temp.clear();
     temp.push_back("book1chapter1");
     temp.push_back("book1chapter1_1");
     temp.push_back("book1chapter1_2");
-    afterImages.push_back(temp);
+    PBD.afterImages.push_back(temp);
     
     temp.clear();
     temp.push_back("book1chapter2");
     temp.push_back("book1chapter2_1");
     temp.push_back("book1chapter2_2");
-    afterImages.push_back(temp);
+    PBD.afterImages.push_back(temp);
     
     temp.clear();
     temp.push_back("book1chapter7");
@@ -158,38 +155,33 @@ int main(int argc, char *argv[]){
     temp.push_back("book1chapter9_1");
     temp.push_back("book1chapter9_2");
     temp.push_back("book1chapter9_3");
-    afterImages.push_back(temp);    
+    PBD.afterImages.push_back(temp);    
 
-    vector<string> beforeFlower;
-    beforeFlower.push_back("flower1");
-    beforeFlower.push_back("flower2");
-    beforeFlower.push_back("flower3");
+    PBD.beforeFlower.push_back("flower1");
+    PBD.beforeFlower.push_back("flower2");
+    PBD.beforeFlower.push_back("flower3");
 
+    PBD.afterFlower.push_back("flower1color");
+    PBD.afterFlower.push_back("flower2color");
+    PBD.afterFlower.push_back("flower3color");
 
-    vector<string> afterFlower;
-    afterFlower.push_back("flower1color");
-    afterFlower.push_back("flower2color");
-    afterFlower.push_back("flower3color");
+    PBD.startIndex = 0;
 
-    int startIndex = 0;
+    PBD.textMap[0] = " Close the path. Touch the square with the circle to enter a 3 and then swipe right.";
+    PBD.textMap[1] = " Nice work. The yellow squares are part of a path we are giving you.";
+    PBD.textMap[2] = " TIP: Beatrice loves you. If you touch her, she'll give you a hint. Touch the questionmark to see the rules.";
+    PBD.textMap[3] = " This puzzle is harder then it looks. Remember Beatrice's rule!";
+    PBD.textMap[4] = " Not all paths have to be rectangles!";
+    PBD.textMap[5] = " Some paths have to cross themselves.";
+    PBD.textMap[6] = " Keep it up!";
+    PBD.textMap[7] = " This puzzle is easier then it looks! You are almost done!";
+    PBD.textMap[8] = " Looks like you got the hang of things. Touch Beatrice if you need help.";
 
-    map<int, string> textMap;
-    textMap[0] = " Close the path. Touch the square with the circle to enter a 3 and then swipe right.";
-    textMap[1] = " Nice work. The yellow squares are part of a path we are giving you.";
-    textMap[2] = " TIP: Beatrice loves you. If you touch her, she'll give you a hint. Touch the questionmark to see the rules.";
-    textMap[3] = " This puzzle is harder then it looks. Remember Beatrice's rule!";
-    textMap[4] = " Not all paths have to be rectangles!";
-    textMap[5] = " Some paths have to cross themselves.";
-    textMap[6] = " Keep it up!";
-    textMap[7] = " This puzzle is easier then it looks! You are almost done!";
-    textMap[8] = " Looks like you got the hang of things. Touch Beatrice if you need help.";
-
-    PuzzleBook PB = PuzzleBook(files, bookTitle, bookStyle, chapterTitles, chapterEndText, beforeImages, afterImages, beforeFlower, afterFlower,textMap, startIndex);
+    PuzzleBook PB = PuzzleBook(PBD);
     
     ofs.open("StoryPackOne.xml");
-    PB.printXML(ofs);
+    PB.printXML2(ofs);
     ofs.close();
-
   }
 
   else if (str == "printStoryPackTwo") {

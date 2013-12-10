@@ -5,6 +5,7 @@
 #include "rapidxml_print.hpp"
 
 #include "Pos.hpp"
+#include "PuzzleBookData.hpp"
 #include <string.h>
 #include <jni.h>
 #include <iostream>
@@ -94,8 +95,9 @@ public:
   void printPuzzle();
   int uniqueCounter;
   void plotToFile(ofstream &ofs);
-  int getLength();
-  void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, map<int, string> textMap,int*);
+int getLength();
+void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, map<int, string> textMap,int*);
+void buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBookData &PBD);
   string getHintDir(int i);
   string getBoardXML();
   string getPathXML();
