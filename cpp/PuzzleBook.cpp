@@ -105,6 +105,6 @@ PuzzleBook::PuzzleBook(vector<string> files, string a, string aa ,vector<string>
   loadChapters(files);
 }
 
-PuzzleBook::PuzzleBook(PuzzleBookData PBD): this.PBD(PBD){
-  loadChapters(this.PBD.files);
+PuzzleBook::PuzzleBook(PuzzleBookData IN): PBD(IN){
+  loadChapters(PBD.files);
 };

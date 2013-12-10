@@ -15,10 +15,8 @@ public:
   void add(PuzzleChapter);
   void printXML(ofstream&);
   void printXML2(ofstream&);
-  PuzzleBook(vector<string>,string, string, vector<string>, vector<string>, vector<string>, vector< vector <string> >, vector<string>, vector<string>, int);
-  
+  PuzzleBook(vector<string>,string, string, vector<string>, vector<string>, vector<string>, vector< vector <string> >, vector<string>, vector<string>, int);  
   PuzzleBook(vector<string>,string, string, vector<string>, vector<string>, vector<string>, vector< vector <string> >, vector<string>, vector<string>,map<int, string>, int);
-
   PuzzleBook(PuzzleBookData PBD);
 
 private:
@@ -35,8 +33,6 @@ private:
   vector< vector<string> > afterImages;
   vector<string> beforeFlower;
   vector<string> afterFlower;
-
-  
   void loadChapters(vector<string>);  
 };
 

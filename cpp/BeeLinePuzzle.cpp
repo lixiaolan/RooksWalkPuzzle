@@ -1395,7 +1395,7 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBoo
   string str;
   
   map<int, string>::iterator it = PBD.textMap.find(PBD.startIndex);
-  if (it != textMap.end()) {
+  if (it != PBD.textMap.end()) {
     str = it->second;
   }
   else {
@@ -1416,11 +1416,11 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBoo
 
   PBD.startIndex += 1;
 
-  name = doc->allocate_string(PBD.beforeFlower.c_str());
+  name = doc->allocate_string(PBD.getBeforeFlower().c_str());
   attr = doc->allocate_attribute("before_flower", name);
   puzzle->append_attribute(attr);
 
-  name = doc->allocate_string(PBD.afterFlower.c_str());
+  name = doc->allocate_string(PBD.getAfterFlower().c_str());
   attr = doc->allocate_attribute("after_flower", name);
   puzzle->append_attribute(attr);
 
@@ -1436,7 +1436,7 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBoo
   name = doc->allocate_string(getPathXML().c_str());
   node = doc->allocate_node(node_element, "path", name);
   puzzle->append_node(node);
-  for (int i = 0; i < PBD.hintsPos.size(); i++) {
+  for (int i = 0; i < hintsPos.size(); i++) {
     hint = doc->allocate_node(node_element, "hint");
     puzzle->append_node(hint);
     myInt = height*hintsPos[i].r + hintsPos[i].c;

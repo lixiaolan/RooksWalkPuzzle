@@ -147,20 +147,20 @@ void PuzzleChapter::buildXML(xml_document<> *doc, xml_node<> *levelpack, PuzzleB
 
   chapter = doc->allocate_node(node_element, "chapter");
   levelpack->append_node(chapter);
-  name = doc->allocate_string(PBD.title.c_str());
+  name = doc->allocate_string(PBD.getChapterTitle().c_str());
   attr = doc->allocate_attribute("title", name);
   chapter->append_attribute(attr);
-  name = doc->allocate_string(PBD.endText.c_str());
+  name = doc->allocate_string(PBD.getChapterEndText().c_str());
   attr = doc->allocate_attribute("end_text", name);
   chapter->append_attribute(attr);
-  name = doc->allocate_string(PBD.beforeImage.c_str());
+  name = doc->allocate_string(PBD.getBeforeImage().c_str());
   attr = doc->allocate_attribute("before_image", name);
   chapter->append_attribute(attr);
 
   afterIm = doc->allocate_node(node_element, "afterImage");
   chapter->append_node(afterIm);
 
-  for (string s : PBD.afterImage) {
+  for (string s : PBD.getAfterImages()) {
     node = doc->allocate_node(node_element, "image");
     name = doc->allocate_string(s.c_str());
     attr = doc->allocate_attribute("image", name);
