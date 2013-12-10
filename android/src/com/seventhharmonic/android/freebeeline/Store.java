@@ -47,7 +47,7 @@ public class Store {
 		PDS = GlobalApplication.getPurchasedDB();
 		//This is hardcoded for security - for now.
 		purchasables = new ArrayList<String>(Arrays.asList(
-				new String[]{"android.test.purchased","storyPack2","test2", "test3"}));
+				new String[]{"android.test.purchased","storyPack2","test2", "test3", "storypack2"}));
 		//Actual level pack id here
 		levelPackToChapterLimit = new HashMap<String, Integer>();
 		levelPackToChapterLimit.put("android.test.purchased", Integer.valueOf(1));

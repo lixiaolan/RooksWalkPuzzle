@@ -276,7 +276,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	public void touchHandler(float[] pt) {
 		//This is a bit sloppy. So I am commenting it so we can remember
 		//First let's fix into stone the currLevelPack. This is an LevelPack object
-	   
+	   m.touchHandler(pt);
 		physics.touchHandler(pt);	    
 		currLevelPack = LPP.getLevelPack(m.getActiveWidget());
 	    currLevelPackWidget = m.getWidget(m.getActiveWidget());

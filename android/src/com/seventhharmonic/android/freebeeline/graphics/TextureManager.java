@@ -217,13 +217,13 @@ public class TextureManager {
 		try {
 			// get input stream for flower pictures
 			String[] imageList = context.getAssets().list(BASE);
+			//Can I guarantee that these images are all the same resolution?
 			for(String s: imageList){
 				InputStream is = context.getAssets().open(BASE+"/"+s);
 				Bitmap b = BitmapFactory.decodeStream(is); 
 				//Remove the .png
 				library.put(s.substring(0, s.length()-4),textureFromBitmap(b));
 			}
-			
 			//Now the larger images
 			BASE = "images/murals/"+getSize(); 
 			Bitmap b = null;

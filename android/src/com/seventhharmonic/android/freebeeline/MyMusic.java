@@ -31,7 +31,7 @@ public class MyMusic{
     private int iVolume;
     private int fadeDuration = 666;
     private boolean playing = true;
-    private final static int INT_VOLUME_MAX = 100;
+	private final static int INT_VOLUME_MAX = 100;
     private final static int INT_VOLUME_MIN = 0;
     private final static float FLOAT_VOLUME_MAX = 1;
     private final static float FLOAT_VOLUME_MIN = 0;
@@ -40,6 +40,10 @@ public class MyMusic{
     public MyMusic(Context c) {
 	context = c;
     }
+    
+    public boolean isPlaying() {
+		return playing;
+	}
     
     public void playSong(String song) {
 	if (song.equals(currSong) ) {	    

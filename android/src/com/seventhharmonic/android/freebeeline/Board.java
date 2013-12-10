@@ -380,7 +380,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 			mGameBanner.setJ(TextJustification.LEFT);
 			mGameBanner.setFontSize(TextCreator.font1);
-
+			//All text shown will shake a bit
+			mGameBanner.setShakeToggle(true);
 			if(boardWidth == 6){
 				mBoardBg = new ImageWidget(0,0, 1.0f,1.0f,TextureManager.BOARD6);
 			} else if(boardWidth == 5){
@@ -755,7 +756,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		public BoardGameEnd(BoardTile[] tiles) {
 			//Top game banner
 			mFlower = new ImageWidget(0,mBoardBg.getCenterY()+mBoardBg.getHeight(),.15f,.15f,currPuzzle.getFlower());
-
+			mGameBanner.setShakeToggle(false);
 			//Note: this is game moves! If this number is less then the puzzle moves, the puzzle will not change the number of moves.
 			if(moves <= par){
 				mGameBanner.setText("Perfect Finish!");	

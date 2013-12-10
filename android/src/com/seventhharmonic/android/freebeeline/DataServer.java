@@ -163,6 +163,13 @@ public class DataServer {
         editor.commit();
 	}
 	
+	public void saveMusicToggle(boolean error){
+		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
+		SharedPreferences.Editor editor = s.edit();
+		editor.putBoolean("music", error);
+        editor.commit();
+	}
+	
 	public boolean getLinesOption(){
 		SharedPreferences s  = mContext.getSharedPreferences(settingsfile, 0);
 		return s.getBoolean("lines", true);
@@ -188,6 +195,8 @@ public class DataServer {
         editor.commit();
 	}
 
+	
+	
 	
 	public int[] dumpSolution(Board mBoard) {
 		int[] solution = new int[36];

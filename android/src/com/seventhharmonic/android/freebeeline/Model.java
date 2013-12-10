@@ -69,6 +69,7 @@ class Model {
 		public void event(int i) {
 			GlobalApplication.getAnalytics().sendMuteSound(muteButton.getToggle());
 		    GlobalApplication.getMyMusic().toggleMusic();
+		    ViewActivity.mDataServer.saveMusicToggle(GlobalApplication.getMyMusic().isPlaying());
 		}
 	    });
     }
@@ -236,6 +237,7 @@ class Model {
     	mDataServer = d;
     	state.linesOn = d.getLinesOption();
     	state.ruleCheck = d.getErrorCheckingOption();
+    	mDataServer.
     }
     
     public void setStore(Store s){

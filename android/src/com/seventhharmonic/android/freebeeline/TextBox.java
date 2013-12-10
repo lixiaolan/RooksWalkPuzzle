@@ -14,15 +14,15 @@ import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
  */
 
 public class TextBox extends Widget{
-
+	String TAG = "TextBox";
 	String text;
 	//Font size in b's. See Text Creator for more on this unit.
 	//1bf  = .05b. Ie
 	float fontSize = 1;
 	TextJustification j = TextJustification.LEFT;
 	ImageWidget background;
-	
-	
+	boolean shakeToggle = false;
+	long timer = 0;
 	public void setJ(TextJustification j) {
 		this.j = j;
 	}
@@ -35,6 +35,10 @@ public class TextBox extends Widget{
 		this.fontSize = fontSize;
 	}
 
+	public void setShakeToggle(boolean a){
+		shakeToggle = a;
+	}
+	
 	/**
 	 * Constructor for a textBox. The x, y coordinates where you want the center of the first row of the text box.
 	 * The width specifies where to jump to the next line.
@@ -55,8 +59,11 @@ public class TextBox extends Widget{
 		setHeight(width);
 	}
 	
-	public void setText(String text){
-		this.text = text;
+	public void setText(String t){
+		if(!text.equals(t)){
+			timer = System.currentTimeMillis();
+		}
+		this.text = t;
 	}
 	
 	/**Currently, this gives no guarantee on properly toggling a border. The text could end up outside of it.
@@ -83,6 +90,7 @@ public class TextBox extends Widget{
 		background.setCenter(x, y);
 	}
 	
+	float[] tempCenter = {0,0};
 	
 	@Override
 	public void draw(MyGLRenderer r) {
@@ -90,7 +98,17 @@ public class TextBox extends Widget{
 		if(background.getBorder()){
 			background.draw(r);
 		}
-		r.drawTextBox(center,width,fontSize,text, j);
+		long time = System.currentTimeMillis();
+		if(shakeToggle && time-timer<1000){
+			tempCenter[0] = center[0]+.1f*(float)Math.sin(6.28f*(float)((time-timer)/1000f));
+			tempCenter[1] = center[1];//+.05f*(float)Math.sin(6.28f*(float)(time-timer));
+			
+			Log.d(TAG, "Shake it up baby "+Float.toString(.1f*(float)Math.sin(6.28f*(float)(time-timer))));
+			r.drawTextBox(tempCenter, width, fontSize, text, j);
+		} else{
+			r.drawTextBox(center,width,fontSize,text, j);
+		}
+		
 	}
 
 	@Override
