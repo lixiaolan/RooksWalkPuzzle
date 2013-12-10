@@ -144,6 +144,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 
 	public void resetBoard() {
 		mErrorLog.setLog();
+		moves = 0;
 		for(int i=0;i<tiles.length;i++){
 			if(tiles[i].isChangeable()){
 				tiles[i].setNumber(TextureManager.CLEAR);
@@ -393,8 +394,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			reset.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			reset.setClickListener(new GameEventListener(){
 				public void event(int i){
-					moves = 0;
+					//moves = 0;
 					resetBoard();
+					updateMoves();
 					updateErrors();
 				}
 			});
