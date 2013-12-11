@@ -1,5 +1,5 @@
 <levelpack bookStyle="lp2" id="challengePack1" kickback="2" purchaseBanner="challengePack1PurchaseBanner" purchaseId="storypack2" purchaseTag="unlockTag" title="challengePack1Banner">
-	<chapter title="One" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
+	<chapter title="One" end_text=" Congratulations!^ You Bee Awesome" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter1"/>
 			<image image="challengepack1chapter1_1"/>
@@ -124,7 +124,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Two" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
+	<chapter title="Two" end_text=" Congratulations!^ You Bee Awesomer" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter2"/>
 			<image image="challengepack1chapter2_1"/>
@@ -249,7 +249,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Three" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
+	<chapter title="Three" end_text=" Congratulations!^ You Bee Awesomest" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter3"/>
 			<image image="challengepack1chapter3_1"/>
@@ -380,7 +380,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Four" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
+	<chapter title="Four" end_text=" Congratulations!^ You Bee Awesome Smausome" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter4"/>
 			<image image="challengepack1chapter4_1"/>
@@ -514,7 +514,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Five" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
+	<chapter title="Five" end_text=" Congratulations!^ You Bee Awesome Smausomer" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter5"/>
 			<image image="challengepack1chapter5_1"/>
@@ -648,7 +648,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Six" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
+	<chapter title="Six" end_text=" Congratulations!^ You Bee Awesome Smausomest" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter6"/>
 			<image image="challengepack1chapter6_1"/>
@@ -776,7 +776,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Seven" end_text="Congratulations!^ You Bee Awesome" before_image="questionmark">
+	<chapter title="Seven" end_text=" Congratulations!^ Beatrice Loves You" before_image="questionmark">
 		<afterImage>
 			<image image="challengepack1chapter7"/>
 			<image image="challengepack1chapter7_1"/>
