@@ -1,5 +1,5 @@
 <levelpack bookStyle="lp2" id="storyPack2" kickback="1" purchaseBanner="storyPack2PurchaseBanner" purchaseId="storypack2" purchaseTag="unlockTag" title="storyPack2Banner">
-	<chapter title="The Natural Log" end_text="Congratulations!^ You helped Beatrice visit all the flowers on the log!" before_image="questionmark">
+	<chapter title="The Natural Log" end_text=" Congratulations!^ You helped Beatrice visit all the flowers on the log!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter1"/>
 			<image image="book1chapter1_1"/>
@@ -173,7 +173,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="The Babbling Brook" end_text="Congratulations!^ You helped Beatrice find the flowers along side the brook!" before_image="questionmark">
+	<chapter title="The Babbling Brook" end_text=" Congratulations!^ You helped Beatrice find the flowers along side the brook!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter2"/>
 			<image image="book1chapter2_1"/>
@@ -320,7 +320,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="The Cherry Tree" end_text="Congratulations!^ You helped Beatrice pollinate every flower in the tree!" before_image="questionmark">
+	<chapter title="The Cherry Tree" end_text=" Congratulations!^ You helped Beatrice pollinate every flower in the tree!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter3"/>
 			<image image="book1chapter3_1"/>
@@ -482,7 +482,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Cats And Lilies" end_text="Congratulations!^ Do you feel emotionally connected to Beatrice yet?" before_image="questionmark">
+	<chapter title="Cats And Lilies" end_text=" Congratulations!^ Do you feel emotionally connected to Beatrice yet?" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter4"/>
 			<image image="book1chapter4_1"/>
@@ -650,7 +650,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Over The Hills" end_text="Congratulations!^ You thought those were tricky? Just wait!" before_image="questionmark">
+	<chapter title="Over The Hills" end_text=" Congratulations!^ Only two chapters to go!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter5"/>
 			<image image="book1chapter5_1"/>
@@ -776,7 +776,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Tigers In The Grass" end_text="Congratulations!^ Don't worry, Beatrice still loves you!" before_image="questionmark">
+	<chapter title="Tigers In The Grass" end_text=" Congratulations!^ Don't worry, Beatrice still loves you!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter6"/>
 			<image image="book1chapter6_1"/>
@@ -929,7 +929,7 @@
 			</hint>
 		</puzzle>
 	</chapter>
-	<chapter title="Beatrice's Garden" end_text="Congratulations!^ You did it! You helped Beatrice bring color to her world!" before_image="questionmark">
+	<chapter title="Beatrice's Garden" end_text=" Congratulations!^ You did it! You helped Beatrice bring color to her world!" before_image="questionmark">
 		<afterImage>
 			<image image="book1chapter7"/>
 			<image image="book1chapter7_1"/>
