@@ -349,7 +349,7 @@ public class Store {
 	//Code for level pack purchase
 	public boolean hasLevelPack(LevelPack lp){
 		//TODO: BOOGIE. Uncomment to purchase level packs.
-		String id  = lp.getPurchaseId();
+		/*String id  = lp.getPurchaseId();
 		if(purchasables.contains(id)){
 			if(mInventory == null){
 				Log.d(TAG, "Found a null inventory");
@@ -365,7 +365,7 @@ public class Store {
 				return false;
 			}
 		}
-		Log.d(TAG, "Didn't contain id "+id);
+		Log.d(TAG, "Didn't contain id "+id);*/
 		return true;
 	}
 

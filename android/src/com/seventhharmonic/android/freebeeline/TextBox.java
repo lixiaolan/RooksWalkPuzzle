@@ -99,8 +99,8 @@ public class TextBox extends Widget{
 			background.draw(r);
 		}
 		long time = System.currentTimeMillis();
-		if(shakeToggle && time-timer<1000){
-			tempCenter[0] = center[0]+.1f*(float)Math.sin(6.28f*(float)((time-timer)/1000f));
+		if(shakeToggle && time-timer<500){
+			tempCenter[0] = center[0]+.02f*(float)Math.sin(6.28f*(float)((time-timer)/500f));
 			tempCenter[1] = center[1];//+.05f*(float)Math.sin(6.28f*(float)(time-timer));
 			
 			Log.d(TAG, "Shake it up baby "+Float.toString(.1f*(float)Math.sin(6.28f*(float)(time-timer))));

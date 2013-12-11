@@ -398,6 +398,12 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					resetBoard();
 					updateMoves();
 					updateErrors();
+					if(toggleError){
+						mGameBanner.setText(currPuzzle.getText());
+					} else{
+						mGameBanner.setText("");
+					}
+
 				}
 			});
 
