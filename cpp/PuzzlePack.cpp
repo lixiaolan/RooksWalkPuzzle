@@ -14,11 +14,6 @@ int main(int argc, char *argv[]){
   for (int i = 0; i < argc; i++) {
     ss << argv[i] << " ";
   }
-  // string sss;
-  // while (ss >> sss) {
-  //   cout << sss << endl;
-  // }
-  // return 0;
 
   PuzzleChapter PP;
   ifs.open("iotest.txt");
@@ -322,7 +317,7 @@ int main(int argc, char *argv[]){
     PBD.puzzleBookAttr["purchaseId"] = "storypack2";
     PBD.puzzleBookAttr["purchaseBanner"] = "challengePack1PurchaseBanner";
     PBD.puzzleBookAttr["purchaseTag"] = "unlockTag";
-    PBD.puzzleBookAttr["bookStyle"] = "lp2";
+    PBD.puzzleBookAttr["bookStyle"] = "lp3";
     PBD.puzzleBookAttr["kickback"] = "2";
     
     PBD.chapterTitles.push_back("One");
