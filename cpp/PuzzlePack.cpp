@@ -213,13 +213,13 @@ int main(int argc, char *argv[]){
     PBD.chapterTitles.push_back("Tigers In The Grass");
     PBD.chapterTitles.push_back("Beatrice's Garden");
 
-    PBD.chapterEndText.push_back("Congratulations!^ You helped Beatrice visit all the flowers on the log!");
-    PBD.chapterEndText.push_back("Congratulations!^ You helped Beatrice find the flowers along side the brook!");
-    PBD.chapterEndText.push_back("Congratulations!^ You helped Beatrice pollinate every flower in the tree!");
-    PBD.chapterEndText.push_back("Congratulations!^ Do you feel emotionally connected to Beatrice yet?");
-    PBD.chapterEndText.push_back("Congratulations!^ You thought those were tricky? Just wait!");
-    PBD.chapterEndText.push_back("Congratulations!^ Don't worry, Beatrice still loves you!");
-    PBD.chapterEndText.push_back("Congratulations!^ You did it! You helped Beatrice bring color to her world!");
+    PBD.chapterEndText.push_back(" Congratulations!^ You helped Beatrice visit all the flowers on the log!");
+    PBD.chapterEndText.push_back(" Congratulations!^ You helped Beatrice find the flowers along side the brook!");
+    PBD.chapterEndText.push_back(" Congratulations!^ You helped Beatrice pollinate every flower in the tree!");
+    PBD.chapterEndText.push_back(" Congratulations!^ Do you feel emotionally connected to Beatrice yet?");
+    PBD.chapterEndText.push_back(" Congratulations!^ Only two chapters to go!");
+    PBD.chapterEndText.push_back(" Congratulations!^ Don't worry, Beatrice still loves you!");
+    PBD.chapterEndText.push_back(" Congratulations!^ You did it! You helped Beatrice bring color to her world!");
     
     PBD.beforeImages.push_back("questionmark");
     PBD.beforeImages.push_back("questionmark");
@@ -333,13 +333,13 @@ int main(int argc, char *argv[]){
     PBD.chapterTitles.push_back("Six");
     PBD.chapterTitles.push_back("Seven");
 
-    PBD.chapterEndText.push_back("Congratulations!^ You Bee Awesome");
-    PBD.chapterEndText.push_back("Congratulations!^ You Bee Awesome");
-    PBD.chapterEndText.push_back("Congratulations!^ You Bee Awesome");
-    PBD.chapterEndText.push_back("Congratulations!^ You Bee Awesome");
-    PBD.chapterEndText.push_back("Congratulations!^ You Bee Awesome");
-    PBD.chapterEndText.push_back("Congratulations!^ You Bee Awesome");
-    PBD.chapterEndText.push_back("Congratulations!^ You Bee Awesome");
+    PBD.chapterEndText.push_back(" Congratulations!^ You Bee Awesome");
+    PBD.chapterEndText.push_back(" Congratulations!^ You Bee Awesomer");
+    PBD.chapterEndText.push_back(" Congratulations!^ You Bee Awesomest");
+    PBD.chapterEndText.push_back(" Congratulations!^ You Bee Awesome Smausome");
+    PBD.chapterEndText.push_back(" Congratulations!^ You Bee Awesome Smausomer");
+    PBD.chapterEndText.push_back(" Congratulations!^ You Bee Awesome Smausomest");
+    PBD.chapterEndText.push_back(" Congratulations!^ Beatrice Loves You");
     
     PBD.beforeImages.push_back("questionmark");
     PBD.beforeImages.push_back("questionmark");
