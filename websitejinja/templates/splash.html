@@ -14,22 +14,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/main.css">
-    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="js/screenSlider/jquery.flexslider-min.js"></script>
     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <title>Get Bee-Line - SeventhHarmonic</title>
-    <script>{% block localscript %} {% endblock %}</script>
+    <link rel="stylesheet" href="css/slider2.css" type="text/css">
   </head>
   <body>
     
     <div class="container">
       <div span="row">
-       <div class="col-md-8"><img src="img/splashscreen/nexus7_1.png" width="60%"/></div>
-       <div class="col-md-4"> 
-	 <h1>The new puzzle game that has everybody buzzing around.</h1> 
+	<div class="col-md-6">
+          <div class="flex-container">
+	    <div class="flexslider">
+	      <ul class="slides">
+		<li>
+		  <a href="#"><img src="img/splashscreen/nexus7_1.png"/></a>
+		</li>
+		<li>
+		  <img src="img/splashscreen/nexus7_2.png" />
+		</li>
+		<li>
+		  <img src="img/splashscreen/nexus7_3.png" />
+		</li>
+		<li>
+		  <img src="img/splashscreen/nexus7_4.png" />
+		</li>	    
+	      </ul>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    <script>
+      $(document).ready(function () {
+      $('.flexslider').flexslider({
+      animation: 'fade',
+      controlsContainer: '.flexslider'
+      });
+      });
+    </script>
+    
 
 
+       <div class="col-md-6"> 
+	 <h1>Bee-Line: The new puzzle game that has everyone abuzz.</h1> 
+	 <br/><br/><br/>
+	 <a href="https://play.google.com/store/apps/details?id=com.seventhharmonic.android.freebeeline">
+	   <img alt="Get it on Google Play" src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+	 </a>
+	 <br/><br/><br/>
+	 <h4><a href="index.html">(Continue to Site)</a></h4>
        </div>
       </div>
     </div>

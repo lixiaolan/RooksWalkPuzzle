@@ -45,9 +45,13 @@ class Email(ndb.Model):
 class MainHandler(webapp.RequestHandler):
   def get (self, q):
       if(q is None):
-          template = JINJA_ENVIRONMENT.get_template('index.html')
-      else:
-          template = JINJA_ENVIRONMENT.get_template(q)
+          q = 'splash.html'
+      #    path = os.path.join (os.path.dirname (__file__), q)
+      #    print path
+      #    self.response.headers ['Content-Type'] = 'text/html'
+      #    self.response.out.write(template.render(path, {}))
+#      else:
+      template = JINJA_ENVIRONMENT.get_template(q)
       self.response.write(template.render())
 
 class EmailHandler(webapp2.RequestHandler):
