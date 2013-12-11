@@ -612,7 +612,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					if(toggleError){
 						turnErrorRed(at);
 						if(lt == at){
-							mGameBanner.setText(mErrorLog.getError(at));
+						    mGameBanner.setText(mErrorLog.getError(at));
 						}
 					}
 					if(tiles[at].isBlack() == false) {
