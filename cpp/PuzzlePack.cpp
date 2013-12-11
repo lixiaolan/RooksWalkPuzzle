@@ -162,7 +162,7 @@ int main(int argc, char *argv[]){
     PBD.afterFlower.push_back("flower2color");
     PBD.afterFlower.push_back("flower3color");
 
-    PBD.startIndex = 0;
+    PBD.startIndex = 100;
 
     PBD.textMap[0] = " Close the path. Touch the square with the dot to enter a 3 and then swipe right.";
     PBD.textMap[1] = " Create a loop. The yellow squares are part of the path given as hints.";
@@ -296,7 +296,7 @@ int main(int argc, char *argv[]){
     PBD.afterFlower.push_back("flower6color");
     PBD.afterFlower.push_back("flower7color");
 
-    PBD.startIndex = 100;
+    PBD.startIndex = 200;
 
     PuzzleBook PB = PuzzleBook(PBD);
     
@@ -403,7 +403,7 @@ int main(int argc, char *argv[]){
     PBD.afterFlower.push_back("flower6color");
     PBD.afterFlower.push_back("flower7color");
 
-    PBD.startIndex = 200;
+    PBD.startIndex = 300;
 
     PuzzleBook PB = PuzzleBook(PBD);
     

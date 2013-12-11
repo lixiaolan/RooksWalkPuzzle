@@ -7,7 +7,7 @@
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="100" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="200" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,1,0,2,1,0,2,-1,0,3,0,0,1,0,-1,1,0,2,0,-1,3,0,0,4</board>
@@ -28,7 +28,7 @@
 				<index>16</index>
 			</hint>
 		</puzzle>
-		<puzzle id="101" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="201" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,1,4,-1,-1,2,0,0,3,4,0,0,0,1,0,1,3,0,-1,2,0,0,3,-1</board>
@@ -49,7 +49,7 @@
 				<index>16</index>
 			</hint>
 		</puzzle>
-		<puzzle id="102" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="202" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>1,0,0,0,4,2,0,1,3,0,-1,-1,-1,0,2,-1,3,0,0,1,-1,1,0,2,-1</board>
@@ -67,7 +67,7 @@
 				<index>8</index>
 			</hint>
 		</puzzle>
-		<puzzle id="103" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="203" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,2,1,-1,1,3,0,0,2,0,2,1,0,0,0,0,-1,3,1,3,1,-1,-1,-1</board>
@@ -85,7 +85,7 @@
 				<index>18</index>
 			</hint>
 		</puzzle>
-		<puzzle id="104" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="204" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>1,0,2,-1,-1,3,1,0,2,-1,0,3,0,0,1,0,-1,3,0,2,2,0,1,3,-1</board>
@@ -103,7 +103,7 @@
 				<index>11</index>
 			</hint>
 		</puzzle>
-		<puzzle id="105" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="205" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>2,0,3,4,1,1,-1,0,0,0,0,-1,0,0,0,0,-1,2,0,3,3,1,0,2,-1</board>
@@ -121,7 +121,7 @@
 				<index>20</index>
 			</hint>
 		</puzzle>
-		<puzzle id="106" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="206" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>2,1,-1,-1,-1,0,0,2,1,-1,4,0,0,0,2,-1,3,1,0,0,-1,-1,-1,3,1</board>
@@ -142,7 +142,7 @@
 				<index>7</index>
 			</hint>
 		</puzzle>
-		<puzzle id="107" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="207" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,2,0,4,-1,2,0,1,0,1,0,0,3,0,2,0,3,-1,0,-1,3,1,0,2</board>
@@ -157,7 +157,7 @@
 				<index>4</index>
 			</hint>
 		</puzzle>
-		<puzzle id="108" text="" before_flower="flower1" after_flower="flower1color">
+		<puzzle id="208" text="" before_flower="flower1" after_flower="flower1color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,1,0,2,-1,-1,3,0,0,1,-1,-1,1,0,2,1,0,2,3,-1,3,0,0,1,-1</board>
@@ -181,7 +181,7 @@
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="109" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="209" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,3,0,2,1,2,0,3,0,0,-1,0,0,0,0,-1,1,0,0,3,0,2,1,4</board>
@@ -196,7 +196,7 @@
 				<index>17</index>
 			</hint>
 		</puzzle>
-		<puzzle id="110" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="210" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,2,0,1,-1,1,0,0,3,-1,2,0,1,-1,-1,-1,0,2,0,1,-1,4,0,0,3</board>
@@ -208,7 +208,7 @@
 				<index>21</index>
 			</hint>
 		</puzzle>
-		<puzzle id="111" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="211" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,2,1,-1,-1,-1,0,0,2,1,2,1,0,0,0,0,-1,3,1,0,4,0,0,0,3</board>
@@ -220,7 +220,7 @@
 				<index>10</index>
 			</hint>
 		</puzzle>
-		<puzzle id="112" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="212" text="" before_flower="flower2" after_flower="flower2color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,5,2,0,4,3,0,0,1,-1,0,0,2,0,0,3,0,0,-1,0,-1,0,0,0,-1,0,-1,2,1,4,0,2,-1,-1,-1</board>
@@ -241,7 +241,7 @@
 				<index>32</index>
 			</hint>
 		</puzzle>
-		<puzzle id="113" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="213" text="" before_flower="flower2" after_flower="flower2color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,0,1,5,-1,1,0,2,-1,0,-1,5,0,0,0,0,2,-1,3,0,-1,0,0,-1,1,0,0,0,4,-1,-1,4,0,2,-1</board>
@@ -262,7 +262,7 @@
 				<index>8</index>
 			</hint>
 		</puzzle>
-		<puzzle id="114" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="214" text="" before_flower="flower2" after_flower="flower2color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,2,0,4,-1,4,0,0,0,0,5,0,2,-1,-1,0,0,0,0,3,0,0,2,0,0,1,0,2,-1,1,3,-1,-1,-1,-1</board>
@@ -283,7 +283,7 @@
 				<index>30</index>
 			</hint>
 		</puzzle>
-		<puzzle id="115" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="215" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,1,0,0,3,-1,2,-1,-1,0,3,0,0,1,2,0,3,0,0,1,2,0,0,0,4</board>
@@ -298,7 +298,7 @@
 				<index>10</index>
 			</hint>
 		</puzzle>
-		<puzzle id="116" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="216" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,-1,2,1,1,3,-1,0,0,0,0,-1,1,0,2,0,0,3,0,-1,1,2,0,4</board>
@@ -310,7 +310,7 @@
 				<index>24</index>
 			</hint>
 		</puzzle>
-		<puzzle id="117" text="" before_flower="flower2" after_flower="flower2color">
+		<puzzle id="217" text="" before_flower="flower2" after_flower="flower2color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,3,1,0,2,-1,0,-1,-1,0,2,0,0,3,0,0,2,0,1,3,4,0,0,0,1</board>
@@ -328,7 +328,7 @@
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="118" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="218" text="" before_flower="flower3" after_flower="flower3color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,2,-1,-1,-1,5,0,0,0,0,1,3,1,0,0,0,4,0,-1,3,-1,-1,-1,0,-1,1,0,2,-1,4,0,0,0,1,-1</board>
@@ -349,7 +349,7 @@
 				<index>6</index>
 			</hint>
 		</puzzle>
-		<puzzle id="119" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="219" text="" before_flower="flower3" after_flower="flower3color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,5,0,0,0,4,-1,0,2,0,3,0,-1,0,1,-1,0,2,3,0,0,2,0,1,1,0,0,0,4,-1,-1,1,3,-1,-1,-1</board>
@@ -370,7 +370,7 @@
 				<index>18</index>
 			</hint>
 		</puzzle>
-		<puzzle id="120" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="220" text="" before_flower="flower3" after_flower="flower3color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,1,4,-1,-1,4,1,0,0,3,-1,0,-1,0,0,1,-1,0,4,0,0,0,2,0,0,0,1,2,0,1,2,5,0,0,3</board>
@@ -394,7 +394,7 @@
 				<index>27</index>
 			</hint>
 		</puzzle>
-		<puzzle id="121" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="221" text="" before_flower="flower3" after_flower="flower3color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,3,0,0,1,2,0,1,-1,-1,3,1,0,0,0,4,0,-1,-1,-1,-1,1,0,-1,1,0,0,0,4,-1,3,0,0,2,-1</board>
@@ -409,7 +409,7 @@
 				<index>12</index>
 			</hint>
 		</puzzle>
-		<puzzle id="122" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="222" text="" before_flower="flower3" after_flower="flower3color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,-1,3,1,1,2,0,3,0,0,0,-1,-1,0,0,2,0,-1,1,0,2,0,3,0,2,1,-1,0,-1,-1,-1,2,0,3</board>
@@ -427,7 +427,7 @@
 				<index>22</index>
 			</hint>
 		</puzzle>
-		<puzzle id="123" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="223" text="" before_flower="flower3" after_flower="flower3color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,0,1,3,-1,3,0,0,0,0,5,0,0,3,0,0,1,0,0,0,-1,1,2,1,4,2,-1,-1,0,-1,-1,1,0,0,3</board>
@@ -448,7 +448,7 @@
 				<index>22</index>
 			</hint>
 		</puzzle>
-		<puzzle id="124" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="224" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,1,4,-1,-1,2,0,0,3,4,0,0,0,1,0,1,3,0,-1,2,0,0,3,-1</board>
@@ -457,7 +457,7 @@
 				<index>17</index>
 			</hint>
 		</puzzle>
-		<puzzle id="125" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="225" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>2,0,1,-1,-1,0,-1,2,0,1,0,1,0,0,3,3,2,0,1,-1,1,0,0,3,-1</board>
@@ -469,7 +469,7 @@
 				<index>14</index>
 			</hint>
 		</puzzle>
-		<puzzle id="126" text="" before_flower="flower3" after_flower="flower3color">
+		<puzzle id="226" text="" before_flower="flower3" after_flower="flower3color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,1,2,-1,-1,2,0,0,3,2,0,0,3,1,0,1,3,-1,0,1,3,0,0,2</board>
@@ -490,7 +490,7 @@
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="127" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="227" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>5,0,0,0,0,3,0,2,0,0,3,0,0,0,-1,-1,1,0,3,1,-1,-1,0,2,4,0,0,0,2,0,1,0,0,0,0,5</board>
@@ -511,7 +511,7 @@
 				<index>16</index>
 			</hint>
 		</puzzle>
-		<puzzle id="128" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="228" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,0,0,4,-1,3,2,0,0,0,4,0,0,-1,-1,2,0,0,3,0,0,1,0,2,0,1,-1,-1,3,-1,-1,3,0,0,1</board>
@@ -529,7 +529,7 @@
 				<index>0</index>
 			</hint>
 		</puzzle>
-		<puzzle id="129" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="229" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>4,0,0,0,0,5,0,3,0,0,2,0,0,0,3,1,0,0,0,0,0,0,1,3,5,0,0,0,0,1,-1,4,1,3,0,2</board>
@@ -550,7 +550,7 @@
 				<index>23</index>
 			</hint>
 		</puzzle>
-		<puzzle id="130" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="230" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,4,-1,-1,-1,3,0,0,1,4,-1,1,0,0,0,0,5,-1,3,0,-1,0,0,-1,0,3,0,0,2,-1,2,0,0,3,-1</board>
@@ -562,7 +562,7 @@
 				<index>1</index>
 			</hint>
 		</puzzle>
-		<puzzle id="131" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="231" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,4,0,0,3,-1,4,0,0,3,1,-1,0,0,-1,0,0,3,0,0,1,2,0,1,0,2,-1,-1,0,-1,1,3,0,0,4</board>
@@ -577,7 +577,7 @@
 				<index>21</index>
 			</hint>
 		</puzzle>
-		<puzzle id="132" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="232" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,1,2,-1,2,0,1,0,0,-1,0,-1,2,0,1,-1,0,2,0,0,3,-1,0,0,3,0,0,1,4,1,-1,5,0,2</board>
@@ -595,7 +595,7 @@
 				<index>22</index>
 			</hint>
 		</puzzle>
-		<puzzle id="133" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="233" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,2,0,1,5,-1,-1,1,0,2,0,3,0,0,2,0,0,1,-1,-1,0,0,0,0,-1,-1,1,3,0,2,0,0,0,4,1</board>
@@ -610,7 +610,7 @@
 				<index>4</index>
 			</hint>
 		</puzzle>
-		<puzzle id="134" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="234" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>5,0,0,0,0,4,1,4,0,2,-1,0,0,0,2,0,1,0,2,0,0,0,4,0,-1,0,0,0,-1,1,-1,1,3,4,0,2</board>
@@ -628,7 +628,7 @@
 				<index>9</index>
 			</hint>
 		</puzzle>
-		<puzzle id="135" text="" before_flower="flower4" after_flower="flower4color">
+		<puzzle id="235" text="" before_flower="flower4" after_flower="flower4color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,2,0,1,-1,-1,2,0,0,3,2,1,0,0,3,-1,0,2,1,3,0,-1,3,0,0,1,2,-1,-1,3,0,0,1,-1</board>
@@ -658,7 +658,7 @@
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="136" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="236" text="" before_flower="flower5" after_flower="flower5color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,-1,1,2,-1,-1,2,0,0,3,2,0,0,3,1,0,1,3,-1,0,3,0,0,1,2</board>
@@ -667,7 +667,7 @@
 				<index>20</index>
 			</hint>
 		</puzzle>
-		<puzzle id="137" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="237" text="" before_flower="flower5" after_flower="flower5color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,1,0,0,3,-1,3,2,0,1,2,0,1,-1,-1,1,0,0,3,-1,-1,2,0,1,-1</board>
@@ -676,7 +676,7 @@
 				<index>6</index>
 			</hint>
 		</puzzle>
-		<puzzle id="138" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="238" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,1,-1,-1,-1,-1,0,0,2,0,0,3,3,0,0,2,0,1,0,3,1,0,-1,-1,0,-1,-1,0,-1,-1,1,2,0,3,-1,-1</board>
@@ -688,7 +688,7 @@
 				<index>0</index>
 			</hint>
 		</puzzle>
-		<puzzle id="139" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="239" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,0,1,-1,-1,-1,0,-1,2,0,1,-1,0,2,0,0,3,2,0,0,0,0,5,0,0,1,-1,-1,0,1,5,3,0,0,2</board>
@@ -703,7 +703,7 @@
 				<index>9</index>
 			</hint>
 		</puzzle>
-		<puzzle id="140" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="240" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,0,0,4,-1,3,-1,-1,2,0,1,0,-1,-1,0,2,3,0,3,0,0,1,0,2,0,1,3,-1,0,-1,2,0,0,0,4</board>
@@ -721,7 +721,7 @@
 				<index>22</index>
 			</hint>
 		</puzzle>
-		<puzzle id="141" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="241" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,2,-1,-1,-1,-1,0,0,1,4,-1,-1,0,3,0,0,2,3,0,0,2,0,0,1,0,0,0,0,5,-1,5,1,0,2,-1</board>
@@ -733,7 +733,7 @@
 				<index>1</index>
 			</hint>
 		</puzzle>
-		<puzzle id="142" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="242" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,5,0,2,1,-1,3,0,2,1,0,5,0,0,0,0,2,1,0,0,3,0,-1,-1,2,0,1,0,-1,-1,-1,2,0,4,-1</board>
@@ -748,7 +748,7 @@
 				<index>32</index>
 			</hint>
 		</puzzle>
-		<puzzle id="143" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="243" text="" before_flower="flower5" after_flower="flower5color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,0,3,1,-1,0,2,0,0,0,4,3,0,0,2,0,1,-1,1,3,0,0,2,-1,-1,2,0,4,0,-1,-1,1,0,0,3</board>
@@ -766,7 +766,7 @@
 				<index>12</index>
 			</hint>
 		</puzzle>
-		<puzzle id="144" text="" before_flower="flower5" after_flower="flower5color">
+		<puzzle id="244" text="" before_flower="flower5" after_flower="flower5color">
 			<height>5</height>
 			<width>5</width>
 			<board>-1,1,3,-1,-1,-1,0,0,1,3,1,2,0,0,0,0,-1,1,2,0,2,0,0,3,1</board>
@@ -784,7 +784,7 @@
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="145" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="245" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,3,0,0,2,3,1,0,-1,-1,0,0,0,2,-1,-1,3,0,0,1,0,2,0,4,0,0,0,1,0,-1,4,0,0,3,1</board>
@@ -799,7 +799,7 @@
 				<index>31</index>
 			</hint>
 		</puzzle>
-		<puzzle id="146" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="246" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>4,0,0,0,1,2,0,-1,1,4,-1,0,0,2,0,0,0,4,0,0,2,0,0,3,0,4,0,0,0,1,5,1,0,2,-1,-1</board>
@@ -814,7 +814,7 @@
 				<index>31</index>
 			</hint>
 		</puzzle>
-		<puzzle id="147" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="247" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,3,0,0,1,0,-1,4,1,0,2,0,2,0,0,0,4,3,0,0,0,4,0,-1,3,0,0,1,0,-1,-1,1,2,0,3</board>
@@ -832,7 +832,7 @@
 				<index>32</index>
 			</hint>
 		</puzzle>
-		<puzzle id="148" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="248" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,5,0,0,0,4,-1,0,-1,1,3,0,5,0,0,0,0,2,0,0,1,2,0,-1,2,0,0,3,1,-1,-1,1,2,-1,-1,-1</board>
@@ -847,7 +847,7 @@
 				<index>12</index>
 			</hint>
 		</puzzle>
-		<puzzle id="149" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="249" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,3,0,0,1,-1,-1,1,-1,-1,2,-1,3,0,2,1,0,1,0,0,0,0,5,3,0,0,1,2,-1,-1,1,4,-1,-1,-1</board>
@@ -862,7 +862,7 @@
 				<index>11</index>
 			</hint>
 		</puzzle>
-		<puzzle id="150" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="250" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,3,0,2,1,-1,1,0,0,0,0,5,2,0,3,0,0,1,0,2,1,-1,0,-1,3,0,0,1,4,-1,-1,1,2,-1,-1,-1</board>
@@ -880,7 +880,7 @@
 				<index>19</index>
 			</hint>
 		</puzzle>
-		<puzzle id="151" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="251" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,0,0,0,4,-1,0,1,2,-1,0,3,1,0,0,-1,2,0,-1,0,1,2,0,0,-1,0,-1,0,0,2,0,4,-1,1,3</board>
@@ -895,7 +895,7 @@
 				<index>5</index>
 			</hint>
 		</puzzle>
-		<puzzle id="152" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="252" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,1,-1,-1,-1,0,-1,2,0,1,4,0,3,0,0,2,0,3,1,-1,-1,0,0,1,0,0,0,4,0,-1,2,0,0,3,1</board>
@@ -910,7 +910,7 @@
 				<index>10</index>
 			</hint>
 		</puzzle>
-		<puzzle id="153" text="" before_flower="flower6" after_flower="flower6color">
+		<puzzle id="253" text="" before_flower="flower6" after_flower="flower6color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,2,-1,-1,-1,4,0,0,0,3,-1,5,0,0,0,0,1,0,1,3,-1,0,2,2,0,0,3,1,0,-1,2,1,0,0,3</board>
@@ -944,7 +944,7 @@
 		</afterImage>
 		<width>3</width>
 		<height>3</height>
-		<puzzle id="154" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="254" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,3,0,2,1,-1,1,0,0,3,0,-1,5,0,0,0,0,2,-1,1,2,0,0,0,-1,-1,0,0,4,1,-1,-1,1,4,-1,-1</board>
@@ -956,7 +956,7 @@
 				<index>1</index>
 			</hint>
 		</puzzle>
-		<puzzle id="155" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="255" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,5,-1,4,1,1,4,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,3,1,0,4,1,3,0,0,2</board>
@@ -971,7 +971,7 @@
 				<index>6</index>
 			</hint>
 		</puzzle>
-		<puzzle id="156" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="256" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,2,0,1,-1,-1,1,0,0,3,-1,-1,3,0,0,2,0,1,4,0,0,0,1,2,0,4,1,0,2,0,2,0,0,0,0,5</board>
@@ -989,7 +989,7 @@
 				<index>15</index>
 			</hint>
 		</puzzle>
-		<puzzle id="157" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="257" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,3,0,0,0,4,-1,0,1,4,-1,0,4,0,0,0,1,2,0,1,2,0,-1,-1,2,0,0,0,0,5,-1,-1,-1,2,0,1</board>
@@ -1001,7 +1001,7 @@
 				<index>12</index>
 			</hint>
 		</puzzle>
-		<puzzle id="158" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="258" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>1,0,0,3,0,2,3,-1,4,0,2,0,0,2,0,1,0,0,0,0,0,2,0,3,4,0,0,0,3,-1,-1,3,1,-1,-1,-1</board>
@@ -1016,7 +1016,7 @@
 				<index>5</index>
 			</hint>
 		</puzzle>
-		<puzzle id="159" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="259" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>2,0,0,0,4,1,0,2,0,0,3,0,3,0,0,2,1,0,-1,1,2,0,0,3,-1,-1,0,1,2,0,-1,-1,3,0,0,2</board>
@@ -1034,7 +1034,7 @@
 				<index>35</index>
 			</hint>
 		</puzzle>
-		<puzzle id="160" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="260" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,1,3,0,0,5,3,0,2,1,-1,0,0,0,-1,0,-1,0,0,3,1,0,2,0,4,0,0,0,1,0,-1,-1,-1,4,0,2</board>
@@ -1046,7 +1046,7 @@
 				<index>2</index>
 			</hint>
 		</puzzle>
-		<puzzle id="161" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="261" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>4,0,0,3,0,2,0,-1,3,0,0,1,0,-1,0,-1,1,3,0,1,2,-1,0,0,3,0,0,1,2,0,-1,2,0,0,0,4</board>
@@ -1061,7 +1061,7 @@
 				<index>3</index>
 			</hint>
 		</puzzle>
-		<puzzle id="162" text="" before_flower="flower7" after_flower="flower7color">
+		<puzzle id="262" text="" before_flower="flower7" after_flower="flower7color">
 			<height>6</height>
 			<width>6</width>
 			<board>-1,-1,-1,3,1,-1,-1,-1,3,0,0,1,3,1,0,0,0,2,0,0,2,1,0,0,0,2,1,0,0,3,1,3,0,0,5,-1</board>
