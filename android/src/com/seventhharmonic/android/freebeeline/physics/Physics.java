@@ -34,7 +34,7 @@ public class Physics implements PhysicsInterface {
 	str2physics.put("main_menu", new FlowerMainMenu(tiles));
 	str2physics.put("default", new LevelPack1(tiles));
 	str2physics.put("lp2", new LevelPack2(tiles));
-	
+	str2physics.put("lp3", new LevelPack3(tiles));
 	state = str2physics.get("main_menu");
     }
 
