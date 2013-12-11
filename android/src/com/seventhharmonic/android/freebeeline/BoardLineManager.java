@@ -190,6 +190,7 @@ public class BoardLineManager {
 			tiles[i+num].pointedToCount++;
 		    }
 		}
+
 		if (tiles[i].getArrow().equals(TextureManager.DOWNARROW)) {
 		    for (int j = 1; j < num; j++) {
 			if (i%boardHeight - j >= 0) {
@@ -201,8 +202,8 @@ public class BoardLineManager {
 			tiles[i-num].mEndDirectionType = EndDirectionType.DOWN;
 			tiles[i-num].pointedToCount++;
 		    }
-		    
 		}
+
 		if (tiles[i].getArrow().equals(TextureManager.LEFTARROW)) {
 		    for (int j = 1; j < num; j++) {
 			if (i/boardHeight + j < boardWidth) {
@@ -214,7 +215,6 @@ public class BoardLineManager {
 			tiles[i + num*boardHeight].mEndDirectionType = EndDirectionType.LEFT;
 			tiles[i + num*boardHeight].pointedToCount++;
 		    }
-		    
 		}
 		
 		if (tiles[i].getArrow().equals(TextureManager.RIGHTARROW)) {

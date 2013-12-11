@@ -9,6 +9,7 @@ public class PuzzleWidget extends Widget{
     
     private static final String TAG = "PuzzleWidget";
 	ImageWidget mFlower;
+	ImageWidget pulseBk;
     boolean rotateToggle = false;
     int currAngle = 0;
     boolean pulseToggle = false;
@@ -20,6 +21,9 @@ public class PuzzleWidget extends Widget{
     	this.height = height;
     	mFlower = new ImageWidget(0,0, width, height, p.getFlower());
 		mFlower.setPivot(new float[] {0.0f, 0.0f, 1.0f});
+		pulseBk = new ImageWidget(0,0, width, height, TextureManager.CLEAR);
+		pulseBk.setColor("white");
+		pulseBk.setPivot(new float[] {0.0f, 0.0f, 1.0f});
     }
     
     public void setColor(String color){
@@ -51,6 +55,7 @@ public class PuzzleWidget extends Widget{
     		pulseAmount = (pulseAmount +5)%360; 
     		mFlower.setHeight(height*(Math.abs(.2f*(float)Math.sin((pulseAmount)*3.14f/180f))+.8f));
     		mFlower.setWidth(width*(Math.abs(.2f*(float)Math.sin((pulseAmount)*3.14f/180f))+.8f));
+    		pulseBk.draw(r);
     	}
     	
     	mFlower.draw(r);	
@@ -59,6 +64,7 @@ public class PuzzleWidget extends Widget{
     public void setCenter(float x, float y){
     	super.setCenter(x,y);
     	mFlower.setCenter(x, y);
+    	pulseBk.setCenter(x, y);
     }
     
     public boolean isTouched(float[] pt){

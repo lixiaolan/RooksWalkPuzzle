@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import com.seventhharmonic.com.freebeeline.levelresources.LevelPack;
+
 import android.util.Log;
 
 /*
@@ -14,7 +16,7 @@ public class LevelPackWidget extends WidgetLayout{
     ImageWidget mImage;
     String TAG = "LevelPackWidget";
 
-    public LevelPackWidget(String text, String image){
+    public LevelPackWidget(LevelPack lp){
 
 	float height = Math.abs(GlobalApplication.getGeometry().getGeometry()[1]);
 	
@@ -22,7 +24,7 @@ public class LevelPackWidget extends WidgetLayout{
 	//mText = new TextWidget(0,0,1,.5f,text);
 	//mText.setRelativeCenter(0,height-mText.getHeight());
 	
-	mImage = new ImageWidget(0,0,.8f, .6f, image);
+	mImage = new ImageWidget(0,0,.8f, .5f, lp.getTitle());
 	mImage.setRelativeCenter(0,0);
 	mImage.setBorder(true);
 	mImage.setColor("white");
@@ -60,13 +62,11 @@ public class LevelPackWidget extends WidgetLayout{
 
 	@Override
 	public void touchHandler(float[] pt) {
-		// TODO Auto-generated method stub
-		
+		return;
 	}
 
 	@Override
 	public void swipeHandler(String direction) {
-		// TODO Auto-generated method stub
-		
+		return;
 	}    
 }

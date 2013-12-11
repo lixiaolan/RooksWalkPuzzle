@@ -5,6 +5,7 @@
 #include "rapidxml_print.hpp"
 
 #include "Pos.hpp"
+#include "PuzzleBookData.hpp"
 #include <string.h>
 #include <jni.h>
 #include <iostream>
@@ -18,7 +19,7 @@
 #include <ctime>
 #include <cstdlib> 
 #include <string>
-
+#include <map>
 
 using namespace rapidxml;
 using namespace std;
@@ -55,13 +56,22 @@ private:
   
   vector<pos> legalMoves();
   vector<pos> legalMovesTestUnique();
+
+
   bool goodDir(pos, int, bool, bool);
   bool goodDirTestUnique(pos, int, bool, bool);
+  bool goodDirSud(pos, int, bool, bool);
+  bool goodDirTestUniqueSud(pos, int, bool, bool);
+
   bool makeBoard(int);
   void countAllSolutions();
   bool isUnique();
   bool goodPlay(pos, pos);
   bool goodPlayTestUnique(pos, pos);
+  bool goodPlaySud(pos, pos);
+  bool goodPlayTestUniqueSud(pos, pos);
+
+
   void markUnused();
   void clearBoolMats();
   void addHint(int r, int c);
@@ -79,12 +89,15 @@ public:
   BeeLinePuzzle();
   void print();
   void printSoln();
+  void printGameBoard();
+
   string printUnique();
   void printPuzzle();
   int uniqueCounter;
   void plotToFile(ofstream &ofs);
-  int getLength();
-  void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, int*);
+int getLength();
+void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, map<int, string> textMap,int*);
+void buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBookData &PBD);
   string getHintDir(int i);
   string getBoardXML();
   string getPathXML();

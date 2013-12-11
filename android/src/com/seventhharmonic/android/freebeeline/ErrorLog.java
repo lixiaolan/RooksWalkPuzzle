@@ -1,5 +1,7 @@
 package com.seventhharmonic.android.freebeeline;
 
+import android.util.Log;
+
 import com.seventhharmonic.android.freebeeline.graphics.TextureManager;
 
 public class ErrorLog {
@@ -22,7 +24,7 @@ public class ErrorLog {
 	errorMap = new ErrorMap();
 	logErrors();
     }
-
+    
     public boolean hasError() {
 	setLog();
 	ErrorBundle e;
@@ -36,7 +38,7 @@ public class ErrorLog {
 	}
 	return false;
     }
-
+    
     public boolean hasError(int index) {
 	setLog();
 	ErrorBundle e;
@@ -48,22 +50,22 @@ public class ErrorLog {
 	}
 	return false;
     }
-
+    
     
     public String getError(int index) {
 	if (!errorMap.containsKey(index)) return "";
 	
 	ErrorBundle e = errorMap.get(index);
 	
-	if (e.pointsAtSame || e.pointedAtBySame) {
-	    return TextureManager.MATCHINGNUMBERRULE;
+	/*if (e.pointsAtSame || e.pointedAtBySame) {
+	  return TextureManager.MATCHINGNUMBERRULE;
+	  }*/
+	if(e.sudokuRule){
+	    return TextureManager.SUDOKURULE;
 	}
-	else if (e.pointsPast || e.pointedPast) {
+	else if (e.pointsPast || e.pointedPast || e.pointsOnTo) {
 	    return TextureManager.PASSTHROUGHRULE;
 	}
-	else if (e.pointsAtBadDir || e.pointedAtByBadDir) {
-	    return TextureManager.TURNINGRULE;
-	} 
 	else if (e.pointsOffBoard){
 	    return TextureManager.OFFBOARD;
 	}
@@ -81,8 +83,28 @@ public class ErrorLog {
 	int index;
 	int num;
 	for (int i = 0; i < mBoard.tiles.length; i++ ) {
+	    if(mBoard.tiles[i].hasNumber()){
+		int height = mBoard.boardHeight;
+		int width = mBoard.boardWidth;
+		//Assuming height is same as width
+		for(int k = 0; k< mBoard.boardHeight;k++){
+		    //row check
+		    if(mBoard.tiles[i%height+height*k].getNumber().equals(mBoard.tiles[i].getNumber()) && (i%height+height*k)!=i){
+			errorMap.get(i).sudokuRule = true;
+			Log.d("ErrorLog", "row error "+Integer.toString(i));
+			break;
+		    }
+		    //column check
+		    if(mBoard.tiles[i/width*width+k].getNumber().equals(mBoard.tiles[i].getNumber()) && (i/width*width + k)!=i){
+			errorMap.get(i).sudokuRule = true;
+			Log.d("ErrorLog", "column error "+Integer.toString(i));
+			break;
+		    }
+		}
+	    }
+	    
 	    if (mBoard.tiles[i].hasNumber() && mBoard.tiles[i].hasArrow()) {
-		num = Integer.parseInt(mBoard.tiles[i].number);
+		num = Integer.parseInt(mBoard.tiles[i].number);	
 		if (mBoard.tiles[i].getArrow().equals(TextureManager.UPARROW)) {
 		    for (int j = 1; i%mBoard.boardHeight + j < mBoard.boardHeight; j++) {
 			index = i+j;
@@ -98,6 +120,10 @@ public class ErrorLog {
 			    if (t.isBlack() || !t.isBlank()) {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
+			    }
+			    //Check if any numbers point onto the the path
+			    if (t.pointedToCount > 0) {
+				errorMap.get(i).pointsPast = true;
 			    }
 			}
 			
@@ -118,10 +144,8 @@ public class ErrorLog {
 				errorMap.get(index).multiPointedTo = true;
 			    }
 			    if (t.isPointedAt()) {
-				errorMap.get(i).pointsPast = true;
-				errorMap.get(index).pointedPast = true;
+				errorMap.get(i).pointsOnTo = true;
 			    }
-			    
 			}
 		    }
 		    //Checking if we point off the board
@@ -146,6 +170,10 @@ public class ErrorLog {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
 			    }
+			    //Check if any numbers point onto the the path
+			    if (t.pointedToCount > 0) {
+				errorMap.get(i).pointsPast = true;
+			    }
 			}
 			
 			//Checking orthogonality explicitly
@@ -164,10 +192,12 @@ public class ErrorLog {
 				errorMap.get(i).pointsAtMultiPointedTo = true;
 				errorMap.get(index).multiPointedTo = true;
 			    }
+
 			    if (t.isPointedAt()) {
-				errorMap.get(i).pointsPast = true;
-				errorMap.get(index).pointedPast = true;
+				errorMap.get(i).pointsOnTo = true;
 			    }
+
+
 			}
 		    }
 		    //Checking if we point off the board
@@ -192,6 +222,10 @@ public class ErrorLog {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
 			    }
+			    //Check if any numbers point onto the the path
+			    if (t.pointedToCount > 0) {
+				errorMap.get(i).pointsPast = true;
+			    }
 			}
 			
 			//Checking orthogonality explicitly
@@ -211,10 +245,8 @@ public class ErrorLog {
 				errorMap.get(index).multiPointedTo = true;
 			    }
 			    if (t.isPointedAt()) {
-				errorMap.get(i).pointsPast = true;
-				errorMap.get(index).pointedPast = true;
+				errorMap.get(i).pointsOnTo = true;
 			    }
-
 			}
 		    }
 		    //Checking if we point off the board
@@ -239,6 +271,10 @@ public class ErrorLog {
 				errorMap.get(i).pointsPast = true;
 				errorMap.get(index).pointedPast = true;
 			    }
+			    //Check if any numbers point onto the the path
+			    if (t.pointedToCount > 0) {
+				errorMap.get(i).pointsPast = true;
+			    }
 			}
 			
 			//Checking orthogonality explicitly
@@ -258,10 +294,8 @@ public class ErrorLog {
 				errorMap.get(index).multiPointedTo = true;
 			    }
 			    if (t.isPointedAt()) {
-				errorMap.get(i).pointsPast = true;
-				errorMap.get(index).pointedPast = true;
+				errorMap.get(i).pointsOnTo = true;
 			    }
-
 			}
 		    }
 		    //Checking if we point off the board
@@ -273,4 +307,3 @@ public class ErrorLog {
 	}
     }
 }
-

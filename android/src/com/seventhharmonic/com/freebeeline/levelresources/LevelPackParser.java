@@ -40,14 +40,27 @@ public class LevelPackParser extends BaseParser {
     	Element hizzle = puzzle.getChild(HINT);
     	Element afterImage = chapter.getChild(AFTERIMAGE);
     	
+    	root.setStartElementListener(new StartElementListener(){
+    		public void start(Attributes a){
+    			lp.setId(a.getValue("id"));
+    			lp.setPurchaseId(a.getValue("purchaseId"));
+    			lp.setTitle(a.getValue("title"));
+    			lp.setStyle(a.getValue("bookStyle"));
+    			lp.setPurchaseBanner(a.getValue("purchaseBanner"));
+    			lp.setPurchaseTag(a.getValue("purchaseTag"));
+    			lp.setKickback(Integer.parseInt(a.getValue("kickback")));
+    			Log.d(TAG, "Style in Parser: "+a.getValue("bookStyle"));
+    		}
+    	});
     	
+    	/*
     	root.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
     		public void end(String body){
 		    lp.setTitle(body);
     		}
     		
 	    });
-    	
+    	*/
     	root.getChild(CHAPTER).setStartElementListener(new StartElementListener(){
     		public void start(Attributes a) {
 		    ch.reset();

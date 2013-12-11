@@ -42,16 +42,18 @@ public class ViewActivity extends Activity {
     private TextView mQuoteView;
     private TextView mWaitView;
     
-    private DataServer mDataServer;
-    private static LinearLayout loadingScreen;
-    public static Store mStore;
     
+    private static LinearLayout loadingScreen;
+
+    public static Store mStore;
+    public static DataServer mDataServer;
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.viewactivity);
 	Log.d(TAG, "Run View Activity");
+	
 	mModel = new Model(this);
 	mRenderer = new MyGLRenderer(this, mModel);
 	
@@ -116,11 +118,15 @@ public class ViewActivity extends Activity {
 	// The following call resumes a paused rendering thread.
 	// If you de-allocated graphic objects for onPause()
 	// this is a good place to re-allocate them.
+	mGLView.onResume();
 	GlobalApplication.getPuzzleDB().open();
 	GlobalApplication.getHintDB().open();
 	GlobalApplication.getPurchasedDB().open();	
-	mGLView.onResume();
-	GlobalApplication.getMyMusic().resumeMusic();
+	//TODO:This also sucks. Why is music hard???
+	if(mDataServer.getMusicToggle()) {
+		Log.d(TAG, "WHY AM I RESUMING .,.....");
+		GlobalApplication.getMyMusic().resumeMusic();
+	}
     }
     
     @Override
@@ -141,7 +147,8 @@ public class ViewActivity extends Activity {
 	
 	//TODO: Loading puzzles with their completion value. This sucks balls. Do this elsewhere.
 	LevelPackProvider mLPP = GlobalApplication.getLevelPackProvider();
-	LevelPack mLP = mLPP.getLevelPack(0);
+	for(int i =0;i<mLPP.getNumberOfLevelPacks();i++){
+	LevelPack mLP = mLPP.getLevelPack(i);
 	//	Log.d(TAG, mLP.getTitle());
 	//	Log.d(TAG, Integer.toString(mLP.getAllChapters().size()));
 	SQLPuzzle q;
@@ -150,12 +157,13 @@ public class ViewActivity extends Activity {
 		q = GlobalApplication.getPuzzleDB().getPuzzle(p.getId());
 		String result = q.getCompleted();
 		Log.d(TAG,"db result "+result+" "+p.getId());
-		if(result.equals("true"))
+		//TODO: BOOGIE:Uncomment to unmark all puzzles as completed
+		//if(result.equals("true"))
 		    p.setCompleted(true);	    
 		p.setMoves((int)q.getMovesUsed());
 	    }
 	}
-	 
+	}
 		EasyTracker.getInstance(this).activityStart(this);
     }	
     
@@ -163,7 +171,7 @@ public class ViewActivity extends Activity {
     
     
     protected void onStop() {
-	super.onStop();
+    	super.onStop();
 	//	GlobalApplication.getMyMusic().stopMusic();
     	EasyTracker.getInstance(this).activityStop(this);
     	mGLView.onPause();
@@ -200,7 +208,7 @@ public class ViewActivity extends Activity {
     }
     
     public void closeQuoteScreen(View v) {
-	loadingScreen.setVisibility(View.INVISIBLE);
+    	loadingScreen.setVisibility(View.INVISIBLE);
     }    
     
     public void onBackPressed() {

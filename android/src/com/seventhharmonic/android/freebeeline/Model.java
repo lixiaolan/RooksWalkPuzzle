@@ -36,7 +36,7 @@ class Model {
     public FlowerMenu mFlowerMenu;
     private boolean initializeToggle = false;
     
-    TextBox mVersionBanner;
+    //TextBox mVersionBanner;
     Store mStore;
     //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
     
@@ -59,16 +59,18 @@ class Model {
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
 	mTitle = new ImageWidget(.5f,.8f,.5f,.5f,"title");
-	mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
-	mVersionBanner.setCenter(0.0f, 0.0f);
+	//mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
+	//mVersionBanner.setCenter(0.0f, 0.0f);
 	//	muteButton = new ImageWidget(-.05f,GlobalApplication.getGeometry().getGeometry()[1],.1f, .1f, "title");
+	
 	muteButton = new TextToggleButtonWidget(10.0f,.1f,.1f, .1f, TextureManager.SPEAKER_ON, TextureManager.SPEAKER_OFF);
 	muteButton.setBorder(false);
 	muteButton.setClickListener(new GameEventListener() {
 		@Override
 		public void event(int i) {
-			GlobalApplication.getAnalytics().sendMuteSound(muteButton.getToggle());
+		    GlobalApplication.getAnalytics().sendMuteSound(muteButton.getToggle());
 		    GlobalApplication.getMyMusic().toggleMusic();
+		    ViewActivity.mDataServer.saveMusicToggle(GlobalApplication.getMyMusic().isPlaying());
 		}
 	    });
     }
@@ -94,7 +96,7 @@ class Model {
     }
     
     public void toggleRules(boolean toggle) {
-	mBoard.toggleRules(toggle);
+    	mBoard.toggleRules(toggle);
     }
     
     public void touched(float[] pt) {
@@ -180,7 +182,6 @@ class Model {
 	case MAIN_MENU_GEAR:
 	    mFlowerMenu.draw(r);
 	    mTitle.draw(r);
-	    mVersionBanner.draw(r);
 	    mMenuManager.draw(r);
 	    break;
 	case FLOWER_MENU:	
@@ -235,8 +236,16 @@ class Model {
 
     public void setDataServer(DataServer d){
     	mDataServer = d;
+    	state.linesOn = d.getLinesOption();
+    	state.ruleCheck = d.getErrorCheckingOption();
+    	boolean musicToggle = mDataServer.getMusicToggle();
+    	GlobalApplication.getMyMusic().playSong("default");
+    	//GlobalApplication.getMyMusic().setMusic(musicToggle);
+    	//TODO: MAKE THIS BETTER> 
+    	if(!musicToggle){
+    		muteButton.touchHandler(muteButton.getCenter());
+    	}
     }
-    
     public void setStore(Store s){
 	mStore = s; 
     }
@@ -266,17 +275,27 @@ class Model {
     }*/
     
    
-    
+    //Broken on Game_Menu_End - this might be okay.
     public void onBack(){
 	switch(state.state){
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-	case GAME_OPENING:
-	    mMenuManager.callCallback(0);
+	case ABOUT:
+		mMenuManager.callCallback(0);
 	    break;
 	case MAIN_MENU_OPENING:
 	    ((Activity)context).finish();
+	    break;
+	case TUTORIAL_MAIN_MENU:
+	case TUTORIAL:
+	    mMenuManager.callCallback(1);
+	    break;
+	case GAME_OPENING:
+	    mMenuManager.callCallback(0);
+	    break;
+	case FLOWER_MENU:
+	    mMenuManager.callCallback(1);
 	    break;
 	default:
 	    break;

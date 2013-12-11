@@ -45,13 +45,15 @@ public class Store {
 		this.mContext = c;
 		this.mModel = mModel;
 		PDS = GlobalApplication.getPurchasedDB();
+		//This is hardcoded for security - for now.
 		purchasables = new ArrayList<String>(Arrays.asList(
-				new String[]{"android.test.purchased","levelpack1","levelpack2"}));
+				new String[]{"android.test.purchased","storyPack2","test2", "test3", "storypack2"}));
+		//Actual level pack id here
 		levelPackToChapterLimit = new HashMap<String, Integer>();
 		levelPackToChapterLimit.put("android.test.purchased", Integer.valueOf(1));
-		levelPackToChapterLimit.put("levelpack1", Integer.valueOf(1));
-		levelPackToChapterLimit.put("levelpack2", Integer.valueOf(3));
-		
+		levelPackToChapterLimit.put("storyPack1", Integer.valueOf(3));
+		levelPackToChapterLimit.put("storyPack2", Integer.valueOf(2));
+		levelPackToChapterLimit.put("challengePack1", Integer.valueOf(2));
 		initializeIab();
 		
 	}
@@ -346,8 +348,8 @@ public class Store {
 	/***********************************************************************/
 	//Code for level pack purchase
 	public boolean hasLevelPack(LevelPack lp){
-		//TODO: Uncomment to lock levelpack.
-		/*String id  = lp.getId();
+		//TODO: BOOGIE. Uncomment to purchase level packs.
+		/*String id  = lp.getPurchaseId();
 		if(purchasables.contains(id)){
 			if(mInventory == null){
 				Log.d(TAG, "Found a null inventory");
@@ -355,9 +357,11 @@ public class Store {
 			}
 			
 			//TODO: Compare to how mainActivity is doing this more safely. You should really verify the purchase here. 
-			if(mInventory.hasPurchase(id)){	
+			if(mInventory.hasPurchase(id)){
+				Log.d(TAG, "Had the purchase");
 				return true;
 			} else {
+				Log.d(TAG, "Don't have the purchase");
 				return false;
 			}
 		}
@@ -366,6 +370,7 @@ public class Store {
 	}
 
 	public int getLevelPackChapterLimit(LevelPack lp){
+		//Use the actual Id of the levelpack here.
 		String id  = lp.getId();
 		if(levelPackToChapterLimit.containsKey(id)){
 			return levelPackToChapterLimit.get(id);
@@ -386,8 +391,8 @@ public class Store {
 		 *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
 		 *        an empty string, but on a production app you should carefully generate this. */
 		String payload = "";
-		GlobalApplication.getAnalytics().sendPurchase(lp.getId());
-		mHelper.launchPurchaseFlow(mContext, lp.getId(), RC_REQUEST,
+		GlobalApplication.getAnalytics().sendPurchase(lp.getPurchaseId());
+		mHelper.launchPurchaseFlow(mContext, lp.getPurchaseId(), RC_REQUEST,
 				mPurchaseLevelPackFinishedListener, payload);
 		
 	}
@@ -412,8 +417,9 @@ public class Store {
 					return;
 				} 
 
-				//Note that we should NOT CONSUME since you get unlimited hints.
-				//Need to update the inventory object.
+				// Note that we should NOT CONSUME since you can't buy this again.
+				// Need to update the inventory object.
+				// Now when the level pack returns, it will query for the existence of this, and we won't have problems.
 				mInventory.addPurchase(purchase);
 				GlobalApplication.getAnalytics().sendPurchase(purchase.getSku());
 
@@ -423,7 +429,7 @@ public class Store {
 				PDS.setPurchased(purchase.getSku(), true);
 				PDS.close();
 
-				//Update the board test widget.
+				//Now send FlowerMenu to the correct state. 
 				mModel.setModelToChapterSelect();
 				setWaitScreen(false);
 			}catch(Exception e){

@@ -21,6 +21,8 @@ class TutorialBoard2 extends Board {
 	public TutorialBoard2() {
 		//Worse fix ever. Daniel Ross confirms that super() is run by default after.
 		super(null);
+		boardWidth = 6;
+		boardHeight = 6;
 		float[] center = {.20f,-1.0f, 0.0f };
 		mCPB = new CircleProgressBarWidget(4, 0, -1, .05f);
 		mBanner = new TextBox(0,0,.9f,"");
@@ -305,6 +307,9 @@ class TutorialBoard2 extends Board {
 			mBanner.setText(mTutorialInfo.banners[2]);
 			showHint(27);
 			tiles[27].setColor("dullyellow");
+			//TODO: Crappy fix to a bizare bug where some squares stay red.
+			tiles[7].setColor("transparent");
+			tiles[10].setColor("transparent");
 			mBoardLineManager.drawLines();
 			refTime = System.currentTimeMillis();
 			state.period = DrawPeriod.DURING; 
@@ -396,9 +401,11 @@ class TutorialBoard2 extends Board {
 				tiles[10].setArrow("left_arrow");
 				tiles[10].setTextures();
 				tiles[10].setColor("red");
+				tiles[7].setColor("red");
 
 			} else if(time < 4){
 				tiles[10].setColor("transparent");
+				tiles[7].setColor("transparent");
 				tiles[10].setNumber("3");
 				tiles[10].setArrow("left_arrow");
 				tiles[10].setTextures();
@@ -423,152 +430,4 @@ class TutorialBoard2 extends Board {
 			leftArrow.draw(r);
 		}
 	}
-
-	/*
-    class PlayGame extends State<BoardTile> {
-	long refTime;
-	private Background mCheck;
-	Menu mMenu;
-	private int at = -1;
-
-
-	public PlayGame(){
-	    mBee.setMood(Mood.ASLEEP);
-	    refTime = System.currentTimeMillis();
-	    prepBoard();		
-	    mCheck  = new Background("check",.11f);
-	    float[] center = {-.7f,-1f, 0f};
-	    mCheck.setCenter(center);
-	    mBanner.set("tutorial_banner_4");
-	    mMenu = new Menu(5);
-	}
-
-	private void prepBoard() {
-	    restoreBoard(TutorialInfo2.solutionNumbersPlayGame, TutorialInfo2.initialNumbersPlayGame, TutorialInfo2.initialArrowsPlayGame, TutorialInfo2.solutionArrowsPlayGame, TutorialInfo2.pathPlayGame, TutorialInfo2.clickablePlayGame);
-	    drawLines();
-	    for (int i = 0; i < tiles.length; i++) {
-		tiles[i].rotate = false;
-		tiles[i].setTextures();
-		tiles[i].setSize(tileSize);
-	    }
-	}
-
-	@Override
-	    public void enterAnimation(BoardTile[] tiles) {
-	    state.period = DrawPeriod.DURING; 
-	}
-
-	@Override
-	    public void duringAnimation(BoardTile[] tiles) {
-	}
-
-	public void draw(BoardTile[] tiles, MyGLRenderer r){
-	    mBoardBg.draw(r);
-	    super.draw(tiles, r);
-	    mBanner.draw(r);
-	    mMenu.draw(r);
-	    mCheck.draw(r);
-	    mBee.draw(r);
-
-	}
-
-	public void touchHandler(float[] pt){
-	    int val = mMenu.touched(pt);			
-	    if(val == -1){
-		if (at != -1) {
-		    tiles[at].setColor("transparent");
-		}
-		at = touched(pt);
-		if(at != -1 ) {
-		    if(tiles[at].isBlack() == false) {
-			tiles[at].setColor("blue");
-			if(tiles[at].isClickable())
-			    mMenu.activate(pt);
-		    }
-		}
-	    } else {
-		if (at != -1) {
-		    tiles[at].setUserInput(val);
-		    drawLines();
-		}
-	    }
-
-	    if(mCheck.touched(pt) == 1){
-		if(checkSolution()){
-		    setStateForward();      
-		} else {
-		    mBanner.set(TextureManager.TRY_AGAIN);
-		}
-	    }
-	}
-
-	public void swipeHandler(String direction){
-	    if (at != -1 && tiles[at].isClickable()) {
-		tiles[at].setArrow(direction);
-		tiles[at].setTextures();
-		drawLines(); 
-		mMenu.menuActive = false;
-	    }}
-
-    }
-
-    class PlayGameEnd extends State<BoardTile> {
-	boolean[] rotateTiles = new boolean[36];
-	boolean[] flipped = new boolean[36];
-	long[] refTime = new long[36];
-	public PlayGameEnd() {
-	    mBanner.set("tutorial_banner_5");
-	    mBee.setState(GameState.GAME_OPENING,TutorialInfo2.lengthPlayGame);
-	    mBee.setMood(Mood.HAPPY);
-	    for (int i = 0; i < tiles.length; i++) {
-		flipped[i] = false;
-		rotateTiles[i] = false;
-		float Sx = ( (i/6) - 2.5f )/4.0f;
-		float Sy = ( (i%6) - 2.5f )/4.0f;
-		tiles[i].setSize(.12f);
-		float center[] = { Sx, Sy, 0.0f};
-		tiles[i].center = center;
-		tiles[i].setColor("transparent");
-		refTime[i] = System.currentTimeMillis();
-		tiles[i].setPivot(tiles[i].getCenter());
-	    }
-	}
-
-
-	//The new animation:
-	public void enterAnimation(BoardTile[] tiles) {
-	    //	    long time = System.currentTimeMillis()-refTime[0];
-	    for (int i = 0; i < tiles.length ; i++) {
-		if (tiles[i].true_solution >0) {
-		    float[] pivot = {1.0f,1.0f,0.0f};
-		    String[] s = new String[2];
-		    s[0] = TextureManager.CLEAR;
-		    s[1] = tiles[i].flowerTexture;
-		    tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-		}
-	    }
-	    period = DrawPeriod.DURING;
-	}
-
-	public void duringAnimation(BoardTile[] tiles) {
-	    for(int i=0;i<tiles.length;i++){
-		if(tiles[i].rotate && !rotateTiles[i]){
-		    refTime[i] = System.currentTimeMillis();
-		    rotateTiles[i] = true;
-		    float[] pivot = {1.0f,1.0f,0.0f};
-		    String[] s = new String[2];
-		    s[0] = tiles[i].arrow;
-		    s[1] = tiles[i].number;
-		    tiles[i].setFlipper(geometry[1], pivot, 1.5f, 0.0f, s);
-		    //tiles[i].rotate = false;
-		}
-	    }
-	}
-	public void draw(BoardTile[] tiles, MyGLRenderer r){
-	    mBoardBg.draw(r);
-	    super.draw(tiles, r);
-	    mBanner.draw(r);
-	    mBee.draw(r);
-	}
-    } */       
 }

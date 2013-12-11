@@ -1,0 +1,9 @@
+border_N
+border_E
+border_S
+border_W
+border_NE
+border_NW
+border_SW
+border_SE
+box

@@ -28,13 +28,13 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), widt
   makeBoard(l);
   markUnused();
   bool test;
-  for (int i = 0; i < 20; i++) {
+  for (int i = 0; i < 40; i++) {
 
     cout << "try..." << endl;
     getHints(hintNum);//select the hints to be used;
-    test = checkUnique();
-
-    
+    if (checkUnique())
+      break;
+  
   }
   if (uniqueCounter == 1) {
     cout << "win!" << endl;
@@ -159,14 +159,14 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = i - last.r;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlay(pos(i,last.c),last)) {
+	  if (goodPlaySud(pos(i,last.c),last)) {
 	    legalMovesList.push_back(pos(i,last.c));
 	  }
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlay(pos(i,last.c),last)) {
+	    if (goodPlaySud(pos(i,last.c),last)) {
 	      legalMovesList.push_back(pos(i,last.c));
 	    }
 	}
@@ -180,13 +180,13 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = last.r - i;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlay(pos(i,last.c),last))
+	  if (goodPlaySud(pos(i,last.c),last))
 	    legalMovesList.push_back(pos(i,last.c));
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlay(pos(i,last.c),last))
+	    if (goodPlaySud(pos(i,last.c),last))
 	      legalMovesList.push_back(pos(i,last.c));
 	}
 	else
@@ -200,13 +200,13 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = i - last.c;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlay(pos(last.r,i),last))
+	  if (goodPlaySud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
 	  break;
 	}
 	if (leftRight[last.r][i] == false) {
 	  if (upDown[last.r][i] == false)
-	    if (goodPlay(pos(last.r,i),last))
+	    if (goodPlaySud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -219,13 +219,13 @@ vector<pos> BeeLinePuzzle::legalMoves() {
       int temp = last.c - i;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlay(pos(last.r,i),last))
+	  if (goodPlaySud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
 	  break;
 	}
 	if (leftRight[last.r][i]==false){
 	  if (upDown[last.r][i] == false)
-	    if (goodPlay(pos(last.r,i),last))
+	    if (goodPlaySud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -256,14 +256,19 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = i - last.r;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlayTestUnique(pos(i,last.c),last)) {
+	  if (goodPlayTestUniqueSud(pos(i,last.c),last)) {
 	    legalMovesList.push_back(pos(i,last.c));
 	  }
 	  break;
 	}
+	//This makes sure that the path does not go though black squares
+	//already designated in the puzzle:
+	if (moveArea[i][last.c] == -1) {
+	  break;
+	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlayTestUnique(pos(i,last.c),last)) {
+	    if (goodPlayTestUniqueSud(pos(i,last.c),last)) {
 	      legalMovesList.push_back(pos(i,last.c));
 	    }
 	}
@@ -277,13 +282,16 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = last.r - i;
       if (temp > 0) {
 	if (pos(i,last.c) == im) {
-	  if (goodPlayTestUnique(pos(i,last.c),last))
+	  if (goodPlayTestUniqueSud(pos(i,last.c),last))
 	    legalMovesList.push_back(pos(i,last.c));
+	  break;
+	}
+	if (moveArea[i][last.c] == -1) {
 	  break;
 	}
 	if (upDown[i][last.c]==false) {
 	  if (leftRight[i][last.c]==false)
-	    if (goodPlayTestUnique(pos(i,last.c),last))
+	    if (goodPlayTestUniqueSud(pos(i,last.c),last))
 	      legalMovesList.push_back(pos(i,last.c));
 	}
 	else
@@ -297,13 +305,16 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = i - last.c;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlayTestUnique(pos(last.r,i),last))
+	  if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (moveArea[last.r][i] == -1) {
 	  break;
 	}
 	if (leftRight[last.r][i] == false) {
 	  if (upDown[last.r][i] == false)
-	    if (goodPlayTestUnique(pos(last.r,i),last))
+	    if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -316,13 +327,16 @@ vector<pos> BeeLinePuzzle::legalMovesTestUnique() {
       int temp = last.c - i;
       if (temp > 0) {
 	if (pos(last.r,i) == im) {
-	  if (goodPlayTestUnique(pos(last.r,i),last))
+	  if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	    legalMovesList.push_back(pos(last.r,i));
+	  break;
+	}
+	if (moveArea[last.r][i] == -1) {
 	  break;
 	}
 	if (leftRight[last.r][i]==false){
 	  if (upDown[last.r][i] == false)
-	    if (goodPlayTestUnique(pos(last.r,i),last))
+	    if (goodPlayTestUniqueSud(pos(last.r,i),last))
 	      legalMovesList.push_back(pos(last.r,i));
 	}
 	else
@@ -378,6 +392,57 @@ bool BeeLinePuzzle::goodPlay(pos play, pos orig) {
   for (int i = play.c; i >= 0; i--) {
     if (i != play.c) {
       if (moveArea[play.r][i] == num && !vertical[play.r][i] && !leftUp[play.r][i]) {
+  	return false;
+      }
+    }
+  }
+  return true;
+}
+
+bool BeeLinePuzzle::goodPlaySud(pos play, pos orig) {
+  // If the suggest move is already occupied, return false
+  if (moveArea[play.r][play.c] != 0) return false;
+  
+  // Otherwise, check that the number placed is a proper
+  // distance from any matching number in the row or col.
+
+  pos diff = play - orig;
+  int num = abs(diff.r)+abs(diff.c);    
+
+
+  if (!goodDirSud( play, num, diff.c == 0 ,(diff.c+diff.r)>0)) {
+    return false;
+  }
+  if (moveArea[orig.r][orig.c] == num)
+    return false;
+
+  for (int i = play.r; i < height; i++) {
+    if (i != play.r) {
+      if (moveArea[i][play.c] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.r; i >= 0; i--) {
+    if (i != play.r) {
+      if (moveArea[i][play.c] == num) {
+	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i < width; i++) {
+    if (i != play.c) {
+      if (moveArea[play.r][i] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i >= 0; i--) {
+    if (i != play.c) {
+      if (moveArea[play.r][i] == num) {
   	return false;
       }
     }
@@ -449,12 +514,75 @@ bool BeeLinePuzzle::goodPlayTestUnique(pos play, pos orig) {
   return true;
 }
 
+bool BeeLinePuzzle::goodPlayTestUniqueSud(pos play, pos orig) {
+  // If the suggest move is already occupied, return false
+  if (gameBoard[play.r][play.c] != 0) return false;
+  
+  // Otherwise, check that the number placed is a proper
+  // distance from any matching number in the row or col.
+
+  pos diff = play - orig;
+  int num = abs(diff.r)+abs(diff.c);    
+  
+  bool vert = (diff.c == 0);
+  bool leup = ((diff.c+diff.r)>0);
+
+  for (int i = 0; i < hintsPos.size(); i++) {
+    if (hintsPos[i] == play) {
+      if (hintsNum[i] == num && hintsVertical[i] == vert && hintsLeftUp[i] == leup) {
+      }
+      else {
+	return false;
+      }
+    }
+  }
+  
+  if (!goodDirTestUniqueSud( play, num, vert, leup)) {
+    return false;
+  }
+  if (gameBoard[orig.r][orig.c] == num) {
+    return false;
+  }
+
+  for (int i = play.r; i < height; i++) {
+    if (i != play.r) {
+      if (gameBoard[i][play.c] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.r; i >= 0; i--) {
+    if (i != play.r) {
+      if (gameBoard[i][play.c] == num) {
+	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i < width; i++) {
+    if (i != play.c) {
+      if (gameBoard[play.r][i] == num) {
+  	return false;
+      }
+    }
+  }
+
+  for (int i = play.c; i >= 0; i--) {
+    if (i != play.c) {
+      if (gameBoard[play.r][i] == num) {
+  	return false;
+      }
+    }
+  }
+  return true;
+}
+
 bool BeeLinePuzzle::goodDir(pos in, int temp, bool v, bool ul) {
   if (positions.size() == 1)
     return true;
 
   //int temp = moveArea[in.r][in.c];
-
 
   if (v) {
     if (ul) {
@@ -488,6 +616,35 @@ bool BeeLinePuzzle::goodDir(pos in, int temp, bool v, bool ul) {
       }
     }
   }
+  return true;
+}
+
+bool BeeLinePuzzle::goodDirSud(pos in, int temp, bool v, bool ul) {
+  if (positions.size() == 1)
+    return true;
+
+  //int temp = moveArea[in.r][in.c];
+
+      for (int i = in.r; i >=0; i--) {
+  	if (i != in.r && moveArea[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.r; i < height; i++) {
+  	if (i != in.r && moveArea[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i >=0; i--) {
+  	if (i != in.c && moveArea[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i < width; i++) {
+  	if (i != in.c && moveArea[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
   return true;
 }
 
@@ -527,6 +684,33 @@ bool BeeLinePuzzle::goodDirTestUnique(pos in, int temp, bool v, bool ul) {
       }
     }
   }
+  return true;
+}
+
+bool BeeLinePuzzle::goodDirTestUniqueSud(pos in, int temp, bool v, bool ul) {
+  if (tPosVec.size() == 1)
+    return true;
+
+      for (int i = in.r; i >=0; i--) {
+  	if (i != in.r && gameBoard[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.r; i < height; i++) {
+  	if (i != in.r && gameBoard[i][in.c]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i >=0; i--) {
+  	if (i != in.c && gameBoard[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
+      for (int i = in.c; i < width; i++) {
+  	if (i != in.c && gameBoard[in.r][i]==temp) {
+  	  return false;
+  	}
+      }
   return true;
 }
 
@@ -678,9 +862,10 @@ bool BeeLinePuzzle::isUnique() {
       }
       if (b) {
 	uniqueCounter += 1;
-	if (uniqueCounter > 1) {
-	  return false;
-	}
+	printGameBoard();
+	// if (uniqueCounter > 1) {
+	//   return false;
+	// }
       }
     }
   }
@@ -709,6 +894,9 @@ bool BeeLinePuzzle::isUnique() {
     if (!test) {
       return false;
     }
+  }
+  if (uniqueCounter > 1) {
+    return false;
   }
   return true;
 }
@@ -963,6 +1151,56 @@ void BeeLinePuzzle::printPuzzle() {
   }
 }
 
+void BeeLinePuzzle::printGameBoard() {
+
+  for (int j = 0; j < width+1; j++) {
+    cout << ".   ";
+  }
+  cout << '\n';
+
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      if (gameBoard[i][j] == -1) {
+	cout << " ***";
+      } else if (gameBoard[i][j] == 0){
+	cout << "    ";
+      }
+      else {
+	cout << " " << gameBoard[i][j] << "  ";
+      }
+    }
+
+    //CRAP... vertical and leftup are overwritten by check soln :(
+    cout << '\n';
+    for (int j = 0; j < width; j++) {
+      if (gameBoard[i][j] == -1) {
+	cout << ".***";
+      } else if (gameBoard[i][j] == 0){
+	cout << ".   ";
+      }
+      else {
+	if (vertical[i][j]) {
+	  if (leftUp[i][j]) {
+	    cout << ".  ^";
+	  }
+	  else {
+	    cout << ".  v";
+	  }
+	}
+	else {
+	  if (leftUp[i][j]) {
+	    cout << ".  <";
+	  }
+	  else {
+	    cout << ".  >";
+	  }
+	}
+      }
+    }
+    cout << ".\n";
+  }
+}
+
 void BeeLinePuzzle::printSoln() {
   for (int j = 0; j < width+1; j++) {
     cout << ".   ";
@@ -1078,7 +1316,7 @@ int BeeLinePuzzle::getLength() {
   return length-1;
 }
 
-void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower ,int *puzzleIndex) {
+void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower , map<int, string> textMap,int *puzzleIndex) {
   
   xml_node<> *puzzle;
   xml_node<> *node;
@@ -1086,7 +1324,15 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string be
   xml_attribute<> *attr;
   char *name;
   int myInt;
-  string str("");
+  string str;
+  
+  map<int, string>::iterator it = textMap.find(*puzzleIndex);
+  if (it != textMap.end()) {
+    str = it->second;
+  }
+  else {
+    str = "";
+  } 
   
   puzzle = doc->allocate_node(node_element, "puzzle");
   chapter->append_node(puzzle);
@@ -1138,6 +1384,86 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string be
   }
 }
 
+void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBookData &PBD) {
+  
+  xml_node<> *puzzle;
+  xml_node<> *node;
+  xml_node<> *hint;
+  xml_attribute<> *attr;
+  char *name;
+  int myInt;
+  string str;
+  
+  map<int, string>::iterator it = PBD.textMap.find(PBD.startIndex);
+  if (it != PBD.textMap.end()) {
+    str = it->second;
+  }
+  else {
+    str = "";
+  } 
+  
+  puzzle = doc->allocate_node(node_element, "puzzle");
+  chapter->append_node(puzzle);
+
+  name = doc->allocate_string(intTooString(PBD.startIndex).c_str());
+  attr = doc->allocate_attribute("id", name);
+  puzzle->append_attribute(attr);
+
+  //This should actually do something usefull later :)
+  name = doc->allocate_string(str.c_str());
+  attr = doc->allocate_attribute("text", name);
+  puzzle->append_attribute(attr);
+
+  PBD.startIndex += 1;
+
+  name = doc->allocate_string(PBD.getBeforeFlower().c_str());
+  attr = doc->allocate_attribute("before_flower", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(PBD.getAfterFlower().c_str());
+  attr = doc->allocate_attribute("after_flower", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(intTooString(height).c_str());
+  node = doc->allocate_node(node_element, "height", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(intTooString(width).c_str());
+  node = doc->allocate_node(node_element, "width", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getBoardXML().c_str());
+  node = doc->allocate_node(node_element, "board", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getPathXML().c_str());
+  node = doc->allocate_node(node_element, "path", name);
+  puzzle->append_node(node);
+  for (int i = 0; i < hintsPos.size(); i++) {
+    hint = doc->allocate_node(node_element, "hint");
+    puzzle->append_node(hint);
+    myInt = height*hintsPos[i].r + hintsPos[i].c;
+    name = doc->allocate_string(intTooString(myInt).c_str());
+    node = doc->allocate_node(node_element, "index", name);
+    hint->append_node(node);
+  }
+}
+
+// void BeeLinePuzzle::readXML(xml_node<> *puzzle) {
+//   BLP.gameBoard.clear();
+//   BLP.positions.clear();
+//   BLP.vertical.clear();
+//   BLP.leftUp.clear();
+
+//   BLP.hintsNum.clear();
+//   BLP.hintsIndex.clear();
+//   BLP.hintsVertical.clear();
+//   BLP.hintsLeftUp.clear();
+//   BLP.hintsPos.clear();
+  
+//   int r, c, t;
+  
+//   puzzle->
+
+// }
+
 string BeeLinePuzzle::getHintDir(int i) {
   if (hintsVertical[i]) {
     if (hintsLeftUp[i]) {
@@ -1182,9 +1508,6 @@ string BeeLinePuzzle::getPathXML() {
   return oss.str();
 }
 
-
-
-
 // Overloaded ofstream &<< to print the game board in a standard format
 // which can be ready by any other program.
 ofstream &operator<<(ofstream &ofs, BeeLinePuzzle &BLP) {
@@ -1208,15 +1531,12 @@ ifstream &operator>>(ifstream &ifs, BeeLinePuzzle &BLP) {
   BLP.positions.clear();
   BLP.vertical.clear();
   BLP.leftUp.clear();
-  BLP.hintsPos.clear();
-  BLP.hintsNum.clear();
-  BLP.hintsVertical.clear();
-  BLP.hintsLeftUp.clear();
-  BLP.hintsPos.clear();
+
   BLP.hintsNum.clear();
   BLP.hintsIndex.clear();
   BLP.hintsVertical.clear();
   BLP.hintsLeftUp.clear();
+  BLP.hintsPos.clear();
 
   int r, c, t;
 

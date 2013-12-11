@@ -26,12 +26,7 @@ void PuzzleBook::printXML(ofstream& ofs) {
 
   xml_document<> d;
   xml_document<> *doc = &d;
-  xml_node<> *node;
   xml_node<> *levelpack;
-  xml_node<> *chapter;
-
-  xml_node<> *puzzle;
-  xml_node<> *hint;
   xml_attribute<> *attr;
   char *name;
 
@@ -47,10 +42,39 @@ void PuzzleBook::printXML(ofstream& ofs) {
   levelpack->append_attribute(attr);
 
   for (int i = 0; i < chapters.size(); i++) {
-    chapters[i].buildXML(doc, levelpack, chapterTitles[i], chapterEndText[i], beforeImages[i], afterImages[i], beforeFlower[i], afterFlower[i] , puzzleIndex);
+    chapters[i].buildXML(doc, levelpack, chapterTitles[i], chapterEndText[i], beforeImages[i], afterImages[i], beforeFlower[i], afterFlower[i], textMap ,puzzleIndex);
   }
 
   ofs << *doc;
+
+  return;
+}
+
+void PuzzleBook::printXML2(ofstream& ofs) {
+
+  xml_document<> d;
+  xml_document<> *doc = &d;
+  xml_node<> *levelpack;
+  xml_attribute<> *attr;
+  char *name;
+
+  levelpack = doc->allocate_node(node_element, "levelpack");
+  doc->append_node(levelpack);
+  
+  //put in all attributes in one loop.
+  for (map<string, string>::iterator i = PBD.puzzleBookAttr.begin(); i!=PBD.puzzleBookAttr.end(); i++ ){
+    name = doc->allocate_string((i->second).c_str());
+    attr = doc->allocate_attribute((i->first).c_str(), name);
+    levelpack->append_attribute(attr);
+  }
+
+  for (int i = 0; i < chapters.size(); i++) {
+    PBD.currChapter = i;
+    chapters[i].buildXML(doc, levelpack, PBD);
+  }
+
+  ofs << *doc;
+
   return;
 }
 
@@ -75,3 +99,12 @@ PuzzleBook::PuzzleBook(vector<string> files, string a, string aa ,vector<string>
   puzzleIndex = &pi;
   loadChapters(files);
 }
+
+PuzzleBook::PuzzleBook(vector<string> files, string a, string aa ,vector<string> b, vector<string> bb, vector<string> c,vector< vector <string> > d, vector<string> cc,vector<string> dd, map<int, string> ee,int e): bookTitle(a), bookStyle(aa), chapterTitles(b), chapterEndText(bb), beforeImages(c), afterImages(d), beforeFlower(cc), afterFlower(dd), textMap(ee), pi(e) {
+  puzzleIndex = &pi;
+  loadChapters(files);
+}
+
+PuzzleBook::PuzzleBook(PuzzleBookData IN): PBD(IN){
+  loadChapters(PBD.files);
+};

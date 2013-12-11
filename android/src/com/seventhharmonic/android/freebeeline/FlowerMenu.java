@@ -42,7 +42,7 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
     private static final int flowerCount = 25; 
     private FlowerTile[] tiles = new FlowerTile[flowerCount];
 
-    private MyMusic myMusic = GlobalApplication.getMyMusic();
+    //private MyMusic myMusic = GlobalApplication.getMyMusic();
 
     private long lastTouchTime;
     private float[] lastTouchPos = new float[2];
@@ -219,15 +219,25 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 
     class LevelPackDisplay extends StateWidget {
 	ScreenSlideWidgetLayout m;
+	Widget currLevelPackWidget;
+	
 	public LevelPackDisplay(){
-	    m = new ScreenSlideWidgetLayout(2.0f);
+		Store store = ViewActivity.mStore;
+	    m = new ScreenSlideWidgetLayout(1.75f);
 	    m.setDrawProgressBar(true);
 	    for(int i =0;i<LPP.getNumberOfLevelPacks();i++){
-	    	m.addWidget(new LevelPackWidget(TextureManager.CLEAR, LPP.getLevelPack(i).getCurrTitleImage()));
+	    	LevelPack lp  = LPP.getLevelPack(i);
+	    	if(store.hasLevelPack(lp)){
+	    		m.addWidget(new LevelPackWidget(lp));
+	    	} else {
+	    		m.addWidget(new LockedLevelPackWidget(lp));
+	    	}
 	    }
+	    
+	    //Switch to the current savedLevelPack.
 	    m.setActiveWidget(savedLevelPack);
 	    currLevelPack = LPP.getLevelPack(savedLevelPack);
-
+	    currLevelPackWidget = m.getWidget(m.getActiveWidget());
 	    physics.resetPhysics();
 	    physics.setPhysics(currLevelPack.getStyle());
 
@@ -255,30 +265,41 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	public void swipeHandler(String direction) {
 	    physics.swipeHandler(direction);
 	    m.swipeHandler(direction);
+	    currLevelPack = LPP.getLevelPack(m.getActiveWidget());
 	    physics.resetPhysics();
 	    physics.setPhysics(currLevelPack.getStyle());
+	    Log.d(TAG, "Style: "+currLevelPack.getStyle());
 	    //myMusic.playSong(currLevelPack.getSong());
 	}
 	
 	@Override
 	public void touchHandler(float[] pt) {
-	    currLevelPack = LPP.getLevelPack(m.getActiveWidget());
-	    if(m.getWidget(m.getActiveWidget()).isTouched(pt)){
-		if(savedLevelPack != m.activeWidget){
-		    savedLevelPack = m.activeWidget;
-		    savedChapter = 0;
-		}
-		Log.d(TAG,"touched LevelPackDisplay");
-		if(m.isTouched(pt)){
-		    mFlowerState = FlowerState.CHAPTER_SELECT;
+		//This is a bit sloppy. So I am commenting it so we can remember
+		//First let's fix into stone the currLevelPack. This is an LevelPack object
+	   m.touchHandler(pt);
+		physics.touchHandler(pt);	    
+		currLevelPack = LPP.getLevelPack(m.getActiveWidget());
+	    currLevelPackWidget = m.getWidget(m.getActiveWidget());
+
+	    //If the current level pack is touched and it's different from the savedLevelPack - we do some reshuffling
+	    if(m.isTouched(pt)){
+	    	if(savedLevelPack != m.activeWidget){
+	    		savedLevelPack = m.activeWidget;
+	    		savedChapter = 0;
+	    	}
+	    	Log.d(TAG,"touched LevelPackDisplay");
+	    	//Now launch into chapter_select mode.
+	    	//Note that a LockedLevelPackWidget will only return touched if it's top half is touched!
+	    	mFlowerState = FlowerState.CHAPTER_SELECT;
 	    	GlobalApplication.getAnalytics().sendScreen("chapter_select");
-		    currLevelPack = currLevelPack;
-		    updateState();
-		}	
+	    	updateState();
+	    	return;
 	    }
-	    m.touchHandler(pt);
-	    physics.touchHandler(pt);	    
+	    //Now see if we need to launch a purchase flow.
+	    currLevelPackWidget.touchHandler(pt);
 	}
+
+    
     }
 
     class ChapterDisplay extends StateWidget{
@@ -296,8 +317,11 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    gridToggle.setClickListener(new GameEventListener(){ 
 		    public void event(int i){   	
 			GlobalApplication.getAnalytics().sendPuzzleShow(gridToggle.getToggle());
-		    for(Widget w: m.getWidgetList())
-			    ((ChapterWidget)w).setState();
+		    //TODO: I hate this! Should do something more polymorphic. But until then...
+			for(Widget w: m.getWidgetList()){
+				if(w instanceof ChapterWidget)
+					((ChapterWidget)w).setState();
+			}
 		    }
 		});
 	    
@@ -326,7 +350,8 @@ class FlowerMenu extends GraphicWidget implements BeeFlowerMenuInterface {
 	    }
 	    
 	    //Widget that shows our backgrounds.
-	    mGIF = new AnimatedGIFWidget(currLevelPack, 1);
+	    //This is where the kickback is specifed?
+	    mGIF = new AnimatedGIFWidget(currLevelPack, currLevelPack.getKickback());
 	    
 	    //Say that a user was staring at chapter 4 - then we should move the slider ahead to that
 	    //if the saved chapter was 0, then we jump to the most current chapter.
