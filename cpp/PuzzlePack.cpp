@@ -119,13 +119,13 @@ int main(int argc, char *argv[]){
     PBD.puzzleBookAttr["bookStyle"] = "default";
     PBD.puzzleBookAttr["kickback"] = "2";
 
-    PBD.chapterTitles.push_back("Beatrice Buzzes");
-    PBD.chapterTitles.push_back("The flowers in the garden");
-    PBD.chapterTitles.push_back("Raise up to greet her");
+    PBD.chapterTitles.push_back("Beatrice Stirs");
+    PBD.chapterTitles.push_back("A New Leaf");
+    PBD.chapterTitles.push_back("Busy As A...");
 
-    PBD.chapterEndText.push_back("Congratulations!^ You completed your very first chapter!");
-    PBD.chapterEndText.push_back("Congratulations!^ Wow, that was fast! Let's try the last chapter...");
-    PBD.chapterEndText.push_back("Congratulations!^ Beatrice is so happy! Help her collect flowers in level pack two!");
+    PBD.chapterEndText.push_back(" Congratulations!^ You completed your very first chapter!");
+    PBD.chapterEndText.push_back(" Congratulations!^ Wow, that was fast! Let's try the last chapter...");
+    PBD.chapterEndText.push_back(" Congratulations!^ Beatrice is so happy! Now help her collect flowers in story pack 2!");
     
 
     PBD.beforeImages.push_back("questionmark");
@@ -164,15 +164,19 @@ int main(int argc, char *argv[]){
 
     PBD.startIndex = 0;
 
-    PBD.textMap[0] = " Close the path. Touch the square with the circle to enter a 3 and then swipe right.";
-    PBD.textMap[1] = " Nice work. The yellow squares are part of a path we are giving you.";
-    PBD.textMap[2] = " TIP: Beatrice loves you. If you touch her, she'll give you a hint. Touch the questionmark to see the rules.";
-    PBD.textMap[3] = " This puzzle is harder then it looks. Remember Beatrice's rule!";
-    PBD.textMap[4] = " Not all paths have to be rectangles!";
-    PBD.textMap[5] = " Some paths have to cross themselves.";
-    PBD.textMap[6] = " Keep it up!";
-    PBD.textMap[7] = " This puzzle is easier then it looks! You are almost done!";
-    PBD.textMap[8] = " Looks like you got the hang of things. Touch Beatrice if you need help.";
+    PBD.textMap[0] = " Close the path. Touch the square with the dot to enter a 3 and then swipe right.";
+    PBD.textMap[1] = " Create a loop. The yellow squares are part of the path given as hints.";
+    PBD.textMap[2] = " Nice work. Again, close the loop!";
+    PBD.textMap[3] = " Remember Beatrice's rule: A number cannot appear twice in a row or column.";
+    PBD.textMap[4] = " The path can start at any yellow square as long as it finally comes back there.";
+    PBD.textMap[5] = " Some paths have to cross themselves. Remember, your path must return to the 4.";
+    PBD.textMap[6] = " Remember, the path can start at any yellow square as long as it finally comes back there.";
+    PBD.textMap[7] = " Remember Beatrice's rule: A number cannot appear twice in a row or column.";
+    PBD.textMap[8] = " Looks like you got the hang of things. Touch Beatrice to get a hint.";
+    PBD.textMap[9] = " This looks complicated! Just trace out the path carefully.";
+    PBD.textMap[10] = " Tip: You can play any puzzle in a chapter, but you must solve them all to move on.";
+    PBD.textMap[11] = " Remember, your path must fill all the empty tiles on the board.";
+    
 
     PuzzleBook PB = PuzzleBook(PBD);
     
