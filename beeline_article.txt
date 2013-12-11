@@ -1,0 +1,22 @@
+Grad Students Produce “Math Suduko” Mobile Game 
+
+Picture:  slide4.png  
+Caption:  Bee-Line is the first game created by the company Seventh Harmonic LLC (link), and available for free on the Android store.
+
+Three Math graduate students, Leland Jefferis, Lalit Jain and Nathan Clement, have created a mobile game for the Android platform. The game, Bee-Line, evolved from a puzzles created by Leland Jefferies while living in Shanghai and working on his thesis.   
+
+Leland showed his puzzles to Lalit, who found them entertaining and suggested adapting them for the mobile platform. They partnered with Nathan whose signature art work give the game a sketchy and organic look. Bee-Line was just added to the Android store and is free to download.
+
+The objective of the Bee-Line is to help guide Beatrice the Bee visit all the flowers in a garden. The game is a geometric number puzzle which can be described as combining elements of a maze and a Sudoku puzzle together. The more puzzles you are able to complete, the more challenging they become while progression though the game as a whole is marked by the animation of nature scenes brought to life by the Nathans artistic nuance. 
+
+Encouraged by Math Professor Jordan Ellenberg and CS Professor Rezmi Arpaci-Dusseau, the three students also worked in conjunction with UW-Madison's Law and Entrepreneurship Clinic (link) to navigate the twists and turns involved in creating a business. Another massive hurdle was figuring out exactly how to create a game for the Android platform. No one on the team had programmed in Java before, and they had to do their own research to understand the trade secrets of Android development. Nathan even had to research how to create his own font.   
+
+The trio play tested their game by asking random people at Union South and the Aldo Leopold Café at the WID for feedback.  Using that experience, they developed a tutorial to best help explain the game play in as intuitive a way as possible.  
+
+Now that the development is complete, the team is looking forward to the game’s debut and developing more puzzle packs to add to extend the player experience. And, of course, completing their dissertations.
+
+http://www.seventhharmonic.com
+
+
+  
+
