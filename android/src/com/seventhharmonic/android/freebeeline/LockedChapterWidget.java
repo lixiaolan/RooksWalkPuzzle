@@ -14,8 +14,8 @@ public class LockedChapterWidget extends WidgetLayout{
 	public LockedChapterWidget(Chapter ch){
 
 		this.ch  = ch;
-		
-		mLocked = new ImageWidget(0,0,.8f, .6f, "chapterLockedBanner");
+		//TODO: This needs to be in the xml.
+		mLocked = new ImageWidget(0,0,.8f, .8f, "chapterLockedBanner");
 		mLocked.setRelativeCenter(0,0);
 		mLocked.setBorder(true);
 		mLocked.setColor("white");

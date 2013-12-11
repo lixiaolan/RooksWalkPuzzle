@@ -626,7 +626,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				if (at != -1) {
 					//Set the user input since we get values
 					tiles[at].setUserInput(val);
-					moves+=1;
+					if(val != 0){
+						moves+=1;
+					}
 					updateMoves();
 
 					if (toggleLines) {
