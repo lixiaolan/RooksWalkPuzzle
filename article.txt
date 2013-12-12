@@ -1,15 +1,10 @@
-Grad Students Produce “Math Suduko” Mobile Game 
-
-Picture:  slide4.png  
-Caption:  Bee-Line is the first game created by the company Seventh Harmonic LLC (link), and available for free on the Android store.
-
 Three Math graduate students, Leland Jefferis, Lalit Jain and Nathan Clement, have created a mobile game for the Android platform. The game, Bee-Line, evolved from a puzzle created by Leland Jefferies while living in Shanghai and working on his thesis.   
 
 Leland showed his puzzles to Lalit, who found them entertaining and suggested adapting them for the mobile platform. They partnered with Nathan whose signature art work give the game a sketchy and organic look. Bee-Line was just added to the Android store and is free to download.
 
 The objective of the Bee-Line is to help Beatrice the Bee visit all the flowers in a garden. The game is a geometric number puzzle that combines elements of maze and Sudoku puzzles. The more puzzles you are able to complete, the more developed the interface becomes, allowing the game to bloom before your eyes.
 
-Encouraged by Math Professor Jordan Ellenberg and CS Professor Remzi Arpaci-Dusseau, the three students also worked in conjunction with UW-Madison's Law and Entrepreneurship Clinic (link) to navigate the twists and turns involved in creating a business. Another massive hurdle was figuring out exactly how to create a game for the Android platform. No one on the team had programmed in Java before, and they had to do their own research to understand the trade secrets of Android development. Nathan even had to research how to create his own font.   
+Encouraged by Math Professor Jordan Ellenberg and CS Professor Remzi Arpaci-Dusseau, the three students also worked in conjunction with UW-Madison's Law and Entrepreneurship Clinic to navigate the twists and turns involved in creating a business. Another massive hurdle was figuring out exactly how to create a game for the Android platform. No one on the team had programmed in Java before, and they had to do their own research to understand the trade secrets of Android development. Nathan even had to research how to create his own font.   
 
 The trio play tested their game by asking random people at Union South and the Aldo Leopold Café at the WID for feedback.  Using that experience, they developed a tutorial and calibrated the difficulty of the puzzles.  
 
