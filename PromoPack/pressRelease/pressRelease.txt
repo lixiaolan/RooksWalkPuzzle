@@ -1,8 +1,3 @@
-Grad Students Produce “Math Suduko” Mobile Game 
-
-Picture:  slide4.png  
-Caption:  Bee-Line is the first game created by the company Seventh Harmonic LLC (link), and available for free on the Android store.
-
 Three Math graduate students, Leland Jefferis, Lalit Jain and Nathan Clement, have created a mobile game for the Android platform. The game, Bee-Line, evolved from a puzzles created by Leland Jefferies while living in Shanghai and working on his thesis.   
 
 Leland showed his puzzles to Lalit, who found them entertaining and suggested adapting them for the mobile platform. They partnered with Nathan whose signature art work give the game a sketchy and organic look. Bee-Line was just added to the Android store and is free to download.
@@ -16,3 +11,4 @@ The trio play tested their game by asking random people at Union South and the A
 Now that the development is complete, the team is looking forward to the game’s debut and developing more puzzle packs to add to extend the player experience. And, of course, completing their dissertations.
 
 http://www.seventhharmonic.com
+
