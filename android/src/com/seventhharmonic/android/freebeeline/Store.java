@@ -47,10 +47,9 @@ public class Store {
 		PDS = GlobalApplication.getPurchasedDB();
 		//This is hardcoded for security - for now.
 		purchasables = new ArrayList<String>(Arrays.asList(
-				new String[]{"android.test.purchased","storyPack2","test2", "test3", "storypack2"}));
+				new String[]{"storypack2"}));
 		//Actual level pack id here
 		levelPackToChapterLimit = new HashMap<String, Integer>();
-		levelPackToChapterLimit.put("android.test.purchased", Integer.valueOf(1));
 		levelPackToChapterLimit.put("storyPack1", Integer.valueOf(3));
 		levelPackToChapterLimit.put("storyPack2", Integer.valueOf(2));
 		levelPackToChapterLimit.put("challengePack1", Integer.valueOf(2));
@@ -274,7 +273,7 @@ public class Store {
 	 * Code run when you decide to buy infinity hints.
 	 */
 	public boolean hasUnlimitedHints(){
-		String sku = "unlimitedhints";
+		String sku = "hintsunlimited";
 		if(mInventory == null){
 			return PDS.getPurchased(sku);
 		}
@@ -333,7 +332,7 @@ public class Store {
 				PDS.setPurchased("hintsunlimited", true);
 				PDS.close();
 				//Update the board test widget.
-				hintWidget.setText(TextureManager.HIVE);
+				hintWidget.setText(TextureManager.buildHint("%"));
 				setWaitScreen(false);
 			}catch(Exception e){
 				//Should actually throw an exception here! This is a mess.
@@ -349,7 +348,7 @@ public class Store {
 	//Code for level pack purchase
 	public boolean hasLevelPack(LevelPack lp){
 		//TODO: BOOGIE. Uncomment to purchase level packs.
-		/*String id  = lp.getPurchaseId();
+		String id  = lp.getPurchaseId();
 		if(purchasables.contains(id)){
 			if(mInventory == null){
 				Log.d(TAG, "Found a null inventory");
@@ -365,7 +364,7 @@ public class Store {
 				return false;
 			}
 		}
-		Log.d(TAG, "Didn't contain id "+id);*/
+		Log.d(TAG, "Didn't contain id "+id);
 		return true;
 	}
 

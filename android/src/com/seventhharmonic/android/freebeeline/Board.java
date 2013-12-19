@@ -626,7 +626,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				if (at != -1) {
 					//Set the user input since we get values
 					tiles[at].setUserInput(val);
-					moves+=1;
+					if(val != 0){
+						moves+=1;
+					}
 					updateMoves();
 
 					if (toggleLines) {
@@ -877,11 +879,16 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
-			super.draw(tiles, r); //TODO: The code once died on this line :(
-			for(int i =0;i<tiles.length;i++){
-				if(tiles[i].getTrueSolution() != -1 && tiles[i] !=null){
-					tiles[i].draw(r);
+			try{
+				super.draw(tiles, r); //TODO: The code once died on this line :(
+				for(int i =0;i<tiles.length;i++){
+					if(tiles[i].getTrueSolution() != -1 && tiles[i] !=null){
+						tiles[i].draw(r);
+					}
 				}
+			}
+			catch(Exception e){
+				GlobalApplication.getAnalytics().sendCaughtException(e);
 			}
 			mBee.draw(r);
 			mDialog.draw(r);

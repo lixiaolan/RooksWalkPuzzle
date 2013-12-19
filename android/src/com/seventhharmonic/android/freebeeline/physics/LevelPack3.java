@@ -46,9 +46,8 @@ class LevelPack3 extends StateWidget {
 	float tt = ((float)(refTime - startTime))/2000.0f;
 	for (int i = 0; i<tiles.length; i++ ) {
 	    float ii = (float)i;
-	    t = (ii/tiles.length)*2.0f*( (float)Math.PI); 
-	    fixedCenters[2*i] =  .7*( (float)Math.sin(t))+.3*( (float)Math.sin(t*4));
-	    fixedCenters[2*i+1] = .7*( (float)Math.cos(t))+.3*( (float)Math.cos(t*4));
+	    fixedCenters[2*i] = (((float)(i/5))-2f)/2f;
+	    fixedCenters[2*i+1] = (((float)(i%5))-2f)/2f;
 	    centers[2*i] = ((float)Math.cos(tt))*fixedCenters[2*i] 
 		+ ((float)Math.sin(tt))*fixedCenters[2*i + 1];
 	    centers[2*i+1] = -((float)Math.sin(tt))*fixedCenters[2*i] 
