@@ -2,8 +2,8 @@
 <!--  versionName should be done as major.minor.point -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.seventhharmonic.android.freebeeline"
-    android:versionCode="5"
-    android:versionName="1.1" >
+    android:versionCode="6"
+    android:versionName="1.3" >
 
 
   <uses-sdk android:minSdkVersion="11" 

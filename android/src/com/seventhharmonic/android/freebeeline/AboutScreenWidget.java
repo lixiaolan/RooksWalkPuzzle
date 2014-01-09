@@ -19,7 +19,7 @@ public class AboutScreenWidget extends WidgetLayout{
 	float height = Math.abs(GlobalApplication.getGeometry().getGeometry()[1]);
 	
 	Log.d(TAG, Float.toString(height));
-	mText = new TextBox(0,0,.9f,"BeeLine is a Seventh Harmonic LLC production.^^ Version 1.2^^Developed by Lalit Jain, Leland Jefferis^ Art by Nathan Clement, Music by Leland Jefferis^^ For questions, comments, or to submit a bug report, visit www.seventhharmonic.com^^ Copyright 2013 Seventh Harmonic LLC.");
+	mText = new TextBox(0,0,.9f,"BeeLine is a Seventh Harmonic LLC production.^^ Version 1.3^^Developed by Lalit Jain, Leland Jefferis^ Art by Nathan Clement, Music by Leland Jefferis^^ For questions, comments, or to submit a bug report, visit www.seventhharmonic.com^^ Copyright 2013 Seventh Harmonic LLC.");
 	mText.setRelativeCenter(0,0);
 	//mText.setFontSize(fontSize);
 	widgetList.add(mText);
