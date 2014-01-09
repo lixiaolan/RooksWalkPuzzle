@@ -159,18 +159,18 @@ int main(int argc, char *argv[]){
 
     PBD.startIndex = 100;
 
-    PBD.textMap[0] = " Close the path. Touch the square with the dot to enter a 3 and then swipe right.";
-    PBD.textMap[1] = " Create a loop. The yellow squares are part of the path given as hints.";
-    PBD.textMap[2] = " Nice work. Again, close the loop!";
-    PBD.textMap[3] = " Remember Beatrice's rule: A number cannot appear twice in a row or column.";
-    PBD.textMap[4] = " The path can start at any yellow square as long as it finally comes back there.";
-    PBD.textMap[5] = " Some paths have to cross themselves. Remember, your path must return to the 4.";
-    PBD.textMap[6] = " Remember, the path can start at any yellow square as long as it finally comes back there.";
-    PBD.textMap[7] = " Remember Beatrice's rule: A number cannot appear twice in a row or column.";
-    PBD.textMap[8] = " Looks like you got the hang of things. Touch Beatrice to get a hint.";
-    PBD.textMap[9] = " This looks complicated! Just trace out the path carefully.";
-    PBD.textMap[10] = " Tip: You can play any puzzle in a chapter, but you must solve them all to move on.";
-    PBD.textMap[11] = " Remember, your path must fill all the empty tiles on the board.";
+    PBD.textMap[100] = " Close the path. Touch the square with the dot to enter a 3 and then swipe right.";
+    PBD.textMap[101] = " Create a loop. The yellow squares are part of the path given as hints.";
+    PBD.textMap[102] = " Nice work. Again, close the loop!";
+    PBD.textMap[103] = " Remember Beatrice's rule: A number cannot appear twice in a row or column.";
+    PBD.textMap[104] = " The path can start at any yellow square as long as it finally comes back there.";
+    PBD.textMap[105] = " Some paths have to cross themselves. Remember, your path must return to the 4.";
+    PBD.textMap[106] = " Remember, the path can start at any yellow square as long as it finally comes back there.";
+    PBD.textMap[107] = " Remember Beatrice's rule: A number cannot appear twice in a row or column.";
+    PBD.textMap[108] = " Looks like you got the hang of things. Touch Beatrice to get a hint.";
+    PBD.textMap[109] = " This looks complicated! Just trace out the path carefully.";
+    PBD.textMap[110] = " Tip: You can play any puzzle in a chapter, but you must solve them all to move on.";
+    PBD.textMap[111] = " Remember, your path must fill all the empty tiles on the board.";
     
 
     PuzzleBook PB = PuzzleBook(PBD);

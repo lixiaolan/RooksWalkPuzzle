@@ -1,0 +1,21 @@
+The Dark Side of App Reviews:
+
+This topic is relevant to our current struggles and can be placed neatly into the "rant" category.
+
+When all the code is written, polished, and packaged to the best of your ability, a dreadful thing happens: You have a finished product! That famous quote from that movie no one has actually seen states: "If you build it, he will come". If that quote is your philosophy, you may as well be waiting for ghosts to drift up from the netherworld to partake in your new android game.
+
+Ghoulish imagery aside, I am stating that if you don't market your product, it will go nowhere.  Lucky for you, there are thousands of people out there who want to help you market your product. Unlucky for you, they all want your money. Worse still for your, they are backhanded about asking for your money. Devastating for you, you don't have any money.
+
+Evidently, for a cost which usually lands between 100-300 USD, you can get a sweet-tacular text and/or video review of your game on any number of sites! The next time you see a review on your favorite site, don't be so sure the editors actually wanted to review it or had any real interest in it. They most likely did not.
+
+The saddest part is, these sites don't offer any promise of downloads. They want your money up front, will then write whatever they want, and if you only get one download from their review, tough!  Based on a very conservative estimate of our "conversion rate" (this is the fraction of users that will actually purchase content in our app) we would need at least 2000 downloads from one of these reviews to justify the cost.
+
+So hey, app reviewers of the world, if you can promise me 2000 downloads from your review or my money back, shoot me an email. But don't expect this developer to fall prey to your many traps and snares baited by anxious desperation. Shame on you all!
+
+One could shrug it off by saying "hey, those review sites need to make a buck also!" Remember, however, these sites are claiming to get you publicity. A site with true publicity can generate revenue with advertisements and should not need to exploit small time android developers like yours truly. Thus I am very VERY wary of sites that rely on this type of income and have little faith that they can actually deliver on their promises of exposure. 
+
+To close, a little example of the treachery we face. We were contacted by a website, call it X. X said they found our app and were excited to review it for us. "Great", thought we, "this will get our foot in the door!" Then X asked us to send the app, a description, and promotional video. We wrote back to inform them that we are still working on our promo video. In response, X lectured us about how a good promo video is the golden key to an apps' success (bull poop) and how, conveniently, X can make one for us for a moderate fee! Look, X, if your equation for entrapping aspiring small time developers is so calculating and miserly, then we have an equation for you:
+
+X = appeggs.com
+
+- Fat Man Jackson
