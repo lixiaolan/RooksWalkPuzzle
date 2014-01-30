@@ -24,9 +24,11 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	private boolean toggleError = true;
 
 	private ErrorLog mErrorLog;
-	private TextBox mGameBanner;
-	private ImageWidget mBoardBg;
-	private Puzzle currPuzzle;
+	private TextBox mGameBanner;	
+	
+	public ImageWidget mBoardBg;	
+	public Puzzle currPuzzle;
+	
 	private Model mModel;
 	private NewBee mBee;
 	private BoardBeeController mBeeController;
@@ -38,7 +40,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 	int moves = 0;
 	//Par number of moves
 	int par  = 0;
-	boolean firstCompleted  = false;
+	
+	public boolean firstCompleted  = false;
 	public Board(Model mModel) {
 		buildEmptyBoard();
 		state = null;
@@ -324,7 +327,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		return beeBoxCenter;
 	}
 
-	public long getHints(){
+	public long getHints() {
 		if(ViewActivity.mStore.hasUnlimitedHints()){
 			return -1;
 		} else {
@@ -411,11 +414,9 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			tutorial.setBorderStyle(ButtonWidget.ButtonStyle.SQUARE);
 			tutorial.setClickListener(new GameEventListener(){
 				public void event(int i){
-					GlobalApplication.getAnalytics().sendScreen("puzzle_tutorial");
-					mModel.createTutorial();
-					mModel.setState(GameState.TUTORIAL);
+				    mModel.launchTutorial();
 				}
-			});
+			    });
 
 
 			/*
@@ -689,8 +690,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 					if(!beforeChCompleted &&  currPuzzle.getChapter().getCompleted()){
 						firstCompleted = true;
 					}
-					mModel.setState(GameState.GAME_MENU_END);
-
+					mModel.puzzleSolved();
 				}
 			}
 		}
@@ -761,7 +761,6 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		boolean[] rotateTiles = new boolean[boardHeight*boardWidth];
 		boolean[] flipped = new boolean[boardHeight*boardWidth];
 		long[] refTime = new long[boardHeight*boardWidth];
-		EndGameDialogWidgetLayout mDialog;
 		ImageWidget mFlower;
 
 		public BoardGameEnd(BoardTile[] tiles) {
@@ -778,51 +777,8 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 			mGameBanner.setFontSize(2);
 			mGameBanner.setJ(TextJustification.CENTER);
 
+			mModel.launchDialog();
 			//Buttons at the bottom.
-			mDialog = new EndGameDialogWidgetLayout(.8f);
-			mDialog.setCenter(0,(-1*mBoardBg.getHeight()-geometry[1])/2.0f);
-			mDialog.setNextClickListener(new GameEventListener(){
-				public void event(int i ){
-					Log.d("Dialog","Clicked");
-					mDialog.deactivate();
-					//If this is the first time you completed a chapter
-					if(firstCompleted == true) {
-						mModel.setModelToChapterEnd();
-					} 
-					//If there is a next puzzle and the chapter is not finished
-					else if(currPuzzle.getNextPuzzle() != null) {
-						Log.d("next puzzle", "Apparently, there is another puzzle!");
-						//TODO: Created a hack here to ensure we recreate the current chapter widget
-						mModel.setModelToGameOpening(currPuzzle.getNextPuzzle());
-						setState(GameState.GAME_OPENING);
-					} 
-					//If you are the last puzzle in a chapter and the chapter is now completed
-					else if(currPuzzle.getNextPuzzle() == null && currPuzzle.getChapter().getCompleted()) {
-						mModel.setModelToChapterEnd();
-					} 
-					//If you are the last puzzle in a chapter and the chapter is not completed.
-					else {
-						mModel.setModelToChapterSelect();
-					}
-				}
-
-			});
-
-			mDialog.setBackClickListener(new GameEventListener() {
-				public void event(int i){
-					mDialog.deactivate();
-					if(currPuzzle.getNextPuzzle() == null){
-						mModel.setModelToChapterEnd();
-					}
-					else{
-						mModel.setModelToChapterSelect();
-					}
-				}
-
-			});
-
-
-			mDialog.activate();
 
 			//Initiate tiles
 			for (int i = 0; i < tiles.length; i++) {
@@ -875,7 +831,7 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 		}
 
 		public void touchHandler(float[] pt){
-			mDialog.touchHandler(pt);
+		    return;
 		}
 
 		public void draw(BoardTile[] tiles, MyGLRenderer r){
@@ -891,12 +847,10 @@ class Board extends Graphic<BoardTile, State<BoardTile> > implements BeeBoardInt
 				GlobalApplication.getAnalytics().sendCaughtException(e);
 			}
 			mBee.draw(r);
-			mDialog.draw(r);
 			mGameBanner.draw(r);
 			mFlower.draw(r);
 		}
 	}        
-
 
 }
 

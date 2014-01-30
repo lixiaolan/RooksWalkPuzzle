@@ -16,7 +16,7 @@ import android.util.Log;
 import android.app.Activity;
 
 
-class Model {
+class Model implements ModelBoardInterface{
 
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
@@ -35,6 +35,7 @@ class Model {
     public MediaPlayer mediaPlayer;    
     public FlowerMenu mFlowerMenu;
     private boolean initializeToggle = false;
+    private EndGameDialogWidgetLayout mDialog;
     
     //TextBox mVersionBanner;
     Store mStore;
@@ -102,11 +103,13 @@ class Model {
     public void touched(float[] pt) {
 	switch(state.state){
 	case GAME_OPENING: 
-		mMenuManager.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
+	    mBoard.touchHandler(pt);
+	    break;
 	case GAME_MENU_END:
 	    //Internally close menu.    		
-	    mBoard.touchHandler(pt);
-	    
+	    //mBoard.touchHandler(pt);
+	    mDialog.touchHandler(pt);
 	    break;
 	case MAIN_MENU_OPENING:  
 	    mMenuManager.touchHandler(pt);
@@ -175,6 +178,7 @@ class Model {
 	    break;
 	case GAME_MENU_END:
 	    mBoard.draw(r);
+	    mDialog.draw(r);
 	    break;
 	case MAIN_MENU_OPENING:
 	case MAIN_MENU_LIST:
@@ -231,8 +235,6 @@ class Model {
     	state.state = s;
     	mMenuManager.updateState();
     }
-    
-   
 
     public void setDataServer(DataServer d){
     	mDataServer = d;
@@ -302,7 +304,6 @@ class Model {
 	}
     }
 
-
    //INTERFACE CLASSES FOR FLOWERMENU:   
     public void setModelToMainMenuOpening() {
     	GlobalApplication.getAnalytics().sendScreen("main_menu");
@@ -356,7 +357,29 @@ class Model {
     	GlobalApplication.getAnalytics().sendScreen("main_about");
 
     }
+
+
+    //INTERFACE FOR BOARD dialog
+    // Called by board when a puzzle is completed
+    public void launchDialog(){
+	//extract needed info from board;
+	mDialog = new EndGameDialogWidgetLayout(this);
+	return;
+    }
     
+    // Called by board when touching the '?' icon.
+    public void launchTutorial(){
+	GlobalApplication.getAnalytics().sendScreen("puzzle_tutorial");
+	createTutorial();
+	setState(GameState.TUTORIAL);
+	return;
+    }
+    
+    // Called by board whena puzzle solution has been found. 
+    public void puzzleSolved(){
+	setState(GameState.GAME_MENU_END);
+	return;
+    }    
 }
 
 

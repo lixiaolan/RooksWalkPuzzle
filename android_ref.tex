@@ -45,7 +45,7 @@ From <sdk>/tools/ run \textbf{andriod avd}. Set up a new device or use and old o
 \item
 If you are compiling c++ code in NDK, then you need to run: \textbf{ndk\_root/ndk-build} first.
 \item
-Change to the root of your project and do \textbf{ant debug}.
+Change to the root of your project and do \textbf{ant debug}. If this is giving you issues, try \textbf{ant clean debug}.
 \item
 Next do \textbf{adb install bin/MyFirstApp-debug.apk}. Note, the command \textbf{adb install -r bin/MyFirstApp-debug.apk} will re-install the program on the virtual device so that you don't have to manually delete it on the device befor attempting an install!
 \end{enumerate}
