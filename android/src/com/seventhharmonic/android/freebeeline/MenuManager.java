@@ -59,7 +59,7 @@ class MenuManager {
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 		    mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {*/
-		    String[] textures2 = {TextureManager.MENU, TextureManager.PLAY, TextureManager.DAILY_PUZZLE};
+		    String[] textures2 = {TextureManager.PLAY, TextureManager.DAILY_PUZZLE,TextureManager.MENU};
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 		    mCallback = new Callback_MAIN_MENU_LIST();
 		break;
@@ -84,6 +84,11 @@ class MenuManager {
 		mGameMenu = new GameMenu(bottomRight, scale2, textures5, TextureManager.BACK, tiltAngle); 
 		mCallback = new Callback_GAME_OPENING();
 		break;
+	    case DAILY_PUZZLE_GAME:
+			String[] textures55 = {};
+			mGameMenu = new GameMenu(bottomRight, scale2, textures55, TextureManager.BACK, tiltAngle); 
+			mCallback = new Callback_DAILY_PUZZLE_GAME();
+			break;
 /*	    case GAME_MENU_END:
 		String[] textures7 = {TextureManager.QUIT, TextureManager.SHARE};
 		mGameMenu = new SelectTwoMenu(bottomPos2, scale2, textures7); 
@@ -121,7 +126,7 @@ class MenuManager {
 			mCallback = new Callback_ABOUT();
 			break;
 	    
-	    case DAILY_PUZZLE:
+	    case DAILY_PUZZLE_LOADER:
 			String[] texturesDP = {TextureManager.BACK};
 			mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesDP); 
 			mCallback = new Callback_DAILY_PUZZLE();
@@ -197,16 +202,16 @@ class MenuManager {
     class Callback_MAIN_MENU_LIST extends Callback {
 	public void callback(int val) {
 	    switch(val) {
-	    case 1: state.state = GameState.MAIN_MENU_GEAR;
+	    case 3: state.state = GameState.MAIN_MENU_GEAR;
 	    	GlobalApplication.getAnalytics().sendScreen("main_gear");
 	    	updateState();
 		break;
-	    case 2:
+	    case 1:
 	    	mModel.setModelToLevelPack();
 	    	updateState();
 		break;
-	    case 3:
-	    	mModel.setModelToDailyPuzzle();
+	    case 2:
+	    	mModel.setModelToLoadDailyPuzzle();
 			updateState();
 			break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
@@ -263,6 +268,16 @@ class MenuManager {
 	    	updateState();   
 		}
     }
+    
+    class Callback_DAILY_PUZZLE_GAME extends Callback {
+    	@Override
+    		public void callback(int val) {
+    	    	mModel.setModelToMainMenuOpening();
+    	    	mModel.toggleAdView(false);
+    		    GlobalApplication.getAnalytics().sendScreen("main_gear");
+    	    	updateState();   
+    		}
+        }
     
     
     class Callback_ABOUT extends Callback {

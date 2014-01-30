@@ -17,7 +17,7 @@ import android.view.View;
 import android.app.Activity;
 
 
-class Model {
+class Model implements ModelBoardInterface{
 
     public GlobalState state;
     public TutorialBoard2 mTutorialBoard;
@@ -37,7 +37,8 @@ class Model {
     public FlowerMenu mFlowerMenu;
     private boolean initializeToggle = false;
     private DailyPuzzleLoadWidget mDailyPuzzleLoadWidget;
-
+    private EndGameDialogWidgetLayout mDialog;
+    
     //TextBox mVersionBanner;
     
     Store mStore;
@@ -96,12 +97,15 @@ class Model {
     
     public void touched(float[] pt) {
 	switch(state.state){
+	case DAILY_PUZZLE_GAME: 
 	case GAME_OPENING: 
-		mMenuManager.touchHandler(pt);
+	    mMenuManager.touchHandler(pt);
+	    mBoard.touchHandler(pt);
+	    break;
 	case GAME_MENU_END:
 	    //Internally close menu.    		
-	    mBoard.touchHandler(pt);
-	    
+	    //mBoard.touchHandler(pt);
+	    mDialog.touchHandler(pt);
 	    break;
 	case MAIN_MENU_OPENING:  
 	    mMenuManager.touchHandler(pt);
@@ -131,7 +135,7 @@ class Model {
 	    mStoryBoard.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
-	case DAILY_PUZZLE:
+	case DAILY_PUZZLE_LOADER:
 	case ABOUT:
 	    mMenuManager.touchHandler(pt);
 	    break;
@@ -147,6 +151,7 @@ class Model {
 	case FLOWER_MENU:
 	    mFlowerMenu.swipeHandler(direction);
 	    break;	
+	case DAILY_PUZZLE_GAME:
 	case GAME_OPENING:
 	    mBoard.swipeHandler(direction);
 	    break;
@@ -164,12 +169,14 @@ class Model {
 	case STORY:
 	    mStoryBoard.draw(r);
 	    break;
+	case DAILY_PUZZLE_GAME:
 	case GAME_OPENING:
 	    mBoard.draw(r);   
 	    mMenuManager.draw(r);		
 	    break;
 	case GAME_MENU_END:
 	    mBoard.draw(r);
+	    mDialog.draw(r);
 	    break;
 	case MAIN_MENU_OPENING:
 	case MAIN_MENU_LIST:
@@ -189,7 +196,7 @@ class Model {
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
 	    break;
-	case DAILY_PUZZLE:
+	case DAILY_PUZZLE_LOADER:
 		mDailyPuzzleLoadWidget.draw(r);
 		mMenuManager.draw(r);
 		break;
@@ -227,8 +234,6 @@ class Model {
     	state.state = s;
     	mMenuManager.updateState();
     }
-    
-   
 
     public void setDataServer(DataServer d){
     	mDataServer = d;
@@ -265,13 +270,13 @@ class Model {
     }
     
    
-    //Broken on Game_Menu_End - this might be okay.
+    //Broken on Game_Menu_End, - this might be okay.
     public void onBack(){
 	switch(state.state){
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
-	case DAILY_PUZZLE:
+	case DAILY_PUZZLE_LOADER:
 	case ABOUT:
 		mMenuManager.callCallback(0);
 	    break;
@@ -282,6 +287,7 @@ class Model {
 	case TUTORIAL:
 	    mMenuManager.callCallback(1);
 	    break;
+	case DAILY_PUZZLE_GAME:
 	case GAME_OPENING:
 	    mMenuManager.callCallback(0);
 	    break;
@@ -293,7 +299,6 @@ class Model {
 	}
     }
 
-
    //INTERFACE CLASSES FOR FLOWERMENU:   
     public void setModelToMainMenuOpening() {
     	GlobalApplication.getAnalytics().sendScreen("main_menu");
@@ -302,6 +307,7 @@ class Model {
 
     public void setModelToGameOpening(Puzzle p) {
 	createPuzzleFromPuzzle(p);
+	mDialog = new PuzzlePackPuzzleEndGameDialogWidgetLayout(this);
 	GlobalApplication.getAnalytics().sendScreen("puzzle_begin");
 	//Resets the chapter display information.
 	mFlowerMenu.enterChapterSelect();
@@ -314,12 +320,19 @@ class Model {
     	setState(GameState.FLOWER_MENU);
     }
 
-    public void setModelToDailyPuzzle(){
-    	setState(GameState.DAILY_PUZZLE);
+    public void setModelToLoadDailyPuzzle(){
+    	setState(GameState.DAILY_PUZZLE_LOADER);
     	toggleAdView(true);
-    	GlobalApplication.getAnalytics().sendScreen("daily_puzzle");
+    	GlobalApplication.getAnalytics().sendScreen("daily_puzzle_download");
     	mDailyPuzzleLoadWidget.downloadPuzzle();
     	
+    }
+    
+    public void setModelToPlayDailyPuzzle(Puzzle p){
+    	createPuzzleFromPuzzle(p);
+    	mDialog = new DailyPuzzleEndGameDialogWidgetLayout(this);
+    	GlobalApplication.getAnalytics().sendScreen("daily_puzzle_begin");
+    	setState(GameState.DAILY_PUZZLE_GAME);
     }
     
     public void setModelToLevelPack() {
@@ -355,11 +368,33 @@ class Model {
     	GlobalApplication.getAnalytics().sendScreen("main_about");
 
     }
+
+
+    //INTERFACE FOR BOARD dialog
+    // Called by board when a puzzle is completed
+    public void launchDialog(){
+	//extract needed info from board;
+    	//mDialog = new EndGameDialogWidgetLayout(this);
+    	return;
+    }
+    
+    // Called by board when touching the '?' icon.
+    public void launchTutorial(){
+    	GlobalApplication.getAnalytics().sendScreen("puzzle_tutorial");
+    	createTutorial();
+    	setState(GameState.TUTORIAL);
+    	return;
+    }
     
     public void toggleAdView(boolean set){
 		context.findViewById(R.id.adView).setVisibility((set)? View.VISIBLE: View.INVISIBLE);
     }
-    
+    // Called by board when a puzzle solution has been found. 
+    public void puzzleSolved(){
+        toggleAdView(false);
+    	setState(GameState.GAME_MENU_END);
+    	return;
+    }    
 }
 
 

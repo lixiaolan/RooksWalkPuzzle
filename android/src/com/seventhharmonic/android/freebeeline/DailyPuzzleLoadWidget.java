@@ -86,13 +86,14 @@ public class DailyPuzzleLoadWidget extends WidgetLayout{
 				 mText.setText(errorText);
 			 } else {
 				 PuzzleParser parser = new PuzzleParser();
-				 try{
+				 //try{
 					 Puzzle p = parser.parse(result);
 					 Log.d(TAG, p.getFlower()+" ");
-				 } catch(RuntimeException e){
-					 Log.d(TAG,e.getMessage());
-					 mText.setText(errorText);
-				 }
+					 mModel.setModelToPlayDailyPuzzle(p);
+				 //} catch(RuntimeException e){
+				//	 Log.d(TAG,e.toString());
+				//	 mText.setText(errorText);
+				// }
 			 }
 		 }
 		

@@ -56,7 +56,7 @@ public class TextureManager {
 	public static final String RULE_CHECK_ON = "help on";
 	public static final String RULE_CHECK_OFF = "help off";
 	public static final String DONE = "done";
-	public static final String DAILY_PUZZLE = "daily puzzle";
+	public static final String DAILY_PUZZLE = "daily^puzzle";
 	public static final String CLEAR_BOARD = "reset";
 	//public static final String QUIT = "quit";
 	public static final String YES = "yes";
@@ -483,6 +483,8 @@ public class TextureManager {
 		menuBmp.eraseColor(Color.TRANSPARENT);
 
 		// Draw the text
+		String[] lines = text.split("\\^");
+
 		Paint textPaint = new Paint();
 		textPaint.setTextSize(font);
 		textPaint.setTextAlign(Paint.Align.CENTER);
@@ -493,7 +495,15 @@ public class TextureManager {
 		textPaint.setTypeface(tf);
 		// draw the text centered
 		canvas.drawColor(Color.TRANSPARENT);
-		canvas.drawText(text, x , y, textPaint);
+		if(lines.length ==1){
+			canvas.drawText(text, x , y, textPaint);
+		} else {
+			y-=font/2;
+			for(int i =0;i<lines.length;i++){
+				canvas.drawText(lines[i], x , y, textPaint);
+				y+=font;
+			}
+		}
 		return menuBmp;
 	}
 
