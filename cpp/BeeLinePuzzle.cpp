@@ -8,6 +8,10 @@ string intTooString(int in) {
   return out;
 }
 
+BeeLinePuzzle::BeeLinePuzzle(){
+  
+}
+
 BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), width(w), length(l) {
   vector<int> temp;
   vector<bool> bTemp;
@@ -28,13 +32,12 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), widt
   makeBoard(l);
   markUnused();
   bool test;
-  for (int i = 0; i < 40; i++) {
 
+  for (int i = 0; i < 40; i++) {
     cout << "try..." << endl;
     getHints(hintNum);//select the hints to be used;
     if (checkUnique())
       break;
-  
   }
   if (uniqueCounter == 1) {
     cout << "win!" << endl;
@@ -47,8 +50,46 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum) : height(h), widt
   // cout << "tPosVec.size(): "<<tPosVec.size() << endl;
 }
 
-BeeLinePuzzle::BeeLinePuzzle() {
-  
+BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum, int seed) : height(h), width(w), length(l)  {
+
+  vector<int> temp;
+  vector<bool> bTemp;
+
+  srand(seed);
+
+  do {   
+    for (int j = 0; j < width; j++) {
+      temp.push_back(0);
+      bTemp.push_back(false);
+    }
+    
+    for (int i = 0; i < height; i++) {
+      moveArea.push_back(temp);
+      leftRight.push_back(bTemp);
+      upDown.push_back(bTemp);
+      vertical.push_back(bTemp);
+      leftUp.push_back(bTemp);
+    }
+
+    cout << "generating board..." << endl;    
+    
+    makeBoard(l);
+    markUnused();
+    for (int i = 0; i < 40; i++) {
+      //cout << "try..." << endl;
+      getHints(hintNum);//select the hints to be used;
+      
+      if (checkUnique())
+	break;
+    }
+    if (uniqueCounter == 1) {
+      cout << "win!" << endl;
+      printGameBoard();      
+    }
+    else {
+      cout << "fail!" << endl;
+    }
+  } while (uniqueCounter != 1);
 }
 
 void BeeLinePuzzle::getHints(int num) {
@@ -738,7 +779,6 @@ bool BeeLinePuzzle::makeBoard(int depth) {
   
   // If the puzzle has not been started, choose a random starting point
   if (positions.size() == 0) {
-    srand ( unsigned ( time(0) ) );
     int x = rand() % height;
     int y = rand() % width;
     positions.push_back(pos(x,y));
@@ -755,7 +795,6 @@ bool BeeLinePuzzle::makeBoard(int depth) {
   // Otherwise, reorder the legal moves according to preference
   // See "reorderLegalMoves" for detail>s!
   
-
   random_shuffle(lm.begin(), lm.end() );
   //sortLegalMoves(*(positions.end()-1) , lm);
   //reorderLegalMoves(lm);
@@ -862,7 +901,7 @@ bool BeeLinePuzzle::isUnique() {
       }
       if (b) {
 	uniqueCounter += 1;
-	printGameBoard();
+	//printGameBoard();
 	// if (uniqueCounter > 1) {
 	//   return false;
 	// }
@@ -1314,6 +1353,63 @@ void BeeLinePuzzle::plotToFile(ofstream &ofs) {
 
 int BeeLinePuzzle::getLength() {
   return length-1;
+}
+
+void BeeLinePuzzle::printXML(ofstream &ofs, int index) {
+  xml_document<> d;
+  xml_document<> *doc = &d;
+  xml_node<> *puzzle;
+  xml_node<> *node;
+  xml_node<> *hint;
+  xml_attribute<> *attr;
+  char *name;
+  int myInt;
+  string str;
+  
+  string beforeFlower = "flower1";
+  string afterFlower = "flower1color";
+
+  puzzle = doc->allocate_node(node_element, "puzzle");
+  doc->append_node(puzzle);
+
+  name = doc->allocate_string(intTooString(index).c_str());
+  attr = doc->allocate_attribute("id", name);
+  puzzle->append_attribute(attr);
+
+  //This should actually do something usefull later :)
+  name = doc->allocate_string(str.c_str());
+  attr = doc->allocate_attribute("text", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(beforeFlower.c_str());
+  attr = doc->allocate_attribute("before_flower", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(afterFlower.c_str());
+  attr = doc->allocate_attribute("after_flower", name);
+  puzzle->append_attribute(attr);
+
+  name = doc->allocate_string(intTooString(height).c_str());
+  node = doc->allocate_node(node_element, "height", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(intTooString(width).c_str());
+  node = doc->allocate_node(node_element, "width", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getBoardXML().c_str());
+  node = doc->allocate_node(node_element, "board", name);
+  puzzle->append_node(node);
+  name = doc->allocate_string(getPathXML().c_str());
+  node = doc->allocate_node(node_element, "path", name);
+  puzzle->append_node(node);
+  for (int i = 0; i < hintsPos.size(); i++) {
+    hint = doc->allocate_node(node_element, "hint");
+    puzzle->append_node(hint);
+    myInt = height*hintsPos[i].r + hintsPos[i].c;
+    name = doc->allocate_string(intTooString(myInt).c_str());
+    node = doc->allocate_node(node_element, "index", name);
+    hint->append_node(node);
+  }
+  ofs << *doc;
 }
 
 void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower , map<int, string> textMap,int *puzzleIndex) {

@@ -20,6 +20,7 @@
 #include <cstdlib> 
 #include <string>
 #include <map>
+#include <chrono>
 
 using namespace rapidxml;
 using namespace std;
@@ -86,6 +87,7 @@ private:
   
 public:
   BeeLinePuzzle(int, int ,int, int);
+  BeeLinePuzzle(int, int ,int, int, int);
   BeeLinePuzzle();
   void print();
   void printSoln();
@@ -95,9 +97,12 @@ public:
   void printPuzzle();
   int uniqueCounter;
   void plotToFile(ofstream &ofs);
-int getLength();
-void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, map<int, string> textMap,int*);
-void buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBookData &PBD);
+  int getLength();
+  void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, map<int, string> textMap,int*);
+  void buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBookData &PBD);
+  
+  void printXML(ofstream &, int);
+  
   string getHintDir(int i);
   string getBoardXML();
   string getPathXML();
