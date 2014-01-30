@@ -13,6 +13,7 @@ import android.media.AudioManager;
 import android.content.Context;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.View;
 import android.app.Activity;
 
 
@@ -24,7 +25,7 @@ class Model {
     public MenuManager mMenuManager;
     private int at = -1;
     private Vibrator vibe;
-    public Context context;
+    public Activity context;
     private ImageWidget mTitle;
     private TextToggleButtonWidget muteButton;
     private Geometry geometry;
@@ -35,34 +36,28 @@ class Model {
     public MediaPlayer mediaPlayer;    
     public FlowerMenu mFlowerMenu;
     private boolean initializeToggle = false;
-    
-    //TextBox mVersionBanner;
-    Store mStore;
-    //TextBox testBox = new TextBox(0,0,0.8f,"Create a loop and fill the board. The arrows tell you where to go and the numbers indicate how far.");
-    
-    public Model(Context c) {
-	initiateMembers(c, new Board(this));		
-    }
-    
-    public Model(Context c, Board b){
-	// mediaPlayer = MediaPlayer.create(c, R.raw.themesong);
-	// mediaPlayer.setLooping(true);
-	// mediaPlayer.start();
-    	initiateMembers(c, b);
-    }
+    private DailyPuzzleLoadWidget mDailyPuzzleLoadWidget;
 
+    //TextBox mVersionBanner;
     
-    public void initiateMembers(Context c, Board b){
+    Store mStore;
+    
+    public Model(Activity c) {
+    	initiateMembers(c, new Board(this));		
+    }
+    
+    
+    public void initiateMembers(Activity c, Board b){
     	mBoard = b;
     	context = c;
     	vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); 
 	state = new GlobalState();
 	mMenuManager = new MenuManager(state, this);
 	mTitle = new ImageWidget(.5f,.8f,.5f,.5f,"title");
+	mDailyPuzzleLoadWidget = new DailyPuzzleLoadWidget(this);
+	
 	//mVersionBanner= new TextBox(0,0,.8f,TextureManager.VERSION);
 	//mVersionBanner.setCenter(0.0f, 0.0f);
-	//	muteButton = new ImageWidget(-.05f,GlobalApplication.getGeometry().getGeometry()[1],.1f, .1f, "title");
-	
 	muteButton = new TextToggleButtonWidget(10.0f,.1f,.1f, .1f, TextureManager.SPEAKER_ON, TextureManager.SPEAKER_OFF);
 	muteButton.setBorder(false);
 	muteButton.setClickListener(new GameEventListener() {
@@ -76,8 +71,8 @@ class Model {
     }
     
     public void createPuzzleFromPuzzle(Puzzle p){
-	mBoard.createPuzzleFromPuzzle(p);
-	final long id  = p.getId();		
+    	mBoard.createPuzzleFromPuzzle(p);
+    	final long id  = p.getId();		
     }
     
     public void createTutorial(){
@@ -136,6 +131,7 @@ class Model {
 	    mStoryBoard.touchHandler(pt);
 	    mMenuManager.touchHandler(pt);
 	    break;
+	case DAILY_PUZZLE:
 	case ABOUT:
 	    mMenuManager.touchHandler(pt);
 	    break;
@@ -164,8 +160,7 @@ class Model {
     
     public void draw(MyGLRenderer r) {
 	
-	switch(state.state) {
-	    
+	switch(state.state) {	    
 	case STORY:
 	    mStoryBoard.draw(r);
 	    break;
@@ -194,6 +189,10 @@ class Model {
 	    mTutorialBoard.draw(r);
 	    mMenuManager.draw(r);
 	    break;
+	case DAILY_PUZZLE:
+		mDailyPuzzleLoadWidget.draw(r);
+		mMenuManager.draw(r);
+		break;
 	case ABOUT:
 	    mAboutScreen.draw(r);
 	    mMenuManager.draw(r);
@@ -208,10 +207,7 @@ class Model {
     geometry = g;
 	mMenuManager.setGeometry(g);
 	mBoard.setGeometry(g.getGeometry());
-	//Log.d("Model","g");
-	//Log.d("Model", Float.toString(g[1]));
-	//Log.d("Model","global");
-	//	Log.d("Model", Float.toString(GlobalApplication.getGeometry().getGeometry()[1]));	
+
 	/*TODO: This is a bit of hack to make sure these classes are not initialized too early.
 	*	the initialize Toggle is to fix the fact that this function is called from the Renderer.
 	*	Can the renderer initialize before the DB????
@@ -268,12 +264,6 @@ class Model {
 	mMenuManager.updateState();
     }
     
-    /*public void firstRun() {
-    	//createStory();
-    	//setState(GameState.STORY);
-    	mMenuManager.updateState();
-    }*/
-    
    
     //Broken on Game_Menu_End - this might be okay.
     public void onBack(){
@@ -281,6 +271,7 @@ class Model {
 	case MAIN_MENU_LIST:
 	case MAIN_MENU_OPTIONS:
 	case MAIN_MENU_GEAR:
+	case DAILY_PUZZLE:
 	case ABOUT:
 		mMenuManager.callCallback(0);
 	    break;
@@ -323,6 +314,14 @@ class Model {
     	setState(GameState.FLOWER_MENU);
     }
 
+    public void setModelToDailyPuzzle(){
+    	setState(GameState.DAILY_PUZZLE);
+    	toggleAdView(true);
+    	GlobalApplication.getAnalytics().sendScreen("daily_puzzle");
+    	mDailyPuzzleLoadWidget.downloadPuzzle();
+    	
+    }
+    
     public void setModelToLevelPack() {
     	if(state.firstRun){
     		setModelToTutorial();    		
@@ -355,6 +354,10 @@ class Model {
     	setState(GameState.ABOUT);
     	GlobalApplication.getAnalytics().sendScreen("main_about");
 
+    }
+    
+    public void toggleAdView(boolean set){
+		context.findViewById(R.id.adView).setVisibility((set)? View.VISIBLE: View.INVISIBLE);
     }
     
 }

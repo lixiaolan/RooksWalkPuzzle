@@ -8,6 +8,7 @@ public enum GameState {
     MAIN_MENU_OPTIONS,
     GAME_OPENING,
     GAME_MENU_END,
+    DAILY_PUZZLE,
     TUTORIAL,
     TUTORIAL_MAIN_MENU,
     STORY,

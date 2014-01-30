@@ -8,14 +8,16 @@ import android.text.Html;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
 import android.content.res.Resources;
-
-import com.google.analytics.tracking.android.EasyTracker;
 import com.seventhharmonic.android.freebeeline.db.SQLPuzzle;
 import com.seventhharmonic.com.freebeeline.levelresources.*;
+
+import com.google.android.gms.ads.*;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 import android.media.MediaPlayer;
@@ -41,7 +43,7 @@ public class ViewActivity extends Activity {
     private MyGLRenderer mRenderer;    
     private TextView mQuoteView;
     private TextView mWaitView;
-    
+    private AdView adView;
     
     private static LinearLayout loadingScreen;
 
@@ -81,23 +83,24 @@ public class ViewActivity extends Activity {
 	
 	mStore = new Store(this, mModel);		
 	loadingScreen = (LinearLayout)findViewById(R.id.loadingScreen);
-	//texturesLoadedEventHandler();
-	/*
-	if (Build.VERSION.SDK_INT < 16) {
-	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	}
-	else{
-	    View decorView = getWindow().getDecorView();
-	    int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-	    decorView.setSystemUiVisibility(uiOptions);
-	}*/
+	
+	//Create AdView
+	adView = (AdView)findViewById(R.id.adView);
+ 
+    // Initiate a generic request.
+    AdRequest adRequest = new AdRequest.Builder()
+    								   .build();
+    // Load the adView with the ad request.
+    adView.loadAd(adRequest);
+	adView.setVisibility(View.INVISIBLE);
+    
     }
     
     
     @Override
     protected void onPause() {
 	super.onPause();
+	adView.pause();
 	// The following call pauses the rendering thread.
 	// If your OpenGL application is memory intensive,
 	// you should consider de-allocating objects that
@@ -115,6 +118,7 @@ public class ViewActivity extends Activity {
     @Override
     protected void onResume() {
 	super.onResume();
+	adView.resume();
 	// The following call resumes a paused rendering thread.
 	// If you de-allocated graphic objects for onPause()
 	// this is a good place to re-allocate them.
@@ -180,6 +184,7 @@ public class ViewActivity extends Activity {
     
     public void onDestroy() {
 	super.onDestroy();
+	adView.destroy();
 	// very important:
 	Log.d(TAG, "Destroying helper.");
 	if (mStore.mHelper != null) {
@@ -219,3 +224,14 @@ public class ViewActivity extends Activity {
 
 
 
+//texturesLoadedEventHandler();
+	/*
+	if (Build.VERSION.SDK_INT < 16) {
+	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
+	else{
+	    View decorView = getWindow().getDecorView();
+	    int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+	    decorView.setSystemUiVisibility(uiOptions);
+	}*/

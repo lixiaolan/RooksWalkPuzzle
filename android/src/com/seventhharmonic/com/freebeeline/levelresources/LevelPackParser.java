@@ -1,14 +1,18 @@
 package com.seventhharmonic.com.freebeeline.levelresources;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.xml.sax.*;
 
 import com.seventhharmonic.android.freebeeline.GlobalApplication;
 
+import android.content.Context;
 import android.sax.*;
 import android.util.Log;
 import android.util.Xml;
 
-public class LevelPackParser extends BaseParser {
+public class LevelPackParser{
 	String TAG = "LevelPackParser";
 	String LEVELPACK = "levelpack";
 	String CHAPTER = "chapter";
@@ -25,7 +29,8 @@ public class LevelPackParser extends BaseParser {
 	String ID = "id";
 	String AFTERIMAGE = "afterImage";
 	String IMAGE = "image";
-    public LevelPackParser(){
+    
+	public LevelPackParser(){
         
     }
     
@@ -169,11 +174,7 @@ public class LevelPackParser extends BaseParser {
             }
         });
     	
-    	
-    	
-    	
-    	try{
-    		
+    	try{		
     		Xml.parse(this.getInputStream(file), Xml.Encoding.UTF_8, 
     				root.getContentHandler());
     	} catch(Exception e) {
@@ -182,4 +183,15 @@ public class LevelPackParser extends BaseParser {
     	
     	return lp;
     }
+    
+    protected InputStream getInputStream(String file) {
+        try{	
+        	Context c = GlobalApplication.getContext();
+            return c.getAssets().open(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    
 }

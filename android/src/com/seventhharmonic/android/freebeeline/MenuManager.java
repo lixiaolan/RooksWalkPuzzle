@@ -59,7 +59,7 @@ class MenuManager {
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 		    mCallback = new Callback_MAIN_MENU_LIST_RESUME();
 		} else {*/
-		    String[] textures2 = {TextureManager.MENU, TextureManager.PLAY};
+		    String[] textures2 = {TextureManager.MENU, TextureManager.PLAY, TextureManager.DAILY_PUZZLE};
 		    mGameMenu = new GameMenu(pos1,scale1, textures2, TextureManager.BACK); 
 		    mCallback = new Callback_MAIN_MENU_LIST();
 		break;
@@ -119,6 +119,12 @@ class MenuManager {
 			String[] texturesAbout = {TextureManager.BACK};
 			mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesAbout); 
 			mCallback = new Callback_ABOUT();
+			break;
+	    
+	    case DAILY_PUZZLE:
+			String[] texturesDP = {TextureManager.BACK};
+			mGameMenu = new SelectOneMenu(bottomRight, scale2, texturesDP); 
+			mCallback = new Callback_DAILY_PUZZLE();
 			break;
 		
 	    }
@@ -192,13 +198,17 @@ class MenuManager {
 	public void callback(int val) {
 	    switch(val) {
 	    case 1: state.state = GameState.MAIN_MENU_GEAR;
-	    GlobalApplication.getAnalytics().sendScreen("main_gear");
-	    updateState();
+	    	GlobalApplication.getAnalytics().sendScreen("main_gear");
+	    	updateState();
 		break;
 	    case 2:
-		mModel.setModelToLevelPack();
-		updateState();
+	    	mModel.setModelToLevelPack();
+	    	updateState();
 		break;
+	    case 3:
+	    	mModel.setModelToDailyPuzzle();
+			updateState();
+			break;
 	    case 0: state.state = GameState.MAIN_MENU_OPENING;
 		updateState();
 		break;
@@ -264,9 +274,17 @@ class MenuManager {
     		}
         }
     
+    class Callback_DAILY_PUZZLE extends Callback {
+    	@Override
+    		public void callback(int val) {
+    			state.state = GameState.MAIN_MENU_LIST;
+    			mModel.toggleAdView(false);
+    		    GlobalApplication.getAnalytics().sendScreen("main_gear");
+    	    	updateState();   
+    		}
+        }
     
     class Callback_TUTORIAL extends Callback {
-	
 	@Override
 		public void callback(int val) {
 	    	switch(val) {
@@ -310,7 +328,7 @@ class MenuManager {
 	}
     }
 
-        
+    //TODO: DEPRECATED. DELETE THIS
     class Callback_STORY extends Callback { 	
 	@Override
 	public void callback(int val) {

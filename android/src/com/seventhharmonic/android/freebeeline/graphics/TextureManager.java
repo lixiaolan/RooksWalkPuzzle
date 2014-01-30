@@ -56,7 +56,7 @@ public class TextureManager {
 	public static final String RULE_CHECK_ON = "help on";
 	public static final String RULE_CHECK_OFF = "help off";
 	public static final String DONE = "done";
-	
+	public static final String DAILY_PUZZLE = "daily puzzle";
 	public static final String CLEAR_BOARD = "reset";
 	//public static final String QUIT = "quit";
 	public static final String YES = "yes";
@@ -298,6 +298,7 @@ public class TextureManager {
 		buildTextures(SHOW, xpos, ypos, SHOW, fontSize);
 		buildTextures(DONE, xpos, ypos, DONE, fontSize);
 		buildTextures(ABOUT, xpos, ypos, ABOUT, fontSize);
+		buildTextures(DAILY_PUZZLE, xpos, ypos, DAILY_PUZZLE, fontSize);
 		menuBmp.recycle();
 	}
 

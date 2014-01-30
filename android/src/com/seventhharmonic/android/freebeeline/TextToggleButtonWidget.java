@@ -9,16 +9,12 @@ import com.seventhharmonic.android.freebeeline.listeners.GameEventListener;
 
 public class TextToggleButtonWidget extends ButtonWidget{
 
-	//TextBox mText;
 	String text;
 	String toggleText;
 	boolean toggle = true;
 	
 	public TextToggleButtonWidget(float centerX, float centerY, float width, float height, String text, String toggleText){
 		super(centerX, centerY, width, height, text);
-		//mText = new TextBox(centerX,centerY, width, text );
-		//mText.setJ(TextJustification.CENTERBOX);
-		//a.setColor("white");
 		this.text = text;
 		this.toggleText = toggleText;
 	}

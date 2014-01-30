@@ -21,14 +21,6 @@ public class Puzzle {
 	Puzzle nextPuzzle;
 	Puzzle prevPuzzle;
 	
-	public Puzzle getPrevPuzzle() {
-		return prevPuzzle;
-	}
-
-	public void setPrevPuzzle(Puzzle prevPuzzle) {
-		this.prevPuzzle = prevPuzzle;
-	}
-
 	boolean completed = false;
 	long id;
 	Chapter ch;
@@ -58,12 +50,15 @@ public class Puzzle {
 		}*/
 		
 		//New logic. A puzzle is unlocked when the whole previous chapter is unlocked.
+		if(ch!=null){
 		if(ch.getPrevChapter() == null){
 			return true;
 		} else if(ch.getPrevChapter().getCompleted()){
 			return true;
 		} else{
 			return false;
+		}} else {
+			return true;
 		}
 	}
 	
@@ -138,7 +133,6 @@ public class Puzzle {
 		setMoves(moves);
 		setCompleted(completed);
 		GlobalApplication.getPuzzleDB().setPuzzle(this.getId(),"true",moves);
-
 	}
 	
 	public int getMoves(){
@@ -160,6 +154,15 @@ public class Puzzle {
 	public Chapter getChapter(){
 		return ch;
 	}
+
+	public Puzzle getPrevPuzzle() {
+		return prevPuzzle;
+	}
+
+	public void setPrevPuzzle(Puzzle prevPuzzle) {
+		this.prevPuzzle = prevPuzzle;
+	}
+	
 	
 	public Puzzle getNextPuzzle() {
 		return nextPuzzle;
