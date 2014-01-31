@@ -15,7 +15,6 @@ int main(int argc, char *argv[]){
     ss << argv[i] << " ";
   }
 
-  BeeLinePuzzle BLP;
   // ifs.open("iotest.txt");
   // ifs >> PP;
   // ifs.close();
@@ -26,12 +25,13 @@ int main(int argc, char *argv[]){
   
   if (str == "generate") {
     //row, col, length, hints
+    BeeLinePuzzle BLP;
     int a;
     ss >> a;
 
     srand( unsigned (time(0)) );
 
-    vector<int> seeds;
+    vector<unsigned int> seeds;
     for (int i = 0; i < a; i++) {
       seeds.push_back(rand());
     }
@@ -39,7 +39,9 @@ int main(int argc, char *argv[]){
     ofs.open("iotest.txt");
     for (int i = 0; i < a; i++) {
       std::cout << (i+1) << std::endl;
-      BLP = BeeLinePuzzle(6,6,14,3,seeds[i]);
+      do {
+	BLP = BeeLinePuzzle(6,6,14,3,seeds[i]+unsigned(time(0)));
+      } while (BLP.uniqueCounter != 1);
       ofs << BLP;
     }
     ofs.close();
@@ -47,14 +49,28 @@ int main(int argc, char *argv[]){
 
   else if (str == "print") {
     ifs.open("iotest.txt");
-    ofs.open("DailyPuzzles.xml");
+
+    xml_document<> d;
+    xml_document<> *doc = &d;
+    xml_node<> *dailyPuzzles;
+
+    dailyPuzzles = doc->allocate_node(node_element, "DailyPuzzles");
+    doc->append_node(dailyPuzzles);
     
     int i = 0;
-    while (ifs >> BLP) {
+    while (true) {
       i++;
-      BLP.printXML(ofs,i);
+      BeeLinePuzzle BLP;
+      if (ifs >> BLP) {
+	BLP.buildXMLSimple(doc, dailyPuzzles, i,"flower1","flower1color");
+      }
+      else {
+	break;
+      }
     }
 
+    ofs.open("DailyPuzzles.xml");
+    ofs << *doc;
     ifs.close();
     ofs.close();
   }

@@ -101,7 +101,7 @@ public:
   void buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower, map<int, string> textMap,int*);
   void buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBookData &PBD);
   
-  void printXML(ofstream &, int);
+  void buildXMLSimple(xml_document<> *doc, xml_node<> *DailyPuzzles, int id, string beforeFlower, string afterFlower);
   
   string getHintDir(int i);
   string getBoardXML();

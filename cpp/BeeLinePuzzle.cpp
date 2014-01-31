@@ -57,39 +57,38 @@ BeeLinePuzzle::BeeLinePuzzle(int h, int w, int l, int hintNum, int seed) : heigh
 
   srand(seed);
 
-  do {   
-    for (int j = 0; j < width; j++) {
-      temp.push_back(0);
-      bTemp.push_back(false);
-    }
-    
-    for (int i = 0; i < height; i++) {
-      moveArea.push_back(temp);
-      leftRight.push_back(bTemp);
-      upDown.push_back(bTemp);
-      vertical.push_back(bTemp);
-      leftUp.push_back(bTemp);
-    }
+  for (int j = 0; j < width; j++) {
+    temp.push_back(0);
+    bTemp.push_back(false);
+  }
+  
+  for (int i = 0; i < height; i++) {
+    moveArea.push_back(temp);
+    leftRight.push_back(bTemp);
+    upDown.push_back(bTemp);
+    vertical.push_back(bTemp);
+    leftUp.push_back(bTemp);
+  }
+  
+  cout << "generating board..." << endl;    
+  
+  makeBoard(l);
+  markUnused();
 
-    cout << "generating board..." << endl;    
+  for (int i = 0; i < 40; i++) {
+    //cout << "try..." << endl;
+    getHints(hintNum);//select the hints to be used;
     
-    makeBoard(l);
-    markUnused();
-    for (int i = 0; i < 40; i++) {
-      //cout << "try..." << endl;
-      getHints(hintNum);//select the hints to be used;
-      
-      if (checkUnique())
-	break;
-    }
-    if (uniqueCounter == 1) {
-      cout << "win!" << endl;
-      printGameBoard();      
-    }
-    else {
-      cout << "fail!" << endl;
-    }
-  } while (uniqueCounter != 1);
+    if (checkUnique())
+      break;
+  }
+  if (uniqueCounter == 1) {
+    //cout << "win!" << endl;
+    //printGameBoard();      
+  }
+  else {
+    //cout << "fail!" << endl;
+  }
 }
 
 void BeeLinePuzzle::getHints(int num) {
@@ -1355,9 +1354,8 @@ int BeeLinePuzzle::getLength() {
   return length-1;
 }
 
-void BeeLinePuzzle::printXML(ofstream &ofs, int index) {
-  xml_document<> d;
-  xml_document<> *doc = &d;
+void BeeLinePuzzle::buildXMLSimple(xml_document<> *doc, xml_node<> *DailyPuzzles, int id, string beforeFlower, string afterFlower) {
+
   xml_node<> *puzzle;
   xml_node<> *node;
   xml_node<> *hint;
@@ -1365,14 +1363,11 @@ void BeeLinePuzzle::printXML(ofstream &ofs, int index) {
   char *name;
   int myInt;
   string str;
-  
-  string beforeFlower = "flower1";
-  string afterFlower = "flower1color";
 
   puzzle = doc->allocate_node(node_element, "puzzle");
-  doc->append_node(puzzle);
+  DailyPuzzles->append_node(puzzle);
 
-  name = doc->allocate_string(intTooString(index).c_str());
+  name = doc->allocate_string(intTooString(id).c_str());
   attr = doc->allocate_attribute("id", name);
   puzzle->append_attribute(attr);
 
@@ -1409,7 +1404,7 @@ void BeeLinePuzzle::printXML(ofstream &ofs, int index) {
     node = doc->allocate_node(node_element, "index", name);
     hint->append_node(node);
   }
-  ofs << *doc;
+
 }
 
 void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, string beforeFlower, string afterFlower , map<int, string> textMap,int *puzzleIndex) {
@@ -1526,6 +1521,7 @@ void BeeLinePuzzle::buildXML(xml_document<> *doc, xml_node<> *chapter, PuzzleBoo
   name = doc->allocate_string(intTooString(width).c_str());
   node = doc->allocate_node(node_element, "width", name);
   puzzle->append_node(node);
+
   name = doc->allocate_string(getBoardXML().c_str());
   node = doc->allocate_node(node_element, "board", name);
   puzzle->append_node(node);
