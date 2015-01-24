@@ -327,7 +327,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 		return ret;
 	}
 
-	public float[] project(float[] pt) {	
+	public float[] project(float[] pt) {
 		pt[0] = -pt[0]*cameraDistance*(screenWidth/screenHeight)/frustumNear;
 		pt[1] = pt[1]*cameraDistance/frustumNear;
 		return pt;
@@ -413,7 +413,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 		// Pass in the combined matrix.
 		GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
-//		//GLES20.glDrawArrays(GLES20.GL_LINES, 0, 6);
+		//GLES20.glDrawArrays(GLES20.GL_LINES, 0, 6);
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
 	}
 

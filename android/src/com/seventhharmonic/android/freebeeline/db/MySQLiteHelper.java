@@ -10,9 +10,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_PUZZLES = "puzzels";
     public static final String TABLE_HINTS = "hints";
 
-
     public static final String TABLE_PURCHASED = "purchased"; 
-
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PUZZLE = "completed";

@@ -31,6 +31,14 @@ import android.os.Build;
 import android.content.Intent;
 import android.view.WindowManager;
 
+/**
+   An "Activity" Represents (generally) a unit of user interface. It
+   must be able to handle Creation and destruction, Start and Stop,
+   Pause and Resume. Usually a program will have many
+   activities. Bee-Line only uses one (this one) since all our UI is
+   though OpenGL|ES and not the Android framework.
+ */
+
 public class ViewActivity extends Activity {    
     
     boolean savedGame = false;
@@ -43,8 +51,12 @@ public class ViewActivity extends Activity {
     private MyGLRenderer mRenderer;    
     private TextView mQuoteView;
     private TextView mWaitView;
+
     private AdView adView;
     
+
+        
+
     private static LinearLayout loadingScreen;
 
     public static Store mStore;
@@ -128,8 +140,7 @@ public class ViewActivity extends Activity {
 	GlobalApplication.getPurchasedDB().open();	
 	//TODO:This also sucks. Why is music hard???
 	if(mDataServer.getMusicToggle()) {
-		Log.d(TAG, "WHY AM I RESUMING .,.....");
-		GlobalApplication.getMyMusic().resumeMusic();
+	    GlobalApplication.getMyMusic().resumeMusic();
 	}
     }
     
@@ -169,11 +180,8 @@ public class ViewActivity extends Activity {
 	    }
 	}
 	}
-		EasyTracker.getInstance(this).activityStart(this);
+	EasyTracker.getInstance(this).activityStart(this);
     }	
-    
-    
-    
     
     protected void onStop() {
     	super.onStop();

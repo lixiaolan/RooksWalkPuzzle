@@ -111,7 +111,5 @@ public class PurchasedDataSource extends BaseDataSource{
 	cursor.close();
 
 	return;
-    }
-    
-    
+    }    
 } 
